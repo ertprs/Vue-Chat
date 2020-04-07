@@ -1,0 +1,151 @@
+.chat-rodape{
+  display: flex;
+  background-color: #93BD94;
+  align-items: center;
+  justify-content: center;
+  height: 40vh;
+  .chat-rodape-mensagens{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+    margin: 2%;
+    min-height: 182px;
+    .chat-rodape-textarea{
+      position: relative;
+      width: 100%;
+      .chat-rodape-previa-img{
+        padding: 15px;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.5);
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        img{
+          max-height: 175px;
+        }
+      }
+      .caracteres-disponiveis{
+        z-index: 1;
+        color: #777;
+        position: absolute;
+        right: 15px;
+        bottom: 5px;
+      }
+    }
+    .chat-rodape-hsm{
+      background-color: #FFF;
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      span{
+        margin-bottom: 15px;
+      }
+      .select-hsm-container{
+        display: flex;
+        align-items: center;
+        #select-hsm{
+          margin-right: 10px;
+        }
+        .hsm-btn{
+          @include estiloBotao(-4px, -2px);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 10px 5px;
+          background-color: #F2CA50;
+          p{
+            margin: unset
+          }
+        }
+      }
+    }
+  }
+  .chat-rodape-botoes{
+    width: 20%;
+    margin: 2% 2% 2% 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    .chat-rodape-botoes-botao{
+      @include estiloBotao(-3px, -1px);
+
+      width: 100%;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 7px 5px;
+      color: #FFF;
+      transition-duration: .5s;
+      margin-bottom: 10px;
+      &:last-child{
+        margin-bottom: unset;
+      }
+      svg{
+        margin-right: 5px;
+        font-size: 1.2rem;
+      }
+      &.botao-enviar-msg{
+        background-color: #339E58;
+        svg{
+          color: #2D7345;
+        }
+      }
+      &.botao-enviar-anexo{
+        position: relative;
+        background-color: #919191;
+        svg{
+          color: #736B66
+        }
+        .chat-rodape-anexo-opcoes{
+          position: absolute;
+          left: -1px;
+          bottom: 40px;
+          padding: 5px;
+          z-index: 3;
+          background-color: #CCC;
+          display: flex;
+          justify-content: space-between;
+          > div{
+            margin: 0 auto;
+            text-align: center;
+            border-radius: 10px;
+            padding: 3px;
+            svg{
+              color: #FFF
+            }
+            &:nth-child(1){
+              background-color: #9575cd;
+              margin-right: 5px;
+            }
+            &:nth-child(2){
+              background-color: #7986cb 
+            }
+          }
+        }
+      }
+      &.botao-encerrar{
+        background-color: #E74C3C;
+        svg{
+          color: #BE1E2A
+        }
+      }
+      &.botao-retornar{
+        background-color: #184A8C;
+        svg{
+          color: #012136
+        }
+      }
+      &.botao-excluir-anexo{
+        background-color: #f44336;
+        svg{
+          color: #d32f2f 
+        }
+      }
+    }
+  }
+}

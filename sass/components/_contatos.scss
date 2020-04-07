@@ -1,0 +1,13 @@
+#todos-contatos{
+  width: 19.9vw;
+  height: 100vh;
+  border-right: .1vw solid #000;
+  > div{
+    margin: 0 auto;
+    width: 95%;
+  }
+  .titulo-contatos{
+    padding: 15px 10px;
+    border-bottom: 1px solid #CCC
+  }
+}

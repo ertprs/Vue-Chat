@@ -1,0 +1,13 @@
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../node_modules/bootstrap-vue/src/index.scss';
+
+@import './abstract/mixins';
+
+@import './components/formulario';
+@import './components/contatos';
+@import './components/chat';
+@import './components/chatCliente';
+@import './components/chatOpcoes';
+@import './components/chatCorpo';
+@import './components/chatRodape';
+@import './components/default';
