@@ -7,7 +7,12 @@
     width: 95%;
   }
   .titulo-contatos{
-    padding: 15px 10px;
-    border-bottom: 1px solid #CCC
+    height: 10vh;
+    border-bottom: 1px solid #CCC;
+    display: flex;
+    align-items: center;
+    h1 {
+      font-size: 1.4rem
+    }
   }
 }

@@ -6,6 +6,7 @@
       <template  v-else>
         <Contatos />
         <Chat />
+        <Informacoes />
       </template>
     </template>
   </div>
@@ -21,6 +22,7 @@ import { mapMutations } from 'vuex'
 import Formulario from './components/templates/Formulario'
 import Contatos from './components/templates/Contatos'
 import Chat from './components/templates/Chat'
+import Informacoes from './components/templates/Informacoes'
 
 import Teste from './components/templates/Teste'
 
@@ -29,6 +31,7 @@ export default {
     Formulario,
     Contatos,
     Chat,
+    Informacoes,
     Teste
   },
   data(){

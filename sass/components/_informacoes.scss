@@ -1,0 +1,27 @@
+#informacoes{
+  display: absolute;
+  transition: .5s;
+  right: -1px;
+  height: 100vh;
+  background-color: #FFF;
+  width: 0;
+  > div{
+    margin: 0 auto;
+    width: 95%;
+  }
+}
+
+.abrir-informacoes{
+  width: 30vw!important;
+  border-left: 1px solid #000
+}
+
+.titulo-informacoes{
+  height: 10vh;
+  border-bottom: 1px solid #CCC;
+  display: flex;
+  align-items: center;
+  h1 {
+    font-size: 1.4rem
+  }
+}

@@ -9,7 +9,8 @@ export default new Vuex.Store({
     formularioCliente: false,
     todasMensagens: [],
     clienteMandouMensagem: false,
-    habilitaRolagem: false
+    habilitaRolagem: false,
+    informacoesAberto: false
   },
   mutations: {
     setFormularioCliente(state, formularioCliente){
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     setHabilitaRolagem(state, habilitaRolagem){
       state.habilitaRolagem = habilitaRolagem
+    },
+    setInformacoesAberto(state, informacoesAberto){
+      state.informacoesAberto = informacoesAberto
     }
   },
   getters: {
@@ -43,6 +47,9 @@ export default new Vuex.Store({
     },
     getHabilitaRolagem(state){
       return state.habilitaRolagem
+    },
+    getInformacoesAberto(state){
+      return state.informacoesAberto
     }
   }
 });
