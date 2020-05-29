@@ -13,7 +13,7 @@
           id="textarea"
           v-model="mensagem"
           placeholder="Digite sua mensagem"
-          rows="7"
+          rows="6"
           no-resize
           >
         </b-form-textarea>

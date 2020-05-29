@@ -2,12 +2,15 @@
   <div id="app">
     <Teste v-if="testeAtivo" />
     <template v-else>
-      <Formulario v-if="!formularioCliente" />
-      <template  v-else>
-        <Contatos />
-        <Chat />
-        <Informacoes />
-      </template>
+      <div id="container">
+        <BotoesSuperiores />
+        <!-- <Formulario v-if="!formularioCliente" /> -->
+        <!-- <template  v-else> -->
+          <Contatos v-if="abaAtiva == 'contatos'" />
+          <Chat v-if="abaAtiva == 'chat'" />
+          <!-- <Informacoes /> -->
+        <!-- </template> -->
+      </div>
     </template>
   </div>
 </template>
@@ -19,16 +22,19 @@ import { mapGetters } from "vuex"
 import axios from 'axios'
 import { mapMutations } from 'vuex'
 
-import Formulario from './components/templates/Formulario'
+// import Formulario from './components/templates/Formulario'
 import Contatos from './components/templates/Contatos'
 import Chat from './components/templates/Chat'
 import Informacoes from './components/templates/Informacoes'
+
+import BotoesSuperiores from './components/templates/BotoesSuperiores'
 
 import Teste from './components/templates/Teste'
 
 export default {
   components: {
-    Formulario,
+    // Formulario,
+    BotoesSuperiores,
     Contatos,
     Chat,
     Informacoes,
@@ -41,7 +47,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      formularioCliente: 'getFormularioCliente'
+      // formularioCliente: 'getFormularioCliente',
+      abaAtiva: 'getAbaAtiva'
     })
   }
 }

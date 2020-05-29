@@ -1,0 +1,48 @@
+#container-botoes{  width: 100%;
+  height: 12vh;
+  ul{
+    padding: 0;
+    width: 100%;
+    height: 100%;  
+    display: flex;
+    align-items: center;
+    hr{
+      margin: 0;
+      height: 100%;
+      width: .1%;
+      border: none;
+      background-color: #FFF;
+    }
+    li{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      list-style-type: none;
+      width: 49.9%;
+      height: 70px;
+      -moz-box-shadow:    inset 0 0 15px 0 rgba(0, 0, 0, 0.5);
+      -webkit-box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, 0.5);
+      box-shadow:         inset 0 0 15px 0 rgba(0, 0, 0, 0.5);
+      opacity: .8;
+      transition-duration: .5s;
+      cursor: pointer;
+      svg{
+        margin-right: 10px;
+      }
+      color: #FFF; 
+      font-size: 1.4rem;
+      &#botao-contatos{
+        background-color: $bg-btn-contatos;
+      }
+      &#botao-chat{
+        background-color: $bg-btn-chat;
+      }
+      &.ativo{
+        opacity: 1;
+      }
+      &:hover{
+        opacity: 1;
+      }
+    }
+  }
+}

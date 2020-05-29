@@ -3,15 +3,15 @@
   // flex-wrap: wrap;
   justify-content: space-between;
   height: fit-content;
-  border-bottom: 2px solid #93BD94;
+  border-bottom: 2px solid $bg-btn-chat; // #93BD94
   height: 10vh;
+  width: 100%;
+  background-color: $bg-btn-chat; // #93BD94
   .chat-opcoes-titulo{
     user-select: none;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    width: 65%;
-    background-color: #93BD94;
     p{
       white-space: nowrap;
       font-size: 1.4rem;
@@ -29,13 +29,21 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    width: 35%;
-    p{
-      color: #666;
-      margin: 15px;
+    svg{
+      color: #FFF;
+      margin-right: 15px;
+      font-size: 1.4rem;
     }
-    &:hover > p{
-      text-decoration: underline
-    }
+    // svg, p{
+    //   font-size: 1.2rem;
+    //   color: #FFF;
+    // }
+    // p{
+    //   margin: 0;
+    //   margin-left: 5px;
+    // }
+    // &:hover > p{
+    //   text-decoration: underline
+    // }
   }
 }

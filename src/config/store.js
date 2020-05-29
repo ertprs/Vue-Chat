@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import controlaAba from './modulos/controleAba'
 
 Vue.use(Vuex);
 
@@ -51,5 +52,6 @@ export default new Vuex.Store({
     getInformacoesAberto(state){
       return state.informacoesAberto
     }
-  }
+  },
+  modules: { controlaAba }
 });

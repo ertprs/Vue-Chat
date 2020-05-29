@@ -5,7 +5,9 @@
         <span> Nome do Cliente </span>
       </div>
       <div class="chat-opcoes-infos" v-on:click="toggleInformacoes()">
-        <p> Clique para Visualizar as Informacoes do Cliente </p>
+        <i class="fas fa-info-circle" title="Clique para Visualizar as Informacoes do Cliente"></i>
+        <!-- <i class="fas fa-id-badge" title="Clique para Visualizar as Informacoes do Cliente"></i> -->
+        <!-- <p>Visualizar as Informacoes</p> -->
       </div>
     </div>
 </template>
