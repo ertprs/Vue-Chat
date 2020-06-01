@@ -24,14 +24,11 @@ import Contatos from './components/templates/Contatos'
 import Chat from './components/templates/Chat'
 import Informacoes from './components/templates/Informacoes'
 
-import BotoesSuperiores from './components/templates/BotoesSuperiores'
-
 import Teste from './components/templates/Teste'
 
 export default {
   components: {
     // Formulario,
-    BotoesSuperiores,
     Contatos,
     Chat,
     Informacoes,
@@ -45,7 +42,6 @@ export default {
   computed: {
     ...mapGetters({
       // formularioCliente: 'getFormularioCliente',
-      abaAtiva: 'getAbaAtiva'
     })
   }
 }
