@@ -1,5 +1,5 @@
 <template>
-  <div id="todos-contatos"  v-if="clienteMandouMensagem">
+  <div id="todos-contatos" > <!--  v-if="clienteMandouMensagem" -->
     <div class="titulo-contatos">
       <h1> Contatos </h1>
     </div>

@@ -2,13 +2,13 @@
   <div id="app">
     <Teste v-if="testeAtivo" />
     <template v-else>
-      <Formulario v-if="!formularioCliente" />
-      <template  v-else>
+      <!-- <Formulario v-if="!formularioCliente" /> -->
+      <!-- <template  v-else> -->
         <Contatos />
         <Chat />
         <Informacoes />
       </template>
-    </template>
+    <!-- </template> -->
   </div>
 </template>
 
