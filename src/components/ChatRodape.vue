@@ -34,13 +34,13 @@
     </div>
     <div class="chat-rodape-botoes">
       <template v-if="!aparecerPrevia"> 
-        <div class="chat-rodape-botoes-botao botao-enviar-msg" title="Enviar" v-on:click="enviarMensagem()">
+        <div class="chat-rodape-botoes-botao botao-enviar-msg" :class="informacoesAberto ? 'icones-fechado' : ''" title="Enviar" v-on:click="enviarMensagem()">
           <i class="fas fa-paper-plane"></i>
-          <span> Enviar </span>
+          <span v-show="!informacoesAberto"> Enviar </span>
         </div>
-        <div class="chat-rodape-botoes-botao botao-enviar-anexo" title="Selecionar Anexo" v-on:click="selecionarAnexo()">
+        <div class="chat-rodape-botoes-botao botao-enviar-anexo" :class="informacoesAberto ? 'icones-fechado' : ''" title="Selecionar Anexo" v-on:click="selecionarAnexo()">
           <i class="fas fa-paperclip"></i>
-          <span> Selecionar Anexo </span>
+          <span v-show="!informacoesAberto"> Selecionar Anexo </span>
 
           <div class="chat-rodape-anexo-opcoes" v-if="abrirOpcoes">
             <div v-on:click="selecionarImagem()">
@@ -58,31 +58,31 @@
           </div>
 
         </div>
-        <div class="chat-rodape-botoes-botao botao-encerrar" title="Encerrar" v-on:click="encerrarAtendimento()">
+        <div class="chat-rodape-botoes-botao botao-encerrar" :class="informacoesAberto ? 'icones-fechado' : ''" title="Encerrar" v-on:click="encerrarAtendimento()">
           <i class="fas fa-sign-out-alt"></i>
-          <span> Encerrar </span>
+          <span v-show="!informacoesAberto"> Encerrar </span>
         </div>
-        <div class="chat-rodape-botoes-botao botao-retornar" title="Retornar" v-on:click="retornarForm()">
+        <div class="chat-rodape-botoes-botao botao-retornar" :class="informacoesAberto ? 'icones-fechado' : ''" title="Retornar" v-on:click="retornarForm()">
           <i class="fas fa-undo"></i>
-          <span> Retornar </span>
+          <span v-show="!informacoesAberto"> Retornar </span>
         </div>
       </template>
       <template v-else>
-        <div class="chat-rodape-botoes-botao botao-enviar-msg" title="Enviar Anexo" v-on:click="enviarAnexo()">
+        <div class="chat-rodape-botoes-botao botao-enviar-msg" :class="informacoesAberto ? 'icones-fechado' : ''" title="Enviar Anexo" v-on:click="enviarAnexo()">
           <i class="fas fa-paper-plane"></i>
-          <span> Enviar Anexo </span>
+          <span v-show="!informacoesAberto"> Enviar Anexo </span>
         </div>
-        <div class="chat-rodape-botoes-botao botao-enviar-anexo" title="Alterar Anexo" v-on:click="selecionarAnexo()">
+        <div class="chat-rodape-botoes-botao botao-enviar-anexo" :class="informacoesAberto ? 'icones-fechado' : ''" title="Alterar Anexo" v-on:click="selecionarAnexo()">
           <i class="fas fa-paperclip"></i>
-          <span> Alterar Anexo </span>
+          <span v-show="!informacoesAberto"> Alterar Anexo </span>
 
           <div class="chat-rodape-botoes-container-anexo d-none">
             <input type="file" id="file" ref="file" accept="image/*" v-on:change="fileUpload()">
           </div>
         </div>
-        <div class="chat-rodape-botoes-botao botao-excluir-anexo" title="Excluir Anexo" v-on:click="excluirAnexo()">
+        <div class="chat-rodape-botoes-botao botao-excluir-anexo" :class="informacoesAberto ? 'icones-fechado' : ''" title="Excluir Anexo" v-on:click="excluirAnexo()">
           <i class="fas fa-times-circle"></i>
-          <span> Cancelar </span>
+          <span v-show="!informacoesAberto"> Cancelar </span>
         </div>
       </template>
     </div>
@@ -299,7 +299,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      todasMensagens: 'getTodasMensagens'
+      todasMensagens: 'getTodasMensagens',
+      informacoesAberto: 'getInformacoesAberto'
     })
   }
 }

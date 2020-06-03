@@ -74,6 +74,12 @@
     .chat-rodape-botoes-botao{
       @include estiloBotao(-3px, -1px);
 
+      &.icones-fechado{
+        svg{
+          margin: 0 auto;
+        }
+      }
+
       width: 100%;
       display: flex;
       align-items: center;

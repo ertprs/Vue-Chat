@@ -1,6 +1,10 @@
 #chat{
   width: 80vw;
+  transition-duration: .5s;
   // .chat-corpo-rodape{
     // box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.5);
   // }
+  &.chat-fechado{
+    width: 30vw!important;
+  }
 }

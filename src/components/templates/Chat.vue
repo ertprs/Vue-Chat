@@ -1,5 +1,5 @@
 <template>
-  <div id="chat">
+  <div id="chat" :class="informacoesAberto ? 'chat-fechado' : ''">
     <!-- <ChatCliente v-if="zonaDeTeste"/> -->
 
     <!-- <template v-if="clienteMandouMensagem">  -->
@@ -30,7 +30,8 @@ export default {
   computed: {
     ...mapGetters({
       zonaDeTeste: 'getZonaDeTeste',
-      clienteMandouMensagem: 'getClienteMandouMensagem'
+      clienteMandouMensagem: 'getClienteMandouMensagem',
+      informacoesAberto: 'getInformacoesAberto'
     })
   }
 }

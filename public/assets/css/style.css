@@ -8868,7 +8868,10 @@ input[type="color"].form-control:disabled {
       font-size: 1.4rem; }
 
 #chat {
-  width: 80vw; }
+  width: 80vw;
+  transition-duration: .5s; }
+  #chat.chat-fechado {
+    width: 30vw !important; }
 
 #chat-cliente #chat-cliente.chat-corpo {
   background-image: url("../../../public/assets/img/messages-wallpaper.png");
@@ -9272,6 +9275,8 @@ input[type="color"].form-control:disabled {
         -o-transform: translateY(1px);
         -ms-transform: translateY(1px);
         transform: translateY(1px); }
+      .chat-rodape .chat-rodape-botoes .chat-rodape-botoes-botao.icones-fechado svg {
+        margin: 0 auto; }
       .chat-rodape .chat-rodape-botoes .chat-rodape-botoes-botao:last-child {
         margin-bottom: unset; }
       .chat-rodape .chat-rodape-botoes .chat-rodape-botoes-botao svg {
@@ -9332,7 +9337,7 @@ input[type="color"].form-control:disabled {
     width: 95%; }
 
 .abrir-informacoes {
-  width: 30vw !important;
+  width: 80vw !important;
   border-left: 1px solid #000; }
 
 .titulo-informacoes {
