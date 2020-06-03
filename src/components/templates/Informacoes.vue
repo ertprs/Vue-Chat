@@ -1,8 +1,12 @@
 <template>
   <div id="informacoes">
-    <template v-if="informacoesAberto">
+    <template>
       <div class="titulo-informacoes">
         <h1> Informacoes </h1>
+      </div>
+      <div>
+        <p>Info aqui</p>
+        <p>{{this.informacoesDoCliente}}</p>
       </div>
     </template>
   </div>
@@ -15,7 +19,8 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters({
-      informacoesAberto: 'getInformacoesAberto'
+      // informacoesAberto: 'getInformacoesAberto'
+      informacoesDoCliente: 'getInformacoesDoCliente'
     })
   }
 }

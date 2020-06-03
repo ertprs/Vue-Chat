@@ -8,9 +8,12 @@ export default new Vuex.Store({
     zonaDeTeste: true,
     formularioCliente: false,
     todasMensagens: [],
-    clienteMandouMensagem: false,
+    clienteMandouMensagem: true,
     habilitaRolagem: false,
-    informacoesAberto: false
+    informacoesAberto: true,
+    informacoesDoCliente: {},
+    atendimentosAbertos: {},
+    url: ''
   },
   mutations: {
     setFormularioCliente(state, formularioCliente){
@@ -30,6 +33,15 @@ export default new Vuex.Store({
     },
     setInformacoesAberto(state, informacoesAberto){
       state.informacoesAberto = informacoesAberto
+    },
+    setURL(state, newURI) {
+      state.url = newURI
+    },
+    setAtendimentosAbertos(state, atendimentosAbertos){
+      state.atendimentosAbertos = atendimentosAbertos
+    },
+    setInformacoesDoCliente(state, objInformacoes){
+      state.informacoesDoCliente = objInformacoes
     }
   },
   getters: {
@@ -50,6 +62,15 @@ export default new Vuex.Store({
     },
     getInformacoesAberto(state){
       return state.informacoesAberto
+    },
+    getURL(state) {
+      return state.url
+    },
+    getAtendimentosAbertos(state){
+      return state.atendimentosAbertos
+    },
+    getInformacoesDoCliente(state){
+      return state.informacoesDoCliente
     }
   }
 });

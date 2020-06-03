@@ -4,9 +4,9 @@
         <p :title="chatTitulo"> {{ chatTitulo }} </p>
         <span> Nome do Cliente </span>
       </div>
-      <div class="chat-opcoes-infos" v-on:click="toggleInformacoes()">
+      <!-- <div class="chat-opcoes-infos" v-on:click="toggleInformacoes()">
         <p> Clique para Visualizar as Informacoes do Cliente </p>
-      </div>
+      </div> -->
     </div>
 </template>
 
@@ -22,18 +22,18 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['setInformacoesAberto']),
-    toggleInformacoes(){
-      let divInformacoes = document.querySelector('#informacoes')
-      divInformacoes.classList.toggle('abrir-informacoes')
+    // ...mapMutations(['setInformacoesAberto']),
+    // toggleInformacoes(){
+    //   let divInformacoes = document.querySelector('#informacoes')
+    //   divInformacoes.classList.toggle('abrir-informacoes')
 
-      this.setInformacoesAberto(!this.informacoesAberto)
-    }
+    //   this.setInformacoesAberto(!this.informacoesAberto)
+    // }
   },
   computed: {
-    ...mapGetters({
-      informacoesAberto: 'getInformacoesAberto'
-    })
+    // ...mapGetters({
+    //   informacoesAberto: 'getInformacoesAberto'
+    // })
   }
 }
 </script>

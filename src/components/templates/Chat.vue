@@ -2,13 +2,13 @@
   <div id="chat" :class="informacoesAberto ? 'chat-fechado' : ''">
     <!-- <ChatCliente v-if="zonaDeTeste"/> -->
 
-    <!-- <template v-if="clienteMandouMensagem">  -->
+    <template v-if="clienteMandouMensagem">
       <ChatOpcoes />
       <div class="chat-corpo-rodape">
         <ChatCorpo id="chat-operador" />
         <ChatRodape />
       </div>
-    <!-- </template> -->
+    </template>
   </div>
 </template>
 

@@ -9039,7 +9039,7 @@ input[type="color"].form-control:disabled {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    width: 65%;
+    width: 100%;
     background-color: #93BD94; }
     .chat-opcoes .chat-opcoes-titulo p {
       white-space: nowrap;
@@ -9051,16 +9051,7 @@ input[type="color"].form-control:disabled {
       font-size: 1.1rem;
       margin-left: 50px; }
   .chat-opcoes .chat-opcoes-infos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    width: 35%; }
-    .chat-opcoes .chat-opcoes-infos p {
-      color: #666;
-      margin: 15px; }
-    .chat-opcoes .chat-opcoes-infos:hover > p {
-      text-decoration: underline; }
+    display: none; }
 
 #chat-operador.chat-corpo {
   padding: unset !important;
@@ -9331,7 +9322,8 @@ input[type="color"].form-control:disabled {
   right: -1px;
   height: 100vh;
   background-color: #FFF;
-  width: 0; }
+  border-left: 1px solid #000;
+  width: 50vw !important; }
   #informacoes > div {
     margin: 0 auto;
     width: 95%; }

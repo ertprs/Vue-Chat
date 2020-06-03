@@ -1,30 +1,38 @@
 <template>
-  <div id="todos-contatos" > <!--  v-if="clienteMandouMensagem" -->
+  <div id="todos-contatos"  v-if="clienteMandouMensagem">
     <div class="titulo-contatos">
-      <h1> Contatos </h1>
+      <h1>Contatos</h1>
     </div>
-      {{ objetoContato }}
+    <div v-for="atd in atendimentosAbertos.atendimentos" :key="atd.id">
+      <button @click="ativarConversa( atd.id ); exibirInformacoes( atd.informacoes )">{{atd.nome}}</button>
+    </div>
   </div>
 </template>
 
 <script>
-// Essa lógica com certeza será alterada
-
 import { mapGetters } from 'vuex'
-import { mapMutations } from 'vuex'
+import { mapMutations } from "vuex";
 
 export default {
-  methods: {
-    ...mapMutations(['setAbaAtiva']),
-    toggleAbaAtiva(aba){
-      this.setAbaAtiva(aba)
-    }
+  created: function() {
+    // console.log( this.atendimentosAbertos )
   },
   computed: {
     ...mapGetters({
       clienteMandouMensagem: 'getClienteMandouMensagem',
-      objetoContato: 'getTodasMensagens'
+      objetoContato: 'getTodasMensagens',
+      atendimentosAbertos: 'getAtendimentosAbertos'
     })
+  },
+  methods: {
+    ...mapMutations(["setInformacoesDoCliente"]),
+    ativarConversa: function( id ) {
+      // console.log( id )
+    },
+    exibirInformacoes: function( objInformacoes ) {
+      // console.log( objInformacoes )
+      this.setInformacoesDoCliente( objInformacoes )
+    }
   }
 }
 </script>

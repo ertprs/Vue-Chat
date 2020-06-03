@@ -92,6 +92,7 @@
 <script>
 import { mapMutations } from 'vuex'
 import { mapGetters } from 'vuex'
+import axios from "axios"
 
 export default {
   data(){
@@ -114,11 +115,22 @@ export default {
 
     enviarMensagem(){
       if(this.validaMensagem()){
-
-        this.setTodasMensagens(this.criaObjMensagem())
-
-        this.mensagem = ''
-
+        let msg = this.mensagem;
+        if( msg != '' ) {
+          axios
+            .post(
+              "http://linux03/im/atdHumano/middleware/atd_api.php/send-message",
+              { msg }
+            )
+            .then(response => {
+              console.log(response.data);
+            })
+            .catch(error => {
+              console.log(error);
+            });
+          this.setTodasMensagens(this.criaObjMensagem())
+          this.mensagem = ''
+        }
       }
     },
     verificaRolagem(){
@@ -272,11 +284,8 @@ export default {
     },
     encerrarAtendimento(){
       this.mensagem = 'Mensagem de Encerramento do Atendimento'
-
       this.enviarMensagem()
-
       document.querySelector('#textarea').setAttribute('readonly','readonly')
-
       setTimeout(
         () => {
           this.retornarForm()
@@ -285,6 +294,59 @@ export default {
     },
     retornarForm(){
       this.setFormularioCliente(false)
+    },
+    obterAtendimentos() {
+      axios
+        .get(
+          "http://linux03/im/atdHumano/middleware/atd_api.php/get-atendimento"
+        )
+        .then(response => {
+          mostrarAtendimentos(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    obterMensagens() {
+      var idClientes = [55987654321, 5517987654321];
+      axios
+        .post(
+          "http://linux03/im/atdHumano/middleware/atd_api.php/search-message",
+          { idClientes }
+        )
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    enviarInformacao() {
+      var informacao = "Testando alguma informacao";
+      axios
+        .post(
+          "http://linux03/im/atdHumano/middleware/atd_api.php/send-information",
+          { informacao }
+        )
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    finalizarAtendimento() {
+      axios
+        .put(
+          "http://linux03/im/atdHumano/middleware/atd_api.php/end-atendimento ",
+          {}
+        )
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   },
   watch: {
