@@ -10,7 +10,7 @@ let baseURL = String
 if(location.hostname == 'localhost'){
   baseURL = ''
 }else{
-  baseURL = 'kpi/'
+  baseURL = 'im/'
 }
 
 export default new Router({

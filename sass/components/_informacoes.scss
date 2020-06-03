@@ -4,7 +4,8 @@
   right: -1px;
   height: 100vh;
   background-color: #FFF;
-  width: 0;
+  border-left: 1px solid #000;
+  width: 50vw !important;
   > div{
     margin: 0 auto;
     width: 95%;
@@ -12,8 +13,7 @@
 }
 
 .abrir-informacoes{
-  width: 30vw!important;
-  border-left: 1px solid #000
+  opacity: 1;
 }
 
 .titulo-informacoes{

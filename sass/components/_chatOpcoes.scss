@@ -10,7 +10,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    width: 65%;
+    width: 100%;
     background-color: #93BD94;
     p{
       white-space: nowrap;
@@ -25,17 +25,6 @@
     }
   }
   .chat-opcoes-infos{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    width: 35%;
-    p{
-      color: #666;
-      margin: 15px;
-    }
-    &:hover > p{
-      text-decoration: underline
-    }
+  display: none;
   }
 }
