@@ -40,9 +40,7 @@ new Vue({
   methods: {
     ...mapMutations(["setAtendimentosAbertos"]),
     setObjAtendimentosAbertos( objAtendimentosAbertos ) {
-      console.log( objAtendimentosAbertos )
       this.setAtendimentosAbertos(objAtendimentosAbertos)
     }
-
   }
 }).$mount("#app");

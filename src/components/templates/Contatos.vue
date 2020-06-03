@@ -1,11 +1,18 @@
 <template>
   <div id="todos-contatos"  v-if="clienteMandouMensagem">
     <div class="titulo-contatos">
-      <h1>Contatos</h1>
+      <h1>
+        <i class="fas fa-address-book"></i>
+        Contatos
+      </h1>
     </div>
-    <div v-for="atd in atendimentosAbertos.atendimentos" :key="atd.id">
-      <button @click="ativarConversa( atd.id ); exibirInformacoes( atd.informacoes )">{{atd.nome}}</button>
-    </div>
+    <ul>
+      <li v-for="(atd, indice) in atendimentosAbertos.atendimentos" :key="atd.id"
+        @click="ativarConversa( atd.id ); exibirInformacoes( atd.informacoes )">
+        <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i>
+        {{ atd.informacoes.nome }}
+      </li>
+    </ul>
   </div>
 </template>
 

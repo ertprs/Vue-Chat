@@ -1,138 +1,204 @@
+$altura: 50px;
+
 .chat-rodape{
   display: flex;
   background-color: #93BD94;
   align-items: center;
   justify-content: center;
-  height: 40vh;
-  .chat-rodape-mensagens{
+  flex-wrap: wrap;
+  height: 30vh;
+  .chat-rodape-container{
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    margin: 10px;
+    margin-bottom: 0;
+    width: 100%;
+  }
+  .chat-rodape-mensagens{
     width: 75%;
-    margin: 2%;
-    min-height: 182px;
+    &.anexo-aberto{
+      width: 65%;
+    }
     .chat-rodape-textarea{
       position: relative;
-      width: 100%;
+      textarea{
+        width: 100%;
+        resize: none;
+        border-radius: 30px;
+        height: $altura;
+        &:focus, &:active{
+          outline: 0;
+        }
+        font-size: .9rem;
+        padding-left: 15px;
+        border: 1px solid #CCC;
+        border-right: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
       .chat-rodape-previa-img{
-        padding: 15px;
+        height: 50px;
         border-radius: 10px;
-        background-color: rgba(255, 255, 255, 0.5);
+        border: 1px solid #CCC;
+        border-right: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        background: #FFF;
         position: relative;
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
+        margin-bottom: 5px;
         img{
-          max-height: 175px;
+          margin: 5px;
+          max-height: 35px;
+        }
+        h3{
+          font-size: 1rem;
+          color: #444;
+        }
+        h4{
+          font-size: .8rem;
+          color: #444;
         }
       }
       .caracteres-disponiveis{
+        font-size: .7rem;
         z-index: 1;
-        color: #777;
+        color: #444;
         position: absolute;
-        right: 15px;
-        bottom: 5px;
+        left: 15px;
+        bottom: -9px;
       }
     }
-    .chat-rodape-hsm{
-      background-color: #FFF;
-      padding: 15px;
+  }
+  .chat-rodape-botoes{
+    width: 25%;
+    &.anexo-aberto{
+      width: 35%;
+    }
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #CCC;
+    border-radius: 30px;
+    border-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    height: $altura;
+    background-color: #FFF;
+    .chat-rodape-botoes-botao{
+      color: #777;
+      transition-duration: .5s;
+      border-radius: 50%;
+      font-size: .9rem;
+      padding: 10px;
+      cursor: pointer;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      span{
-        margin-bottom: 15px;
+      &:hover, &.btn-ativo{
+        background-color: rgba(0, 0, 0, 0.1)
       }
-      .select-hsm-container{
+      &.botao-enviar-anexo{
+        position: relative;
+      }
+
+      .chat-rodape-anexo-opcoes{
+        position: absolute;
+        left: -1px;
+        bottom: 40px;
+        padding: 5px;
+        z-index: 3;
+        background-color: rgba(255, 255, 255, 0.5);
+        border-radius: 5px;
         display: flex;
-        align-items: center;
-        #select-hsm{
-          margin-right: 10px;
-        }
-        .hsm-btn{
-          @include estiloBotao(-4px, -2px);
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 10px 5px;
-          background-color: #F2CA50;
-          p{
-            margin: unset
+        justify-content: space-between;
+        > div{
+          margin: 0 auto;
+          text-align: center;
+          border-radius: 10px;
+          padding: 3px;
+          color: #444;
+          svg{
+            color: #FFF
+          }
+          &:nth-child(1){
+            background-color: #9575cd;
+            margin-right: 5px;
+          }
+          &:nth-child(2){
+            background-color: #7986cb 
           }
         }
       }
     }
   }
-  .chat-rodape-botoes{
-    width: 20%;
-    margin: 2% 2% 2% 0;
+  .chat-rodape-hsm{
+    width: 100%;
+    margin: 10px;
+    padding: 5px;
+    margin-bottom: 0;
+    position: relative;
+    .select-hsm-container{
+      display: flex;
+      // justify-content: center;
+      align-items: center;
+      h3{
+        margin: 0;
+        margin-right: 5px;
+        font-size: 1rem;
+      }
+      #select-hsm{
+        font-size: .9rem;
+        max-width: 270px;
+      }
+    }
+    .hsm-btn{
+      position: absolute;
+      right: 0;
+      @include estiloBotao(-4px, -2px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 5px;
+      width: fit-content;
+      background-color: #F2CA50;
+      color: #FFF;
+      svg{
+        margin-bottom: 5px;
+        font-size: 1.2rem;
+        color: darken(#F2CA50, 40)
+      }
+    }
+  }
+  .chat-rodape-botoes-encerramento{
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0;
     .chat-rodape-botoes-botao{
       @include estiloBotao(-3px, -1px);
-
-      &.icones-fechado{
-        svg{
-          margin: 0 auto;
-        }
-      }
-
-      width: 100%;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      padding: 7px 5px;
       color: #FFF;
-      transition-duration: .5s;
-      margin-bottom: 10px;
-      &:last-child{
-        margin-bottom: unset;
+      &{
+        margin: 0;
+        width: 48%;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      &:nth-child(1){
+        margin-right: 1%;
       }
       svg{
         margin-right: 5px;
         font-size: 1.2rem;
-      }
-      &.botao-enviar-msg{
-        background-color: #339E58;
-        svg{
-          color: #2D7345;
-        }
-      }
-      &.botao-enviar-anexo{
-        position: relative;
-        background-color: #919191;
-        svg{
-          color: #736B66
-        }
-        .chat-rodape-anexo-opcoes{
-          position: absolute;
-          left: -1px;
-          bottom: 40px;
-          padding: 5px;
-          z-index: 3;
-          background-color: #CCC;
-          display: flex;
-          justify-content: space-between;
-          > div{
-            margin: 0 auto;
-            text-align: center;
-            border-radius: 10px;
-            padding: 3px;
-            svg{
-              color: #FFF
-            }
-            &:nth-child(1){
-              background-color: #9575cd;
-              margin-right: 5px;
-            }
-            &:nth-child(2){
-              background-color: #7986cb 
-            }
-          }
-        }
       }
       &.botao-encerrar{
         background-color: #E74C3C;
@@ -146,12 +212,7 @@
           color: #012136
         }
       }
-      &.botao-excluir-anexo{
-        background-color: #f44336;
-        svg{
-          color: #d32f2f 
-        }
-      }
+      
     }
   }
 }
