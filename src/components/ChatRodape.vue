@@ -377,6 +377,7 @@ export default {
       }else{
         this.txtFormatoInvalido = 'Formato Invalido!'
         this.txtFormatosValidos = '.gif, .jpg/jpeg ou .png sao aceitos'
+        this.selecioneAnexo = false
       }
     },
     selecioneAnexo(){
