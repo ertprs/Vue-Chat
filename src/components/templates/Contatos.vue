@@ -8,7 +8,7 @@
     </div>
     <ul>
       <li v-for="(atd, indice) in atendimentosAbertos.atendimentos" :key="atd.id"
-        @click="ativarConversa( atd.id ); exibirInformacoes( atd.informacoes )">
+        @click="ativarConversa( atd.id ); exibirInformacoes( atd )">
         <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i>
         {{ atd.informacoes.nome }}
       </li>
@@ -32,13 +32,13 @@ export default {
     })
   },
   methods: {
-    ...mapMutations(["setInformacoesDoCliente"]),
+    ...mapMutations(["setAtendimentoAtivo"]),
     ativarConversa: function( id ) {
       // console.log( id )
     },
     exibirInformacoes: function( objInformacoes ) {
       // console.log( objInformacoes )
-      this.setInformacoesDoCliente( objInformacoes )
+      this.setAtendimentoAtivo( objInformacoes )
     }
   }
 }

@@ -4,11 +4,11 @@
       <div class="titulo-informacoes">
         <h1>
           <i class="fas fa-info-circle"></i>
-           Informacoes 
+           Informacoes
         </h1>
       </div>
       <div>
-        <p>{{this.informacoesDoCliente}}</p>
+        <p>{{this.atendimentoAtivo.informacoes}}</p>
       </div>
     </template>
   </div>
@@ -22,7 +22,7 @@ export default {
   computed: {
     ...mapGetters({
       // informacoesAberto: 'getInformacoesAberto'
-      informacoesDoCliente: 'getInformacoesDoCliente'
+      atendimentoAtivo: 'getAtendimentoAtivo'
     })
   }
 }

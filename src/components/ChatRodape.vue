@@ -292,17 +292,22 @@ export default {
     excluirAnexo(){
       this.arquivo = ''
       this.aparecerPrevia = false
-      this.imagemPrevia = '' 
+      this.imagemPrevia = ''
     },
     encerrarAtendimento(){
-      this.mensagem = 'Mensagem de Encerramento do Atendimento'
-      this.enviarMensagem()
-      document.querySelector('#textarea').setAttribute('readonly','readonly')
-      setTimeout(
-        () => {
-          this.retornarForm()
-        }, 1500
-      )
+      if( this.atendimentoAtivo.informacoes.nome != null ) {
+        this.finalizarAtendimento(this.atendimentoAtivo.id )
+        this.mensagem = 'Mensagem de Encerramento do Atendimento de ' + this.atendimentoAtivo.informacoes.nome
+        this.enviarMensagem()
+        document.querySelector('#textarea').setAttribute('readonly','readonly')
+        setTimeout(
+          () => {
+            this.retornarForm()
+          }, 1500
+        )
+      } else {
+        alert('Selecione um cliente antes de tentar finalizar o  atendimento')
+      }
     },
     retornarForm(){
       this.setFormularioCliente(false)
@@ -347,11 +352,11 @@ export default {
           console.log(error);
         });
     },
-    finalizarAtendimento() {
+    finalizarAtendimento( id ) {
       axios
         .put(
           "http://linux03/im/atdHumano/middleware/atd_api.php/end-atendimento ",
-          {}
+          {id}
         )
         .then(response => {
           console.log(response.data);
@@ -391,7 +396,8 @@ export default {
   computed: {
     ...mapGetters({
       todasMensagens: 'getTodasMensagens',
-      informacoesAberto: 'getInformacoesAberto'
+      informacoesAberto: 'getInformacoesAberto',
+      atendimentoAtivo: 'getAtendimentoAtivo'
     })
   }
 }

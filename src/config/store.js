@@ -11,7 +11,7 @@ export default new Vuex.Store({
     clienteMandouMensagem: true,
     habilitaRolagem: false,
     informacoesAberto: true,
-    informacoesDoCliente: {},
+    atendimentoAtivo: {},
     atendimentosAbertos: {},
     url: ''
   },
@@ -40,8 +40,8 @@ export default new Vuex.Store({
     setAtendimentosAbertos(state, atendimentosAbertos){
       state.atendimentosAbertos = atendimentosAbertos
     },
-    setInformacoesDoCliente(state, objInformacoes){
-      state.informacoesDoCliente = objInformacoes
+    setAtendimentoAtivo(state, objInformacoes){
+      state.atendimentoAtivo = objInformacoes
     }
   },
   getters: {
@@ -69,8 +69,8 @@ export default new Vuex.Store({
     getAtendimentosAbertos(state){
       return state.atendimentosAbertos
     },
-    getInformacoesDoCliente(state){
-      return state.informacoesDoCliente
+    getAtendimentoAtivo(state){
+      return state.atendimentoAtivo
     }
   }
 });
