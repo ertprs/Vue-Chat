@@ -16,6 +16,7 @@ $altura: 50px;
     width: 100%;
   }
   .chat-rodape-mensagens{
+    height: 50px;
     width: 75%;
     &.anexo-aberto{
       width: 65%;
@@ -80,7 +81,6 @@ $altura: 50px;
     &.anexo-aberto{
       width: 35%;
     }
-    margin-bottom: 5px;
     display: flex;
     align-items: center;
     justify-content: center;

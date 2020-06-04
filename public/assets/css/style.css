@@ -9242,6 +9242,7 @@ input[type="color"].form-control:disabled {
     margin-bottom: 0;
     width: 100%; }
   .chat-rodape .chat-rodape-mensagens {
+    height: 50px;
     width: 75%; }
     .chat-rodape .chat-rodape-mensagens.anexo-aberto {
       width: 65%; }
@@ -9293,7 +9294,6 @@ input[type="color"].form-control:disabled {
         bottom: -9px; }
   .chat-rodape .chat-rodape-botoes {
     width: 25%;
-    margin-bottom: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
