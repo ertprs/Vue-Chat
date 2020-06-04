@@ -8855,18 +8855,34 @@ input[type="color"].form-control:disabled {
 #todos-contatos {
   width: 19.9vw;
   height: 100vh;
-  border-right: .1vw solid #000;
+  transition-duration: .5s;
+  border-right: .1vw solid #FFF;
   background-color: rgba(100, 100, 100, 0.1); }
+  #todos-contatos.fechado {
+    height: 10vh !important;
+    width: 14.9vw !important;
+    border-right: 0.01vw solid #FFF !important; }
   #todos-contatos > div {
     margin: 0 auto;
     width: 95%; }
   #todos-contatos .titulo-contatos {
+    position: relative;
     background-color: #42a5f5;
     height: 10vh;
     width: 100%;
     border-bottom: 1px solid #CCC;
     display: flex;
     align-items: center; }
+    #todos-contatos .titulo-contatos div {
+      position: absolute;
+      right: 15px;
+      transition-duration: .5s; }
+      #todos-contatos .titulo-contatos div.rotate {
+        transform: rotate(-180deg); }
+      #todos-contatos .titulo-contatos div svg.flecha {
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #FFF; }
     #todos-contatos .titulo-contatos h1 {
       color: #FFF;
       margin-left: 10px;
@@ -8874,10 +8890,13 @@ input[type="color"].form-control:disabled {
   #todos-contatos ul {
     padding: 0;
     max-height: 87vh;
-    overflow-y: auto; }
+    overflow-y: auto;
+    transition-duration: .5s; }
+    #todos-contatos ul.fechado {
+      height: 0; }
     #todos-contatos ul li {
       padding: 0 10px;
-      transition-duration: .5s;
+      transition-duration: .4s;
       font-size: .9rem;
       display: flex;
       align-items: center;
@@ -8885,15 +8904,31 @@ input[type="color"].form-control:disabled {
       height: 50px;
       cursor: pointer;
       border-bottom: 1px solid #CCC; }
+      #todos-contatos ul li p {
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        margin-right: 10px;
+        font-weight: 600;
+        user-select: none; }
       #todos-contatos ul li svg {
         margin-right: 5px;
         font-size: 1.2rem; }
       #todos-contatos ul li:nth-child(odd) {
         background-color: rgba(100, 100, 100, 0.1); }
+        #todos-contatos ul li:nth-child(odd) p {
+          background-color: #FFF; }
         #todos-contatos ul li:nth-child(odd):hover {
           background-color: rgba(100, 100, 100, 0.3); }
       #todos-contatos ul li:nth-child(even) {
         background-color: #FFF; }
+        #todos-contatos ul li:nth-child(even) p {
+          background-color: #CCC; }
         #todos-contatos ul li:nth-child(even):hover {
           background-color: rgba(255, 255, 255, 0.1); }
 
@@ -9403,7 +9438,7 @@ input[type="color"].form-control:disabled {
   right: -1px;
   height: 100vh;
   background-color: #FFF;
-  border-left: 1px solid #000;
+  border-left: 1px solid #FFF;
   width: 50vw; }
 
 .titulo-informacoes {
@@ -9411,17 +9446,68 @@ input[type="color"].form-control:disabled {
   border-bottom: 1px solid #CCC;
   display: flex;
   align-items: center;
-  width: 100%; }
+  width: 100%;
+  background-color: #ffb74d;
+  color: #FFF; }
   .titulo-informacoes h1 {
     margin-left: 10px;
     font-size: 1.2rem; }
+
+.lista-informacoes-container-vazio {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: whitesmoke; }
+  .lista-informacoes-container-vazio div {
+    font-size: 1.1rem;
+    color: #3c3c3c;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center; }
+    .lista-informacoes-container-vazio div p {
+      text-align: center;
+      width: 100%; }
+
+.lista-informacoes-container {
+  margin-top: 15px; }
+  .lista-informacoes-container .info {
+    width: 100%;
+    height: 65px; }
+    .lista-informacoes-container .info > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative; }
+      .lista-informacoes-container .info > div hr {
+        margin: 0;
+        width: 100%;
+        height: 1px;
+        border: 0;
+        background-color: #CCC; }
+      .lista-informacoes-container .info > div span {
+        position: absolute;
+        left: 15px;
+        background-color: #FFF;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 0 5px; }
+        .lista-informacoes-container .info > div span svg {
+          font-size: 1.3rem; }
+    .lista-informacoes-container .info > p {
+      text-align: center;
+      margin: 0;
+      margin-top: 20px;
+      font-size: .9rem; }
 
 body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap; }
+  flex-wrap: wrap;
+  overflow: hidden; }
 
 #app {
   width: 100vw;

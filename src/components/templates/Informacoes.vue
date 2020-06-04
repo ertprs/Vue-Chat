@@ -7,8 +7,53 @@
            Informacoes
         </h1>
       </div>
-      <div>
-        <p>{{this.atendimentoAtivo.informacoes}}</p>
+      <div class="lista-informacoes-container" v-if="atendimentoAtivo.informacoes">
+        <div class="info">
+          <div>
+            <hr>
+            <span>
+              <i class="fas fa-portrait"></i>
+              Nome
+            </span>
+          </div>
+          <p> {{ atendimentoAtivo.informacoes.nome }} </p>
+        </div>
+        <div class="info">
+          <div>
+            <hr>
+            <span>
+              <i class="fas fa-file-alt"></i>
+              Protocolo
+            </span>
+          </div>
+          <p> {{ atendimentoAtivo.informacoes.Protocolo }} </p>
+        </div>
+        <div class="info">
+          <div>
+            <hr>
+            <span>
+              <i class="fas fa-user-clock"></i>
+              Tempo Conectado
+            </span>
+          </div>
+          <p> {{ atendimentoAtivo.informacoes.tempo_conectado }} </p>
+        </div>
+        <div class="info">
+          <div>
+            <hr>
+            <span>
+              <i class="fas fa-clock"></i>
+              Tempo de Fila
+            </span>
+          </div>
+          <p> {{ atendimentoAtivo.informacoes.tempo_fila }} </p>
+        </div>
+      </div>
+      <div class="lista-informacoes-container-vazio" v-else>
+        <div>
+          <i class="far fa-folder-open"></i>
+          <p> Sem Informacoes para mostrar </p>
+        </div>
       </div>
     </template>
   </div>

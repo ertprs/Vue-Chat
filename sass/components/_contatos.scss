@@ -1,19 +1,39 @@
 #todos-contatos{
   width: 19.9vw;
   height: 100vh;
-  border-right: .1vw solid #000;
+  transition-duration: .5s;
+  &.fechado{
+    height: 10vh!important;
+    width: 14.9vw!important;
+    border-right: .01vw solid #FFF!important;
+  }
+  border-right: .1vw solid #FFF;
   background-color: rgba(100, 100, 100, 0.1);
   > div{
     margin: 0 auto;
     width: 95%;
   }
   .titulo-contatos{
+    position: relative;
     background-color: #42a5f5;
     height: 10vh;
     width: 100%;
     border-bottom: 1px solid #CCC;
     display: flex;
     align-items: center;
+    div{
+      position: absolute;
+      right: 15px;
+      transition-duration: .5s;
+      &.rotate{
+        transform: rotate(-180deg);
+      }
+      svg.flecha{
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #FFF;
+      }
+    }
     h1 {
       color: #FFF;
       margin-left: 10px;
@@ -24,9 +44,13 @@
     padding: 0;
     max-height: 87vh;
     overflow-y: auto;
+    transition-duration: .5s;
+    &.fechado{
+      height: 0;
+    }
     li{
       padding: 0 10px;
-      transition-duration: .5s;
+      transition-duration: .4s;
       font-size: .9rem;
       display: flex;
       align-items: center;
@@ -34,17 +58,36 @@
       height: 50px;
       cursor: pointer;
       border-bottom: 1px solid #CCC;
+      p{
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+        margin-right: 10px;
+        font-weight: 600;
+        user-select: none;
+      }
       svg{
         margin-right: 5px;
         font-size: 1.2rem;
       }
       &:nth-child(odd){
+        p{
+          background-color: #FFF;
+        }
         background-color: rgba(100, 100, 100, 0.1);
         &:hover{
           background-color: rgba(100, 100, 100, 0.3)
         }
       }
       &:nth-child(even){
+        p{
+          background-color: #CCC;
+        }
         background-color: #FFF;
         &:hover{
           background-color: rgba(255, 255, 255, 0.1);
