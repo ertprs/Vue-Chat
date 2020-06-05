@@ -8903,7 +8903,8 @@ input[type="color"].form-control:disabled {
       list-style-type: none;
       height: 50px;
       cursor: pointer;
-      border-bottom: 1px solid #CCC; }
+      border-bottom: 1px solid #CCC;
+      position: relative; }
       #todos-contatos ul li p {
         border-radius: 50%;
         width: 35px;
@@ -8916,6 +8917,13 @@ input[type="color"].form-control:disabled {
         margin-right: 10px;
         font-weight: 600;
         user-select: none; }
+      #todos-contatos ul li .ativo {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: green;
+        position: absolute;
+        right: 15px; }
       #todos-contatos ul li svg {
         margin-right: 5px;
         font-size: 1.2rem; }
