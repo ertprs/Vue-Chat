@@ -22,6 +22,9 @@ export default new Vuex.Store({
     setTodasMensagens(state, todasMensagens){
       state.todasMensagens.push(todasMensagens)
     },
+    limparTodasMensagens(state){
+      state.todasMensagens = []
+    },
     setZonaDeTeste(state, zonaDeTeste){
       state.zonaDeTeste = zonaDeTeste
     },

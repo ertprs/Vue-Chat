@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="chat-rodape-botoes" :class="aparecerPrevia ? 'anexo-aberto' : ''">
-        <template v-if="!aparecerPrevia"> 
+        <template v-if="!aparecerPrevia">
           <div class="chat-rodape-botoes-botao botao-enviar-msg" title="Enviar" v-on:click="enviarMensagem()">
             <i class="fas fa-paper-plane"></i>
           </div>
@@ -141,7 +141,6 @@ export default {
     },
     verificaRolagem(){
       let corpoMensagens = document.querySelector("#chat-operador > div")
-      
       let tamanhoCorpoMensagem = corpoMensagens.offsetHeight
       let tamanhoScroll = corpoMensagens.scrollHeight
 
@@ -151,7 +150,7 @@ export default {
     },
     validaMensagem(){
       let msg = this.mensagem
-      
+
       if(msg.length === 0 || !msg.trim()){
         this.mensagem = ''
         return false
@@ -161,7 +160,7 @@ export default {
             this.$toasted.global.limiteCaracter()
           }
           return false
-        }        
+        }
 
         this.mensagem = msg.trim()
         return true;
@@ -195,16 +194,12 @@ export default {
       return objMensagem
     },
     formataHoraAtual(){
-      let data = new Date()
-      
-      let hora = data.getHours()
-      hora = hora < 10 ? '0'+hora : hora
-
-      let minutos = data.getMinutes()
-      minutos = minutos < 10 ? '0'+minutos : minutos
-
+      let data            = new Date()
+      let hora            = data.getHours()
+      hora                = hora < 10 ? '0'+hora : hora
+      let minutos         = data.getMinutes()
+      minutos             = minutos < 10 ? '0'+minutos : minutos
       const horaFormatada = hora + 'h' + minutos
-
       return horaFormatada
     },
     selecionarAnexo(){

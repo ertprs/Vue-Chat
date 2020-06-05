@@ -34,7 +34,7 @@ new Vue({
     axios({ method: 'get', url: this.$store.getters.getURL+'get-atendimento'})
       .then(response => {
         this.setObjAtendimentosAbertos(response.data)
-        // this.updateAtendimentos()
+        this.updateAtendimentos()
       })
       .catch(err => console.log(err))
   },
@@ -42,18 +42,18 @@ new Vue({
     ...mapMutations(["setAtendimentosAbertos"]),
     setObjAtendimentosAbertos( objAtendimentosAbertos ) {
       this.setAtendimentosAbertos(objAtendimentosAbertos)
-    }
-    // ,
-    // updateAtendimentos() {
-    //  setInterval( this.obterAtendimentoHorarioAtual, 5000 );
-    // }
-    // obterAtendimentoHorarioAtual() {
-      // let hora = new Date().getHours()
-      // hora = hora < 10 ? "0" + hora : hora;
-      // let minutos = new Date().getMinutes()
-      // minutos = minutos < 10 ? "0" + minutos : minutos;
+    },
+    updateAtendimentos() {
+     // setInterval( this.obterAtendimentoHorarioAtual, 5000 );
+    },
+    obterAtendimentoHorarioAtual() {
+      // let hora         = new Date().getHours()
+      // hora             = hora < 10 ? "0" + hora : hora;
+      // let minutos      = new Date().getMinutes()
+      // minutos          = minutos < 10 ? "0" + minutos : minutos;
       // let horarioAtual = hora + ':' + minutos
+
       // console.log( horarioAtual )
-    // }
+    }
   }
 }).$mount("#app");

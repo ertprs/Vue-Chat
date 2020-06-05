@@ -12,9 +12,9 @@
     <ul :class="{'fechado' : fechado}">
       <li v-for="(atd, indice) in atendimentosAbertos.atendimentos" :key="atd.id"
         :id="'li_'+indice"
-        @click="ativarConversa( atd.id ); exibirInformacoes( atd, indice )">
+        @click="ativarConversa( atd, indice );">
         <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
-        <p :class="indice % 2 == 0 ? '' : ''"> 
+        <p :class="indice % 2 == 0 ? '' : ''">
           {{ atd.informacoes.nome[0].toUpperCase() }}
         </p>
         {{ atd.informacoes.nome }}
@@ -40,7 +40,7 @@ export default {
       if(this.atendimentosAbertos){
         if(this.atendimentosAbertos.atendimentos){
           this.preencheAtivos()
-        } 
+        }
       }
     }
   },
@@ -52,15 +52,57 @@ export default {
     })
   },
   methods: {
-    ...mapMutations(["setAtendimentoAtivo"]),
-    ativarConversa: function( id ) {
-      // console.log( id )
+    ...mapMutations(['setAtendimentoAtivo', 'setTodasMensagens', 'limparTodasMensagens']),
+    ativarConversa: function( atd, indice ) {
+      this.setMensagensClienteAtivo( atd.id, atd.messages )
+      this.exibirInformacoes( atd, indice )
     },
     exibirInformacoes: function( objInformacoes, indice ) {
       // console.log( objInformacoes )
       this.setAtendimentoAtivo( objInformacoes )
-
       this.controlaAtivos(indice)
+    },
+    setMensagensClienteAtivo( id, arrMensagens) {
+      // const hora = this.formataHoraAtual()
+      this.limparTodasMensagens()
+      for( let i in arrMensagens ) {
+        let mensagem = arrMensagens[i].texto
+        let origem = 'principal'
+        let horario = '??:??'
+        let anexo = false
+        let imgAnexo = ''
+        let autor = arrMensagens[i].resp_msg
+        switch( autor ) {
+          case 'CLI':
+          autor = 'Cliente'
+          break
+          case 'OPE':
+          autor = 'Operador'
+          break
+        }
+        let objMensagem = this.getObjMensagem( autor, origem, mensagem, horario, anexo, imgAnexo )
+        this.setTodasMensagens(objMensagem)
+      }
+    },
+    getObjMensagem( inAutor, inOrigem, inMensagem, inHorario, inAnexo, inImgAnexo ) {
+      let objMensagem = {
+        autor: inAutor, // Operador, Cliente
+        origem: inOrigem, // principal e outros
+        msg: inMensagem,
+        horario: inHorario,
+        anexo: inAnexo,
+        imgAnexo: inImgAnexo
+      }
+      return objMensagem
+    },
+    formataHoraAtual(){
+      let data            = new Date()
+      let hora            = data.getHours()
+      hora                = hora < 10 ? '0'+hora : hora
+      let minutos         = data.getMinutes()
+      minutos             = minutos < 10 ? '0'+minutos : minutos
+      const horaFormatada = hora + 'h' + minutos
+      return horaFormatada
     },
     toggleContatos(){
       this.rotate = !this.rotate

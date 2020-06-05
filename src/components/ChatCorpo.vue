@@ -45,18 +45,15 @@ export default {
     ...mapMutations(['setHabilitaRolagem']),
     rolaChat(){
       let corpoMensagens = document.querySelector("#chat-operador > div")
-      
       let tamanhoCorpoMensagem = corpoMensagens.offsetHeight
       let tamanhoScroll = corpoMensagens.scrollHeight
 
       if(tamanhoScroll > tamanhoCorpoMensagem){
         let ultimoFilho = corpoMensagens.lastElementChild
-        
         corpoMensagens.scrollTo(0, ultimoFilho.offsetTop )
 
         this.setHabilitaRolagem(false)
       }
-
     },
     verificaPosicaoBarraRolagem(){
       if(this.habilitaRolagem){
