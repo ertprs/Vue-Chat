@@ -33,15 +33,16 @@ new Vue({
   mounted() {
     axios({ method: 'get', url: this.$store.getters.getURL+'get-atendimento'})
       .then(response => {
-        this.setObjAtendimentosAbertos(response.data)
+        let mainData = response.data
+        this.setObjAtendimentosAbertos( mainData )
         this.updateAtendimentos()
       })
       .catch(err => console.log(err))
   },
   methods: {
     ...mapMutations(["setAtendimentosAbertos"]),
-    setObjAtendimentosAbertos( objAtendimentosAbertos ) {
-      this.setAtendimentosAbertos(objAtendimentosAbertos)
+    setObjAtendimentosAbertos( mainData ) {
+      this.setAtendimentosAbertos( mainData.ramais )
     },
     updateAtendimentos() {
      // setInterval( this.obterAtendimentoHorarioAtual, 5000 );

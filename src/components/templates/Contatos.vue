@@ -10,14 +10,15 @@
       </div> -->
     </div>
     <ul :class="{'fechado' : fechado}">
-      <li v-for="(atd, indice) in atendimentosAbertos.atendimentos" :key="atd.id"
+      <li v-for="(atd, indice) in atendimentosAbertos"
+        :key="atd.cliente.id"
         :id="'li_'+indice"
-        @click="ativarConversa( atd, indice );">
+        @click="ativarConversa( atd.cliente, indice );">
         <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
         <p :class="indice % 2 == 0 ? '' : ''">
-          {{ atd.informacoes.nome[0].toUpperCase() }}
+          {{ atd.cliente.informacoes.nome[0].toUpperCase() }}
         </p>
-        {{ atd.informacoes.nome }}
+        {{ atd.cliente.informacoes.nome }}
       </li>
     </ul>
   </div>
@@ -38,7 +39,7 @@ export default {
   watch: {
     atendimentosAbertos(){
       if(this.atendimentosAbertos){
-        if(this.atendimentosAbertos.atendimentos){
+        if(this.atendimentosAbertos){
           this.preencheAtivos()
         }
       }
@@ -109,7 +110,7 @@ export default {
       this.fechado = !this.fechado
     },
     preencheAtivos(){
-      for(let i = 0; i < this.atendimentosAbertos.atendimentos.length; i++){
+      for(let i = 0; i < this.atendimentosAbertos.length; i++){
         this.arrAtivos[i] = { ativo: 'N' }
       }
     },
