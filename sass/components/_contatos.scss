@@ -17,6 +17,7 @@
     // background-color: #42a5f5;
     background-color: lighten($cor, 10);
     height: 10vh;
+    max-height: $alturaMaxTitulos;
     width: 100%;
     border-bottom: 1px solid #CCC;
     display: flex;

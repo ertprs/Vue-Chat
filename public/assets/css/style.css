@@ -8907,6 +8907,7 @@ body {
     position: relative;
     background-color: #5262c5;
     height: 10vh;
+    max-height: 58px;
     width: 100%;
     border-bottom: 1px solid #CCC;
     display: flex;
@@ -9183,7 +9184,9 @@ body {
   display: flex;
   justify-content: space-between;
   height: fit-content;
-  height: 10vh; }
+  height: 10vh;
+  max-height: 58px;
+  border-bottom: 1px solid #FFF; }
   .chat-opcoes .chat-opcoes-titulo {
     user-select: none;
     display: flex;
@@ -9525,6 +9528,7 @@ body {
 
 .titulo-informacoes {
   height: 10vh;
+  max-height: 58px;
   border-bottom: 1px solid #CCC;
   display: flex;
   align-items: center;

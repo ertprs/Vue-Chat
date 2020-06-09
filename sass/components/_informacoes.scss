@@ -7,6 +7,7 @@
 
 .titulo-informacoes{
   height: 10vh;
+  max-height: $alturaMaxTitulos;
   border-bottom: 1px solid #CCC;
   display: flex;
   align-items: center;
