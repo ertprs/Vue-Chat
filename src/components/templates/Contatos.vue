@@ -9,7 +9,7 @@
         <i class="fas fa-long-arrow-alt-left flecha" ></i>
       </div> -->
     </div>
-    <ul :class="{'fechado' : fechado}">
+    <ul v-if="atendimentosAbertos.length > 0" :class="{'fechado' : fechado}">
       <li v-for="(atd, indice) in atendimentosAbertos"
         :key="atd.cliente.id"
         :id="'li_'+indice"
@@ -21,6 +21,12 @@
         {{ atd.cliente.informacoes.nome }}
       </li>
     </ul>
+    <div v-else class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
+      <div>
+        <i class="far fa-folder-open"></i>
+        <p> Sem Contatos para mostrar </p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -33,7 +39,8 @@ export default {
     return{
       rotate: false,
       fechado: false,
-      arrAtivos: []
+      arrAtivos: [],
+      haContatos: true
     }
   },
   watch: {

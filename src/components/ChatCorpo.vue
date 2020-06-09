@@ -75,6 +75,11 @@ export default {
       todasMensagens: 'getTodasMensagens',
       habilitaRolagem: 'getHabilitaRolagem'
     })
+  },
+  watch: {
+    todasMensagens(){
+      this.rolaChat()
+    }
   }
 }
 </script>
