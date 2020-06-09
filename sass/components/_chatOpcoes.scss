@@ -1,9 +1,10 @@
+@import 'default';
+
 .chat-opcoes{
   display: flex;
   // flex-wrap: wrap;
   justify-content: space-between;
   height: fit-content;
-  border-bottom: 2px solid #93BD94;
   height: 10vh;
   .chat-opcoes-titulo{
     user-select: none;
@@ -11,7 +12,8 @@
     flex-wrap: wrap;
     align-items: center;
     width: 100%;
-    background-color: #93BD94;
+    // background-color: #93BD94;
+    background-color: $cor;
     p{
       white-space: nowrap;
       font-size: .95rem;

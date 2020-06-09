@@ -1,13 +1,12 @@
+@import 'default';
 #todos-contatos{
-  width: 19.9vw;
+  width: 20vw;
   height: 100vh;
   transition-duration: .5s;
   &.fechado{
     height: 10vh!important;
-    width: 14.9vw!important;
-    border-right: .01vw solid #FFF!important;
+    width: 15vw!important;
   }
-  border-right: .1vw solid #FFF;
   background-color: rgba(100, 100, 100, 0.1);
   > div{
     margin: 0 auto;
@@ -15,7 +14,8 @@
   }
   .titulo-contatos{
     position: relative;
-    background-color: #42a5f5;
+    // background-color: #42a5f5;
+    background-color: lighten($cor, 10);
     height: 10vh;
     width: 100%;
     border-bottom: 1px solid #CCC;
