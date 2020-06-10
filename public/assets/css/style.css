@@ -9578,11 +9578,28 @@ body {
   display: flex;
   align-items: center;
   width: 100%;
+  position: relative;
   background-color: #2c3985;
   color: #FFF; }
   .titulo-informacoes h1 {
     margin-left: 10px;
     font-size: 1.2rem; }
+  .titulo-informacoes > div {
+    position: absolute;
+    right: 15px;
+    display: flex; }
+    .titulo-informacoes > div > div p {
+      margin: 0; }
+    .titulo-informacoes > div > div > div {
+      display: flex; }
+      .titulo-informacoes > div > div > div p {
+        font-weight: 600; }
+      .titulo-informacoes > div > div > div svg {
+        margin: 0;
+        padding: 0;
+        margin-right: 5px; }
+    .titulo-informacoes > div > div:nth-child(1) {
+      margin-right: 10px; }
 
 .lista-informacoes-container-vazio {
   height: 90vh;

@@ -2,7 +2,7 @@
   <div class="chat-opcoes">
       <div class="chat-opcoes-titulo">
         <h1 :title="chatTitulo"> <i class="fas fa-comments"></i> {{ chatTitulo }} </h1>
-        <p v-if="atendimentoAtivo.informacoes.Protocolo"> {{ ' - Protocolo: ' + atendimentoAtivo.informacoes.Protocolo }} </p>
+        <p v-if="atendimentoAtivo.informacoes.protocolo"> {{ ' - Protocolo: ' + atendimentoAtivo.informacoes.protocolo }} </p>
       </div>
     </div>
 </template>

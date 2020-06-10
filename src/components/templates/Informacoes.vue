@@ -6,9 +6,25 @@
           <i class="fas fa-info-circle"></i>
            Informacoes
         </h1>
+        <div v-if="atendimentoAtivo.informacoes">
+          <div v-if="atendimentoAtivo.informacoes.tempo_conectado">
+            <div>
+              <i class="fas fa-user-clock"></i>
+              <p> Tempo Conectado </p>
+            </div>
+            <p> {{ atendimentoAtivo.informacoes.tempo_conectado }} </p>
+          </div>
+          <div v-if="atendimentoAtivo.informacoes.tempo_fila">
+            <div>
+              <i class="fas fa-clock"></i>
+              <p> Tempo de Fila </p>
+            </div>                
+            <p> {{ atendimentoAtivo.informacoes.tempo_fila }} </p>
+          </div>
+        </div>
       </div>
       <div class="lista-informacoes-container" v-if="atendimentoAtivo.informacoes">
-        <div class="info">
+        <div class="info" v-if="atendimentoAtivo.informacoes.nome">
           <div>
             <hr>
             <span>
@@ -16,10 +32,9 @@
               Nome
             </span>
           </div>
-          <p v-if="atendimentoAtivo.informacoes.nome"> {{ atendimentoAtivo.informacoes.nome }} </p>
-          <p v-else> --- </p>
+          <p> {{ atendimentoAtivo.informacoes.nome }} </p>
         </div>
-        <div class="info">
+        <div class="info" v-if="atendimentoAtivo.informacoes.protocolo">
           <div>
             <hr>
             <span>
@@ -27,30 +42,7 @@
               Protocolo
             </span>
           </div>
-          <p v-if="atendimentoAtivo.informacoes.Protocolo"> {{ atendimentoAtivo.informacoes.Protocolo }} </p>
-          <p v-else> --- </p>
-        </div>
-        <div class="info">
-          <div>
-            <hr>
-            <span>
-              <i class="fas fa-user-clock"></i>
-              Tempo Conectado
-            </span>
-          </div>
-          <p v-if="atendimentoAtivo.informacoes.tempo_conectado"> {{ atendimentoAtivo.informacoes.tempo_conectado }} </p>
-          <p v-else> --- </p>
-        </div>
-        <div class="info">
-          <div>
-            <hr>
-            <span>
-              <i class="fas fa-clock"></i>
-              Tempo de Fila
-            </span>
-          </div>
-          <p v-if="atendimentoAtivo.informacoes.tempo_fila"> {{ atendimentoAtivo.informacoes.tempo_fila }} </p>
-          <p v-else> --- </p>
+          <p> {{ atendimentoAtivo.informacoes.protocolo }} </p>
         </div>
       </div>
       <div class="lista-informacoes-container-vazio" v-else>
