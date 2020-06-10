@@ -43,10 +43,19 @@ export default {
   },
   methods:{
     ...mapMutations(['setHabilitaRolagem']),
-    rolaChat(){
+    rolaChat(origem){
       let corpoMensagens = document.querySelector("#chat-operador > div")
       let tamanhoCorpoMensagem = corpoMensagens.offsetHeight
       let tamanhoScroll = corpoMensagens.scrollHeight
+
+      if(origem == 'novaMensagem'){
+        setTimeout(
+          () => {
+            corpoMensagens.scrollTo(0, corpoMensagens.scrollHeight )
+          }
+        ), 100
+        return
+      }
 
       if(tamanhoScroll > tamanhoCorpoMensagem){
         let ultimoFilho = corpoMensagens.lastElementChild
@@ -78,7 +87,7 @@ export default {
   },
   watch: {
     todasMensagens(){
-      this.rolaChat()
+      this.rolaChat('novaMensagem')
     }
   }
 }

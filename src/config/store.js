@@ -13,7 +13,8 @@ export default new Vuex.Store({
     tokenAtd: '',
     tokenManager: '',
     atendimentosAbertos: {},
-    url: ''
+    url: '',
+    abaContatos: false
   },
   mutations: {
     setFormularioCliente(state, formularioCliente){
@@ -46,6 +47,9 @@ export default new Vuex.Store({
     },
     setTokenManager( state, tokenManager ) {
       state.tokenManager = tokenManager
+    },
+    toggleAbaContatos(state, abaContatos){
+      state.abaContatos = abaContatos
     }
   },
   getters: {
@@ -75,6 +79,9 @@ export default new Vuex.Store({
     },
     getTokenManager(state) {
       return state.tokenManager
+    },
+    getAbaContatos(state){
+      return state.abaContatos
     }
   }
 });

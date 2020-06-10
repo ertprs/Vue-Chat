@@ -3,22 +3,27 @@
     <div class="titulo-contatos">
       <h1>
         <i class="fas fa-address-book"></i>
-        Contatos
+        <template v-if="!fechado">
+          Contatos
+        </template>
       </h1>
-      <!-- <div v-on:click="toggleContatos()" :class="rotate ? 'rotate' : ''">
+      <div v-on:click="toggleContatos()" :class="rotate ? 'rotate' : ''">
         <i class="fas fa-long-arrow-alt-left flecha" ></i>
-      </div> -->
+      </div>
     </div>
     <ul v-if="atendimentosAbertos.length > 0" :class="{'fechado' : fechado}">
       <li v-for="(atd, indice) in atendimentosAbertos"
         :key="atd.cliente.id"
         :id="'li_'+indice"
+        :title='atd.cliente.informacoes.nome'
         @click="ativarConversa( atd.cliente, indice );">
         <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
         <p :class="indice % 2 == 0 ? '' : ''">
           {{ atd.cliente.informacoes.nome[0].toUpperCase() }}
         </p>
-        {{ atd.cliente.informacoes.nome }}
+        <template v-if="!fechado">
+          {{ atd.cliente.informacoes.nome }}
+        </template>
       </li>
     </ul>
     <div v-else class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
@@ -56,11 +61,11 @@ export default {
     ...mapGetters({
       clienteMandouMensagem: 'getClienteMandouMensagem',
       objetoContato: 'getTodasMensagens',
-      atendimentosAbertos: 'getAtendimentosAbertos',
+      atendimentosAbertos: 'getAtendimentosAbertos'
     })
   },
   methods: {
-    ...mapMutations(['setAtendimentoAtivo', 'setTodasMensagens', 'limparTodasMensagens']),
+    ...mapMutations(['setAtendimentoAtivo', 'setTodasMensagens', 'limparTodasMensagens', 'toggleAbaContatos']),
     ativarConversa: function( atd, indice ) {
       this.setMensagensClienteAtivo( atd.id, atd.messages )
       this.exibirInformacoes( atd, indice )
@@ -115,6 +120,7 @@ export default {
     toggleContatos(){
       this.rotate = !this.rotate
       this.fechado = !this.fechado
+      this.toggleAbaContatos(this.fechado)
     },
     preencheAtivos(){
       for(let i = 0; i < this.atendimentosAbertos.length; i++){

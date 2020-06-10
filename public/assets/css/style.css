@@ -8898,8 +8898,7 @@ body {
   transition-duration: .5s;
   background-color: rgba(100, 100, 100, 0.1); }
   #todos-contatos.fechado {
-    height: 10vh !important;
-    width: 15vw !important; }
+    width: 5vw !important; }
   #todos-contatos > div {
     margin: 0 auto;
     width: 95%; }
@@ -8914,6 +8913,7 @@ body {
     align-items: center; }
     #todos-contatos .titulo-contatos div {
       position: absolute;
+      bottom: 5px;
       right: 15px;
       transition-duration: .5s; }
       #todos-contatos .titulo-contatos div.rotate {
@@ -8931,8 +8931,12 @@ body {
     max-height: 87vh;
     overflow-y: auto;
     transition-duration: .5s; }
-    #todos-contatos ul.fechado {
-      height: 0; }
+    #todos-contatos ul.fechado li {
+      padding-left: 10px; }
+      #todos-contatos ul.fechado li p {
+        margin: 0;
+        min-height: 35px;
+        min-width: 35px; }
     #todos-contatos ul li {
       padding: 0 10px;
       transition-duration: .4s;
@@ -8962,7 +8966,8 @@ body {
         border-radius: 50%;
         background-color: green;
         position: absolute;
-        right: 15px; }
+        right: 3px;
+        top: 3px; }
       #todos-contatos ul li svg {
         margin-right: 5px;
         font-size: 1.2rem; }
@@ -8997,10 +9002,10 @@ body {
       width: 100%; }
 
 #chat {
-  width: 80vw;
+  width: 30vw;
   transition-duration: .5s; }
-  #chat.chat-fechado {
-    width: 30vw !important; }
+  #chat.chat-aberto {
+    width: 45vw !important; }
   #chat .lista-chat-container-vazio {
     height: 90vh;
     display: flex;

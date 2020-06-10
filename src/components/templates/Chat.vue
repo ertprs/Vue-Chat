@@ -1,5 +1,5 @@
 <template>
-  <div id="chat" class="chat-fechado">
+  <div id="chat" :class="abaContatos ? 'chat-aberto' : ''">
     <!-- <ChatCliente v-if="zonaDeTeste"/> -->
 
     <template v-if="atendimentoAtivo.informacoes">
@@ -43,7 +43,8 @@ export default {
   computed: {
     ...mapGetters({
       zonaDeTeste: 'getZonaDeTeste',
-      atendimentoAtivo: 'getAtendimentoAtivo'
+      atendimentoAtivo: 'getAtendimentoAtivo',
+      abaContatos: 'getAbaContatos'
     })
   }
 }
