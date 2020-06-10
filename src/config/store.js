@@ -12,6 +12,8 @@ export default new Vuex.Store({
     habilitaRolagem: false,
     informacoesAberto: true,
     atendimentoAtivo: {},
+    tokenAtd: '',
+    tokenManager: '',
     atendimentosAbertos: {},
     url: ''
   },
@@ -45,6 +47,12 @@ export default new Vuex.Store({
     },
     setAtendimentoAtivo(state, objInformacoes){
       state.atendimentoAtivo = objInformacoes
+    },
+    setTokenAtd( state, tokenAtd ) {
+      state.tokenAtd = tokenAtd
+    },
+    setTokenManager( state, tokenManager ) {
+      state.tokenManager = tokenManager
     }
   },
   getters: {
@@ -74,6 +82,12 @@ export default new Vuex.Store({
     },
     getAtendimentoAtivo(state){
       return state.atendimentoAtivo
+    },
+    getTokenAtd(state) {
+      return state.tokenAtd
+    },
+    getTokenManager(state) {
+      return state.tokenManager
     }
   }
 });

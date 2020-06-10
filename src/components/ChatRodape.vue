@@ -123,10 +123,15 @@ export default {
       if(this.validaMensagem()){
         let msg = this.mensagem;
         if( msg != '' ) {
+          let jsonMensagem = {
+            "id": this.atendimentoAtivo.id,
+            "message": this.mensagem,
+            "origin": "OPE"
+          }
           axios
-            .post(
+            .put(
               "http://linux03/im/atdHumano/middleware/atd_api.php/send-message",
-              { msg }
+              { jsonMensagem }
             )
             .then(response => {
               console.log(response.data);
@@ -295,11 +300,11 @@ export default {
         this.mensagem = 'Mensagem de Encerramento do Atendimento de ' + this.atendimentoAtivo.informacoes.nome
         this.enviarMensagem()
         document.querySelector('#textarea').setAttribute('readonly','readonly')
-        setTimeout(
-          () => {
-            this.retornarForm()
-          }, 1500
-        )
+        // setTimeout(
+        //   () => {
+        //     this.retornarForm()
+        //   }, 500
+        // )
       } else {
         alert('Selecione um cliente antes de tentar finalizar o  atendimento')
       }
@@ -348,17 +353,16 @@ export default {
         });
     },
     finalizarAtendimento( id ) {
-      axios
-        .put(
-          "http://linux03/im/atdHumano/middleware/atd_api.php/end-atendimento ",
-          {id}
-        )
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      let url = 'http://linux03/im/atdHumano/middleware/atd_api.php/end-atendimento'
+      axios.delete(url, { data: { id: id } })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+      this.$root.$emit('updateAtendimentos');
     }
   },
   watch: {

@@ -9,6 +9,11 @@
         <i class="fas fa-long-arrow-alt-left flecha" ></i>
       </div> -->
     </div>
+   <!--  <div>
+      <pre>
+        {{atendimentosAbertos}}
+      </pre>
+    </div> -->
     <ul :class="{'fechado' : fechado}">
       <li v-for="(atd, indice) in atendimentosAbertos"
         :key="atd.cliente.id"
@@ -119,16 +124,18 @@ export default {
         this.arrAtivos[indice].ativo = 'S'
         let arrLi = []
         for(let i = 0; i < this.arrAtivos.length; i++){
-          arrLi[i] = document.querySelector('#li_'+i)
-          if(arrLi[i].children[1]){
-            if( i !== indice ){
-              arrLi[i].children[1].remove()
+          if( document.querySelector('#li_'+i) ) {
+            arrLi[i] = document.querySelector('#li_'+i)
+            if(arrLi[i].children[1]){
+              if( i !== indice ){
+                arrLi[i].children[1].remove()
+              }
+            }else if(i == indice){
+              const spanAtivo = document.createElement('span')
+              spanAtivo.classList.add('ativo')
+              const li = document.querySelector('#li_'+indice)
+              li.insertAdjacentElement('beforeend', spanAtivo)
             }
-          }else if(i == indice){
-            const spanAtivo = document.createElement('span')
-            spanAtivo.classList.add('ativo')
-            const li = document.querySelector('#li_'+indice)
-            li.insertAdjacentElement('beforeend', spanAtivo)
           }
         }
       }
