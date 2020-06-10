@@ -16,7 +16,8 @@
               Nome
             </span>
           </div>
-          <p> {{ atendimentoAtivo.informacoes.nome }} </p>
+          <p v-if="atendimentoAtivo.informacoes.nome"> {{ atendimentoAtivo.informacoes.nome }} </p>
+          <p v-else> --- </p>
         </div>
         <div class="info">
           <div>
@@ -26,7 +27,8 @@
               Protocolo
             </span>
           </div>
-          <p> {{ atendimentoAtivo.informacoes.Protocolo }} </p>
+          <p v-if="atendimentoAtivo.informacoes.Protocolo"> {{ atendimentoAtivo.informacoes.Protocolo }} </p>
+          <p v-else> --- </p>
         </div>
         <div class="info">
           <div>
@@ -36,7 +38,8 @@
               Tempo Conectado
             </span>
           </div>
-          <p> {{ atendimentoAtivo.informacoes.tempo_conectado }} </p>
+          <p v-if="atendimentoAtivo.informacoes.tempo_conectado"> {{ atendimentoAtivo.informacoes.tempo_conectado }} </p>
+          <p v-else> --- </p>
         </div>
         <div class="info">
           <div>
@@ -46,7 +49,8 @@
               Tempo de Fila
             </span>
           </div>
-          <p> {{ atendimentoAtivo.informacoes.tempo_fila }} </p>
+          <p v-if="atendimentoAtivo.informacoes.tempo_fila"> {{ atendimentoAtivo.informacoes.tempo_fila }} </p>
+          <p v-else> --- </p>
         </div>
       </div>
       <div class="lista-informacoes-container-vazio" v-else>
@@ -66,7 +70,6 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters({
-      // informacoesAberto: 'getInformacoesAberto'
       atendimentoAtivo: 'getAtendimentoAtivo'
     })
   }

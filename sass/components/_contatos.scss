@@ -1,13 +1,12 @@
+@import 'default';
 #todos-contatos{
-  width: 19.9vw;
+  width: 20vw;
   height: 100vh;
   transition-duration: .5s;
   &.fechado{
     height: 10vh!important;
-    width: 14.9vw!important;
-    border-right: .01vw solid #FFF!important;
+    width: 15vw!important;
   }
-  border-right: .1vw solid #FFF;
   background-color: rgba(100, 100, 100, 0.1);
   > div{
     margin: 0 auto;
@@ -15,8 +14,10 @@
   }
   .titulo-contatos{
     position: relative;
-    background-color: #42a5f5;
+    // background-color: #42a5f5;
+    background-color: lighten($cor, 10);
     height: 10vh;
+    max-height: $alturaMaxTitulos;
     width: 100%;
     border-bottom: 1px solid #CCC;
     display: flex;
@@ -102,6 +103,27 @@
           background-color: rgba(255, 255, 255, 0.1);
         }
       }
+    }
+  }
+}
+
+.lista-contatos-container-vazio{
+  // width: 100%;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: whitesmoke;
+  div{
+    font-size: 1.1rem;
+    color: lighten(#222, 10);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    p{
+      text-align: center;
+      width: 100%;
     }
   }
 }

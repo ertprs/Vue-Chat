@@ -7,4 +7,24 @@
   &.chat-fechado{
     width: 30vw!important;
   }
+  .lista-chat-container-vazio{
+    // width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFF;
+    div{
+      font-size: 1.1rem;
+      color: lighten(#222, 10);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      p{
+        text-align: center;
+        width: 100%;
+      }
+    }
+  }
 }

@@ -1,20 +1,19 @@
 #informacoes{
-  display: absolute;
   transition: .5s;
   right: -1px;
   height: 100vh;
-  background-color: #FFF;
-  border-left: 1px solid #FFF;
   width: 50vw;
 }
 
 .titulo-informacoes{
   height: 10vh;
+  max-height: $alturaMaxTitulos;
   border-bottom: 1px solid #CCC;
   display: flex;
   align-items: center;
   width: 100%;
-  background-color: #ffb74d;
+  // background-color: #ffb74d;
+  background-color: darken($cor, 10);
   color: #FFF;
   h1 {
     margin-left: 10px;

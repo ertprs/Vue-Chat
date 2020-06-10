@@ -8,9 +8,7 @@ export default new Vuex.Store({
     zonaDeTeste: true,
     formularioCliente: false,
     todasMensagens: [],
-    clienteMandouMensagem: true,
     habilitaRolagem: false,
-    informacoesAberto: true,
     atendimentoAtivo: {},
     tokenAtd: '',
     tokenManager: '',
@@ -30,15 +28,10 @@ export default new Vuex.Store({
     setZonaDeTeste(state, zonaDeTeste){
       state.zonaDeTeste = zonaDeTeste
     },
-    setClienteMandouMensagem(state, clienteMandouMensagem){
-      state.clienteMandouMensagem = clienteMandouMensagem
-    },
     setHabilitaRolagem(state, habilitaRolagem){
       state.habilitaRolagem = habilitaRolagem
     },
-    setInformacoesAberto(state, informacoesAberto){
-      state.informacoesAberto = informacoesAberto
-    },
+    
     setURL(state, newURI) {
       state.url = newURI
     },
@@ -65,14 +58,8 @@ export default new Vuex.Store({
     getZonaDeTeste(state){
       return state.zonaDeTeste
     },
-    getClienteMandouMensagem(state){
-      return state.clienteMandouMensagem
-    },
     getHabilitaRolagem(state){
       return state.habilitaRolagem
-    },
-    getInformacoesAberto(state){
-      return state.informacoesAberto
     },
     getURL(state) {
       return state.url

@@ -8852,23 +8852,62 @@ input[type="color"].form-control:disabled {
     opacity: .8;
     border-radius: 10px; }
 
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: hidden; }
+
+#app {
+  width: 100vw;
+  display: flex;
+  justify-content: flex-start; }
+
+.toasted.toasted-primary.error svg {
+  margin-right: 15px; }
+
+.d-none {
+  display: none; }
+
+* {
+  scrollbar-color: #888 rgba(0, 0, 0, 0.8);
+  scrollbar-width: thin; }
+
+::-webkit-scrollbar {
+  width: 10px; }
+
+::-webkit-scrollbar-track {
+  background-color: rgba(255, 255, 255, 0.3); }
+
+::-webkit-scrollbar-thumb {
+  transition-duration: .5s;
+  border-radius: 5px;
+  background-color: #888; }
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; }
+
+.toasted.toasted-primary.info svg {
+  margin-right: 10px; }
+
 #todos-contatos {
-  width: 19.9vw;
+  width: 20vw;
   height: 100vh;
   transition-duration: .5s;
-  border-right: .1vw solid #FFF;
   background-color: rgba(100, 100, 100, 0.1); }
   #todos-contatos.fechado {
     height: 10vh !important;
-    width: 14.9vw !important;
-    border-right: 0.01vw solid #FFF !important; }
+    width: 15vw !important; }
   #todos-contatos > div {
     margin: 0 auto;
     width: 95%; }
   #todos-contatos .titulo-contatos {
     position: relative;
-    background-color: #42a5f5;
+    background-color: #5262c5;
     height: 10vh;
+    max-height: 58px;
     width: 100%;
     border-bottom: 1px solid #CCC;
     display: flex;
@@ -8940,11 +8979,44 @@ input[type="color"].form-control:disabled {
         #todos-contatos ul li:nth-child(even):hover {
           background-color: rgba(255, 255, 255, 0.1); }
 
+.lista-contatos-container-vazio {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: whitesmoke; }
+  .lista-contatos-container-vazio div {
+    font-size: 1.1rem;
+    color: #3c3c3c;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center; }
+    .lista-contatos-container-vazio div p {
+      text-align: center;
+      width: 100%; }
+
 #chat {
   width: 80vw;
   transition-duration: .5s; }
   #chat.chat-fechado {
     width: 30vw !important; }
+  #chat .lista-chat-container-vazio {
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFF; }
+    #chat .lista-chat-container-vazio div {
+      font-size: 1.1rem;
+      color: #3c3c3c;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center; }
+      #chat .lista-chat-container-vazio div p {
+        text-align: center;
+        width: 100%; }
 
 #chat-cliente #chat-cliente.chat-corpo {
   background-image: url("../../../public/assets/img/messages-wallpaper.png");
@@ -9101,24 +9173,72 @@ input[type="color"].form-control:disabled {
   bottom: 15px;
   user-select: none; }
 
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: hidden; }
+
+#app {
+  width: 100vw;
+  display: flex;
+  justify-content: flex-start; }
+
+.toasted.toasted-primary.error svg {
+  margin-right: 15px; }
+
+.d-none {
+  display: none; }
+
+* {
+  scrollbar-color: #888 rgba(0, 0, 0, 0.8);
+  scrollbar-width: thin; }
+
+::-webkit-scrollbar {
+  width: 10px; }
+
+::-webkit-scrollbar-track {
+  background-color: rgba(255, 255, 255, 0.3); }
+
+::-webkit-scrollbar-thumb {
+  transition-duration: .5s;
+  border-radius: 5px;
+  background-color: #888; }
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; }
+
+.toasted.toasted-primary.info svg {
+  margin-right: 10px; }
+
 .chat-opcoes {
   display: flex;
   justify-content: space-between;
   height: fit-content;
-  border-bottom: 2px solid #93BD94;
-  height: 10vh; }
+  height: 10vh;
+  max-height: 58px;
+  border-bottom: 1px solid #FFF; }
   .chat-opcoes .chat-opcoes-titulo {
     user-select: none;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     width: 100%;
-    background-color: #93BD94; }
+    background-color: #3949ab; }
     .chat-opcoes .chat-opcoes-titulo p {
       white-space: nowrap;
       font-size: .95rem;
       margin: 0 3%;
       color: #FFF; }
+    .chat-opcoes .chat-opcoes-titulo h1 {
+      color: #FFF;
+      font-size: 1.2rem;
+      margin: 0;
+      margin-left: 15px; }
+      .chat-opcoes .chat-opcoes-titulo h1 svg {
+        font-size: 1.3rem; }
   .chat-opcoes .chat-opcoes-infos {
     display: none; }
 
@@ -9237,7 +9357,7 @@ input[type="color"].form-control:disabled {
 
 .chat-rodape {
   display: flex;
-  background-color: #93BD94;
+  background-color: #bbbbbb;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
@@ -9441,21 +9561,19 @@ input[type="color"].form-control:disabled {
           color: #012136; }
 
 #informacoes {
-  display: absolute;
   transition: .5s;
   right: -1px;
   height: 100vh;
-  background-color: #FFF;
-  border-left: 1px solid #FFF;
   width: 50vw; }
 
 .titulo-informacoes {
   height: 10vh;
+  max-height: 58px;
   border-bottom: 1px solid #CCC;
   display: flex;
   align-items: center;
   width: 100%;
-  background-color: #ffb74d;
+  background-color: #2c3985;
   color: #FFF; }
   .titulo-informacoes h1 {
     margin-left: 10px;

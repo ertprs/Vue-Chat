@@ -64,6 +64,8 @@ export default {
 
         if(posicaoDaBarra == (tamanhoBarra - tamanhoContainer)){
           this.setHabilitaRolagem(false)
+        }else if(parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra || parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra + 1 || parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra - 1){
+          this.setHabilitaRolagem(false)
         }
       }
     }
@@ -73,6 +75,11 @@ export default {
       todasMensagens: 'getTodasMensagens',
       habilitaRolagem: 'getHabilitaRolagem'
     })
+  },
+  watch: {
+    todasMensagens(){
+      this.rolaChat()
+    }
   }
 }
 </script>

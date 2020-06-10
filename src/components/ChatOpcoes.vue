@@ -1,18 +1,27 @@
 <template>
   <div class="chat-opcoes">
       <div class="chat-opcoes-titulo">
-        <p :title="chatTitulo"> {{ chatTitulo }} </p>
+        <h1 :title="chatTitulo"> <i class="fas fa-comments"></i> {{ chatTitulo }} </h1>
+        <p v-if="atendimentoAtivo.informacoes.Protocolo"> {{ ' - Protocolo: ' + atendimentoAtivo.informacoes.Protocolo }} </p>
       </div>
     </div>
 </template>
 
 <script>
 
+import { mapGetters } from 'vuex'
+
 export default {
   data(){
     return{
-      chatTitulo: 'WhatsApp - Sucursal(ATD) - Protocolo 20200268741'
+      chatTitulo: 'Chat'
     }
+  },
+  computed: {
+    ...mapGetters({
+      atendimentoAtivo: 'getAtendimentoAtivo'
+    })
   }
 }
+
 </script>
