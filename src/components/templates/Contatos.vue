@@ -5,9 +5,9 @@
         <i class="fas fa-address-book"></i>
         Contatos
       </h1>
-      <!-- <div v-on:click="toggleContatos()" :class="rotate ? 'rotate' : ''">
+      <div v-on:click="toggleContatos()" :class="rotate ? 'rotate' : ''">
         <i class="fas fa-long-arrow-alt-left flecha" ></i>
-      </div> -->
+      </div>
     </div>
     <ul v-if="atendimentosAbertos.length > 0" :class="{'fechado' : fechado}">
       <li v-for="(atd, indice) in atendimentosAbertos"
@@ -75,7 +75,8 @@ export default {
       this.limparTodasMensagens()
       for( let i in arrMensagens ) {
         let mensagem = arrMensagens[i].texto
-        let origem = 'principal'
+        let origem
+        arrMensagens[i].resp_msg == 'CLI' ? origem = 'principal' : origem = 'outros'
         let horario = '??:??'
         let anexo = false
         let imgAnexo = ''
