@@ -80,7 +80,8 @@ export default {
       this.limparTodasMensagens()
       for( let i in arrMensagens ) {
         let mensagem = arrMensagens[i].texto
-        let origem = 'principal'
+        let origem
+        arrMensagens[i].resp_msg == 'CLI' ? origem = 'principal' : origem = 'outros'
         let horario = '??:??'
         let anexo = false
         let imgAnexo = ''
