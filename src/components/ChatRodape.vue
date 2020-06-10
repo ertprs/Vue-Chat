@@ -343,7 +343,7 @@ export default {
       axios
         .post(
           "http://linux03/im/atdHumano/middleware/atd_api.php/send-information",
-          { informacao }
+          { ...informacao }
         )
         .then(response => {
           console.log(response.data);
