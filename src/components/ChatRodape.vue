@@ -131,7 +131,7 @@ export default {
           axios
             .put(
               "http://linux03/im/atdHumano/middleware/atd_api.php/send-message",
-              { jsonMensagem }
+              { ...jsonMensagem }
             )
             .then(response => {
               console.log(response.data);
