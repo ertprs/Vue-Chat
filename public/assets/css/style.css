@@ -8926,6 +8926,8 @@ body {
       color: #FFF;
       margin-left: 10px;
       font-size: 1.2rem; }
+      #todos-contatos .titulo-contatos h1 svg {
+        margin-right: 5px; }
   #todos-contatos ul {
     padding: 0;
     max-height: 87vh;
