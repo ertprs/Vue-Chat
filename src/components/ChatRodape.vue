@@ -131,7 +131,7 @@ export default {
           axios
             .put(
               "http://linux03/im/atdHumano/middleware/atd_api.php/send-message",
-              { jsonMensagem }
+              { ...jsonMensagem }
             )
             .then(response => {
               console.log(response.data);
@@ -139,6 +139,8 @@ export default {
             .catch(error => {
               console.log(error);
             });
+          // this.$root.$emit('atualizarAtendimentos');
+          this.$root.$emit('contatos')
           this.setTodasMensagens(this.criaObjMensagem())
           this.mensagem = ''
         }
@@ -343,7 +345,7 @@ export default {
       axios
         .post(
           "http://linux03/im/atdHumano/middleware/atd_api.php/send-information",
-          { ...informacao }
+          { informacao }
         )
         .then(response => {
           console.log(response.data);
@@ -361,8 +363,7 @@ export default {
       .catch(error => {
         console.log(error);
       });
-
-      this.$root.$emit('updateAtendimentos');
+      this.$root.$emit('atualizarAtendimentos');
     }
   },
   watch: {

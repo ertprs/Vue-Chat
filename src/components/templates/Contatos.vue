@@ -41,7 +41,8 @@ export default {
       rotate: false,
       fechado: false,
       arrAtivos: [],
-      haContatos: true
+      haContatos: true,
+      idAtendimentoAtivo: ''
     };
   },
   watch: {
@@ -53,11 +54,15 @@ export default {
       }
     }
   },
+  mounted() {
+    this.$root.$on('contatos', () => {
+      this.atualizarMensagemDoContatoAtivo()
+    })
+  },
   computed: {
     ...mapGetters({
       clienteMandouMensagem: "getClienteMandouMensagem",
-      objetoContato: "getTodasMensagens",
-      atendimentosAbertos: "getAtendimentosAbertos"
+      atendimentosAbertos: "getAtendimentosAbertos",
     })
   },
   methods: {
@@ -70,21 +75,18 @@ export default {
     ativarConversa: function(atd, indice) {
       this.setMensagensClienteAtivo(atd.id, atd.messages);
       this.exibirInformacoes(atd, indice);
+      this.idAtendimentoAtivo = atd.id
     },
     exibirInformacoes: function(objInformacoes, indice) {
-      // console.log( objInformacoes )
       this.setAtendimentoAtivo(objInformacoes);
       this.controlaAtivos(indice);
     },
     setMensagensClienteAtivo(id, arrMensagens) {
-      // const hora = this.formataHoraAtual()
       this.limparTodasMensagens();
       for (let i in arrMensagens) {
         let mensagem = arrMensagens[i].texto;
         let origem;
-        arrMensagens[i].resp_msg == "CLI"
-          ? (origem = "outros")
-          : (origem = "principal");
+        arrMensagens[i].resp_msg == "CLI" ? (origem = "outros") : (origem = "principal");
         let horario = "??:??";
         let anexo = false;
         let imgAnexo = "";
@@ -97,14 +99,7 @@ export default {
             autor = "Operador";
             break;
         }
-        let objMensagem = this.getObjMensagem(
-          autor,
-          origem,
-          mensagem,
-          horario,
-          anexo,
-          imgAnexo
-        );
+        let objMensagem = this.getObjMensagem( autor, origem, mensagem, horario, anexo, imgAnexo );
         this.setTodasMensagens(objMensagem);
       }
     },
@@ -165,6 +160,18 @@ export default {
           }
         }
       }
+    },
+    obterMensagensDoContatoAtivoPeloId( id ) {
+      for( let atd in this.atendimentosAbertos ) {
+        if( id == this.atendimentosAbertos[atd].cliente.id ) {
+          return this.atendimentosAbertos[atd].cliente.messages
+        }
+      }
+    },
+    atualizarMensagemDoContatoAtivo() {
+      let idClienteAtivo = this.idAtendimentoAtivo
+      let mensagensClienteAtivo = this.obterMensagensDoContatoAtivoPeloId(idClienteAtivo)
+      this.setMensagensClienteAtivo(idClienteAtivo, mensagensClienteAtivo);      
     }
   }
 };

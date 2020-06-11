@@ -37,7 +37,7 @@ var app = new Vue({
     })
   },
   mounted() {
-    this.$on('obterAtendimentoHorarioAtual', this.obterAtendimentoHorarioAtual)
+    this.$on('atualizarAtendimentos', this.atualizarAtendimentos)
     axios({ method: 'get', url: this.$store.getters.getURL+'get-atendimento'}) // primeiro get-atendimento, sem passar parametros
       .then(response => {
         let mainData = response.data
@@ -45,7 +45,7 @@ var app = new Vue({
           this.setObjAtendimentosAbertos( mainData )
           mainData.atendimentos.token_atd != null ? this.setTokenAtd(mainData.atendimentos.token_atd) : this.setTokenAtd('-')
           mainData.gerenciador.token_manager != null ? this.setTokenManager( mainData.gerenciador.token_manager ) : this.setTokenManager('-')
-          this.updateAtendimentos()
+          this.iniciarAtualizacaoDeAtendimentos()
         } else {
           alert( 'Erro ao tentar obter dados no servidor')
           console.log( mainData )
@@ -53,7 +53,7 @@ var app = new Vue({
           // this.setObjAtendimentosAbertos( mainDataTeste )
           // mainDataTeste.atendimentos.token_atd != null ? this.setTokenAtd(mainDataTeste.atendimentos.token_atd) : this.setTokenAtd('-')
           // mainDataTeste.gerenciador.token_manager != null ? this.setTokenManager( mainDataTeste.gerenciador.token_manager ) : this.setTokenManager('-')
-          // this.updateAtendimentos()
+          // this.iniciarAtualizacaoDeAtendimentos()
 
           // console.log('Usando objeto teste:')
           // console.log( mainDataTeste )
@@ -66,10 +66,10 @@ var app = new Vue({
     setObjAtendimentosAbertos( mainData ) {
       this.setAtendimentosAbertos( mainData.atendimentos.ramais )
     },
-    updateAtendimentos() {
-     var temporizador = setInterval( this.obterAtendimentoHorarioAtual, 1000 );
+    iniciarAtualizacaoDeAtendimentos() {
+     var temporizador = setInterval( this.atualizarAtendimentos, 1000 );
     },
-    obterAtendimentoHorarioAtual() {
+    atualizarAtendimentos() {
       // let url = 'get-atendimento?token_atd=' + this.tokenAtd + '&token_manager=' + this.tokenManager
       let url = 'get-atendimento'
       axios({ method: 'get', url: this.$store.getters.getURL + url }) // segundo get-atendimendo, agora com parametros
