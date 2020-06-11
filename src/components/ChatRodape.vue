@@ -117,7 +117,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['setTodasMensagens', 'setHabilitaRolagem', 'setFormularioCliente']),
+    ...mapMutations(['setTodasMensagens', 'setHabilitaRolagem', 'setFormularioCliente', 'limparAtendimentoAtivo']),
 
     enviarMensagem(){
       if(this.validaMensagem()){
@@ -130,7 +130,7 @@ export default {
           }
           axios
             .put(
-              "http://linux03/im/atdHumano/middleware/atd_api.php/send-message",
+              "https://linux03/im/atdHumano/middleware/atd_api.php/send-message",
               { ...jsonMensagem }
             )
             .then(response => {
@@ -298,10 +298,11 @@ export default {
     },
     encerrarAtendimento(){
       if( this.atendimentoAtivo.informacoes.nome != null ) {
-        this.finalizarAtendimento(this.atendimentoAtivo.id )
+        this.finalizarAtendimentoNaApi(this.atendimentoAtivo.id )
         this.mensagem = 'Mensagem de Encerramento do Atendimento de ' + this.atendimentoAtivo.informacoes.nome
         this.enviarMensagem()
-        document.querySelector('#textarea').setAttribute('readonly','readonly')
+        this.limparAtendimentoAtivo()
+        // document.querySelector('#textarea').setAttribute('readonly','readonly')
         // setTimeout(
         //   () => {
         //     this.retornarForm()
@@ -317,7 +318,7 @@ export default {
     obterAtendimentos() {
       axios
         .get(
-          "http://linux03/im/atdHumano/middleware/atd_api.php/get-atendimento"
+          "https://linux03/im/atdHumano/middleware/atd_api.php/get-atendimento"
         )
         .then(response => {
           mostrarAtendimentos(response.data);
@@ -330,7 +331,7 @@ export default {
       var idClientes = [55987654321, 5517987654321];
       axios
         .post(
-          "http://linux03/im/atdHumano/middleware/atd_api.php/search-message",
+          "https://linux03/im/atdHumano/middleware/atd_api.php/search-message",
           { idClientes }
         )
         .then(response => {
@@ -344,7 +345,7 @@ export default {
       var informacao = "Testando alguma informacao";
       axios
         .post(
-          "http://linux03/im/atdHumano/middleware/atd_api.php/send-information",
+          "https://linux03/im/atdHumano/middleware/atd_api.php/send-information",
           { informacao }
         )
         .then(response => {
@@ -354,8 +355,8 @@ export default {
           console.log(error);
         });
     },
-    finalizarAtendimento( id ) {
-      let url = 'http://linux03/im/atdHumano/middleware/atd_api.php/end-atendimento'
+    finalizarAtendimentoNaApi( id ) {
+      let url = 'https://linux03/im/atdHumano/middleware/atd_api.php/end-atendimento'
       axios.delete(url, { data: { id: id } })
       .then(response => {
         console.log(response.data);
@@ -363,7 +364,6 @@ export default {
       .catch(error => {
         console.log(error);
       });
-      this.$root.$emit('atualizarAtendimentos');
     }
   },
   watch: {

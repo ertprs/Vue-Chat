@@ -42,6 +42,9 @@ export default new Vuex.Store({
     setAtendimentoAtivo(state, objInformacoes){
       state.atendimentoAtivo = objInformacoes
     },
+    limparAtendimentoAtivo(state) {
+      state.atendimentoAtivo = {}
+    },
     setTokenAtd( state, tokenAtd ) {
       state.tokenAtd = tokenAtd
     },
