@@ -1,5 +1,8 @@
 @import 'default';
 #todos-contatos{
+  *{
+    transition-duration: .5s;
+  }
   width: 20vw;
   height: 100vh;
   transition-duration: .5s;

@@ -18,12 +18,15 @@
   color: #FFF;
   h1 {
     margin-left: 10px;
-    font-size: 1.2rem
+    font-size: 1.2rem;
+    width: 30%;
   }
   > div{
     position: absolute;
     right: 15px;
     display: flex;
+    justify-content: space-between;
+    width: 70%;
     > div{
       p{
         margin: 0;

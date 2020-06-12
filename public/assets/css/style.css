@@ -8897,6 +8897,8 @@ body {
   height: 100vh;
   transition-duration: .5s;
   background-color: rgba(100, 100, 100, 0.1); }
+  #todos-contatos * {
+    transition-duration: .5s; }
   #todos-contatos.fechado {
     width: 5vw !important; }
   #todos-contatos > div {
@@ -9585,11 +9587,14 @@ body {
   color: #FFF; }
   .titulo-informacoes h1 {
     margin-left: 10px;
-    font-size: 1.2rem; }
+    font-size: 1.2rem;
+    width: 30%; }
   .titulo-informacoes > div {
     position: absolute;
     right: 15px;
-    display: flex; }
+    display: flex;
+    justify-content: space-between;
+    width: 70%; }
     .titulo-informacoes > div > div p {
       margin: 0; }
     .titulo-informacoes > div > div > div {

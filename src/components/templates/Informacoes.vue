@@ -7,6 +7,13 @@
            Informacoes
         </h1>
         <div v-if="atendimentoAtivo.informacoes">
+          <div v-if="atendimentoAtivo.informacoes.nome">
+            <div>
+              <i class="fas fa-user"></i>
+              <p> Nome </p>
+            </div>
+            <p> {{ atendimentoAtivo.informacoes.nome }} </p>
+          </div>
           <div v-if="atendimentoAtivo.informacoes.tempo_conectado">
             <div>
               <i class="fas fa-user-clock"></i>
@@ -24,26 +31,7 @@
         </div>
       </div>
       <div class="lista-informacoes-container" v-if="atendimentoAtivo.informacoes">
-        <div class="info" v-if="atendimentoAtivo.informacoes.nome">
-          <div>
-            <hr>
-            <span>
-              <i class="fas fa-portrait"></i>
-              Nome
-            </span>
-          </div>
-          <p> {{ atendimentoAtivo.informacoes.nome }} </p>
-        </div>
-        <div class="info" v-if="atendimentoAtivo.informacoes.protocolo">
-          <div>
-            <hr>
-            <span>
-              <i class="fas fa-file-alt"></i>
-              Protocolo
-            </span>
-          </div>
-          <p> {{ atendimentoAtivo.informacoes.protocolo }} </p>
-        </div>
+        
       </div>
       <div class="lista-informacoes-container-vazio" v-else>
         <div>

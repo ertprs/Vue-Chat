@@ -18,7 +18,12 @@
         @click="ativarConversa( atd.cliente, indice );"
       >
         <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
-        <p :class="indice % 2 == 0 ? '' : ''">{{ atd.cliente.informacoes.nome[0].toUpperCase() }}</p>
+        <p :class="indice % 2 == 0 ? '' : ''">
+          {{ atd.cliente.informacoes.nome[0].toUpperCase() }}
+          <template v-if="fechado">
+            {{ atd.cliente.informacoes.nome[1].toLowerCase() }}
+          </template>
+        </p>
         <template v-if="!fechado">{{ atd.cliente.informacoes.nome }}</template>
       </li>
     </ul>
