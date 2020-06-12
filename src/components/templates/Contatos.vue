@@ -60,7 +60,7 @@ export default {
     }
   },
   mounted() {
-    this.$root.$on('contatos', () => {
+    this.$root.$on('atualizar_mensagem_contato_ativo', () => {
       this.atualizarMensagemDoContatoAtivo()
     })
   },
@@ -78,9 +78,9 @@ export default {
       "toggleAbaContatos"
     ]),
     ativarConversa: function(atd, indice) {
-      this.setMensagensClienteAtivo(atd.id, atd.messages);
-      this.exibirInformacoes(atd, indice);
       this.idAtendimentoAtivo = atd.id
+      this.setMensagensClienteAtivo(atd.id, atd.messages)
+      this.exibirInformacoes(atd, indice)
     },
     exibirInformacoes: function(objInformacoes, indice) {
       this.setAtendimentoAtivo(objInformacoes);
@@ -174,9 +174,12 @@ export default {
       }
     },
     atualizarMensagemDoContatoAtivo() {
-      let idClienteAtivo = this.idAtendimentoAtivo
-      let mensagensClienteAtivo = this.obterMensagensDoContatoAtivoPeloId(idClienteAtivo)
-      this.setMensagensClienteAtivo(idClienteAtivo, mensagensClienteAtivo);      
+      var self = this
+      var timeAtualizarMsg = setTimeout( function() {
+        let idClienteAtivo = self.idAtendimentoAtivo
+        let mensagensClienteAtivo = self.obterMensagensDoContatoAtivoPeloId(idClienteAtivo)
+        self.setMensagensClienteAtivo(idClienteAtivo, mensagensClienteAtivo)
+      },1500)
     }
   }
 };
