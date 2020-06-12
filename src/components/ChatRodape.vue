@@ -139,8 +139,6 @@ export default {
             .catch(error => {
               console.log(error);
             });
-          // this.$root.$emit('atualizarAtendimentos');
-          this.$root.$emit('atualizar_mensagem_contato_ativo')
           this.setTodasMensagens(this.criaObjMensagem())
           this.mensagem = ''
         }

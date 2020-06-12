@@ -54,15 +54,13 @@ export default {
     atendimentosAbertos() {
       if (this.atendimentosAbertos) {
         if (this.atendimentosAbertos) {
-          this.preencheAtivos();
+          this.preencheAtivos()
+          this.setMensagensClienteAtivo(
+            this.idAtendimentoAtivo, this.obterMensagensDoContatoAtivoPeloId(this.idAtendimentoAtivo)
+          )
         }
       }
     }
-  },
-  mounted() {
-    this.$root.$on('atualizar_mensagem_contato_ativo', () => {
-      this.atualizarMensagemDoContatoAtivo()
-    })
   },
   computed: {
     ...mapGetters({

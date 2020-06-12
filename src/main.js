@@ -67,7 +67,7 @@ var app = new Vue({
       this.setAtendimentosAbertos( mainData.atendimentos.ramais )
     },
     iniciarAtualizacaoDeAtendimentos() {
-     var temporizador = setInterval( this.atualizarAtendimentos, 1000 );
+     var temporizador = setInterval( this.atualizarAtendimentos, 2000 );
     },
     atualizarAtendimentos() {
       // let url = 'get-atendimento?token_atd=' + this.tokenAtd + '&token_manager=' + this.tokenManager
