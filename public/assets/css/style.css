@@ -8853,7 +8853,6 @@ input[type="color"].form-control:disabled {
     border-radius: 10px; }
 
 body {
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9029,7 +9028,7 @@ body {
 
 #chat-cliente #chat-cliente.chat-corpo {
   background-image: url("../../../public/assets/img/messages-wallpaper.png");
-  min-height: 250px;
+  min-height: 230px;
   padding: 15px; }
   #chat-cliente #chat-cliente.chat-corpo .chat-corpo-mensagens {
     width: 100%;
@@ -9183,7 +9182,6 @@ body {
   user-select: none; }
 
 body {
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9254,7 +9252,7 @@ body {
 #chat-operador.chat-corpo {
   padding: unset !important;
   background-image: url("../../../public/assets/img/messages-wallpaper.png");
-  min-height: 250px;
+  min-height: 230px;
   padding: 15px; }
   #chat-operador.chat-corpo .chat-corpo-mensagens {
     width: 100%;
@@ -9277,7 +9275,7 @@ body {
         #chat-operador.chat-corpo .chat-corpo-mensagens .btn-rolagem svg:hover {
           opacity: 1; }
     #chat-operador.chat-corpo .chat-corpo-mensagens {
-      min-height: 60vh; }
+      min-height: 50vh; }
     #chat-operador.chat-corpo .chat-corpo-mensagens .mensagem-principal {
       width: 100%;
       display: flex;
@@ -9657,7 +9655,6 @@ body {
       font-size: .9rem; }
 
 body {
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
