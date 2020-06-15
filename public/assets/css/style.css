@@ -9036,7 +9036,7 @@ body {
 
 #chat-cliente #chat-cliente.chat-corpo {
   background-image: url("../../../public/assets/img/messages-wallpaper.png");
-  min-height: 250px;
+  min-height: 220px;
   padding: 15px; }
   #chat-cliente #chat-cliente.chat-corpo .chat-corpo-mensagens {
     width: 100%;
@@ -9265,7 +9265,7 @@ body {
 #chat-operador.chat-corpo {
   padding: unset !important;
   background-image: url("../../../public/assets/img/messages-wallpaper.png");
-  min-height: 250px;
+  min-height: 220px;
   padding: 15px; }
   #chat-operador.chat-corpo .chat-corpo-mensagens {
     width: 100%;
