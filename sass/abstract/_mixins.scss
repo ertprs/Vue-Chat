@@ -22,7 +22,7 @@
 
 @mixin chat-corpo($inveter){
   background-image: url('../../../public/assets/img/messages-wallpaper.png');
-  min-height: 230px;
+  min-height: 250px;
   padding: 15px;
   .chat-corpo-mensagens{
     width: 100%;
@@ -51,7 +51,7 @@
     @if($inveter == ''){
 
       &{
-        min-height: 50vh;
+        min-height: 50%; // *
       }
 
       .mensagem-principal{

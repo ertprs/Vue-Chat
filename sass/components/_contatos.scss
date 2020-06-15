@@ -3,12 +3,12 @@
   *{
     transition-duration: .5s;
   }
-  width: 20vw;
-  height: 100vh;
+  width: 20%;  // *
+  height: 100%; // *
   transition-duration: .5s;
   &.fechado{
     // height: 10vh!important;
-    width: 5vw!important;
+    width: 5%!important; // *
   }
   background-color: rgba(100, 100, 100, 0.1);
   > div{
@@ -19,7 +19,7 @@
     position: relative;
     // background-color: #42a5f5;
     background-color: lighten($cor, 10);
-    height: 10vh;
+    height: 10%; // *
     max-height: $alturaMaxTitulos;
     width: 100%;
     border-bottom: 1px solid #CCC;
@@ -50,7 +50,7 @@
   }
   ul{
     padding: 0;
-    max-height: 87vh;
+    max-height: 87%; // *
     overflow-y: auto;
     transition-duration: .5s;
     &.fechado{
@@ -124,7 +124,7 @@
 
 .lista-contatos-container-vazio{
   // width: 100%;
-  height: 90vh;
+  height: 90%; // *
   display: flex;
   justify-content: center;
   align-items: center;

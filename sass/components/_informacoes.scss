@@ -1,12 +1,12 @@
 #informacoes{
   transition: .5s;
   right: -1px;
-  height: 100vh;
-  width: 50vw;
+  height: 100%; // *
+  width: 50%; // *
 }
 
 .titulo-informacoes{
-  height: 10vh;
+  height: 10%; // *
   max-height: $alturaMaxTitulos;
   border-bottom: 1px solid #CCC;
   display: flex;
@@ -51,7 +51,7 @@
 
 .lista-informacoes-container-vazio{
   // width: 100%;
-  height: 90vh;
+  height: 90%; // *
   display: flex;
   justify-content: center;
   align-items: center;

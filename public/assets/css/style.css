@@ -8796,7 +8796,7 @@ input[type="color"].form-control:disabled {
   vertical-align: text-bottom; }
 
 #formulario-container {
-  width: 40vw;
+  width: 40%;
   margin: 0 auto;
   box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
@@ -8852,6 +8852,10 @@ input[type="color"].form-control:disabled {
     opacity: .8;
     border-radius: 10px; }
 
+html, body {
+  height: 100%;
+  width: 100%; }
+
 body {
   display: flex;
   justify-content: center;
@@ -8860,7 +8864,8 @@ body {
   overflow: hidden; }
 
 #app {
-  width: 100vw;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: flex-start; }
 
@@ -8892,21 +8897,21 @@ body {
   margin-right: 10px; }
 
 #todos-contatos {
-  width: 20vw;
-  height: 100vh;
+  width: 20%;
+  height: 100%;
   transition-duration: .5s;
   background-color: rgba(100, 100, 100, 0.1); }
   #todos-contatos * {
     transition-duration: .5s; }
   #todos-contatos.fechado {
-    width: 5vw !important; }
+    width: 5% !important; }
   #todos-contatos > div {
     margin: 0 auto;
     width: 95%; }
   #todos-contatos .titulo-contatos {
     position: relative;
     background-color: #5262c5;
-    height: 10vh;
+    height: 10%;
     max-height: 58px;
     width: 100%;
     border-bottom: 1px solid #CCC;
@@ -8931,7 +8936,7 @@ body {
         margin-right: 5px; }
   #todos-contatos ul {
     padding: 0;
-    max-height: 87vh;
+    max-height: 87%;
     overflow-y: auto;
     transition-duration: .5s; }
     #todos-contatos ul.fechado li {
@@ -8988,7 +8993,7 @@ body {
           background-color: rgba(255, 255, 255, 0.1); }
 
 .lista-contatos-container-vazio {
-  height: 90vh;
+  height: 90%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9005,12 +9010,15 @@ body {
       width: 100%; }
 
 #chat {
-  width: 30vw;
-  transition-duration: .5s; }
+  width: 30%;
+  transition-duration: .5s;
+  height: 100%;
+  background-color: #bbbbbb;
+  position: relative; }
   #chat.chat-aberto {
-    width: 45vw !important; }
+    width: 45% !important; }
   #chat .lista-chat-container-vazio {
-    height: 90vh;
+    height: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9028,7 +9036,7 @@ body {
 
 #chat-cliente #chat-cliente.chat-corpo {
   background-image: url("../../../public/assets/img/messages-wallpaper.png");
-  min-height: 230px;
+  min-height: 250px;
   padding: 15px; }
   #chat-cliente #chat-cliente.chat-corpo .chat-corpo-mensagens {
     width: 100%;
@@ -9181,6 +9189,10 @@ body {
   bottom: 15px;
   user-select: none; }
 
+html, body {
+  height: 100%;
+  width: 100%; }
+
 body {
   display: flex;
   justify-content: center;
@@ -9189,7 +9201,8 @@ body {
   overflow: hidden; }
 
 #app {
-  width: 100vw;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: flex-start; }
 
@@ -9224,7 +9237,7 @@ body {
   display: flex;
   justify-content: space-between;
   height: fit-content;
-  height: 10vh;
+  height: 10%;
   max-height: 58px;
   border-bottom: 1px solid #FFF; }
   .chat-opcoes .chat-opcoes-titulo {
@@ -9252,7 +9265,7 @@ body {
 #chat-operador.chat-corpo {
   padding: unset !important;
   background-image: url("../../../public/assets/img/messages-wallpaper.png");
-  min-height: 230px;
+  min-height: 250px;
   padding: 15px; }
   #chat-operador.chat-corpo .chat-corpo-mensagens {
     width: 100%;
@@ -9275,7 +9288,7 @@ body {
         #chat-operador.chat-corpo .chat-corpo-mensagens .btn-rolagem svg:hover {
           opacity: 1; }
     #chat-operador.chat-corpo .chat-corpo-mensagens {
-      min-height: 50vh; }
+      min-height: 50%; }
     #chat-operador.chat-corpo .chat-corpo-mensagens .mensagem-principal {
       width: 100%;
       display: flex;
@@ -9368,7 +9381,7 @@ body {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  height: 30vh; }
+  height: 30%; }
   .chat-rodape .chat-rodape-container {
     display: flex;
     justify-content: space-between;
@@ -9525,6 +9538,8 @@ body {
         font-size: 1.2rem;
         color: #6e5508; }
   .chat-rodape .chat-rodape-botoes-encerramento {
+    position: absolute;
+    bottom: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9571,11 +9586,11 @@ body {
 #informacoes {
   transition: .5s;
   right: -1px;
-  height: 100vh;
-  width: 50vw; }
+  height: 100%;
+  width: 50%; }
 
 .titulo-informacoes {
-  height: 10vh;
+  height: 10%;
   max-height: 58px;
   border-bottom: 1px solid #CCC;
   display: flex;
@@ -9608,7 +9623,7 @@ body {
       margin-right: 10px; }
 
 .lista-informacoes-container-vazio {
-  height: 90vh;
+  height: 90%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9655,6 +9670,10 @@ body {
       margin-top: 20px;
       font-size: .9rem; }
 
+html, body {
+  height: 100%;
+  width: 100%; }
+
 body {
   display: flex;
   justify-content: center;
@@ -9663,7 +9682,8 @@ body {
   overflow: hidden; }
 
 #app {
-  width: 100vw;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: flex-start; }
 
