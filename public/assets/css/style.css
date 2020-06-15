@@ -9538,8 +9538,6 @@ body {
         font-size: 1.2rem;
         color: #6e5508; }
   .chat-rodape .chat-rodape-botoes-encerramento {
-    position: absolute;
-    bottom: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
