@@ -184,12 +184,22 @@ $altura: 50px;
     align-items: center;
     width: 100%;
     margin: 10px 0;
+    .chat-rodape-botoes-container{
+      position: relative;
+      width: 100%;
+      div[container-acoes]{
+        position: absolute;
+        z-index: 2;
+        top: (-40 * 3)+px;
+        right: 0;
+      }
+    }
     .chat-rodape-botoes-botao{
       @include estiloBotao(-3px, -1px);
       color: #FFF;
       &{
-        margin: 0;
-        width: 48%;
+        margin: 0 10px;
+        width: 100%;
         height: 40px;
         display: flex;
         justify-content: center;
@@ -202,7 +212,23 @@ $altura: 50px;
         margin-right: 5px;
         font-size: 1.2rem;
       }
+      &.botao-acoes{
+        margin: 0 10%;
+        width: 80%;
+        background-color: #ffa726;
+        svg{
+          margin-left: 10px;
+          color: darken(#ffa726, 30)
+        }
+      }
+      &.botao-transferencia{
+        background-color: #512da8;
+        svg{
+          color: darken(#512da8, 30);
+        }
+      }
       &.botao-encerrar{
+        margin: 10px;
         background-color: #E74C3C;
         svg{
           color: #BE1E2A

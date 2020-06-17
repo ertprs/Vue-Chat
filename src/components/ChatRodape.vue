@@ -80,13 +80,25 @@
       </div>
     </div>
     <div class="chat-rodape-botoes-encerramento">
-      <div class="chat-rodape-botoes-botao botao-encerrar" title="Encerrar" v-on:click="encerrarAtendimento()">
-        <i class="fas fa-sign-out-alt"></i>
-        <span> Encerrar </span>
+      <div class="chat-rodape-botoes-container">
+        <div class="chat-rodape-botoes-botao botao-acoes" title="Acoes" v-on:click="abrirAcoes()">
+          <span> Acoes </span>
+          <i class="fas fa-angle-double-right"></i>
+        </div>
+        <div v-if="containerAcoes" container-acoes>
+          <div class="chat-rodape-botoes-botao botao-transferencia" title="Transferir" v-on:click="abrirTransferir()">
+            <i class="fas fa-random"></i>
+            <span> Transferir </span>
+          </div>
+          <div class="chat-rodape-botoes-botao botao-encerrar" title="Encerrar" v-on:click="encerrarAtendimento()">
+            <i class="fas fa-sign-out-alt"></i>
+            <span> Encerrar </span>
+          </div>
+          <div class="chat-rodape-botoes-botao botao-retornar" title="Retornar" v-on:click="retornarForm()">
+            <i class="fas fa-undo"></i>
+            <span> Retornar </span>
+          </div>
       </div>
-      <div class="chat-rodape-botoes-botao botao-retornar" title="Retornar" v-on:click="retornarForm()">
-        <i class="fas fa-undo"></i>
-        <span> Retornar </span>
       </div>
     </div>
   </div>
@@ -114,6 +126,7 @@ export default {
       abrirOpcoes: false,
       erroFormatoAnexo: false,
       selecioneAnexo: true,
+      containerAcoes: false
     }
   },
   methods: {
@@ -298,6 +311,7 @@ export default {
         this.mensagem = 'Mensagem de Encerramento do Atendimento de ' + this.atendimentoAtivo.informacoes.nome
         this.enviarMensagem()
         this.limparAtendimentoAtivo()
+        this.checaBlocker()
         // document.querySelector('#textarea').setAttribute('readonly','readonly')
         // setTimeout(
         //   () => {
@@ -310,6 +324,7 @@ export default {
     },
     retornarForm(){
       this.setFormularioCliente(false)
+      this.checaBlocker()
     },
     obterAtendimentos() {
       axios
@@ -360,6 +375,33 @@ export default {
       .catch(error => {
         console.log(error);
       });
+    },
+    abrirAcoes(){
+      let blocker = document.createElement('div')
+      blocker.setAttribute('blocker', '')
+      blocker.style.width = '100vw'
+      blocker.style.height = '100vh'
+      blocker.style.zIndex = 1
+      blocker.style.position = 'absolute'
+      blocker.style.top = '0'
+      blocker.style.left = '0'
+      blocker.addEventListener('click', () => {
+        this.containerAcoes = !this.containerAcoes
+        blocker.remove()
+      })
+
+      document.querySelector('body').insertAdjacentElement('beforeend', blocker)
+
+      this.containerAcoes = !this.containerAcoes
+    },
+    abrirTransferir(){
+      this.checaBlocker()
+    },
+    checaBlocker(){
+      let blocker = document.querySelector('[blocker]')
+      if(blocker){
+        blocker.click()
+      }
     }
   },
   watch: {
