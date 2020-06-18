@@ -2,16 +2,16 @@
   <div id="popup">
     <h2>{{ titulo }}</h2>
     <ul>
-      <li>Todos</li>
-      <li>Pessoal</li>
-      <li>Pessoal/Data</li>
+      <li v-for="(opt, i) in opcoes" :key="i">
+        {{ opt }}
+      </li>
     </ul>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['titulo'],
+  props: ['titulo', 'opcoes'],
   data(){
     return{
       popupAtivo: true

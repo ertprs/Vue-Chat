@@ -9692,9 +9692,11 @@ body {
   position: absolute;
   top: 200px;
   z-index: 2;
-  width: 400px;
-  min-height: 125px;
-  background-color: white; }
+  min-width: 200px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; }
   #popup h2 {
     font-size: 1.5rem;
     font-weight: 100;
@@ -9704,7 +9706,9 @@ body {
     background-color: #6573cc; }
   #popup ul {
     display: flex;
-    list-style-type: none; }
+    list-style-type: none;
+    margin: 15px auto;
+    padding: 0; }
     #popup ul li {
       transition-duration: .3s;
       user-select: none;

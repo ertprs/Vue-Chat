@@ -2,9 +2,11 @@
   position: absolute;
   top: 200px;
   z-index: 2;
-  width: 400px;
-  min-height: 125px;
+  min-width: 200px;
   background-color: lighten(#FFF, 15);
+  display: flex;
+  align-items: center; 
+  flex-wrap: wrap;
   h2{
     font-size: 1.5rem;
     font-weight: 100;
@@ -16,6 +18,8 @@
   ul{
     display: flex;
     list-style-type: none;
+    margin: 15px auto;
+    padding: 0;
     li{
       @include estiloBotao(-4px, -2px, 1, $cor);
       min-width: 85px;

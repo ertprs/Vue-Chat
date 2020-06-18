@@ -101,7 +101,8 @@
       </div>
       </div>
     </div>
-    <Popup v-if="popUpRetorno" :titulo="'Retornar'" />
+    <Popup v-if="popUpRetorno" :titulo="'Retornar'" :opcoes="arrOpcoesRetorno" />
+    <Popup v-if="popUpTransferir" :titulo="'Transferir'" :opcoes="arrOpcoesTransferir" />
   </div>
 </template>
 
@@ -130,7 +131,10 @@ export default {
       erroFormatoAnexo: false,
       selecioneAnexo: true,
       containerAcoes: false,
-      popUpRetorno: false
+      popUpRetorno: false,
+      arrOpcoesRetorno: ["Todos", "Pessoal", "Pessoal/Data"],
+      popUpTransferir: false,
+      arrOpcoesTransferir: ["Agente", "Grupo"]
     }
   },
   components: {
@@ -384,7 +388,8 @@ export default {
       this.containerAcoes = true
     },
     abrirTransferir(){
-      this.checaBlocker()
+      this.checaBlocker(true)
+      this.popUpTransferir = true
     },
     checaBlocker(criar){
       let blocker = document.querySelector('[blocker]')
@@ -415,6 +420,9 @@ export default {
         }
         if(this.popUpRetorno == true){
           this.popUpRetorno = false
+        }
+        if(this.popUpTransferir == true){
+          this.popUpTransferir = false
         }
         blocker.remove()
       })
