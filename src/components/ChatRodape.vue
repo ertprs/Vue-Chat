@@ -101,8 +101,8 @@
       </div>
       </div>
     </div>
-    <Popup v-if="popUpRetorno" :titulo="'Retornar'" :opcoes="arrOpcoesRetorno" />
-    <Popup v-if="popUpTransferir" :titulo="'Transferir'" :opcoes="arrOpcoesTransferir" />
+    <Popup v-if="popUpRetorno" :titulo="'Retornar'" />
+    <Popup v-if="popUpTransferir" :titulo="'Transferir'" />
   </div>
 </template>
 
@@ -132,9 +132,7 @@ export default {
       selecioneAnexo: true,
       containerAcoes: false,
       popUpRetorno: false,
-      arrOpcoesRetorno: ["Todos", "Pessoal", "Pessoal/Data"],
       popUpTransferir: false,
-      arrOpcoesTransferir: ["Agente", "Grupo"]
     }
   },
   components: {
@@ -461,7 +459,8 @@ export default {
     ...mapGetters({
       todasMensagens: 'getTodasMensagens',
       informacoesAberto: 'getInformacoesAberto',
-      atendimentoAtivo: 'getAtendimentoAtivo'
+      atendimentoAtivo: 'getAtendimentoAtivo',
+      url: 'getURL'
     })
   }
 }
