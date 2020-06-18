@@ -56,9 +56,6 @@ export default new Vuex.Store({
     }
   },
   getters: {
-    getFormularioCliente(state){
-      return state.formularioCliente
-    },
     getTodasMensagens(state){
       return state.todasMensagens
     },

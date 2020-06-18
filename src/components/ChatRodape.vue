@@ -101,6 +101,7 @@
       </div>
       </div>
     </div>
+    <Popup v-if="popUpRetorno" :titulo="'Retornar'" />
   </div>
 </template>
 
@@ -108,6 +109,8 @@
 import { mapMutations } from 'vuex'
 import { mapGetters } from 'vuex'
 import axios from "axios"
+
+import Popup from './templates/Popup'
 
 export default {
   data(){
@@ -126,11 +129,15 @@ export default {
       abrirOpcoes: false,
       erroFormatoAnexo: false,
       selecioneAnexo: true,
-      containerAcoes: false
+      containerAcoes: false,
+      popUpRetorno: false
     }
   },
+  components: {
+    Popup
+  },
   methods: {
-    ...mapMutations(['setTodasMensagens', 'setHabilitaRolagem', 'setFormularioCliente', 'limparAtendimentoAtivo']),
+    ...mapMutations(['setTodasMensagens', 'setHabilitaRolagem', 'limparAtendimentoAtivo']),
 
     enviarMensagem(){
       if(this.validaMensagem()){
@@ -312,19 +319,15 @@ export default {
         this.enviarMensagem()
         this.limparAtendimentoAtivo()
         this.checaBlocker()
-        // document.querySelector('#textarea').setAttribute('readonly','readonly')
-        // setTimeout(
-        //   () => {
-        //     this.retornarForm()
-        //   }, 500
-        // )
       } else {
         alert('Selecione um cliente antes de tentar finalizar o  atendimento')
       }
     },
     retornarForm(){
-      this.setFormularioCliente(false)
-      this.checaBlocker()
+      this.containerAcoes = false
+      this.checaBlocker(true)
+
+      this.popUpRetorno = true
     },
     obterAtendimentos() {
       axios
@@ -377,6 +380,24 @@ export default {
       });
     },
     abrirAcoes(){
+      this.checaBlocker()
+      this.containerAcoes = true
+    },
+    abrirTransferir(){
+      this.checaBlocker()
+    },
+    checaBlocker(criar){
+      let blocker = document.querySelector('[blocker]')
+      if(blocker){
+        blocker.click()
+        if(criar){
+          this.criaBlocker(true)
+        }
+      }else{
+        this.criaBlocker()
+      }
+    },
+    criaBlocker(cor){
       let blocker = document.createElement('div')
       blocker.setAttribute('blocker', '')
       blocker.style.width = '100vw'
@@ -385,23 +406,20 @@ export default {
       blocker.style.position = 'absolute'
       blocker.style.top = '0'
       blocker.style.left = '0'
+      if(cor){
+        blocker.style.backgroundColor = 'rgba(0, 0, 0, 0.2)'
+      }
       blocker.addEventListener('click', () => {
-        this.containerAcoes = !this.containerAcoes
+        if(this.containerAcoes == true){
+          this.containerAcoes = false
+        }
+        if(this.popUpRetorno == true){
+          this.popUpRetorno = false
+        }
         blocker.remove()
       })
 
       document.querySelector('body').insertAdjacentElement('beforeend', blocker)
-
-      this.containerAcoes = !this.containerAcoes
-    },
-    abrirTransferir(){
-      this.checaBlocker()
-    },
-    checaBlocker(){
-      let blocker = document.querySelector('[blocker]')
-      if(blocker){
-        blocker.click()
-      }
     }
   },
   watch: {

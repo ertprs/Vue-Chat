@@ -1,15 +1,15 @@
-@mixin estiloBotao($insetBorder, $insetBorderHover){
+@mixin estiloBotao($insetBorder, $insetBorderHover, $opacity: .9, $corBorda: rgba(0, 0, 0, 0.2)){
   transition-duration: .3s;
   user-select: none;
   cursor: pointer;
-  box-shadow: inset 0 $insetBorder rgba(0, 0, 0, 0.2);
-  opacity: .9;
+  box-shadow: inset 0 $insetBorder $corBorda;
+  opacity: $opacity;
   &:hover{
     opacity: 1;
   }
   &:active{
     opacity: 1;
-    box-shadow: inset 0 $insetBorderHover rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 $insetBorderHover $corBorda;
 
     -webkit-transform: translateY(1px);
     -moz-transform: translateY(1px);

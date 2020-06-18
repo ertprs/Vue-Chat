@@ -38,11 +38,6 @@ export default {
     return{
       testeAtivo: false
     }
-  },
-  computed: {
-    ...mapGetters({
-      formularioCliente: 'getFormularioCliente'
-    })
   }
 }
 
