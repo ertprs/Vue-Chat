@@ -2,7 +2,7 @@
   <div id="popup">
     <h2>{{ titulo }}</h2>
     <template v-if="titulo == 'Retornar'">
-      <ul>
+      <ul lista-retornar>
         <li v-for="(opt, i) in arrOptRetorno" :key="i"
         v-on:click="opt.funcao">
           {{ opt.descricao }}
@@ -10,28 +10,48 @@
       </ul>
     </template>
     <template v-else-if="titulo == 'Transferir'">
-      <ul>
+      <ul lista-transferir>
         <li v-for="(opt, i) in arrOptTransferir" :key="i"
         v-on:click="opt.funcao">
           {{ opt.descricao }}
         </li>
       </ul>
+      <div v-if="arrGrupos.length" grupos-transferir>
+        <vSelect 
+        :options="arrGrupos" 
+        label="label"
+        :reduce="grupo => grupo.grupos"
+        @input="enviaGrupo"
+        >
+        </vSelect> 
+        <!-- <select name="grupos">
+          <option v-for="(grupo, indice) in arrGrupos" :key="indice"
+          :value="grupo.grupo">
+            {{ grupo.label }}
+          </option>
+        </select> -->
+      </div>
     </template>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import AppVue from '../../App.vue'
+
+import vSelect from 'vue-select'
+import 'vue-select/dist/vue-select.css';
 
 export default {
+  components:{
+    vSelect
+  },
   props: ['titulo'],
   data(){
     return{
       popupAtivo: true,
       arrOptRetorno: [],
       arrOptTransferir: [],
-      grupos: '',
+      arrGrupos: [],
       agente: ''
     }
   },
@@ -39,6 +59,9 @@ export default {
     this.preencherArrOpt(this.titulo)
   },
   methods: {
+    enviaGrupo(value){
+      console.log('value: ', value)
+    },
     getAgente(){
       let url = this.$store.getters.getURL
 
@@ -55,7 +78,9 @@ export default {
 
       axios.get(url+'get-groups')
       .then(response => {
-        console.log('Sucesso get grupos: ', response)
+        this.arrGrupos = response.data
+        document.querySelector('[lista-transferir]').remove()
+
       })
       .catch(error => {
         console.log('Erro get grupos: ', error)

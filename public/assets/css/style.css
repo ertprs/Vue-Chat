@@ -9697,19 +9697,19 @@ body {
   display: flex;
   align-items: center;
   flex-wrap: wrap; }
-  #popup h2 {
+  #popup > h2 {
     font-size: 1.5rem;
     font-weight: 100;
     padding: 5px 10px;
     width: 100%;
     color: #FFF;
     background-color: #6573cc; }
-  #popup ul {
+  #popup > ul {
     display: flex;
     list-style-type: none;
     margin: 15px auto;
     padding: 0; }
-    #popup ul li {
+    #popup > ul li {
       transition-duration: .3s;
       user-select: none;
       cursor: pointer;
@@ -9724,9 +9724,9 @@ body {
       border: 1px solid #999;
       border-bottom: 0;
       padding: 0 10px; }
-      #popup ul li:hover {
+      #popup > ul li:hover {
         opacity: 1; }
-      #popup ul li:active {
+      #popup > ul li:active {
         opacity: 1;
         box-shadow: inset 0 -2px #3949ab;
         -webkit-transform: translateY(1px);
@@ -9734,8 +9734,13 @@ body {
         -o-transform: translateY(1px);
         -ms-transform: translateY(1px);
         transform: translateY(1px); }
-      #popup ul li:nth-child(2) {
+      #popup > ul li:nth-child(2) {
         margin: 0 15px; }
+  #popup div[grupos-transferir] {
+    min-height: 150px;
+    width: 80%;
+    min-width: 300px;
+    margin: 15px auto; }
 
 html, body {
   height: 100%;
