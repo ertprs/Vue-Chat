@@ -22,6 +22,7 @@
 
 <script>
 import axios from 'axios'
+import AppVue from '../../App.vue'
 
 export default {
   props: ['titulo'],
@@ -29,13 +30,37 @@ export default {
     return{
       popupAtivo: true,
       arrOptRetorno: [],
-      arrOptTransferir: []
+      arrOptTransferir: [],
+      grupos: '',
+      agente: ''
     }
   },
   mounted(){
     this.preencherArrOpt(this.titulo)
   },
   methods: {
+    getAgente(){
+      let url = this.$store.getters.getURL
+
+      axios.get(url+'get-agente')
+      .then(response => {
+        console.log('Sucesso get agente: ', response)
+      })
+      .catch(error => {
+        console.log('Erro get agente: ', error)
+      })
+    },
+    getGrupos(){
+      let url = this.$store.getters.getURL
+
+      axios.get(url+'get-groups')
+      .then(response => {
+        console.log('Sucesso get grupos: ', response)
+      })
+      .catch(error => {
+        console.log('Erro get grupos: ', error)
+      })
+    },
     preencherArrOpt(tipo){
       let url = this.$store.getters.getURL
 
@@ -46,7 +71,7 @@ export default {
           this.arrOptRetorno.push({
             descricao: arrAux[i],
             funcao: function(){
-              console.log('bbb') 
+              console.log('ok') 
             }
           })
         }
@@ -55,17 +80,23 @@ export default {
         for(let i = 0; i < arrAux.length; i++){
           this.arrOptTransferir.push({
             descricao: arrAux[i],
-            funcao: function(){
+            funcao: () => {
+              if(arrAux[i] == arrAux[0]){
+                this.getAgente()
+              }else if(arrAux[i] == arrAux[1]){
+                this.getGrupos()
+              }
+
               axios({
                 method: 'put',
                 url: url+'transfer',
                 data: {"id_schedule": "5516987987955", "id_attedant":"re028771"}
               })
               .then(response => {
-                console.log(response)
+                console.log('sucesso transferencia: ', response)
               })
               .catch(error => {
-                console.log(error)
+                console.log('erro transferencia: ', error)
               })
             }
           })
