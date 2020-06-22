@@ -31,7 +31,8 @@
         </div>
       </div>
       <div class="lista-informacoes-container" v-if="atendimentoAtivo.informacoes">
-        
+
+          <BotoesAcoes />
       </div>
       <div class="lista-informacoes-container-vazio" v-else>
         <div>
@@ -47,7 +48,12 @@
 
 import { mapGetters } from 'vuex'
 
+import BotoesAcoes from '../BotoesAcoes'
+
 export default {
+  components: {
+    BotoesAcoes
+  },
   computed: {
     ...mapGetters({
       atendimentoAtivo: 'getAtendimentoAtivo'

@@ -1,0 +1,56 @@
+
+#rodape-botoes-encerramento-container{
+  width: 100%;
+  height: 10%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // background-color: lighten($cor, 30);
+  border-top: 1px solid #CCC;
+
+  .rodape-botoes-encerramento{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0;
+    .rodape-botoes-botao{
+      @include estiloBotao(-3px, -1px);
+      color: #FFF;
+      &{
+        margin: 0 10px;
+        width: 100%;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      svg{
+        margin-right: 5px;
+        font-size: 1.2rem;
+      }
+      &.botao-transferencia{
+        background-color: #512da8;
+        svg{
+          color: darken(#512da8, 30);
+        }
+      }
+      &.botao-retornar{
+        background-color: #184A8C;
+        svg{
+          color: #012136
+        }
+      }
+      &.botao-encerrar{
+        margin: 10px;
+        background-color: #E74C3C;
+        svg{
+          color: #BE1E2A;
+        }
+      }
+    }
+  }
+}

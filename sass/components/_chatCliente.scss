@@ -1,6 +1,6 @@
 #chat-cliente{
 
-  #chat-cliente.chat-corpo{
+  .chat-corpo{
     @include chat-corpo('inverter')
   }
 

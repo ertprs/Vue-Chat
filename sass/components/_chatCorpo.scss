@@ -1,4 +1,5 @@
 #chat-operador.chat-corpo{
   padding: unset!important;
-  @include chat-corpo('')
+  @include chat-corpo('');
+  height: 85%;
 }

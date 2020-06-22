@@ -27,7 +27,7 @@
       </div>
       <div class="chat-rodape-botoes" :class="aparecerPrevia ? 'anexo-aberto' : ''">
         <template v-if="!aparecerPrevia">
-          <div class="chat-rodape-botoes-botao botao-enviar-msg" title="Enviar" v-on:click="enviarMensagem()">
+          <div class="chat-rodape-botoes-botao botao-enviar-msg" title="Enviar" enviar-msg v-on:click="enviarMensagem()">
             <i class="fas fa-paper-plane"></i>
           </div>
           <div class="chat-rodape-botoes-botao botao-enviar-anexo" :class="abrirOpcoes ? 'btn-ativo': ''" title="Selecionar Anexo" v-on:click="selecionarAnexo()">
@@ -67,42 +67,6 @@
         </template>
       </div>
     </div>
-    <div class="chat-rodape-hsm">
-      <div class="select-hsm-container">
-        <h3> HSM: </h3>
-        <select name="select-hsm" id="select-hsm">
-          <option value="">Mensagem Formatada do HSM</option>
-        </select>
-        <div class="hsm-btn" title="Dados do Cliente">
-          <i class="fas fa-id-badge"></i>
-          <!-- <p> Dados do Cliente </p> -->
-        </div>
-      </div>
-    </div>
-    <div class="chat-rodape-botoes-encerramento">
-      <div class="chat-rodape-botoes-container">
-        <div class="chat-rodape-botoes-botao botao-acoes" title="Acoes" v-on:click="abrirAcoes()">
-          <span> Acoes </span>
-          <i class="fas fa-angle-double-right"></i>
-        </div>
-        <div v-if="containerAcoes" container-acoes>
-          <div class="chat-rodape-botoes-botao botao-transferencia" title="Transferir" v-on:click="abrirTransferir()">
-            <i class="fas fa-random"></i>
-            <span> Transferir </span>
-          </div>
-          <div class="chat-rodape-botoes-botao botao-encerrar" title="Encerrar" v-on:click="encerrarAtendimento()">
-            <i class="fas fa-sign-out-alt"></i>
-            <span> Encerrar </span>
-          </div>
-          <div class="chat-rodape-botoes-botao botao-retornar" title="Retornar" v-on:click="retornarForm()">
-            <i class="fas fa-undo"></i>
-            <span> Retornar </span>
-          </div>
-      </div>
-      </div>
-    </div>
-    <Popup v-if="popUpRetorno" :titulo="'Retornar'" />
-    <Popup v-if="popUpTransferir" :titulo="'Transferir'" />
   </div>
 </template>
 
@@ -111,12 +75,9 @@ import { mapMutations } from 'vuex'
 import { mapGetters } from 'vuex'
 import axios from "axios"
 
-import Popup from './templates/Popup'
-
 export default {
   data(){
     return{
-      hsm: false,
       mensagem: '',
       qtdCaracteresDisponiveis: 1500,
       arquivo: '',
@@ -129,17 +90,11 @@ export default {
       qtdInicial: 0,
       abrirOpcoes: false,
       erroFormatoAnexo: false,
-      selecioneAnexo: true,
-      containerAcoes: false,
-      popUpRetorno: false,
-      popUpTransferir: false,
+      selecioneAnexo: true
     }
   },
-  components: {
-    Popup
-  },
   methods: {
-    ...mapMutations(['setTodasMensagens', 'setHabilitaRolagem', 'limparAtendimentoAtivo']),
+    ...mapMutations(['setTodasMensagens', 'setHabilitaRolagem']),
 
     enviarMensagem(){
       if(this.validaMensagem()){
@@ -314,23 +269,6 @@ export default {
       this.aparecerPrevia = false
       this.imagemPrevia = ''
     },
-    encerrarAtendimento(){
-      if( this.atendimentoAtivo.informacoes.nome != null ) {
-        this.finalizarAtendimentoNaApi(this.atendimentoAtivo.id )
-        this.mensagem = 'Mensagem de Encerramento do Atendimento de ' + this.atendimentoAtivo.informacoes.nome
-        this.enviarMensagem()
-        this.limparAtendimentoAtivo()
-        this.checaBlocker()
-      } else {
-        alert('Selecione um cliente antes de tentar finalizar o  atendimento')
-      }
-    },
-    retornarForm(){
-      this.containerAcoes = false
-      this.checaBlocker(true)
-
-      this.popUpRetorno = true
-    },
     obterAtendimentos() {
       axios
         .get(
@@ -371,62 +309,6 @@ export default {
           console.log(error);
         });
     },
-    finalizarAtendimentoNaApi( id ) {
-      let url = 'https://linux03/im/atdHumano/middleware/atd_api.php/end-atendimento'
-      axios.delete(url, { data: { id: id } })
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    },
-    abrirAcoes(){
-      this.checaBlocker()
-      this.containerAcoes = true
-    },
-    abrirTransferir(){
-      this.checaBlocker(true)
-      this.popUpTransferir = true
-    },
-    checaBlocker(criar){
-      let blocker = document.querySelector('[blocker]')
-      if(blocker){
-        blocker.click()
-        if(criar){
-          this.criaBlocker(true)
-        }
-      }else{
-        this.criaBlocker()
-      }
-    },
-    criaBlocker(cor){
-      let blocker = document.createElement('div')
-      blocker.setAttribute('blocker', '')
-      blocker.style.width = '100vw'
-      blocker.style.height = '100vh'
-      blocker.style.zIndex = 1
-      blocker.style.position = 'absolute'
-      blocker.style.top = '0'
-      blocker.style.left = '0'
-      if(cor){
-        blocker.style.backgroundColor = 'rgba(0, 0, 0, 0.2)'
-      }
-      blocker.addEventListener('click', () => {
-        if(this.containerAcoes == true){
-          this.containerAcoes = false
-        }
-        if(this.popUpRetorno == true){
-          this.popUpRetorno = false
-        }
-        if(this.popUpTransferir == true){
-          this.popUpTransferir = false
-        }
-        blocker.remove()
-      })
-
-      document.querySelector('body').insertAdjacentElement('beforeend', blocker)
-    }
   },
   watch: {
     todasMensagens(){
@@ -459,7 +341,6 @@ export default {
     ...mapGetters({
       todasMensagens: 'getTodasMensagens',
       informacoesAberto: 'getInformacoesAberto',
-      atendimentoAtivo: 'getAtendimentoAtivo',
       url: 'getURL'
     })
   }
