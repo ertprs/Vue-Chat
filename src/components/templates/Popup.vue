@@ -20,9 +20,10 @@
         <vSelect 
         :options="arrGrupos" 
         label="label"
-        :reduce="grupo => grupo.grupos"
         @input="enviaGrupo"
-        >
+        :reduce="arrGrupos => arrGrupos.grupo"
+        > 
+
         </vSelect> 
         <!-- <select name="grupos">
           <option v-for="(grupo, indice) in arrGrupos" :key="indice"
@@ -59,8 +60,8 @@ export default {
     this.preencherArrOpt(this.titulo)
   },
   methods: {
-    enviaGrupo(value){
-      console.log('value: ', value)
+    enviaGrupo(grupo){
+      console.log('grupo: ', grupo)
     },
     getAgente(){
       let url = this.$store.getters.getURL
