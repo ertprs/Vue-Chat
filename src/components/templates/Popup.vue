@@ -1,38 +1,40 @@
 <template>
-  <div id="popup">
-    <h2>{{ titulo }}</h2>
-    <template v-if="titulo == 'Retornar'">
-      <ul lista-retornar>
-        <li v-for="(opt, i) in arrOptRetorno" :key="i"
-        v-on:click="opt.funcao">
-          {{ opt.descricao }}
-        </li>
-      </ul>
-    </template>
-    <template v-else-if="titulo == 'Transferir'">
-      <ul lista-transferir>
-        <li v-for="(opt, i) in arrOptTransferir" :key="i"
-        v-on:click="opt.funcao">
-          {{ opt.descricao }}
-        </li>
-      </ul>
-      <div v-if="arrGrupos.length" grupos-transferir>
-        <vSelect 
-        :options="arrGrupos" 
-        label="label"
-        @input="enviaGrupo"
-        :reduce="arrGrupos => arrGrupos.grupo"
-        > 
+  <div id="popup" popup>
+    <div>
+      <h2>{{ titulo }}</h2>
+      <template v-if="titulo == 'Retornar'">
+        <ul lista-retornar>
+          <li v-for="(opt, i) in arrOptRetorno" :key="i"
+          v-on:click="opt.funcao">
+            {{ opt.descricao }}
+          </li>
+        </ul>
+      </template>
+      <template v-else-if="titulo == 'Transferir'">
+        <ul lista-transferir>
+          <li v-for="(opt, i) in arrOptTransferir" :key="i"
+          v-on:click="opt.funcao">
+            {{ opt.descricao }}
+          </li>
+        </ul>
+        <div v-if="arrGrupos.length" grupos-transferir>
+          <vSelect 
+          :options="arrGrupos" 
+          label="label"
+          @input="enviaGrupo"
+          :reduce="arrGrupos => arrGrupos.grupo"
+          > 
 
-        </vSelect> 
-        <!-- <select name="grupos">
-          <option v-for="(grupo, indice) in arrGrupos" :key="indice"
-          :value="grupo.grupo">
-            {{ grupo.label }}
-          </option>
-        </select> -->
-      </div>
-    </template>
+          </vSelect> 
+          <!-- <select name="grupos">
+            <option v-for="(grupo, indice) in arrGrupos" :key="indice"
+            :value="grupo.grupo">
+              {{ grupo.label }}
+            </option>
+          </select> -->
+        </div>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -49,7 +51,6 @@ export default {
   props: ['titulo'],
   data(){
     return{
-      popupAtivo: true,
       arrOptRetorno: [],
       arrOptTransferir: [],
       arrGrupos: [],
@@ -128,9 +129,6 @@ export default {
           })
         }
       }
-    },
-    fecharPopup(){
-      this.popupAtivo = !this.popupAtivo
     }
   }
 }

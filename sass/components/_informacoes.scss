@@ -73,38 +73,12 @@
 
 .lista-informacoes-container{
   margin-top: 15px;
-  .info{
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  .container-acoes{
     width: 100%;
-    height: 65px;
-    > div{
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      hr{
-        margin: 0;
-        width: 100%;
-        height: 1px;
-        border: 0;
-        background-color: #CCC;
-      }
-      span{
-        position: absolute;
-        left: 15px;
-        background-color: #FFF;
-        font-size: 1rem;
-        font-weight: 600;
-        padding: 0 5px;
-        svg{
-          font-size: 1.3rem;
-        }
-      }
-    }
-    > p{
-      text-align: center;
-      margin: 0;
-      margin-top: 20px;
-      font-size: .9rem;
-    }
+    height: 25%;
   }
 }

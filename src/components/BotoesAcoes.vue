@@ -14,8 +14,9 @@
           <span> Encerrar </span>
         </div>
       </div>
-      <Popup v-if="popUpRetorno" :titulo="'Retornar'" />
-      <Popup v-if="popUpTransferir" :titulo="'Transferir'" />
+      <Popup v-if="blocker" :titulo='titulo' />
+      <!-- <Popup v-if="popUpRetorno" :titulo="'Retornar'" />
+      <Popup v-if="popUpTransferir" :titulo="'Transferir'" /> -->
   </div>
 </template>
 
@@ -30,33 +31,30 @@ import { mapGetters } from 'vuex'
 export default {
   data(){
     return{
-      popUpRetorno: false,
-      popUpTransferir: false
+      titulo: '',
+      blocker: false
     }
   },
   components: {
     Popup
   },
   methods: {
-    criaBlocker(cor){
+    criaBlocker(){
       let blocker = document.createElement('div')
       blocker.setAttribute('blocker', '')
-      blocker.style.width = '100vw'
-      blocker.style.height = '100vh'
+      blocker.style.width = '100%'
+      blocker.style.height = '100%'
       blocker.style.zIndex = 1
       blocker.style.position = 'absolute'
       blocker.style.top = '0'
       blocker.style.left = '0'
-      if(cor){
-        blocker.style.backgroundColor = 'rgba(0, 0, 0, 0.2)'
-      }
+      blocker.style.backgroundColor = 'rgba(0, 0, 0, 0.1)'
+      blocker.style.display = 'flex'
+      blocker.style.justifyContent = 'center'
+      blocker.style.alignItems = 'center'
+
       blocker.addEventListener('click', () => {
-        if(this.popUpRetorno == true){
-          this.popUpRetorno = false
-        }
-        if(this.popUpTransferir == true){
-          this.popUpTransferir = false
-        }
+        this.blocker = false
         blocker.remove()
       })
 
@@ -75,12 +73,14 @@ export default {
     },
     abrirTransferir(){
       this.checaBlocker(true)
-      this.popUpTransferir = true
+      this.blocker = true
+      this.titulo = 'Transferir'
     },
     retornarForm(){
       this.checaBlocker(true)
-
-      this.popUpRetorno = true
+      this.blocker = true
+      this.titulo = 'Retornar'
+      
     },
     ...mapMutations(['limparAtendimentoAtivo']),
     encerrarAtendimento(){

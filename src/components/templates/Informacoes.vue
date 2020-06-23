@@ -31,8 +31,9 @@
         </div>
       </div>
       <div class="lista-informacoes-container" v-if="atendimentoAtivo.informacoes">
-
+        <div class="container-acoes">
           <BotoesAcoes />
+        </div>
       </div>
       <div class="lista-informacoes-container-vazio" v-else>
         <div>
