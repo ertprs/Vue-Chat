@@ -3,6 +3,7 @@
     <div class="chat-rodape-container">
       <div class="chat-rodape-mensagens" :class="aparecerPrevia ? 'anexo-aberto' : ''">
         <div class="chat-rodape-textarea">
+          <!-- Prévia imagem -->
           <div class="chat-rodape-previa-img"  v-show="aparecerPrevia">
             <template v-if="erroFormatoAnexo">
               <h3> {{ txtFormatoInvalido }} </h3>
@@ -13,6 +14,24 @@
             </template>
             <img :src="imagemPrevia" v-show="aparecerPrevia && imagemPrevia !== ''" alt="Previa da Imagem Selecionada">
           </div>
+          <!-- Emoji -->
+          <div id="emoji-picker-container" v-show="!aparecerPrevia">
+            <twemoji-picker
+              :emojiData="emojiDataAll"
+              :emojiGroups="emojiGroups"
+              :skinsSelection="false"
+              :searchEmojisFeat="true"
+              searchEmojiPlaceholder="Pesquisar"
+              searchEmojiNotFound="Sem Resultados"
+              isLoadingLabel="Carregando..."
+              :pickerWidth="300"
+              :recentEmojisFeat="true"
+              :recentEmojisStorage="'local'"
+              :pickerPaddingOffset="0"
+              @emojiUnicodeAdded="adicionarEmoji"
+            ></twemoji-picker>
+          </div>
+          <!-- Textarea -->
           <textarea
             v-show="!aparecerPrevia"
             v-on:keyup.enter="enviarMensagem()"
@@ -25,6 +44,7 @@
           <span v-show="!aparecerPrevia" class="caracteres-disponiveis"> ({{ qtdCaracteresDisponiveis - mensagem.length }}) </span>
         </div>
       </div>
+      <!-- Outros Botões -->
       <div class="chat-rodape-botoes" :class="aparecerPrevia ? 'anexo-aberto' : ''">
         <template v-if="!aparecerPrevia">
           <div class="chat-rodape-botoes-botao botao-enviar-msg" title="Enviar" enviar-msg v-on:click="enviarMensagem()">
@@ -34,13 +54,17 @@
             <i class="fas fa-paperclip"></i>
 
             <div class="chat-rodape-anexo-opcoes" v-if="abrirOpcoes">
-              <div v-on:click="selecionarImagem()">
+              <div class="imagens" v-on:click="selecionarImagem()" title="Imagem">
                 <i class="fas fa-image"></i>
-                <span> Imagem </span>
+                <!-- <span> Imagem </span> -->
               </div>
-              <div v-on:click="selecionarDoc()">
+              <div class="docs" v-on:click="selecionarDoc()" title="Documento">
                 <i class="fas fa-file-alt"></i>
-                <span> Documento </span>
+                <!-- <span> Documento </span> -->
+              </div>
+              <div class='msg-formatada' v-on:click="selecionarDoc()" title="Mensagem Formatada">
+                <i class="fas fa-comment"></i>
+                <!-- <span> Mensagem Formatada </span> -->
               </div>
             </div>
 
@@ -71,9 +95,17 @@
 </template>
 
 <script>
+
 import { mapMutations } from 'vuex'
 import { mapGetters } from 'vuex'
+
 import axios from "axios"
+
+import { TwemojiPicker } from '@kevinfaguiar/vue-twemoji-picker'
+import EmojiAllData from '@kevinfaguiar/vue-twemoji-picker/emoji-data/pt/emoji-all-groups.json';
+import EmojiDataAnimalsNature from '@kevinfaguiar/vue-twemoji-picker/emoji-data/pt/emoji-group-animals-nature.json';
+import EmojiDataFoodDrink from '@kevinfaguiar/vue-twemoji-picker/emoji-data/pt/emoji-group-food-drink.json';
+import EmojiGroups from '@kevinfaguiar/vue-twemoji-picker/emoji-data/emoji-groups.json';
 
 export default {
   data(){
@@ -93,16 +125,23 @@ export default {
       selecioneAnexo: true
     }
   },
+  components: {
+    'twemoji-picker': TwemojiPicker
+  },
   methods: {
+    adicionarEmoji(value){
+      this.mensagem += value
+    },
+
     ...mapMutations(['setTodasMensagens', 'setHabilitaRolagem']),
 
     enviarMensagem(){
       if(this.validaMensagem()){
-        let msg = this.mensagem;
+        let msg = this.mensagem
         if( msg != '' ) {
           let jsonMensagem = {
             "id": this.atendimentoAtivo.id,
-            "message": this.mensagem,
+            "message": msg,
             "origin": "OPE"
           }
           axios
@@ -339,10 +378,17 @@ export default {
   },
   computed: {
     ...mapGetters({
+      atendimentoAtivo: 'getAtendimentoAtivo',
       todasMensagens: 'getTodasMensagens',
       informacoesAberto: 'getInformacoesAberto',
       url: 'getURL'
-    })
+    }),
+    emojiDataAll() {
+      return EmojiAllData;
+    },
+    emojiGroups() {
+      return EmojiGroups;
+    }
   }
 }
 </script>

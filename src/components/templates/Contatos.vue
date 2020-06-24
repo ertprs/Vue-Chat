@@ -9,24 +9,50 @@
         <i class="fas fa-long-arrow-alt-left flecha"></i>
       </div>
     </div>
-    <ul v-if="atendimentosAbertos.length > 0" :class="{'fechado' : fechado}">
-      <li
-        v-for="(atd, indice) in atendimentosAbertos"
-        :key="atd.cliente.id"
-        :id="'li_'+indice"
-        :title="atd.cliente.informacoes.nome"
-        @click="ativarConversa( atd.cliente, indice );"
-      >
-        <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
-        <p :class="indice % 2 == 0 ? '' : ''">
-          {{ atd.cliente.informacoes.nome[0].toUpperCase() }}
-          <template v-if="fechado">
-            {{ atd.cliente.informacoes.nome[1].toLowerCase() }}
-          </template>
-        </p>
-        <template v-if="!fechado">{{ atd.cliente.informacoes.nome }}</template>
-      </li>
-    </ul>
+    <div class="lista-contatos-container" v-if="atendimentosAbertos.length > 0">
+      <ul :class="{'fechado' : fechado}">
+        <li
+          v-for="(atd, indice) in atendimentosAbertos"
+          :key="atd.cliente.id"
+          :id="'li_'+indice"
+          :title="atd.cliente.informacoes.nome"
+          @click="ativarConversa( atd.cliente, indice );"
+        >
+          <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
+          <p :class="indice % 2 == 0 ? '' : ''">
+            {{ atd.cliente.informacoes.nome[0].toUpperCase() }}
+            <template v-if="fechado">
+              {{ atd.cliente.informacoes.nome[1].toLowerCase() }}
+            </template>
+          </p>
+          <template v-if="!fechado">{{ atd.cliente.informacoes.nome }}</template>
+        </li>
+      </ul>
+      <div class="lista-agenda">
+        <h2>
+          <i class="far fa-address-book"></i>
+          <template v-if="!fechado">Minha Agenda</template>
+        </h2>
+        <ul :class="{'fechado' : fechado}">
+          <li
+            v-for="(atd, indice) in atendimentosAbertos"
+            :key="atd.cliente.id"
+            :id="'li_'+indice"
+            :title="atd.cliente.informacoes.nome"
+            @click="ativarConversa( atd.cliente, indice );"
+          >
+            <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
+            <p :class="indice % 2 == 0 ? '' : ''">
+              {{ atd.cliente.informacoes.nome[0].toUpperCase() }}
+              <template v-if="fechado">
+                {{ atd.cliente.informacoes.nome[1].toLowerCase() }}
+              </template>
+            </p>
+            <template v-if="!fechado">{{ atd.cliente.informacoes.nome }}</template>
+          </li>
+        </ul>
+      </div>
+    </div>
     <div v-else class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
       <div>
         <i class="far fa-folder-open"></i>

@@ -8934,9 +8934,12 @@ body {
       font-size: 1.2rem; }
       #todos-contatos .titulo-contatos h1 svg {
         margin-right: 5px; }
+  #todos-contatos .lista-contatos-container {
+    width: 100%;
+    background-color: #FFF; }
   #todos-contatos ul {
     padding: 0;
-    max-height: 87%;
+    max-height: 200px;
     overflow-y: auto;
     transition-duration: .5s; }
     #todos-contatos ul.fechado li {
@@ -8991,6 +8994,18 @@ body {
           background-color: #CCC; }
         #todos-contatos ul li:nth-child(even):hover {
           background-color: rgba(255, 255, 255, 0.1); }
+  #todos-contatos .lista-agenda h2 {
+    margin: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    background-color: #7885d2;
+    color: #FFF;
+    font-size: 1.1rem; }
+    #todos-contatos .lista-agenda h2 svg {
+      margin-right: 5px; }
 
 .lista-contatos-container-vazio {
   height: 90%;
@@ -9391,23 +9406,38 @@ body {
       width: 65%; }
     .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea {
       position: relative; }
-      .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea textarea {
-        width: 100%;
-        resize: none;
+      .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea #emoji-picker-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 25%;
+        background-color: #FFF;
+        position: absolute;
+        left: 0;
         border-radius: 30px;
+        height: 50px;
+        border: 1px solid #CCC;
+        border-right: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0; }
+        .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea #emoji-picker-container .emoji-popover-inner {
+          max-width: 290px; }
+      .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea textarea {
+        margin-left: 25%;
+        width: 75%;
+        resize: none;
         height: 50px;
         font-size: .9rem;
         padding-left: 15px;
         padding-top: 10px;
         border: 1px solid #CCC;
-        border-right: 0;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0; }
+        border-left: 0;
+        border-right: 0; }
         .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea textarea:focus, .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea textarea:active {
           outline: 0; }
       .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .chat-rodape-previa-img {
         height: 50px;
-        border-radius: 10px;
+        border-radius: 30px;
         border: 1px solid #CCC;
         border-right: 0;
         border-top-right-radius: 0;
@@ -9430,12 +9460,12 @@ body {
           font-size: .8rem;
           color: #444; }
       .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .caracteres-disponiveis {
-        font-size: .7rem;
+        font-size: .5rem;
         z-index: 1;
         color: #444;
         position: absolute;
         left: 15px;
-        bottom: -10px; }
+        bottom: -5px; }
   .chat-rodape .chat-rodape-botoes {
     margin-right: 10px;
     width: 25%;
@@ -9476,18 +9506,25 @@ body {
         display: flex;
         justify-content: space-between; }
         .chat-rodape .chat-rodape-botoes .chat-rodape-botoes-botao .chat-rodape-anexo-opcoes > div {
-          margin: 0 auto;
-          text-align: center;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           border-radius: 10px;
           padding: 3px;
-          color: #444; }
+          width: 40px;
+          height: 40px;
+          font-size: 1rem;
+          color: #FFF; }
           .chat-rodape .chat-rodape-botoes .chat-rodape-botoes-botao .chat-rodape-anexo-opcoes > div svg {
             color: #FFF; }
-          .chat-rodape .chat-rodape-botoes .chat-rodape-botoes-botao .chat-rodape-anexo-opcoes > div:nth-child(1) {
+          .chat-rodape .chat-rodape-botoes .chat-rodape-botoes-botao .chat-rodape-anexo-opcoes > div.imagens {
             background-color: #9575cd;
             margin-right: 5px; }
-          .chat-rodape .chat-rodape-botoes .chat-rodape-botoes-botao .chat-rodape-anexo-opcoes > div:nth-child(2) {
-            background-color: #7986cb; }
+          .chat-rodape .chat-rodape-botoes .chat-rodape-botoes-botao .chat-rodape-anexo-opcoes > div.docs {
+            background-color: #7986cb;
+            margin-right: 5px; }
+          .chat-rodape .chat-rodape-botoes .chat-rodape-botoes-botao .chat-rodape-anexo-opcoes > div.msg-formatada {
+            background-color: goldenrod; }
 
 #informacoes {
   position: relative;
