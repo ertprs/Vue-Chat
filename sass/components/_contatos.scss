@@ -1,14 +1,11 @@
 @import 'default';
 #todos-contatos{
-  *{
-    transition-duration: .5s;
-  }
-  width: 20%;  // *
-  height: 100%; // *
-  transition-duration: .5s;
+  width: 20%; 
+  height: 100%;
+  transition-duration: 2s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   &.fechado{
-    // height: 10vh!important;
-    width: 5%!important; // *
+    width: 5%!important;
   }
   background-color: rgba(100, 100, 100, 0.1);
   > div{
@@ -17,19 +14,21 @@
   }
   .titulo-contatos{
     position: relative;
-    // background-color: #42a5f5;
+    display: flex;
+    align-items: center;
     background-color: lighten($cor, 10);
-    height: 10%; // *
+    height: 10%;
     max-height: $alturaMaxTitulos;
     width: 100%;
     border-bottom: 1px solid #CCC;
     display: flex;
     align-items: center;
-    div{
+    padding-left: 10px;
+    div.container-flecha{
       position: absolute;
-      bottom: 5px;
+      bottom: 0;
       right: 15px;
-      transition-duration: .5s;
+      transition-duration: 1.2s;
       &.rotate{
         transform: rotate(-180deg);
       }
@@ -39,13 +38,26 @@
         color: #FFF;
       }
     }
-    h1 {
+    .titulo-contatos--icone-container{
+      margin-right: 5px;
+      width: 100%;
+      display: flex;
       svg{
+        color: #FFF;
+        font-size: 1.4rem;
         margin-right: 5px;
       }
-      color: #FFF;
-      margin-left: 10px;
-      font-size: 1.2rem
+      h1 {
+        margin: 0;
+        padding: 0;
+        color: #FFF;
+        font-size: 1.3rem;
+      }
+      &.fechado{
+        display: flex;
+        justify-content: center;
+        width: initial;
+      }
     }
   }
   .lista-contatos-container{
@@ -54,16 +66,18 @@
   }
   ul{
     padding: 0;
-    max-height: 200px; // *
+    max-height: 200px;
     overflow-y: auto;
-    transition-duration: .5s;
+    overflow-x: hidden;
     &.fechado{
       li{
-        padding-left: 10px;
         p{
           margin: 0;
-          min-height: 35px;
-          min-width: 35px;
+          height: 35px;
+          width: 35px;
+        }
+        span{
+          margin-left: 5px;
         }
       }
     }
@@ -78,18 +92,25 @@
       cursor: pointer;
       border-bottom: 1px solid #CCC;
       position: relative;
-      p{
+      .circulo-contatos{
         border-radius: 50%;
         width: 35px;
         height: 35px;
+        min-width: 35px;
+        min-height: 35px;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 0;
-        padding: 0;
         margin-right: 10px;
-        font-weight: 600;
-        user-select: none;
+        p{
+          margin: 0;
+          padding: 0;
+          font-weight: 600;
+          user-select: none;
+          text-align: center;
+          height: auto;
+          width: auto;
+        }
       }
       .ativo{
         width: 10px;
@@ -105,7 +126,7 @@
         font-size: 1.2rem;
       }
       &:nth-child(odd){
-        p{
+        .circulo-contatos{
           background-color: #FFF;
         }
         background-color: rgba(100, 100, 100, 0.1);
@@ -114,7 +135,7 @@
         }
       }
       &:nth-child(even){
-        p{
+        .circulo-contatos{
           background-color: #CCC;
         }
         background-color: #FFF;
@@ -125,26 +146,40 @@
     }
   }
   .lista-agenda{
-    h2{
-      margin: 0;
+    .lista-agenda--titulo{
       width: 100%;
       height: 50px;
+      max-height: 50px;
       display: flex;
       align-items: center;
       padding: 5px 10px;
       background-color: lighten($cor, 20);
-      color: #FFF;
-      font-size: 1.1rem;
+      
       svg{
         margin-right: 5px;
+        font-size: 1.2rem;
+        color: #FFF;
       }
+      > div.fechado{
+        font-size: 1.4rem;
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;
+        // width: 100%;
+      }
+    }
+    h2{
+      margin: 0;
+      color: #FFF;
+      font-size: 1.1rem;
+      white-space: nowrap;
     }
   }
 }
 
 .lista-contatos-container-vazio{
   // width: 100%;
-  height: 90%; // *
+  height: 90%;
   display: flex;
   justify-content: center;
   align-items: center;

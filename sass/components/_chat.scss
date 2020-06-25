@@ -1,6 +1,7 @@
 #chat{
-  width: 30%; // *
+  width: 30%;
   transition-duration: .5s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   height: 100%;
   background-color: darken(#eeeeee, 20);
   position: relative;
@@ -9,7 +10,7 @@
     // box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.5);
   }
   &.chat-aberto{
-    width: 45%!important; // *
+    width: 45%!important;
   }
   .lista-chat-container-vazio{
     // width: 100%;

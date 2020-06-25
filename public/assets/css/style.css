@@ -8899,10 +8899,9 @@ body {
 #todos-contatos {
   width: 20%;
   height: 100%;
-  transition-duration: .5s;
+  transition-duration: 2s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   background-color: rgba(100, 100, 100, 0.1); }
-  #todos-contatos * {
-    transition-duration: .5s; }
   #todos-contatos.fechado {
     width: 5% !important; }
   #todos-contatos > div {
@@ -8910,30 +8909,44 @@ body {
     width: 95%; }
   #todos-contatos .titulo-contatos {
     position: relative;
+    display: flex;
+    align-items: center;
     background-color: #5262c5;
     height: 10%;
     max-height: 58px;
     width: 100%;
     border-bottom: 1px solid #CCC;
     display: flex;
-    align-items: center; }
-    #todos-contatos .titulo-contatos div {
+    align-items: center;
+    padding-left: 10px; }
+    #todos-contatos .titulo-contatos div.container-flecha {
       position: absolute;
-      bottom: 5px;
+      bottom: 0;
       right: 15px;
-      transition-duration: .5s; }
-      #todos-contatos .titulo-contatos div.rotate {
+      transition-duration: 1.2s; }
+      #todos-contatos .titulo-contatos div.container-flecha.rotate {
         transform: rotate(-180deg); }
-      #todos-contatos .titulo-contatos div svg.flecha {
+      #todos-contatos .titulo-contatos div.container-flecha svg.flecha {
         font-size: 1.5rem;
         cursor: pointer;
         color: #FFF; }
-    #todos-contatos .titulo-contatos h1 {
-      color: #FFF;
-      margin-left: 10px;
-      font-size: 1.2rem; }
-      #todos-contatos .titulo-contatos h1 svg {
+    #todos-contatos .titulo-contatos .titulo-contatos--icone-container {
+      margin-right: 5px;
+      width: 100%;
+      display: flex; }
+      #todos-contatos .titulo-contatos .titulo-contatos--icone-container svg {
+        color: #FFF;
+        font-size: 1.4rem;
         margin-right: 5px; }
+      #todos-contatos .titulo-contatos .titulo-contatos--icone-container h1 {
+        margin: 0;
+        padding: 0;
+        color: #FFF;
+        font-size: 1.3rem; }
+      #todos-contatos .titulo-contatos .titulo-contatos--icone-container.fechado {
+        display: flex;
+        justify-content: center;
+        width: initial; }
   #todos-contatos .lista-contatos-container {
     width: 100%;
     background-color: #FFF; }
@@ -8941,13 +8954,13 @@ body {
     padding: 0;
     max-height: 200px;
     overflow-y: auto;
-    transition-duration: .5s; }
-    #todos-contatos ul.fechado li {
-      padding-left: 10px; }
-      #todos-contatos ul.fechado li p {
-        margin: 0;
-        min-height: 35px;
-        min-width: 35px; }
+    overflow-x: hidden; }
+    #todos-contatos ul.fechado li p {
+      margin: 0;
+      height: 35px;
+      width: 35px; }
+    #todos-contatos ul.fechado li span {
+      margin-left: 5px; }
     #todos-contatos ul li {
       padding: 0 10px;
       transition-duration: .4s;
@@ -8959,18 +8972,24 @@ body {
       cursor: pointer;
       border-bottom: 1px solid #CCC;
       position: relative; }
-      #todos-contatos ul li p {
+      #todos-contatos ul li .circulo-contatos {
         border-radius: 50%;
         width: 35px;
         height: 35px;
+        min-width: 35px;
+        min-height: 35px;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 0;
-        padding: 0;
-        margin-right: 10px;
-        font-weight: 600;
-        user-select: none; }
+        margin-right: 10px; }
+        #todos-contatos ul li .circulo-contatos p {
+          margin: 0;
+          padding: 0;
+          font-weight: 600;
+          user-select: none;
+          text-align: center;
+          height: auto;
+          width: auto; }
       #todos-contatos ul li .ativo {
         width: 10px;
         height: 10px;
@@ -8984,28 +9003,35 @@ body {
         font-size: 1.2rem; }
       #todos-contatos ul li:nth-child(odd) {
         background-color: rgba(100, 100, 100, 0.1); }
-        #todos-contatos ul li:nth-child(odd) p {
+        #todos-contatos ul li:nth-child(odd) .circulo-contatos {
           background-color: #FFF; }
         #todos-contatos ul li:nth-child(odd):hover {
           background-color: rgba(100, 100, 100, 0.3); }
       #todos-contatos ul li:nth-child(even) {
         background-color: #FFF; }
-        #todos-contatos ul li:nth-child(even) p {
+        #todos-contatos ul li:nth-child(even) .circulo-contatos {
           background-color: #CCC; }
         #todos-contatos ul li:nth-child(even):hover {
           background-color: rgba(255, 255, 255, 0.1); }
-  #todos-contatos .lista-agenda h2 {
-    margin: 0;
+  #todos-contatos .lista-agenda .lista-agenda--titulo {
     width: 100%;
     height: 50px;
+    max-height: 50px;
     display: flex;
     align-items: center;
     padding: 5px 10px;
-    background-color: #7885d2;
+    background-color: #7885d2; }
+    #todos-contatos .lista-agenda .lista-agenda--titulo svg {
+      margin-right: 5px;
+      font-size: 1.2rem;
+      color: #FFF; }
+    #todos-contatos .lista-agenda .lista-agenda--titulo > div.fechado {
+      font-size: 1.4rem; }
+  #todos-contatos .lista-agenda h2 {
+    margin: 0;
     color: #FFF;
-    font-size: 1.1rem; }
-    #todos-contatos .lista-agenda h2 svg {
-      margin-right: 5px; }
+    font-size: 1.1rem;
+    white-space: nowrap; }
 
 .lista-contatos-container-vazio {
   height: 90%;
@@ -9027,6 +9053,7 @@ body {
 #chat {
   width: 30%;
   transition-duration: .5s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   height: 100%;
   background-color: #bbbbbb;
   position: relative; }

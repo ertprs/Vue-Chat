@@ -1,11 +1,15 @@
 <template>
-  <div id="todos-contatos" :class="{'fechado' : fechado}">
+  <div id="todos-contatos" :class="{'fechado' : fechado, 'aberto' : !fechado}">
     <div class="titulo-contatos">
-      <h1>
-        <i class="fas fa-address-book"></i>
-        <template v-if="!fechado">Contatos</template>
-      </h1>
-      <div v-on:click="toggleContatos()" :class="rotate ? 'rotate' : ''">
+      <div class="titulo-contatos--icone-container" :class="{'fechado' : fechado}">
+        <i class="fas fa-address-book" title="Contatos"></i>
+        <transition name="fade">
+          <h1 v-show="!fechado">
+            Contatos
+          </h1>
+        </transition>
+      </div>
+      <div v-on:click="toggleContatos()" class="container-flecha" :class="rotate ? 'rotate' : ''">
         <i class="fas fa-long-arrow-alt-left flecha"></i>
       </div>
     </div>
@@ -19,20 +23,24 @@
           @click="ativarConversa( atd.cliente, indice );"
         >
           <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
-          <p :class="indice % 2 == 0 ? '' : ''">
-            {{ atd.cliente.informacoes.nome[0].toUpperCase() }}
-            <template v-if="fechado">
-              {{ atd.cliente.informacoes.nome[1].toLowerCase() }}
-            </template>
-          </p>
+          <div :class="indice % 2 == 0 ? '' : ''" class="circulo-contatos">
+            <p>{{ formataSigla(atd.cliente.informacoes.nome[0], 'upper') }}</p>
+            <p v-if="fechado">{{ formataSigla(atd.cliente.informacoes.nome[1], 'lower') }}</p>
+          </div>
           <template v-if="!fechado">{{ atd.cliente.informacoes.nome }}</template>
         </li>
       </ul>
       <div class="lista-agenda">
-        <h2>
-          <i class="far fa-address-book"></i>
-          <template v-if="!fechado">Minha Agenda</template>
-        </h2>
+        <div class="lista-agenda--titulo">
+          <div :class="{'fechado' : fechado}">
+            <i class="far fa-address-book"  title="Minha Agenda"></i>
+          </div>
+          <transition name="fade">
+            <h2 v-show="!fechado" >
+              Minha Agenda
+            </h2>
+          </transition>
+        </div>
         <ul :class="{'fechado' : fechado}">
           <li
             v-for="(atd, indice) in atendimentosAbertos"
@@ -42,12 +50,10 @@
             @click="ativarConversa( atd.cliente, indice );"
           >
             <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
-            <p :class="indice % 2 == 0 ? '' : ''">
-              {{ atd.cliente.informacoes.nome[0].toUpperCase() }}
-              <template v-if="fechado">
-                {{ atd.cliente.informacoes.nome[1].toLowerCase() }}
-              </template>
-            </p>
+            <div :class="indice % 2 == 0 ? '' : ''" class="circulo-contatos">
+              <p>{{ formataSigla(atd.cliente.informacoes.nome[0], 'upper') }}</p>
+              <p v-if="fechado">{{ formataSigla(atd.cliente.informacoes.nome[1], 'lower') }}</p>
+            </div>
             <template v-if="!fechado">{{ atd.cliente.informacoes.nome }}</template>
           </li>
         </ul>
@@ -61,6 +67,15 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active em versões anteriores a 2.1.8 */ {
+    opacity: 0;
+  }
+</style>
 
 <script>
 import { mapGetters } from "vuex";
@@ -95,6 +110,13 @@ export default {
     })
   },
   methods: {
+    formataSigla(letra, acao){
+      if(acao == 'upper'){
+        return letra.toUpperCase()
+      }else if(acao == 'lower'){
+        return letra.toLowerCase()
+      }
+    },
     ...mapMutations([
       "setAtendimentoAtivo",
       "setTodasMensagens",
