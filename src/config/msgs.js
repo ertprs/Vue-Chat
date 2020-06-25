@@ -14,6 +14,12 @@ Vue.toasted.register(
 );
 
 Vue.toasted.register(
+  "sucessoTransferencia",
+  payload => (!payload.msg ? "Transferencia realizada" : payload.msg),
+  { type: "success", icon: "random" }
+)
+
+Vue.toasted.register(
   "defaultError",
   payload => (!payload.msg ? "Oops.. Erro inesperado." : payload.msg),
   { type: "error", icon: "times" }

@@ -61,18 +61,42 @@ export default {
     this.preencherArrOpt(this.titulo)
   },
   methods: {
+    fecharPopup(){
+      document.querySelector('[blocker]').click()
+    },
     enviaGrupo(grupo){
-      console.log('grupo: ', grupo)
+      let url = this.$store.getters.getURL
+      axios.put(url+'transfer', grupo)
+      .then(response => {
+        this.fecharPopup()
+        console.log('Sucesso enviar grupo: ', response)
+        if(!document.querySelector('.toasted.toasted-primary.success')){
+          this.$toasted.global.sucessoTransferencia()
+        }
+      })
+      .catch(error => {
+        console.log('Erro ao enviar o grupo: : ', error)
+        if(!document.querySelector('.toasted.toasted-primary.error')){
+          this.$toasted.global.defaultError('Erro na transferencia')
+        }
+      })
     },
     getAgente(){
       let url = this.$store.getters.getURL
 
       axios.get(url+'get-agente')
       .then(response => {
+        this.fecharPopup()
         console.log('Sucesso get agente: ', response)
+        if(!document.querySelector('.toasted.toasted-primary.success')){
+          this.$toasted.global.sucessoTransferencia()
+        }
       })
       .catch(error => {
         console.log('Erro get agente: ', error)
+        if(!document.querySelector('.toasted.toasted-primary.error')){
+          this.$toasted.global.defaultError('Erro na transferencia')
+        }
       })
     },
     getGrupos(){
@@ -97,8 +121,11 @@ export default {
         for(let i = 0; i < arrAux.length; i++){
           this.arrOptRetorno.push({
             descricao: arrAux[i],
-            funcao: function(){
-              console.log('ok') 
+            funcao: () => {
+              this.fecharPopup()
+              if(!document.querySelector('.toasted.toasted-primary.success')){
+                this.$toasted.global.defaultSuccess({msg: 'Retorno realizado'})
+              }
             }
           })
         }
