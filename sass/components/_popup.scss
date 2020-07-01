@@ -44,11 +44,22 @@
         }
       }
     }
-    div[grupos-transferir]{
+    div[grupos-transferir], div[grupos-agentes]{
       min-height: 150px;
       width: 80%;
       min-width: 300px;
       margin: 15px auto;
+    }
+    div[agendar-retorno]{
+      width: 100%;
+      margin: 10px auto;
+      margin-top: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      > input{
+        outline: unset
+      }
     }
   }
 }

@@ -3,12 +3,15 @@
     <div>
       <h2>{{ titulo }}</h2>
       <template v-if="titulo == 'Retornar'">
-        <ul lista-retornar>
+        <ul lista-retornar v-if="!pessoalData">
           <li v-for="(opt, i) in arrOptRetorno" :key="i"
           v-on:click="opt.funcao">
             {{ opt.descricao }}
           </li>
         </ul>
+        <div v-if="pessoalData" agendar-retorno>
+          <input type="datetime-local" :min="setData('minimo')" :max="setData('maximo')" v-model="dataHora" />
+        </div>
       </template>
       <template v-else-if="titulo == 'Transferir'">
         <ul lista-transferir>
@@ -24,14 +27,19 @@
           @input="enviaGrupo"
           :reduce="arrGrupos => arrGrupos.grupo"
           > 
-
-          </vSelect> 
-          <!-- <select name="grupos">
-            <option v-for="(grupo, indice) in arrGrupos" :key="indice"
-            :value="grupo.grupo">
-              {{ grupo.label }}
-            </option>
-          </select> -->
+          <!-- :value="arrGrupos[0].label" -->
+          </vSelect>
+        </div>
+        <div v-if="arrAgentes.length" grupos-agentes>
+          <vSelect 
+          :options="arrAgentes"
+          label="login"
+          
+          @input="enviaAgente"
+          :reduce="arrAgentes => arrAgentes.login"
+          > 
+          <!-- :value="arrAgentes[0].login" -->
+          </vSelect>
         </div>
       </template>
     </div>
@@ -42,11 +50,11 @@
 import axios from 'axios'
 
 import vSelect from 'vue-select'
-import 'vue-select/dist/vue-select.css';
+import 'vue-select/dist/vue-select.css'
 
 export default {
   components:{
-    vSelect
+    vSelect,
   },
   props: ['titulo'],
   data(){
@@ -54,15 +62,40 @@ export default {
       arrOptRetorno: [],
       arrOptTransferir: [],
       arrGrupos: [],
-      agente: ''
+      arrAgentes: [],
+      pessoalData: false,
+      dataHora: ''
     }
   },
   mounted(){
     this.preencherArrOpt(this.titulo)
   },
+  watch: {
+    dataHora(){
+      let data = this.dataHora.slice(0, 10)
+      let hora = this.dataHora.slice(11, this.dataHora.length)
+
+      this.fecharPopup()
+      if(!document.querySelector('.toasted.toasted-primary.success')){
+        this.$toasted.global.defaultSuccess({msg: 'Retorno Agendado'})
+      }
+    }
+  },
   methods: {
     fecharPopup(){
       document.querySelector('[blocker]').click()
+    },
+    getGrupos(){
+      let url = this.$store.getters.getURL
+
+      axios.get(url+'get-groups')
+      .then(response => {
+        this.arrGrupos = response.data
+        document.querySelector('[lista-transferir]').remove()
+      })
+      .catch(error => {
+        console.log('Erro get grupos: ', error)
+      })
     },
     enviaGrupo(grupo){
       let url = this.$store.getters.getURL
@@ -86,11 +119,9 @@ export default {
 
       axios.get(url+'get-agente')
       .then(response => {
-        this.fecharPopup()
         console.log('Sucesso get agente: ', response)
-        if(!document.querySelector('.toasted.toasted-primary.success')){
-          this.$toasted.global.sucessoTransferencia()
-        }
+        this.arrAgentes = response.data
+        document.querySelector('[lista-transferir]').remove()
       })
       .catch(error => {
         console.log('Erro get agente: ', error)
@@ -99,17 +130,21 @@ export default {
         }
       })
     },
-    getGrupos(){
+    enviaAgente(agente){
       let url = this.$store.getters.getURL
-
-      axios.get(url+'get-groups')
+      axios.put(url+'transfer', agente)
       .then(response => {
-        this.arrGrupos = response.data
-        document.querySelector('[lista-transferir]').remove()
-
+        this.fecharPopup()
+        console.log('Sucesso enviar agente: ', response)
+        if(!document.querySelector('.toasted.toasted-primary.success')){
+          this.$toasted.global.sucessoTransferencia()
+        }
       })
       .catch(error => {
-        console.log('Erro get grupos: ', error)
+        console.log('Erro ao enviar o agente: : ', error)
+        if(!document.querySelector('.toasted.toasted-primary.error')){
+          this.$toasted.global.defaultError('Erro na transferencia')
+        }
       })
     },
     preencherArrOpt(tipo){
@@ -122,9 +157,13 @@ export default {
           this.arrOptRetorno.push({
             descricao: arrAux[i],
             funcao: () => {
-              this.fecharPopup()
-              if(!document.querySelector('.toasted.toasted-primary.success')){
-                this.$toasted.global.defaultSuccess({msg: 'Retorno realizado'})
+              if(arrAux[i] == arrAux[2]){
+                this.pessoalData = true
+              }else{
+                this.fecharPopup()
+                if(!document.querySelector('.toasted.toasted-primary.success')){
+                  this.$toasted.global.defaultSuccess({msg: 'Retorno realizado'})
+                }
               }
             }
           })
@@ -155,6 +194,42 @@ export default {
             }
           })
         }
+      }
+    },
+    setData(opt){
+      let data = new Date()
+      let dia = data.getDate()
+      let mes = data.getMonth() + 1
+      let ano = data.getFullYear()
+      let hora = data.getHours()
+      let minutos = data.getMinutes()
+
+      if(dia < 10){
+        dia = '0'+dia
+      }
+      if(mes < 10){
+        mes = '0'+mes
+      }
+      if(hora < 10){
+        hora = '0'+hora
+      }
+      if(minutos < 10){
+        minutos = '0'+minutos
+      }
+
+      if(opt == 'minimo'){
+        let agora = ano + '-' + mes + '-' + dia + 'T' + hora + ':' + minutos + ':00'
+        return agora
+      }else{
+        mes = parseInt(mes)
+        mes += 1
+
+        if(mes < 10){
+          mes = '0'+mes
+        }
+
+        let agora = ano + '-' + mes + '-' + dia + 'T' + hora + ':' + minutos + ':00'
+        return agora
       }
     }
   }

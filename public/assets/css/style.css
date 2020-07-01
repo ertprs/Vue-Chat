@@ -9676,11 +9676,20 @@ body {
           transform: translateY(1px); }
         #popup > div > ul li:nth-child(2) {
           margin: 0 15px; }
-    #popup > div div[grupos-transferir] {
+    #popup > div div[grupos-transferir], #popup > div div[grupos-agentes] {
       min-height: 150px;
       width: 80%;
       min-width: 300px;
       margin: 15px auto; }
+    #popup > div div[agendar-retorno] {
+      width: 100%;
+      margin: 10px auto;
+      margin-top: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+      #popup > div div[agendar-retorno] > input {
+        outline: unset; }
 
 #rodape-botoes-encerramento-container {
   width: 100%;

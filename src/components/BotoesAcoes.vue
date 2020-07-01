@@ -95,12 +95,12 @@ export default {
 
         this.limparAtendimentoAtivo()
 
-        this.checaBlocker()
+        // this.checaBlocker()
       } else {
         alert('Selecione um cliente antes de tentar finalizar o  atendimento')
       }
     },
-    finalizarAtendimentoNaApi( id ) {
+    finalizarAtendimentoNaApi(id) {
       let url = 'https://linux03/im/atdHumano/middleware/atd_api.php/end-atendimento'
       axios.delete(url, { data: { id: id } })
       .then(response => {
