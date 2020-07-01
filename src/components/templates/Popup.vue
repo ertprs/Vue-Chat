@@ -52,11 +52,13 @@ import axios from 'axios'
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css'
 
+import { mapMutations } from 'vuex'
+
 export default {
   components:{
     vSelect,
   },
-  props: ['titulo'],
+  props: ['titulo', 'origem'],
   data(){
     return{
       arrOptRetorno: [],
@@ -82,8 +84,9 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setBlocker']),
     fecharPopup(){
-      document.querySelector('[blocker]').click()
+      this.setBlocker(false)
     },
     getGrupos(){
       let url = this.$store.getters.getURL

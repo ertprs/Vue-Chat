@@ -1,13 +1,13 @@
 <template>
   <div id="rodape-botoes-encerramento-container">  
     <div class="rodape-botoes-encerramento">
-        <div class="rodape-botoes-botao botao-transferencia" title="Transferir" v-on:click="abrirTransferir()">
+        <div class="rodape-botoes-botao botao-transferencia" :title="titulos[0]" v-on:click="abrirTransferir()">
           <i class="fas fa-random"></i>
-          <span> Transferir </span>
+          <span>{{ titulos[0] }}</span>
         </div>
-        <div class="rodape-botoes-botao botao-retornar" title="Retornar" v-on:click="retornarForm()">
+        <div class="rodape-botoes-botao botao-retornar" :title="titulos[1]" v-on:click="retornarForm()">
           <i class="fas fa-undo"></i>
-          <span> Retornar </span>
+          <span>{{ titulos[1] }}</span>
         </div>
         <div class="rodape-botoes-botao botao-encerrar" title="Encerrar" v-on:click="encerrarAtendimento()">
           <i class="fas fa-sign-out-alt"></i>
@@ -15,8 +15,6 @@
         </div>
       </div>
       <Popup v-if="blocker" :titulo='titulo' />
-      <!-- <Popup v-if="popUpRetorno" :titulo="'Retornar'" />
-      <Popup v-if="popUpTransferir" :titulo="'Transferir'" /> -->
   </div>
 </template>
 
@@ -25,62 +23,35 @@ import axios from 'axios'
 
 import Popup from './templates/Popup'
 
-import { mapMutations } from 'vuex'
-import { mapGetters } from 'vuex'
+import {mapGetters,  mapMutations } from 'vuex'
 
 export default {
   data(){
     return{
-      titulo: '',
-      blocker: false
+      titulos: ['Transferir', 'Retornar'],
+      titulo: ''
     }
   },
   components: {
     Popup
   },
   methods: {
-    criaBlocker(){
-      let blocker = document.createElement('div')
-      blocker.setAttribute('blocker', '')
-      blocker.style.width = '100%'
-      blocker.style.height = '100%'
-      blocker.style.zIndex = 1
-      blocker.style.position = 'absolute'
-      blocker.style.top = '0'
-      blocker.style.left = '0'
-      blocker.style.backgroundColor = 'rgba(0, 0, 0, 0.1)'
-      blocker.style.display = 'flex'
-      blocker.style.justifyContent = 'center'
-      blocker.style.alignItems = 'center'
-
-      blocker.addEventListener('click', () => {
-        this.blocker = false
-        blocker.remove()
-      })
-
-      document.querySelector('body').insertAdjacentElement('beforeend', blocker)
-    },
+    ...mapMutations(['setBlocker']),
     checaBlocker(criar){
-      let blocker = document.querySelector('[blocker]')
-      if(blocker){
-        blocker.click()
-        if(criar){
-          this.criaBlocker(true)
-        }
+      if(criar){
+        this.setBlocker(true)
       }else{
-        this.criaBlocker()
+        this.setBlocker(false)
       }
     },
     abrirTransferir(){
       this.checaBlocker(true)
-      this.blocker = true
       this.titulo = 'Transferir'
     },
     retornarForm(){
-      this.checaBlocker(true)
-      this.blocker = true
       this.titulo = 'Retornar'
-      
+
+      this.checaBlocker(true)
     },
     ...mapMutations(['limparAtendimentoAtivo']),
     encerrarAtendimento(){
@@ -95,7 +66,6 @@ export default {
 
         this.limparAtendimentoAtivo()
 
-        // this.checaBlocker()
       } else {
         alert('Selecione um cliente antes de tentar finalizar o  atendimento')
       }
@@ -114,6 +84,7 @@ export default {
   computed: {
     ...mapGetters({
       atendimentoAtivo: 'getAtendimentoAtivo',
+      blocker: 'getBlocker'
     })
   }
 }

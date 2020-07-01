@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
+import controleBlocker from './modulos/controleBlocker'
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -83,5 +85,6 @@ export default new Vuex.Store({
     getAbaContatos(state){
       return state.abaContatos
     }
-  }
+  },
+  modules: { controleBlocker }
 });
