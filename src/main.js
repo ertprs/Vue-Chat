@@ -43,6 +43,8 @@ var app = new Vue({
         let mainData = response.data
         if( mainData.atendimentos != null && mainData.gerenciador != null) {
           this.setObjAtendimentosAbertos( mainData )
+          console.log('Dados iniciais: ')
+          console.log(mainData)
           mainData.atendimentos.token_atd != null ? this.setTokenAtd(mainData.atendimentos.token_atd) : this.setTokenAtd('-')
           mainData.gerenciador.token_manager != null ? this.setTokenManager( mainData.gerenciador.token_manager ) : this.setTokenManager('-')
           this.iniciarAtualizacaoDeAtendimentos()
@@ -70,14 +72,25 @@ var app = new Vue({
      var temporizador = setInterval( this.atualizarAtendimentos, 2000 );
     },
     atualizarAtendimentos() {
-      // let url = 'get-atendimento?token_atd=' + this.tokenAtd + '&token_manager=' + this.tokenManager
-      let url = 'get-atendimento'
-      axios({ method: 'get', url: this.$store.getters.getURL + url }) // segundo get-atendimendo, agora com parametros
+      let urlComToken = 'get-atendimento?token_atd=' + this.tokenAtd + '&token_manager=' + this.tokenManager
+      axios({ method: 'get', url: this.$store.getters.getURL + urlComToken }) // segundo get-atendimendo, agora com parametros
       .then(response => {
-        let mainData = response.data
-        this.setObjAtendimentosAbertos( mainData )
+        let mainData = response.data  
+        mainData = this.testeTratarParaSomenteTerUltimaMgs(mainData)
+        this.setObjAtendimentosAbertos(mainData)
       })
       .catch(err => console.log(err))
+    },
+    testeTratarParaSomenteTerUltimaMgs( jsonData ) {
+      var ultimoArray = []
+      for( let item in jsonData.atendimentos.ramais) {
+        let tamanho = jsonData.atendimentos.ramais[item].cliente.messages.length
+        let ultimaPosicao = tamanho - 1
+        ultimoArray = jsonData.atendimentos.ramais[item].cliente.messages[ultimaPosicao]
+        jsonData.atendimentos.ramais[item].cliente.messages = []
+        jsonData.atendimentos.ramais[item].cliente.messages[0] = ultimoArray
+      }
+      return jsonData
     }
   }
 }).$mount("#app");
