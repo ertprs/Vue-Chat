@@ -198,16 +198,21 @@ export default {
         for (let i = 0; i < this.arrAtivos.length; i++) {
           if (document.querySelector("#li_" + i)) {
             arrLi[i] = document.querySelector("#li_" + i);
-            if (arrLi[i].children[1]) {
-              if (i !== indice) {
-                arrLi[i].children[1].remove();
-              }
-            } else if (i == indice) {
-              const spanAtivo = document.createElement("span");
-              spanAtivo.classList.add("ativo");
-              const li = document.querySelector("#li_" + indice);
-              li.insertAdjacentElement("beforeend", spanAtivo);
+            if(arrLi[i].classList.contains('ativo')){
+              arrLi[i].classList.remove('ativo')
+            }else if(i == indice){
+              arrLi[i].classList.add('ativo')
             }
+            // if (arrLi[i].children[1]) {
+            //   if (i !== indice) {
+            //     arrLi[i].children[1].remove();
+            //   }
+            // } else if (i == indice) {
+            //   const spanAtivo = document.createElement("span");
+            //   spanAtivo.classList.add("ativo");
+            //   const li = document.querySelector("#li_" + indice);
+            //   li.insertAdjacentElement("beforeend", spanAtivo);
+            // }
           }
         }
       }

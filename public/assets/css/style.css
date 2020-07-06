@@ -8962,6 +8962,7 @@ body {
     #todos-contatos ul.fechado li span {
       margin-left: 5px; }
     #todos-contatos ul li {
+      opacity: .8;
       padding: 0 10px;
       transition-duration: .4s;
       font-size: .9rem;
@@ -8990,14 +8991,9 @@ body {
           text-align: center;
           height: auto;
           width: auto; }
-      #todos-contatos ul li .ativo {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: green;
-        position: absolute;
-        right: 3px;
-        top: 3px; }
+      #todos-contatos ul li.ativo {
+        opacity: 1;
+        background-color: #a8dadc !important; }
       #todos-contatos ul li svg {
         margin-right: 5px;
         font-size: 1.2rem; }
@@ -9006,13 +9002,15 @@ body {
         #todos-contatos ul li:nth-child(odd) .circulo-contatos {
           background-color: #FFF; }
         #todos-contatos ul li:nth-child(odd):hover {
-          background-color: rgba(100, 100, 100, 0.3); }
+          background-color: rgba(100, 100, 100, 0.3);
+          opacity: 1; }
       #todos-contatos ul li:nth-child(even) {
         background-color: #FFF; }
         #todos-contatos ul li:nth-child(even) .circulo-contatos {
           background-color: #CCC; }
         #todos-contatos ul li:nth-child(even):hover {
-          background-color: rgba(255, 255, 255, 0.1); }
+          background-color: rgba(255, 255, 255, 0.1);
+          opacity: 1; }
   #todos-contatos .lista-agenda .lista-agenda--titulo {
     width: 100%;
     height: 50px;
