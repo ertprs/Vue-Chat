@@ -43,6 +43,9 @@ export default new Vuex.Store({
     atualizarMensagens(state, objAtendimentos){
       var currentdate = new Date();
       var currentTime = currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds()
+      for( let i in objAtendimentos ) {
+        console.log(objAtendimentos)
+      }
 
       let msgCliente = {
         "id_cliente": 5516987987900,
@@ -85,10 +88,12 @@ export default new Vuex.Store({
       }
       // rotina para adicionar propriedade alertaMsgNova
       var idAlvo = "5516987987933"
+      var qtdMensagemNova = 5
       for( let i in state.todosAtendimentos ){
         if( state.todosAtendimentos[i].cliente.id == idAlvo ) {
           var arrAlvo = state.todosAtendimentos[i]
           arrAlvo.cliente.alertaMsgNova = true
+          arrAlvo.cliente.qtdMensagem = qtdMensagemNova
           state.todosAtendimentos.splice(i, 1)
           state.todosAtendimentos.unshift( arrAlvo )
           continue
