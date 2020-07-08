@@ -4,7 +4,7 @@
 
       <!-- MSG Operador -->
       <Mensagens
-      v-for="msg in todasMensagens" :key="msg.id" 
+      v-for="msg in todasMensagens" :key="msg.id"
       :autor="msg.autor"
       :origem="msg.origem"
       :msg="msg.msg"

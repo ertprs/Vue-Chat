@@ -25,7 +25,7 @@
             <div>
               <i class="fas fa-clock"></i>
               <p> Tempo de Fila </p>
-            </div>                
+            </div>
             <p> {{ atendimentoAtivo.informacoes.tempo_fila }} </p>
           </div>
         </div>

@@ -45,10 +45,9 @@ export default new Vuex.Store({
       var currentdate = new Date();
       var currentTime = currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds()
       for( let i in objAtendimentos ) {
-        console.log(objAtendimentos)
+        console.log(objAtendimentos[i])
       }
 
-      
       let msgCliente = {
         "id_cliente": 5516987987900,
         "texto": "Cliente ",
@@ -58,7 +57,7 @@ export default new Vuex.Store({
         "hora": "14:34:11"
       }
       msgCliente.texto = 'Msg cliente ' + currentTime
-      
+
       let msgOperador = {
         "id_cliente": 5516987987900,
         "texto": "99",
