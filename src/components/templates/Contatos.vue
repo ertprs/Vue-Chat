@@ -202,7 +202,11 @@ export default {
           if (document.querySelector("#li_" + i)) {
             arrLi[i] = document.querySelector("#li_" + i)
             if(arrLi[i].classList.contains('ativo')){
-              arrLi[i].classList.remove('ativo')
+              if(i == indice){
+                continue
+              }else{
+                arrLi[i].classList.remove('ativo')
+              }
             }else if(i == indice){
               if(arrLi[i].classList.contains('destaque-novo-contato')){
                 arrLi[i].classList.remove('destaque-novo-contato')

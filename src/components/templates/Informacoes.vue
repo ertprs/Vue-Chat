@@ -2,17 +2,17 @@
   <div id="informacoes">
     <template>
       <div class="titulo-informacoes">
-        <h1>
+        <h1 title="Informacoes">
           <i class="fas fa-info-circle"></i>
-           Informacoes
+           <!-- Informacoes -->
         </h1>
         <div v-if="atendimentoAtivo.informacoes">
           <div v-if="atendimentoAtivo.informacoes.nome">
             <div>
               <i class="fas fa-user"></i>
-              <p> Nome </p>
+              <p> Contato </p>
             </div>
-            <p> {{ atendimentoAtivo.informacoes.nome }} </p>
+            <p> {{ atendimentoAtivo.informacoes.nome }} / {{ atendimentoAtivo.id }} </p>
           </div>
           <div v-if="atendimentoAtivo.informacoes.tempo_conectado">
             <div>
