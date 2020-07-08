@@ -9024,6 +9024,12 @@ body {
         align-items: center;
         border-radius: 50%;
         color: #FFF; }
+      #todos-contatos ul li .ultima-msg {
+        position: absolute;
+        bottom: 0;
+        left: 55px;
+        color: #666666;
+        font-size: .7rem; }
   #todos-contatos .lista-agenda .lista-agenda--titulo {
     width: 100%;
     height: 50px;

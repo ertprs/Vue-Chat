@@ -28,6 +28,7 @@
             <p v-if="fechado">{{ formataSigla(atd.cliente.informacoes.nome[1], 'lower') }}</p>
           </div>
           <template v-if="!fechado">{{ atd.cliente.informacoes.nome }}</template>
+          <span v-if="!fechado" class="ultima-msg">{{formataUltimaMsg(atd.cliente.messages)}}</span>
           <span v-if="verificaMsgNova(atd.cliente.alertaMsgNova, indice)" class="destaque-nova-msg">{{ atd.cliente.qtdMsgNova }}</span>
         </li>
       </ul>
@@ -237,6 +238,16 @@ export default {
           return false
         }else{
           return true
+        }
+      }
+    },
+    formataUltimaMsg(arrMsgs){
+      if(arrMsgs.length > 0){
+        if(arrMsgs[arrMsgs.length - 1].texto.length > 30){
+          let msgFormatada = arrMsgs[arrMsgs.length - 1].texto.slice(0, 30) + '...'
+          return msgFormatada
+        }else{
+          return arrMsgs[arrMsgs.length - 1].texto
         }
       }
     }
