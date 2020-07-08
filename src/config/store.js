@@ -64,10 +64,12 @@ export default new Vuex.Store({
       }
       msgOperador.texto = 'Msg operador ' + currentTime
       var idAlvo = "5516987987933"
+      var qtdMsgNova = 5
       for( let i in state.todosAtendimentos ){
         if( state.todosAtendimentos[i].cliente.id == idAlvo ) {
           var arrAlvo = state.todosAtendimentos[i]
           arrAlvo.cliente.alertaMsgNova = true
+          arrAlvo.cliente.qtdMsgNova = qtdMsgNova
           state.todosAtendimentos.splice(i, 1)
           state.todosAtendimentos.unshift( arrAlvo )
           continue
