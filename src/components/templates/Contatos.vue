@@ -23,12 +23,13 @@
           @click="ativarConversa( atd.cliente, indice );"
         >
           <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
-          <span v-if="atd.cliente.alertaMsgNova == true">Oo</span>
           <div :class="indice % 2 == 0 ? '' : ''" class="circulo-contatos">
             <p>{{ formataSigla(atd.cliente.informacoes.nome[0], 'upper') }}</p>
             <p v-if="fechado">{{ formataSigla(atd.cliente.informacoes.nome[1], 'lower') }}</p>
           </div>
           <template v-if="!fechado">{{ atd.cliente.informacoes.nome }}</template>
+          <span v-if="!fechado" class="ultima-msg">{{formataUltimaMsg(atd.cliente.messages)}}</span>
+          <span v-if="verificaMsgNova(atd.cliente.alertaMsgNova, indice)" class="destaque-nova-msg">{{ atd.cliente.qtdMsgNova }}</span>
         </li>
       </ul>
       <div class="lista-agenda">
@@ -188,32 +189,30 @@ export default {
       this.toggleAbaContatos(this.fechado);
     },
     preencheAtivos() {
-      for (let i = 0; i < this.todosAtendimentos.length; i++) {
-        this.arrAtivos[i] = { ativo: "N" };
+      if(this.arrAtivos.length !== this.todosAtendimentos.length){
+        for (let i = 0; i < this.todosAtendimentos.length; i++) {
+          this.arrAtivos[i] = { ativo: "N" };
+        }
       }
     },
     controlaAtivos(indice) {
       if (this.arrAtivos[indice]) {
-        this.arrAtivos[indice].ativo = "S";
+        this.arrAtivos[indice].ativo = "S"
         let arrLi = [];
         for (let i = 0; i < this.arrAtivos.length; i++) {
           if (document.querySelector("#li_" + i)) {
-            arrLi[i] = document.querySelector("#li_" + i);
+            arrLi[i] = document.querySelector("#li_" + i)
             if(arrLi[i].classList.contains('ativo')){
               arrLi[i].classList.remove('ativo')
             }else if(i == indice){
               arrLi[i].classList.add('ativo')
             }
-            // if (arrLi[i].children[1]) {
-            //   if (i !== indice) {
-            //     arrLi[i].children[1].remove();
-            //   }
-            // } else if (i == indice) {
-            //   const spanAtivo = document.createElement("span");
-            //   spanAtivo.classList.add("ativo");
-            //   const li = document.querySelector("#li_" + indice);
-            //   li.insertAdjacentElement("beforeend", spanAtivo);
-            // }
+          }
+        }
+
+        for(let i = 0; i < this.arrAtivos.length; i++){
+          if(i !== indice){
+            this.arrAtivos[i].ativo = 'N'
           }
         }
       }
@@ -232,6 +231,25 @@ export default {
         let mensagensClienteAtivo = self.obterMensagensDoContatoAtivoPeloId(idClienteAtivo)
         self.setMensagensClienteAtivo(idClienteAtivo, mensagensClienteAtivo)
       },1500)
+    },
+    verificaMsgNova(msgNova, indice){
+      if(msgNova){
+        if(this.arrAtivos[indice].ativo == 'S'){
+          return false
+        }else{
+          return true
+        }
+      }
+    },
+    formataUltimaMsg(arrMsgs){
+      if(arrMsgs.length > 0){
+        if(arrMsgs[arrMsgs.length - 1].texto.length > 30){
+          let msgFormatada = arrMsgs[arrMsgs.length - 1].texto.slice(0, 30) + '...'
+          return msgFormatada
+        }else{
+          return arrMsgs[arrMsgs.length - 1].texto
+        }
+      }
     }
   }
 };
