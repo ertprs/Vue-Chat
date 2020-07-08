@@ -88,7 +88,7 @@ export default new Vuex.Store({
         var arrAlvo2 = state.todosAtendimentos[6]
         arrAlvo2.cliente.id = '5516987955555'
         arrAlvo2.cliente.informacoes.nome = 'NovoCliente'
-        arrAlvo2.cliente.novoContado = true
+        arrAlvo2.cliente.novoContato = true
         arrAlvo2.cliente.qtdMensagem = 8
         state.todosAtendimentos.splice(6, 1)
         state.todosAtendimentos.unshift( arrAlvo2 )

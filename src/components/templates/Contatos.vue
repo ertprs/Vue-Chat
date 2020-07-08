@@ -20,10 +20,11 @@
           :key="atd.cliente.id"
           :id="'li_'+indice"
           :title="atd.cliente.informacoes.nome"
+          :class="atd.cliente.novoContato ? 'destaque-novo-contato' : ''"
           @click="ativarConversa( atd.cliente, indice );"
         >
           <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
-          <div :class="indice % 2 == 0 ? '' : ''" class="circulo-contatos">
+          <div class="circulo-contatos">
             <p>{{ formataSigla(atd.cliente.informacoes.nome[0], 'upper') }}</p>
             <p v-if="fechado">{{ formataSigla(atd.cliente.informacoes.nome[1], 'lower') }}</p>
           </div>
@@ -96,12 +97,10 @@ export default {
   watch: {
     todosAtendimentos() {
       if (this.todosAtendimentos) {
-        if (this.todosAtendimentos) {
-          this.preencheAtivos()
-          this.setMensagensClienteAtivo(
-            this.idAtendimentoAtivo, this.obterMensagensDoContatoAtivoPeloId(this.idAtendimentoAtivo)
-          )
-        }
+        this.preencheAtivos()
+        this.setMensagensClienteAtivo(
+          this.idAtendimentoAtivo, this.obterMensagensDoContatoAtivoPeloId(this.idAtendimentoAtivo)
+        )
       }
     }
   },
@@ -205,6 +204,9 @@ export default {
             if(arrLi[i].classList.contains('ativo')){
               arrLi[i].classList.remove('ativo')
             }else if(i == indice){
+              if(arrLi[i].classList.contains('destaque-novo-contato')){
+                arrLi[i].classList.remove('destaque-novo-contato')
+              }
               arrLi[i].classList.add('ativo')
             }
           }
@@ -234,10 +236,14 @@ export default {
     },
     verificaMsgNova(msgNova, indice){
       if(msgNova){
-        if(this.arrAtivos[indice].ativo == 'S'){
-          return false
+        if(this.arrAtivos[indice]){
+          if(this.arrAtivos[indice].ativo == 'S'){
+            return false
+          }else{
+            return true
+          }
         }else{
-          return true
+          return false
         }
       }
     },
@@ -251,7 +257,7 @@ export default {
         }
       }
     }
-  }
+  },
 };
 </script>
 
