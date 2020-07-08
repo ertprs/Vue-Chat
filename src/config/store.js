@@ -15,7 +15,8 @@ export default new Vuex.Store({
     tokenManager: '',
     todosAtendimentos: {},
     url: '',
-    abaContatos: false
+    abaContatos: false,
+    testeContador: 0
   },
   mutations: {
     setFormularioCliente(state, formularioCliente){
@@ -47,6 +48,7 @@ export default new Vuex.Store({
         console.log(objAtendimentos)
       }
 
+      
       let msgCliente = {
         "id_cliente": 5516987987900,
         "texto": "Cliente ",
@@ -56,7 +58,7 @@ export default new Vuex.Store({
         "hora": "14:34:11"
       }
       msgCliente.texto = 'Msg cliente ' + currentTime
-
+      
       let msgOperador = {
         "id_cliente": 5516987987900,
         "texto": "99",
@@ -66,8 +68,10 @@ export default new Vuex.Store({
         "hora": "14:34:11"
       }
       msgOperador.texto = 'Msg operador ' + currentTime
+      // teste para adicionar novas mensagens para contato
+      state.testeContador ++
+      var qtdMsgNova = state.testeContador
       var idAlvo = "5516987987933"
-      var qtdMsgNova = 5
       for( let i in state.todosAtendimentos ){
         if( state.todosAtendimentos[i].cliente.id == idAlvo ) {
           var arrAlvo = state.todosAtendimentos[i]
@@ -79,13 +83,18 @@ export default new Vuex.Store({
         }
       }
 
-      // state.todosAtendimentos.pop()
+      // teste para adicionar novo cliente
+      if( state.testeContador == 3 ) {
+        var arrAlvo2 = state.todosAtendimentos[6]
+        arrAlvo2.cliente.id = '5516987955555'
+        arrAlvo2.cliente.informacoes.nome = 'NovoCliente'
+        arrAlvo2.cliente.novoContado = true
+        arrAlvo2.cliente.qtdMensagem = 8
+        state.todosAtendimentos.splice(6, 1)
+        state.todosAtendimentos.unshift( arrAlvo2 )
+      }
 
-      // for( let i in state.todosAtendimentos ) {
-        // state.todosAtendimentos[i].cliente.nome = "*" + state.todosAtendimentos[i].cliente.nome
-        // console.log( state.todosAtendimentos[i].cliente.id )
-      // }
-
+      // carrega mensagens teste no contato ativo
       var arrayDeMensagensNovas = [ msgOperador, msgCliente ]
       for( var i in arrayDeMensagensNovas ) {
         state.todosAtendimentos[0].cliente.messages.push( arrayDeMensagensNovas[i] )
@@ -103,19 +112,6 @@ export default new Vuex.Store({
           state.todasMensagens.push(objMensagem)
         } else {
           // destacar que existe mensagem nova em outro cliente com o id
-        }
-      }
-      // rotina para adicionar propriedade alertaMsgNova
-      var idAlvo = "5516987987933"
-      var qtdMensagemNova = 5
-      for( let i in state.todosAtendimentos ){
-        if( state.todosAtendimentos[i].cliente.id == idAlvo ) {
-          var arrAlvo = state.todosAtendimentos[i]
-          arrAlvo.cliente.alertaMsgNova = true
-          arrAlvo.cliente.qtdMensagem = qtdMensagemNova
-          state.todosAtendimentos.splice(i, 1)
-          state.todosAtendimentos.unshift( arrAlvo )
-          continue
         }
       }
     },
