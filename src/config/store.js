@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-
 import controleBlocker from './modulos/controleBlocker'
 
 Vue.use(Vuex);
@@ -14,7 +13,7 @@ export default new Vuex.Store({
     atendimentoAtivo: {},
     tokenAtd: '',
     tokenManager: '',
-    atendimentosAbertos: {},
+    todosAtendimentos: {},
     url: '',
     abaContatos: false
   },
@@ -34,12 +33,74 @@ export default new Vuex.Store({
     setHabilitaRolagem(state, habilitaRolagem){
       state.habilitaRolagem = habilitaRolagem
     },
-    
-    setURL(state, newURI) {
+    setURL(state, newURI){
       state.url = newURI
     },
-    setAtendimentosAbertos(state, atendimentosAbertos){
-      state.atendimentosAbertos = atendimentosAbertos
+    setAtendimentosIniciais(state, todosAtendimentos){
+      state.todosAtendimentos = todosAtendimentos
+      // console.log( state.todosAtendimentos )
+    },
+    atualizarMensagens(state, objAtendimentos){
+      var currentdate = new Date();
+      var currentTime = currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds()
+
+      let msgCliente = {
+        "id_cliente": 5516987987900,
+        "texto": "Cliente ",
+        "resp_msg": "CLI",
+        "origem": "outros",
+        "data": "07-06-2020",
+        "hora": "14:34:11"
+      }
+      msgCliente.texto = 'Msg cliente ' + currentTime
+
+      let msgOperador = {
+        "id_cliente": 5516987987900,
+        "texto": "99",
+        "resp_msg": "OPE",
+        "origem": "principal",
+        "data": "07-06-2020",
+        "hora": "14:34:11"
+      }
+      msgOperador.texto = 'Msg operador ' + currentTime
+      var idAlvo = "5516987987933"
+      for( let i in state.todosAtendimentos ){
+        if( state.todosAtendimentos[i].cliente.id == idAlvo ) {
+          var arrAlvo = state.todosAtendimentos[i]
+          arrAlvo.cliente.alertaMsgNova = true
+          state.todosAtendimentos.splice(i, 1)
+          state.todosAtendimentos.unshift( arrAlvo )
+          continue
+        }
+      }
+
+      // state.todosAtendimentos.pop()
+
+      // for( let i in state.todosAtendimentos ) {
+        // state.todosAtendimentos[i].cliente.nome = "*" + state.todosAtendimentos[i].cliente.nome
+        // console.log( state.todosAtendimentos[i].cliente.id )
+      // }
+
+      var arrayDeMensagensNovas = [ msgOperador, msgCliente ]
+      for( var i in arrayDeMensagensNovas ) {
+        state.todosAtendimentos[0].cliente.messages.push( arrayDeMensagensNovas[i] )
+        var idDoAtendimentoAtivo = state.atendimentoAtivo.id
+        if( arrayDeMensagensNovas[i].id_cliente == idDoAtendimentoAtivo ) {
+          // carrega array e mostra a mensagem
+          let objMensagem = {
+            autor: arrayDeMensagensNovas[i].resp_msg, // Operador, Cliente
+            origem: arrayDeMensagensNovas[i].origem, // principal e outros
+            msg: arrayDeMensagensNovas[i].texto,
+            horario: '88:88',
+            anexo: '',
+            imgAnexo: ''
+          };
+          state.todasMensagens.push(objMensagem)
+        } else {
+          // destacar que existe mensagem nova em outro cliente com o id
+        }
+      }
+      // console.log(idDoAtendimentoAtivo)
     },
     setAtendimentoAtivo(state, objInformacoes){
       state.atendimentoAtivo = objInformacoes
@@ -70,8 +131,8 @@ export default new Vuex.Store({
     getURL(state) {
       return state.url
     },
-    getAtendimentosAbertos(state){
-      return state.atendimentosAbertos
+    getTodosAtendimentos(state){
+      return state.todosAtendimentos
     },
     getAtendimentoAtivo(state){
       return state.atendimentoAtivo

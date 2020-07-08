@@ -155,7 +155,7 @@ export default {
             .catch(error => {
               console.log(error);
             });
-          this.setTodasMensagens(this.criaObjMensagem())
+          // this.setTodasMensagens(this.criaObjMensagem())
           this.mensagem = ''
         }
       }
@@ -204,7 +204,6 @@ export default {
       return objMensagem
     },
     verificaStatusDaMensagem(objMensagem){
-
       // enviado, recebido, visualizado e ''
       if(objMensagem.origem == 'principal'){
         objMensagem.status = 'enviado'
@@ -264,7 +263,6 @@ export default {
         this.imagemPrevia = ''
         this.selecioneAnexo = true
       }
-
     },
     enviarAnexo(){
       if(this.validaAnexo(this.arquivo)){
@@ -379,7 +377,7 @@ export default {
   computed: {
     ...mapGetters({
       atendimentoAtivo: 'getAtendimentoAtivo',
-      todasMensagens: 'getTodasMensagens',
+      // todasMensagens: 'getTodasMensagens',
       informacoesAberto: 'getInformacoesAberto',
       url: 'getURL'
     }),

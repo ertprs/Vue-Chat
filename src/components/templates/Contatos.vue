@@ -13,16 +13,17 @@
         <i class="fas fa-long-arrow-alt-left flecha"></i>
       </div>
     </div>
-    <div class="lista-contatos-container" v-if="atendimentosAbertos.length > 0">
+    <div class="lista-contatos-container" v-if="todosAtendimentos.length > 0">
       <ul :class="{'fechado' : fechado}">
         <li
-          v-for="(atd, indice) in atendimentosAbertos"
+          v-for="(atd, indice) in todosAtendimentos"
           :key="atd.cliente.id"
           :id="'li_'+indice"
           :title="atd.cliente.informacoes.nome"
           @click="ativarConversa( atd.cliente, indice );"
         >
           <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
+          <span v-if="atd.cliente.alertaMsgNova == true">Oo</span>
           <div :class="indice % 2 == 0 ? '' : ''" class="circulo-contatos">
             <p>{{ formataSigla(atd.cliente.informacoes.nome[0], 'upper') }}</p>
             <p v-if="fechado">{{ formataSigla(atd.cliente.informacoes.nome[1], 'lower') }}</p>
@@ -43,7 +44,7 @@
         </div>
         <ul :class="{'fechado' : fechado}">
           <li
-            v-for="(atd, indice) in atendimentosAbertos"
+            v-for="(atd, indice) in todosAtendimentos"
             :key="atd.cliente.id"
             :id="'li_'+indice"
             :title="atd.cliente.informacoes.nome"
@@ -92,9 +93,9 @@ export default {
     };
   },
   watch: {
-    atendimentosAbertos() {
-      if (this.atendimentosAbertos) {
-        if (this.atendimentosAbertos) {
+    todosAtendimentos() {
+      if (this.todosAtendimentos) {
+        if (this.todosAtendimentos) {
           this.preencheAtivos()
           this.setMensagensClienteAtivo(
             this.idAtendimentoAtivo, this.obterMensagensDoContatoAtivoPeloId(this.idAtendimentoAtivo)
@@ -106,7 +107,7 @@ export default {
   computed: {
     ...mapGetters({
       clienteMandouMensagem: "getClienteMandouMensagem",
-      atendimentosAbertos: "getAtendimentosAbertos",
+      todosAtendimentos: "getTodosAtendimentos",
     })
   },
   methods: {
@@ -187,7 +188,7 @@ export default {
       this.toggleAbaContatos(this.fechado);
     },
     preencheAtivos() {
-      for (let i = 0; i < this.atendimentosAbertos.length; i++) {
+      for (let i = 0; i < this.todosAtendimentos.length; i++) {
         this.arrAtivos[i] = { ativo: "N" };
       }
     },
@@ -218,9 +219,9 @@ export default {
       }
     },
     obterMensagensDoContatoAtivoPeloId( id ) {
-      for( let atd in this.atendimentosAbertos ) {
-        if( id == this.atendimentosAbertos[atd].cliente.id ) {
-          return this.atendimentosAbertos[atd].cliente.messages
+      for( let atd in this.todosAtendimentos ) {
+        if( id == this.todosAtendimentos[atd].cliente.id ) {
+          return this.todosAtendimentos[atd].cliente.messages
         }
       }
     },
