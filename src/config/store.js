@@ -63,23 +63,6 @@ export default new Vuex.Store({
         "hora": "14:34:11"
       }
       msgOperador.texto = 'Msg operador ' + currentTime
-      var idAlvo = "5516987987933"
-      for( let i in state.todosAtendimentos ){
-        if( state.todosAtendimentos[i].cliente.id == idAlvo ) {
-          var arrAlvo = state.todosAtendimentos[i]
-          arrAlvo.cliente.alertaMsgNova = true
-          state.todosAtendimentos.splice(i, 1)
-          state.todosAtendimentos.unshift( arrAlvo )
-          continue
-        }
-      }
-
-      // state.todosAtendimentos.pop()
-
-      // for( let i in state.todosAtendimentos ) {
-        // state.todosAtendimentos[i].cliente.nome = "*" + state.todosAtendimentos[i].cliente.nome
-        // console.log( state.todosAtendimentos[i].cliente.id )
-      // }
 
       var arrayDeMensagensNovas = [ msgOperador, msgCliente ]
       for( var i in arrayDeMensagensNovas ) {
@@ -100,7 +83,17 @@ export default new Vuex.Store({
           // destacar que existe mensagem nova em outro cliente com o id
         }
       }
-      // console.log(idDoAtendimentoAtivo)
+      // rotina para adicionar propriedade alertaMsgNova
+      var idAlvo = "5516987987933"
+      for( let i in state.todosAtendimentos ){
+        if( state.todosAtendimentos[i].cliente.id == idAlvo ) {
+          var arrAlvo = state.todosAtendimentos[i]
+          arrAlvo.cliente.alertaMsgNova = true
+          state.todosAtendimentos.splice(i, 1)
+          state.todosAtendimentos.unshift( arrAlvo )
+          continue
+        }
+      }
     },
     setAtendimentoAtivo(state, objInformacoes){
       state.atendimentoAtivo = objInformacoes
