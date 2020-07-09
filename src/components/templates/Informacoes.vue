@@ -64,13 +64,13 @@ export default {
       telefone = "+"+telefone.slice(0,2)+" ("+telefone.slice(2,4)+") "+telefone.slice(4, 9)+"-"+telefone.slice(9, telefone.length)
       return telefone
     },
-    formataHorario(horas){
+    formataHorario(hora){
       if(hora[0] && hora[1] == '0'){
         return hora.slice(3,5)+' minutos'
       }else{
         return hora.slice(0,2)+'horas e '+hora.slice(3,5)+' minutos'
       }
-      return horas
+      return hora
     }
   },
   computed: {
