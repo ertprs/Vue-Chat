@@ -57,18 +57,24 @@ export default {
   },
   methods: {
     formataNome(nome){
+      if(!nome){ return '' }
+
       nome = nome.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase() })
       return nome
     },
     formataTelefone(telefone){
+      if(!telefone){ return '' }
+
       telefone = "+"+telefone.slice(0,2)+" ("+telefone.slice(2,4)+") "+telefone.slice(4, 9)+"-"+telefone.slice(9, telefone.length)
       return telefone
     },
     formataHorario(horas){
-      if(hora[0] && hora[1] == '0'){
-        return hora.slice(3,5)+' minutos'
+      if(!horas){ return '' }
+
+      if(horas[0] && horas[1] == '0'){
+        return horas.slice(3,5)+' minutos'
       }else{
-        return hora.slice(0,2)+'horas e '+hora.slice(3,5)+' minutos'
+        return horas.slice(0,2)+'horas e '+horas.slice(3,5)+' minutos'
       }
       return horas
     }
