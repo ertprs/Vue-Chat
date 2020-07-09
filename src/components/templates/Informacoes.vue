@@ -19,14 +19,14 @@
               <i class="fas fa-user-clock"></i>
               <p> Tempo Conectado </p>
             </div>
-            <p> {{ atendimentoAtivo.informacoes.tempo_conectado }} </p>
+            <p> {{ formataHorario(atendimentoAtivo.informacoes.tempo_conectado) }} </p>
           </div>
           <div v-if="atendimentoAtivo.informacoes.tempo_fila">
             <div>
               <i class="fas fa-clock"></i>
               <p> Tempo de Fila </p>
             </div>
-            <p> {{ atendimentoAtivo.informacoes.tempo_fila }} </p>
+            <p> {{ formataHorario(atendimentoAtivo.informacoes.tempo_fila) }} </p>
           </div>
         </div>
       </div>
@@ -61,9 +61,16 @@ export default {
       return nome
     },
     formataTelefone(telefone){
-      telefone = telefone.replace(/^\([0-9]{2}(?:\))\s?[0-9]{5}(?:-)[0-9]{4}$/mg)
-      console.log('Telefone: ', telefone)
+      telefone = "+"+telefone.slice(0,2)+" ("+telefone.slice(2,4)+") "+telefone.slice(4, 9)+"-"+telefone.slice(9, telefone.length)
       return telefone
+    },
+    formataHorario(horas){
+      if(hora[0] && hora[1] == '0'){
+        return hora.slice(3,5)+' minutos'
+      }else{
+        return hora.slice(0,2)+'horas e '+hora.slice(3,5)+' minutos'
+      }
+      return horas
     }
   },
   computed: {
