@@ -44,7 +44,7 @@ export default new Vuex.Store({
     atualizarMensagens(state, objAtendimentos){
       // var currentdate = new Date();
       // var currentTime = currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds()
-      
+
       var textoOperador = ''
       var textoCliente = ''
       var idCliente = ''
@@ -117,7 +117,7 @@ export default new Vuex.Store({
         arrAlvo2.cliente.id = '5516987955555'
         arrAlvo2.cliente.informacoes.nome = 'NovoCliente'
         arrAlvo2.cliente.novoContato = true
-        arrAlvo.cliente.alertaMsgNova = true
+        arrAlvo2.cliente.alertaMsgNova = true
         arrAlvo2.cliente.qtdMsgNova = 8
         state.todosAtendimentos.splice(6, 1)
         state.todosAtendimentos.unshift( arrAlvo2 )

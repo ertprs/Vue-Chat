@@ -76,7 +76,7 @@ export default {
       }else{
         return horas.slice(0,2)+'horas e '+horas.slice(3,5)+' minutos'
       }
-      return horas
+      return hora
     }
   },
   computed: {
