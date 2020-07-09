@@ -1,5 +1,5 @@
 <template>
-  <div id="rodape-botoes-encerramento-container">  
+  <div id="rodape-botoes-encerramento-container">
     <div class="rodape-botoes-encerramento">
         <div class="rodape-botoes-botao botao-transferencia" :title="titulos[0]" v-on:click="abrirTransferir()">
           <i class="fas fa-random"></i>

@@ -68,7 +68,6 @@ export default {
         if (this.validaMensagem()) {
           this.setTodasMensagens(this.criaObjMensagem());
           this.setClienteMandouMensagem(true);
-  
           this.mensagem = "";
         }
       }

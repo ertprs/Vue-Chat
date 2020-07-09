@@ -27,7 +27,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
 import ChatCliente from '../ChatCliente'
 import ChatOpcoes from '../ChatOpcoes'
 import ChatCorpo from '../ChatCorpo'

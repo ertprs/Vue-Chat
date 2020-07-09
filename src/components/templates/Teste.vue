@@ -1,8 +1,8 @@
 <template>
   <div>
-    <label> 
-      Arquivo 
-      <input type="file" id="file" ref="file" accept="image/*" v-on:change="fileUpload()">  
+    <label>
+      Arquivo
+      <input type="file" id="file" ref="file" accept="image/*" v-on:change="fileUpload()">
     </label>
     <img v-bind:src="imagePreview" v-show="showPreview"/>
     <button v-on:click="submitFile()">Enviar</button>
@@ -46,7 +46,7 @@ export default {
 
       console.log('formData: ', formData)
       console.log('file: ', this.file)
-      // axios.post('', 
+      // axios.post('',
       // formData,
       // {
       //   headers: {

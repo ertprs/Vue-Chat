@@ -21,23 +21,23 @@
           </li>
         </ul>
         <div v-if="arrGrupos.length" grupos-transferir>
-          <vSelect 
-          :options="arrGrupos" 
+          <vSelect
+          :options="arrGrupos"
           label="label"
           @input="enviaGrupo"
           :reduce="arrGrupos => arrGrupos.grupo"
-          > 
+          >
           <!-- :value="arrGrupos[0].label" -->
           </vSelect>
         </div>
         <div v-if="arrAgentes.length" grupos-agentes>
-          <vSelect 
+          <vSelect
           :options="arrAgentes"
           label="login"
-          
+
           @input="enviaAgente"
           :reduce="arrAgentes => arrAgentes.login"
-          > 
+          >
           <!-- :value="arrAgentes[0].login" -->
           </vSelect>
         </div>

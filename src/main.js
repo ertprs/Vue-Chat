@@ -62,9 +62,8 @@ var app = new Vue({
       let urlComToken = 'get-atendimento?token_atd=' + this.tokenAtd + '&token_manager=' + this.tokenManager
       axios({ method: 'get', url: this.$store.getters.getURL + urlComToken }) // segundo get-atendimendo, agora com parametros
       .then(response => {
-        // let mainData = response.data
-        let mainData = ''
-        this.atualizarMensagens(mainData)
+        let mainData = response.data
+        this.atualizarMensagens(mainData.atendimentos.ramais)
       })
       .catch(err => console.log(err))
     }

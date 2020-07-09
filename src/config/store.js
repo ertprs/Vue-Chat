@@ -42,77 +42,85 @@ export default new Vuex.Store({
       // console.log( state.todosAtendimentos )
     },
     atualizarMensagens(state, objAtendimentos){
-      var currentdate = new Date();
-      var currentTime = currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds()
-      for( let i in objAtendimentos ) {
-        console.log(objAtendimentos)
-      }
+      // var currentdate = new Date();
+      // var currentTime = currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds()
+      
+      var textoOperador = ''
+      var textoCliente = ''
+      var idCliente = ''
+      var msgOperador = {}
+      var msgCliente = {}
+      for (var indexRamal in objAtendimentos) {
+        var lenArrMessages = objAtendimentos[indexRamal].cliente.messages.length
+        if (lenArrMessages > 0) {
+          textoOperador = objAtendimentos[indexRamal].cliente.messages[lenArrMessages - 2].texto
+          textoCliente = objAtendimentos[indexRamal].cliente.messages[lenArrMessages - 1].texto
+          idCliente = objAtendimentos[indexRamal].cliente.id
+          console.log('cliente: ' + objAtendimentos[indexRamal].cliente.informacoes.nome + ' | qtdMensagens: ' + lenArrMessages)
+          console.log('Mensagem Operador: ' + textoOperador)
+          console.log('Mensagem Cliente: ' + textoCliente)
+          state.testeContador % 3 == 0 ? idCliente = '5516987987911' : false
 
-      
-      let msgCliente = {
-        "id_cliente": 5516987987900,
-        "texto": "Cliente ",
-        "resp_msg": "CLI",
-        "origem": "outros",
-        "data": "07-06-2020",
-        "hora": "14:34:11"
-      }
-      msgCliente.texto = 'Msg cliente ' + currentTime
-      
-      let msgOperador = {
-        "id_cliente": 5516987987900,
-        "texto": "99",
-        "resp_msg": "OPE",
-        "origem": "principal",
-        "data": "07-06-2020",
-        "hora": "14:34:11"
-      }
-      msgOperador.texto = 'Msg operador ' + currentTime
-      // teste para adicionar novas mensagens para contato
-      state.testeContador ++
-      var qtdMsgNova = state.testeContador
-      var idAlvo = "5516987987933"
-      for( let i in state.todosAtendimentos ){
-        if( state.todosAtendimentos[i].cliente.id == idAlvo ) {
-          var arrAlvo = state.todosAtendimentos[i]
-          arrAlvo.cliente.alertaMsgNova = true
-          arrAlvo.cliente.qtdMsgNova = qtdMsgNova
-          state.todosAtendimentos.splice(i, 1)
-          state.todosAtendimentos.unshift( arrAlvo )
-          continue
+          msgCliente = {
+            "id_cliente": idCliente,
+            "texto": textoCliente,
+            "resp_msg": "CLI",
+            "origem": "outros",
+            "data": "07-06-2020",
+            "hora": "14:34:11"
+          }
+          msgOperador = {
+            "id_cliente": idCliente,
+            "texto": textoOperador,
+            "resp_msg": "OPE",
+            "origem": "principal",
+            "data": "07-06-2020",
+            "hora": "14:34:11"
+          }
+          // carrega mensagens teste no contato ativo
+          var arrayDeMensagensNovas = [msgOperador, msgCliente]
+          for (var k in arrayDeMensagensNovas) {
+            state.todosAtendimentos[0].cliente.messages.push(arrayDeMensagensNovas[k])
+            var idDoAtendimentoAtivo = state.atendimentoAtivo.id
+            if (arrayDeMensagensNovas[k].id_cliente == idDoAtendimentoAtivo) {
+              // carrega array e mostra a mensagem
+              let objMensagem = {
+                autor: arrayDeMensagensNovas[k].resp_msg, // Operador, Cliente
+                origem: arrayDeMensagensNovas[k].origem, // principal e outros
+                msg: arrayDeMensagensNovas[k].texto,
+                horario: '88:88',
+                anexo: '',
+                imgAnexo: ''
+              };
+              state.todasMensagens.push(objMensagem)
+            } else {
+              // destacar que existe mensagem nova em outro cliente com o id
+              for (let i in state.todosAtendimentos) {
+                if (state.todosAtendimentos[i].cliente.id == idCliente) {
+                  var arrAlvo = state.todosAtendimentos[i]
+                  arrAlvo.cliente.alertaMsgNova = true
+                  arrAlvo.cliente.qtdMsgNova = state.testeContador
+                  state.todosAtendimentos.splice(i, 1)
+                  state.todosAtendimentos.unshift(arrAlvo)
+                  continue
+                }
+              }
+            }
+          }
         }
       }
 
       // teste para adicionar novo cliente
-      if( state.testeContador == 3 ) {
+      state.testeContador ++
+      if( state.testeContador == 2 ) {
         var arrAlvo2 = state.todosAtendimentos[6]
         arrAlvo2.cliente.id = '5516987955555'
         arrAlvo2.cliente.informacoes.nome = 'NovoCliente'
         arrAlvo2.cliente.novoContato = true
-        arrAlvo2.cliente.qtdMensagem = 8
+        arrAlvo.cliente.alertaMsgNova = true
+        arrAlvo2.cliente.qtdMsgNova = 8
         state.todosAtendimentos.splice(6, 1)
         state.todosAtendimentos.unshift( arrAlvo2 )
-      }
-
-      // carrega mensagens teste no contato ativo
-      var arrayDeMensagensNovas = [ msgOperador, msgCliente ]
-      for( var i in arrayDeMensagensNovas ) {
-        state.todosAtendimentos[0].cliente.messages.push( arrayDeMensagensNovas[i] )
-        var idDoAtendimentoAtivo = state.atendimentoAtivo.id
-        if( arrayDeMensagensNovas[i].id_cliente == idDoAtendimentoAtivo ) {
-          // carrega array e mostra a mensagem
-          let objMensagem = {
-            autor: arrayDeMensagensNovas[i].resp_msg, // Operador, Cliente
-            origem: arrayDeMensagensNovas[i].origem, // principal e outros
-            msg: arrayDeMensagensNovas[i].texto,
-            horario: '88:88',
-            anexo: '',
-            imgAnexo: ''
-          };
-          state.todasMensagens.push(objMensagem)
-        } else {
-          // destacar que existe mensagem nova em outro cliente com o id
-        }
       }
     },
     setAtendimentoAtivo(state, objInformacoes){
