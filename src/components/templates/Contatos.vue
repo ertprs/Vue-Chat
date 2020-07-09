@@ -19,7 +19,7 @@
           v-for="(atd, indice) in todosAtendimentos"
           :key="atd.cliente.id"
           :id="'li_'+indice"
-          :title="atd.cliente.informacoes.nome"
+          :title="formataNome(atd.cliente.informacoes.nome)"
           :class="atd.cliente.novoContato ? 'destaque-novo-contato' : ''"
           @click="ativarConversa( atd.cliente, indice );"
         >
@@ -262,6 +262,8 @@ export default {
       }
     },
     formataNome(nome){
+      if(!nome){ return '' }
+      
       nome = nome.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase() })
       return nome
     }
