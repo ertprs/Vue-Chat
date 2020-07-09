@@ -12,7 +12,7 @@
               <i class="fas fa-user"></i>
               <p> Contato </p>
             </div>
-            <p> {{ atendimentoAtivo.informacoes.nome }} / {{ atendimentoAtivo.id }} </p>
+            <p> {{ formataNome(atendimentoAtivo.informacoes.nome) }} / {{ formataTelefone(atendimentoAtivo.id) }} </p>
           </div>
           <div v-if="atendimentoAtivo.informacoes.tempo_conectado">
             <div>
@@ -55,11 +55,22 @@ export default {
   components: {
     BotoesAcoes
   },
+  methods: {
+    formataNome(nome){
+      nome = nome.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase() })
+      return nome
+    },
+    formataTelefone(telefone){
+      telefone = telefone.replace(/^\([0-9]{2}(?:\))\s?[0-9]{5}(?:-)[0-9]{4}$/mg)
+      console.log('Telefone: ', telefone)
+      return telefone
+    }
+  },
   computed: {
     ...mapGetters({
       atendimentoAtivo: 'getAtendimentoAtivo'
     })
-  }
+  },
 }
 </script>
 

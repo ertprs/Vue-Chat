@@ -28,7 +28,7 @@
             <p>{{ formataSigla(atd.cliente.informacoes.nome[0], 'upper') }}</p>
             <p v-if="fechado">{{ formataSigla(atd.cliente.informacoes.nome[1], 'lower') }}</p>
           </div>
-          <template v-if="!fechado">{{ atd.cliente.informacoes.nome }}</template>
+          <template v-if="!fechado">{{ formataNome(atd.cliente.informacoes.nome) }}</template>
           <span v-if="!fechado" class="ultima-msg">{{formataUltimaMsg(atd.cliente.messages)}}</span>
           <span v-if="verificaMsgNova(atd.cliente.alertaMsgNova, indice)" class="destaque-nova-msg">{{ atd.cliente.qtdMsgNova }}</span>
         </li>
@@ -260,6 +260,10 @@ export default {
           return arrMsgs[arrMsgs.length - 1].texto
         }
       }
+    },
+    formataNome(nome){
+      nome = nome.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase() })
+      return nome
     }
   },
 };
