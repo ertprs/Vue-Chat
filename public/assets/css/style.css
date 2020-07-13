@@ -8877,7 +8877,7 @@ body {
 
 .tamanho-ajustavel {
   resize: horizontal !important;
-  overflow: auto !important; }
+  overflow-y: hidden; }
 
 * {
   scrollbar-color: #888 rgba(0, 0, 0, 0.8);
@@ -9296,7 +9296,7 @@ body {
 
 .tamanho-ajustavel {
   resize: horizontal !important;
-  overflow: auto !important; }
+  overflow-y: hidden; }
 
 * {
   scrollbar-color: #888 rgba(0, 0, 0, 0.8);
@@ -9622,7 +9622,8 @@ body {
     display: flex;
     justify-content: space-between;
     margin: 0 15px;
-    width: 95%; }
+    width: 95%;
+    white-space: nowrap; }
     .titulo-informacoes > div > div p {
       margin: 0; }
     .titulo-informacoes > div > div > div {
@@ -9828,7 +9829,7 @@ body {
 
 .tamanho-ajustavel {
   resize: horizontal !important;
-  overflow: auto !important; }
+  overflow-y: hidden; }
 
 * {
   scrollbar-color: #888 rgba(0, 0, 0, 0.8);

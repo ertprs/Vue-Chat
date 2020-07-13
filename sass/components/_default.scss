@@ -33,7 +33,7 @@ body{
 
 .tamanho-ajustavel{
   resize: horizontal!important;
-  overflow: auto!important;
+  overflow-y: hidden;
 }
 
 *{
