@@ -20,9 +20,10 @@
           :key="atd.cliente.id"
           :id="'li_'+indice"
           :title="formataNome(atd.cliente.informacoes.nome)"
-          :class="atd.cliente.novoContato ? 'destaque-novo-contato' : ''"
+          :class="{'destaque-novo-contato' : atd.cliente.novoContato, 'nova-msg' : verificaMsgNova(atd.cliente.qtdMsgNova, indice)}"
           @click="ativarConversa( atd.cliente, indice );"
         >
+          <!-- :class="atd.cliente.novoContato ? 'destaque-novo-contato' : ''" -->
           <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
           <div class="circulo-contatos">
             <p>{{ formataSigla(atd.cliente.informacoes.nome[0], 'upper') }}</p>
@@ -239,17 +240,21 @@ export default {
       },1500)
     },
     verificaMsgNova(msgNova, indice){
-      if(msgNova){
-        if(this.arrAtivos[indice]){
-          if(this.arrAtivos[indice].ativo == 'S'){
-            return false
-          }else{
-            return true
+      setTimeout(
+        () => {
+          if(msgNova){
+            if(this.arrAtivos[indice]){
+              if(this.arrAtivos[indice].ativo == 'S'){
+                return false
+              }else{
+                return true
+              }
+            }else{
+              return false
+            }
           }
-        }else{
-          return false
-        }
-      }
+        }, 300
+      )
     },
     formataUltimaMsg(arrMsgs){
       if(arrMsgs.length > 0){

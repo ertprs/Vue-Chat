@@ -123,6 +123,9 @@ $tamanhoBoxShadow: 5px;
         opacity: 1;
         background-color: #a8dadc!important
       }
+      &.nova-msg{
+        font-weight: 700
+      }
       &.destaque-novo-contato{
         background-color: #fdffb6!important;
         // -moz-box-shadow:    inset 0 0 $tamanhoBoxShadow $corBoxShadow;

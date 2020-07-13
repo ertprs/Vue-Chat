@@ -8995,6 +8995,8 @@ body {
       #todos-contatos ul li.ativo {
         opacity: 1;
         background-color: #a8dadc !important; }
+      #todos-contatos ul li.nova-msg {
+        font-weight: 700; }
       #todos-contatos ul li.destaque-novo-contato {
         background-color: #fdffb6 !important;
         animation-name: blink;
