@@ -8875,6 +8875,10 @@ body {
 .d-none {
   display: none; }
 
+.tamanho-ajustavel {
+  resize: horizontal !important;
+  overflow: auto !important; }
+
 * {
   scrollbar-color: #888 rgba(0, 0, 0, 0.8);
   scrollbar-width: thin; }
@@ -9040,7 +9044,8 @@ body {
         bottom: 0;
         left: 55px;
         color: #666666;
-        font-size: .7rem; }
+        font-size: .7rem;
+        white-space: nowrap; }
   #todos-contatos .lista-agenda .lista-agenda--titulo {
     width: 100%;
     height: 50px;
@@ -9288,6 +9293,10 @@ body {
 
 .d-none {
   display: none; }
+
+.tamanho-ajustavel {
+  resize: horizontal !important;
+  overflow: auto !important; }
 
 * {
   scrollbar-color: #888 rgba(0, 0, 0, 0.8);
@@ -9608,7 +9617,7 @@ body {
   .titulo-informacoes h1 {
     margin-left: 10px;
     font-size: 1.2rem;
-    width: 5%; }
+    width: 15%; }
   .titulo-informacoes > div {
     display: flex;
     justify-content: space-between;
@@ -9816,6 +9825,10 @@ body {
 
 .d-none {
   display: none; }
+
+.tamanho-ajustavel {
+  resize: horizontal !important;
+  overflow: auto !important; }
 
 * {
   scrollbar-color: #888 rgba(0, 0, 0, 0.8);

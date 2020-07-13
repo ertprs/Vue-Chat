@@ -1,5 +1,5 @@
 <template>
-  <div id="informacoes">
+  <div id="informacoes" class="tamanho-ajustavel">
     <template>
       <div class="titulo-informacoes">
         <h1 title="Informacoes">

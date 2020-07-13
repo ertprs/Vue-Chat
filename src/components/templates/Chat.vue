@@ -1,5 +1,5 @@
 <template>
-  <div id="chat" :class="abaContatos ? 'chat-aberto' : ''">
+  <div id="chat" :class="abaContatos ? 'chat-aberto' : ''" class="tamanho-ajustavel">
     <!-- <ChatCliente v-if="zonaDeTeste"/> -->
 
     <template v-if="atendimentoAtivo.informacoes">
