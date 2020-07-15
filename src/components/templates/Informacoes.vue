@@ -1,28 +1,28 @@
 <template>
-  <div id="informacoes">
+  <div id="informacoes" class="tamanho-ajustavel">
     <template>
-      <div class="titulo-informacoes">
-        <h1 title="Informacoes">
+      <div class="container-principal-informacoes">
+        <div class="informacoes-titulo">
           <i class="fas fa-info-circle"></i>
-           <!-- Informacoes -->
-        </h1>
-        <div v-if="atendimentoAtivo.informacoes">
-          <div v-if="atendimentoAtivo.informacoes.nome">
-            <div>
+          <h1 title="Informacoes" v-if="!atendimentoAtivo.informacoes"> Informacoes </h1>
+        </div>
+        <div v-if="atendimentoAtivo.informacoes" class="informacoes-container">
+          <div v-if="atendimentoAtivo.informacoes.nome" class="informacoes-item">
+            <div class="informacoes-item-titulo">
               <i class="fas fa-user"></i>
               <p> Contato </p>
             </div>
             <p> {{ formataNome(atendimentoAtivo.informacoes.nome) }} / {{ formataTelefone(atendimentoAtivo.id) }} </p>
           </div>
-          <div v-if="atendimentoAtivo.informacoes.tempo_conectado">
-            <div>
+          <div v-if="atendimentoAtivo.informacoes.tempo_conectado" class="informacoes-item">
+            <div class="informacoes-item-titulo">
               <i class="fas fa-user-clock"></i>
               <p> Tempo Conectado </p>
             </div>
             <p> {{ formataHorario(atendimentoAtivo.informacoes.tempo_conectado) }} </p>
           </div>
-          <div v-if="atendimentoAtivo.informacoes.tempo_fila">
-            <div>
+          <div v-if="atendimentoAtivo.informacoes.tempo_fila" class="informacoes-item">
+            <div class="informacoes-item-titulo">
               <i class="fas fa-clock"></i>
               <p> Tempo de Fila </p>
             </div>
@@ -38,7 +38,9 @@
       <div class="lista-informacoes-container-vazio" v-else>
         <div>
           <i class="far fa-folder-open"></i>
-          <p> Sem Informacoes para mostrar </p>
+          <p>
+            Sem Informacoes para mostrar
+          </p>
         </div>
       </div>
     </template>

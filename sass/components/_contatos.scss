@@ -47,6 +47,7 @@ $tamanhoBoxShadow: 5px;
       margin-right: 5px;
       width: 100%;
       display: flex;
+      transition: 500ms ease-in-out;
       svg{
         color: #FFF;
         font-size: 1.4rem;
@@ -56,12 +57,13 @@ $tamanhoBoxShadow: 5px;
         margin: 0;
         padding: 0;
         color: #FFF;
-        font-size: 1.3rem;
+        font-size: 1.2rem;
       }
       &.fechado{
-        display: flex;
-        justify-content: center;
-        width: initial;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        opacity: .8;
       }
     }
   }
@@ -182,6 +184,7 @@ $tamanhoBoxShadow: 5px;
         left: 55px;
         color: darken(#CCC, 40);
         font-size: .7rem;
+        white-space: nowrap;
       }
     }
   }
@@ -234,6 +237,7 @@ $tamanhoBoxShadow: 5px;
     p{
       text-align: center;
       width: 100%;
+      white-space: nowrap;
     }
   }
 }

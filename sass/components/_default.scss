@@ -31,6 +31,11 @@ body{
   display: none
 }
 
+.tamanho-ajustavel{
+  resize: horizontal!important;
+  overflow-y: hidden;
+}
+
 *{
   scrollbar-color: #888 rgba(0, 0, 0, 0.8);
   scrollbar-width: thin;

@@ -6,42 +6,53 @@
   width: 50%; // *
 }
 
-.titulo-informacoes{
+.container-principal-informacoes{
   height: 10%; // *
   max-height: $alturaMaxTitulos;
   border-bottom: 1px solid #CCC;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   position: relative;
-  justify-content: space-between;
-  // background-color: #ffb74d;
   background-color: darken($cor, 10);
   color: #FFF;
-  h1 {
-    margin-left: 10px;
+}
+
+.informacoes-titulo{
+  display: flex;
+  align-items: center;
+  height: $alturaMaxTitulos;
+  h1{
     font-size: 1.2rem;
-    width: 5%;
+    margin: 0;
+    margin-left: 5px;
   }
-  > div{
+  svg{
+    margin-left: 15px;
+  }
+}
+
+.informacoes-container{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: $alturaMaxTitulos;
+  width: 90%;
+  font-size: .8375rem;
+  .informacoes-item{
+    margin-top: 18px;
     display: flex;
-    justify-content: space-between;
-    margin: 0 15px;
-    width: 95%;
-    > div{
+    flex-direction: column;
+    justify-content: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    .informacoes-item-titulo{
+      display: flex;
       p{
-        margin: 0;
-      }
-      > div{
-        display: flex;
-        p{
-          font-weight: 600;
-        }
-        svg{
-          margin: 0;
-          padding: 0;
-          margin-right: 5px;
-        }
+        white-space: nowrap;
+        margin-left: 5px;
       }
     }
   }
@@ -64,6 +75,7 @@
     p{
       text-align: center;
       width: 100%;
+      white-space: nowrap;
     }
   }
 }
