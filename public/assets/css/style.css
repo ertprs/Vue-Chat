@@ -9649,6 +9649,7 @@ body {
       display: flex; }
       .informacoes-container .informacoes-item .informacoes-item-titulo p {
         white-space: nowrap;
+        margin: 0;
         margin-left: 5px; }
 
 .lista-informacoes-container-vazio {
