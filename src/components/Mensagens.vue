@@ -1,5 +1,6 @@
 <template>
   <div :class="'mensagem-'+origem">
+    <div></div>
     <div class="mensagem">
       <p v-if="!anexo"> {{ msg }} </p>
       <div v-else class="mensagem-div-anexo">

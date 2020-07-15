@@ -33,7 +33,8 @@ var app = new Vue({
   computed: {
     ...mapGetters({
       tokenAtd: 'getTokenAtd',
-      tokenManager: 'getTokenManager'
+      tokenManager: 'getTokenManager',
+      todosAtendimentos: 'getTodosAtendimentos'
     })
   },
   mounted() {
@@ -54,7 +55,7 @@ var app = new Vue({
       .catch(err => console.log(err))
    },
   methods: {
-    ...mapMutations(["setAtendimentosIniciais", "atualizarMensagens", "setTokenAtd", "setTokenManager"]),
+    ...mapMutations(["setAtendimentosIniciais", "adicionarMensagem", "adicionarClienteNovo", "setTokenAtd", "setTokenManager"]),
     iniciarAtualizacaoDeAtendimentos() {
      var temporizador = setInterval( this.atualizarAtendimentos, 2000 );
     },
@@ -63,7 +64,46 @@ var app = new Vue({
       axios({ method: 'get', url: this.$store.getters.getURL + urlComToken }) // segundo get-atendimendo, agora com parametros
       .then(response => {
         let mainData = response.data
-        this.atualizarMensagens(mainData.atendimentos.ramais)
+        var arrClientesNovos = mainData.atendimentos.ramais
+
+        //verifica se existe clientes novos
+        var temClienteNovo = false
+        var temMsgAntiga = false
+        for(var indiceClientesNovos in arrClientesNovos) {
+          for(var indiceClientesAtuais in this.todosAtendimentos) {
+            temClienteNovo = false
+            if(this.todosAtendimentos[indiceClientesAtuais] !== 'undefined') { }
+            if (arrClientesNovos[indiceClientesNovos].cliente.id === this.todosAtendimentos[indiceClientesAtuais].cliente.id) {
+              // atualizar as mensagens de contatos já existentes
+              for(var indexMsgsNovas in arrClientesNovos[indiceClientesNovos].cliente.messages) {
+                temMsgAntiga = false
+                for(var indexTodasMsgs in this.todosAtendimentos[indiceClientesAtuais].cliente.messages) {
+                  if(arrClientesNovos[indiceClientesNovos].cliente.messages[indexMsgsNovas].id_msg === this.todosAtendimentos[indiceClientesAtuais].cliente.messages[indexTodasMsgs].id_msg) {
+                    temMsgAntiga = true
+                    indexMsgsNovas ++
+                  } else {
+                    temMsgAntiga = false
+                  }
+                }
+                if(temMsgAntiga == false) {
+                  let objCliente = arrClientesNovos[indiceClientesNovos]
+                  objCliente.indiceRef = indiceClientesNovos
+                  this.adicionarMensagem(objCliente)
+                }
+              }
+              arrClientesNovos[indiceClientesNovos].cliente.id
+              indiceClientesNovos++
+            } else {
+              temClienteNovo = true
+            }
+          }
+          if(temClienteNovo) {
+            console.log('Adicionando Cliente Novo')
+            let objCliente = arrClientesNovos[indiceClientesNovos].cliente
+            this.adicionarClienteNovo(objCliente)
+          }
+        }
+
       })
       .catch(err => console.log(err))
     }
