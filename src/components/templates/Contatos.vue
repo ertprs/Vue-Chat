@@ -278,7 +278,7 @@ export default {
       nome = nome.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase() })
       return nome
     }
-  },
+  }
 };
 </script>
 
