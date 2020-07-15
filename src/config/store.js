@@ -56,9 +56,9 @@ export default new Vuex.Store({
           textoOperador = objAtendimentos[indexRamal].cliente.messages[lenArrMessages - 2].texto
           textoCliente = objAtendimentos[indexRamal].cliente.messages[lenArrMessages - 1].texto
           idCliente = objAtendimentos[indexRamal].cliente.id
-          console.log('cliente: ' + objAtendimentos[indexRamal].cliente.informacoes.nome + ' | qtdMensagens: ' + lenArrMessages)
-          console.log('Mensagem Operador: ' + textoOperador)
-          console.log('Mensagem Cliente: ' + textoCliente)
+          // console.log('cliente: ' + objAtendimentos[indexRamal].cliente.informacoes.nome + ' | qtdMensagens: ' + lenArrMessages)
+          // console.log('Mensagem Operador: ' + textoOperador)
+          // console.log('Mensagem Cliente: ' + textoCliente)
           state.testeContador % 3 == 0 ? idCliente = '5516987987911' : false
 
           msgCliente = {
@@ -113,14 +113,16 @@ export default new Vuex.Store({
       // teste para adicionar novo cliente
       state.testeContador ++
       if( state.testeContador == 2 ) {
-        var arrAlvo2 = state.todosAtendimentos[6]
-        arrAlvo2.cliente.id = '5516987955555'
-        arrAlvo2.cliente.informacoes.nome = 'NovoCliente'
-        arrAlvo2.cliente.novoContato = true
-        arrAlvo2.cliente.alertaMsgNova = true
-        arrAlvo2.cliente.qtdMsgNova = 8
-        state.todosAtendimentos.splice(6, 1)
-        state.todosAtendimentos.unshift( arrAlvo2 )
+        if(state.todosAtendimentos){
+          var arrAlvo2 = state.todosAtendimentos[6]
+          arrAlvo2.cliente.id = '5516987955555'
+          arrAlvo2.cliente.informacoes.nome = 'NovoCliente'
+          arrAlvo2.cliente.novoContato = true
+          arrAlvo2.cliente.alertaMsgNova = true
+          arrAlvo2.cliente.qtdMsgNova = 8
+          state.todosAtendimentos.splice(6, 1)
+          state.todosAtendimentos.unshift( arrAlvo2 )
+        }
       }
     },
     setAtendimentoAtivo(state, objInformacoes){

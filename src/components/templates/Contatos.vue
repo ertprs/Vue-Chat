@@ -13,60 +13,66 @@
         <i class="fas fa-long-arrow-alt-left flecha"></i>
       </div>
     </div>
-    <div class="lista-contatos-container" v-if="todosAtendimentos.length > 0">
-      <ul :class="{'fechado' : fechado}">
-        <li
-          v-for="(atd, indice) in todosAtendimentos"
-          :key="atd.cliente.id"
-          :id="'li_'+indice"
-          :title="formataNome(atd.cliente.informacoes.nome)"
-          :class="{'destaque-novo-contato' : atd.cliente.novoContato, 'nova-msg' : verificaMsgNova(atd.cliente.qtdMsgNova, indice)}"
-          @click="ativarConversa( atd.cliente, indice );"
-        >
-          <!-- :class="atd.cliente.novoContato ? 'destaque-novo-contato' : ''" -->
-          <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
-          <div class="circulo-contatos">
-            <p>{{ formataSigla(atd.cliente.informacoes.nome[0], 'upper') }}</p>
-            <p v-if="fechado">{{ formataSigla(atd.cliente.informacoes.nome[1], 'lower') }}</p>
-          </div>
-          <template v-if="!fechado">{{ formataNome(atd.cliente.informacoes.nome) }}</template>
-          <span v-if="!fechado" class="ultima-msg">{{formataUltimaMsg(atd.cliente.messages)}}</span>
-          <span v-if="verificaMsgNova(atd.cliente.alertaMsgNova, indice)" class="destaque-nova-msg">{{ atd.cliente.qtdMsgNova }}</span>
-        </li>
-      </ul>
-      <div class="lista-agenda">
-        <div class="lista-agenda--titulo">
-          <div :class="{'fechado' : fechado}">
-            <i class="far fa-address-book"  title="Minha Agenda"></i>
-          </div>
-          <transition name="fade">
-            <h2 v-show="!fechado" >
-              Minha Agenda
-            </h2>
-          </transition>
-        </div>
+    <template v-if="todosAtendimentos">
+      <div class="lista-contatos-container" v-if="todosAtendimentos.length > 0">
         <ul :class="{'fechado' : fechado}">
           <li
             v-for="(atd, indice) in todosAtendimentos"
             :key="atd.cliente.id"
             :id="'li_'+indice"
-            :title="atd.cliente.informacoes.nome"
+            :title="formataNome(atd.cliente.informacoes.nome)"
+            :class="{'destaque-novo-contato' : atd.cliente.novoContato, 'nova-msg' : verificaMsgNova(atd.cliente.qtdMsgNova, indice)}"
             @click="ativarConversa( atd.cliente, indice );"
           >
+            <!-- :class="atd.cliente.novoContato ? 'destaque-novo-contato' : ''" -->
             <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
-            <div :class="indice % 2 == 0 ? '' : ''" class="circulo-contatos">
+            <div class="circulo-contatos">
               <p>{{ formataSigla(atd.cliente.informacoes.nome[0], 'upper') }}</p>
               <p v-if="fechado">{{ formataSigla(atd.cliente.informacoes.nome[1], 'lower') }}</p>
             </div>
-            <template v-if="!fechado">{{ atd.cliente.informacoes.nome }}</template>
+            <template v-if="!fechado">{{ formataNome(atd.cliente.informacoes.nome) }}</template>
+            <span v-if="!fechado" class="ultima-msg">{{formataUltimaMsg(atd.cliente.messages)}}</span>
+            <span v-if="verificaMsgNova(atd.cliente.alertaMsgNova, indice)" class="destaque-nova-msg">{{ atd.cliente.qtdMsgNova }}</span>
           </li>
         </ul>
+        <div class="lista-agenda">
+          <div class="lista-agenda--titulo">
+            <div :class="{'fechado' : fechado}">
+              <i class="far fa-address-book"  title="Minha Agenda"></i>
+            </div>
+            <transition name="fade">
+              <h2 v-show="!fechado" >
+                Minha Agenda
+              </h2>
+            </transition>
+          </div>
+          <ul :class="{'fechado' : fechado}">
+            <li
+              v-for="(atd, indice) in todosAtendimentos"
+              :key="atd.cliente.id"
+              :id="'li_'+indice"
+              :title="atd.cliente.informacoes.nome"
+              @click="ativarConversa( atd.cliente, indice );"
+            >
+              <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
+              <div :class="indice % 2 == 0 ? '' : ''" class="circulo-contatos">
+                <p>{{ formataSigla(atd.cliente.informacoes.nome[0], 'upper') }}</p>
+                <p v-if="fechado">{{ formataSigla(atd.cliente.informacoes.nome[1], 'lower') }}</p>
+              </div>
+              <template v-if="!fechado">{{ atd.cliente.informacoes.nome }}</template>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
+    </template>
     <div v-else class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
       <div>
         <i class="far fa-folder-open"></i>
-        <p>Sem Contatos para mostrar</p>
+        <transition name="fade">
+          <p v-show="!fechado" >
+            Sem Contatos para mostrar
+          </p>
+        </transition>
       </div>
     </div>
   </div>
