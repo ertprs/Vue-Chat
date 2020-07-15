@@ -155,7 +155,7 @@ export default {
             .catch(error => {
               console.log(error);
             });
-          // this.setTodasMensagens(this.criaObjMensagem())
+          this.setTodasMensagens( this.criaObjMensagem() )
           this.mensagem = ''
         }
       }
