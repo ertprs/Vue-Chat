@@ -1,5 +1,5 @@
 <template>
-  <div id="todos-contatos" :class="{'fechado' : fechado, 'aberto' : !fechado}" class="tamanho-ajustavel">
+  <div id="todos-contatos" :class="{'fechado' : fechado, 'aberto' : !fechado}"> <!-- class="tamanho-ajustavel" -->
     <div class="titulo-contatos">
       <div class="titulo-contatos--icone-container" :class="{'fechado' : fechado}">
         <i class="fas fa-address-book" title="Contatos"></i>

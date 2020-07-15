@@ -9539,7 +9539,7 @@ body {
         color: #444;
         position: absolute;
         left: 15px;
-        bottom: -5px; }
+        bottom: -10px; }
   .chat-rodape .chat-rodape-botoes {
     margin-right: 10px;
     width: 25%;
@@ -9601,7 +9601,6 @@ body {
             background-color: goldenrod; }
 
 #informacoes {
-  position: relative;
   transition: .5s;
   right: -1px;
   height: 100%;
@@ -9682,6 +9681,7 @@ body {
 
 #popup {
   position: absolute;
+  z-index: 3;
   top: 0;
   right: 0;
   transition-duration: .5s;
@@ -9691,7 +9691,6 @@ body {
   justify-content: center;
   align-items: center; }
   #popup > div {
-    z-index: 2;
     min-width: 200px;
     background-color: white;
     display: flex;
