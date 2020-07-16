@@ -8884,14 +8884,13 @@ body {
   scrollbar-width: thin; }
 
 ::-webkit-scrollbar {
-  width: 10px; }
+  width: 7px; }
 
 ::-webkit-scrollbar-track {
-  background-color: rgba(255, 255, 255, 0.3); }
+  background-color: rgba(0, 0, 0, 0.2); }
 
 ::-webkit-scrollbar-thumb {
   transition-duration: .5s;
-  border-radius: 5px;
   background-color: #888; }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -9307,14 +9306,13 @@ body {
   scrollbar-width: thin; }
 
 ::-webkit-scrollbar {
-  width: 10px; }
+  width: 7px; }
 
 ::-webkit-scrollbar-track {
-  background-color: rgba(255, 255, 255, 0.3); }
+  background-color: rgba(0, 0, 0, 0.2); }
 
 ::-webkit-scrollbar-thumb {
   transition-duration: .5s;
-  border-radius: 5px;
   background-color: #888; }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -9479,12 +9477,13 @@ body {
     .chat-rodape .chat-rodape-mensagens.anexo-aberto {
       width: 65%; }
     .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea {
+      max-height: 50px;
       position: relative; }
       .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea #emoji-picker-container {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 25%;
+        width: 20%;
         background-color: #FFF;
         position: absolute;
         left: 0;
@@ -9497,8 +9496,8 @@ body {
         .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea #emoji-picker-container .emoji-popover-inner {
           max-width: 290px; }
       .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea textarea {
-        margin-left: 25%;
-        width: 75%;
+        margin-left: 20%;
+        width: 80%;
         resize: none;
         height: 50px;
         font-size: .9rem;
@@ -9539,7 +9538,7 @@ body {
         color: #444;
         position: absolute;
         left: 15px;
-        bottom: -5px; }
+        bottom: -10px; }
   .chat-rodape .chat-rodape-botoes {
     margin-right: 10px;
     width: 25%;
@@ -9601,7 +9600,6 @@ body {
             background-color: goldenrod; }
 
 #informacoes {
-  position: relative;
   transition: .5s;
   right: -1px;
   height: 100%;
@@ -9682,6 +9680,7 @@ body {
 
 #popup {
   position: absolute;
+  z-index: 3;
   top: 0;
   right: 0;
   transition-duration: .5s;
@@ -9691,7 +9690,6 @@ body {
   justify-content: center;
   align-items: center; }
   #popup > div {
-    z-index: 2;
     min-width: 200px;
     background-color: white;
     display: flex;
@@ -9854,14 +9852,13 @@ body {
   scrollbar-width: thin; }
 
 ::-webkit-scrollbar {
-  width: 10px; }
+  width: 7px; }
 
 ::-webkit-scrollbar-track {
-  background-color: rgba(255, 255, 255, 0.3); }
+  background-color: rgba(0, 0, 0, 0.2); }
 
 ::-webkit-scrollbar-thumb {
   transition-duration: .5s;
-  border-radius: 5px;
   background-color: #888; }
 
 ::-webkit-scrollbar-thumb:hover {

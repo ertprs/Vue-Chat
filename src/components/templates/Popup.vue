@@ -1,5 +1,5 @@
 <template>
-  <div id="popup" popup>
+  <div id="popup" popup v-on:click="fecharPopup($event)">
     <div>
       <h2>{{ titulo }}</h2>
       <template v-if="titulo == 'Retornar'">
@@ -85,8 +85,14 @@ export default {
   },
   methods: {
     ...mapMutations(['setBlocker']),
-    fecharPopup(){
-      this.setBlocker(false)
+    fecharPopup(event){
+      if(event){
+        if(event.target === document.querySelector('#popup')){
+          this.setBlocker(false)
+        }
+      }else{
+        this.setBlocker(false)
+      }
     },
     getGrupos(){
       let url = this.$store.getters.getURL

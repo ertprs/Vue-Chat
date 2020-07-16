@@ -7,7 +7,7 @@
         <Blocker />
         <Contatos />
         <Chat />
-        <Informacoes />
+        <Informacoes v-on:click="clickInformacoes($event)"/>
       <!-- </template> -->
     <!-- </template> -->
   </div>
@@ -36,8 +36,56 @@ export default {
   },
   data(){
     return{
-      testeAtivo: false
+      testeAtivo: false,
+      arrWidthChatPadrao: [],
+      arrWidthInformacoesPadrao: []
     }
+  },
+  methods: {
+    observador(){
+
+      const observer = new ResizeObserver(entries => {
+        for(const entry of entries){
+          if(entry.contentRect){
+            // Chat
+            if(entry.target == document.querySelector('#chat')){
+              this.arrWidthChatPadrao.push(entry.contentRect.width)
+              this.verificaTamanhoMinimo('chat', entry.contentRect.width)
+            // Informacoes
+            }else if(entry.target == document.querySelector('#informacoes')){
+              this.arrWidthInformacoesPadrao.push(entry.contentRect.width)
+              this.verificaTamanhoMinimo('informacoes', entry.contentRect.width)
+            }
+            // console.log('width: ', entry.contentRect.width)
+            // console.log('target: ', entry.target)
+          }
+        }
+      })
+
+      observer.observe(document.querySelector('#informacoes'))
+      observer.observe(document.querySelector('#chat'))
+    },
+    verificaTamanhoMinimo(alvo, widthAtual){
+      if(alvo == 'informacoes'){
+        if(widthAtual < this.arrWidthInformacoesPadrao[0] - 100){
+          document.querySelector(`#${alvo}`).style.width = (this.arrWidthInformacoesPadrao[0] - 100) + 'px'
+        }else if(widthAtual > this.arrWidthInformacoesPadrao[0] + 100){
+          document.querySelector(`#${alvo}`).style.width = (this.arrWidthInformacoesPadrao[0] + 100) + 'px'
+        }
+      }else if(alvo == 'chat'){
+        if(widthAtual < this.arrWidthChatPadrao[0]){
+          document.querySelector(`#${alvo}`).style.width = this.arrWidthChatPadrao[0] + 'px'
+        }else if(widthAtual > this.arrWidthChatPadrao[0] + 200){
+          document.querySelector(`#${alvo}`).style.width = (this.arrWidthChatPadrao[0] + 200) + 'px'
+        }
+      }
+    }
+  },
+  watch: {
+    
+  },
+  mounted(){
+    this.observador()
   }
 }
 
