@@ -41,6 +41,7 @@ var app = new Vue({
     this.$on('atualizarAtendimentos', this.atualizarAtendimentos)
     axios({ method: 'get', url: this.$store.getters.getURL+'get-atendimento'}) // primeiro get-atendimento, sem passar parametros
       .then(response => {
+        console.log(response.data)
         let mainData = response.data
         if( mainData.atendimentos != null && mainData.gerenciador != null) {
           this.setAtendimentosIniciais( mainData.atendimentos.ramais )
@@ -69,41 +70,47 @@ var app = new Vue({
         //verifica se existe clientes novos
         var temClienteNovo = false
         var temMsgAntiga = false
-        for(var indiceClientesNovos in arrClientesNovos) {
-          for(var indiceClientesAtuais in this.todosAtendimentos) {
-            temClienteNovo = false
-            if(this.todosAtendimentos[indiceClientesAtuais] !== 'undefined') { }
-            if (arrClientesNovos[indiceClientesNovos].cliente.id === this.todosAtendimentos[indiceClientesAtuais].cliente.id) {
-              // atualizar as mensagens de contatos já existentes
-              for(var indexMsgsNovas in arrClientesNovos[indiceClientesNovos].cliente.messages) {
-                temMsgAntiga = false
-                for(var indexTodasMsgs in this.todosAtendimentos[indiceClientesAtuais].cliente.messages) {
-                  if(arrClientesNovos[indiceClientesNovos].cliente.messages[indexMsgsNovas].id_msg === this.todosAtendimentos[indiceClientesAtuais].cliente.messages[indexTodasMsgs].id_msg) {
-                    temMsgAntiga = true
-                    indexMsgsNovas ++
-                  } else {
-                    temMsgAntiga = false
+        for (var indiceClientesNovos in arrClientesNovos) {
+          if (arrClientesNovos[indiceClientesNovos]) {
+            for (var indiceClientesAtuais in this.todosAtendimentos) {
+              temClienteNovo = false
+              if (arrClientesNovos[indiceClientesNovos].cliente.id === this.todosAtendimentos[indiceClientesAtuais].cliente.id) {
+                // atualizar as mensagens de contatos já existentes
+                for (var indexMsgsNovas in arrClientesNovos[indiceClientesNovos].cliente.messages) {
+                  temMsgAntiga = false
+                  for (var indexTodasMsgs in this.todosAtendimentos[indiceClientesAtuais].cliente.messages) {
+                    if (arrClientesNovos[indiceClientesNovos].cliente.messages[indexMsgsNovas].id_msg === this.todosAtendimentos[indiceClientesAtuais].cliente.messages[indexTodasMsgs].id_msg) {
+                      temMsgAntiga = true
+                      indexMsgsNovas++
+                    } else {
+                      temMsgAntiga = false
+                    }
+                  }
+                  if (temMsgAntiga == false) {
+                    let objCliente = arrClientesNovos[indiceClientesNovos]
+                    objCliente.indiceRef = indiceClientesNovos
+                    // arrAlvo.cliente.qtdMsgNova = state.testeContador
+                    this.adicionarMensagem(objCliente)
                   }
                 }
-                if(temMsgAntiga == false) {
-                  let objCliente = arrClientesNovos[indiceClientesNovos]
-                  objCliente.indiceRef = indiceClientesNovos
-                  this.adicionarMensagem(objCliente)
-                }
+                arrClientesNovos[indiceClientesNovos].cliente.id
+                indiceClientesNovos++
+              } else {
+                temClienteNovo = true
               }
-              arrClientesNovos[indiceClientesNovos].cliente.id
-              indiceClientesNovos++
-            } else {
-              temClienteNovo = true
+            }
+            if (temClienteNovo) {
+              console.log('Adicionando Cliente Novo')
+              let objCliente = arrClientesNovos[indiceClientesNovos]
+              objCliente.cliente.novoContato = true
+              objCliente.cliente.alertaMsgNova = true
+              objCliente.cliente.qtdMsgNova = 1
+              console.log(objCliente)
+              this.adicionarClienteNovo(objCliente)
+              temClienteNovo = false
             }
           }
-          if(temClienteNovo) {
-            console.log('Adicionando Cliente Novo')
-            let objCliente = arrClientesNovos[indiceClientesNovos].cliente
-            this.adicionarClienteNovo(objCliente)
-          }
         }
-
       })
       .catch(err => console.log(err))
     }

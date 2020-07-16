@@ -20,9 +20,7 @@
           visualizado
           <i class="fas fa-check-double"></i>
         </template>
-
         <template v-else> </template>
-
       </span>
       <span class="autor-mensagem"> {{ autor }} </span>
     </div>
