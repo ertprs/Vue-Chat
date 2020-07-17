@@ -61,10 +61,16 @@ export default {
         const textarea = document.querySelector('#textarea')
         textarea.innerText = 'Mensagem de Encerramento do Atendimento de ' + this.atendimentoAtivo.informacoes.nome
 
-        let btnEnviarMsg = document.querySelector('[enviar-msg]')
+        const btnEnviarMsg = document.querySelector('[enviar-msg]')
         btnEnviarMsg.click()
 
-        this.limparAtendimentoAtivo()
+        setTimeout(
+          () => {
+            const contato = document.querySelector('.ativo')
+            contato.remove()
+            this.limparAtendimentoAtivo()
+          }, 1000
+        )
 
       } else {
         alert('Selecione um cliente antes de tentar finalizar o  atendimento')

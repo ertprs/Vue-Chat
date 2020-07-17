@@ -8880,7 +8880,7 @@ body {
   overflow-y: hidden; }
 
 * {
-  scrollbar-color: #888 rgba(0, 0, 0, 0.8);
+  scrollbar-color: #888 rgba(0, 0, 0, 0.2);
   scrollbar-width: thin; }
 
 ::-webkit-scrollbar {
@@ -9046,7 +9046,8 @@ body {
         left: 55px;
         color: #666666;
         font-size: .7rem;
-        white-space: nowrap; }
+        white-space: nowrap;
+        user-select: none; }
   #todos-contatos .lista-agenda .lista-agenda--titulo {
     width: 100%;
     height: 50px;
@@ -9302,7 +9303,7 @@ body {
   overflow-y: hidden; }
 
 * {
-  scrollbar-color: #888 rgba(0, 0, 0, 0.8);
+  scrollbar-color: #888 rgba(0, 0, 0, 0.2);
   scrollbar-width: thin; }
 
 ::-webkit-scrollbar {
@@ -9337,8 +9338,8 @@ body {
     background-color: #3949ab; }
     .chat-opcoes .chat-opcoes-titulo p {
       white-space: nowrap;
-      font-size: .95rem;
-      margin: 0 3%;
+      font-size: .75rem;
+      margin: 0 5px;
       color: #FFF; }
     .chat-opcoes .chat-opcoes-titulo h1 {
       color: #FFF;
@@ -9848,7 +9849,7 @@ body {
   overflow-y: hidden; }
 
 * {
-  scrollbar-color: #888 rgba(0, 0, 0, 0.8);
+  scrollbar-color: #888 rgba(0, 0, 0, 0.2);
   scrollbar-width: thin; }
 
 ::-webkit-scrollbar {

@@ -18,7 +18,7 @@
         <ul :class="{'fechado' : fechado}">
           <li
             v-for="(atd, indice) in todosAtendimentos"
-            :key="atd.cliente.id"
+            :key="atd.cliente.id+indice"
             :id="'li_'+indice"
             :title="formataNome(atd.cliente.informacoes.nome)"
             :class="{'destaque-novo-contato' : atd.cliente.novoContato, 'nova-msg' : verificaMsgNova(atd.cliente.qtdMsgNova, indice)}"

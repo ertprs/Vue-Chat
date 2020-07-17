@@ -171,6 +171,11 @@ export default {
     },
     validaMensagem(){
       let msg = this.mensagem
+      
+      const textarea = document.querySelector('#textarea')
+      if((textarea.innerHTML !== '' || !textarea.innerHTML.trim()) && (msg.length == 0 || !msg.trim())){
+        msg = textarea.innerHTML
+      }
 
       if(msg.length === 0 || !msg.trim()){
         this.mensagem = ''

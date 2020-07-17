@@ -185,6 +185,7 @@ $tamanhoBoxShadow: 5px;
         color: darken(#CCC, 40);
         font-size: .7rem;
         white-space: nowrap;
+        user-select: none;
       }
     }
   }

@@ -41,7 +41,7 @@ var app = new Vue({
     this.$on('atualizarAtendimentos', this.atualizarAtendimentos)
     axios({ method: 'get', url: this.$store.getters.getURL+'get-atendimento'}) // primeiro get-atendimento, sem passar parametros
       .then(response => {
-        console.log(response.data)
+        console.log('atualizar atendimentos: ', response.data)
         let mainData = response.data
         if( mainData.atendimentos != null && mainData.gerenciador != null) {
           this.setAtendimentosIniciais( mainData.atendimentos.ramais )
@@ -74,6 +74,9 @@ var app = new Vue({
           if (arrClientesNovos[indiceClientesNovos]) {
             for (var indiceClientesAtuais in this.todosAtendimentos) {
               temClienteNovo = false
+              if(!arrClientesNovos[indiceClientesNovos]){
+                break;
+              }
               if (arrClientesNovos[indiceClientesNovos].cliente.id === this.todosAtendimentos[indiceClientesAtuais].cliente.id) {
                 // atualizar as mensagens de contatos já existentes
                 for (var indexMsgsNovas in arrClientesNovos[indiceClientesNovos].cliente.messages) {
