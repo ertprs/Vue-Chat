@@ -18,11 +18,11 @@
         <ul :class="{'fechado' : fechado}">
           <li
             v-for="(atd, indice) in todosAtendimentos"
-            :key="atd.cliente.id+'_'+indice"
+            :key="indice"
             :id="'li_'+indice"
             :title="formataNome(atd.cliente.informacoes.nome)"
-            :class="{'destaque-novo-contato' : atd.cliente.novoContato, 'nova-msg' : verificaMsgNova(atd.cliente.alertaMsgNova, indice)}"
-            @click="ativarConversa( atd.cliente, indice );"
+            :class="{'destaque-novo-contato' : atd.cliente.novoContato, 'nova-msg' : verificaMsgNova(atd.cliente.alertaMsgNova, 'li_'+indice)}"
+            @click="ativarConversa( atd.cliente, indice ), toggleAtivo( 'li_'+indice, atd.cliente )"
           >
             <!-- :class="atd.cliente.novoContato ? 'destaque-novo-contato' : ''" -->
             <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
@@ -32,7 +32,7 @@
             </div>
             <template v-if="!fechado">{{ formataNome(atd.cliente.informacoes.nome) }}</template>
             <span v-if="!fechado" class="ultima-msg">{{formataUltimaMsg(atd.cliente.messages)}}</span>
-            <span v-if="verificaMsgNova(atd.cliente.alertaMsgNova, indice)" class="destaque-nova-msg">{{ atd.cliente.qtdMsgNova }}</span>
+            <span v-if="atd.cliente.alertaMsgNova && atd.cliente.qtdMsgNova > 0 && verificaMsgNova(atd.cliente.alertaMsgNova, 'li_'+indice)" class="destaque-nova-msg">{{ atd.cliente.qtdMsgNova }}</span>
           </li>
         </ul>
         <div class="lista-agenda">
@@ -96,7 +96,6 @@ export default {
     return {
       rotate: false,
       fechado: false,
-      arrAtivos: [],
       haContatos: true,
       idAtendimentoAtivo: ''
     };
@@ -104,12 +103,11 @@ export default {
   watch: {
     todosAtendimentos() {
       if (this.todosAtendimentos) {
-        this.preencheAtivos()
         this.setMensagensClienteAtivo(
           this.idAtendimentoAtivo, this.obterMensagensDoContatoAtivoPeloId(this.idAtendimentoAtivo)
         )
       }
-    }
+    },
   },
   computed: {
     ...mapGetters({
@@ -136,9 +134,72 @@ export default {
       this.setMensagensClienteAtivo(atd.id, atd.messages)
       this.exibirInformacoes(atd, indice)
     },
+    toggleAtivo(li, contato){
+      if(contato){
+        contato.ativo = true
+      }
+
+      const contatoAtivo = document.querySelector('#'+li)
+      if(contatoAtivo){
+        contatoAtivo.classList.add('ativo')
+      }
+
+      let arrLi = []
+      for(let i = 0; i < this.todosAtendimentos.length; i++){
+        arrLi.push(document.querySelector('#li_'+i))
+
+        if(arrLi[i]){
+          // Remove ativo de outras LI's
+          if(arrLi[i].classList.contains('ativo') && ('li_'+i) !== li){
+            arrLi[i].classList.remove('ativo')
+            this.todosAtendimentos[i].cliente.ativo = false
+          }
+          if(arrLi[i].style.cssText){
+            const valorOrder = arrLi[i].style.order
+            arrLi[i].style.cssText = ''
+            arrLi[i].style.order = valorOrder
+          }
+          // Remove classe de destaque-novo-contato
+          if(arrLi[i].classList.contains('destaque-novo-contato')){
+            this.todosAtendimentos[i].cliente.novoContato = false
+            arrLi[i].classList.remove('destaque-novo-contato')
+            // Por remover a classe do novo contato, a const contatoAtivo fica errada, pois o indice é alterado
+            arrLi[i].style.order = '-2'
+            arrLi[i].style.opacity = '1'
+            arrLi[i].style.backgroundColor= "#a8dadc"
+            this.todosAtendimentos[i].cliente.ativo = true
+          }
+          // Remove classe de nova-msg
+          if(arrLi[i].classList.contains('nova-msg')){
+            this.todosAtendimentos[i].cliente.alertaMsgNova = false
+            this.todosAtendimentos[i].cliente.qtdMsgNova = 0
+            arrLi[i].classList.remove('nova-msg')
+            // Por remover a classe do novo contato, a const contatoAtivo fica errada, pois o indice é alterado
+            arrLi[i].style.order = '-1'
+            arrLi[i].style.opacity = '1'
+            arrLi[i].style.backgroundColor= "#a8dadc"
+            this.todosAtendimentos[i].cliente.ativo = true
+          }
+        }
+      }
+    },
+    verificaMsgNova(alertaMsgNova, id){
+      const li = document.querySelector('#'+id)
+      if(li && alertaMsgNova){
+        if(li.style.cssText){
+          if(li.style.backgroundColor){
+            return false
+          }else{
+            return true
+          }
+        }else{
+          return true
+        }
+      }
+
+    },
     exibirInformacoes: function(objInformacoes, indice) {
       this.setAtendimentoAtivo(objInformacoes);
-      this.controlaAtivos(indice);
     },
     setMensagensClienteAtivo(id, arrMensagens) {
       this.limparTodasMensagens();
@@ -194,42 +255,6 @@ export default {
       this.fechado = !this.fechado;
       this.toggleAbaContatos(this.fechado);
     },
-    preencheAtivos() {
-      if(this.arrAtivos.length !== this.todosAtendimentos.length){
-        for (let i = 0; i < this.todosAtendimentos.length; i++) {
-          this.arrAtivos[i] = { ativo: "N" };
-        }
-      }
-    },
-    controlaAtivos(indice) {
-      if (this.arrAtivos[indice]) {
-        this.arrAtivos[indice].ativo = "S"
-        let arrLi = [];
-        for (let i = 0; i < this.arrAtivos.length; i++) {
-          if (document.querySelector("#li_" + i)) {
-            arrLi[i] = document.querySelector("#li_" + i)
-            if(arrLi[i].classList.contains('ativo')){
-              if(i == indice){
-                continue
-              }else{
-                arrLi[i].classList.remove('ativo')
-              }
-            }else if(i == indice){
-              if(arrLi[i].classList.contains('destaque-novo-contato')){
-                arrLi[i].classList.remove('destaque-novo-contato')
-              }
-              arrLi[i].classList.add('ativo')
-            }
-          }
-        }
-
-        for(let i = 0; i < this.arrAtivos.length; i++){
-          if(i !== indice){
-            this.arrAtivos[i].ativo = 'N'
-          }
-        }
-      }
-    },
     obterMensagensDoContatoAtivoPeloId( id ) {
       for( let atd in this.todosAtendimentos ) {
         if( id == this.todosAtendimentos[atd].cliente.id ) {
@@ -244,29 +269,6 @@ export default {
         let mensagensClienteAtivo = self.obterMensagensDoContatoAtivoPeloId(idClienteAtivo)
         self.setMensagensClienteAtivo(idClienteAtivo, mensagensClienteAtivo)
       },1500)
-    },
-    verificaMsgNova(msgNova, indice){
-      setTimeout(
-        () => {
-          if(msgNova){
-            if(this.arrAtivos[indice]){
-              if(this.arrAtivos[indice].ativo == 'S'){
-                console.log('false')
-                return false
-              }else{
-                console.log('true')
-                return true
-              }
-            }else{
-              console.log('false')
-              return false
-            }
-          }else{
-            console.log('false')
-            return false
-          }
-        }, 300
-      )
     },
     formataUltimaMsg(arrMsgs){
       if(arrMsgs.length > 0){

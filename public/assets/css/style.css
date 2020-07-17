@@ -8955,6 +8955,9 @@ body {
   #todos-contatos .lista-contatos-container {
     width: 100%;
     background-color: #FFF; }
+    #todos-contatos .lista-contatos-container ul {
+      display: flex;
+      flex-direction: column; }
   #todos-contatos ul {
     padding: 0;
     max-height: 200px;
@@ -8975,7 +8978,9 @@ body {
       display: flex;
       align-items: center;
       list-style-type: none;
+      min-height: 50px;
       height: 50px;
+      max-height: 50px;
       cursor: pointer;
       border-bottom: 1px solid #CCC;
       position: relative; }
@@ -9001,13 +9006,19 @@ body {
         opacity: 1;
         background-color: #a8dadc !important; }
       #todos-contatos ul li.nova-msg {
-        font-weight: 700; }
+        animation-name: blink;
+        animation-duration: 800ms;
+        animation-direction: alternate;
+        animation-iteration-count: infinite;
+        font-weight: 700;
+        order: -1; }
       #todos-contatos ul li.destaque-novo-contato {
         background-color: #fdffb6 !important;
         animation-name: blink;
         animation-duration: 800ms;
         animation-direction: alternate;
-        animation-iteration-count: infinite; }
+        animation-iteration-count: infinite;
+        order: -2; }
       #todos-contatos ul li svg {
         margin-right: 5px;
         font-size: 1.2rem; }

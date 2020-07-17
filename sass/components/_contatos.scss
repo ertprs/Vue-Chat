@@ -69,7 +69,11 @@ $tamanhoBoxShadow: 5px;
   }
   .lista-contatos-container{
     width: 100%;
-    background-color: #FFF
+    background-color: #FFF;
+    ul{
+      display: flex;
+      flex-direction: column;
+    }
   }
   ul{
     padding: 0;
@@ -97,7 +101,9 @@ $tamanhoBoxShadow: 5px;
       display: flex;
       align-items: center;
       list-style-type: none;
+      min-height: 50px;
       height: 50px;
+      max-height: 50px;
       cursor: pointer;
       border-bottom: 1px solid #CCC;
       position: relative;
@@ -126,7 +132,12 @@ $tamanhoBoxShadow: 5px;
         background-color: #a8dadc!important
       }
       &.nova-msg{
-        font-weight: 700
+        animation-name: blink;
+        animation-duration: 800ms;
+        animation-direction: alternate;
+        animation-iteration-count: infinite;
+        font-weight: 700;
+        order: -1;
       }
       &.destaque-novo-contato{
         background-color: #fdffb6!important;
@@ -137,6 +148,7 @@ $tamanhoBoxShadow: 5px;
         animation-duration: 800ms;
         animation-direction: alternate;
         animation-iteration-count: infinite;
+        order: -2;
       }
       svg{
         margin-right: 5px;

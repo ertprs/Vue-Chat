@@ -44,7 +44,7 @@ export default new Vuex.Store({
       state.todosAtendimentos.splice(objCliente.indiceRef, 1, objCliente)
     },
     adicionarClienteNovo(state, objCliente) {
-      state.todosAtendimentos.unshift(objCliente)
+      state.todosAtendimentos.push(objCliente)
     },
     setAtendimentoAtivo(state, objInformacoes){
       state.atendimentoAtivo = objInformacoes

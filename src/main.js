@@ -74,12 +74,14 @@ var app = new Vue({
         var temClienteNovo = false
         var temMsgAntiga = false
         for (var indiceClientesNovos in arrClientesNovos) {
+
           if (arrClientesNovos[indiceClientesNovos]) {
             for (var indiceClientesAtuais in this.todosAtendimentos) {
               temClienteNovo = false
               if(!arrClientesNovos[indiceClientesNovos]){
                 break;
               }
+
               if (arrClientesNovos[indiceClientesNovos].cliente.id === this.todosAtendimentos[indiceClientesAtuais].cliente.id) {
                 // atualizar as mensagens de contatos já existentes
                 for (var indexMsgsNovas in arrClientesNovos[indiceClientesNovos].cliente.messages) {
@@ -92,12 +94,22 @@ var app = new Vue({
                       temMsgAntiga = false
                     }
                   }
+
+                  // Criando novas posições nos clientes
+                  if(arrClientesNovos[indiceClientesNovos].cliente.qtdMsgNova == 0 || !arrClientesNovos[indiceClientesNovos].cliente.qtdMsgNova){
+                    arrClientesNovos[indiceClientesNovos].cliente.ativo = false
+                    arrClientesNovos[indiceClientesNovos].cliente.qtdMsgNova = 0
+                    arrClientesNovos[indiceClientesNovos].cliente.alertaMsgNova = false
+                  }
+
                   if (temMsgAntiga == false) {
                     let objCliente = arrClientesNovos[indiceClientesNovos]
-                    objCliente.indiceRef = indiceClientesNovos
-                    objCliente.cliente.alertaMsgNova = true
-                    objCliente.cliente.qtdMsgNova = objCliente.cliente.messages.length
-                    console.log('Obj Cliente: ', objCliente)
+                    if(objCliente.cliente.ativo == false){
+                      objCliente.indiceRef = indiceClientesNovos
+                      objCliente.cliente.alertaMsgNova = true
+                      objCliente.cliente.qtdMsgNova++
+                      console.log('Obj Cliente: ', objCliente)
+                    }
                     this.adicionarMensagem(objCliente)
                   }
                 }
@@ -111,8 +123,6 @@ var app = new Vue({
               console.log('Adicionando Cliente Novo')
               let objCliente = arrClientesNovos[indiceClientesNovos]
               objCliente.cliente.novoContato = true
-              objCliente.cliente.alertaMsgNova = true
-              objCliente.cliente.qtdMsgNova = 0
               console.log(objCliente)
               this.adicionarClienteNovo(objCliente)
               temClienteNovo = false
