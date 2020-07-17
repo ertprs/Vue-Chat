@@ -65,6 +65,9 @@ var app = new Vue({
       axios({ method: 'get', url: this.$store.getters.getURL + urlComToken }) // segundo get-atendimendo, agora com parametros
       .then(response => {
         let mainData = response.data
+        if(!mainData || !mainData.atendimentos){
+          return
+        }
         var arrClientesNovos = mainData.atendimentos.ramais
 
         //verifica se existe clientes novos
@@ -92,7 +95,9 @@ var app = new Vue({
                   if (temMsgAntiga == false) {
                     let objCliente = arrClientesNovos[indiceClientesNovos]
                     objCliente.indiceRef = indiceClientesNovos
-                    // arrAlvo.cliente.qtdMsgNova = state.testeContador
+                    objCliente.cliente.alertaMsgNova = true
+                    objCliente.cliente.qtdMsgNova = objCliente.cliente.messages.length
+                    console.log('Obj Cliente: ', objCliente)
                     this.adicionarMensagem(objCliente)
                   }
                 }
@@ -107,7 +112,7 @@ var app = new Vue({
               let objCliente = arrClientesNovos[indiceClientesNovos]
               objCliente.cliente.novoContato = true
               objCliente.cliente.alertaMsgNova = true
-              objCliente.cliente.qtdMsgNova = 1
+              objCliente.cliente.qtdMsgNova = 0
               console.log(objCliente)
               this.adicionarClienteNovo(objCliente)
               temClienteNovo = false

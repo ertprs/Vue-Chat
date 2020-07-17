@@ -31,6 +31,9 @@
         </div>
       </div>
       <div class="lista-informacoes-container" v-if="atendimentoAtivo.informacoes">
+        <div class="iframe-informacoes" v-if="atendimentoAtivo.url">
+          <iframe :src="atendimentoAtivo.url" frameborder="0"></iframe>
+        </div>
         <div class="container-acoes">
           <BotoesAcoes />
         </div>

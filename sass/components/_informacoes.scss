@@ -87,6 +87,15 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
+  .iframe-informacoes{
+    width: 100%;
+    height: 75%;
+    padding: 5px;
+    iframe{
+      width: 100%;
+      height: 100%;
+    }
+  }
   .container-acoes{
     width: 100%;
     height: 25%;

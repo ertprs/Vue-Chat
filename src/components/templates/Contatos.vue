@@ -18,10 +18,10 @@
         <ul :class="{'fechado' : fechado}">
           <li
             v-for="(atd, indice) in todosAtendimentos"
-            :key="atd.cliente.id+indice"
+            :key="atd.cliente.id+'_'+indice"
             :id="'li_'+indice"
             :title="formataNome(atd.cliente.informacoes.nome)"
-            :class="{'destaque-novo-contato' : atd.cliente.novoContato, 'nova-msg' : verificaMsgNova(atd.cliente.qtdMsgNova, indice)}"
+            :class="{'destaque-novo-contato' : atd.cliente.novoContato, 'nova-msg' : verificaMsgNova(atd.cliente.alertaMsgNova, indice)}"
             @click="ativarConversa( atd.cliente, indice );"
           >
             <!-- :class="atd.cliente.novoContato ? 'destaque-novo-contato' : ''" -->
@@ -251,13 +251,19 @@ export default {
           if(msgNova){
             if(this.arrAtivos[indice]){
               if(this.arrAtivos[indice].ativo == 'S'){
+                console.log('false')
                 return false
               }else{
+                console.log('true')
                 return true
               }
             }else{
+              console.log('false')
               return false
             }
+          }else{
+            console.log('false')
+            return false
           }
         }, 300
       )
