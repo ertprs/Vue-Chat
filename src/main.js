@@ -73,6 +73,7 @@ var app = new Vue({
         //verifica se existe clientes novos
         var temClienteNovo = false
         var temMsgAntiga = false
+
         for (var indiceClientesNovos in arrClientesNovos) {
 
           if (arrClientesNovos[indiceClientesNovos]) {
@@ -96,11 +97,9 @@ var app = new Vue({
                   }
 
                   // Criando novas posições nos clientes
-                  if(arrClientesNovos[indiceClientesNovos].cliente.qtdMsgNova == 0 || !arrClientesNovos[indiceClientesNovos].cliente.qtdMsgNova){
-                    arrClientesNovos[indiceClientesNovos].cliente.ativo = false
-                    arrClientesNovos[indiceClientesNovos].cliente.qtdMsgNova = 0
-                    arrClientesNovos[indiceClientesNovos].cliente.alertaMsgNova = false
-                  }
+                  arrClientesNovos[indiceClientesNovos].cliente.ativo = false
+                  arrClientesNovos[indiceClientesNovos].cliente.qtdMsgNova = 0
+                  arrClientesNovos[indiceClientesNovos].cliente.alertaMsgNova = false
 
                   if (temMsgAntiga == false) {
                     let objCliente = arrClientesNovos[indiceClientesNovos]

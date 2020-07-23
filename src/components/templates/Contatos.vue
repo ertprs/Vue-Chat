@@ -32,7 +32,7 @@
             </div>
             <template v-if="!fechado">{{ formataNome(atd.cliente.informacoes.nome) }}</template>
             <span v-if="!fechado" class="ultima-msg">{{formataUltimaMsg(atd.cliente.messages)}}</span>
-            <span v-if="atd.cliente.alertaMsgNova && atd.cliente.qtdMsgNova > 0 && verificaMsgNova(atd.cliente.alertaMsgNova, 'li_'+indice)" class="destaque-nova-msg">{{ atd.cliente.qtdMsgNova }}</span>
+            <span v-if="atd.cliente.alertaMsgNova && atd.cliente.qtdMsgNova > 0 && verificaMsgNova(atd.cliente.alertaMsgNova, 'li_'+indice)" class="destaque-nova-msg">{{ qtdMsgNova(atd.cliente.qtdMsgNova) }}</span>
           </li>
         </ul>
         <div class="lista-agenda">
@@ -197,6 +197,9 @@ export default {
         }
       }
 
+    },
+    qtdMsgNova(qtd){
+      return qtd
     },
     exibirInformacoes: function(objInformacoes, indice) {
       this.setAtendimentoAtivo(objInformacoes);
