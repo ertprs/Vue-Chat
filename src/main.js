@@ -77,6 +77,7 @@ var app = new Vue({
     atualizarAtendimentos() {
       let urlComToken = 'get-atendimento?token_atd=' + this.tokenAtd + '&token_manager=' + this.tokenManager
       axios({ method: 'get', url: this.$store.getters.getURL + urlComToken }) // segundo get-atendimendo, agora com parametros
+<<<<<<< HEAD
         .then(response => {
           let mainData = response.data
           if (mainData.st_ret !== 'OK') {
@@ -84,6 +85,71 @@ var app = new Vue({
             return false
           } else {
             this.atualizarMensagens(mainData)
+=======
+      .then(response => {
+        let mainData = response.data
+        if(!mainData || !mainData.atendimentos){
+          return
+        }
+        var arrClientesNovos = mainData.atendimentos.ramais
+
+        //verifica se existe clientes novos
+        var temClienteNovo = false
+        var temMsgAntiga = false
+
+        for (var indiceClientesNovos in arrClientesNovos) {
+
+          if (arrClientesNovos[indiceClientesNovos]) {
+            for (var indiceClientesAtuais in this.todosAtendimentos) {
+              temClienteNovo = false
+              if(!arrClientesNovos[indiceClientesNovos]){
+                break;
+              }
+
+              if (arrClientesNovos[indiceClientesNovos].cliente.id === this.todosAtendimentos[indiceClientesAtuais].cliente.id) {
+                // atualizar as mensagens de contatos já existentes
+                for (var indexMsgsNovas in arrClientesNovos[indiceClientesNovos].cliente.messages) {
+                  temMsgAntiga = false
+                  for (var indexTodasMsgs in this.todosAtendimentos[indiceClientesAtuais].cliente.messages) {
+                    if (arrClientesNovos[indiceClientesNovos].cliente.messages[indexMsgsNovas].id_msg === this.todosAtendimentos[indiceClientesAtuais].cliente.messages[indexTodasMsgs].id_msg) {
+                      temMsgAntiga = true
+                      indexMsgsNovas++
+                    } else {
+                      temMsgAntiga = false
+                    }
+                  }
+
+                  // Criando novas posições nos clientes
+                  arrClientesNovos[indiceClientesNovos].cliente.ativo = false
+                  arrClientesNovos[indiceClientesNovos].cliente.qtdMsgNova = 0
+                  arrClientesNovos[indiceClientesNovos].cliente.alertaMsgNova = false
+
+                  if (temMsgAntiga == false) {
+                    let objCliente = arrClientesNovos[indiceClientesNovos]
+                    if(objCliente.cliente.ativo == false){
+                      objCliente.indiceRef = indiceClientesNovos
+                      objCliente.cliente.alertaMsgNova = true
+                      objCliente.cliente.qtdMsgNova++
+                      console.log('Obj Cliente: ', objCliente)
+                    }
+                    this.adicionarMensagem(objCliente)
+                  }
+                }
+                arrClientesNovos[indiceClientesNovos].cliente.id
+                indiceClientesNovos++
+              } else {
+                temClienteNovo = true
+              }
+            }
+            if (temClienteNovo) {
+              console.log('Adicionando Cliente Novo')
+              let objCliente = arrClientesNovos[indiceClientesNovos]
+              objCliente.cliente.novoContato = true
+              console.log(objCliente)
+              this.adicionarClienteNovo(objCliente)
+              temClienteNovo = false
+            }
+>>>>>>> 3833648c8193903a0ef3cb76dc0645a345d384c4
           }
         })
         .catch(err => console.log(err))
