@@ -6,23 +6,25 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    zonaDeTeste: true,
-    formularioCliente: false,
-    todasMensagens: [],
-    habilitaRolagem: false,
+    abaContatos: false,
+    agenda: [],
     atendimentoAtivo: {},
+    formularioCliente: false,
+    habilitaRolagem: false,
+    testeContador: 0,
+    todasMensagens: [],
     tokenAtd: '',
     tokenManager: '',
     todosAtendimentos: {},
     url: '',
-    abaContatos: false,
-    testeContador: 0
+    zonaDeTeste: true
   },
   mutations: {
     setFormularioCliente(state, formularioCliente){
       state.formularioCliente = formularioCliente
     },
     setTodasMensagens(state, todasMensagens){
+      // console.log(todasMensagens)
       state.todasMensagens.push(todasMensagens)
     },
     limparTodasMensagens(state){
@@ -36,6 +38,9 @@ export default new Vuex.Store({
     },
     setURL(state, newURI){
       state.url = newURI
+    },
+    setAgenda(state, agenda) {
+      state.agenda = agenda
     },
     setAtendimentosIniciais(state, todosAtendimentos){
       state.todosAtendimentos = todosAtendimentos
@@ -63,6 +68,9 @@ export default new Vuex.Store({
     }
   },
   getters: {
+    getAgenda(state) {
+      return state.agenda
+    },
     getTodasMensagens(state){
       return state.todasMensagens
     },

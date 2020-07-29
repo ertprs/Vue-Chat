@@ -93,14 +93,11 @@
     </div>
   </div>
 </template>
-
 <script>
 
 import { mapMutations } from 'vuex'
 import { mapGetters } from 'vuex'
-
 import axios from "axios"
-
 import { TwemojiPicker } from '@kevinfaguiar/vue-twemoji-picker'
 import EmojiAllData from '@kevinfaguiar/vue-twemoji-picker/emoji-data/pt/emoji-all-groups.json';
 import EmojiDataAnimalsNature from '@kevinfaguiar/vue-twemoji-picker/emoji-data/pt/emoji-group-animals-nature.json';
@@ -138,26 +135,18 @@ export default {
     enviarMensagem(){
       if(this.validaMensagem()){
         let msg = this.mensagem
-        if( msg != '' ) {
-          let jsonMensagem = {
-            "id": this.atendimentoAtivo.id,
-            "message": msg,
-            "origin": "OPE"
-          }
-          axios
-            .put(
-              "https://linux03/im/atdHumano/middleware/atd_api.php/send-message",
-              { ...jsonMensagem }
-            )
-            .then(response => {
-              console.log(response.data);
+          if(this.atendimentoAtivo.token_cliente != '' && msg != '') {
+            let data = {"token_cliente": this.atendimentoAtivo.token_cliente,"message": msg}
+            // let data = {"token_cliente": "MKUTBPHG0JnoOhaBTkqiNmhUBs=", "message": "testando 123"}
+            axios({
+              method: 'PUT',
+              url:this.$store.getters.getURL + 'send-message',
+              data
             })
-            .catch(error => {
-              console.log(error);
-            });
-          this.setTodasMensagens( this.criaObjMensagem() )
-          this.mensagem = ''
-        }
+            this.setTodasMensagens(this.criaObjMensagem())
+            this.mensagem = ''
+            // }
+          }
       }
     },
     verificaRolagem(){
@@ -314,7 +303,7 @@ export default {
     obterAtendimentos() {
       axios
         .get(
-          "https://linux03/im/atdHumano/middleware/atd_api.php/get-atendimento"
+          this.$store.getters.getURL + "get-atendimento"
         )
         .then(response => {
           mostrarAtendimentos(response.data);
@@ -327,7 +316,7 @@ export default {
       var idClientes = [55987654321, 5517987654321];
       axios
         .post(
-          "https://linux03/im/atdHumano/middleware/atd_api.php/search-message",
+          this.$store.getters.getURL + "search-message",
           { idClientes }
         )
         .then(response => {
@@ -341,7 +330,7 @@ export default {
       var informacao = "Testando alguma informacao";
       axios
         .post(
-          "https://linux03/im/atdHumano/middleware/atd_api.php/send-information",
+          this.$store.getters.getURL + "send-information",
           { informacao }
         )
         .then(response => {

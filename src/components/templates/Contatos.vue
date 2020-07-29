@@ -9,30 +9,32 @@
           </h1>
         </transition>
       </div>
+      <div>
+      </div>
       <div v-on:click="toggleContatos()" class="container-flecha" :class="rotate ? 'rotate' : ''">
         <i class="fas fa-long-arrow-alt-left flecha"></i>
       </div>
     </div>
     <template v-if="todosAtendimentos">
-      <div class="lista-contatos-container" v-if="todosAtendimentos.length > 0">
+      <div class="lista-contatos-container" >
         <ul :class="{'fechado' : fechado}">
           <li
             v-for="(atd, indice) in todosAtendimentos"
             :key="indice"
             :id="'li_'+indice"
-            :title="formataNome(atd.cliente.informacoes.nome)"
-            :class="{'destaque-novo-contato' : atd.cliente.novoContato, 'nova-msg' : verificaMsgNova(atd.cliente.alertaMsgNova, 'li_'+indice)}"
-            @click="ativarConversa( atd.cliente, indice ), toggleAtivo( 'li_'+indice, atd.cliente )"
+            :title="formataNome(atd.nome_usu)"
+            :class="{'destaque-novo-contato' : atd.nome_usu, 'nova-msg' : verificaMsgNova(atd.status, 'li_'+indice)}"
+            @click="ativarConversa( atd, indice ), toggleAtivo( 'li_'+indice, atd )"
           >
             <!-- :class="atd.cliente.novoContato ? 'destaque-novo-contato' : ''" -->
             <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
             <div class="circulo-contatos">
-              <p>{{ formataSigla(atd.cliente.informacoes.nome[0], 'upper') }}</p>
-              <p v-if="fechado">{{ formataSigla(atd.cliente.informacoes.nome[1], 'lower') }}</p>
+              <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
+              <p v-if="fechado">{{ formataSigla(atd.nome_usu[1], 'lower') }}</p>
             </div>
-            <template v-if="!fechado">{{ formataNome(atd.cliente.informacoes.nome) }}</template>
-            <span v-if="!fechado" class="ultima-msg">{{formataUltimaMsg(atd.cliente.messages)}}</span>
-            <span v-if="atd.cliente.alertaMsgNova && atd.cliente.qtdMsgNova > 0 && verificaMsgNova(atd.cliente.alertaMsgNova, 'li_'+indice)" class="destaque-nova-msg">{{ atd.cliente.qtdMsgNova }}</span>
+            <template v-if="!fechado">{{ formataNome(atd.nome_usu) }}</template>
+            <span v-if="!fechado" class="ultima-msg">{{formataUltimaMsg(atd.arrMsg)}}</span>
+            <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && verificaMsgNova(atd.alertaMsgNova, 'li_'+indice)" class="destaque-nova-msg">{{ atd.qtdMsgNova }}</span>
           </li>
         </ul>
         <div class="lista-agenda">
@@ -48,18 +50,17 @@
           </div>
           <ul :class="{'fechado' : fechado}">
             <li
-              v-for="(atd, indice) in todosAtendimentos"
-              :key="atd.cliente.id"
+              v-for="(atd, indice) in minhaAgenda"
+              :key="'id_'+indice"
               :id="'li_'+indice"
-              :title="atd.cliente.informacoes.nome"
-              @click="ativarConversa( atd.cliente, indice );"
+              :title="atd"
             >
               <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
               <div :class="indice % 2 == 0 ? '' : ''" class="circulo-contatos">
-                <p>{{ formataSigla(atd.cliente.informacoes.nome[0], 'upper') }}</p>
-                <p v-if="fechado">{{ formataSigla(atd.cliente.informacoes.nome[1], 'lower') }}</p>
+                <p>{{ formataSigla(atd[0], 'upper') }}</p>
+                <p v-if="fechado">{{ formataSigla(atd[1], 'lower') }}</p>
               </div>
-              <template v-if="!fechado">{{ atd.cliente.informacoes.nome }}</template>
+              <template v-if="!fechado">{{ atd }}</template>
             </li>
           </ul>
         </div>
@@ -101,18 +102,19 @@ export default {
     };
   },
   watch: {
-    todosAtendimentos() {
-      if (this.todosAtendimentos) {
-        this.setMensagensClienteAtivo(
-          this.idAtendimentoAtivo, this.obterMensagensDoContatoAtivoPeloId(this.idAtendimentoAtivo)
-        )
-      }
-    },
+    // todosAtendimentos() {
+    //   if (this.todosAtendimentos) {
+    //     this.setMensagensClienteAtivo(
+    //       this.idAtendimentoAtivo, this.obterMensagensDoContatoAtivoPeloId(this.idAtendimentoAtivo)
+    //     )
+    //   }
+    // }
   },
   computed: {
     ...mapGetters({
       clienteMandouMensagem: "getClienteMandouMensagem",
       todosAtendimentos: "getTodosAtendimentos",
+      minhaAgenda: "getAgenda"
     })
   },
   methods: {
@@ -130,8 +132,8 @@ export default {
       "toggleAbaContatos"
     ]),
     ativarConversa: function(atd, indice) {
-      this.idAtendimentoAtivo = atd.id
-      this.setMensagensClienteAtivo(atd.id, atd.messages)
+      this.idAtendimentoAtivo = atd.id_cli
+      this.setMensagensClienteAtivo(atd.id_cli, atd.arrMsg)
       this.exibirInformacoes(atd, indice)
     },
     toggleAtivo(li, contato){
@@ -196,31 +198,36 @@ export default {
           return true
         }
       }
-
     },
-    exibirInformacoes: function(objInformacoes, indice) {
-      this.setAtendimentoAtivo(objInformacoes);
+    exibirInformacoes: function(atd, indice) {
+      atd.informacoes = {}
+      atd.informacoes.nome = atd.nome_usu
+      atd.id = '8888888888888'
+      atd.url = ''
+      this.setAtendimentoAtivo(atd);
     },
     setMensagensClienteAtivo(id, arrMensagens) {
       this.limparTodasMensagens();
       for (let i in arrMensagens) {
-        let mensagem = arrMensagens[i].texto;
-        let origem;
-        arrMensagens[i].resp_msg == "CLI" ? (origem = "outros") : (origem = "principal");
-        let horario = "??:??";
-        let anexo = false;
-        let imgAnexo = "";
-        let autor = arrMensagens[i].resp_msg;
-        switch (autor) {
-          case "CLI":
-            autor = "Cliente";
-            break;
-          case "OPE":
-            autor = "Operador";
-            break;
+        if(i != 'st_ret') {
+          let mensagem = arrMensagens[i].msg;
+          let origem;
+          arrMensagens[i].resp_msg == "CLI" ? (origem = "outros") : (origem = "principal");
+          let horario = arrMensagens[i].hora;
+          let anexo = false;
+          let imgAnexo = "";
+          let autor = arrMensagens[i].resp_msg;
+          switch (autor) {
+            case "CLI":
+              autor = "Cliente";
+              break;
+            case "OPE":
+              autor = "Operador";
+              break;
+          }
+          let objMensagem = this.getObjMensagem( autor, origem, mensagem, horario, anexo, imgAnexo );
+          this.setTodasMensagens(objMensagem);
         }
-        let objMensagem = this.getObjMensagem( autor, origem, mensagem, horario, anexo, imgAnexo );
-        this.setTodasMensagens(objMensagem);
       }
     },
     getObjMensagem(
@@ -256,11 +263,11 @@ export default {
       this.toggleAbaContatos(this.fechado);
     },
     obterMensagensDoContatoAtivoPeloId( id ) {
-      for( let atd in this.todosAtendimentos ) {
-        if( id == this.todosAtendimentos[atd].cliente.id ) {
-          return this.todosAtendimentos[atd].cliente.messages
-        }
-      }
+      // for( let atd in this.todosAtendimentos ) {
+      //   if( id == this.todosAtendimentos[atd].cliente.id ) {
+      //     return this.todosAtendimentos[atd].cliente.messages
+      //   }
+      // }
     },
     atualizarMensagemDoContatoAtivo() {
       var self = this

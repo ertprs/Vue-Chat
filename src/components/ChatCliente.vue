@@ -54,17 +54,17 @@ export default {
     enviarMensagem() {
       let msg = this.mensagem;
       if( msg != '' ) {
-        axios
-          .post(
-            "http://linux03/im/atdHumano/middleware/atd_api.php/send-message",
-            { msg }
-          )
-          .then(response => {
-            console.log(response.data);
-          })
-          .catch(error => {
-            console.log(error);
-          });
+        // axios
+        //   .post(
+        //     this.$store.getters.getURL + "send-message",
+        //     { msg }
+        //   )
+        //   .then(response => {
+        //     console.log(response.data);
+        //   })
+        //   .catch(error => {
+        //     console.log(error);
+        //   });
         if (this.validaMensagem()) {
           this.setTodasMensagens(this.criaObjMensagem());
           this.setClienteMandouMensagem(true);
