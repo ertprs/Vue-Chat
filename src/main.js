@@ -28,7 +28,7 @@ var app = new Vue({
   Formulario,
   render: h => h(App),
   created: () => {
-    store.commit('setURL', "https://linux03/im/atdHumano/middleware/atd_api.php/")
+    store.commit('setURL', "http://linux03/im/atdHumano/middleware/atd_api.php/")
   },
   computed: {
     ...mapGetters({
@@ -39,21 +39,37 @@ var app = new Vue({
   },
   mounted() {
     this.$on('atualizarAtendimentos', this.atualizarAtendimentos)
-    axios({ method: 'get', url: this.$store.getters.getURL+'get-atendimento'}) // primeiro get-atendimento, sem passar parametros
-      .then(response => {
-        console.log('atualizar atendimentos: ', response.data)
-        let mainData = response.data
-        if( mainData.atendimentos != null && mainData.gerenciador != null) {
-          this.setAtendimentosIniciais( mainData.atendimentos.ramais )
-          mainData.atendimentos.token_atd != null ? this.setTokenAtd(mainData.atendimentos.token_atd) : this.setTokenAtd('-')
-          mainData.gerenciador.token_manager != null ? this.setTokenManager( mainData.gerenciador.token_manager ) : this.setTokenManager('-')
-          this.iniciarAtualizacaoDeAtendimentos()
-        } else {
-          alert( 'Erro ao tentar obter dados no servidor')
-          console.log( mainData )
-        }
-      })
-      .catch(err => console.log(err))
+    
+    axios.put(
+      'http://linux03/im/atdHumano/middleware/atd_api.php/send-message',
+      {"token_cliente": "MKUHDwwim4l5wwkcm7ZXkIWwAp8wwxb44awwwwim4l5wwpRJyE", "message": "alo alo alo"}
+    )
+    .then(
+      (response) => {
+        console.log(response)
+      }
+    )
+    .catch(
+      (error) => {
+        console.log(error)
+      }
+    )
+    
+    // axios({ method: 'get', url: this.$store.getters.getURL+'get-atendimento'}) // primeiro get-atendimento, sem passar parametros
+    //   .then(response => {
+    //     console.log('atualizar atendimentos: ', response.data)
+    //     let mainData = response.data
+    //     if( mainData.atendimentos != null && mainData.gerenciador != null) {
+    //       this.setAtendimentosIniciais( mainData.atendimentos.ramais )
+    //       mainData.atendimentos.token_atd != null ? this.setTokenAtd(mainData.atendimentos.token_atd) : this.setTokenAtd('-')
+    //       mainData.gerenciador.token_manager != null ? this.setTokenManager( mainData.gerenciador.token_manager ) : this.setTokenManager('-')
+    //       this.iniciarAtualizacaoDeAtendimentos()
+    //     } else {
+    //       alert( 'Erro ao tentar obter dados no servidor')
+    //       console.log( mainData )
+    //     }
+    //   })
+    //   .catch(err => console.log(err))
    },
   methods: {
     ...mapMutations(["setAtendimentosIniciais", "adicionarMensagem", "adicionarClienteNovo", "setTokenAtd", "setTokenManager"]),
