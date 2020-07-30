@@ -32,15 +32,9 @@
               <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
               <p v-if="fechado">{{ formataSigla(atd.nome_usu[1], 'lower') }}</p>
             </div>
-<<<<<<< HEAD
             <template v-if="!fechado">{{ formataNome(atd.nome_usu) }}</template>
             <span v-if="!fechado" class="ultima-msg">{{formataUltimaMsg(atd.arrMsg)}}</span>
             <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && verificaMsgNova(atd.alertaMsgNova, 'li_'+indice)" class="destaque-nova-msg">{{ atd.qtdMsgNova }}</span>
-=======
-            <template v-if="!fechado">{{ formataNome(atd.cliente.informacoes.nome) }}</template>
-            <span v-if="!fechado" class="ultima-msg">{{formataUltimaMsg(atd.cliente.messages)}}</span>
-            <span v-if="atd.cliente.alertaMsgNova && atd.cliente.qtdMsgNova > 0 && verificaMsgNova(atd.cliente.alertaMsgNova, 'li_'+indice)" class="destaque-nova-msg">{{ qtdMsgNova(atd.cliente.qtdMsgNova) }}</span>
->>>>>>> 3833648c8193903a0ef3cb76dc0645a345d384c4
           </li>
         </ul>
         <div class="lista-agenda">
@@ -108,19 +102,27 @@ export default {
     };
   },
   watch: {
-    // todosAtendimentos() {
-    //   if (this.todosAtendimentos) {
-    //     this.setMensagensClienteAtivo(
-    //       this.idAtendimentoAtivo, this.obterMensagensDoContatoAtivoPeloId(this.idAtendimentoAtivo)
-    //     )
-    //   }
-    // }
+    todosAtendimentos() {
+      if (this.todosAtendimentos && this.idAtendimentoAtivo) {
+        this.setMensagensClienteAtivo(
+          this.idAtendimentoAtivo, this.obterMensagensDoContatoAtivoPeloId(this.idAtendimentoAtivo)
+        )
+      }
+    }
   },
   computed: {
     ...mapGetters({
       clienteMandouMensagem: "getClienteMandouMensagem",
       todosAtendimentos: "getTodosAtendimentos",
       minhaAgenda: "getAgenda"
+    })
+  },
+  mounted() {
+    this.$root.$on('atualizar_mensagem', (msg) => {
+      // this.atualizarMensagemDoContatoAtivo()
+      // console.log(this.todosAtendimentos)
+      // console.log('component contatos')
+
     })
   },
   methods: {
@@ -205,20 +207,12 @@ export default {
         }
       }
     },
-<<<<<<< HEAD
     exibirInformacoes: function(atd, indice) {
       atd.informacoes = {}
       atd.informacoes.nome = atd.nome_usu
-      atd.id = '8888888888888'
+      atd.id = atd.login_usu
       atd.url = ''
       this.setAtendimentoAtivo(atd);
-=======
-    qtdMsgNova(qtd){
-      return qtd
-    },
-    exibirInformacoes: function(objInformacoes, indice) {
-      this.setAtendimentoAtivo(objInformacoes);
->>>>>>> 3833648c8193903a0ef3cb76dc0645a345d384c4
     },
     setMensagensClienteAtivo(id, arrMensagens) {
       this.limparTodasMensagens();
@@ -277,11 +271,11 @@ export default {
       this.toggleAbaContatos(this.fechado);
     },
     obterMensagensDoContatoAtivoPeloId( id ) {
-      // for( let atd in this.todosAtendimentos ) {
-      //   if( id == this.todosAtendimentos[atd].cliente.id ) {
-      //     return this.todosAtendimentos[atd].cliente.messages
-      //   }
-      // }
+      for( let ramal in this.todosAtendimentos ) {
+        if( id == this.todosAtendimentos[ramal].id_cli ) {
+          return this.todosAtendimentos[ramal].arrMsg
+        }
+      }
     },
     atualizarMensagemDoContatoAtivo() {
       var self = this

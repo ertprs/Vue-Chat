@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Vuex from "vuex";
+import Vuex, { Store } from "vuex";
 import controleBlocker from './modulos/controleBlocker'
 
 Vue.use(Vuex);
@@ -24,7 +24,6 @@ export default new Vuex.Store({
       state.formularioCliente = formularioCliente
     },
     setTodasMensagens(state, todasMensagens){
-      // console.log(todasMensagens)
       state.todasMensagens.push(todasMensagens)
     },
     limparTodasMensagens(state){
@@ -42,14 +41,8 @@ export default new Vuex.Store({
     setAgenda(state, agenda) {
       state.agenda = agenda
     },
-    setAtendimentosIniciais(state, todosAtendimentos){
+    setAtendimentos(state, todosAtendimentos){
       state.todosAtendimentos = todosAtendimentos
-    },
-    adicionarMensagem(state, objCliente) {
-      state.todosAtendimentos.splice(objCliente.indiceRef, 1, objCliente)
-    },
-    adicionarClienteNovo(state, objCliente) {
-      state.todosAtendimentos.push(objCliente)
     },
     setAtendimentoAtivo(state, objInformacoes){
       state.atendimentoAtivo = objInformacoes
@@ -65,6 +58,11 @@ export default new Vuex.Store({
     },
     toggleAbaContatos(state, abaContatos){
       state.abaContatos = abaContatos
+    }
+  },
+  actions: {
+    atualizarAtendimentos({commit}, atendimentos) {
+      commit('setAtendimentos', atendimentos)
     }
   },
   getters: {
