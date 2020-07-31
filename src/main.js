@@ -74,13 +74,18 @@ var app = new Vue({
       var temporizador = setInterval(this.atualizarAtendimentos, 2000);
     },
     atualizarAtendimentos() {
+      // console.log('token_atd:' + this.tokenAtd)
+      // console.log('token_manager:' + this.tokenManager)
       let urlComToken = 'get-atendimento?token_atd=' + this.tokenAtd + '&token_manager=' + this.tokenManager
+
       // let urlComToken = ''
       axios({ method: 'get', url: this.$store.getters.getURL + urlComToken }) // segundo get-atendimendo, agora com parametros
         .then(response => {
           let mainData = response.data
           if (mainData.st_ret === 'OK') {
             this.atualizarClientes(mainData)
+            mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('-')
+            mainData.token_manager != null ? this.setTokenManager(mainData.token_manager) : this.setTokenManager('-')
           } else {
             console.log('ERRO! Status:' + mainData.st_ret)
             return false
@@ -93,8 +98,11 @@ var app = new Vue({
       var atendimentosLocal = this.todosAtendimentos
       var novosAtendimentos = {}
 
+      var testeLinkInformacoes = 1
       for(var ramal_local in this.todosAtendimentos) {
         novosAtendimentos[ramal_local] = this.todosAtendimentos[ramal_local]
+        testeLinkInformacoes % 2 == 0 ? novosAtendimentos[ramal_local].url = 'https://www.wikipedia.org/' : novosAtendimentos[ramal_local].url = 'https://linux03/callcenter/bot_param.php?mku=MKUEKqjNF3MhGK0Tuok8xsA6PQJz5a9WdTrEwrGh6uOk72A'
+        testeLinkInformacoes ++
       }
       for(var ramal_server in atendimentosServer) {
         var temClienteNovo = true
@@ -114,6 +122,7 @@ var app = new Vue({
     },
     atualizarMensagens: function (cliente, ramal, novosAtendimentos) {
       var clienteLocal = this.todosAtendimentos[ramal]
+      console.log(cliente.arrMsg)
       for (var indexMsgNova in cliente.arrMsg) {
         if (indexMsgNova != 'st_ret') {
           var temMsgNova = true
@@ -121,7 +130,7 @@ var app = new Vue({
             if (indexMsgLocal != 'st_ret') {
               if(clienteLocal.arrMsg[indexMsgLocal].seq === cliente.arrMsg[indexMsgNova].seq) {
                 temMsgNova = false
-            }
+              }
               var indexAux = indexMsgLocal
             }
           }

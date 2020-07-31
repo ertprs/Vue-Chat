@@ -211,7 +211,8 @@ export default {
       atd.informacoes = {}
       atd.informacoes.nome = atd.nome_usu
       atd.id = atd.login_usu
-      atd.url = ''
+      // atd.url = 'https://www.wikipedia.org/'
+      // atd.url = 'https://linux03/callcenter/bot_param.php?mku=MKUEKqjNF3MhGK0Tuok8xsA6PQJz5a9WdTrEwrGh6uOk72A'
       this.setAtendimentoAtivo(atd);
     },
     setMensagensClienteAtivo(id, arrMensagens) {
