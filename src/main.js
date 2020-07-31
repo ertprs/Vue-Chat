@@ -139,13 +139,17 @@ var app = new Vue({
           if(temMsgNova) {
             if (indexAux != 'st_ret') {
               indexAux ++
-              
+
               novosAtendimentos[ramal].arrMsg[indexAux] = cliente.arrMsg[indexMsgNova]
               if(this.idAtendimentoAtivo == novosAtendimentos[ramal].id_cli){
                 novosAtendimentos[ramal].alertaMsgNova = false
               }else{
                 novosAtendimentos[ramal].alertaMsgNova = true
-                novosAtendimentos[ramal].qtdMsgNova = 1
+                if(!novosAtendimentos[ramal].qtdMsgNova){
+                  novosAtendimentos[ramal].qtdMsgNova = 1
+                }else{
+                  novosAtendimentos[ramal].qtdMsgNova += 1
+                }
               }
 
               this.$store.dispatch('atualizarAtendimentos', novosAtendimentos)
