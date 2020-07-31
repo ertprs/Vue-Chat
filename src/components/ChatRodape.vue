@@ -139,7 +139,6 @@ export default {
         let msg = this.mensagem
           if(this.atendimentoAtivo.token_cliente != '' && msg != '') {
             let data = {"token_cliente": this.atendimentoAtivo.token_cliente,"message": msg}
-            // let data = {"token_cliente": "MKUTBPHG0JnoOhaBTkqiNmhUBs=", "message": "testando 123"}
             axios({
               method: 'PUT',
               url:this.$store.getters.getURL + 'send-message',
@@ -147,7 +146,6 @@ export default {
             })
             this.setTodasMensagens(this.criaObjMensagem())
             this.mensagem = ''
-            // }
           }
       }
     },
