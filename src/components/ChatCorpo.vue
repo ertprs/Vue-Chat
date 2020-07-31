@@ -65,6 +65,7 @@ export default {
       }
     },
     verificaPosicaoBarraRolagem(){
+      this.setHabilitaRolagem(true)
       if(this.habilitaRolagem){
         let containerMensagens = document.querySelector("#chat-operador > div")
         let posicaoDaBarra = containerMensagens.scrollTop
