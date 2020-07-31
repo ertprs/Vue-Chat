@@ -106,6 +106,7 @@ var app = new Vue({
         if(temClienteNovo) {
           console.log('cliente novo')
           novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
+          novosAtendimentos[ramal_server].novoContato = true
           this.$store.dispatch('atualizarAtendimentos', novosAtendimentos)
         } else {
           this.atualizarMensagens(atendimentosServer[ramal_server], ramal_server, novosAtendimentos)

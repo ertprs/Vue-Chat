@@ -16,7 +16,8 @@
           </div>
           <!-- Emoji -->
           <div id="emoji-picker-container" v-show="!aparecerPrevia">
-            <twemoji-picker
+            &#128540;
+            <!-- <twemoji-picker
               :emojiData="emojiDataAll"
               :emojiGroups="emojiGroups"
               :skinsSelection="false"
@@ -29,7 +30,7 @@
               :recentEmojisStorage="'local'"
               :pickerPaddingOffset="0"
               @emojiUnicodeAdded="adicionarEmoji"
-            ></twemoji-picker>
+            ></twemoji-picker> -->
           </div>
           <!-- Textarea -->
           <textarea
@@ -98,6 +99,7 @@
 import { mapMutations } from 'vuex'
 import { mapGetters } from 'vuex'
 import axios from "axios"
+
 import { TwemojiPicker } from '@kevinfaguiar/vue-twemoji-picker'
 import EmojiAllData from '@kevinfaguiar/vue-twemoji-picker/emoji-data/pt/emoji-all-groups.json';
 import EmojiDataAnimalsNature from '@kevinfaguiar/vue-twemoji-picker/emoji-data/pt/emoji-group-animals-nature.json';

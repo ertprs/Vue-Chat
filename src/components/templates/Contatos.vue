@@ -21,10 +21,9 @@
           <li
             v-for="(atd, indice) in todosAtendimentos"
             :key="indice"
-            :id="'li_'+indice"
             :title="formataNome(atd.nome_usu)"
-            :class="{'destaque-novo-contato' : atd.nome_usu, 'nova-msg' : verificaMsgNova(atd.status, 'li_'+indice)}"
-            @click="ativarConversa( atd, indice ), toggleAtivo( 'li_'+indice, atd )"
+            :class="{'destaque-novo-contato' : atd.novoContato, 'nova-msg' : atd.alertaMsgNova, 'ativo' : idAtendimentoAtivo == atd.id_cli}"
+            @click="ativarConversa( atd, indice )"
           >
             <!-- :class="atd.cliente.novoContato ? 'destaque-novo-contato' : ''" -->
             <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
@@ -34,7 +33,7 @@
             </div>
             <template v-if="!fechado">{{ formataNome(atd.nome_usu) }}</template>
             <span v-if="!fechado" class="ultima-msg">{{formataUltimaMsg(atd.arrMsg)}}</span>
-            <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && verificaMsgNova(atd.alertaMsgNova, 'li_'+indice)" class="destaque-nova-msg">{{ atd.qtdMsgNova }}</span>
+            <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && idAtendimentoAtivo !== atd.id_cli" class="destaque-nova-msg">{{ atd.qtdMsgNova }}</span>
           </li>
         </ul>
         <div class="lista-agenda">
@@ -140,72 +139,19 @@ export default {
       "toggleAbaContatos"
     ]),
     ativarConversa: function(atd, indice) {
+      
+      if(atd.novoContato){
+        atd.novoContato = false
+      }
+
+      if(atd.alertaMsgNova){
+        atd.alertaMsgNova = false
+      }
+      
+
       this.idAtendimentoAtivo = atd.id_cli
       this.setMensagensClienteAtivo(atd.id_cli, atd.arrMsg)
       this.exibirInformacoes(atd, indice)
-    },
-    toggleAtivo(li, contato){
-      if(contato){
-        contato.ativo = true
-      }
-
-      const contatoAtivo = document.querySelector('#'+li)
-      if(contatoAtivo){
-        contatoAtivo.classList.add('ativo')
-      }
-
-      let arrLi = []
-      for(let i = 0; i < this.todosAtendimentos.length; i++){
-        arrLi.push(document.querySelector('#li_'+i))
-
-        if(arrLi[i]){
-          // Remove ativo de outras LI's
-          if(arrLi[i].classList.contains('ativo') && ('li_'+i) !== li){
-            arrLi[i].classList.remove('ativo')
-            this.todosAtendimentos[i].cliente.ativo = false
-          }
-          if(arrLi[i].style.cssText){
-            const valorOrder = arrLi[i].style.order
-            arrLi[i].style.cssText = ''
-            arrLi[i].style.order = valorOrder
-          }
-          // Remove classe de destaque-novo-contato
-          if(arrLi[i].classList.contains('destaque-novo-contato')){
-            this.todosAtendimentos[i].cliente.novoContato = false
-            arrLi[i].classList.remove('destaque-novo-contato')
-            // Por remover a classe do novo contato, a const contatoAtivo fica errada, pois o indice é alterado
-            arrLi[i].style.order = '-2'
-            arrLi[i].style.opacity = '1'
-            arrLi[i].style.backgroundColor= "#a8dadc"
-            this.todosAtendimentos[i].cliente.ativo = true
-          }
-          // Remove classe de nova-msg
-          if(arrLi[i].classList.contains('nova-msg')){
-            this.todosAtendimentos[i].cliente.alertaMsgNova = false
-            this.todosAtendimentos[i].cliente.qtdMsgNova = 0
-            arrLi[i].classList.remove('nova-msg')
-            // Por remover a classe do novo contato, a const contatoAtivo fica errada, pois o indice é alterado
-            arrLi[i].style.order = '-1'
-            arrLi[i].style.opacity = '1'
-            arrLi[i].style.backgroundColor= "#a8dadc"
-            this.todosAtendimentos[i].cliente.ativo = true
-          }
-        }
-      }
-    },
-    verificaMsgNova(alertaMsgNova, id){
-      const li = document.querySelector('#'+id)
-      if(li && alertaMsgNova){
-        if(li.style.cssText){
-          if(li.style.backgroundColor){
-            return false
-          }else{
-            return true
-          }
-        }else{
-          return true
-        }
-      }
     },
     exibirInformacoes: function(atd, indice) {
       atd.informacoes = {}
