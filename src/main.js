@@ -25,7 +25,7 @@ var app = new Vue({
   Formulario,
   render: h => h(App),
   created: () => {
-    store.commit('setURL', "https://linux03/im/atdHumano/middleware/atd_api.php/")
+    store.commit('setURL', "http://linux03/im/atdHumano/middleware/atd_api.php/")
   },
   computed: {
     ...mapGetters({
