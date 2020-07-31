@@ -136,7 +136,8 @@ export default {
       "setAtendimentoAtivo",
       "setTodasMensagens",
       "limparTodasMensagens",
-      "toggleAbaContatos"
+      "toggleAbaContatos",
+      "setIdAtendimentoAtivo"
     ]),
     ativarConversa: function(atd, indice) {
       
@@ -147,9 +148,11 @@ export default {
       if(atd.alertaMsgNova){
         atd.alertaMsgNova = false
       }
-      
+
 
       this.idAtendimentoAtivo = atd.id_cli
+
+      this.setIdAtendimentoAtivo(this.idAtendimentoAtivo)
       this.setMensagensClienteAtivo(atd.id_cli, atd.arrMsg)
       this.exibirInformacoes(atd, indice)
     },

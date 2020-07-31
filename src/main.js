@@ -31,7 +31,8 @@ var app = new Vue({
     ...mapGetters({
       tokenAtd: 'getTokenAtd',
       tokenManager: 'getTokenManager',
-      todosAtendimentos: 'getTodosAtendimentos'
+      todosAtendimentos: 'getTodosAtendimentos',
+      idAtendimentoAtivo: 'getIdAtendimentoAtivo'
     })
   },
   mounted() {
@@ -112,7 +113,7 @@ var app = new Vue({
           }
         }
         if(temClienteNovo) {
-          console.log('cliente novo')
+          // console.log('cliente novo')
           novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
           novosAtendimentos[ramal_server].novoContato = true
           this.$store.dispatch('atualizarAtendimentos', novosAtendimentos)
@@ -123,7 +124,7 @@ var app = new Vue({
     },
     atualizarMensagens: function (cliente, ramal, novosAtendimentos) {
       var clienteLocal = this.todosAtendimentos[ramal]
-      console.log(cliente.arrMsg)
+      // console.log(cliente.arrMsg)
       for (var indexMsgNova in cliente.arrMsg) {
         if (indexMsgNova != 'st_ret') {
           var temMsgNova = true
@@ -138,9 +139,15 @@ var app = new Vue({
           if(temMsgNova) {
             if (indexAux != 'st_ret') {
               indexAux ++
+              
               novosAtendimentos[ramal].arrMsg[indexAux] = cliente.arrMsg[indexMsgNova]
-              novosAtendimentos[ramal].alertaMsgNova = true
-              novosAtendimentos[ramal].qtdMsgNova = 1
+              if(this.idAtendimentoAtivo == novosAtendimentos[ramal].id_cli){
+                novosAtendimentos[ramal].alertaMsgNova = false
+              }else{
+                novosAtendimentos[ramal].alertaMsgNova = true
+                novosAtendimentos[ramal].qtdMsgNova = 1
+              }
+
               this.$store.dispatch('atualizarAtendimentos', novosAtendimentos)
             }
           }

@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     abaContatos: false,
     agenda: [],
+    idAtendimentoAtivo: '',
     atendimentoAtivo: {},
     formularioCliente: false,
     habilitaRolagem: false,
@@ -43,6 +44,9 @@ export default new Vuex.Store({
     },
     setAtendimentos(state, todosAtendimentos){
       state.todosAtendimentos = todosAtendimentos
+    },
+    setIdAtendimentoAtivo(state, idAtendimentoAtivo){
+      state.idAtendimentoAtivo = idAtendimentoAtivo
     },
     setAtendimentoAtivo(state, objInformacoes){
       state.atendimentoAtivo = objInformacoes
@@ -95,6 +99,9 @@ export default new Vuex.Store({
     },
     getAbaContatos(state){
       return state.abaContatos
+    },
+    getIdAtendimentoAtivo(state){
+      return state.idAtendimentoAtivo
     }
   },
   modules: { controleBlocker }

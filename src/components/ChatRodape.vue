@@ -16,8 +16,13 @@
           </div>
           <!-- Emoji -->
           <div id="emoji-picker-container" v-show="!aparecerPrevia">
+            <!-- Esse buga ao enviar -->
             &#128540;
-            <!-- <twemoji-picker
+            <!-- Esse buga na tela do cliente (no teste) -->
+            ??
+            <!--
+              Plugin 
+              <twemoji-picker
               :emojiData="emojiDataAll"
               :emojiGroups="emojiGroups"
               :skinsSelection="false"
