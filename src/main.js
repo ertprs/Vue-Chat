@@ -57,6 +57,7 @@ var app = new Vue({
           case 206:
             console.log('Status ' + response.status + ' ' + response.statusText)
             console.log('Aguardando Cliente')
+            this.adicionaCaso(206)
             setTimeout( function() {
               document.location.reload(true);
             },2000)
@@ -70,9 +71,12 @@ var app = new Vue({
       .catch(err => console.log(err))
   },
   methods: {
-    ...mapMutations(["setAtendimentos", "setAgenda", "adicionarMensagem", "adicionarClienteNovo", "setTokenAtd", "setTokenManager"]),
+    ...mapMutations(["setAtendimentos", "setAgenda", "adicionarMensagem", "adicionarClienteNovo", "setTokenAtd", "setTokenManager", "setCaso"]),
     iniciarAtualizacaoDeAtendimentos() {
       var temporizador = setInterval(this.atualizarAtendimentos, 2000);
+    },
+    adicionaCaso(caso){
+      this.setCaso(caso)
     },
     atualizarAtendimentos() {
       // console.log('token_atd:' + this.tokenAtd)

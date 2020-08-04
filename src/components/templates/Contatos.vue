@@ -16,7 +16,15 @@
       </div>
     </div>
     <template v-if="todosAtendimentos">
-      <div class="lista-contatos-container" >
+      <div id="load-container" v-if="caso">
+        <div id="load">
+          <p> Aguardando cliente </p>
+          <div>
+            <i class="fas fa-hourglass-start"></i>
+          </div>
+        </div>
+      </div>
+      <div class="lista-contatos-container" v-else>
         <ul :class="{'fechado' : fechado}">
           <li
             v-for="(atd, indice) in todosAtendimentos"
@@ -113,7 +121,8 @@ export default {
     ...mapGetters({
       clienteMandouMensagem: "getClienteMandouMensagem",
       todosAtendimentos: "getTodosAtendimentos",
-      minhaAgenda: "getAgenda"
+      minhaAgenda: "getAgenda",
+      caso: 'getCaso'
     })
   },
   mounted() {

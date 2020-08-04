@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Vuex, { Store } from "vuex";
+
 import controleBlocker from './modulos/controleBlocker'
+import tratativaDeCasos from './modulos/tratativaDeCasos'
 
 Vue.use(Vuex);
 
@@ -104,5 +106,5 @@ export default new Vuex.Store({
       return state.idAtendimentoAtivo
     }
   },
-  modules: { controleBlocker }
+  modules: { controleBlocker, tratativaDeCasos }
 });

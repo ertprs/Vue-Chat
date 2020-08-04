@@ -8899,6 +8899,40 @@ body {
 .toasted.toasted-primary.info svg {
   margin-right: 10px; }
 
+#load-container {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  #load-container #load {
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    #load-container #load p {
+      margin: 0;
+      padding: 0; }
+    #load-container #load div {
+      margin: 0 10px;
+      width: 2.3rem;
+      height: 2.3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px dashed #222;
+      border-radius: 50%;
+      animation: rotate;
+      animation-duration: 2s;
+      animation-iteration-count: infinite; }
+      #load-container #load div svg {
+        font-size: 1.2rem; }
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
+
 #todos-contatos {
   width: 20%;
   height: 100%;
