@@ -8900,11 +8900,12 @@ body {
   margin-right: 10px; }
 
 #load-container {
-  height: 50%;
   width: 100%;
+  height: 90%;
   display: flex;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  background-color: whitesmoke; }
   #load-container #load {
     display: flex;
     justify-content: center;
@@ -9115,6 +9116,7 @@ body {
     white-space: nowrap; }
 
 .lista-contatos-container-vazio {
+  width: 100%;
   height: 90%;
   display: flex;
   justify-content: center;

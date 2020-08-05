@@ -16,7 +16,7 @@
       </div>
     </div>
     <template v-if="todosAtendimentos">
-      <div id="load-container" v-if="caso">
+      <div id="load-container" v-if="caso == 206">
         <div id="load">
           <p> Aguardando cliente </p>
           <div>
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="lista-contatos-container" v-else>
-        <ul :class="{'fechado' : fechado}">
+        <ul :class="{'fechado' : fechado}" v-if="todosAtendimentos.length">
           <li
             v-for="(atd, indice) in todosAtendimentos"
             :key="indice"
@@ -44,7 +44,7 @@
             <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && idAtendimentoAtivo !== atd.id_cli" class="destaque-nova-msg">{{ atd.qtdMsgNova }}</span>
           </li>
         </ul>
-        <div class="lista-agenda">
+        <div class="lista-agenda" v-if="todosAtendimentos.length">
           <div class="lista-agenda--titulo">
             <div :class="{'fechado' : fechado}">
               <i class="far fa-address-book"  title="Minha Agenda"></i>
@@ -73,7 +73,7 @@
         </div>
       </div>
     </template>
-    <div v-else class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
+    <div v-if="!todosAtendimentos || !todosAtendimentos.length" class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
       <div>
         <i class="far fa-folder-open"></i>
         <transition name="fade">

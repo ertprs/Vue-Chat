@@ -5,11 +5,12 @@ $corBoxShadow: rgba(0, 0, 0, 0.5);
 $tamanhoBoxShadow: 5px;
 
 #load-container{
-  height: 50%;
   width: 100%;
+  height: 90%;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: whitesmoke;
   #load{
     display: flex;
     justify-content: center;
@@ -277,7 +278,7 @@ $tamanhoBoxShadow: 5px;
 }
 
 .lista-contatos-container-vazio{
-  // width: 100%;
+  width: 100%;
   height: 90%;
   display: flex;
   justify-content: center;
