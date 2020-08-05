@@ -8958,6 +8958,8 @@ body {
     #todos-contatos .lista-contatos-container ul {
       display: flex;
       flex-direction: column; }
+  #todos-contatos .semClick {
+    cursor: unset; }
   #todos-contatos ul {
     padding: 0;
     max-height: 200px;
@@ -9080,7 +9082,19 @@ body {
     font-size: 1.1rem;
     white-space: nowrap; }
 
+#load svg {
+  animation: rotate;
+  animation-duration: 2s;
+  animation-iteration-count: infinite; }
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
+
 .lista-contatos-container-vazio {
+  width: 100%;
   height: 90%;
   display: flex;
   justify-content: center;

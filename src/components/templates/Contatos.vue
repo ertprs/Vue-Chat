@@ -15,18 +15,28 @@
         <i class="fas fa-long-arrow-alt-left flecha"></i>
       </div>
     </div>
-    <template v-if="todosAtendimentos">
-      <div class="lista-contatos-container" >
+    <template v-if="objAtendimentos">
+      <!-- Caso Aguardando Cliente -->
+      <div class="lista-contatos-container-vazio" v-if="caso == 206">
+        <div id="load">
+          <i class="fas fa-hourglass-end"></i>
+          <transition name="fade">
+            <p v-show="!fechado" >
+              Aguardando cliente
+            </p>
+          </transition>
+        </div>
+      </div>
+      <!-- Caso haja Cliente -->
+      <div class="lista-contatos-container" v-if="objAtendimentos.length">
         <ul :class="{'fechado' : fechado}">
           <li
-            v-for="(atd, indice) in todosAtendimentos"
+            v-for="(atd, indice) in objAtendimentos"
             :key="indice"
             :title="formataNome(atd.nome_usu)"
             :class="{'destaque-novo-contato' : atd.novoContato, 'nova-msg' : atd.alertaMsgNova, 'ativo' : idAtendimentoAtivo == atd.id_cli}"
             @click="ativarConversa( atd, indice )"
           >
-            <!-- :class="atd.cliente.novoContato ? 'destaque-novo-contato' : ''" -->
-            <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
             <div class="circulo-contatos">
               <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
               <p v-if="fechado">{{ formataSigla(atd.nome_usu[1], 'lower') }}</p>
@@ -53,8 +63,8 @@
               :key="'id_'+indice"
               :id="'li_'+indice"
               :title="atd"
+              class="semClick"
             >
-              <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
               <div :class="indice % 2 == 0 ? '' : ''" class="circulo-contatos">
                 <p>{{ formataSigla(atd[0], 'upper') }}</p>
                 <p v-if="fechado">{{ formataSigla(atd[1], 'lower') }}</p>
@@ -65,12 +75,13 @@
         </div>
       </div>
     </template>
-    <div v-else class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
+    <!-- Caso não haja atendimentos -->
+    <div v-if="!objAtendimentos.length" class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
       <div>
         <i class="far fa-folder-open"></i>
         <transition name="fade">
           <p v-show="!fechado" >
-            Sem Contatos para mostrar
+            Sem contatos para mostrar
           </p>
         </transition>
       </div>
@@ -97,15 +108,23 @@ export default {
       rotate: false,
       fechado: false,
       haContatos: true,
-      idAtendimentoAtivo: ''
+      idAtendimentoAtivo: '',
+      objAtendimentos: [],
+      chavesUsuarios: []
     };
   },
   watch: {
     todosAtendimentos() {
-      if (this.todosAtendimentos && this.idAtendimentoAtivo) {
-        this.setMensagensClienteAtivo(
-          this.idAtendimentoAtivo, this.obterMensagensDoContatoAtivoPeloId(this.idAtendimentoAtivo)
-        )
+      if(this.todosAtendimentos){
+
+        this.chavesUsuarios = Object.keys(this.todosAtendimentos)
+        this.objAtendimentos = Object.values(this.todosAtendimentos)
+        
+        if (this.objAtendimentos && this.idAtendimentoAtivo) {
+          this.setMensagensClienteAtivo(
+            this.idAtendimentoAtivo, this.obterMensagensDoContatoAtivoPeloId(this.idAtendimentoAtivo)
+          )
+        }
       }
     }
   },
@@ -113,7 +132,8 @@ export default {
     ...mapGetters({
       clienteMandouMensagem: "getClienteMandouMensagem",
       todosAtendimentos: "getTodosAtendimentos",
-      minhaAgenda: "getAgenda"
+      minhaAgenda: "getAgenda",
+      caso: 'getCaso'
     })
   },
   mounted() {

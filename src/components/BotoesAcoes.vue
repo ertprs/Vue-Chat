@@ -55,9 +55,9 @@ export default {
     },
     ...mapMutations(['limparAtendimentoAtivo']),
     encerrarAtendimento(){
+      console.log('atendimentoAtivo: ', this.atendimentoAtivo)
       if( this.atendimentoAtivo.informacoes.nome != null ) {
-        this.finalizarAtendimentoNaApi(this.atendimentoAtivo.id )
-
+        
         const textarea = document.querySelector('#textarea')
         textarea.innerText = 'Mensagem de Encerramento do Atendimento de ' + this.atendimentoAtivo.informacoes.nome
 
@@ -68,9 +68,16 @@ export default {
           () => {
             const contato = document.querySelector('.ativo')
             contato.remove()
+          }, 500
+        )
+
+        setTimeout(
+          () => {
+            this.finalizarAtendimentoNaApi(this.atendimentoAtivo.id )
             this.limparAtendimentoAtivo()
           }, 1000
         )
+        
 
       } else {
         alert('Selecione um cliente antes de tentar finalizar o  atendimento')

@@ -65,8 +65,8 @@ export default {
       }
 
       if(tamanhoScroll > tamanhoCorpoMensagem){
-        let ultimoFilho = corpoMensagens.lastElementChild
-        corpoMensagens.scrollTo(0, ultimoFilho.offsetTop )
+        corpoMensagens.scrollTo(0, corpoMensagens.scrollHeight )
+
         this.setHabilitaRolagem(false)
       }
     },

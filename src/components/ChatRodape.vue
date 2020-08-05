@@ -144,10 +144,23 @@ export default {
         let msg = this.mensagem
           if(this.atendimentoAtivo.token_cliente != '' && msg != '') {
             let data = {"token_cliente": this.atendimentoAtivo.token_cliente,"message": msg}
-            axios_api.put('send-message', data)
-            this.$root.$emit('rolaChat')
-            this.setTodasMensagens(this.criaObjMensagem())
-            this.mensagem = ''
+            axios_api.put('send-message', data).then(
+              response => {
+                this.setTodasMensagens(this.criaObjMensagem())
+                this.$root.$emit('rolaChat')
+                this.mensagem = ''
+              }
+            )
+            .catch(
+              error => {
+                console.log('erro send-message: ', error)
+                if(!document.querySelector('.toasted.toasted-primary.error')){
+                  this.$toasted.global.defaultError({msg: 'Nao foi possivel enviar a mensagem'})
+                } 
+              }
+            )
+
+            
           }
       }
     },
