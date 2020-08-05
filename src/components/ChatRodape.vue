@@ -142,15 +142,28 @@ export default {
     enviarMensagem(){
       if(this.validaMensagem()){
         let msg = this.mensagem
-          if(this.atendimentoAtivo.token_cliente != '' && msg != '') {
-            let data = {"token_cliente": this.atendimentoAtivo.token_cliente,"message": msg}
+          if(this.atendimentoAtivo != '' && msg != '') {
+            let data = {"token_cliente": this.atendimentoAtivo,"message": msg}
             axios({
               method: 'PUT',
               url:this.$store.getters.getURL + 'send-message',
               data
             })
-            this.setTodasMensagens(this.criaObjMensagem())
-            this.mensagem = ''
+            .then(
+              response => {
+                console.log('response: ', response)
+                this.setTodasMensagens(this.criaObjMensagem())
+                this.mensagem = ''
+              }
+            )
+            .catch(
+              error => {
+                console.log('erro send-message: ', error)
+                if(!document.querySelector('.toasted.toasted-primary.error')){
+                  this.$toasted.global.defaultError({msg: 'Nao foi possivel enviar a mensagem'})
+                } 
+              }
+            )
           }
       }
     },
