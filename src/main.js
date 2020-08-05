@@ -45,7 +45,7 @@ var app = new Vue({
   methods: {
     ...mapMutations(["setAtendimentos", "setAgenda", "adicionarMensagem", "adicionarClienteNovo", "setTokenAtd", "setTokenManager", "setCaso"]),
     iniciarAtualizacaoDeAtendimentos() {
-      var temporizador = setInterval(this.atualizarAtendimentos, 3000);
+      var temporizador = setInterval(this.atualizarAtendimentos, 5000);
     },
     atualizarAtendimentosIniciais() {
     axios({
@@ -141,20 +141,32 @@ var app = new Vue({
     },
     atualizarMensagens: function (cliente, ramal, novosAtendimentos) {
       var aux = 0
-      const seqs = novosAtendimentos[ramal].arrMsg.map(message => (message.seq)); //seq das mensagens antigas
-      if(cliente.arrMsg.length > 0) {
-        cliente.arrMsg.map((message)=>{ //mensagens novas
-          if(!seqs.includes(message.seq)) {
-            if(message.resp_msg == 'CLI') {
-              aux = aux + 1
-              this.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
-              console.log(message)
+      if(novosAtendimentos[ramal].arrMsg.length > 0){ //verifica se o cliente antigo ou novo
+        const seqs = novosAtendimentos[ramal].arrMsg.map(message => (message.seq)); //seq das mensagens antigas
+        if(cliente.arrMsg.length > 0) {
+          cliente.arrMsg.map((message)=>{ //mensagens novas
+            if(!seqs.includes(message.seq)) {
+              if(message.resp_msg == 'CLI') {
+                aux = aux + 1
+                this.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
+              }
+              if(typeof novosAtendimentos[ramal].qtdMsgNova === 'undefined'){
+                novosAtendimentos[ramal].qtdMsgNova = aux;
+              } else {
+                novosAtendimentos[ramal].qtdMsgNova += aux;
+              }
+              novosAtendimentos[ramal].alertaMsgNova = true
+              novosAtendimentos[ramal].arrMsg.push(message)// adiciono as mensagens novas no array global
+            } else {
+              novosAtendimentos[ramal].alertaMsgNova = false
             }
-            novosAtendimentos[ramal].arrMsg.push(message)// adiciono as mensagens novas no array global
-          }
-        });
+          });
+        }
+      } else { //cliente novo
+        novosAtendimentos[ramal] = cliente;
+        novosAtendimentos[ramal].qtdMsgNova = cliente.arrMsg.length;
+        novosAtendimentos[ramal].alertaMsgNova = true
       }
-      // novosAtendimentos[ramal].qtdMsgNova = aux + novosAtendimentos[ramal].qtdMsgNova;
       this.setAtendimentos(novosAtendimentos)
 
     }

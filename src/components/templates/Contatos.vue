@@ -168,7 +168,7 @@ export default {
       if(atd.alertaMsgNova){
         atd.alertaMsgNova = false
       }
-
+      atd.qtdMsgNova = 0;
 
       this.idAtendimentoAtivo = atd.id_cli
 
