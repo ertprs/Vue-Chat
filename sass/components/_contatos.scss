@@ -75,6 +75,11 @@ $tamanhoBoxShadow: 5px;
       flex-direction: column;
     }
   }
+
+  .semClick{
+    cursor: unset;
+  }
+
   ul{
     padding: 0;
     max-height: 200px;

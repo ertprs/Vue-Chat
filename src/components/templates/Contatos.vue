@@ -63,6 +63,7 @@
               :key="'id_'+indice"
               :id="'li_'+indice"
               :title="atd"
+              class="semClick"
             >
               <div :class="indice % 2 == 0 ? '' : ''" class="circulo-contatos">
                 <p>{{ formataSigla(atd[0], 'upper') }}</p>
@@ -115,7 +116,7 @@ export default {
   watch: {
     todosAtendimentos() {
       if(this.todosAtendimentos){
-        
+
         this.chavesUsuarios = Object.keys(this.todosAtendimentos)
         this.objAtendimentos = Object.values(this.todosAtendimentos)
         
