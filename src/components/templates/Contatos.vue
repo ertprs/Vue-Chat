@@ -140,7 +140,7 @@ export default {
       "setIdAtendimentoAtivo"
     ]),
     ativarConversa: function(atd, indice) {
-      
+      this.$root.$emit('rolaChat')
       if(atd.novoContato){
         atd.novoContato = false
       }
@@ -236,18 +236,18 @@ export default {
       },1500)
     },
     formataUltimaMsg(arrMsgs){
-      if(arrMsgs.length > 0){
-        if(arrMsgs[arrMsgs.length - 1].texto.length > 30){
-          let msgFormatada = arrMsgs[arrMsgs.length - 1].texto.slice(0, 30) + '...'
+      if(arrMsgs.length > 0) {
+        let indexRef = arrMsgs.length - 1
+        if(arrMsgs[indexRef].msg.length > 30){
+          let msgFormatada = arrMsgs[indexRef].msg.slice(0, 30) + '...'
           return msgFormatada
         }else{
-          return arrMsgs[arrMsgs.length - 1].texto
+          return arrMsgs[indexRef].msg
         }
       }
     },
     formataNome(nome){
       if(!nome){ return '' }
-      
       nome = nome.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase() })
       return nome
     }

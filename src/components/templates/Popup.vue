@@ -48,7 +48,7 @@
 
 <script>
 import axios from 'axios'
-
+import axios_api from '../../services/axios_api'
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css'
 
@@ -107,9 +107,7 @@ export default {
       })
     },
     enviaGrupo(grupo){
-      let url = this.$store.getters.getURL
-      axios.put(url+'transfer', grupo)
-      .then(response => {
+      axios_api.put('transfer',grupo).then(response => {
         this.fecharPopup()
         console.log('Sucesso enviar grupo: ', response)
         if(!document.querySelector('.toasted.toasted-primary.success')){
@@ -140,8 +138,7 @@ export default {
       })
     },
     enviaAgente(agente){
-      let url = this.$store.getters.getURL
-      axios.put(url+'transfer', agente)
+      axios_api.put('transfer', agente)
       .then(response => {
         this.fecharPopup()
         console.log('Sucesso enviar agente: ', response)
@@ -188,12 +185,8 @@ export default {
               }else if(arrAux[i] == arrAux[1]){
                 this.getGrupos()
               }
-
-              axios({
-                method: 'put',
-                url: url+'transfer',
-                data: {"id_schedule": "5516987987955", "id_attedant":"re028771"}
-              })
+              data = {"id_schedule": "5516987987955", "id_attedant":"re028771"}
+              axios_api.put('transfer', data)
               .then(response => {
                 console.log('sucesso transferencia: ', response)
               })

@@ -28,7 +28,6 @@
 <script>
 import { mapMutations } from "vuex";
 import { mapGetters } from "vuex";
-import axios from "axios"
 
 import ChatCorpo from "./ChatCorpo";
 
@@ -54,17 +53,6 @@ export default {
     enviarMensagem() {
       let msg = this.mensagem;
       if( msg != '' ) {
-        // axios
-        //   .post(
-        //     this.$store.getters.getURL + "send-message",
-        //     { msg }
-        //   )
-        //   .then(response => {
-        //     console.log(response.data);
-        //   })
-        //   .catch(error => {
-        //     console.log(error);
-        //   });
         if (this.validaMensagem()) {
           this.setTodasMensagens(this.criaObjMensagem());
           this.setClienteMandouMensagem(true);

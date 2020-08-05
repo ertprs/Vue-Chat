@@ -33,13 +33,20 @@
 
 <script>
 import Mensagens from './Mensagens'
-
 import { mapGetters } from 'vuex'
 import { mapMutations } from 'vuex'
 
 export default {
   components: {
     Mensagens
+  },
+  mounted() {
+    this.$root.$on('rolaChat', () => {
+      this.rolaChat('novaMensagem')
+    })
+    this.$root.$on('rolaChatClienteAtivo',(id) => {
+      this.rolaChatClienteAtivo(id)
+    })
   },
   methods:{
     ...mapMutations(['setHabilitaRolagem']),
@@ -60,8 +67,12 @@ export default {
       if(tamanhoScroll > tamanhoCorpoMensagem){
         let ultimoFilho = corpoMensagens.lastElementChild
         corpoMensagens.scrollTo(0, ultimoFilho.offsetTop )
-
         this.setHabilitaRolagem(false)
+      }
+    },
+    rolaChatClienteAtivo(id) {
+      if(id === this.atendimentoAtivo.id_cli) {
+        this.rolaChat('novaMensagem')
       }
     },
     verificaPosicaoBarraRolagem(){
@@ -83,13 +94,9 @@ export default {
   computed:{
     ...mapGetters({
       todasMensagens: 'getTodasMensagens',
-      habilitaRolagem: 'getHabilitaRolagem'
+      habilitaRolagem: 'getHabilitaRolagem',
+      atendimentoAtivo: 'getAtendimentoAtivo'
     })
-  },
-  watch: {
-    todasMensagens(){
-      this.rolaChat('novaMensagem')
-    }
   }
 }
 </script>

@@ -103,8 +103,8 @@
 
 import { mapMutations } from 'vuex'
 import { mapGetters } from 'vuex'
+import axios_api from '../services/axios_api'
 import axios from "axios"
-
 import { TwemojiPicker } from '@kevinfaguiar/vue-twemoji-picker'
 import EmojiAllData from '@kevinfaguiar/vue-twemoji-picker/emoji-data/pt/emoji-all-groups.json';
 import EmojiDataAnimalsNature from '@kevinfaguiar/vue-twemoji-picker/emoji-data/pt/emoji-group-animals-nature.json';
@@ -144,11 +144,8 @@ export default {
         let msg = this.mensagem
           if(this.atendimentoAtivo.token_cliente != '' && msg != '') {
             let data = {"token_cliente": this.atendimentoAtivo.token_cliente,"message": msg}
-            axios({
-              method: 'PUT',
-              url:this.$store.getters.getURL + 'send-message',
-              data
-            })
+            axios_api.put('send-message', data)
+            this.$root.$emit('rolaChat')
             this.setTodasMensagens(this.criaObjMensagem())
             this.mensagem = ''
           }
@@ -319,31 +316,12 @@ export default {
     },
     obterMensagens() {
       var idClientes = [55987654321, 5517987654321];
-      axios
-        .post(
-          this.$store.getters.getURL + "search-message",
-          { idClientes }
-        )
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      axios_api.post('search-message', idClientes)
+
     },
     enviarInformacao() {
       var informacao = "Testando alguma informacao";
-      axios
-        .post(
-          this.$store.getters.getURL + "send-information",
-          { informacao }
-        )
-        .then(response => {
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      axios_api.put('send-information', informacao)
     },
   },
   watch: {

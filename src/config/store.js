@@ -64,11 +64,6 @@ export default new Vuex.Store({
       state.abaContatos = abaContatos
     }
   },
-  actions: {
-    atualizarAtendimentos({commit}, atendimentos) {
-      commit('setAtendimentos', atendimentos)
-    }
-  },
   getters: {
     getAgenda(state) {
       return state.agenda

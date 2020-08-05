@@ -12,6 +12,7 @@ import Chat from './components/templates/Chat'
 import store from "./config/store"
 import { mapMutations, mapGetters } from "vuex";
 import axios from "axios"
+import { axiosTokenJWT} from "./services/axios_api"
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -25,70 +26,85 @@ var app = new Vue({
   Formulario,
   render: h => h(App),
   created: () => {
-    store.commit('setURL', "http://linux03/im/atdHumano/middleware/atd_api.php/")
+    store.commit('setURL', "https://linux03/im/atdHumano/middleware/atd_api.php/")
+    // store.commit('setTokenJWT', "asdfasfasdf")
   },
   computed: {
     ...mapGetters({
       tokenAtd: 'getTokenAtd',
       tokenManager: 'getTokenManager',
       todosAtendimentos: 'getTodosAtendimentos',
-      idAtendimentoAtivo: 'getIdAtendimentoAtivo'
+      idAtendimentoAtivo: 'getIdAtendimentoAtivo',
+      tokenJWT: 'getTokenJWT'
     })
   },
   mounted() {
     this.$on('atualizarAtendimentos', this.atualizarAtendimentos)
-    axios({ method: 'get', url: this.$store.getters.getURL + 'get-atendimento' }) // primeiro get-atendimento, sem passar parametros
-      .then(response => {
-        switch(response.status) {
-          case 200:
-            let mainData = response.data
-            mainData.gerenciador = 'teste'
-            if (mainData.atendimentos != null && mainData.token_manager != null) {
-              this.setAtendimentos(mainData.atendimentos)
-              this.setAgenda(['Maria', 'Joao', 'Joana', 'Frederico'])
-              mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('-')
-              mainData.token_manager != null ? this.setTokenManager(mainData.token_manager) : this.setTokenManager('-')
-              this.iniciarAtualizacaoDeAtendimentos()
-            } else {
-              console.log('Erro ao tentar obter dados no servidor')
-              console.log(mainData)
-            }
-            break;
-          case 206:
-            console.log('Status ' + response.status + ' ' + response.statusText)
-            console.log('Aguardando Cliente')
-            setTimeout( function() {
-              document.location.reload(true);
-            },2000)
-          break;
-          default:
-            console.log('ERRO STATUS ' + response.status + ' ' + response.statusText)
-            console.log(response)
-            break
-        }
-      })
-      .catch(err => console.log(err))
+    this.atualizarAtendimentosIniciais()
   },
   methods: {
     ...mapMutations(["setAtendimentos", "setAgenda", "adicionarMensagem", "adicionarClienteNovo", "setTokenAtd", "setTokenManager"]),
     iniciarAtualizacaoDeAtendimentos() {
-      var temporizador = setInterval(this.atualizarAtendimentos, 2000);
+      var temporizador = setInterval(this.atualizarAtendimentos, 3000);
+    },
+    atualizarAtendimentosIniciais() {
+    axios({
+      method: 'get',
+      url: this.$store.getters.getURL + 'get-atendimento'
+    })
+    .then(response => {
+      // response.headers.authorization != null ? this.setTokenJWT(response.headers.authorization): this.setTokenJWT('')
+      axiosTokenJWT(response.headers.authorization)
+      switch(response.status) {
+        case 200:
+          let mainData = response.data
+          mainData.gerenciador = 'teste'
+          if (mainData.atendimentos != null && mainData.token_manager != null) {
+            console.log(mainData.atendimentos)
+            this.setAtendimentos(mainData.atendimentos)
+            this.setAgenda(['Maria', 'Joao', 'Joana', 'Frederico'])
+            mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('')
+            mainData.token_manager != null ? this.setTokenManager(mainData.token_manager) : this.setTokenManager('')
+            this.iniciarAtualizacaoDeAtendimentos()
+          } else {
+            console.log('Erro ao tentar obter dados no servidor')
+            console.log(mainData)
+          }
+          break;
+        case 206:
+          console.log('Status ' + response.status + ' ' + response.statusText)
+          console.log('Aguardando Cliente')
+          setTimeout( function() {
+            document.location.reload(true);
+          },7000)
+        break;
+        default:
+          console.log('ERRO STATUS ' + response.status + ' ' + response.statusText)
+          console.log(response)
+          break
+      }
+    })
+    .catch(err => console.log(err))
     },
     atualizarAtendimentos() {
-      // console.log('token_atd:' + this.tokenAtd)
-      // console.log('token_manager:' + this.tokenManager)
       let urlComToken = 'get-atendimento?token_atd=' + this.tokenAtd + '&token_manager=' + this.tokenManager
-
-      // let urlComToken = ''
-      axios({ method: 'get', url: this.$store.getters.getURL + urlComToken }) // segundo get-atendimendo, agora com parametros
+      axios({
+        method: 'get',
+        url: this.$store.getters.getURL + urlComToken
+      }) // segundo get-atendimendo, agora com parametros
         .then(response => {
+          // let tokenBearer = response.config.headers.authorization
+
           let mainData = response.data
           if (mainData.st_ret === 'OK') {
             this.atualizarClientes(mainData)
             mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('-')
             mainData.token_manager != null ? this.setTokenManager(mainData.token_manager) : this.setTokenManager('-')
+          } else if(mainData.st_ret === 'AVISO') {
+            console.log('Nao existe clientes na fila')
+            this.atualizarAtendimentosIniciais()
           } else {
-            console.log('ERRO! Status:' + mainData.st_ret)
+            console.log(`ERRO! Status: ${response}`)
             return false
           }
         })
@@ -99,12 +115,10 @@ var app = new Vue({
       var atendimentosLocal = this.todosAtendimentos
       var novosAtendimentos = {}
 
-      var testeLinkInformacoes = 1
       for(var ramal_local in this.todosAtendimentos) {
         novosAtendimentos[ramal_local] = this.todosAtendimentos[ramal_local]
-        testeLinkInformacoes % 2 == 0 ? novosAtendimentos[ramal_local].url = 'https://www.wikipedia.org/' : novosAtendimentos[ramal_local].url = 'https://linux03/callcenter/bot_param.php?mku=MKUEKqjNF3MhGK0Tuok8xsA6PQJz5a9WdTrEwrGh6uOk72A'
-        testeLinkInformacoes ++
       }
+
       for(var ramal_server in atendimentosServer) {
         var temClienteNovo = true
         for(var ramal_local in this.todosAtendimentos) {
@@ -113,50 +127,31 @@ var app = new Vue({
           }
         }
         if(temClienteNovo) {
-          // console.log('cliente novo')
           novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
           novosAtendimentos[ramal_server].novoContato = true
-          this.$store.dispatch('atualizarAtendimentos', novosAtendimentos)
+          this.setAtendimentos(novosAtendimentos)
         } else {
           this.atualizarMensagens(atendimentosServer[ramal_server], ramal_server, novosAtendimentos)
         }
       }
     },
     atualizarMensagens: function (cliente, ramal, novosAtendimentos) {
-      var clienteLocal = this.todosAtendimentos[ramal]
-      // console.log(cliente.arrMsg)
-      for (var indexMsgNova in cliente.arrMsg) {
-        if (indexMsgNova != 'st_ret') {
-          var temMsgNova = true
-          for (var indexMsgLocal in clienteLocal.arrMsg) {
-            if (indexMsgLocal != 'st_ret') {
-              if(clienteLocal.arrMsg[indexMsgLocal].seq === cliente.arrMsg[indexMsgNova].seq) {
-                temMsgNova = false
-              }
-              var indexAux = indexMsgLocal
+      var aux = 0
+      const seqs = novosAtendimentos[ramal].arrMsg.map(message => (message.seq)); //seq das mensagens antigas
+      if(cliente.arrMsg.length > 0) {
+        cliente.arrMsg.map((message)=>{ //mensagens novas
+          if(!seqs.includes(message.seq)) {
+            if(message.resp_msg == 'CLI') {
+              aux = aux + 1
+              this.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
+              console.log(message)
             }
+            novosAtendimentos[ramal].arrMsg.push(message)// adiciono as mensagens novas no array global
           }
-          if(temMsgNova) {
-            if (indexAux != 'st_ret') {
-              indexAux ++
-
-              novosAtendimentos[ramal].arrMsg[indexAux] = cliente.arrMsg[indexMsgNova]
-              if(this.idAtendimentoAtivo == novosAtendimentos[ramal].id_cli){
-                novosAtendimentos[ramal].alertaMsgNova = false
-              }else{
-                novosAtendimentos[ramal].alertaMsgNova = true
-                if(!novosAtendimentos[ramal].qtdMsgNova){
-                  novosAtendimentos[ramal].qtdMsgNova = 1
-                }else{
-                  novosAtendimentos[ramal].qtdMsgNova += 1
-                }
-              }
-
-              this.$store.dispatch('atualizarAtendimentos', novosAtendimentos)
-            }
-          }
-        }
+        });
       }
+      // novosAtendimentos[ramal].qtdMsgNova = aux + novosAtendimentos[ramal].qtdMsgNova;
+      this.setAtendimentos(novosAtendimentos)
 
     }
   }

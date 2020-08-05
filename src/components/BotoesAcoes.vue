@@ -20,7 +20,7 @@
 
 <script>
 import axios from 'axios'
-
+import axios_api from '../services/axios_api'
 import Popup from './templates/Popup'
 
 import {mapGetters,  mapMutations } from 'vuex'
@@ -77,14 +77,8 @@ export default {
       }
     },
     finalizarAtendimentoNaApi(id) {
-      let url = 'https://linux03/im/atdHumano/middleware/atd_api.php/end-atendimento'
-      axios.delete(url, { data: { token_cliente: this.atendimentoAtivo.token_cliente } })
-      .then(response => {
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+      let data = { token_cliente: this.atendimentoAtivo.token_cliente }
+      axios_api.delete('end-atendimento', data)
     }
   },
   computed: {
