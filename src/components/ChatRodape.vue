@@ -151,7 +151,6 @@ export default {
             })
             .then(
               response => {
-                console.log('response: ', response)
                 this.setTodasMensagens(this.criaObjMensagem())
                 this.mensagem = ''
               }
