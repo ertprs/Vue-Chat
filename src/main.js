@@ -44,6 +44,7 @@ var app = new Vue({
             let mainData = response.data
             mainData.gerenciador = 'teste'
             if (mainData.atendimentos != null && mainData.token_manager != null) {
+
               this.setAtendimentos(mainData.atendimentos)
               this.setAgenda(['Maria', 'Joao', 'Joana', 'Frederico'])
               mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('-')

@@ -42,7 +42,7 @@
         <div>
           <i class="far fa-folder-open"></i>
           <p>
-            Sem Informacoes para mostrar
+            Sem informacoes para mostrar
           </p>
         </div>
       </div>

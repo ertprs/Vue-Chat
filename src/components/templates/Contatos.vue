@@ -15,26 +15,28 @@
         <i class="fas fa-long-arrow-alt-left flecha"></i>
       </div>
     </div>
-    <template v-if="todosAtendimentos">
-      <div id="load-container" v-if="caso == 206">
+    <template v-if="objAtendimentos">
+      <!-- Caso Aguardando Cliente -->
+      <div class="lista-contatos-container-vazio" v-if="caso == 206">
         <div id="load">
-          <p> Aguardando cliente </p>
-          <div>
-            <i class="fas fa-hourglass-start"></i>
-          </div>
+          <i class="fas fa-hourglass-end"></i>
+          <transition name="fade">
+            <p v-show="!fechado" >
+              Aguardando cliente
+            </p>
+          </transition>
         </div>
       </div>
-      <div class="lista-contatos-container" v-else>
-        <ul :class="{'fechado' : fechado}" v-if="todosAtendimentos.length">
+      <!-- Caso haja Cliente -->
+      <div class="lista-contatos-container" v-if="objAtendimentos.length">
+        <ul :class="{'fechado' : fechado}">
           <li
-            v-for="(atd, indice) in todosAtendimentos"
+            v-for="(atd, indice) in objAtendimentos"
             :key="indice"
             :title="formataNome(atd.nome_usu)"
             :class="{'destaque-novo-contato' : atd.novoContato, 'nova-msg' : atd.alertaMsgNova, 'ativo' : idAtendimentoAtivo == atd.id_cli}"
             @click="ativarConversa( atd, indice )"
           >
-            <!-- :class="atd.cliente.novoContato ? 'destaque-novo-contato' : ''" -->
-            <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
             <div class="circulo-contatos">
               <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
               <p v-if="fechado">{{ formataSigla(atd.nome_usu[1], 'lower') }}</p>
@@ -44,7 +46,7 @@
             <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && idAtendimentoAtivo !== atd.id_cli" class="destaque-nova-msg">{{ atd.qtdMsgNova }}</span>
           </li>
         </ul>
-        <div class="lista-agenda" v-if="todosAtendimentos.length">
+        <div class="lista-agenda">
           <div class="lista-agenda--titulo">
             <div :class="{'fechado' : fechado}">
               <i class="far fa-address-book"  title="Minha Agenda"></i>
@@ -62,7 +64,6 @@
               :id="'li_'+indice"
               :title="atd"
             >
-              <!-- <i :class="indice % 2 == 0 ? 'far' : 'fas'" class="fa-user"></i> -->
               <div :class="indice % 2 == 0 ? '' : ''" class="circulo-contatos">
                 <p>{{ formataSigla(atd[0], 'upper') }}</p>
                 <p v-if="fechado">{{ formataSigla(atd[1], 'lower') }}</p>
@@ -73,12 +74,13 @@
         </div>
       </div>
     </template>
-    <div v-if="!todosAtendimentos || !todosAtendimentos.length" class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
+    <!-- Caso não haja atendimentos -->
+    <div v-if="!objAtendimentos.length" class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
       <div>
         <i class="far fa-folder-open"></i>
         <transition name="fade">
           <p v-show="!fechado" >
-            Sem Contatos para mostrar
+            Sem contatos para mostrar
           </p>
         </transition>
       </div>
@@ -105,15 +107,23 @@ export default {
       rotate: false,
       fechado: false,
       haContatos: true,
-      idAtendimentoAtivo: ''
+      idAtendimentoAtivo: '',
+      objAtendimentos: [],
+      chavesUsuarios: []
     };
   },
   watch: {
     todosAtendimentos() {
-      if (this.todosAtendimentos && this.idAtendimentoAtivo) {
-        this.setMensagensClienteAtivo(
-          this.idAtendimentoAtivo, this.obterMensagensDoContatoAtivoPeloId(this.idAtendimentoAtivo)
-        )
+      if(this.todosAtendimentos){
+        
+        this.chavesUsuarios = Object.keys(this.todosAtendimentos)
+        this.objAtendimentos = Object.values(this.todosAtendimentos)
+        
+        if (this.objAtendimentos && this.idAtendimentoAtivo) {
+          this.setMensagensClienteAtivo(
+            this.idAtendimentoAtivo, this.obterMensagensDoContatoAtivoPeloId(this.idAtendimentoAtivo)
+          )
+        }
       }
     }
   },
@@ -245,12 +255,14 @@ export default {
       },1500)
     },
     formataUltimaMsg(arrMsgs){
-      if(arrMsgs.length > 0){
-        if(arrMsgs[arrMsgs.length - 1].texto.length > 30){
-          let msgFormatada = arrMsgs[arrMsgs.length - 1].texto.slice(0, 30) + '...'
-          return msgFormatada
-        }else{
-          return arrMsgs[arrMsgs.length - 1].texto
+      if(arrMsgs){
+        if(arrMsgs.length > 0){
+          if(arrMsgs[arrMsgs.length - 1].msg.length > 30){
+            let msgFormatada = arrMsgs[arrMsgs.length - 1].msg.slice(0, 30) + '...'
+            return msgFormatada
+          }else{
+            return arrMsgs[arrMsgs.length - 1].msg
+          }
         }
       }
     },
