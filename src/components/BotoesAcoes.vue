@@ -55,9 +55,7 @@ export default {
     },
     ...mapMutations(['limparAtendimentoAtivo']),
     encerrarAtendimento(){
-      console.log('atendimentoAtivo: ', this.atendimentoAtivo)
       if( this.atendimentoAtivo.informacoes.nome != null ) {
-        
         const textarea = document.querySelector('#textarea')
         textarea.innerText = 'Mensagem de Encerramento do Atendimento de ' + this.atendimentoAtivo.informacoes.nome
 
@@ -83,12 +81,9 @@ export default {
       }
     },
     async finalizarAtendimentoNaApi(id) {
-      console.log(id)
       let data = { "token_cliente": this.atendimentoAtivo.token_cliente }
-      // let data = {"token_cliente": this.atendimentoAtivo.token_cliente,"message": msg}
-      console.log(data)
       await axios_api.delete('end-atendimento', {data: {...data}})
-      alert('trava')
+
     }
   },
   computed: {
