@@ -92,7 +92,7 @@ var app = new Vue({
           this.adicionaCaso(206)
           setTimeout( function() {
             document.location.reload(true);
-          },7000)
+          },2000)
         break;
         default:
           console.log('ERRO STATUS ' + response.status + ' ' + response.statusText)
@@ -112,7 +112,7 @@ var app = new Vue({
           this.atualizarAtendimentos()
         }
         this.loopAtualizacaoDeAtendimentos()
-      }, 100);
+      }, 50);
     },
     verificaRequest() {
       if(status_gerenciador === 0) {
