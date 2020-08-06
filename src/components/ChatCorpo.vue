@@ -14,7 +14,7 @@
       :anexo="msg.anexo"
       :imgAnexo="msg.imgAnexo"/>
 
-      <!-- MSG Cliente -->
+      <!-- MSGs Cliente -->
       <!-- <div class="mensagem-cliente">
         <div class="mensagem" id="msg-1-cliente">
           <b-tooltip target="msg-1-cliente" triggers="hover" placement="right">
