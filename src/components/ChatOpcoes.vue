@@ -8,10 +8,11 @@
           <ul class="chat-opcoes-titulo-container--lista">
             <li :title="atendimentoAtivo.nome_usu">{{ atendimentoAtivo.nome_usu }}</li>
             <li :title="atendimentoAtivo.id_cli">{{ atendimentoAtivo.id_cli }}</li>
-            <li :title="atendimentoAtivo.representante">{{ atendimentoAtivo.representante }}</li>
+            <li :title="atendimentoAtivo.desc_grupo">{{ atendimentoAtivo.desc_grupo }}</li>
           </ul>
           <div class="chat-opcoes-titulo-container--logo">
-            <i class="fas fa-comments"></i>
+            <img v-if="atendimentoAtivo.sigla" :src="`http://linux03/callcenter/imagens/ext_top_${atendimentoAtivo.sigla}.png`">
+            <i v-else class="fas fa-comments"></i>
           </div>
         </div>
       </div>
