@@ -60,21 +60,35 @@ var app = new Vue({
           let mainData = response.data
           mainData.gerenciador = 'teste'
           if (mainData.atendimentos != null && mainData.token_manager != null) {
-            console.log(mainData.atendimentos)
+            console.log('mainData.atendimentos: ', mainData.atendimentos)
             this.setAtendimentos(mainData.atendimentos)
             this.setAgenda(['Maria', 'Joao', 'Joana', 'Frederico'])
             mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('')
             mainData.token_manager != null ? this.setTokenManager(mainData.token_manager) : this.setTokenManager('')
             this.iniciarAtualizacaoDeAtendimentos()
           } else {
-            console.log('Erro ao tentar obter dados no servidor')
-            console.log(mainData)
-            this.adicionaCaso(200)
+            // quando o token e valido mas nao recebemos o atendimento (gambis)
+            if(mainData.token_manager != null){
+              this.adicionaCaso(206)
+              setTimeout( function() {
+                document.location.reload(true)
+              },500)
+            }else{
+              console.log('Erro ao tentar obter dados no servidor')
+              console.log(mainData)
+              this.adicionaCaso(200)
+            }
           }
           break;
         case 206:
           console.log('Status ' + response.status + ' ' + response.statusText)
           console.log('Aguardando Cliente')
+          if(response.data.token_manager != null){
+            this.setAgenda(['Maria', 'Joao', 'Joana', 'Frederico'])
+            response.data.token_atd != null ? this.setTokenAtd(response.data.token_atd) : this.setTokenAtd('')
+            response.data.token_manager != null ? this.setTokenManager(response.data.token_manager) : this.setTokenManager('')
+          }
+
           this.adicionaCaso(206)
           setTimeout( function() {
             document.location.reload(true);
@@ -101,6 +115,7 @@ var app = new Vue({
           // let tokenBearer = response.config.headers.authorization
 
           let mainData = response.data
+          // Quando chega um novo contato, o str_ret não vem, e acaba caindo no ultimo else
           if (mainData.st_ret === 'OK') {
             this.atualizarClientes(mainData)
             mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('-')
@@ -109,7 +124,7 @@ var app = new Vue({
             console.log('Nao existe clientes na fila')
             this.atualizarAtendimentosIniciais()
           } else {
-            console.log(`ERRO! Status: ${response}`)
+            console.log('ERRO! Status:', response)
             return false
           }
         })
@@ -151,15 +166,20 @@ var app = new Vue({
                 aux = aux + 1
                 this.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
               }
-              if(typeof novosAtendimentos[ramal].qtdMsgNova === 'undefined'){
-                novosAtendimentos[ramal].qtdMsgNova = aux;
-              } else {
-                novosAtendimentos[ramal].qtdMsgNova += aux;
+              
+              if(this.idAtendimentoAtivo !== novosAtendimentos[ramal].id_cli){
+                novosAtendimentos[ramal].alertaMsgNova = true
+                if(typeof novosAtendimentos[ramal].qtdMsgNova === 'undefined'){
+                  novosAtendimentos[ramal].qtdMsgNova = aux;
+                } else {
+                  novosAtendimentos[ramal].qtdMsgNova += aux;
+                }
               }
-              novosAtendimentos[ramal].alertaMsgNova = true
+
               novosAtendimentos[ramal].arrMsg.push(message)// adiciono as mensagens novas no array global
             } else {
               novosAtendimentos[ramal].alertaMsgNova = false
+              novosAtendimentos[ramal].qtdMsgNova = false
             }
           });
         }
@@ -167,6 +187,10 @@ var app = new Vue({
         novosAtendimentos[ramal] = cliente;
         novosAtendimentos[ramal].qtdMsgNova = cliente.arrMsg.length;
         novosAtendimentos[ramal].alertaMsgNova = true
+        // verificando se o contato novo ja foi marcado como ativo
+        if(this.idAtendimentoAtivo == novosAtendimentos[ramal].id_cli){
+          console.log('Entrou')
+        }
       }
       this.setAtendimentos(novosAtendimentos)
 

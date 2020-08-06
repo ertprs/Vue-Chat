@@ -29,7 +29,7 @@
       </div>
       <!-- Caso haja Cliente -->
       <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 200">
-        <ul :class="{'fechado' : fechado}" v-if="objAtendimentos.length">
+        <ul :class="{'fechado' : fechado}" v-if="objAtendimentos.length && caso !== 206">
           <li
             v-for="(atd, indice) in objAtendimentos"
             :key="indice"
@@ -76,7 +76,7 @@
       </div>
     </template>
     <!-- Caso não haja atendimentos -->
-    <div v-if="caso == 200" class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
+    <div v-if="caso == 200 && !todosAtendimentos.length" class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
       <div>
         <i class="far fa-folder-open"></i>
         <transition name="fade">
@@ -156,8 +156,12 @@ export default {
       "setTodasMensagens",
       "limparTodasMensagens",
       "toggleAbaContatos",
-      "setIdAtendimentoAtivo"
+      "setIdAtendimentoAtivo",
+      "setCaso"
     ]),
+    adicionaCaso(caso){
+      this.setCaso(caso)
+    },
     ativarConversa: function(atd, indice) {
       this.$root.$emit('rolaChat')
       if(atd.novoContato){
