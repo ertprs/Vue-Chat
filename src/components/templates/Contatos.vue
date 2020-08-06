@@ -17,7 +17,7 @@
     </div>
     <template v-if="objAtendimentos">
       <!-- Caso Aguardando Cliente -->
-      <div class="lista-contatos-container-vazio" v-if="caso == 206">
+      <div class="lista-contatos-container-vazio load-container" v-if="caso == 206">
         <div id="load">
           <i class="fas fa-hourglass-end"></i>
           <transition name="fade">
@@ -28,8 +28,8 @@
         </div>
       </div>
       <!-- Caso haja Cliente -->
-      <div class="lista-contatos-container" v-if="objAtendimentos.length">
-        <ul :class="{'fechado' : fechado}">
+      <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 200">
+        <ul :class="{'fechado' : fechado}" v-if="objAtendimentos.length && caso !== 206">
           <li
             v-for="(atd, indice) in objAtendimentos"
             :key="indice"
@@ -65,7 +65,7 @@
               :title="atd"
               class="semClick"
             >
-              <div :class="indice % 2 == 0 ? '' : ''" class="circulo-contatos">
+              <div class="circulo-contatos">
                 <p>{{ formataSigla(atd[0], 'upper') }}</p>
                 <p v-if="fechado">{{ formataSigla(atd[1], 'lower') }}</p>
               </div>
@@ -76,7 +76,7 @@
       </div>
     </template>
     <!-- Caso não haja atendimentos -->
-    <div v-if="!objAtendimentos.length" class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
+    <div v-if="caso == 200 && !todosAtendimentos.length" class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
       <div>
         <i class="far fa-folder-open"></i>
         <transition name="fade">
@@ -140,8 +140,7 @@ export default {
     this.$root.$on('atualizar_mensagem', (msg) => {
       // this.atualizarMensagemDoContatoAtivo()
       // console.log(this.todosAtendimentos)
-      // console.log('component contatos')
-
+      // console.log('component contatos'
     })
   },
   methods: {
@@ -157,8 +156,12 @@ export default {
       "setTodasMensagens",
       "limparTodasMensagens",
       "toggleAbaContatos",
-      "setIdAtendimentoAtivo"
+      "setIdAtendimentoAtivo",
+      "setCaso"
     ]),
+    adicionaCaso(caso){
+      this.setCaso(caso)
+    },
     ativarConversa: function(atd, indice) {
       this.$root.$emit('rolaChat')
       if(atd.novoContato){

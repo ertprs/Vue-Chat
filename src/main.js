@@ -57,20 +57,38 @@ var app = new Vue({
           let mainData = response.data
           mainData.gerenciador = 'teste'
           if (mainData.atendimentos != null && mainData.token_manager != null) {
-            console.log(mainData.atendimentos)
+            console.log('mainData.atendimentos: ', mainData.atendimentos)
+            for(let atendimento in mainData.atendimentos){
+              mainData.atendimentos[atendimento].novoContato = true
+            }
             this.setAtendimentos(mainData.atendimentos)
             this.setAgenda(['Maria', 'Joao', 'Joana', 'Frederico'])
             mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('')
             mainData.token_manager != null ? this.setTokenManager(mainData.token_manager) : this.setTokenManager('')
             this.loopAtualizacaoDeAtendimentos()
           } else {
-            console.log('Erro ao tentar obter dados no servidor')
-            console.log(mainData)
+            // quando o token e valido mas nao recebemos o atendimento (gambis)
+            if(mainData.token_manager != null){
+              this.adicionaCaso(206)
+              setTimeout( function() {
+                document.location.reload(true)
+              },500)
+            }else{
+              console.log('Erro ao tentar obter dados no servidor')
+              console.log(mainData)
+              this.adicionaCaso(200)
+            }
           }
           break;
         case 206:
           console.log('Status ' + response.status + ' ' + response.statusText)
           console.log('Aguardando Cliente')
+          if(response.data.token_manager != null){
+            this.setAgenda(['Maria', 'Joao', 'Joana', 'Frederico'])
+            response.data.token_atd != null ? this.setTokenAtd(response.data.token_atd) : this.setTokenAtd('')
+            response.data.token_manager != null ? this.setTokenManager(response.data.token_manager) : this.setTokenManager('')
+          }
+
           this.adicionaCaso(206)
           setTimeout( function() {
             document.location.reload(true);
@@ -118,6 +136,7 @@ var app = new Vue({
         .then(response => {
           this.liberaRequest()
           let mainData = response.data
+          // Quando chega um novo contato, o str_ret não vem, e acaba caindo no ultimo else
           if (mainData.st_ret === 'OK') {
             this.atualizarClientes(mainData)
             mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('')
@@ -126,7 +145,7 @@ var app = new Vue({
             console.log('Nao existe clientes na fila')
             this.buscaAtendimentos()
           } else {
-            console.log(`ERRO! Status: ${response}`)
+            console.log('ERRO! Status:', response)
             return false
           }
         })
@@ -158,25 +177,28 @@ var app = new Vue({
       }
     },
     atualizarMensagens: function (cliente, ramal, novosAtendimentos) {
-      var aux = 0
       if(novosAtendimentos[ramal].arrMsg.length > 0){ //verifica se o cliente antigo ou novo
         const seqs = novosAtendimentos[ramal].arrMsg.map(message => (message.seq)); //seq das mensagens antigas
         if(cliente.arrMsg.length > 0) {
           cliente.arrMsg.map((message)=>{ //mensagens novas
             if(!seqs.includes(message.seq)) {
               if(message.resp_msg == 'CLI') {
-                aux = aux + 1
                 this.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
               }
-              if(typeof novosAtendimentos[ramal].qtdMsgNova === 'undefined'){
-                novosAtendimentos[ramal].qtdMsgNova = aux;
-              } else {
-                novosAtendimentos[ramal].qtdMsgNova += aux;
+              
+              if(this.idAtendimentoAtivo !== novosAtendimentos[ramal].id_cli){
+                novosAtendimentos[ramal].alertaMsgNova = true
+                if(!novosAtendimentos[ramal].qtdMsgNova){
+                  novosAtendimentos[ramal].qtdMsgNova = 1;
+                } else {
+                  novosAtendimentos[ramal].qtdMsgNova += 1;
+                }
               }
-              novosAtendimentos[ramal].alertaMsgNova = true
+
               novosAtendimentos[ramal].arrMsg.push(message)// adiciono as mensagens novas no array global
             } else {
               novosAtendimentos[ramal].alertaMsgNova = false
+              novosAtendimentos[ramal].qtdMsgNova = false
             }
           });
         }

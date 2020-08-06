@@ -7,26 +7,34 @@
           <h1 title="Informacoes" v-if="!atendimentoAtivo.informacoes"> Informacoes </h1>
         </div>
         <div v-if="atendimentoAtivo.informacoes" class="informacoes-container">
-          <div v-if="atendimentoAtivo.informacoes.nome" class="informacoes-item">
+          <!-- <h1> {{ atendimentoAtivo }} </h1> -->
+          <div v-if="atendimentoAtivo.id" class="informacoes-item">
             <div class="informacoes-item-titulo">
-              <i class="fas fa-user"></i>
-              <p> Contato </p>
+              <i class="fas fa-phone"></i>
+              <p> Telefone </p>
             </div>
-            <p> {{ formataNome(atendimentoAtivo.informacoes.nome) }} / {{ formataTelefone(atendimentoAtivo.id) }} </p>
+            <p> {{ formataTelefone(atendimentoAtivo.id) }} </p>
           </div>
-          <div v-if="atendimentoAtivo.informacoes.tempo_conectado" class="informacoes-item">
+          <div v-if="atendimentoAtivo.representante" class="informacoes-item">
+            <div class="informacoes-item-titulo">
+              <i class="fas fa-tag"></i>
+              <p> Representante </p>
+            </div>
+            <p> {{ formataNome(atendimentoAtivo.representante) }} </p>
+          </div>
+          <div v-if="atendimentoAtivo.hora_cliente_ini" class="informacoes-item">
             <div class="informacoes-item-titulo">
               <i class="fas fa-user-clock"></i>
               <p> Tempo Conectado </p>
             </div>
-            <p> {{ formataHorario(atendimentoAtivo.informacoes.tempo_conectado) }} </p>
+            <p> {{ formataHorario(atendimentoAtivo.hora_cliente_ini) }} </p>
           </div>
-          <div v-if="atendimentoAtivo.informacoes.tempo_fila" class="informacoes-item">
+          <div v-if="atendimentoAtivo.hora_fila_ini" class="informacoes-item">
             <div class="informacoes-item-titulo">
               <i class="fas fa-clock"></i>
               <p> Tempo de Fila </p>
             </div>
-            <p> {{ formataHorario(atendimentoAtivo.informacoes.tempo_fila) }} </p>
+            <p> {{ formataHorario(atendimentoAtivo.hora_fila_ini) }} </p>
           </div>
         </div>
       </div>
@@ -69,7 +77,6 @@ export default {
     },
     formataTelefone(telefone){
       if(!telefone){ return '' }
-
       telefone = "+"+telefone.slice(0,2)+" ("+telefone.slice(2,4)+") "+telefone.slice(4, 9)+"-"+telefone.slice(9, telefone.length)
       return telefone
     },
@@ -79,7 +86,7 @@ export default {
       if(horas[0] && horas[1] == '0'){
         return horas.slice(3,5)+' minutos'
       }else{
-        return horas.slice(0,2)+'horas e '+horas.slice(3,5)+' minutos'
+        return horas.slice(0,2)+' horas e '+horas.slice(3,5)+' minutos'
       }
       return horas
     }
