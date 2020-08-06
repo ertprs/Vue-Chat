@@ -69,6 +69,7 @@ var app = new Vue({
           } else {
             console.log('Erro ao tentar obter dados no servidor')
             console.log(mainData)
+            this.adicionaCaso(200)
           }
           break;
         case 206:

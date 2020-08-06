@@ -9378,6 +9378,47 @@ body {
       margin-left: 15px; }
       .chat-opcoes .chat-opcoes-titulo h1 svg {
         font-size: 1.3rem; }
+    .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      position: relative; }
+      .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container .circulo-contatos {
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        min-width: 35px;
+        min-height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 10px;
+        background-color: #FFF; }
+        .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container .circulo-contatos p {
+          color: #000;
+          margin: 0;
+          padding: 0;
+          font-weight: 600;
+          user-select: none;
+          text-align: center;
+          height: auto;
+          width: auto; }
+      .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none; }
+        .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container ul li {
+          font-size: .8rem;
+          margin: 0;
+          padding: 0;
+          color: #FFF; }
+      .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container .chat-opcoes-titulo-container--logo {
+        position: absolute;
+        right: 10px; }
+        .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container .chat-opcoes-titulo-container--logo svg {
+          font-size: 1.4rem;
+          color: #FFF; }
   .chat-opcoes .chat-opcoes-infos {
     display: none; }
 
@@ -9665,7 +9706,8 @@ body {
   justify-content: space-between;
   height: 58px;
   width: 90%;
-  font-size: .8375rem; }
+  font-size: .8375rem;
+  margin-right: 15px; }
   .informacoes-container .informacoes-item {
     margin-top: 18px;
     display: flex;
@@ -9680,6 +9722,8 @@ body {
         white-space: nowrap;
         margin: 0;
         margin-left: 5px; }
+      .informacoes-container .informacoes-item .informacoes-item-titulo svg.fa-phone {
+        transform: rotate(120deg); }
 
 .lista-informacoes-container-vazio {
   height: 90%;

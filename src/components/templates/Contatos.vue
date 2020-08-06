@@ -28,7 +28,7 @@
         </div>
       </div>
       <!-- Caso haja Cliente -->
-      <div class="lista-contatos-container" v-if="objAtendimentos">
+      <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 200">
         <ul :class="{'fechado' : fechado}" v-if="objAtendimentos.length">
           <li
             v-for="(atd, indice) in objAtendimentos"
@@ -76,7 +76,7 @@
       </div>
     </template>
     <!-- Caso não haja atendimentos -->
-    <div v-if="!objAtendimentos.length && !caso" class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
+    <div v-if="caso == 200" class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
       <div>
         <i class="far fa-folder-open"></i>
         <transition name="fade">
