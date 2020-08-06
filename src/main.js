@@ -16,8 +16,9 @@ import { axiosTokenJWT} from "./services/axios_api"
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
-
 Vue.config.productionTip = false;
+var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
+
 
 var app = new Vue({
   router,
@@ -39,15 +40,11 @@ var app = new Vue({
     })
   },
   mounted() {
-    this.$on('atualizarAtendimentos', this.atualizarAtendimentos)
-    this.atualizarAtendimentosIniciais()
+    this.buscaAtendimentos()
   },
   methods: {
     ...mapMutations(["setAtendimentos", "setAgenda", "adicionarMensagem", "adicionarClienteNovo", "setTokenAtd", "setTokenManager", "setCaso"]),
-    iniciarAtualizacaoDeAtendimentos() {
-      var temporizador = setInterval(this.atualizarAtendimentos, 2000);
-    },
-    atualizarAtendimentosIniciais() {
+    buscaAtendimentos() {
     axios({
       method: 'get',
       url: this.$store.getters.getURL + 'get-atendimento'
@@ -65,7 +62,7 @@ var app = new Vue({
             this.setAgenda(['Maria', 'Joao', 'Joana', 'Frederico'])
             mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('')
             mainData.token_manager != null ? this.setTokenManager(mainData.token_manager) : this.setTokenManager('')
-            this.iniciarAtualizacaoDeAtendimentos()
+            this.loopAtualizacaoDeAtendimentos()
           } else {
             console.log('Erro ao tentar obter dados no servidor')
             console.log(mainData)
@@ -90,6 +87,28 @@ var app = new Vue({
     adicionaCaso(caso){
       this.setCaso(caso)
     },
+    loopAtualizacaoDeAtendimentos() {
+      setTimeout(() => {
+        if(this.verificaRequest()) {
+          this.bloqueiaRequest()
+          this.atualizarAtendimentos()
+        }
+        this.loopAtualizacaoDeAtendimentos()
+      }, 100);
+    },
+    verificaRequest() {
+      if(status_gerenciador === 0) {
+        return true
+      } else {
+        return false
+      }
+    },
+    bloqueiaRequest() {
+      status_gerenciador = 1
+    },
+    liberaRequest() {
+      status_gerenciador = 0
+    },
     atualizarAtendimentos() {
       let urlComToken = 'get-atendimento?token_atd=' + this.tokenAtd + '&token_manager=' + this.tokenManager
       axios({
@@ -97,16 +116,15 @@ var app = new Vue({
         url: this.$store.getters.getURL + urlComToken
       }) // segundo get-atendimendo, agora com parametros
         .then(response => {
-          // let tokenBearer = response.config.headers.authorization
-
+          this.liberaRequest()
           let mainData = response.data
           if (mainData.st_ret === 'OK') {
             this.atualizarClientes(mainData)
-            mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('-')
-            mainData.token_manager != null ? this.setTokenManager(mainData.token_manager) : this.setTokenManager('-')
+            mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('')
+            mainData.token_manager != null ? this.setTokenManager(mainData.token_manager) : this.setTokenManager('')
           } else if(mainData.st_ret === 'AVISO') {
             console.log('Nao existe clientes na fila')
-            this.atualizarAtendimentosIniciais()
+            this.buscaAtendimentos()
           } else {
             console.log(`ERRO! Status: ${response}`)
             return false
