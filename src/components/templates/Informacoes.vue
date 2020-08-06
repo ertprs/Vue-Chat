@@ -10,7 +10,7 @@
           <!-- <h1> {{ atendimentoAtivo }} </h1> -->
           <div v-if="atendimentoAtivo.id" class="informacoes-item">
             <div class="informacoes-item-titulo">
-              <i class="fas fa-phone"></i>
+              <i class="fas fa-phone-alt"></i>
               <p> Telefone </p>
             </div>
             <p> {{ formataTelefone(atendimentoAtivo.id) }} </p>
@@ -34,7 +34,7 @@
               <i class="fas fa-clock"></i>
               <p> Tempo de Fila </p>
             </div>
-            <p> {{ formataHorario(atendimentoAtivo.hora_fila_ini) }} </p>
+            <p> {{ formataHorario(atendimentoAtivo.hora_fila_fim) }} </p>
           </div>
         </div>
       </div>
@@ -77,6 +77,7 @@ export default {
     },
     formataTelefone(telefone){
       if(!telefone){ return '' }
+
       telefone = "+"+telefone.slice(0,2)+" ("+telefone.slice(2,4)+") "+telefone.slice(4, 9)+"-"+telefone.slice(9, telefone.length)
       return telefone
     },

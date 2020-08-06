@@ -136,7 +136,7 @@ var app = new Vue({
         .then(response => {
           this.liberaRequest()
           let mainData = response.data
-          // Quando chega um novo contato, o str_ret não vem, e acaba caindo no ultimo else
+          // Quando chega um novo contato, o st_ret não vem, e acaba caindo no ultimo else
           if (mainData.st_ret === 'OK') {
             this.atualizarClientes(mainData)
             mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('')
