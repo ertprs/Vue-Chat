@@ -159,23 +159,21 @@ var app = new Vue({
       }
     },
     atualizarMensagens: function (cliente, ramal, novosAtendimentos) {
-      var aux = 0
       if(novosAtendimentos[ramal].arrMsg.length > 0){ //verifica se o cliente antigo ou novo
         const seqs = novosAtendimentos[ramal].arrMsg.map(message => (message.seq)); //seq das mensagens antigas
         if(cliente.arrMsg.length > 0) {
           cliente.arrMsg.map((message)=>{ //mensagens novas
             if(!seqs.includes(message.seq)) {
               if(message.resp_msg == 'CLI') {
-                aux = aux + 1
                 this.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
               }
               
               if(this.idAtendimentoAtivo !== novosAtendimentos[ramal].id_cli){
                 novosAtendimentos[ramal].alertaMsgNova = true
-                if(typeof novosAtendimentos[ramal].qtdMsgNova === 'undefined'){
-                  novosAtendimentos[ramal].qtdMsgNova = aux;
+                if(!novosAtendimentos[ramal].qtdMsgNova){
+                  novosAtendimentos[ramal].qtdMsgNova = 1;
                 } else {
-                  novosAtendimentos[ramal].qtdMsgNova += aux;
+                  novosAtendimentos[ramal].qtdMsgNova += 1;
                 }
               }
 
