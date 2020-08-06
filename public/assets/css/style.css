@@ -9417,7 +9417,7 @@ body {
         position: absolute;
         right: 10px; }
         .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container .chat-opcoes-titulo-container--logo img {
-          height: 1.4rem; }
+          height: 1.8rem; }
         .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container .chat-opcoes-titulo-container--logo svg {
           font-size: 1.4rem;
           color: #FFF; }
@@ -9724,8 +9724,6 @@ body {
         white-space: nowrap;
         margin: 0;
         margin-left: 5px; }
-      .informacoes-container .informacoes-item .informacoes-item-titulo svg.fa-phone {
-        transform: rotate(120deg); }
 
 .lista-informacoes-container-vazio {
   height: 90%;
