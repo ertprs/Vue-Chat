@@ -45,7 +45,7 @@ var app = new Vue({
   methods: {
     ...mapMutations(["setAtendimentos", "setAgenda", "adicionarMensagem", "adicionarClienteNovo", "setTokenAtd", "setTokenManager", "setCaso"]),
     iniciarAtualizacaoDeAtendimentos() {
-      var temporizador = setInterval(this.atualizarAtendimentos, 5000);
+      var temporizador = setInterval(this.atualizarAtendimentos, 2000);
     },
     atualizarAtendimentosIniciais() {
     axios({
