@@ -194,7 +194,11 @@ var app = new Vue({
                   novosAtendimentos[ramal].qtdMsgNova += 1;
                 }
               }
-
+              
+              // Emoji teste (retornou '??')
+              // if(message.msg == '&#x1f61c;'){
+              //   message.msg = '??'
+              // }
               novosAtendimentos[ramal].arrMsg.push(message)// adiciono as mensagens novas no array global
             } else {
               novosAtendimentos[ramal].alertaMsgNova = false

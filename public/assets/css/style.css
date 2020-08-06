@@ -9416,6 +9416,8 @@ body {
       .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container .chat-opcoes-titulo-container--logo {
         position: absolute;
         right: 10px; }
+        .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container .chat-opcoes-titulo-container--logo img {
+          height: 1.4rem; }
         .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container .chat-opcoes-titulo-container--logo svg {
           font-size: 1.4rem;
           color: #FFF; }

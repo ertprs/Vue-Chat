@@ -18,8 +18,6 @@
           <div id="emoji-picker-container" v-show="!aparecerPrevia">
             <!-- Esse buga ao enviar -->
             &#128540;
-            <!-- Esse buga na tela do cliente (no teste) -->
-            ??
             <!--
               Plugin 
               <twemoji-picker
