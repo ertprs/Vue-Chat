@@ -61,6 +61,9 @@ var app = new Vue({
           mainData.gerenciador = 'teste'
           if (mainData.atendimentos != null && mainData.token_manager != null) {
             console.log('mainData.atendimentos: ', mainData.atendimentos)
+            for(let atendimento in mainData.atendimentos){
+              mainData.atendimentos[atendimento].novoContato = true
+            }
             this.setAtendimentos(mainData.atendimentos)
             this.setAgenda(['Maria', 'Joao', 'Joana', 'Frederico'])
             mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('')
@@ -187,10 +190,6 @@ var app = new Vue({
         novosAtendimentos[ramal] = cliente;
         novosAtendimentos[ramal].qtdMsgNova = cliente.arrMsg.length;
         novosAtendimentos[ramal].alertaMsgNova = true
-        // verificando se o contato novo ja foi marcado como ativo
-        if(this.idAtendimentoAtivo == novosAtendimentos[ramal].id_cli){
-          console.log('Entrou')
-        }
       }
       this.setAtendimentos(novosAtendimentos)
 

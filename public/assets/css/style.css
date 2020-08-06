@@ -8906,7 +8906,7 @@ body {
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   background-color: rgba(100, 100, 100, 0.1); }
   #todos-contatos.fechado {
-    width: 5% !important; }
+    width: 4% !important; }
   #todos-contatos > div {
     margin: 0 auto;
     width: 95%; }
@@ -9132,7 +9132,7 @@ body {
   #chat .chat-corpo-rodape {
     height: 90%; }
   #chat.chat-aberto {
-    width: 45% !important; }
+    width: 46% !important; }
   #chat .lista-chat-container-vazio {
     height: 90%;
     display: flex;
