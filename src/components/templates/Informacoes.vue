@@ -77,7 +77,6 @@ export default {
     },
     formataTelefone(telefone){
       if(!telefone){ return '' }
-
       telefone = "+"+telefone.slice(0,2)+" ("+telefone.slice(2,4)+") "+telefone.slice(4, 9)+"-"+telefone.slice(9, telefone.length)
       return telefone
     },
@@ -87,7 +86,7 @@ export default {
       if(horas[0] && horas[1] == '0'){
         return horas.slice(3,5)+' minutos'
       }else{
-        return horas.slice(0,2)+'horas e '+horas.slice(3,5)+' minutos'
+        return horas.slice(0,2)+' horas e '+horas.slice(3,5)+' minutos'
       }
       return horas
     }
