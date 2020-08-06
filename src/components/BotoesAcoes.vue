@@ -77,15 +77,18 @@ export default {
             this.limparAtendimentoAtivo()
           }, 1000
         )
-        
 
       } else {
         alert('Selecione um cliente antes de tentar finalizar o  atendimento')
       }
     },
-    finalizarAtendimentoNaApi(id) {
-      let data = { token_cliente: this.atendimentoAtivo.token_cliente }
-      axios_api.delete('end-atendimento', data)
+    async finalizarAtendimentoNaApi(id) {
+      console.log(id)
+      let data = { "token_cliente": this.atendimentoAtivo.token_cliente }
+      // let data = {"token_cliente": this.atendimentoAtivo.token_cliente,"message": msg}
+      console.log(data)
+      await axios_api.delete('end-atendimento', {data: {...data}})
+      alert('trava')
     }
   },
   computed: {
