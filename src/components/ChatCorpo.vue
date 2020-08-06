@@ -58,16 +58,20 @@ export default {
       if(origem == 'novaMensagem'){
         setTimeout(
           () => {
-            corpoMensagens.scrollTo(0, corpoMensagens.scrollHeight )
+            if(corpoMensagens){
+              corpoMensagens.scrollTo(0, corpoMensagens.scrollHeight )
+            }
           }
         ), 100
         return
       }
 
-      if(tamanhoScroll > tamanhoCorpoMensagem){
-        corpoMensagens.scrollTo(0, corpoMensagens.scrollHeight )
-
-        this.setHabilitaRolagem(false)
+      if(tamanhoScroll && tamanhoCorpoMensagem){
+        if(tamanhoScroll > tamanhoCorpoMensagem){
+          corpoMensagens.scrollTo(0, corpoMensagens.scrollHeight )
+  
+          this.setHabilitaRolagem(false)
+        }
       }
     },
     rolaChatClienteAtivo(id) {
