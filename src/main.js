@@ -136,6 +136,7 @@ var app = new Vue({
         .then(response => {
           this.liberaRequest()
           let mainData = response.data
+          console.log(mainData)
           // Quando chega um novo contato, o st_ret não vem, e acaba caindo no ultimo else
           if (mainData.st_ret === 'OK') {
             this.atualizarClientes(mainData)
@@ -170,7 +171,9 @@ var app = new Vue({
         if(temClienteNovo) {
           novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
           novosAtendimentos[ramal_server].novoContato = true
+          console.log(novosAtendimentos)
           this.setAtendimentos(novosAtendimentos)
+          alert('tem cliente novo')
         } else {
           this.atualizarMensagens(atendimentosServer[ramal_server], ramal_server, novosAtendimentos)
         }
@@ -185,7 +188,6 @@ var app = new Vue({
               if(message.resp_msg == 'CLI') {
                 this.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
               }
-              
               if(this.idAtendimentoAtivo !== novosAtendimentos[ramal].id_cli){
                 novosAtendimentos[ramal].alertaMsgNova = true
                 if(!novosAtendimentos[ramal].qtdMsgNova){
@@ -194,7 +196,6 @@ var app = new Vue({
                   novosAtendimentos[ramal].qtdMsgNova += 1;
                 }
               }
-              
               // Emoji teste (retornou '??')
               // if(message.msg == '&#x1f61c;'){
               //   message.msg = '??'
