@@ -61,9 +61,6 @@ var app = new Vue({
           mainData.gerenciador = 'teste'
           if (mainData.atendimentos != null && mainData.token_manager != null) {
             // console.log('mainData.atendimentos: ', mainData.atendimentos)
-            for(let atendimento in mainData.atendimentos){
-              mainData.atendimentos[atendimento].novoContato = true
-            }
             this.setAtendimentos(mainData.atendimentos)
             this.setAgenda(['Maria', 'Joao', 'Joana', 'Frederico'])
             mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('')
