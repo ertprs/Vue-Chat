@@ -109,22 +109,20 @@ export default {
       fechado: false,
       haContatos: true,
       idAtendimentoAtivo: '',
-      objAtendimentos: [],
-      chavesUsuarios: []
+      objAtendimentos: []
     };
   },
   watch: {
     todosAtendimentos() {
       if(this.todosAtendimentos){
 
-        this.chavesUsuarios = Object.keys(this.todosAtendimentos)
         this.objAtendimentos = Object.values(this.todosAtendimentos)
         
-        if (this.objAtendimentos && this.idAtendimentoAtivo) {
-          this.setMensagensClienteAtivo(
-            this.idAtendimentoAtivo, this.obterMensagensDoContatoAtivoPeloId(this.idAtendimentoAtivo)
-          )
-        }
+        // if (this.objAtendimentos && this.idAtendimentoAtivo) {
+        //   this.setMensagensClienteAtivo(
+        //     this.idAtendimentoAtivo, this.obterMensagensDoContatoAtivoPeloId(this.idAtendimentoAtivo)
+        //   )
+        // }
       }
     }
   },
@@ -134,13 +132,6 @@ export default {
       todosAtendimentos: "getTodosAtendimentos",
       minhaAgenda: "getAgenda",
       caso: 'getCaso'
-    })
-  },
-  mounted() {
-    this.$root.$on('atualizar_mensagem', (msg) => {
-      // this.atualizarMensagemDoContatoAtivo()
-      // console.log(this.todosAtendimentos)
-      // console.log('component contatos'
     })
   },
   methods: {
@@ -249,14 +240,6 @@ export default {
           return this.todosAtendimentos[ramal].arrMsg
         }
       }
-    },
-    atualizarMensagemDoContatoAtivo() {
-      var self = this
-      var timeAtualizarMsg = setTimeout( function() {
-        let idClienteAtivo = self.idAtendimentoAtivo
-        let mensagensClienteAtivo = self.obterMensagensDoContatoAtivoPeloId(idClienteAtivo)
-        self.setMensagensClienteAtivo(idClienteAtivo, mensagensClienteAtivo)
-      },1500)
     },
     formataUltimaMsg(arrMsgs){
       if(arrMsgs.length > 0) {

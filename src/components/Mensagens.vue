@@ -7,7 +7,7 @@
         <img :src="imgAnexo" alt="Imagem Anexada">
       </div>
       <span class="horario-envio"> {{ horario }} </span>
-      <span :class="'check ' + status"> <!-- usar :class -->
+      <span class="check" :class="status ? status : ''">
         <template v-if="status == 'enviado'">
           enviado
           <i class="fas fa-check"></i>

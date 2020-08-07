@@ -59,6 +59,7 @@ export default {
         if(origem == 'novaMensagem'){
           setTimeout(
             () => {
+              let corpoMensagens = document.querySelector("#chat-operador > div")
               if(corpoMensagens){
                 corpoMensagens.scrollTo(0, corpoMensagens.scrollHeight )
               }
@@ -85,14 +86,16 @@ export default {
       this.setHabilitaRolagem(true)
       if(this.habilitaRolagem){
         let containerMensagens = document.querySelector("#chat-operador > div")
-        let posicaoDaBarra = containerMensagens.scrollTop
-        let tamanhoContainer = containerMensagens.offsetHeight
-        let tamanhoBarra = containerMensagens.scrollHeight
-
-        if(posicaoDaBarra == (tamanhoBarra - tamanhoContainer)){
-          this.setHabilitaRolagem(false)
-        }else if(parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra || parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra + 1 || parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra - 1){
-          this.setHabilitaRolagem(false)
+        if(containerMensagens){
+          let posicaoDaBarra = containerMensagens.scrollTop
+          let tamanhoContainer = containerMensagens.offsetHeight
+          let tamanhoBarra = containerMensagens.scrollHeight
+  
+          if(posicaoDaBarra == (tamanhoBarra - tamanhoContainer)){
+            this.setHabilitaRolagem(false)
+          }else if(parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra || parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra + 1 || parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra - 1){
+            this.setHabilitaRolagem(false)
+          }
         }
       }
     }

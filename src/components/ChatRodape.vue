@@ -130,6 +130,11 @@ export default {
   components: {
     'twemoji-picker': TwemojiPicker
   },
+  mounted(){
+    this.$root.$on('atualizar_mensagem', (objMessage) => {
+      this.criaObjMensagem(objMessage)
+    })
+  },
   methods: {
     adicionarEmoji(value){
       this.mensagem += value
@@ -138,17 +143,19 @@ export default {
     ...mapMutations(['setTodasMensagens', 'setHabilitaRolagem']),
 
     enviarMensagem(){
-      if(this.mensagem == '' && !this.mensagem.trim()){
-        const textarea = document.querySelector('#textarea')
-        this.mensagem = textarea.innerHTML
-      }
+      // if(this.mensagem == '' && !this.mensagem.trim()){
+      //   const textarea = document.querySelector('#textarea')
+      //   this.mensagem = textarea.innerHTML
+      // }
+      this.mensagem = this.mensagem.replace(/\n$/, '', this.mensagem)
+
       if(this.validaMensagem()){
-        let msg = this.mensagem
-          if(this.atendimentoAtivo.token_cliente != '' && msg != '') {
-            let data = {"token_cliente": this.atendimentoAtivo.token_cliente,"message": msg}
+          if(this.atendimentoAtivo.token_cliente != '' && this.mensagem != '') {
+            this.criaObjMensagem()
+
+            let data = {"token_cliente": this.atendimentoAtivo.token_cliente,"message": this.mensagem}
             axios_api.put('send-message', data).then(
               response => {
-                this.setTodasMensagens(this.criaObjMensagem())
                 this.$root.$emit('rolaChat')
                 this.mensagem = ''
               }
@@ -189,21 +196,38 @@ export default {
       return true;
 
     },
-    criaObjMensagem(){
+    criaObjMensagem(objMessage){
       const hora = this.formataHoraAtual()
+      
+      let objMensagem = {}
+      let msg = this.mensagem
 
-      let objMensagem = {
-        autor: 'Operador', // Operador, Cliente
-        origem: 'principal', // principal e outros
-        msg: this.mensagem,
-        horario: hora,
-        anexo: false,
-        imgAnexo: ''
+      if(!objMessage){
+
+        objMensagem = {
+          autor: 'Operador', // Operador, Cliente
+          origem: 'principal', // principal e outros
+          msg: msg,
+          horario: hora,
+          anexo: false,
+          imgAnexo: ''
+        }
+      }else{
+        msg = objMessage.msg
+        objMensagem = {
+          autor: 'Cliente', // Operador, Cliente
+          origem: 'outros', // principal e outros
+          msg: msg,
+          horario: objMessage.hora,
+          anexo: false,
+          imgAnexo: ''
+        }
       }
+
 
       objMensagem = this.verificaStatusDaMensagem(objMensagem)
 
-      return objMensagem
+      this.setTodasMensagens(objMensagem)
     },
     verificaStatusDaMensagem(objMensagem){
       // enviado, recebido, visualizado e ''
@@ -360,7 +384,6 @@ export default {
   computed: {
     ...mapGetters({
       atendimentoAtivo: 'getAtendimentoAtivo',
-      // todasMensagens: 'getTodasMensagens',
       informacoesAberto: 'getInformacoesAberto',
       url: 'getURL'
     }),
