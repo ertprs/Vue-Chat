@@ -46,7 +46,15 @@ var app = new Vue({
     })
   },
   methods: {
-    ...mapMutations(["setAtendimentos", "setAgenda", "adicionarMensagem", "adicionarClienteNovo", "setTokenAtd", "setTokenManager", "setCaso"]),
+    ...mapMutations([
+      "setAtendimentos",
+      "setAgenda",
+      "adicionarMensagem",
+      "adicionarClienteNovo",
+      "setTokenAtd",
+      "setTokenManager",
+      "setCaso"
+    ]),
     buscaAtendimentos() {
     axios({
       method: 'get',
@@ -71,7 +79,7 @@ var app = new Vue({
               this.adicionaCaso(206)
               setTimeout( function() {
                 document.location.reload(true)
-              },500)
+              },2000)
             }else{
               console.log('Erro ao tentar obter dados no servidor')
               console.log(mainData)
@@ -110,9 +118,13 @@ var app = new Vue({
           this.bloqueiaRequest()
           await this.atualizarAtendimentos()
         }
-        console.log(count)
+        // console.log(count)
         this.loopAtualizacaoDeAtendimentos(count = count + 1)
+<<<<<<< HEAD
       }, 100);
+=======
+      }, 300);
+>>>>>>> 146b0c73f9869d24cf09e8a9d46309f4f999d6d1
     },
     verificaRequest() {
       if(status_gerenciador === 0) {
@@ -128,12 +140,20 @@ var app = new Vue({
       status_gerenciador = 0
     },
     async atualizarAtendimentos() {
+<<<<<<< HEAD
+=======
+      // console.log('chamei')
+>>>>>>> 146b0c73f9869d24cf09e8a9d46309f4f999d6d1
       let urlComToken = 'get-atendimento?token_atd=' + this.tokenAtd + '&token_manager=' + this.tokenManager
       await axios({
         method: 'get',
         url: this.$store.getters.getURL + urlComToken
       }) // segundo get-atendimendo, agora com parametros
         .then(response => {
+<<<<<<< HEAD
+=======
+          // console.log('finalizei')
+>>>>>>> 146b0c73f9869d24cf09e8a9d46309f4f999d6d1
           this.liberaRequest()
           let mainData = response.data
           // console.log(mainData)
@@ -188,6 +208,7 @@ var app = new Vue({
               // console.log('msg nova:  ' + message.msg)
               if(message.resp_msg == 'CLI') {
                 this.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
+                this.$root.$emit('atualizar_mensagem', message)
               }
               if(this.idAtendimentoAtivo !== novosAtendimentos[ramal].id_cli){
                 novosAtendimentos[ramal].alertaMsgNova = true

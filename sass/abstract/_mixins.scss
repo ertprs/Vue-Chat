@@ -20,7 +20,7 @@
   }
 }
 
-@mixin chat-corpo($inveter){
+@mixin chat-corpo(){
   background-image: url('../../../public/assets/img/messages-wallpaper.png');
   // min-height: 80%;
   padding: 15px;
@@ -48,124 +48,62 @@
       }
     }
 
-    @if($inveter == ''){
 
-      .mensagem-principal{
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-        > .mensagem{
-          min-width: 150px;
-          min-height: 80px;
-          background-color: #FFFFCB;
-          &:after{
-            content: "";
-            width: 0;
-            height: 0;
-            position: absolute;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-top: 15px solid #FFFFCB;
-            bottom: 10px;
-            right: -15px;
-            transform: rotate(-90deg);
-          }
-          > .autor-mensagem{
-            right: 10px;
-          }
-          img{
-            max-height: 115px;
-          }
+    .mensagem-principal{
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      > .mensagem{
+        background-color: #FFFFCB;
+        &:after{
+          content: "";
+          width: 0;
+          height: 0;
+          position: absolute;
+          border-left: 15px solid transparent;
+          border-right: 15px solid transparent;
+          border-top: 15px solid #FFFFCB;
+          bottom: 10px;
+          right: -15px;
+          transform: rotate(-90deg);
         }
-      }
-      .mensagem-outros{
-        width: 100%;
-        display: flex;
-        > .mensagem{
-          background-color: #FFF;
-          &:after{
-            content: "";
-            width: 0;
-            height: 0;
-            position: absolute;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-top: 15px solid #FFF;
-            bottom: 10px;
-            left: -15px;
-            transform: rotate(90deg);
-          }
-          .check{
-            display: none
-          }
-          > .autor-mensagem{
-            left: 10px;
-          }
-          img{
-            max-height: 115px;
-          }
+        > .autor-mensagem{
+          right: 10px;
         }
-      }
-    }@else{
-      .btn-rolagem{
-        display: none
-      }
-      .mensagem-principal{
-        width: 100%;
-        display: flex;
-        > .mensagem{
-          background-color: #FFF;
-          &:after{
-            content: "";
-            width: 0;
-            height: 0;
-            position: absolute;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-top: 15px solid #FFF;
-            bottom: 10px;
-            left: -15px;
-            transform: rotate(90deg);
-          }
-          .check{
-            display: none;
-          }
-          > .autor-mensagem{
-            left: 10px;
-          }
-          img{
-            max-height: 65px;
-          }
-        }
-      }
-      .mensagem-outros{
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-        > .mensagem{
-          position: relative;
-          background-color: #FFFFCB;
-          &:after{
-            content: "";
-            width: 0;
-            height: 0;
-            position: absolute;
-            border-left: 15px solid transparent;
-            border-right: 15px solid transparent;
-            border-top: 15px solid #FFFFCB;
-            bottom: 10px;
-            right: -15px;
-            transform: rotate(-90deg);
-          }
-          > .autor-mensagem{
-            right: 10px;
-          }
-          img{
-            max-height: 65px;
-          }
+        img{
+          max-height: 115px;
         }
       }
     }
+    .mensagem-outros{
+      width: 100%;
+      display: flex;
+      > .mensagem{
+        background-color: #FFF;
+        &:after{
+          content: "";
+          width: 0;
+          height: 0;
+          position: absolute;
+          border-left: 15px solid transparent;
+          border-right: 15px solid transparent;
+          border-top: 15px solid #FFF;
+          bottom: 10px;
+          left: -15px;
+          transform: rotate(90deg);
+        }
+        .check{
+          display: none
+        }
+        > .autor-mensagem{
+          left: 10px;
+        }
+        img{
+          max-height: 115px;
+        }
+      }
+    }
+      
 
     .horario-envio{
       margin-right: 15px;
@@ -193,7 +131,11 @@
         right: 10px;
         bottom: 0;
         font-size: 0.7rem;
-        &.visualizado{
+        color: #CCC;
+        svg{
+          color: #CCC
+        }
+        &.visualizado, &.visualizado svg{
           color: #2C858D
         }
       }

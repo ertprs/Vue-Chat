@@ -1,6 +1,5 @@
 <template>
   <div id="chat" :class="abaContatos ? 'chat-aberto' : ''" class="tamanho-ajustavel">
-    <!-- <ChatCliente v-if="zonaDeTeste"/> -->
 
     <template v-if="atendimentoAtivo.informacoes">
       <ChatOpcoes />
@@ -27,14 +26,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import ChatCliente from '../ChatCliente'
 import ChatOpcoes from '../ChatOpcoes'
 import ChatCorpo from '../ChatCorpo'
 import ChatRodape from '../ChatRodape'
 
 export default {
   components: {
-    ChatCliente,
     ChatOpcoes,
     ChatCorpo,
     ChatRodape

@@ -26,8 +26,9 @@ export default new Vuex.Store({
     setFormularioCliente(state, formularioCliente){
       state.formularioCliente = formularioCliente
     },
-    setTodasMensagens(state, todasMensagens){
-      state.todasMensagens.push(todasMensagens)
+    setTodasMensagens(state, novaMensagem){
+      console.log('nova mensagem: ', novaMensagem)
+      state.todasMensagens.push(novaMensagem)
     },
     limparTodasMensagens(state){
       state.todasMensagens = []
