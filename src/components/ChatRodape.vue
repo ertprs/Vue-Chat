@@ -38,7 +38,7 @@
           <!-- Textarea -->
           <textarea
             v-show="!aparecerPrevia"
-            v-on:keyup.enter="enviarMensagem()"
+            v-on:keydown.enter="enviarMensagem()"
             id="textarea"
             v-model="mensagem"
             placeholder="Digite sua mensagem"
