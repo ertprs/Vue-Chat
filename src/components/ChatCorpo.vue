@@ -55,24 +55,24 @@ export default {
       if(corpoMensagens){
         let tamanhoCorpoMensagem = corpoMensagens.offsetHeight
         let tamanhoScroll = corpoMensagens.scrollHeight
-      }
 
-      if(origem == 'novaMensagem'){
-        setTimeout(
-          () => {
-            if(corpoMensagens){
-              corpoMensagens.scrollTo(0, corpoMensagens.scrollHeight )
+        if(origem == 'novaMensagem'){
+          setTimeout(
+            () => {
+              if(corpoMensagens){
+                corpoMensagens.scrollTo(0, corpoMensagens.scrollHeight )
+              }
             }
-          }
-        ), 100
-        return
-      }
+          ), 100
+          return
+        }
 
-      if(tamanhoScroll && tamanhoCorpoMensagem){
-        if(tamanhoScroll > tamanhoCorpoMensagem){
-          corpoMensagens.scrollTo(0, corpoMensagens.scrollHeight )
-  
-          this.setHabilitaRolagem(false)
+        if(tamanhoScroll && tamanhoCorpoMensagem){
+          if(tamanhoScroll > tamanhoCorpoMensagem){
+            corpoMensagens.scrollTo(0, corpoMensagens.scrollHeight )
+    
+            this.setHabilitaRolagem(false)
+          }
         }
       }
     },
