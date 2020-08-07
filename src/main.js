@@ -41,6 +41,9 @@ var app = new Vue({
   },
   mounted() {
     this.buscaAtendimentos()
+    this.$root.$on('buscaAtendimentos', () => {
+      this.buscaAtendimentos()
+    })
   },
   methods: {
     ...mapMutations(["setAtendimentos", "setAgenda", "adicionarMensagem", "adicionarClienteNovo", "setTokenAtd", "setTokenManager", "setCaso"]),
@@ -57,7 +60,7 @@ var app = new Vue({
           let mainData = response.data
           mainData.gerenciador = 'teste'
           if (mainData.atendimentos != null && mainData.token_manager != null) {
-            console.log('mainData.atendimentos: ', mainData.atendimentos)
+            // console.log('mainData.atendimentos: ', mainData.atendimentos)
             for(let atendimento in mainData.atendimentos){
               mainData.atendimentos[atendimento].novoContato = true
             }
@@ -136,7 +139,7 @@ var app = new Vue({
         .then(response => {
           this.liberaRequest()
           let mainData = response.data
-          console.log(mainData)
+          // console.log(mainData)
           // Quando chega um novo contato, o st_ret não vem, e acaba caindo no ultimo else
           if (mainData.st_ret === 'OK') {
             this.atualizarClientes(mainData)
@@ -171,9 +174,8 @@ var app = new Vue({
         if(temClienteNovo) {
           novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
           novosAtendimentos[ramal_server].novoContato = true
-          console.log(novosAtendimentos)
+          console.log('cliente novo: ', novosAtendimentos)
           this.setAtendimentos(novosAtendimentos)
-          alert('tem cliente novo')
         } else {
           this.atualizarMensagens(atendimentosServer[ramal_server], ramal_server, novosAtendimentos)
         }
@@ -213,7 +215,6 @@ var app = new Vue({
         novosAtendimentos[ramal].alertaMsgNova = true
       }
       this.setAtendimentos(novosAtendimentos)
-
     }
   }
 }).$mount("#app");
