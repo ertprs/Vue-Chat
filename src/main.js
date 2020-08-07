@@ -68,7 +68,6 @@ var app = new Vue({
           let mainData = response.data
           mainData.gerenciador = 'teste'
           if (mainData.atendimentos != null && mainData.token_manager != null) {
-            // console.log('mainData.atendimentos: ', mainData.atendimentos)
             this.setAtendimentos(mainData.atendimentos)
             this.setAgenda(['Maria', 'Joao', 'Joana', 'Frederico'])
             mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('')
@@ -190,11 +189,13 @@ var app = new Vue({
       }
     },
     atualizarMensagens: function (cliente, ramal, novosAtendimentos) {
+
       if(novosAtendimentos[ramal].arrMsg.length > 0){ //verifica se o cliente antigo ou novo
         const seqs = novosAtendimentos[ramal].arrMsg.map(message => (message.seq)); //seq das mensagens antigas
         if(cliente.arrMsg.length > 0) {
           cliente.arrMsg.map((message)=>{ //mensagens novas
             if(!seqs.includes(message.seq)) {
+              // console.log('msg nova:  ' + message.msg)
               if(message.resp_msg == 'CLI') {
                 this.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
                 this.$root.$emit('atualizar_mensagem', message)
