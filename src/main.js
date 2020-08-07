@@ -173,7 +173,7 @@ var app = new Vue({
           novosAtendimentos[ramal_server].novoContato = true
           console.log(novosAtendimentos)
           this.setAtendimentos(novosAtendimentos)
-          alert('tem cliente novo')
+          // alert('tem cliente novo')
         } else {
           this.atualizarMensagens(atendimentosServer[ramal_server], ramal_server, novosAtendimentos)
         }

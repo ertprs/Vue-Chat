@@ -62,16 +62,16 @@ export default {
         const btnEnviarMsg = document.querySelector('[enviar-msg]')
         btnEnviarMsg.click()
 
-        setTimeout(
-          () => {
-            const contato = document.querySelector('.ativo')
-            contato.remove()
-          }, 500
-        )
+        // setTimeout(
+        //   () => {
+        //     const contato = document.querySelector('.ativo')
+        //     contato.remove()
+        //   }, 500
+        // )
 
         setTimeout(
           () => {
-            this.finalizarAtendimentoNaApi(this.atendimentoAtivo.id )
+            this.finalizarAtendimentoNaApi(this.atendimentoAtivo.id)
             this.limparAtendimentoAtivo()
           }, 1000
         )
