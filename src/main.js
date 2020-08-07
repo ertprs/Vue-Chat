@@ -105,14 +105,15 @@ var app = new Vue({
     adicionaCaso(caso){
       this.setCaso(caso)
     },
-    loopAtualizacaoDeAtendimentos() {
-      setTimeout(() => {
+    loopAtualizacaoDeAtendimentos(count = 0) {
+      setTimeout(async () => {
         if(this.verificaRequest()) {
           this.bloqueiaRequest()
-          this.atualizarAtendimentos()
+          await this.atualizarAtendimentos()
         }
-        this.loopAtualizacaoDeAtendimentos()
-      }, 50);
+        console.log(count)
+        this.loopAtualizacaoDeAtendimentos(count = count + 1)
+      }, 500);
     },
     verificaRequest() {
       if(status_gerenciador === 0) {
@@ -127,13 +128,15 @@ var app = new Vue({
     liberaRequest() {
       status_gerenciador = 0
     },
-    atualizarAtendimentos() {
+    async atualizarAtendimentos() {
+      console.log('chamei')
       let urlComToken = 'get-atendimento?token_atd=' + this.tokenAtd + '&token_manager=' + this.tokenManager
-      axios({
+      await axios({
         method: 'get',
         url: this.$store.getters.getURL + urlComToken
       }) // segundo get-atendimendo, agora com parametros
         .then(response => {
+          console.log('finalizei')
           this.liberaRequest()
           let mainData = response.data
           // console.log(mainData)

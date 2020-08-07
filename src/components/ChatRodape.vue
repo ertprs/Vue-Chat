@@ -138,6 +138,10 @@ export default {
     ...mapMutations(['setTodasMensagens', 'setHabilitaRolagem']),
 
     enviarMensagem(){
+      if(this.mensagem == '' && !this.mensagem.trim()){
+        const textarea = document.querySelector('#textarea')
+        this.mensagem = textarea.innerHTML
+      }
       if(this.validaMensagem()){
         let msg = this.mensagem
           if(this.atendimentoAtivo.token_cliente != '' && msg != '') {
@@ -154,11 +158,9 @@ export default {
                 console.log('erro send-message: ', error)
                 if(!document.querySelector('.toasted.toasted-primary.error')){
                   this.$toasted.global.defaultError({msg: 'Nao foi possivel enviar a mensagem'})
-                } 
+                }
               }
             )
-
-            
           }
       }
     },
@@ -173,26 +175,19 @@ export default {
     },
     validaMensagem(){
       let msg = this.mensagem
-      
-      const textarea = document.querySelector('#textarea')
-      if((textarea.innerHTML !== '' || !textarea.innerHTML.trim()) && (msg.length == 0 || !msg.trim())){
-        msg = textarea.innerHTML
-      }
 
       if(msg.length === 0 || !msg.trim()){
         this.mensagem = ''
         return false
-      }else{
-        if(msg.length > 1500){
-          if(!document.querySelector('.toasted.toasted-primary.error')){
-            this.$toasted.global.limiteCaracter()
-          }
-          return false
+      }else if(msg.length > 1500){
+        if(!document.querySelector('.toasted.toasted-primary.error')){
+          this.$toasted.global.limiteCaracter()
         }
-
-        this.mensagem = msg.trim()
-        return true;
+        return false
       }
+      // this.mensagem = msg.trim()
+      return true;
+
     },
     criaObjMensagem(){
       const hora = this.formataHoraAtual()
