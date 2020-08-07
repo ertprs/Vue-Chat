@@ -27,14 +27,14 @@
               <i class="fas fa-user-clock"></i>
               <p> Tempo Conectado </p>
             </div>
-            <p> {{ formataHorario(atendimentoAtivo.hora_cliente_ini) }} </p>
+            <p> {{ formataHorario(atendimentoAtivo.tempo_conectado) }} </p>
           </div>
           <div v-if="atendimentoAtivo.hora_fila_ini" class="informacoes-item">
             <div class="informacoes-item-titulo">
               <i class="fas fa-clock"></i>
               <p> Tempo de Fila </p>
             </div>
-            <p> {{ formataHorario(atendimentoAtivo.hora_fila_fim) }} </p>
+            <p> {{ formataHorario(atendimentoAtivo.fila_diff) }} </p>
           </div>
         </div>
       </div>
@@ -84,12 +84,16 @@ export default {
     formataHorario(horas){
       if(!horas){ return '' }
 
-      if(horas[0] && horas[1] == '0'){
-        return horas.slice(3,5)+' minutos'
-      }else{
-        return horas.slice(0,2)+' horas e '+horas.slice(3,5)+' minutos'
-      }
-      return horas
+      let date = new Date(0);
+
+      date.setMinutes(horas.i)
+      date.setSeconds(horas.s)
+      
+      let timeString = date.toISOString().substr(11, 8);
+
+      timeString = timeString.replace(/\d+:/, horas.h.toString().padStart(2, 0) + ':')
+
+      return timeString
     }
   },
   computed: {

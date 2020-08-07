@@ -52,8 +52,10 @@ export default {
     ...mapMutations(['setHabilitaRolagem']),
     rolaChat(origem){
       let corpoMensagens = document.querySelector("#chat-operador > div")
-      let tamanhoCorpoMensagem = corpoMensagens.offsetHeight
-      let tamanhoScroll = corpoMensagens.scrollHeight
+      if(corpoMensagens){
+        let tamanhoCorpoMensagem = corpoMensagens.offsetHeight
+        let tamanhoScroll = corpoMensagens.scrollHeight
+      }
 
       if(origem == 'novaMensagem'){
         setTimeout(
