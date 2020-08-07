@@ -20,7 +20,7 @@
               <i class="fas fa-tag"></i>
               <p> Representante </p>
             </div>
-            <p> {{ formataNome(atendimentoAtivo.representante) }} </p>
+            <p> {{ atendimentoAtivo.representante }} </p>
           </div>
           <div v-if="atendimentoAtivo.hora_cliente_ini" class="informacoes-item">
             <div class="informacoes-item-titulo">

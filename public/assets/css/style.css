@@ -9193,11 +9193,7 @@ body {
           left: -15px;
           transform: rotate(90deg); }
         #chat-cliente .chat-corpo .chat-corpo-mensagens .mensagem-principal > .mensagem .check {
-          font-size: 0.7rem;
-          float: right;
           display: none; }
-          #chat-cliente .chat-corpo .chat-corpo-mensagens .mensagem-principal > .mensagem .check.visualizado {
-            color: #2C858D; }
         #chat-cliente .chat-corpo .chat-corpo-mensagens .mensagem-principal > .mensagem > .autor-mensagem {
           left: 10px; }
         #chat-cliente .chat-corpo .chat-corpo-mensagens .mensagem-principal > .mensagem img {
@@ -9207,6 +9203,7 @@ body {
       display: flex;
       justify-content: flex-end; }
       #chat-cliente .chat-corpo .chat-corpo-mensagens .mensagem-outros > .mensagem {
+        position: relative;
         background-color: #FFFFCB; }
         #chat-cliente .chat-corpo .chat-corpo-mensagens .mensagem-outros > .mensagem:after {
           content: "";
@@ -9219,11 +9216,6 @@ body {
           bottom: 10px;
           right: -15px;
           transform: rotate(-90deg); }
-        #chat-cliente .chat-corpo .chat-corpo-mensagens .mensagem-outros > .mensagem .check {
-          font-size: 0.7rem;
-          float: right; }
-          #chat-cliente .chat-corpo .chat-corpo-mensagens .mensagem-outros > .mensagem .check.visualizado {
-            color: #2C858D; }
         #chat-cliente .chat-corpo .chat-corpo-mensagens .mensagem-outros > .mensagem > .autor-mensagem {
           right: 10px; }
         #chat-cliente .chat-corpo .chat-corpo-mensagens .mensagem-outros > .mensagem img {
@@ -9231,7 +9223,9 @@ body {
     #chat-cliente .chat-corpo .chat-corpo-mensagens .horario-envio {
       margin-right: 15px;
       font-size: 0.7rem;
-      float: left;
+      position: absolute;
+      left: 5px;
+      bottom: 0px;
       color: #CCC; }
     #chat-cliente .chat-corpo .chat-corpo-mensagens p {
       margin: unset;
@@ -9239,10 +9233,19 @@ body {
     #chat-cliente .chat-corpo .chat-corpo-mensagens .mensagem {
       padding: 15px 15px 5px 15px;
       border-radius: 10px;
+      min-width: 150px;
+      min-height: 80px;
       width: fit-content;
       position: relative;
       max-width: 50%;
       margin-bottom: 10px; }
+      #chat-cliente .chat-corpo .chat-corpo-mensagens .mensagem .check {
+        position: absolute;
+        right: 10px;
+        bottom: 0;
+        font-size: 0.7rem; }
+        #chat-cliente .chat-corpo .chat-corpo-mensagens .mensagem .check.visualizado {
+          color: #2C858D; }
       #chat-cliente .chat-corpo .chat-corpo-mensagens .mensagem .autor-mensagem {
         position: absolute;
         font-size: 0.6rem;
@@ -9454,6 +9457,8 @@ body {
       display: flex;
       justify-content: flex-end; }
       #chat-operador.chat-corpo .chat-corpo-mensagens .mensagem-principal > .mensagem {
+        min-width: 150px;
+        min-height: 80px;
         background-color: #FFFFCB; }
         #chat-operador.chat-corpo .chat-corpo-mensagens .mensagem-principal > .mensagem:after {
           content: "";
@@ -9466,11 +9471,6 @@ body {
           bottom: 10px;
           right: -15px;
           transform: rotate(-90deg); }
-        #chat-operador.chat-corpo .chat-corpo-mensagens .mensagem-principal > .mensagem .check {
-          font-size: 0.7rem;
-          float: right; }
-          #chat-operador.chat-corpo .chat-corpo-mensagens .mensagem-principal > .mensagem .check.visualizado {
-            color: #2C858D; }
         #chat-operador.chat-corpo .chat-corpo-mensagens .mensagem-principal > .mensagem > .autor-mensagem {
           right: 10px; }
         #chat-operador.chat-corpo .chat-corpo-mensagens .mensagem-principal > .mensagem img {
@@ -9492,11 +9492,7 @@ body {
           left: -15px;
           transform: rotate(90deg); }
         #chat-operador.chat-corpo .chat-corpo-mensagens .mensagem-outros > .mensagem .check {
-          font-size: 0.7rem;
-          float: right;
           display: none; }
-          #chat-operador.chat-corpo .chat-corpo-mensagens .mensagem-outros > .mensagem .check.visualizado {
-            color: #2C858D; }
         #chat-operador.chat-corpo .chat-corpo-mensagens .mensagem-outros > .mensagem > .autor-mensagem {
           left: 10px; }
         #chat-operador.chat-corpo .chat-corpo-mensagens .mensagem-outros > .mensagem img {
@@ -9504,7 +9500,9 @@ body {
     #chat-operador.chat-corpo .chat-corpo-mensagens .horario-envio {
       margin-right: 15px;
       font-size: 0.7rem;
-      float: left;
+      position: absolute;
+      left: 5px;
+      bottom: 0px;
       color: #CCC; }
     #chat-operador.chat-corpo .chat-corpo-mensagens p {
       margin: unset;
@@ -9512,10 +9510,19 @@ body {
     #chat-operador.chat-corpo .chat-corpo-mensagens .mensagem {
       padding: 15px 15px 5px 15px;
       border-radius: 10px;
+      min-width: 150px;
+      min-height: 80px;
       width: fit-content;
       position: relative;
       max-width: 50%;
       margin-bottom: 10px; }
+      #chat-operador.chat-corpo .chat-corpo-mensagens .mensagem .check {
+        position: absolute;
+        right: 10px;
+        bottom: 0;
+        font-size: 0.7rem; }
+        #chat-operador.chat-corpo .chat-corpo-mensagens .mensagem .check.visualizado {
+          color: #2C858D; }
       #chat-operador.chat-corpo .chat-corpo-mensagens .mensagem .autor-mensagem {
         position: absolute;
         font-size: 0.6rem;

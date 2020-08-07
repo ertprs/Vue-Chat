@@ -55,6 +55,8 @@
         display: flex;
         justify-content: flex-end;
         > .mensagem{
+          min-width: 150px;
+          min-height: 80px;
           background-color: #FFFFCB;
           &:after{
             content: "";
@@ -67,13 +69,6 @@
             bottom: 10px;
             right: -15px;
             transform: rotate(-90deg);
-          }
-          .check{
-            font-size: 0.7rem;
-            float: right;
-            &.visualizado{
-              color: #2C858D
-            }
           }
           > .autor-mensagem{
             right: 10px;
@@ -101,11 +96,6 @@
             transform: rotate(90deg);
           }
           .check{
-            font-size: 0.7rem;
-            float: right;
-            &.visualizado{
-              color: #2C858D
-            }
             display: none
           }
           > .autor-mensagem{
@@ -138,11 +128,6 @@
             transform: rotate(90deg);
           }
           .check{
-            font-size: 0.7rem;
-            float: right;
-            &.visualizado{
-              color: #2C858D
-            }
             display: none;
           }
           > .autor-mensagem{
@@ -158,6 +143,7 @@
         display: flex;
         justify-content: flex-end;
         > .mensagem{
+          position: relative;
           background-color: #FFFFCB;
           &:after{
             content: "";
@@ -170,13 +156,6 @@
             bottom: 10px;
             right: -15px;
             transform: rotate(-90deg);
-          }
-          .check{
-            font-size: 0.7rem;
-            float: right;
-            &.visualizado{
-              color: #2C858D
-            }
           }
           > .autor-mensagem{
             right: 10px;
@@ -191,8 +170,10 @@
     .horario-envio{
       margin-right: 15px;
       font-size: 0.7rem;
-      float: left;
-      color: #CCC
+      position: absolute;
+      left: 5px;
+      bottom: 0px;
+      color: #CCC;
     }
     p{
       margin: unset;
@@ -201,10 +182,21 @@
     .mensagem{
       padding: 15px 15px 5px 15px;
       border-radius: 10px;
+      min-width: 150px;
+      min-height: 80px;
       width: fit-content;
       position: relative;
       max-width: 50%;
       margin-bottom: 10px;
+      .check{
+        position: absolute;
+        right: 10px;
+        bottom: 0;
+        font-size: 0.7rem;
+        &.visualizado{
+          color: #2C858D
+        }
+      }
       .autor-mensagem{
         position: absolute;
         font-size: 0.6rem;
