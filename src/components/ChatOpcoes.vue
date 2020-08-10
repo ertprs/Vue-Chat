@@ -6,9 +6,9 @@
             <p>{{ formataSigla(atendimentoAtivo.nome_usu[0], 'upper') }}</p>
           </div>
           <ul class="chat-opcoes-titulo-container--lista">
-            <li :title="atendimentoAtivo.nome_usu">{{ atendimentoAtivo.nome_usu }}</li>
-            <li :title="atendimentoAtivo.id_cli">ID: {{ atendimentoAtivo.login_usu }}</li>
-            <!-- <li :title="atendimentoAtivo.desc_grupo">{{ atendimentoAtivo.desc_grupo }}</li> -->
+            <li :title="atendimentoAtivo.nome_usu">{{ atendimentoAtivo.nome_usu }} ( {{ atendimentoAtivo.login_usu }} )</li>
+            <!-- <li :title="atendimentoAtivo.id_cli">ID: </li> -->
+            <li :title="atendimentoAtivo.desc_grupo">{{ atendimentoAtivo.desc_grupo }}</li>
           </ul>
           <div class="chat-opcoes-titulo-container--logo">
             <img v-if="atendimentoAtivo.sigla" :src="`http://linux03/callcenter/imagens/ext_top_${atendimentoAtivo.sigla}.png`">

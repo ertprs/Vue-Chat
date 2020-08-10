@@ -161,7 +161,7 @@ var app = new Vue({
             this.buscaAtendimentos()
           } else {
             console.log('ERRO! Status:', response)
-            return false
+            // this.buscaAtendimentos()
           }
           this.liberaRequest()
         })
@@ -200,16 +200,17 @@ var app = new Vue({
           cliente.arrMsg.map((message)=>{ //mensagens novas
             if(!seqs.includes(message.seq)) {
               console.log('msg: ' + message.msg + ', tipo: ' + message.resp_msg)
-              if(message.resp_msg == 'CLI') {
-                this.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
-                this.$root.$emit('atualizar_mensagem', message)
-              }
               if(this.idAtendimentoAtivo !== novosAtendimentos[ramal].id_cli) {
                 novosAtendimentos[ramal].alertaMsgNova = true
                 if(!novosAtendimentos[ramal].qtdMsgNova){
                   novosAtendimentos[ramal].qtdMsgNova = 1;
                 } else {
                   novosAtendimentos[ramal].qtdMsgNova += 1;
+                }
+              } else {
+                if(message.resp_msg == 'CLI') {
+                  this.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
+                  this.$root.$emit('atualizar_mensagem', message)
                 }
               }
               // Emoji teste (retornou '??')
