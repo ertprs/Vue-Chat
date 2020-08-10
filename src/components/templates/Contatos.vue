@@ -116,14 +116,7 @@ export default {
   watch: {
     todosAtendimentos() {
       if(this.todosAtendimentos){
-
         this.objAtendimentos = Object.values(this.todosAtendimentos)
-        
-        // if (this.objAtendimentos && this.idAtendimentoAtivo) {
-        //   this.setMensagensClienteAtivo(
-        //     this.idAtendimentoAtivo, this.obterMensagensDoContatoAtivoPeloId(this.idAtendimentoAtivo)
-        //   )
-        // }
       }
     }
   },
@@ -164,9 +157,7 @@ export default {
         atd.alertaMsgNova = false
       }
       atd.qtdMsgNova = 0;
-
       this.idAtendimentoAtivo = atd.id_cli
-
       this.setIdAtendimentoAtivo(this.idAtendimentoAtivo)
       this.setMensagensClienteAtivo(atd.id_cli, atd.arrMsg)
       this.exibirInformacoes(atd, indice)

@@ -131,7 +131,8 @@ export default {
     'twemoji-picker': TwemojiPicker
   },
   mounted(){
-    this.$root.$on('atualizar_mensagem', (objMessage) => {
+    this.$root.$on('atualizar_mensagem', (objMessage, event) => {
+      console.log('criaObjMensagem')
       this.criaObjMensagem(objMessage)
     })
   },
@@ -197,7 +198,6 @@ export default {
     },
     criaObjMensagem(objMessage){
       const hora = this.formataHoraAtual()
-      
       let objMensagem = {}
       let msg = this.mensagem
 
@@ -222,10 +222,7 @@ export default {
           imgAnexo: ''
         }
       }
-
-
       objMensagem = this.verificaStatusDaMensagem(objMensagem)
-
       this.setTodasMensagens(objMensagem)
     },
     verificaStatusDaMensagem(objMensagem){
