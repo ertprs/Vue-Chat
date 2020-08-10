@@ -8966,7 +8966,11 @@ body {
     overflow-y: auto;
     overflow-x: hidden; }
     #todos-contatos ul.fechado li .circulo-contatos img {
-      display: none; }
+      width: 15px;
+      right: -5px; }
+    #todos-contatos ul.fechado li .destaque-nova-msg {
+      bottom: 5px;
+      right: 5px; }
     #todos-contatos ul.fechado li p {
       margin: 0;
       height: 35px;
@@ -9063,7 +9067,8 @@ body {
         align-items: center;
         border-radius: 50%;
         color: #FFF;
-        font-weight: 600; }
+        font-weight: 600;
+        transition: .3s; }
       #todos-contatos ul li .ultima-msg {
         position: absolute;
         bottom: 0;

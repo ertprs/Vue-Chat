@@ -89,8 +89,13 @@ $tamanhoBoxShadow: 5px;
       li{
         .circulo-contatos{
           img{
-            display: none;
+            width: 15px;
+            right: -5px;
           }
+        }
+        .destaque-nova-msg{
+          bottom: 5px;
+          right: 5px;
         }
         p{
           margin: 0;
@@ -209,6 +214,7 @@ $tamanhoBoxShadow: 5px;
         border-radius: 50%;
         color: #FFF;
         font-weight: 600;
+        transition: .3s;
       }
       .ultima-msg{
         position: absolute;
