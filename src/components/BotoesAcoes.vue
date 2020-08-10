@@ -36,7 +36,7 @@ export default {
     Popup
   },
   methods: {
-    ...mapMutations(['setBlocker']),
+    ...mapMutations(['setBlocker', 'limparAtendimentoAtivo', 'setAtendimentos' ]),
     checaBlocker(criar){
       if(criar){
         this.setBlocker(true)
@@ -50,25 +50,24 @@ export default {
     },
     retornarForm(){
       this.titulo = 'Retornar'
-
       this.checaBlocker(true)
     },
-    ...mapMutations(['limparAtendimentoAtivo']),
-    encerrarAtendimento(){
+    encerrarAtendimento() {
       if( this.atendimentoAtivo.informacoes.nome != null ) {
-        this.finalizarAtendimentoNaApi(this.atendimentoAtivo.id)
+        this.finalizarAtendimentoNaApi()
         this.limparAtendimentoAtivo()
-
-        setTimeout(
-          () => {
-            this.$root.$emit('buscaAtendimentos')
-          }, 500
-        )
+        var novosAtendimentos = {}
+        for(var ramal_local in this.todosAtendimentos) {
+          if(this.todosAtendimentos[ramal_local].id_cli !== this.idAtendimentoAtivo) {
+            novosAtendimentos[ramal_local] = this.todosAtendimentos[ramal_local]
+          }
+        }
+        this.setAtendimentos(novosAtendimentos)
       } else {
         this.$toasted.global.defaultError({msg: 'Selecione um cliente antes de tentar finalizar o atendimento'})
       }
     },
-    async finalizarAtendimentoNaApi(id) {
+    async finalizarAtendimentoNaApi() {
       let data = { "token_cliente": this.atendimentoAtivo.token_cliente }
       await axios_api.delete('end-atendimento', {data: {...data}})
 
@@ -77,7 +76,10 @@ export default {
   computed: {
     ...mapGetters({
       atendimentoAtivo: 'getAtendimentoAtivo',
-      blocker: 'getBlocker'
+      blocker: 'getBlocker',
+      todosAtendimentos: 'getTodosAtendimentos',
+      idAtendimentoAtivo: 'getIdAtendimentoAtivo',
+
     })
   }
 }
