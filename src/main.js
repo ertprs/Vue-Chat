@@ -18,7 +18,7 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.config.productionTip = false;
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
-
+const TEMPO_ATUALIZACAO = 1000
 
 var app = new Vue({
   router,
@@ -28,7 +28,6 @@ var app = new Vue({
   render: h => h(App),
   created: () => {
     store.commit('setURL', "https://linux03/im/atdHumano/middleware/atd_api.php/")
-    // store.commit('setTokenJWT', "asdfasfasdf")
   },
   computed: {
     ...mapGetters({
@@ -43,6 +42,12 @@ var app = new Vue({
     this.buscaAtendimentos()
     this.$root.$on('buscaAtendimentos', () => {
       this.buscaAtendimentos()
+    })
+    this.$root.$on('bloqueiaRequest', (objMessage) => {
+      this.bloqueiaRequest()
+    })
+    this.$root.$on('liberaRequest', (objMessage) => {
+      this.liberaRequest()
     })
   },
   methods: {
@@ -61,12 +66,14 @@ var app = new Vue({
       url: this.$store.getters.getURL + 'get-atendimento'
     })
     .then(response => {
-      // response.headers.authorization != null ? this.setTokenJWT(response.headers.authorization): this.setTokenJWT('')
       axiosTokenJWT(response.headers.authorization)
       switch(response.status) {
         case 200:
           let mainData = response.data
-          mainData.gerenciador = 'teste'
+          if(!mainData) {
+            this.adicionaCaso(200)
+            return
+          }
           if (mainData.atendimentos != null && mainData.token_manager != null) {
             this.setAtendimentos(mainData.atendimentos)
             this.setAgenda(['Maria', 'Joao', 'Joana', 'Frederico'])
@@ -74,12 +81,12 @@ var app = new Vue({
             mainData.token_manager != null ? this.setTokenManager(mainData.token_manager) : this.setTokenManager('')
             this.loopAtualizacaoDeAtendimentos()
           } else {
-            // quando o token e valido mas nao recebemos o atendimento (gambis)
+            // quando o token e valido mas nao recebemos o atendimento
             if(mainData.token_manager != null){
               this.adicionaCaso(206)
               setTimeout( function() {
                 document.location.reload(true)
-              },2000)
+              },TEMPO_ATUALIZACAO)
             }else{
               console.log('Erro ao tentar obter dados no servidor')
               console.log(mainData)
@@ -97,9 +104,11 @@ var app = new Vue({
           }
 
           this.adicionaCaso(206)
+          var self = this
           setTimeout( function() {
-            document.location.reload(true);
-          },2000)
+            // document.location.reload(true);
+            self.buscaAtendimentos()
+          },TEMPO_ATUALIZACAO)
         break;
         default:
           console.log('ERRO STATUS ' + response.status + ' ' + response.statusText)
@@ -118,9 +127,8 @@ var app = new Vue({
           this.bloqueiaRequest()
           await this.atualizarAtendimentos()
         }
-        // console.log(count)
         this.loopAtualizacaoDeAtendimentos(count = count + 1)
-      }, 300);
+      }, TEMPO_ATUALIZACAO);
     },
     verificaRequest() {
       if(status_gerenciador === 0) {
@@ -136,17 +144,13 @@ var app = new Vue({
       status_gerenciador = 0
     },
     async atualizarAtendimentos() {
-      // console.log('chamei')
       let urlComToken = 'get-atendimento?token_atd=' + this.tokenAtd + '&token_manager=' + this.tokenManager
       await axios({
         method: 'get',
         url: this.$store.getters.getURL + urlComToken
       }) // segundo get-atendimendo, agora com parametros
         .then(response => {
-          // console.log('finalizei')
-          this.liberaRequest()
           let mainData = response.data
-          // console.log(mainData)
           // Quando chega um novo contato, o st_ret não vem, e acaba caindo no ultimo else
           if (mainData.st_ret === 'OK') {
             this.atualizarClientes(mainData)
@@ -159,6 +163,7 @@ var app = new Vue({
             console.log('ERRO! Status:', response)
             return false
           }
+          this.liberaRequest()
         })
         .catch(err => console.log(err))
     },
@@ -189,18 +194,17 @@ var app = new Vue({
       }
     },
     atualizarMensagens: function (cliente, ramal, novosAtendimentos) {
-
       if(novosAtendimentos[ramal].arrMsg.length > 0){ //verifica se o cliente antigo ou novo
         const seqs = novosAtendimentos[ramal].arrMsg.map(message => (message.seq)); //seq das mensagens antigas
         if(cliente.arrMsg.length > 0) {
           cliente.arrMsg.map((message)=>{ //mensagens novas
             if(!seqs.includes(message.seq)) {
-              // console.log('msg nova:  ' + message.msg)
+              console.log('msg: ' + message.msg + ', tipo: ' + message.resp_msg)
               if(message.resp_msg == 'CLI') {
                 this.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
                 this.$root.$emit('atualizar_mensagem', message)
               }
-              if(this.idAtendimentoAtivo !== novosAtendimentos[ramal].id_cli){
+              if(this.idAtendimentoAtivo !== novosAtendimentos[ramal].id_cli) {
                 novosAtendimentos[ramal].alertaMsgNova = true
                 if(!novosAtendimentos[ramal].qtdMsgNova){
                   novosAtendimentos[ramal].qtdMsgNova = 1;
@@ -213,9 +217,6 @@ var app = new Vue({
               //   message.msg = '??'
               // }
               novosAtendimentos[ramal].arrMsg.push(message)// adiciono as mensagens novas no array global
-            } else {
-              novosAtendimentos[ramal].alertaMsgNova = false
-              novosAtendimentos[ramal].qtdMsgNova = false
             }
           });
         }

@@ -38,7 +38,7 @@
           <!-- Textarea -->
           <textarea
             v-show="!aparecerPrevia"
-            v-on:keyup.enter="enviarMensagem()"
+            v-on:keydown.enter="enviarMensagem()"
             id="textarea"
             v-model="mensagem"
             placeholder="Digite sua mensagem"
@@ -152,7 +152,6 @@ export default {
       if(this.validaMensagem()){
           if(this.atendimentoAtivo.token_cliente != '' && this.mensagem != '') {
             this.criaObjMensagem()
-
             let data = {"token_cliente": this.atendimentoAtivo.token_cliente,"message": this.mensagem}
             axios_api.put('send-message', data).then(
               response => {

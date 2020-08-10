@@ -71,7 +71,6 @@ export default {
         if(tamanhoScroll && tamanhoCorpoMensagem){
           if(tamanhoScroll > tamanhoCorpoMensagem){
             corpoMensagens.scrollTo(0, corpoMensagens.scrollHeight )
-    
             this.setHabilitaRolagem(false)
           }
         }
