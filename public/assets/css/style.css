@@ -9274,7 +9274,8 @@ body {
           padding: 0;
           color: #FFF; }
           .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container .chat-opcoes-titulo-container--lista li:nth-child(1) {
-            font-size: 1rem; }
+            font-size: 1rem;
+            font-weight: 600; }
       .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container .chat-opcoes-titulo-container--logo {
         position: absolute;
         right: 10px; }
