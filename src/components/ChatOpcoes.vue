@@ -6,8 +6,12 @@
             <p>{{ formataSigla(atendimentoAtivo.nome_usu[0], 'upper') }}</p>
           </div>
           <ul class="chat-opcoes-titulo-container--lista">
+<<<<<<< HEAD
             <li :title="atendimentoAtivo.nome_usu">{{ atendimentoAtivo.nome_usu }} ( {{ atendimentoAtivo.login_usu }} )</li>
             <!-- <li :title="atendimentoAtivo.id_cli">ID: </li> -->
+=======
+            <li :title="atendimentoAtivo.nome_usu">{{ atendimentoAtivo.nome_usu }} ({{ atendimentoAtivo.login_usu }})</li>
+>>>>>>> b893789484fede3943e532b558dccd69327c985b
             <li :title="atendimentoAtivo.desc_grupo">{{ atendimentoAtivo.desc_grupo }}</li>
           </ul>
           <div class="chat-opcoes-titulo-container--logo">

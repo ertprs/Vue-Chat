@@ -46,6 +46,7 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
         margin-left: $tamanhoEmoji;
         width: $tamanhoTextarea;
         resize: none;
+        max-height: ($altura * 4);
         height: $altura;
         font-size: .9rem;
         padding-left: 15px;
