@@ -18,22 +18,6 @@
           <div id="emoji-picker-container" v-show="!aparecerPrevia">
             <!-- Esse buga ao enviar -->
             &#128540;
-            <!--
-              Plugin 
-              <twemoji-picker
-              :emojiData="emojiDataAll"
-              :emojiGroups="emojiGroups"
-              :skinsSelection="false"
-              :searchEmojisFeat="true"
-              searchEmojiPlaceholder="Pesquisar"
-              searchEmojiNotFound="Sem Resultados"
-              isLoadingLabel="Carregando..."
-              :pickerWidth="300"
-              :recentEmojisFeat="true"
-              :recentEmojisStorage="'local'"
-              :pickerPaddingOffset="0"
-              @emojiUnicodeAdded="adicionarEmoji"
-            ></twemoji-picker> -->
           </div>
           <!-- Textarea -->
           <textarea
@@ -197,12 +181,12 @@ export default {
 
     },
     criaObjMensagem(objMessage){
+
       const hora = this.formataHoraAtual()
       let objMensagem = {}
       let msg = this.mensagem
 
       if(!objMessage){
-
         objMensagem = {
           autor: 'Operador', // Operador, Cliente
           origem: 'principal', // principal e outros
