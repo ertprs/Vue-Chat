@@ -199,6 +199,7 @@ var app = new Vue({
         if(cliente.arrMsg.length > 0) {
           cliente.arrMsg.map((message)=>{ //mensagens novas
             if(!seqs.includes(message.seq)) {
+              console.log('seq: ' + message.seq +   ' msg: ' + message.msg + ', tipo: ' + message.resp_msg)
               if(this.idAtendimentoAtivo !== novosAtendimentos[ramal].id_cli) {
                 novosAtendimentos[ramal].alertaMsgNova = true
                 if(!novosAtendimentos[ramal].qtdMsgNova){
@@ -208,6 +209,7 @@ var app = new Vue({
                 }
               } else {
                 if(message.resp_msg == 'CLI') {
+                  console.log('main')
                   this.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
                   this.$root.$emit('atualizacao', message)
                 }

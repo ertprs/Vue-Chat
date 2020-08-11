@@ -62,6 +62,7 @@ export default {
             novosAtendimentos[ramal_local] = this.todosAtendimentos[ramal_local]
           }
         }
+        this.$root.$off('atualizar_mensagem', this.criaObjMensagem)
         this.setAtendimentos(novosAtendimentos)
       } else {
         this.$toasted.global.defaultError({msg: 'Selecione um cliente antes de tentar finalizar o atendimento'})

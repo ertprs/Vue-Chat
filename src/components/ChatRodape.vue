@@ -131,8 +131,8 @@ export default {
     'twemoji-picker': TwemojiPicker
   },
   mounted(){
-    this.$root.$on('atualizacao', (objMessage) => {
-      console.log('Passou CHAT RODAPE')
+    this.$root.$on('atualizar_mensagem', (objMessage, event) => {
+      console.log('criaObjMensagem')
       this.criaObjMensagem(objMessage)
     })
   },
@@ -199,7 +199,6 @@ export default {
     criaObjMensagem(objMessage){
 
       const hora = this.formataHoraAtual()
-      
       let objMensagem = {}
       let msg = this.mensagem
 
@@ -223,8 +222,6 @@ export default {
           imgAnexo: ''
         }
       }
-
-
       objMensagem = this.verificaStatusDaMensagem(objMensagem)
       this.setTodasMensagens(objMensagem)
     },
