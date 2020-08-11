@@ -39,7 +39,8 @@
         </div>
       </div>
       <div class="lista-informacoes-container" v-if="atendimentoAtivo.informacoes">
-        <div class="iframe-informacoes" v-if="atendimentoAtivo.url">
+        <div class="iframe-informacoes" v-show="atendimentoAtivo.url">
+        <!-- <div class="iframe-informacoes"> -->
           <iframe :src="atendimentoAtivo.url" frameborder="0"></iframe>
         </div>
         <div class="container-acoes">
@@ -67,6 +68,11 @@ import BotoesAcoes from '../BotoesAcoes'
 export default {
   components: {
     BotoesAcoes
+  },
+  mounted () {
+    // this.$root.$on('mostrarIframe', (idCliente) => {
+    //   alert(idCliente)
+    // })
   },
   methods: {
     formataNome(nome){
