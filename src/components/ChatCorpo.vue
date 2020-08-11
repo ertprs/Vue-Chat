@@ -105,6 +105,13 @@ export default {
       habilitaRolagem: 'getHabilitaRolagem',
       atendimentoAtivo: 'getAtendimentoAtivo'
     })
+  },
+  watch: {
+    todasMensagens(){
+      if(this.todasMensagens){
+        console.log('TodasMensagens: ', this.todasMensagens)
+      }
+    }
   }
 }
 </script>
