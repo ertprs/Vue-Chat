@@ -35,7 +35,8 @@ var app = new Vue({
       tokenManager: 'getTokenManager',
       todosAtendimentos: 'getTodosAtendimentos',
       idAtendimentoAtivo: 'getIdAtendimentoAtivo',
-      tokenJWT: 'getTokenJWT'
+      tokenJWT: 'getTokenJWT',
+      emojis: 'getEmojis'
     })
   },
   mounted() {
@@ -75,6 +76,18 @@ var app = new Vue({
             return
           }
           if (mainData.atendimentos != null && mainData.token_manager != null) {
+
+            // Percorrendo todas mensagens para transformar em emojis
+            for(let atd in mainData.atendimentos){
+              for(let i = 0; i < mainData.atendimentos[atd].arrMsg.length; i++){
+                let regex = ''
+                for(let j = 0; j < this.emojis.length; j++){
+                  regex = new RegExp(this.emojis[j].hexa, 'gi')
+                  mainData.atendimentos[atd].arrMsg[i].msg = mainData.atendimentos[atd].arrMsg[i].msg.replace(regex, this.emojis[j].emoji)
+                }
+              }
+            }
+
             this.setAtendimentos(mainData.atendimentos)
             this.setAgenda(['Maria', 'Joao', 'Joana', 'Frederico'])
             mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('')
@@ -199,6 +212,16 @@ var app = new Vue({
         if(cliente.arrMsg.length > 0) {
           cliente.arrMsg.map((message)=>{ //mensagens novas
             if(!seqs.includes(message.seq)) {
+              
+              // Transformando codigo hexadecimal recebido em emoji
+              let regex = ''
+              for(let i = 0; i < this.emojis.length; i++){
+                regex = new RegExp(this.emojis[i].hexa, 'gi')
+                message.msg = message.msg.replace(regex, this.emojis[i].emoji)
+              }
+
+              novosAtendimentos[ramal].arrMsg.push(message)// adiciono as mensagens novas no array global
+
               console.log('seq: ' + message.seq +   ' msg: ' + message.msg + ', tipo: ' + message.resp_msg)
               if(this.idAtendimentoAtivo !== novosAtendimentos[ramal].id_cli) {
                 novosAtendimentos[ramal].alertaMsgNova = true
@@ -211,14 +234,10 @@ var app = new Vue({
                 if(message.resp_msg == 'CLI') {
                   console.log('main')
                   this.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
-                  this.$root.$emit('atualizacao', message)
+                  this.$root.$emit('atualizar_mensagem', message)
                 }
               }
-              // Emoji teste (retornou '??')
-              // if(message.msg == '&#x1f61c;'){
-              //   message.msg = '??'
-              // }
-              novosAtendimentos[ramal].arrMsg.push(message)// adiciono as mensagens novas no array global
+              
             }
           });
         }
