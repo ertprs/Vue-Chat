@@ -15,9 +15,18 @@
             <img :src="imagemPrevia" v-show="aparecerPrevia && imagemPrevia !== ''" alt="Previa da Imagem Selecionada">
           </div>
           <!-- Emoji -->
-          <div id="emoji-picker-container" v-show="!aparecerPrevia">
-            <!-- Esse buga ao enviar -->
-            &#128540;
+          <div id="emoji-container" v-show="!aparecerPrevia">
+            <div class="lista-emoji" v-if="abrirEmojis">
+              <ul>
+                <li v-for="(objEmoji, indice) in emojis" :key="indice"
+                  v-on:click="adicionarEmoji(objEmoji.emoji)">
+                  {{ objEmoji.emoji }}
+                </li>
+              </ul>
+            </div>
+            <div class="btn-emoji" v-on:click="abrirEmojis = !abrirEmojis">
+              &#128540;
+            </div>
           </div>
           <!-- Textarea -->
           <textarea
@@ -108,7 +117,8 @@ export default {
       qtdInicial: 0,
       abrirOpcoes: false,
       erroFormatoAnexo: false,
-      selecioneAnexo: true
+      selecioneAnexo: true,
+      abrirEmojis: false
     }
   },
   components: {
@@ -128,10 +138,7 @@ export default {
     ...mapMutations(['setTodasMensagens', 'setHabilitaRolagem']),
 
     enviarMensagem(){
-      // if(this.mensagem == '' && !this.mensagem.trim()){
-      //   const textarea = document.querySelector('#textarea')
-      //   this.mensagem = textarea.innerHTML
-      // }
+
       this.mensagem = this.mensagem.replace(/\n$/, '', this.mensagem)
 
       if(this.validaMensagem()){
@@ -140,8 +147,8 @@ export default {
             let data = {"token_cliente": this.atendimentoAtivo.token_cliente,"message": this.mensagem}
             axios_api.put('send-message', data).then(
               response => {
-                this.$root.$emit('rolaChat')
                 this.mensagem = ''
+                this.$root.$emit('rolaChat')
               }
             )
             .catch(
@@ -187,6 +194,13 @@ export default {
       let msg = this.mensagem
 
       if(!objMessage){
+
+        let regex = ''
+        for(let j = 0; j < this.emojis.length; j++){
+          regex = new RegExp(this.emojis[j].emoji, 'gi')
+          this.mensagem = this.mensagem.replace(regex, this.emojis[j].hexa)
+        }
+
         objMensagem = {
           autor: 'Operador', // Operador, Cliente
           origem: 'principal', // principal e outros
@@ -197,6 +211,7 @@ export default {
         }
       }else{
         msg = objMessage.msg
+        
         objMensagem = {
           autor: 'Cliente', // Operador, Cliente
           origem: 'outros', // principal e outros
@@ -343,6 +358,16 @@ export default {
         this.verificaRolagem()
       }
     },
+    abrirEmojis(){
+      if(this.abrirEmojis){
+        this.abrirOpcoes = false
+      }
+    },
+    abrirOpcoes(){
+      if(this.abrirOpcoes){
+        this.abrirEmojis = false
+      }
+    },
     erroFormatoAnexo(){
       if(this.erroFormatoAnexo == false){
         this.txtFormatoInvalido = ''
@@ -365,7 +390,8 @@ export default {
     ...mapGetters({
       atendimentoAtivo: 'getAtendimentoAtivo',
       informacoesAberto: 'getInformacoesAberto',
-      url: 'getURL'
+      url: 'getURL',
+      emojis: 'getEmojis'
     }),
     emojiDataAll() {
       return EmojiAllData;

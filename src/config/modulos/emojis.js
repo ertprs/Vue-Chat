@@ -1,4 +1,3 @@
-// Fazer obj com posicao hexa e emoji
 export default {
   state: {
     emojis: [
