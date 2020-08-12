@@ -109,7 +109,7 @@ export default {
   watch: {
     todasMensagens(){
       if(this.todasMensagens){
-        console.log('TodasMensagens: ', this.todasMensagens)
+        // console.log('TodasMensagens: ', this.todasMensagens)
       }
     }
   }

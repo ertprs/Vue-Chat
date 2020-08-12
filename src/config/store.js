@@ -1,9 +1,9 @@
 import Vue from "vue";
 import Vuex, { Store } from "vuex";
-
 import controleBlocker from './modulos/controleBlocker'
 import tratativaDeCasos from './modulos/tratativaDeCasos'
 import emojis from './modulos/emojis'
+import iframeModulo from './modulos/iframeModulo'
 
 Vue.use(Vuex);
 
@@ -102,5 +102,5 @@ export default new Vuex.Store({
       return state.idAtendimentoAtivo
     }
   },
-  modules: { controleBlocker, tratativaDeCasos, emojis }
+  modules: { controleBlocker, tratativaDeCasos, emojis, iframeModulo }
 });

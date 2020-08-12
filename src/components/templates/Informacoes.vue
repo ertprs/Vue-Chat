@@ -38,21 +38,14 @@
           </div>
         </div>
       </div>
-      <div class="lista-informacoes-container" v-if="atendimentoAtivo.informacoes">
-        <div class="iframe-informacoes" v-show="atendimentoAtivo.url">
+      <div class="lista-informacoes-container">
+        <div class="iframe-informacoes">
         <!-- <div class="iframe-informacoes"> -->
-          <iframe :src="atendimentoAtivo.url" frameborder="0"></iframe>
+          <!-- <iframe :src="atendimentoAtivo.url" frameborder="0"></iframe> -->
+          <IframeTemplate/>
         </div>
         <div class="container-acoes">
           <BotoesAcoes />
-        </div>
-      </div>
-      <div class="lista-informacoes-container-vazio" v-else>
-        <div>
-          <i class="far fa-folder-open"></i>
-          <p>
-            Sem informacoes para mostrar
-          </p>
         </div>
       </div>
     </template>
@@ -64,12 +57,15 @@
 import { mapGetters } from 'vuex'
 
 import BotoesAcoes from '../BotoesAcoes'
+import IframeTemplate from './IframeTemplate'
 
 export default {
   components: {
-    BotoesAcoes
+    BotoesAcoes,
+    IframeTemplate
   },
   mounted () {
+    // alert('mounted')
     // this.$root.$on('mostrarIframe', (idCliente) => {
     //   alert(idCliente)
     // })
@@ -89,16 +85,11 @@ export default {
     },
     formataHorario(horas){
       if(!horas){ return '' }
-
       let date = new Date(0);
-
       date.setMinutes(horas.i)
       date.setSeconds(horas.s)
-      
       let timeString = date.toISOString().substr(11, 8);
-
       timeString = timeString.replace(/\d+:/, horas.h.toString().padStart(2, 0) + ':')
-
       return timeString
     }
   },

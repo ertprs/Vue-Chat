@@ -125,7 +125,8 @@ export default {
       clienteMandouMensagem: "getClienteMandouMensagem",
       todosAtendimentos: "getTodosAtendimentos",
       minhaAgenda: "getAgenda",
-      caso: 'getCaso'
+      caso: 'getCaso',
+      iframesDisponiveis: 'getIframesDisponiveis'
     })
   },
   methods: {
@@ -161,15 +162,14 @@ export default {
       this.setIdAtendimentoAtivo(this.idAtendimentoAtivo)
       this.setMensagensClienteAtivo(atd.id_cli, atd.arrMsg)
       this.exibirInformacoes(atd, indice)
+
     },
     exibirInformacoes: function(atd, indice) {
       atd.informacoes = {}
       atd.informacoes.nome = atd.nome_usu
       atd.id = atd.login_usu
-      atd.url = 'https://www.wikipedia.org/'
-      // atd.url = 'https://linux03/callcenter/bot_param.php?mku=MKUEKqjNF3MhGK0Tuok8xsA6PQJz5a9WdTrEwrGh6uOk72A'
-      // this.$root.$emit('mostrarIframe', atd.id)
-      this.setAtendimentoAtivo(atd);
+      this.$root.$emit('mostrarIframe', atd.id, atd.url)
+      this.setAtendimentoAtivo(atd)
     },
     setMensagensClienteAtivo(id, arrMensagens) {
       this.limparTodasMensagens();

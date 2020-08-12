@@ -189,6 +189,21 @@ var app = new Vue({
         novosAtendimentos[ramal_local] = this.todosAtendimentos[ramal_local]
       }
 
+      // inicio teste adicionando urls
+      var auxCont = 0
+      var listaUrl = [
+        'https://www.wikipedia.org',
+        'https://getbootstrap.com/',
+        'https://www.vuemastery.com/',
+        'https://angular.io/'
+      ]
+      for(let ramal in this.todosAtendimentos) {
+        novosAtendimentos[ramal].url = listaUrl[auxCont]
+        auxCont ++
+      }
+      // final teste adicionando urls
+
+
       for(var ramal_server in atendimentosServer) {
         var temClienteNovo = true
         for(var ramal_local in this.todosAtendimentos) {
