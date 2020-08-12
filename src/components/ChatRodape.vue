@@ -127,7 +127,7 @@ export default {
       this.mensagem += value
     },
 
-    ...mapMutations(['setTodasMensagens', 'setHabilitaRolagem', 'setBlocker']),
+    ...mapMutations(['setTodasMensagens', 'setHabilitaRolagem', 'setBlocker', 'setOrigemBlocker']),
 
     enviarMensagem(){
 
@@ -238,10 +238,12 @@ export default {
       return horaFormatada
     },
     selecionarEmoji(){
+      this.setOrigemBlocker('chat')
       this.abrirEmojis = !this.abrirEmojis
       this.setBlocker(this.abrirEmojis)
     },
     selecionarAnexo(){
+      this.setOrigemBlocker('chat')
       this.abrirOpcoes = !this.abrirOpcoes
       this.setBlocker(this.abrirOpcoes)
     },
