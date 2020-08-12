@@ -7,22 +7,20 @@
 }
 
 .container-principal-informacoes{
-  height: 10%; // *
-  max-height: $alturaMaxTitulos;
-  border-bottom: 1px solid #CCC;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  height: 100%;
   width: 100%;
   position: relative;
-  background-color: darken($cor, 10);
-  color: #FFF;
 }
 
 .informacoes-titulo{
   display: flex;
   align-items: center;
   height: $alturaMaxTitulos;
+  max-height: $alturaMaxTitulos;
+  background-color: darken($cor, 10);
+  border-bottom: 1px solid #CCC;
+  color: #FFF;
+  width: 100%;
   h1{
     font-size: 1.2rem;
     margin: 0;
@@ -33,7 +31,24 @@
   }
 }
 
-.informacoes-container{
+.lista-informacoes-container{
+  height: 90%;
+  .iframe-informacoes{
+    width: 100%;
+    height: 85%;
+    padding: 5px;
+    iframe{
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .container-acoes{
+    width: 100%;
+    height: 15%;
+  }
+}
+
+.informacoes-superiores-container{
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -79,26 +94,5 @@
       width: 100%;
       white-space: nowrap;
     }
-  }
-}
-
-.lista-informacoes-container{
-  margin-top: 15px;
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  .iframe-informacoes{
-    width: 100%;
-    height: 75%;
-    padding: 5px;
-    iframe{
-      width: 100%;
-      height: 100%;
-    }
-  }
-  .container-acoes{
-    width: 100%;
-    height: 25%;
   }
 }

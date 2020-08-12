@@ -25,7 +25,7 @@
               </ul>
             </div>
             <div class="btn-emoji" v-on:click="abrirEmojis = !abrirEmojis">
-              &#128540;
+              <!-- -->
             </div>
           </div>
           <!-- Textarea -->
@@ -92,15 +92,10 @@
 </template>
 <script>
 
-import { mapMutations } from 'vuex'
-import { mapGetters } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
+
 import axios_api from '../services/axios_api'
 import axios from "axios"
-import { TwemojiPicker } from '@kevinfaguiar/vue-twemoji-picker'
-import EmojiAllData from '@kevinfaguiar/vue-twemoji-picker/emoji-data/pt/emoji-all-groups.json';
-import EmojiDataAnimalsNature from '@kevinfaguiar/vue-twemoji-picker/emoji-data/pt/emoji-group-animals-nature.json';
-import EmojiDataFoodDrink from '@kevinfaguiar/vue-twemoji-picker/emoji-data/pt/emoji-group-food-drink.json';
-import EmojiGroups from '@kevinfaguiar/vue-twemoji-picker/emoji-data/emoji-groups.json';
 
 export default {
   data(){
@@ -121,14 +116,12 @@ export default {
       abrirEmojis: false
     }
   },
-  components: {
-    'twemoji-picker': TwemojiPicker
-  },
   mounted(){
     this.$root.$on('atualizar_mensagem', (objMessage, event) => {
       console.log('criaObjMensagem')
       this.criaObjMensagem(objMessage)
-    })
+    }),
+    document.querySelector('.btn-emoji').innerText = String.fromCodePoint(0x1f61c)
   },
   methods: {
     adicionarEmoji(value){
@@ -149,6 +142,8 @@ export default {
               response => {
                 this.mensagem = ''
                 this.$root.$emit('rolaChat')
+                this.abrirEmojis = false
+                this.abrirOpcoes = false
               }
             )
             .catch(
@@ -393,12 +388,6 @@ export default {
       url: 'getURL',
       emojis: 'getEmojis'
     }),
-    emojiDataAll() {
-      return EmojiAllData;
-    },
-    emojiGroups() {
-      return EmojiGroups;
-    }
   }
 }
 </script>

@@ -5,7 +5,6 @@
       v-for="frame in iframesDisponiveis"
       v-bind:id = "'iframe_' + frame.id"
       :key="frame.id"
-      style="width: 100%; height: 100%; background-color: black;"
     >
       <iframe :src="frame.url" frameborder="0"></iframe>
     </div>
