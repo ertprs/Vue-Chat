@@ -1,5 +1,5 @@
 <template>
-  <div blocker v-if="blocker" v-on:click="fecharBlocker()"></div>
+  <div blocker v-if="blocker" v-on:click="fecharBlocker()" :class="{'bg-blocker-padrao' : origemBlocker == 'btn-acoes'}"></div>
 </template>
 
 <script>
@@ -14,7 +14,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      blocker: 'getBlocker'
+      blocker: 'getBlocker',
+      origemBlocker: 'getOrigemBlocker'
     })
   }
 }

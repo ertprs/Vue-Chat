@@ -1,51 +1,69 @@
 <template>
   <div id="informacoes" class="tamanho-ajustavel">
     <template>
-      <div class="container-principal-informacoes">
+      <!-- Título -->
+      <div class="informacoes-titulo" v-if="!atendimentoAtivo.informacoes">
+        <i class="fas fa-info-circle"></i>
+        <h1 title="Informacoes" v-if="!atendimentoAtivo.informacoes"> Informacoes </h1>
+      </div>
+      <!-- Caso haja informacoes -->
+      <div class="container-principal-informacoes" v-if="atendimentoAtivo.informacoes">
         <div class="informacoes-titulo">
           <i class="fas fa-info-circle"></i>
-          <h1 title="Informacoes" v-if="!atendimentoAtivo.informacoes"> Informacoes </h1>
+          <!-- Lista de Informacoes Superiores -->
+          <div class="informacoes-superiores-container">
+            <!-- ID -->
+            <div v-if="atendimentoAtivo.id" class="informacoes-item">
+              <div class="informacoes-item-titulo">
+                <i class="fas fa-phone-alt"></i>
+                <p> Telefone </p>
+              </div>
+              <p> {{ formataTelefone(atendimentoAtivo.id) }} </p>
+            </div>
+            <!-- Repre -->
+            <div v-if="atendimentoAtivo.representante" class="informacoes-item">
+              <div class="informacoes-item-titulo">
+                <i class="fas fa-tag"></i>
+                <p> Representante </p>
+              </div>
+              <p> {{ atendimentoAtivo.representante }} </p>
+            </div>
+            <!-- Tempo Conectado -->
+            <div v-if="atendimentoAtivo.hora_cliente_ini" class="informacoes-item">
+              <div class="informacoes-item-titulo">
+                <i class="fas fa-user-clock"></i>
+                <p> Tempo Conectado </p>
+              </div>
+              <p> {{ formataHorario(atendimentoAtivo.tempo_conectado) }} </p>
+            </div>
+            <!-- Tempo de Fila -->
+            <div v-if="atendimentoAtivo.hora_fila_ini" class="informacoes-item">
+              <div class="informacoes-item-titulo">
+                <i class="fas fa-clock"></i>
+                <p> Tempo de Fila </p>
+              </div>
+              <p> {{ formataHorario(atendimentoAtivo.fila_diff) }} </p>
+            </div>
+          </div>
         </div>
-        <div v-if="atendimentoAtivo.informacoes" class="informacoes-container">
-          <!-- <h1> {{ atendimentoAtivo }} </h1> -->
-          <div v-if="atendimentoAtivo.id" class="informacoes-item">
-            <div class="informacoes-item-titulo">
-              <i class="fas fa-phone-alt"></i>
-              <p> Telefone </p>
-            </div>
-            <p> {{ formataTelefone(atendimentoAtivo.id) }} </p>
+        <!-- Corpo informacoes -->
+        <div class="lista-informacoes-container">
+          <div class="iframe-informacoes">
+            <IframeTemplate v-if="atendimentoAtivo.url" />
           </div>
-          <div v-if="atendimentoAtivo.representante" class="informacoes-item">
-            <div class="informacoes-item-titulo">
-              <i class="fas fa-tag"></i>
-              <p> Representante </p>
-            </div>
-            <p> {{ atendimentoAtivo.representante }} </p>
-          </div>
-          <div v-if="atendimentoAtivo.hora_cliente_ini" class="informacoes-item">
-            <div class="informacoes-item-titulo">
-              <i class="fas fa-user-clock"></i>
-              <p> Tempo Conectado </p>
-            </div>
-            <p> {{ formataHorario(atendimentoAtivo.tempo_conectado) }} </p>
-          </div>
-          <div v-if="atendimentoAtivo.hora_fila_ini" class="informacoes-item">
-            <div class="informacoes-item-titulo">
-              <i class="fas fa-clock"></i>
-              <p> Tempo de Fila </p>
-            </div>
-            <p> {{ formataHorario(atendimentoAtivo.fila_diff) }} </p>
+          <!-- Rodape - Botoes Acoes -->
+          <div class="container-acoes">
+            <BotoesAcoes />
           </div>
         </div>
       </div>
-      <div class="lista-informacoes-container">
-        <div class="iframe-informacoes">
-        <!-- <div class="iframe-informacoes"> -->
-          <!-- <iframe :src="atendimentoAtivo.url" frameborder="0"></iframe> -->
-          <IframeTemplate/>
-        </div>
-        <div class="container-acoes">
-          <BotoesAcoes />
+      <!-- Caso não haja informacoes -->
+      <div class="lista-informacoes-container-vazio" v-else>
+        <div>
+          <i class="far fa-folder-open"></i>
+          <p>
+            Sem informacoes para mostrar
+          </p>
         </div>
       </div>
     </template>
@@ -63,12 +81,6 @@ export default {
   components: {
     BotoesAcoes,
     IframeTemplate
-  },
-  mounted () {
-    // alert('mounted')
-    // this.$root.$on('mostrarIframe', (idCliente) => {
-    //   alert(idCliente)
-    // })
   },
   methods: {
     formataNome(nome){

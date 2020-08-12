@@ -14,7 +14,7 @@
           <span> Encerrar </span>
         </div>
       </div>
-      <Popup v-if="blocker" :titulo='titulo' />
+      <Popup v-if="blocker && titulo && origemBlocker == 'btn-acoes'" :titulo='titulo' />
   </div>
 </template>
 
@@ -36,8 +36,9 @@ export default {
     Popup
   },
   methods: {
-    ...mapMutations(['setBlocker', 'limparAtendimentoAtivo', 'setAtendimentos' ]),
+    ...mapMutations(['setBlocker', 'limparAtendimentoAtivo', 'setAtendimentos', 'setOrigemBlocker']),
     checaBlocker(criar){
+      this.setOrigemBlocker('btn-acoes')
       if(criar){
         this.setBlocker(true)
       }else{
@@ -80,7 +81,7 @@ export default {
       blocker: 'getBlocker',
       todosAtendimentos: 'getTodosAtendimentos',
       idAtendimentoAtivo: 'getIdAtendimentoAtivo',
-
+      origemBlocker: 'getOrigemBlocker'
     })
   }
 }
