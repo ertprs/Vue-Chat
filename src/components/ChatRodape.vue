@@ -16,7 +16,7 @@
           </div>
           <!-- Emoji -->
           <div id="emoji-container" v-show="!aparecerPrevia">
-            <div class="lista-emoji" v-if="abrirEmojis">
+            <div class="lista-emoji" v-if="abrirEmojis" :class="{'z-index-2' : abrirEmojis}">
               <ul>
                 <li v-for="(objEmoji, indice) in emojis" :key="indice"
                   v-on:click="adicionarEmoji(objEmoji.emoji)">
@@ -24,7 +24,7 @@
                 </li>
               </ul>
             </div>
-            <div class="btn-emoji" v-on:click="abrirEmojis = !abrirEmojis">
+            <div class="btn-emoji" v-on:click="selecionarEmoji()" :class="{'z-index-2' : abrirEmojis}">
               <!-- -->
             </div>
           </div>
@@ -47,10 +47,10 @@
           <div class="chat-rodape-botoes-botao botao-enviar-msg" title="Enviar" enviar-msg v-on:click="enviarMensagem()">
             <i class="fas fa-paper-plane"></i>
           </div>
-          <div class="chat-rodape-botoes-botao botao-enviar-anexo" :class="abrirOpcoes ? 'btn-ativo': ''" title="Selecionar Anexo" v-on:click="selecionarAnexo()">
+          <div class="chat-rodape-botoes-botao botao-enviar-anexo" :class="abrirOpcoes ? 'btn-ativo z-index-2': ''" title="Selecionar Anexo" v-on:click="selecionarAnexo()">
             <i class="fas fa-paperclip"></i>
 
-            <div class="chat-rodape-anexo-opcoes" v-if="abrirOpcoes">
+            <div class="chat-rodape-anexo-opcoes" v-if="abrirOpcoes" :class="{'z-index-2' : abrirOpcoes}">
               <div class="imagens" v-on:click="selecionarImagem()" title="Imagem">
                 <i class="fas fa-image"></i>
                 <!-- <span> Imagem </span> -->
@@ -118,7 +118,6 @@ export default {
   },
   mounted(){
     this.$root.$on('atualizar_mensagem', (objMessage, event) => {
-      console.log('criaObjMensagem')
       this.criaObjMensagem(objMessage)
     }),
     document.querySelector('.btn-emoji').innerText = String.fromCodePoint(0x1f61c)
@@ -128,7 +127,7 @@ export default {
       this.mensagem += value
     },
 
-    ...mapMutations(['setTodasMensagens', 'setHabilitaRolagem']),
+    ...mapMutations(['setTodasMensagens', 'setHabilitaRolagem', 'setBlocker']),
 
     enviarMensagem(){
 
@@ -238,8 +237,13 @@ export default {
       const horaFormatada = hora + 'h' + minutos
       return horaFormatada
     },
+    selecionarEmoji(){
+      this.abrirEmojis = !this.abrirEmojis
+      this.setBlocker(this.abrirEmojis)
+    },
     selecionarAnexo(){
       this.abrirOpcoes = !this.abrirOpcoes
+      this.setBlocker(this.abrirOpcoes)
     },
     selecionarImagem(){
       let inputFile = document.querySelector('#file')
@@ -363,6 +367,12 @@ export default {
         this.abrirEmojis = false
       }
     },
+    blocker(){
+      if(!this.blocker){
+        this.abrirOpcoes = false
+        this.abrirEmojis = false
+      }
+    },
     erroFormatoAnexo(){
       if(this.erroFormatoAnexo == false){
         this.txtFormatoInvalido = ''
@@ -386,7 +396,8 @@ export default {
       atendimentoAtivo: 'getAtendimentoAtivo',
       informacoesAberto: 'getInformacoesAberto',
       url: 'getURL',
-      emojis: 'getEmojis'
+      emojis: 'getEmojis',
+      blocker: 'getBlocker'
     }),
   }
 }

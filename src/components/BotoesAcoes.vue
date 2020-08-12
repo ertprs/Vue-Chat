@@ -14,7 +14,7 @@
           <span> Encerrar </span>
         </div>
       </div>
-      <Popup v-if="blocker" :titulo='titulo' />
+      <Popup v-if="blocker && titulo" :titulo='titulo' />
   </div>
 </template>
 

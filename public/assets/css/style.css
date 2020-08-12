@@ -9515,6 +9515,9 @@ body {
           .chat-rodape .chat-rodape-botoes .chat-rodape-botoes-botao .chat-rodape-anexo-opcoes > div.msg-formatada {
             background-color: goldenrod; }
 
+.z-index-2 {
+  z-index: 2; }
+
 #informacoes {
   transition: .5s;
   right: -1px;
