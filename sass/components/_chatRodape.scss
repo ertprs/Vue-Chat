@@ -1,6 +1,8 @@
 $altura: 50px;
 $margin: 10px;
 
+$tamanhoContainerTxt: 70%;
+
 $tamanhoEmoji: 20%;
 $tamanhoTextarea: 100% - $tamanhoEmoji;
 
@@ -16,7 +18,7 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
   }
   .chat-rodape-mensagens{
     height: $altura;
-    width: 75%;
+    width: $tamanhoContainerTxt;
     margin-left: $margin;
     &.anexo-aberto{
       width: 65%;
@@ -136,7 +138,7 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
   }
   .chat-rodape-botoes{
     margin-right: $margin;
-    width: 25%;
+    width: (100% - $tamanhoContainerTxt);
     &.anexo-aberto{
       width: 35%;
     }

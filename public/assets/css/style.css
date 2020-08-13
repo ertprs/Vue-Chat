@@ -9355,7 +9355,7 @@ body {
     margin: 10px 0; }
   .chat-rodape .chat-rodape-mensagens {
     height: 50px;
-    width: 75%;
+    width: 70%;
     margin-left: 10px; }
     .chat-rodape .chat-rodape-mensagens.anexo-aberto {
       width: 65%; }
@@ -9457,7 +9457,7 @@ body {
         bottom: -13px; }
   .chat-rodape .chat-rodape-botoes {
     margin-right: 10px;
-    width: 25%;
+    width: 30%;
     display: flex;
     align-items: center;
     justify-content: center;
