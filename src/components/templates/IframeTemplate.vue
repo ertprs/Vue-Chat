@@ -34,7 +34,7 @@ export default {
           if(!idsIframe.includes(idCliente)) {
             this.setIframesDisponiveis(objIframe)
           } else {
-            console.log(this.iframesDisponiveis)
+            // console.log(this.iframesDisponiveis)
           }
         } else {
           this.setIframesDisponiveis(objIframe)

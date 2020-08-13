@@ -7,12 +7,12 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
 import App from "./App.vue";
 import router from "./router";
-
 import Chat from './components/templates/Chat'
 import store from "./config/store"
 import { mapMutations, mapGetters } from "vuex";
 import axios from "axios"
-import { axiosTokenJWT} from "./services/axios_api"
+import { axiosTokenJWT } from "./services/axios_api"
+import { carregarIframe } from "./services/iframe_service"
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -40,15 +40,6 @@ var app = new Vue({
   },
   mounted() {
     this.buscaAtendimentos()
-    this.$root.$on('buscaAtendimentos', () => {
-      this.buscaAtendimentos()
-    })
-    this.$root.$on('bloqueiaRequest', (objMessage) => {
-      this.bloqueiaRequest()
-    })
-    this.$root.$on('liberaRequest', (objMessage) => {
-      this.liberaRequest()
-    })
   },
   methods: {
     ...mapMutations([
@@ -61,81 +52,81 @@ var app = new Vue({
       "setCaso"
     ]),
     buscaAtendimentos() {
-    axios({
-      method: 'get',
-      url: this.$store.getters.getURL + 'get-atendimento'
-    })
-    .then(response => {
-      axiosTokenJWT(response.headers.authorization)
-      switch(response.status) {
-        case 200:
-          let mainData = response.data
-          if(!mainData) {
-            this.adicionaCaso(200)
-            return
-          }
-          if (mainData.atendimentos != null && mainData.token_manager != null) {
-
-            // Percorrendo todas mensagens para transformar em emojis
-            for(let atd in mainData.atendimentos){
-              for(let i = 0; i < mainData.atendimentos[atd].arrMsg.length; i++){
-                let regex = ''
-                for(let j = 0; j < this.emojis.length; j++){
-                  regex = new RegExp(this.emojis[j].hexa, 'gi')
-                  mainData.atendimentos[atd].arrMsg[i].msg = mainData.atendimentos[atd].arrMsg[i].msg.replace(regex, this.emojis[j].emoji)
+      this.liberaRequest()
+      axios({
+        method: 'get',
+        url: this.$store.getters.getURL + 'get-atendimento'
+      })
+        .then(response => {
+          axiosTokenJWT(response.headers.authorization)
+          switch (response.status) {
+            case 200:
+              var mainData = response.data
+              if (!mainData) {
+                this.adicionaCaso(200)
+                this.reiniciarApp()
+              }
+              if (mainData.atendimentos != null && mainData.token_manager != null) {
+                // Percorrendo todas mensagens para transformar em emojis
+                for (let atd in mainData.atendimentos) {
+                  for (let i = 0; i < mainData.atendimentos[atd].arrMsg.length; i++) {
+                    let regex = ''
+                    for (let j = 0; j < this.emojis.length; j++) {
+                      regex = new RegExp(this.emojis[j].hexa, 'gi')
+                      mainData.atendimentos[atd].arrMsg[i].msg = mainData.atendimentos[atd].arrMsg[i].msg.replace(regex, this.emojis[j].emoji)
+                    }
+                  }
+                }
+                carregarIframe(mainData.atendimentos)
+                this.setAtendimentos(mainData.atendimentos)
+                this.setAgenda(['Maria', 'Joao', 'Joana', 'Frederico'])
+                mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('')
+                mainData.token_manager != null ? this.setTokenManager(mainData.token_manager) : this.setTokenManager('')
+                this.loopAtualizacaoDeAtendimentos()
+              } else {
+                // quando o token e valido mas nao recebemos o atendimento
+                if (mainData.token_manager != null) {
+                  this.adicionaCaso(206)
+                  this.reiniciarApp()
+                } else {
+                  console.log('Erro ao tentar obter dados no servidor')
+                  console.log(mainData)
+                  this.adicionaCaso(200)
+                  this.reiniciarApp()
                 }
               }
-            }
+              break;
 
-            this.setAtendimentos(mainData.atendimentos)
-            this.setAgenda(['Maria', 'Joao', 'Joana', 'Frederico'])
-            mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('')
-            mainData.token_manager != null ? this.setTokenManager(mainData.token_manager) : this.setTokenManager('')
-            this.loopAtualizacaoDeAtendimentos()
-          } else {
-            // quando o token e valido mas nao recebemos o atendimento
-            if(mainData.token_manager != null){
+            case 206:
+              console.log('Status ' + response.status + ' ' + response.statusText)
+              console.log('Aguardando Cliente')
               this.adicionaCaso(206)
-              setTimeout( function() {
-                document.location.reload(true)
-              },TEMPO_ATUALIZACAO)
-            }else{
-              console.log('Erro ao tentar obter dados no servidor')
-              console.log(mainData)
-              this.adicionaCaso(200)
-            }
-          }
-          break;
-        case 206:
-          console.log('Status ' + response.status + ' ' + response.statusText)
-          console.log('Aguardando Cliente')
-          if(response.data.token_manager != null){
-            this.setAgenda(['Maria', 'Joao', 'Joana', 'Frederico'])
-            response.data.token_atd != null ? this.setTokenAtd(response.data.token_atd) : this.setTokenAtd('')
-            response.data.token_manager != null ? this.setTokenManager(response.data.token_manager) : this.setTokenManager('')
-          }
+              this.reiniciarApp()
+              break;
 
-          this.adicionaCaso(206)
-          var self = this
-          setTimeout( function() {
-            // document.location.reload(true);
-            self.buscaAtendimentos()
-          },TEMPO_ATUALIZACAO)
-        break;
-        default:
-          console.log('ERRO STATUS ' + response.status + ' ' + response.statusText)
-          console.log(response)
-          break
-      }
-    })
-    .catch(err => console.log(err))
+            default:
+              console.log('ERRO STATUS ' + response.status + ' ' + response.statusText)
+              console.log(response)
+              this.reiniciarApp()
+              break
+          }
+        })
+        .catch(err => console.log(err))
     },
-    adicionaCaso(caso){
+    reiniciarApp() {
+      var self = this
+      setTimeout(function () {
+        document.location.reload(true);
+        // self.buscaAtendimentos()
+      }, TEMPO_ATUALIZACAO)
+
+    },
+    adicionaCaso(caso) {
       this.setCaso(caso)
     },
     loopAtualizacaoDeAtendimentos(count = 0) {
       setTimeout(async () => {
-        if(this.verificaRequest()) {
+        if (this.verificaRequest()) {
           this.bloqueiaRequest()
           await this.atualizarAtendimentos()
         }
@@ -143,7 +134,7 @@ var app = new Vue({
       }, TEMPO_ATUALIZACAO);
     },
     verificaRequest() {
-      if(status_gerenciador === 0) {
+      if (status_gerenciador === 0) {
         return true
       } else {
         return false
@@ -165,15 +156,15 @@ var app = new Vue({
           let mainData = response.data
           // Quando chega um novo contato, o st_ret não vem, e acaba caindo no ultimo else
           if (mainData.st_ret === 'OK') {
-            this.atualizarClientes(mainData)
             mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('')
             mainData.token_manager != null ? this.setTokenManager(mainData.token_manager) : this.setTokenManager('')
-          } else if(mainData.st_ret === 'AVISO') {
+            this.atualizarClientes(mainData)
+          } else if (mainData.st_ret === 'AVISO') {
             console.log('Nao existe clientes na fila')
             this.buscaAtendimentos()
           } else {
             console.log('ERRO! Status:', response)
-            // this.buscaAtendimentos()
+            this.buscaAtendimentos()
           }
           this.liberaRequest()
         })
@@ -184,33 +175,33 @@ var app = new Vue({
       var atendimentosLocal = this.todosAtendimentos
       var novosAtendimentos = {}
 
-      for(var ramal_local in this.todosAtendimentos) {
+      for (var ramal_local in this.todosAtendimentos) {
         novosAtendimentos[ramal_local] = this.todosAtendimentos[ramal_local]
       }
 
       // inicio teste adicionando urls
-      var auxCont = 0
-      var listaUrl = [
-        'https://www.wikipedia.org',
-        'https://getbootstrap.com/',
-        'https://www.vuemastery.com/',
-        'https://angular.io/'
-      ]
-      for(let ramal in this.todosAtendimentos) {
-        novosAtendimentos[ramal].url = listaUrl[auxCont]
-        auxCont ++
-      }
+      // var auxCont = 0
+      // var listaUrl = [
+      //   'https://www.wikipedia.org',
+      //   'https://getbootstrap.com/',
+      //   'https://www.vuemastery.com/',
+      //   'https://angular.io/'
+      // ]
+      // for(let ramal in this.todosAtendimentos) {
+      //   novosAtendimentos[ramal].url = listaUrl[auxCont]
+      //   auxCont ++
+      // }
       // final teste adicionando urls
 
 
-      for(var ramal_server in atendimentosServer) {
+      for (var ramal_server in atendimentosServer) {
         var temClienteNovo = true
-        for(var ramal_local in this.todosAtendimentos) {
-          if(atendimentosServer[ramal_server].id_cli === atendimentosLocal[ramal_local].id_cli) {
+        for (var ramal_local in this.todosAtendimentos) {
+          if (atendimentosServer[ramal_server].id_cli === atendimentosLocal[ramal_local].id_cli) {
             temClienteNovo = false
           }
         }
-        if(temClienteNovo) {
+        if (temClienteNovo) {
           novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
           novosAtendimentos[ramal_server].novoContato = true
           console.log('cliente novo: ', novosAtendimentos)
@@ -221,37 +212,37 @@ var app = new Vue({
       }
     },
     atualizarMensagens: function (cliente, ramal, novosAtendimentos) {
-      if(novosAtendimentos[ramal].arrMsg.length > 0){ //verifica se o cliente antigo ou novo
+      if (novosAtendimentos[ramal].arrMsg.length > 0) { //verifica se o cliente antigo ou novo
         const seqs = novosAtendimentos[ramal].arrMsg.map(message => (message.seq)); //seq das mensagens antigas
-        if(cliente.arrMsg.length > 0) {
-          cliente.arrMsg.map((message)=>{ //mensagens novas
-            if(!seqs.includes(message.seq)) {
-              
+        if (cliente.arrMsg.length > 0) {
+          cliente.arrMsg.map((message) => { //mensagens novas
+            if (!seqs.includes(message.seq)) {
+
               // Transformando codigo hexadecimal recebido em emoji
               let regex = ''
-              for(let i = 0; i < this.emojis.length; i++){
+              for (let i = 0; i < this.emojis.length; i++) {
                 regex = new RegExp(this.emojis[i].hexa, 'gi')
                 message.msg = message.msg.replace(regex, this.emojis[i].emoji)
               }
 
               novosAtendimentos[ramal].arrMsg.push(message)// adiciono as mensagens novas no array global
 
-              console.log('seq: ' + message.seq +   ' msg: ' + message.msg + ', tipo: ' + message.resp_msg)
-              if(this.idAtendimentoAtivo !== novosAtendimentos[ramal].id_cli) {
+              console.log('seq: ' + message.seq + ' msg: ' + message.msg + ', tipo: ' + message.resp_msg)
+              if (this.idAtendimentoAtivo !== novosAtendimentos[ramal].id_cli) {
                 novosAtendimentos[ramal].alertaMsgNova = true
-                if(!novosAtendimentos[ramal].qtdMsgNova){
+                if (!novosAtendimentos[ramal].qtdMsgNova) {
                   novosAtendimentos[ramal].qtdMsgNova = 1;
                 } else {
                   novosAtendimentos[ramal].qtdMsgNova += 1;
                 }
               } else {
-                if(message.resp_msg == 'CLI') {
+                if (message.resp_msg == 'CLI') {
                   console.log('main')
                   this.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
                   this.$root.$emit('atualizar_mensagem', message)
                 }
               }
-              
+
             }
           });
         }
