@@ -9516,6 +9516,8 @@ body {
   z-index: 2; }
 
 #informacoes {
+  width: 50%;
+  flex: 1;
   transition: .5s; }
 
 .container-principal-informacoes {
