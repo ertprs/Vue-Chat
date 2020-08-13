@@ -9579,6 +9579,8 @@ body {
         white-space: nowrap;
         margin: 0;
         margin-left: 5px; }
+    .informacoes-superiores-container .informacoes-item p {
+      margin-left: 15px; }
 
 .lista-informacoes-container-vazio {
   height: 100%;
