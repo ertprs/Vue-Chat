@@ -9552,6 +9552,7 @@ body {
       height: 100%; }
 
 .container-acoes {
+  height: 11%;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -9677,6 +9678,7 @@ body {
 
 #rodape-botoes-encerramento-container {
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9685,7 +9687,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%; }
+    width: 100%;
+    height: 100%; }
     #rodape-botoes-encerramento-container .rodape-botoes-encerramento .rodape-botoes-botao {
       transition-duration: .3s;
       user-select: none;
