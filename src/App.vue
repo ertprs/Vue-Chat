@@ -22,13 +22,13 @@
     </vue-resizable>
 
     <!-- Informacoes -->
-    <vue-resizable
+    <!-- <vue-resizable
       :minWidth="500"
       :width="widthInformacoes"
       :active="handlers"
-      :fitParent="true">
+      :fitParent="true"> -->
       <Informacoes v-on:click="clickInformacoes($event)"/>
-    </vue-resizable>
+    <!-- </vue-resizable> -->
 
   </div>
 </template>
