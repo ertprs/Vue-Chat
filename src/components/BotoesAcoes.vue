@@ -9,7 +9,7 @@
           <i class="fas fa-undo"></i>
           <span>{{ titulos[1] }}</span>
         </div>
-        <div class="rodape-botoes-botao botao-encerrar" title="Encerrar" v-on:click="encerrarAtendimento()">
+        <div class="rodape-botoes-botao botao-encerrar" title="Encerrar" v-on:click="popupEncerrar()">
           <i class="fas fa-sign-out-alt"></i>
           <span> Encerrar </span>
         </div>
@@ -35,6 +35,11 @@ export default {
   components: {
     Popup
   },
+  mounted(){
+    this.$root.$on('encerrarAtendimento', () => {
+      this.encerrarAtendimento()
+    })
+  },
   methods: {
     ...mapMutations(['setBlocker', 'limparAtendimentoAtivo', 'setAtendimentos', 'setOrigemBlocker']),
     checaBlocker(criar){
@@ -51,6 +56,10 @@ export default {
     },
     retornarForm(){
       this.titulo = 'Retornar'
+      this.checaBlocker(true)
+    },
+    popupEncerrar(){
+      this.titulo = 'Encerrar'
       this.checaBlocker(true)
     },
     encerrarAtendimento() {

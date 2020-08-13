@@ -60,10 +60,6 @@
                 <i class="fas fa-file-alt"></i>
                 <!-- <span> Documento </span> -->
               </div>
-              <div class='msg-formatada' v-on:click="selecionarDoc()" title="Mensagem Formatada">
-                <i class="fas fa-comment"></i>
-                <!-- <span> Mensagem Formatada </span> -->
-              </div>
             </div>
 
             <div class="chat-rodape-botoes-container-anexo d-none">
@@ -71,6 +67,10 @@
             </div>
 
           </div>
+          <div class='chat-rodape-botoes-botao botao-msg-formatada' v-on:click="selecionarDoc()" title="Mensagem Formatada">
+                <i class="fas fa-comment"></i>
+                <!-- <span> Mensagem Formatada </span> -->
+              </div>
         </template>
         <template v-else>
           <div class="chat-rodape-botoes-botao botao-enviar-msg" title="Enviar Anexo" v-on:click="enviarAnexo()">
@@ -272,7 +272,7 @@ export default {
         this.$toasted.global.emConstrucao()
       }
 
-      this.abrirOpcoes = !this.abrirOpcoes
+      // this.abrirOpcoes = !this.abrirOpcoes
     },
     fileUpload(){
       this.arquivo = this.$refs.file.files[0]

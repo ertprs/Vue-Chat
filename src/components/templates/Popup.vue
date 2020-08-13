@@ -42,6 +42,12 @@
           </vSelect>
         </div>
       </template>
+      <template v-else-if="titulo == 'Encerrar'">
+        <ul lista-retornar>
+          <li v-on:click="encerrar()"> Confirmar </li>
+          <li v-on:click="fecharPopup()"> Cancelar </li>
+        </ul>
+      </template>
     </div>
   </div>
 </template>
@@ -233,6 +239,10 @@ export default {
         let agora = ano + '-' + mes + '-' + dia + 'T' + hora + ':' + minutos + ':00'
         return agora
       }
+    },
+    encerrar(){
+      this.$root.$emit('encerrarAtendimento')
+      this.fecharPopup()
     }
   }
 }
