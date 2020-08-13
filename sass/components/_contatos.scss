@@ -5,12 +5,10 @@ $corBoxShadow: rgba(0, 0, 0, 0.5);
 $tamanhoBoxShadow: 5px;
 
 #todos-contatos{
-  width: 20%; 
-  height: 100%;
   transition-duration: 2s;
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   &.fechado{
-    width: 4%!important;
+    width: 20%!important;
   }
   background-color: rgba(100, 100, 100, 0.1);
   > div{
@@ -160,9 +158,6 @@ $tamanhoBoxShadow: 5px;
       }
       &.destaque-novo-contato{
         background-color: #fdffb6!important;
-        // -moz-box-shadow:    inset 0 0 $tamanhoBoxShadow $corBoxShadow;
-        // -webkit-box-shadow: inset 0 0 $tamanhoBoxShadow $corBoxShadow;
-        // box-shadow:         inset 0 0 $tamanhoBoxShadow $corBoxShadow;
         animation-name: blink;
         animation-duration: 800ms;
         animation-direction: alternate;
@@ -244,10 +239,6 @@ $tamanhoBoxShadow: 5px;
       }
       > div.fechado{
         font-size: 1.4rem;
-        // display: flex;
-        // justify-content: center;
-        // align-items: center;
-        // width: 100%;
       }
     }
     h2{
@@ -277,7 +268,7 @@ $tamanhoBoxShadow: 5px;
 }
 
 .lista-contatos-container-vazio{
-  width: 100%;
+  width: 100%!important;
   height: 90%;
   display: flex;
   justify-content: center;

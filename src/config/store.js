@@ -63,7 +63,7 @@ export default new Vuex.Store({
     setTokenManager( state, tokenManager ) {
       state.tokenManager = tokenManager
     },
-    toggleAbaContatos(state, abaContatos){
+    setAbaContatos(state, abaContatos){
       state.abaContatos = abaContatos
     }
   },

@@ -1,6 +1,5 @@
 <template>
-  <div id="chat" :class="abaContatos ? 'chat-aberto' : ''" class="tamanho-ajustavel">
-
+  <div id="chat" class="resizable-content">
     <template v-if="atendimentoAtivo.informacoes">
       <ChatOpcoes />
       <ChatCorpo id="chat-operador" />
@@ -37,8 +36,7 @@ export default {
   computed: {
     ...mapGetters({
       zonaDeTeste: 'getZonaDeTeste',
-      atendimentoAtivo: 'getAtendimentoAtivo',
-      abaContatos: 'getAbaContatos'
+      atendimentoAtivo: 'getAtendimentoAtivo'
     })
   }
 }

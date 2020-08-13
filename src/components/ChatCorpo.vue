@@ -14,17 +14,7 @@
       :anexo="msg.anexo"
       :imgAnexo="msg.imgAnexo"/>
 
-      <!-- MSGs Cliente -->
-      <!-- <div class="mensagem-cliente">
-        <div class="mensagem" id="msg-1-cliente">
-          <b-tooltip target="msg-1-cliente" triggers="hover" placement="right">
-          Enviado por: Cliente
-        </b-tooltip>
-          <p> Mensagem Cliente </p>
-          <span class="horario-envio"> 16h20 </span>
-        </div>
-      </div> -->
-      <div class="btn-rolagem" v-if="habilitaRolagem" v-on:click="rolaChat()">
+      <div class="btn-rolagem" v-show="habilitaRolagem" v-on:click="rolaChat()">
         <i class="fas fa-arrow-circle-down"></i>
       </div>
     </div>
@@ -105,13 +95,6 @@ export default {
       habilitaRolagem: 'getHabilitaRolagem',
       atendimentoAtivo: 'getAtendimentoAtivo'
     })
-  },
-  watch: {
-    todasMensagens(){
-      if(this.todasMensagens){
-        // console.log('TodasMensagens: ', this.todasMensagens)
-      }
-    }
   }
 }
 </script>

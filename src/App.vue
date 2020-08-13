@@ -1,17 +1,44 @@
 <template>
   <div id="app">
     <Blocker />
-    <Contatos />
-    <Chat />
-    <Informacoes v-on:click="clickInformacoes($event)"/>
+    
+    <!-- Contatos -->
+    <vue-resizable
+      :minWidth="60"
+      :width="widthContatos"
+      :maxWidth="275"
+      :active="handlers"
+      @resize:end="resizeContatos">
+      <Contatos />
+    </vue-resizable>
+
+    <!-- Chat -->
+    <vue-resizable
+      :minWidth="350"
+      :maxWidth="500"
+      :width="widthChat"
+      :active="handlers">
+      <Chat />
+    </vue-resizable>
+
+    <!-- Informacoes -->
+    <vue-resizable
+      :minWidth="500"
+      :width="widthInformacoes"
+      :active="handlers"
+      :fitParent="true">
+      <Informacoes v-on:click="clickInformacoes($event)"/>
+    </vue-resizable>
+
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex"
-import { mapGetters } from "vuex"
+
 import axios from 'axios'
-import { mapMutations } from 'vuex'
+import { mapGetters } from "vuex"
+
+import VueResizable from 'vue-resizable'
 import Blocker from './components/templates/Blocker'
 import Contatos from './components/templates/Contatos'
 import Chat from './components/templates/Chat'
@@ -20,6 +47,7 @@ import Teste from './components/templates/Teste'
 
 export default {
   components: {
+    'vue-resizable' : VueResizable,
     Blocker,
     Contatos,
     Chat,
@@ -28,8 +56,27 @@ export default {
   },
   data(){
     return{
-      testeAtivo: false
+      widthContatos: '20%',
+      widthChat: '30%',
+      widthInformacoes: '50%',
+      handlers: ['r']
     }
+  },
+  methods: {
+    resizeContatos(data){
+      let widthContatos = data.width
+      
+      if(widthContatos < 90 && !this.fechado){
+        this.$root.$emit('toggle-contatos')
+      }else if(widthContatos > 90 && this.fechado){
+        this.$root.$emit('toggle-contatos')
+      }
+    }
+  },
+  computed: {
+    ...mapGetters({
+      fechado: "getAbaContatos"
+    })
   }
 }
 

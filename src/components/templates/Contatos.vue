@@ -1,5 +1,5 @@
 <template>
-  <div id="todos-contatos" :class="{'fechado' : fechado, 'aberto' : !fechado}"> <!-- class="tamanho-ajustavel" -->
+  <div id="todos-contatos" class="resizable-content">
     <div class="titulo-contatos">
       <div class="titulo-contatos--icone-container" :class="{'fechado' : fechado}">
         <i class="fas fa-address-book" title="Contatos"></i>
@@ -11,9 +11,9 @@
       </div>
       <div>
       </div>
-      <div v-on:click="toggleContatos()" class="container-flecha" :class="rotate ? 'rotate' : ''">
+      <!-- <div v-on:click="toggleContatos()" class="container-flecha" :class="rotate ? 'rotate' : ''">
         <i class="fas fa-long-arrow-alt-left flecha"></i>
-      </div>
+      </div> -->
     </div>
     <template v-if="objAtendimentos">
       <!-- Caso Aguardando Cliente -->
@@ -106,7 +106,6 @@ import { mapMutations } from "vuex";
 export default {
   data() {
     return {
-      rotate: false,
       fechado: false,
       haContatos: true,
       idAtendimentoAtivo: '',
@@ -119,6 +118,11 @@ export default {
         this.objAtendimentos = Object.values(this.todosAtendimentos)
       }
     }
+  },
+  mounted(){
+    this.$root.$on('toggle-contatos', () => {
+      this.toggleContatos()
+    })
   },
   computed: {
     ...mapGetters({
@@ -141,9 +145,9 @@ export default {
       "setAtendimentoAtivo",
       "setTodasMensagens",
       "limparTodasMensagens",
-      "toggleAbaContatos",
       "setIdAtendimentoAtivo",
-      "setCaso"
+      "setCaso",
+      "setAbaContatos"
     ]),
     adicionaCaso(caso){
       this.setCaso(caso)
@@ -223,9 +227,8 @@ export default {
       return horaFormatada;
     },
     toggleContatos() {
-      this.rotate = !this.rotate;
       this.fechado = !this.fechado;
-      this.toggleAbaContatos(this.fechado);
+      this.setAbaContatos(this.fechado)
     },
     obterMensagensDoContatoAtivoPeloId( id ) {
       for( let ramal in this.todosAtendimentos ) {

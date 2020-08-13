@@ -1,20 +1,17 @@
 #chat{
-  width: 30%;
+  height: 100%;
   transition-duration: .5s;
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
-  height: 100%;
   background-color: darken(#eeeeee, 20);
   position: relative;
   .chat-corpo-rodape{
     height: 90%;
-    // box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.5);
   }
   &.chat-aberto{
     width: 46%!important;
   }
   .lista-chat-container-vazio{
-    // width: 100%;
-    height: 90%; // *
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;

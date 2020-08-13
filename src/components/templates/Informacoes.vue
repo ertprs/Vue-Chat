@@ -1,5 +1,5 @@
 <template>
-  <div id="informacoes" class="tamanho-ajustavel">
+  <div id="informacoes" class="resizable-content">
     <template>
       <!-- Título -->
       <div class="informacoes-titulo" v-if="!atendimentoAtivo.informacoes">
