@@ -51,10 +51,10 @@
           <div class="iframe-informacoes">
             <IframeTemplate v-if="atendimentoAtivo.url" />
           </div>
-          <!-- Rodape - Botoes Acoes -->
-          <div class="container-acoes">
-            <BotoesAcoes />
-          </div>
+        </div>
+        <!-- Rodape - Botoes Acoes -->
+        <div class="container-acoes">
+          <BotoesAcoes />
         </div>
       </div>
       <!-- Caso não haja informacoes -->

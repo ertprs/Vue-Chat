@@ -3,10 +3,8 @@
 
     <template v-if="atendimentoAtivo.informacoes">
       <ChatOpcoes />
-      <div class="chat-corpo-rodape">
-        <ChatCorpo id="chat-operador" />
-        <ChatRodape />
-      </div>
+      <ChatCorpo id="chat-operador" />
+      <ChatRodape />
     </template>
     <template v-else>
       <div class="chat-opcoes">

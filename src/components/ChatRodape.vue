@@ -36,6 +36,7 @@
             v-model="mensagem"
             placeholder="Digite sua mensagem"
             no-resize
+            rows="1"
             >
           </textarea>
           <span v-show="!aparecerPrevia" class="caracteres-disponiveis"> ({{ qtdCaracteresDisponiveis - mensagem.length }}) </span>
@@ -120,7 +121,10 @@ export default {
     this.$root.$on('atualizar_mensagem', (objMessage, event) => {
       this.criaObjMensagem(objMessage)
     }),
+
     document.querySelector('.btn-emoji').innerText = String.fromCodePoint(0x1f61c)
+
+    this.initResize()
   },
   methods: {
     adicionarEmoji(value){
@@ -132,14 +136,23 @@ export default {
     enviarMensagem(){
 
       this.mensagem = this.mensagem.replace(/\n$/, '', this.mensagem)
+      let msgAux = this.mensagem
 
       if(this.validaMensagem()){
           if(this.atendimentoAtivo.token_cliente != '' && this.mensagem != '') {
             this.criaObjMensagem()
             let data = {"token_cliente": this.atendimentoAtivo.token_cliente,"message": this.mensagem}
+
+            this.mensagem = ''
+            setTimeout(
+              () => {
+                document.querySelector('#textarea').value = ''
+                this.mensagem = this.mensagem.replace(/\n$/, '', this.mensagem)
+              }, 100
+            )
+
             axios_api.put('send-message', data).then(
               response => {
-                this.mensagem = ''
                 this.$root.$emit('rolaChat')
                 this.abrirEmojis = false
                 this.abrirOpcoes = false
@@ -147,6 +160,7 @@ export default {
             )
             .catch(
               error => {
+                this.mensagem = msgAux
                 console.log('erro send-message: ', error)
                 if(!document.querySelector('.toasted.toasted-primary.error')){
                   this.$toasted.global.defaultError({msg: 'Nao foi possivel enviar a mensagem'})
@@ -349,6 +363,34 @@ export default {
       var informacao = "Testando alguma informacao";
       axios_api.put('send-information', informacao)
     },
+    initResize(){
+      var observe;
+      if (window.attachEvent) {
+        observe = function (element, event, handler) {
+          element.attachEvent('on'+event, handler);
+        };
+      }
+      else {
+        observe = function (element, event, handler) {
+          element.addEventListener(event, handler, false);
+        };
+      }
+
+      var text = document.getElementById('textarea');
+      function resize () {
+          text.style.height = 'auto';
+          text.style.height = text.scrollHeight+'px';
+      }
+      /* 0-timeout to get the already changed text */
+      function delayedResize () {
+          window.setTimeout(resize, 0);
+      }
+      observe(text, 'change',  resize);
+      observe(text, 'cut',     delayedResize);
+      observe(text, 'paste',   delayedResize);
+      observe(text, 'drop',    delayedResize);
+      observe(text, 'keydown', delayedResize);
+    }
   },
   watch: {
     todasMensagens(){

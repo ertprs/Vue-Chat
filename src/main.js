@@ -128,7 +128,10 @@ var app = new Vue({
           break
       }
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+        console.log(err)
+        this.adicionaCaso(200)
+      })
     },
     adicionaCaso(caso){
       this.setCaso(caso)

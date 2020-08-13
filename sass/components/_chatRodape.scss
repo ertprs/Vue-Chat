@@ -81,8 +81,9 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
         margin-left: $tamanhoEmoji;
         width: $tamanhoTextarea;
         resize: none;
-        max-height: ($altura * 4);
+        min-height: $altura;
         height: $altura;
+        max-height: $altura;
         font-size: .9rem;
         padding-left: 15px;
         padding-top: 10px;
@@ -122,12 +123,12 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
         }
       }
       .caracteres-disponiveis{
-        font-size: .5rem;
+        font-size: .6rem;
         z-index: 1;
         color: #444;
         position: absolute;
-        left: 15px;
-        bottom: -10px;
+        right: 0;
+        bottom: -13px;
       }
     }
   }

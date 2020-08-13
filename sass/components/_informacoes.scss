@@ -15,7 +15,7 @@
 .informacoes-titulo{
   display: flex;
   align-items: center;
-  height: $alturaMaxTitulos;
+  height: 10%;
   max-height: $alturaMaxTitulos;
   background-color: darken($cor, 10);
   border-bottom: 1px solid #CCC;
@@ -32,20 +32,23 @@
 }
 
 .lista-informacoes-container{
-  height: 90%;
+  height: 80%;
   .iframe-informacoes{
     width: 100%;
-    height: 85%;
+    height: 100%;
     padding: 5px;
     iframe{
       width: 100%;
       height: 100%;
     }
   }
-  .container-acoes{
-    width: 100%;
-    height: 15%;
-  }
+}
+
+.container-acoes{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .informacoes-superiores-container{
