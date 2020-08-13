@@ -21,6 +21,11 @@ body{
   justify-content: flex-start
 }
 
+.resizable-content{
+  width: 100%;
+  height: 100%;
+}
+
 .toasted.toasted-primary.error{
   svg{
     margin-right: 15px;
@@ -29,11 +34,6 @@ body{
 
 .d-none{
   display: none
-}
-
-.tamanho-ajustavel{
-  resize: horizontal!important;
-  overflow-y: hidden;
 }
 
 *{

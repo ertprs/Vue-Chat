@@ -1,9 +1,5 @@
 #informacoes{
-  // position: relative;
   transition: .5s;
-  right: -1px;
-  height: 100%; // *
-  width: 50%; // *
 }
 
 .container-principal-informacoes{
@@ -79,8 +75,7 @@
 }
 
 .lista-informacoes-container-vazio{
-  // width: 100%;
-  height: 90%; // *
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
