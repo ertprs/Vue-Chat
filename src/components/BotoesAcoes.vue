@@ -63,6 +63,16 @@ export default {
       this.checaBlocker(true)
     },
     encerrarAtendimento() {
+      if(!this.atendimentoAtivo){
+        this.$toasted.global.defaultError({msg: 'Selecione um cliente antes de tentar finalizar o atendimento'})
+        return false
+      }
+
+      if(!this.atendimentoAtivo.informacoes){
+        this.$toasted.global.defaultError({msg: 'Selecione um cliente antes de tentar finalizar o atendimento'})
+        return false
+      }
+
       if( this.atendimentoAtivo.informacoes.nome != null ) {
         this.finalizarAtendimentoNaApi()
         this.limparAtendimentoAtivo()

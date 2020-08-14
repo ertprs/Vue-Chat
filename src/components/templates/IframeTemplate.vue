@@ -42,6 +42,9 @@ export default {
         this.$nextTick(function () {
           if(document.querySelector('.iframes_disponiveis')) {
             var elementos = document.querySelectorAll('.iframes_disponiveis')
+            if(!elementos || !elementos[0]){
+              return false
+            }
             for(let i = 0; i < elementos.length; i++) {
               elementos[i].classList.add('d-none')
             }
