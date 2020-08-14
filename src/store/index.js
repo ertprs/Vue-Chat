@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Vuex, { Store } from "vuex";
+import Vuex from "vuex";
 import controleBlocker from './modulos/controleBlocker'
 import tratativaDeCasos from './modulos/tratativaDeCasos'
 import emojis from './modulos/emojis'
