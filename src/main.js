@@ -8,7 +8,7 @@ import '@fortawesome/fontawesome-free/js/all.js'
 import App from "./App.vue";
 import router from "./router";
 import Chat from './components/templates/Chat'
-import store from "./config/store"
+import store from "./store"
 import { mapMutations, mapGetters } from "vuex";
 import axios from "axios"
 import { axiosTokenJWT } from "./services/axios_api"
