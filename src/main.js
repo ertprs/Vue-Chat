@@ -12,13 +12,14 @@ import store from "./config/store"
 import { mapMutations, mapGetters } from "vuex";
 import axios from "axios"
 import { axiosTokenJWT } from "./services/axios_api"
+import axios_api from './services/axios_api'
 import { carregarIframe } from "./services/iframe_service"
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.config.productionTip = false;
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
-const TEMPO_ATUALIZACAO = 1000
+const TEMPO_ATUALIZACAO = 4000
 
 var app = new Vue({
   router,
@@ -148,7 +149,7 @@ var app = new Vue({
     },
     async atualizarAtendimentos() {
       let urlComToken = 'get-atendimento?token_atd=' + this.tokenAtd + '&token_manager=' + this.tokenManager
-      await axios({
+      await axios_api({
         method: 'get',
         url: this.$store.getters.getURL + urlComToken
       }) // segundo get-atendimendo, agora com parametros
