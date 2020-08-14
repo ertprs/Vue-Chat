@@ -62,20 +62,11 @@ export default {
       this.titulo = 'Encerrar'
       this.checaBlocker(true)
     },
-    encerrarAtendimento() {
-      if(!this.atendimentoAtivo){
-        this.$toasted.global.defaultError({msg: 'Selecione um cliente antes de tentar finalizar o atendimento'})
-        return false
-      }
-
-      if(!this.atendimentoAtivo.informacoes){
-        this.$toasted.global.defaultError({msg: 'Selecione um cliente antes de tentar finalizar o atendimento'})
-        return false
-      }
-
+    async encerrarAtendimento() {
       if( this.atendimentoAtivo.informacoes.nome != null ) {
-        this.finalizarAtendimentoNaApi()
+        await this.finalizarAtendimentoNaApi()
         this.limparAtendimentoAtivo()
+
         var novosAtendimentos = {}
         for(var ramal_local in this.todosAtendimentos) {
           if(this.todosAtendimentos[ramal_local].id_cli !== this.idAtendimentoAtivo) {
@@ -83,7 +74,7 @@ export default {
           }
         }
         this.$root.$off('atualizar_mensagem', this.criaObjMensagem)
-        this.setAtendimentos(novosAtendimentos)
+        this.$store.dispatch('setAtendimentos', novosAtendimentos)
       } else {
         this.$toasted.global.defaultError({msg: 'Selecione um cliente antes de tentar finalizar o atendimento'})
       }

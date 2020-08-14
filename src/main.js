@@ -197,14 +197,12 @@ var app = new Vue({
         'https://www.wikipedia.org',
         'https://getbootstrap.com/',
         'https://www.vuemastery.com/',
-        'https://angular.io/'
+        'https://nodejs.org/en/'
       ]
       for(let ramal in this.todosAtendimentos) {
         novosAtendimentos[ramal].url = listaUrl[auxCont]
         auxCont ++
       }
-      // final teste adicionando urls
-
 
       for(var ramal_server in atendimentosServer) {
         var temClienteNovo = true
