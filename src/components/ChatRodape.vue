@@ -376,14 +376,37 @@ export default {
         };
       }
 
+      var rodapeMsg = document.querySelector('.chat-rodape-mensagens')
+      var containerText = document.querySelector('.chat-rodape-textarea')
       var text = document.getElementById('textarea');
+      var emojisContainer = document.getElementById('emoji-container')
+      var rodapeBotoes = document.querySelector('.chat-rodape-botoes')
+
+      var chatCorpo = document.getElementById('chat-operador')
+
       function resize () {
-          text.style.height = 'auto';
-          text.style.height = text.scrollHeight+'px';
+
+        text.style.height = 'auto';
+        text.style.height = text.scrollHeight+'px';
+
+        rodapeMsg.style.height = text.scrollHeight+'px'
+
+        containerText.style.height = text.scrollHeight+'px'
+
+        emojisContainer.style.height = text.scrollHeight+'px'
+
+        rodapeBotoes.style.height = text.scrollHeight+'px'
+        
+        if(text.scrollHeight > 50){
+          chatCorpo.style.height = '77%'
+        }else{
+          chatCorpo.style.height = '80%'
+        }
+
       }
-      /* 0-timeout to get the already changed text */
+      /* Timeout para garantir que estamos pegando o texto atualizado */
       function delayedResize () {
-          window.setTimeout(resize, 0);
+        window.setTimeout(resize, 0);
       }
       observe(text, 'change',  resize);
       observe(text, 'cut',     delayedResize);

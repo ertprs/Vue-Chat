@@ -9313,7 +9313,7 @@ body {
       min-height: 80px;
       width: fit-content;
       position: relative;
-      max-width: 65%;
+      max-width: 80%;
       margin-bottom: 10px; }
       #chat-operador .chat-corpo-mensagens .mensagem .check {
         position: absolute;
@@ -9354,19 +9354,24 @@ body {
     width: 100%;
     margin: 10px 0; }
   .chat-rodape .chat-rodape-mensagens {
+    max-height: 70px;
+    min-height: 50px;
     height: 50px;
     width: 70%;
     margin-left: 10px; }
     .chat-rodape .chat-rodape-mensagens.anexo-aberto {
       width: 65%; }
     .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea {
-      max-height: 50px;
+      max-height: 70px;
+      min-height: 50px;
       position: relative; }
       .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea #emoji-container {
         display: flex;
         justify-content: center;
         align-items: center;
         width: 20%;
+        max-height: 70px;
+        min-height: 50px;
         background-color: #FFF;
         position: absolute;
         left: 0;
@@ -9415,7 +9420,7 @@ body {
         resize: none;
         min-height: 50px;
         height: 50px;
-        max-height: 50px;
+        max-height: 70px;
         font-size: .9rem;
         padding-left: 15px;
         padding-top: 10px;
@@ -9458,6 +9463,8 @@ body {
   .chat-rodape .chat-rodape-botoes {
     margin-right: 10px;
     width: 30%;
+    max-height: 70px;
+    min-height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
