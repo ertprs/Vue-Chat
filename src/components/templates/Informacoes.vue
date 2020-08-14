@@ -58,7 +58,7 @@
         </div>
       </div>
       <!-- Caso não haja informacoes -->
-      <div class="lista-informacoes-container-vazio" v-else>
+      <div class="lista-informacoes-container-vazio" v-else-if="!atendimentoAtivo.informacoes || caso == 200 || caso == 206">
         <div>
           <i class="far fa-folder-open"></i>
           <p>
@@ -107,7 +107,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      atendimentoAtivo: 'getAtendimentoAtivo'
+      atendimentoAtivo: 'getAtendimentoAtivo',
+      caso: 'getCaso'
     })
   },
 }

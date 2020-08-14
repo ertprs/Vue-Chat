@@ -5,7 +5,7 @@
       <ChatCorpo id="chat-operador" />
       <ChatRodape />
     </template>
-    <template v-else>
+    <template v-else-if="!atendimentoAtivo.informacoes || caso == 200 || caso == 206">
       <div class="chat-opcoes">
         <div class="chat-opcoes-titulo">
           <h1> <i class="fas fa-comments"></i> Chat </h1>
@@ -36,7 +36,8 @@ export default {
   computed: {
     ...mapGetters({
       zonaDeTeste: 'getZonaDeTeste',
-      atendimentoAtivo: 'getAtendimentoAtivo'
+      atendimentoAtivo: 'getAtendimentoAtivo',
+      caso: 'getCaso'
     })
   }
 }
