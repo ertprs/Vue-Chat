@@ -1,4 +1,4 @@
-import store from "../config/store"
+import store from "../store"
 
 export function carregarIframe(atendimentos) {
     for(let ramal in atendimentos) {
