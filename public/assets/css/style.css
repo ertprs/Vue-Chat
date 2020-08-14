@@ -9363,6 +9363,7 @@ body {
       width: 65%; }
     .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea {
       max-height: 70px;
+      height: 50px;
       min-height: 50px;
       position: relative; }
       .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea #emoji-container {
@@ -9459,7 +9460,7 @@ body {
         color: #444;
         position: absolute;
         right: -30px;
-        bottom: -13px; }
+        bottom: -11px; }
   .chat-rodape .chat-rodape-botoes {
     margin-right: 10px;
     width: 30%;

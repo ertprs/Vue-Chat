@@ -397,7 +397,7 @@ export default {
 
         rodapeBotoes.style.height = text.scrollHeight+'px'
         
-        if(text.scrollHeight > 50){
+        if(text.scrollHeight > 60){
           chatCorpo.style.height = '77%'
         }else{
           chatCorpo.style.height = '80%'

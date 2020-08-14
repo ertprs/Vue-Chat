@@ -28,6 +28,7 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
     }
     .chat-rodape-textarea{
       max-height: $maxAltura;
+      height: $altura;
       min-height: $altura;
       position: relative;
       #emoji-container{
@@ -138,7 +139,7 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
         color: #444;
         position: absolute;
         right: -30px;
-        bottom: -13px;
+        bottom: -11px;
       }
     }
   }
