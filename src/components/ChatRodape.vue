@@ -413,15 +413,13 @@ export default {
 
         rodapeBotoes.style.height = text.scrollHeight+'px'
 
-        if(!this.msgFormatadaAberto){
+        if(chatCorpo.style.height !== '70%'){
           if(text.scrollHeight > 60){
             chatCorpo.style.height = '77%'
           }else{
             chatCorpo.style.height = '80%'
           }
         }
-        
-
       }
       /* Timeout para garantir que estamos pegando o texto atualizado */
       function delayedResize () {
