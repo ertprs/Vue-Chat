@@ -115,7 +115,8 @@ export default {
       abrirOpcoes: false,
       erroFormatoAnexo: false,
       selecioneAnexo: true,
-      abrirEmojis: false
+      abrirEmojis: false,
+      msgFormatadaAberto: false
     }
   },
   mounted(){
@@ -251,8 +252,16 @@ export default {
       return horaFormatada
     },
     selecionarMsgFormatada(){
-      if(!document.querySelector('.toasted.toasted-primary.info')){
-        this.$toasted.global.emConstrucao()
+      // if(!document.querySelector('.toasted.toasted-primary.info')){
+      //   this.$toasted.global.emConstrucao()
+      // }
+
+      this.msgFormatadaAberto = !this.msgFormatadaAberto
+      const chatCorpo = document.querySelector('#chat-operador')
+      if(this.msgFormatadaAberto == true){
+        chatCorpo.style.height = '70%'
+      }else{
+        chatCorpo.style.height = '80%'
       }
     },
     selecionarEmoji(){
@@ -403,12 +412,15 @@ export default {
         emojisContainer.style.height = text.scrollHeight+'px'
 
         rodapeBotoes.style.height = text.scrollHeight+'px'
-        
-        if(text.scrollHeight > 60){
-          chatCorpo.style.height = '77%'
-        }else{
-          chatCorpo.style.height = '80%'
+
+        if(!this.msgFormatadaAberto){
+          if(text.scrollHeight > 60){
+            chatCorpo.style.height = '77%'
+          }else{
+            chatCorpo.style.height = '80%'
+          }
         }
+        
 
       }
       /* Timeout para garantir que estamos pegando o texto atualizado */
