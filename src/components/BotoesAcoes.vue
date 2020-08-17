@@ -64,17 +64,6 @@ export default {
     async encerrarAtendimento() {
       if( this.atendimentoAtivo.informacoes.nome != null ) {
         await this.finalizarAtendimentoNaApi()
-
-        this.$store.dispatch('limparAtendimentoAtivo')
-
-        var novosAtendimentos = {}
-        for(var ramal_local in this.todosAtendimentos) {
-          if(this.todosAtendimentos[ramal_local].id_cli !== this.idAtendimentoAtivo) {
-            novosAtendimentos[ramal_local] = this.todosAtendimentos[ramal_local]
-          }
-        }
-        this.$root.$off('atualizar_mensagem', this.criaObjMensagem)
-        this.$store.dispatch('setAtendimentos', novosAtendimentos)
       } else {
         this.$toasted.global.defaultError({msg: 'Selecione um cliente antes de tentar finalizar o atendimento'})
       }
@@ -82,6 +71,24 @@ export default {
     async finalizarAtendimentoNaApi() {
       let data = { "token_cliente": this.atendimentoAtivo.token_cliente }
       await axios_api.delete('end-atendimento', {data: {...data}})
+        .then(response => {
+          if(response.data.st_ret == 'OK'){
+            this.$store.dispatch('limparAtendimentoAtivo')
+
+            var novosAtendimentos = {}
+            for(var ramal_local in this.todosAtendimentos) {
+              if(this.todosAtendimentos[ramal_local].id_cli !== this.idAtendimentoAtivo) {
+                novosAtendimentos[ramal_local] = this.todosAtendimentos[ramal_local]
+              }
+            }
+            this.$root.$off('atualizar_mensagem', this.criaObjMensagem)
+            this.$store.dispatch('setAtendimentos', novosAtendimentos)
+          }
+        })
+        .catch(error => {
+          console.log('Error end atd: ', error)
+          this.$toasted.global.defaultError({msg: 'Nao foi possivel encerrar o atendimento. Tente novamente'})
+        })
 
     }
   },
