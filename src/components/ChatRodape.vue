@@ -44,49 +44,50 @@
       </div>
       <!-- Outros Botões -->
       <div class="chat-rodape-botoes" :class="aparecerPrevia ? 'anexo-aberto' : ''">
-        <template v-if="!aparecerPrevia">
-          <div class="chat-rodape-botoes-botao botao-enviar-msg" title="Enviar" enviar-msg v-on:click="enviarMensagem()">
+        <!-- Anexo não selecionado -->
+        <div :class="{'d-none' : aparecerPrevia}">
+          <!-- Btn enviar msg -->
+          <div class="chat-rodape-botoes-botao" title="Enviar" v-on:click="enviarMensagem()">
             <i class="fas fa-paper-plane"></i>
           </div>
+          <!-- Btn abrir msg formatada -->
+          <div class='chat-rodape-botoes-botao' title="Mensagem Formatada" v-on:click="selecionarMsgFormatada()">
+            <i class="fas fa-comment"></i>
+            <!-- <span> Mensagem Formatada </span> -->
+          </div>
+          <!-- Btn abrir opcoes -->
           <div class="chat-rodape-botoes-botao botao-enviar-anexo" :class="abrirOpcoes ? 'btn-ativo z-index-2': ''" title="Selecionar Anexo" v-on:click="selecionarAnexo()">
             <i class="fas fa-paperclip"></i>
-
+            <!-- Modal Opcoes -->
             <div class="chat-rodape-anexo-opcoes" v-if="abrirOpcoes" :class="{'z-index-2' : abrirOpcoes}">
+              <!-- Btn selecionar imagem -->
               <div class="imagens" v-on:click="selecionarImagem()" title="Imagem">
                 <i class="fas fa-image"></i>
                 <!-- <span> Imagem </span> -->
               </div>
+              <!-- Btn selecionar documentos -->
               <div class="docs" v-on:click="selecionarDoc()" title="Documento">
                 <i class="fas fa-file-alt"></i>
                 <!-- <span> Documento </span> -->
               </div>
             </div>
-
-            <div class="chat-rodape-botoes-container-anexo d-none">
-              <input type="file" id="file" ref="file" accept="image/*" v-on:change="fileUpload()">
-            </div>
-
           </div>
-          <div class='chat-rodape-botoes-botao botao-msg-formatada' v-on:click="selecionarDoc()" title="Mensagem Formatada">
-                <i class="fas fa-comment"></i>
-                <!-- <span> Mensagem Formatada </span> -->
-              </div>
-        </template>
-        <template v-else>
+          
+        </div>
+        <div :class="{'d-none' : !aparecerPrevia}">
           <div class="chat-rodape-botoes-botao botao-enviar-msg" title="Enviar Anexo" v-on:click="enviarAnexo()">
             <i class="fas fa-paper-plane"></i>
           </div>
           <div class="chat-rodape-botoes-botao botao-enviar-anexo" title="Alterar Anexo" v-on:click="selecionarImagem()">
             <i class="fas fa-paperclip"></i>
-
             <div class="chat-rodape-botoes-container-anexo d-none">
               <input type="file" id="file" ref="file" accept="image/*" v-on:change="fileUpload()">
             </div>
           </div>
           <div class="chat-rodape-botoes-botao botao-excluir-anexo" title="Excluir Anexo" v-on:click="excluirAnexo()">
             <i class="fas fa-times-circle"></i>
-          </div>
-        </template>
+          </div> 
+        </div>
       </div>
     </div>
   </div>
@@ -249,6 +250,11 @@ export default {
       const horaFormatada = hora + 'h' + minutos
       return horaFormatada
     },
+    selecionarMsgFormatada(){
+      if(!document.querySelector('.toasted.toasted-primary.info')){
+        this.$toasted.global.emConstrucao()
+      }
+    },
     selecionarEmoji(){
       this.$store.dispatch('setOrigemBlocker', 'chat')
       this.abrirEmojis = !this.abrirEmojis
@@ -264,13 +270,15 @@ export default {
       inputFile.click()
 
       this.abrirOpcoes = !this.abrirOpcoes
+      this.$store.dispatch('setBlocker', this.abrirOpcoes)
     },
     selecionarDoc(){
       if(!document.querySelector('.toasted.toasted-primary.info')){
         this.$toasted.global.emConstrucao()
       }
 
-      // this.abrirOpcoes = !this.abrirOpcoes
+      this.abrirOpcoes = !this.abrirOpcoes
+      this.$store.dispatch('setBlocker', this.abrirOpcoes)
     },
     fileUpload(){
       this.arquivo = this.$refs.file.files[0]

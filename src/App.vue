@@ -3,19 +3,19 @@
     <Blocker />
     
     <!-- Contatos -->
-    <vue-resizable
+    <!-- <vue-resizable
       :minWidth="60"
       :width="widthContatos"
       :maxWidth="275"
       :active="handlers"
-      @resize:end="resizeContatos">
+      @resize:end="resizeContatos"> -->
       <Contatos />
-    </vue-resizable>
+    <!-- </vue-resizable> -->
 
     <!-- Chat -->
     <vue-resizable
-      :minWidth="350"
-      :maxWidth="500"
+      :minWidth="300"
+      :maxWidth="700"
       :width="widthChat"
       :active="handlers">
       <Chat />

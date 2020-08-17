@@ -69,9 +69,6 @@
         > .autor-mensagem{
           right: 10px;
         }
-        img{
-          max-height: 115px;
-        }
       }
     }
     .mensagem-outros{
@@ -96,9 +93,6 @@
         }
         > .autor-mensagem{
           left: 10px;
-        }
-        img{
-          max-height: 115px;
         }
       }
     }
@@ -155,6 +149,7 @@
       }
       img{
         margin: 10px 0;
+        max-width: 100%;
       }
     }
     .seta{

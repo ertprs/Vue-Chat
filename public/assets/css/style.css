@@ -8843,11 +8843,12 @@ body {
   margin-right: 10px; }
 
 #todos-contatos {
+  width: 20%;
   transition-duration: 2s;
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   background-color: rgba(100, 100, 100, 0.1); }
   #todos-contatos.fechado {
-    width: 20% !important; }
+    width: 4% !important; }
   #todos-contatos > div {
     margin: 0 auto;
     width: 95%; }
@@ -8948,7 +8949,6 @@ body {
           margin: 0;
           padding: 0;
           font-weight: 600;
-          user-select: none;
           text-align: center;
           height: auto;
           width: auto; }
@@ -9160,7 +9160,6 @@ body {
   max-height: 58px;
   border-bottom: 1px solid #CCC; }
   .chat-opcoes .chat-opcoes-titulo {
-    user-select: none;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -9271,8 +9270,6 @@ body {
           transform: rotate(-90deg); }
         #chat-operador .chat-corpo-mensagens .mensagem-principal > .mensagem > .autor-mensagem {
           right: 10px; }
-        #chat-operador .chat-corpo-mensagens .mensagem-principal > .mensagem img {
-          max-height: 115px; }
     #chat-operador .chat-corpo-mensagens .mensagem-outros {
       width: 100%;
       display: flex; }
@@ -9293,8 +9290,6 @@ body {
           display: none; }
         #chat-operador .chat-corpo-mensagens .mensagem-outros > .mensagem > .autor-mensagem {
           left: 10px; }
-        #chat-operador .chat-corpo-mensagens .mensagem-outros > .mensagem img {
-          max-height: 115px; }
     #chat-operador .chat-corpo-mensagens .horario-envio {
       margin-right: 15px;
       font-size: 0.7rem;
@@ -9338,7 +9333,8 @@ body {
         align-items: center;
         overflow: auto; }
       #chat-operador .chat-corpo-mensagens .mensagem img {
-        margin: 10px 0; }
+        margin: 10px 0;
+        max-width: 100%; }
     #chat-operador .chat-corpo-mensagens .seta {
       position: absolute;
       color: #FFF;
@@ -9465,19 +9461,20 @@ body {
     margin-right: 10px;
     width: 30%;
     max-height: 70px;
-    min-height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #CCC;
-    border-radius: 30px;
-    border-left: 0;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    height: 50px;
-    background-color: #FFF; }
+    min-height: 50px; }
     .chat-rodape .chat-rodape-botoes.anexo-aberto {
       width: 35%; }
+    .chat-rodape .chat-rodape-botoes > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #CCC;
+      border-radius: 30px;
+      border-left: 0;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      height: 50px;
+      background-color: #FFF; }
     .chat-rodape .chat-rodape-botoes .chat-rodape-botoes-botao {
       color: #777;
       transition-duration: .5s;

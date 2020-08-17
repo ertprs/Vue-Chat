@@ -14,6 +14,8 @@ import axios from "axios"
 import { axiosTokenJWT } from "./services/axios_api"
 import axios_api from './services/axios_api'
 import { carregarIframe } from "./services/iframe_service"
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
