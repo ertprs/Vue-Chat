@@ -50,7 +50,7 @@
   ],
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
-    "@fortawesome/fontawesome-free": "^5.12.1",
+    "@fortawesome/fontawesome-free": "^5.14.0",
     "@kevinfaguiar/vue-twemoji-picker": "^5.7.4",
     "@vue/cli": "^4.2.3",
     "axios": "^0.19.2",

@@ -1,5 +1,5 @@
 <template>
-  <div id="todos-contatos" class="resizable-content">
+  <div id="todos-contatos" :class="{'fechado' : fechado}"> <!-- class="resizable-content" -->
     <div class="titulo-contatos">
       <div class="titulo-contatos--icone-container" :class="{'fechado' : fechado}">
         <i class="fas fa-address-book" title="Contatos"></i>
@@ -11,9 +11,9 @@
       </div>
       <div>
       </div>
-      <!-- <div v-on:click="toggleContatos()" class="container-flecha" :class="rotate ? 'rotate' : ''">
+      <div v-on:click="toggleContatos()" class="container-flecha" :class="rotate ? 'rotate' : ''">
         <i class="fas fa-long-arrow-alt-left flecha"></i>
-      </div> -->
+      </div>
     </div>
     <template v-if="objAtendimentos">
       <!-- Caso Aguardando Cliente -->
@@ -106,6 +106,7 @@ export default {
   data() {
     return {
       fechado: false,
+      rotate: false,
       haContatos: true,
       idAtendimentoAtivo: '',
       objAtendimentos: []
@@ -117,6 +118,9 @@ export default {
         this.objAtendimentos = Object.values(this.todosAtendimentos)
       }
     }
+  },
+  created(){
+    this.verificaLocalStorage()
   },
   mounted(){
     this.$root.$on('toggle-contatos', () => {
@@ -220,8 +224,18 @@ export default {
       return horaFormatada;
     },
     toggleContatos() {
+      this.rotate = !this.rotate
       this.fechado = !this.fechado;
+
       this.$store.dispatch('setAbaContatos', this.fechado)
+
+      localStorage.setItem('status-contatos', this.fechado)
+    },
+    verificaLocalStorage(){
+      let fechado = localStorage.getItem('status-contatos')
+      if(fechado == "true"){
+        this.toggleContatos()
+      }
     },
     obterMensagensDoContatoAtivoPeloId( id ) {
       for( let ramal in this.todosAtendimentos ) {

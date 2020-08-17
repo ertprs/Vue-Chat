@@ -45,14 +45,10 @@ export default {
         let tamanhoScroll = corpoMensagens.scrollHeight
 
         if(origem == 'novaMensagem'){
-          setTimeout(
-            () => {
-              let corpoMensagens = document.querySelector("#chat-operador > div")
-              if(corpoMensagens){
-                corpoMensagens.scrollTo(0, corpoMensagens.scrollHeight )
-              }
-            }
-          ), 100
+          let corpoMensagens = document.querySelector("#chat-operador > div")
+          if(corpoMensagens){
+            corpoMensagens.scrollTo(0, corpoMensagens.scrollHeight )
+          }
           return
         }
 

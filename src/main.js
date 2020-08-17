@@ -11,9 +11,11 @@ import Chat from './components/templates/Chat'
 import store from "./store"
 import { mapGetters } from "vuex";
 import axios from "axios"
-import { axiosTokenJWT } from "./services/serviceAxios"
-import axios_api from './services/serviceAxios'
-import { carregarIframe } from "./services/serviceIframe"
+import { axiosTokenJWT } from "./services/axios_api"
+import axios_api from './services/axios_api'
+import { carregarIframe } from "./services/iframe_service"
+import '@fortawesome/fontawesome-free/css/all.css'
+import '@fortawesome/fontawesome-free/js/all.js'
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
@@ -55,10 +57,13 @@ var app = new Vue({
             case 200:
               var mainData = response.data
               if (!mainData) {
+                console.log('IF negacao do mainData')
                 this.adicionaCaso(200)
-                this.reiniciarApp()
+                this.buscaAtendimentos()
               }
               if (mainData.atendimentos != null && mainData.token_manager != null) {
+                this.adicionaCaso('')
+
                 // Percorrendo todas mensagens para transformar em emojis
                 for (let atd in mainData.atendimentos) {
                   for (let i = 0; i < mainData.atendimentos[atd].arrMsg.length; i++) {
@@ -83,12 +88,12 @@ var app = new Vue({
                 // quando o token e valido mas nao recebemos o atendimento
                 if (mainData.token_manager != null) {
                   this.adicionaCaso(206)
-                  this.reiniciarApp()
+                  this.buscaAtendimentos()
                 } else {
                   console.log('Erro ao tentar obter dados no servidor')
                   console.log(mainData)
                   this.adicionaCaso(200)
-                  this.reiniciarApp()
+                  this.buscaAtendimentos()
                 }
               }
               break;
@@ -97,23 +102,30 @@ var app = new Vue({
               console.log('Status ' + response.status + ' ' + response.statusText)
               console.log('Aguardando Cliente')
               this.adicionaCaso(206)
-              this.reiniciarApp()
+              setTimeout( () => {
+                this.buscaAtendimentos()
+              }, 1000)
+            
               break;
 
             default:
               console.log('ERRO STATUS ' + response.status + ' ' + response.statusText)
               console.log(response)
+              this.adicionaCaso(200)
               this.reiniciarApp()
               break
           }
         })
-        .catch(err => console.log(err))
+        .catch(err =>{
+          this.adicionaCaso(200)
+          console.log(err)
+          }
+        )
     },
     reiniciarApp() {
       var self = this
       setTimeout(function () {
         document.location.reload(true);
-        // self.buscaAtendimentos()
       }, TEMPO_ATUALIZACAO)
 
     },
@@ -147,11 +159,11 @@ var app = new Vue({
       await axios_api({
         method: 'get',
         url: this.$store.getters.getURL + urlComToken
-      }) // segundo get-atendimendo, agora com parametros
+      }) // segundo get-atendimento, agora com parametros
         .then(response => {
           let mainData = response.data
           // Quando chega um novo contato, o st_ret não vem, e acaba caindo no ultimo else
-          if (mainData.st_ret === 'OK') {
+          if (mainData.st_ret === 'OK' || mainData.atendimentos) {
             mainData.token_atd != null ? this.$store.dispatch('setTokenAtd', mainData.token_atd) : this.$store.dispatch('setTokenAtd', '')
             mainData.token_manager != null ? this.$store.dispatch('setTokenManager', mainData.token_manager) : this.$store.dispatch('setTokenManager', '')
             this.atualizarClientes(mainData)
@@ -174,21 +186,6 @@ var app = new Vue({
       for (var ramal_local in this.todosAtendimentos) {
         novosAtendimentos[ramal_local] = this.todosAtendimentos[ramal_local]
       }
-
-      // inicio teste adicionando urls
-      // var auxCont = 0
-      // var listaUrl = [
-      //   'https://www.wikipedia.org',
-      //   'https://getbootstrap.com/',
-      //   'https://www.vuemastery.com/',
-      //   'https://angular.io/'
-      // ]
-      // for(let ramal in this.todosAtendimentos) {
-      //   novosAtendimentos[ramal].url = listaUrl[auxCont]
-      //   auxCont ++
-      // }
-      // final teste adicionando urls
-
 
       for (var ramal_server in atendimentosServer) {
         var temClienteNovo = true
@@ -234,7 +231,6 @@ var app = new Vue({
                 }
               } else {
                 if (message.resp_msg == 'CLI') {
-                  console.log('main')
                   this.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
                   this.$root.$emit('atualizar_mensagem', message)
                 }
