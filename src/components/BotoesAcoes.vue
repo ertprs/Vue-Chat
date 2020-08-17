@@ -20,9 +20,8 @@
 
 <script>
 import axios from 'axios'
-import axios_api from '../services/axios_api'
+import axios_api from '../services/serviceAxios'
 import Popup from './templates/Popup'
-
 import { mapGetters } from 'vuex'
 
 export default {

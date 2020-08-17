@@ -11,9 +11,9 @@ import Chat from './components/templates/Chat'
 import store from "./store"
 import { mapGetters } from "vuex";
 import axios from "axios"
-import { axiosTokenJWT } from "./services/axios_api"
-import axios_api from './services/axios_api'
-import { carregarIframe } from "./services/iframe_service"
+import { axiosTokenJWT } from "./services/serviceAxios"
+import axios_api from './services/serviceAxios'
+import { carregarIframe } from "./services/serviceIframe"
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)

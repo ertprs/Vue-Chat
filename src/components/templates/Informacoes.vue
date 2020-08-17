@@ -73,7 +73,6 @@
 <script>
 
 import { mapGetters } from 'vuex'
-
 import BotoesAcoes from '../BotoesAcoes'
 import IframeTemplate from './IframeTemplate'
 

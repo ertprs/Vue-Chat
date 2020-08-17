@@ -54,7 +54,7 @@
 
 <script>
 import axios from 'axios'
-import axios_api from '../../services/axios_api'
+import axios_api from '../../services/serviceAxios'
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css'
 
