@@ -146,8 +146,6 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
   .chat-rodape-botoes{
     margin-right: $margin;
     width: (100% - $tamanhoContainerTxt);
-    max-height: $maxAltura;
-    min-height: $altura;
     &.anexo-aberto{
       width: 35%;
     }
@@ -162,6 +160,8 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
       border-bottom-left-radius: 0;
       height: $altura;
       background-color: #FFF;
+      max-height: $maxAltura;
+      min-height: $altura;
     }
     .chat-rodape-botoes-botao{
       color: #777;

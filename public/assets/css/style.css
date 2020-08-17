@@ -9459,9 +9459,7 @@ body {
         bottom: -11px; }
   .chat-rodape .chat-rodape-botoes {
     margin-right: 10px;
-    width: 30%;
-    max-height: 70px;
-    min-height: 50px; }
+    width: 30%; }
     .chat-rodape .chat-rodape-botoes.anexo-aberto {
       width: 35%; }
     .chat-rodape .chat-rodape-botoes > div {
@@ -9474,7 +9472,9 @@ body {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
       height: 50px;
-      background-color: #FFF; }
+      background-color: #FFF;
+      max-height: 70px;
+      min-height: 50px; }
     .chat-rodape .chat-rodape-botoes .chat-rodape-botoes-botao {
       color: #777;
       transition-duration: .5s;

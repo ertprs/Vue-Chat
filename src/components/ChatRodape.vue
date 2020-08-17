@@ -387,7 +387,7 @@ export default {
       var containerText = document.querySelector('.chat-rodape-textarea')
       var text = document.getElementById('textarea');
       var emojisContainer = document.getElementById('emoji-container')
-      var rodapeBotoes = document.querySelector('.chat-rodape-botoes')
+      var rodapeBotoes = document.querySelector('.chat-rodape-botoes > div')
 
       var chatCorpo = document.getElementById('chat-operador')
 
