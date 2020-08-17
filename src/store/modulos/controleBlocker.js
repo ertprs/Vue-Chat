@@ -11,6 +11,14 @@ export default {
       state.origemBlocker = origemBlocker
     }
   },
+  actions: {
+    setBlocker: (context, payload) => {
+      context.commit('setBlocker', payload)
+    },
+    setOrigemBlocker: (context, payload) => {
+      context.commit('setOrigemBlocker', payload)
+    }
+  },
   getters: {
     getBlocker(state){
       return state.blocker

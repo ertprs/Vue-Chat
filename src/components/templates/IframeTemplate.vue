@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   mounted() {
@@ -23,21 +23,18 @@ export default {
   watch: {
   },
   methods: {
-    ...mapMutations(
-      ["setIframesDisponiveis"]
-    ),
     mostraIframe: function(idCliente, urlFrame) {
       if(urlFrame != '') {
         var objIframe = {id: idCliente, url: urlFrame}
         if(this.iframesDisponiveis.length > 0) {
           const idsIframe = this.iframesDisponiveis.map(iframe => (iframe.id))
           if(!idsIframe.includes(idCliente)) {
-            this.setIframesDisponiveis(objIframe)
+            this.$store.dispatch('setIframesDisponiveis', objIframe)
           } else {
             // console.log(this.iframesDisponiveis)
           }
         } else {
-          this.setIframesDisponiveis(objIframe)
+          this.$store.dispatch('setIframesDisponiveis', objIframe)
         }
         this.$nextTick(function () {
           if(document.querySelector('.iframes_disponiveis')) {

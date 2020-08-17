@@ -9,7 +9,7 @@ import App from "./App.vue";
 import router from "./router";
 import Chat from './components/templates/Chat'
 import store from "./store"
-import { mapMutations, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import axios from "axios"
 import { axiosTokenJWT } from "./services/axios_api"
 import axios_api from './services/axios_api'
@@ -27,7 +27,7 @@ var app = new Vue({
   Chat,
   render: h => h(App),
   created: () => {
-    store.commit('setURL', "https://linux03/im/atdHumano/middleware/atd_api.php/")
+    store.dispatch('setURL', "https://linux03/im/atdHumano/middleware/atd_api.php/")
   },
   computed: {
     ...mapGetters({
@@ -43,15 +43,6 @@ var app = new Vue({
     this.buscaAtendimentos()
   },
   methods: {
-    ...mapMutations([
-      "setAtendimentos",
-      "setAgenda",
-      "adicionarMensagem",
-      "adicionarClienteNovo",
-      "setTokenAtd",
-      "setTokenManager",
-      "setCaso"
-    ]),
     buscaAtendimentos() {
       this.liberaRequest()
       axios({
@@ -79,10 +70,14 @@ var app = new Vue({
                   }
                 }
                 carregarIframe(mainData.atendimentos)
-                this.setAtendimentos(mainData.atendimentos)
-                this.setAgenda(['Maria', 'Joao', 'Joana', 'Frederico'])
-                mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('')
-                mainData.token_manager != null ? this.setTokenManager(mainData.token_manager) : this.setTokenManager('')
+
+                this.$store.dispatch('setAtendimentos', mainData.atendimentos)
+
+                const agenda = ['Maria', 'Joao', 'Joana', 'Frederico']
+                this.$store.dispatch('setAgenda', agenda)
+                
+                mainData.token_atd != null ? this.$store.dispatch('setTokenAtd', mainData.token_atd) : this.$store.dispatch('setTokenAtd', '')
+                mainData.token_manager != null ? this.$store.dispatch('setTokenManager', mainData.token_manager) : this.$store.dispatch('setTokenManager', '')
                 this.loopAtualizacaoDeAtendimentos()
               } else {
                 // quando o token e valido mas nao recebemos o atendimento
@@ -123,7 +118,7 @@ var app = new Vue({
 
     },
     adicionaCaso(caso) {
-      this.setCaso(caso)
+      this.$store.dispatch('setCaso', caso)
     },
     loopAtualizacaoDeAtendimentos(count = 0) {
       setTimeout(async () => {
@@ -157,8 +152,8 @@ var app = new Vue({
           let mainData = response.data
           // Quando chega um novo contato, o st_ret não vem, e acaba caindo no ultimo else
           if (mainData.st_ret === 'OK') {
-            mainData.token_atd != null ? this.setTokenAtd(mainData.token_atd) : this.setTokenAtd('')
-            mainData.token_manager != null ? this.setTokenManager(mainData.token_manager) : this.setTokenManager('')
+            mainData.token_atd != null ? this.$store.dispatch('setTokenAtd', mainData.token_atd) : this.$store.dispatch('setTokenAtd', '')
+            mainData.token_manager != null ? this.$store.dispatch('setTokenManager', mainData.token_manager) : this.$store.dispatch('setTokenManager', '')
             this.atualizarClientes(mainData)
           } else if (mainData.st_ret === 'AVISO') {
             console.log('Nao existe clientes na fila')
@@ -206,7 +201,8 @@ var app = new Vue({
           novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
           novosAtendimentos[ramal_server].novoContato = true
           console.log('cliente novo: ', novosAtendimentos)
-          this.setAtendimentos(novosAtendimentos)
+
+          this.$store.dispatch('setAtendimentos', novosAtendimentos)
         } else {
           this.atualizarMensagens(atendimentosServer[ramal_server], ramal_server, novosAtendimentos)
         }
@@ -252,7 +248,8 @@ var app = new Vue({
         novosAtendimentos[ramal].qtdMsgNova = cliente.arrMsg.length;
         novosAtendimentos[ramal].alertaMsgNova = true
       }
-      this.setAtendimentos(novosAtendimentos)
+
+      this.$store.dispatch('setAtendimentos', novosAtendimentos)
     }
   }
 }).$mount("#app");

@@ -101,7 +101,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { mapMutations } from "vuex";
 
 export default {
   data() {
@@ -141,16 +140,8 @@ export default {
         return letra.toLowerCase()
       }
     },
-    ...mapMutations([
-      "setAtendimentoAtivo",
-      "setTodasMensagens",
-      "limparTodasMensagens",
-      "setIdAtendimentoAtivo",
-      "setCaso",
-      "setAbaContatos"
-    ]),
     adicionaCaso(caso){
-      this.setCaso(caso)
+      this.$store.dispatch('setCaso', caso)
     },
     ativarConversa: function(atd, indice) {
       this.$root.$emit('rolaChat')
@@ -163,7 +154,7 @@ export default {
       }
       atd.qtdMsgNova = 0;
       this.idAtendimentoAtivo = atd.id_cli
-      this.setIdAtendimentoAtivo(this.idAtendimentoAtivo)
+      this.$store.dispatch('setIdAtendimentoAtivo', this.idAtendimentoAtivo)
       this.setMensagensClienteAtivo(atd.id_cli, atd.arrMsg)
       this.exibirInformacoes(atd, indice)
 
@@ -173,10 +164,11 @@ export default {
       atd.informacoes.nome = atd.nome_usu
       atd.id = atd.login_usu
       this.$root.$emit('mostrarIframe', atd.id, atd.url)
-      this.setAtendimentoAtivo(atd)
+      this.$store.dispatch('setAtendimentoAtivo', atd)
     },
     setMensagensClienteAtivo(id, arrMensagens) {
-      this.limparTodasMensagens();
+      this.$store.dispatch('limparTodasMensagens')
+      
       for (let i in arrMensagens) {
         if(i != 'st_ret') {
           let mensagem = arrMensagens[i].msg;
@@ -195,7 +187,8 @@ export default {
               break;
           }
           let objMensagem = this.getObjMensagem( autor, origem, mensagem, horario, anexo, imgAnexo );
-          this.setTodasMensagens(objMensagem);
+          
+          this.$store.dispatch('setTodasMensagens', objMensagem)
         }
       }
     },
@@ -228,7 +221,7 @@ export default {
     },
     toggleContatos() {
       this.fechado = !this.fechado;
-      this.setAbaContatos(this.fechado)
+      this.$store.dispatch('setAbaContatos', this.fechado)
     },
     obterMensagensDoContatoAtivoPeloId( id ) {
       for( let ramal in this.todosAtendimentos ) {

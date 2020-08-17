@@ -23,7 +23,7 @@ import axios from 'axios'
 import axios_api from '../services/axios_api'
 import Popup from './templates/Popup'
 
-import {mapGetters,  mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   data(){
@@ -41,13 +41,12 @@ export default {
     })
   },
   methods: {
-    ...mapMutations(['setBlocker', 'limparAtendimentoAtivo', 'setAtendimentos', 'setOrigemBlocker']),
     checaBlocker(criar){
-      this.setOrigemBlocker('btn-acoes')
+      this.$store.dispatch('setOrigemBlocker', 'btn-acoes')
       if(criar){
-        this.setBlocker(true)
+        this.$store.dispatch('setBlocker', true)
       }else{
-        this.setBlocker(false)
+        this.$store.dispatch('setBlocker', false)
       }
     },
     abrirTransferir(){
@@ -65,7 +64,8 @@ export default {
     async encerrarAtendimento() {
       if( this.atendimentoAtivo.informacoes.nome != null ) {
         await this.finalizarAtendimentoNaApi()
-        this.limparAtendimentoAtivo()
+
+        this.$store.dispatch('limparAtendimentoAtivo')
 
         var novosAtendimentos = {}
         for(var ramal_local in this.todosAtendimentos) {

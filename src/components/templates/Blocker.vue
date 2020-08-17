@@ -3,13 +3,12 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   methods: {
-    ...mapMutations(['setBlocker']),
     fecharBlocker(){
-      this.setBlocker(false)
+      this.$store.dispatch('setBlocker', false)
     }
   },
   computed: {

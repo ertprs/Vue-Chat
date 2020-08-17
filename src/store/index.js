@@ -13,28 +13,20 @@ export default new Vuex.Store({
     agenda: [],
     idAtendimentoAtivo: '',
     atendimentoAtivo: {},
-    formularioCliente: false,
     habilitaRolagem: false,
     testeContador: 0,
     todasMensagens: [],
     tokenAtd: '',
     tokenManager: '',
     todosAtendimentos: {},
-    url: '',
-    zonaDeTeste: true
+    url: ''
   },
   mutations: {
-    setFormularioCliente(state, formularioCliente){
-      state.formularioCliente = formularioCliente
-    },
     setTodasMensagens(state, novaMensagem){
       state.todasMensagens.push(novaMensagem)
     },
     limparTodasMensagens(state){
       state.todasMensagens = []
-    },
-    setZonaDeTeste(state, zonaDeTeste){
-      state.zonaDeTeste = zonaDeTeste
     },
     setHabilitaRolagem(state, habilitaRolagem){
       state.habilitaRolagem = habilitaRolagem
@@ -68,8 +60,41 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    setTodasMensagens: (context, payload) => {
+      context.commit('setTodasMensagens', payload)
+    },
+    limparTodasMensagens: context => {
+      context.commit('limparTodasMensagens')
+    },
+    setHabilitaRolagem: (context, payload) => {
+      context.commit('setHabilitaRolagem', payload)
+    },
+    setURL: (context, payload) => {
+      context.commit('setURL', payload)
+    },
+    setAgenda: (context, payload) => {
+      context.commit('setAgenda', payload)
+    },
     setAtendimentos: (context, payload) => {
       context.commit('setAtendimentos', payload)
+    },
+    setIdAtendimentoAtivo: (context, payload) => {
+      context.commit('setIdAtendimentoAtivo', payload)
+    },
+    setAtendimentoAtivo: (context, payload) => {
+      context.commit('setAtendimentoAtivo', payload)
+    },
+    limparAtendimentoAtivo: context => {
+      context.commit('limparAtendimentoAtivo')
+    },
+    setTokenAtd: (context, payload) => {
+      context.commit('setTokenAtd', payload)
+    },
+    setTokenManager: (context, payload) => {
+      context.commit('setTokenManager', payload)
+    },
+    setAbaContatos: (context, payload) => {
+      context.commit('setAbaContatos', payload)
     }
   },
   getters: {
@@ -78,9 +103,6 @@ export default new Vuex.Store({
     },
     getTodasMensagens(state){
       return state.todasMensagens
-    },
-    getZonaDeTeste(state){
-      return state.zonaDeTeste
     },
     getHabilitaRolagem(state){
       return state.habilitaRolagem

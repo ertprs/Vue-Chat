@@ -24,7 +24,6 @@
 <script>
 import Mensagens from './Mensagens'
 import { mapGetters } from 'vuex'
-import { mapMutations } from 'vuex'
 
 export default {
   components: {
@@ -39,7 +38,6 @@ export default {
     })
   },
   methods:{
-    ...mapMutations(['setHabilitaRolagem']),
     rolaChat(origem){
       let corpoMensagens = document.querySelector("#chat-operador > div")
       if(corpoMensagens){
@@ -61,7 +59,8 @@ export default {
         if(tamanhoScroll && tamanhoCorpoMensagem){
           if(tamanhoScroll > tamanhoCorpoMensagem){
             corpoMensagens.scrollTo(0, corpoMensagens.scrollHeight )
-            this.setHabilitaRolagem(false)
+
+            this.$store.dispatch('setHabilitaRolagem', false)
           }
         }
       }
@@ -72,7 +71,8 @@ export default {
       }
     },
     verificaPosicaoBarraRolagem(){
-      this.setHabilitaRolagem(true)
+      this.$store.dispatch('setHabilitaRolagem', true)
+      
       if(this.habilitaRolagem){
         let containerMensagens = document.querySelector("#chat-operador > div")
         if(containerMensagens){
@@ -81,9 +81,9 @@ export default {
           let tamanhoBarra = containerMensagens.scrollHeight
   
           if(posicaoDaBarra == (tamanhoBarra - tamanhoContainer)){
-            this.setHabilitaRolagem(false)
+            this.$store.dispatch('setHabilitaRolagem', false)
           }else if(parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra || parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra + 1 || parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra - 1){
-            this.setHabilitaRolagem(false)
+            this.$store.dispatch('setHabilitaRolagem', false)
           }
         }
       }

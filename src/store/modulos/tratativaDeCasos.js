@@ -7,6 +7,11 @@ export default {
       state.caso = caso
     }
   },
+  actions: {
+    setCaso: (context, payload) => {
+      context.commit('setCaso', payload)
+    }
+  },
   getters: {
     getCaso(state){
       return state.caso

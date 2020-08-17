@@ -93,7 +93,7 @@
 </template>
 <script>
 
-import { mapMutations, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 import axios_api from '../services/axios_api'
 import axios from "axios"
@@ -130,9 +130,6 @@ export default {
     adicionarEmoji(value){
       this.mensagem += value
     },
-
-    ...mapMutations(['setTodasMensagens', 'setHabilitaRolagem', 'setBlocker', 'setOrigemBlocker']),
-
     enviarMensagem(){
 
       this.mensagem = this.mensagem.replace(/\n$/, '', this.mensagem)
@@ -176,7 +173,7 @@ export default {
       let tamanhoScroll = corpoMensagens.scrollHeight
 
       if(tamanhoScroll > tamanhoCorpoMensagem){
-        this.setHabilitaRolagem(true)
+        this.$store.dispatch('setHabilitaRolagem', true)
       }
     },
     validaMensagem(){
@@ -230,7 +227,8 @@ export default {
         }
       }
       objMensagem = this.verificaStatusDaMensagem(objMensagem)
-      this.setTodasMensagens(objMensagem)
+
+      this.$store.dispatch('setTodasMensagens', objMensagem)
     },
     verificaStatusDaMensagem(objMensagem){
       // enviado, recebido, visualizado e ''
@@ -252,14 +250,14 @@ export default {
       return horaFormatada
     },
     selecionarEmoji(){
-      this.setOrigemBlocker('chat')
+      this.$store.dispatch('setOrigemBlocker', 'chat')
       this.abrirEmojis = !this.abrirEmojis
-      this.setBlocker(this.abrirEmojis)
+      this.$store.dispatch('setBlocker', this.abrirEmojis)
     },
     selecionarAnexo(){
-      this.setOrigemBlocker('chat')
+      this.$store.dispatch('setOrigemBlocker', 'chat')
       this.abrirOpcoes = !this.abrirOpcoes
-      this.setBlocker(this.abrirOpcoes)
+      this.$store.dispatch('setBlocker', this.abrirOpcoes)
     },
     selecionarImagem(){
       let inputFile = document.querySelector('#file')
@@ -302,7 +300,8 @@ export default {
     },
     enviarAnexo(){
       if(this.validaAnexo(this.arquivo)){
-        this.setTodasMensagens(this.criaObjAnexo())
+        this.$store.dispatch('setTodasMensagens', this.criaObjAnexo())
+
         this.verificaRolagem()
         this.arquivo = ''
         this.imagemPrevia = ''

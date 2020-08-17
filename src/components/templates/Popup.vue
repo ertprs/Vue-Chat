@@ -58,8 +58,6 @@ import axios_api from '../../services/axios_api'
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css'
 
-import { mapMutations } from 'vuex'
-
 export default {
   components:{
     vSelect,
@@ -90,14 +88,13 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['setBlocker']),
     fecharPopup(event){
       if(event){
         if(event.target === document.querySelector('#popup')){
-          this.setBlocker(false)
+          this.$store.dispatch('setBlocker', false)
         }
       }else{
-        this.setBlocker(false)
+        this.$store.dispatch('setBlocker', false)
       }
     },
     getGrupos(){
