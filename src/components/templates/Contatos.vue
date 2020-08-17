@@ -119,6 +119,9 @@ export default {
       }
     }
   },
+  created(){
+    this.verificaLocalStorage()
+  },
   mounted(){
     this.$root.$on('toggle-contatos', () => {
       this.toggleContatos()
@@ -223,7 +226,16 @@ export default {
     toggleContatos() {
       this.rotate = !this.rotate
       this.fechado = !this.fechado;
+
       this.$store.dispatch('setAbaContatos', this.fechado)
+
+      localStorage.setItem('status-contatos', this.fechado)
+    },
+    verificaLocalStorage(){
+      let fechado = localStorage.getItem('status-contatos')
+      if(fechado == "true"){
+        this.toggleContatos()
+      }
     },
     obterMensagensDoContatoAtivoPeloId( id ) {
       for( let ramal in this.todosAtendimentos ) {

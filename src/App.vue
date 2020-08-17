@@ -17,7 +17,8 @@
       :minWidth="300"
       :maxWidth="700"
       :width="widthChat"
-      :active="handlers">
+      :active="handlers"
+      @resize:end="insereWidthChatNoLocalStorage">
       <Chat />
     </vue-resizable>
 
@@ -71,7 +72,27 @@ export default {
       }else if(widthContatos > 90 && this.fechado){
         this.$root.$emit('toggle-contatos')
       }
+    },
+    insereWidthChatNoLocalStorage(data){
+      let widthAtual = data.width+'px'
+      localStorage.setItem('largura-chat', widthAtual)
+    },
+    verificaLocalStorage(){
+      let width = localStorage.getItem('largura-chat')
+      if(width){
+        this.widthChat = width 
+        this.alteraWidthChat(width)
+      }
+    },
+    alteraWidthChat(widthNovo){
+      const chat = document.querySelector('#chat')
+      if(chat){
+        chat.style.width = widthNovo
+      }
     }
+  },
+  created(){
+    this.verificaLocalStorage()
   },
   computed: {
     ...mapGetters({
