@@ -327,10 +327,15 @@ export default {
       }
 
       this.mensagensFormatadas = objMsgFormatada
-      // console.log('mensagensFormatadas: ', this.mensagensFormatadas)
+      console.log('mensagensFormatadas: ', this.mensagensFormatadas)
     },
     recebeValorMSGFormatada(valor){
-      console.log('Valor selecionado: ', valor)
+      obterMsgFormatada(valor)
+        .then((data) => {
+          this.exibirMsgFormatada(data)
+        })
+        .catch((err) => console.log(err));
+      // console.log('Valor selecionado: ', valor)
     },
     selecionarEmoji() {
       this.$store.dispatch("setOrigemBlocker", "chat");
