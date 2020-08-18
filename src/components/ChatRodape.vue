@@ -125,12 +125,37 @@
         </div>
       </div>
     </div>
+    <!-- Container mensagens formatadas-->
+    <transition name="fade">
+      <div class="chat-rodape-msg-formatada" v-show="msgFormatadaAberto">
+        <select name="select-msg-formatada" id="select-msg-formatada" v-model="chaveAtual" v-on:change="recebeValorMSGFormatada(chaveAtual)">
+          <option disabled value="">Selecione</option>
+          <option v-for="(valor, chave) in mensagensFormatadas" :key="chave+valor"
+            :value="chave">
+            {{ valor }}
+          </option>
+        </select>
+      </div>
+    </transition>
   </div>
 </template>
+
+<style scoped>
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active em versões anteriores a 2.1.8 */ {
+    opacity: 0;
+  }
+</style>
+
 <script>
+
 import { mapGetters } from "vuex";
+
 import { obterMsgFormatada } from "../services/serviceMsgFormatada";
 import axios_api from "../services/serviceAxios";
+
 import axios from "axios";
 
 export default {
@@ -151,6 +176,8 @@ export default {
       selecioneAnexo: true,
       abrirEmojis: false,
       msgFormatadaAberto: false,
+      mensagensFormatadas: [],
+      chaveAtual: ''
     };
   },
   mounted() {
@@ -284,9 +311,6 @@ export default {
       return horaFormatada;
     },
     selecionarMsgFormatada() {
-      // if(!document.querySelector('.toasted.toasted-primary.info')){
-      //   this.$toasted.global.emConstrucao()
-      // }
       obterMsgFormatada("")
         .then((data) => {
           this.exibirMsgFormatada(data)
@@ -294,7 +318,6 @@ export default {
         .catch((err) => console.log(err));
     },
     exibirMsgFormatada(objMsgFormatada) {
-      console.log(objMsgFormatada)
       this.msgFormatadaAberto = !this.msgFormatadaAberto;
       const chatCorpo = document.querySelector("#chat-operador");
       if (this.msgFormatadaAberto == true) {
@@ -302,6 +325,12 @@ export default {
       } else {
         chatCorpo.style.height = "80%";
       }
+
+      this.mensagensFormatadas = objMsgFormatada
+      // console.log('mensagensFormatadas: ', this.mensagensFormatadas)
+    },
+    recebeValorMSGFormatada(valor){
+      console.log('Valor selecionado: ', valor)
     },
     selecionarEmoji() {
       this.$store.dispatch("setOrigemBlocker", "chat");
