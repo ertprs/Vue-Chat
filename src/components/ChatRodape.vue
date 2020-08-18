@@ -96,7 +96,7 @@
 
 import { mapGetters } from 'vuex'
 
-import axios_api from '../services/axios_api'
+import axios_api from '../services/serviceAxios'
 import axios from "axios"
 
 export default {
