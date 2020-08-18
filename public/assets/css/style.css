@@ -9305,7 +9305,7 @@ body {
       padding: 15px 15px 5px 15px;
       border-radius: 10px;
       min-width: 150px;
-      min-height: 80px;
+      min-height: 60px;
       width: fit-content;
       position: relative;
       max-width: 80%;
@@ -9736,7 +9736,9 @@ body {
           color: #BE1E2A; }
 
 .container-iframes {
-  height: 100%; }
+  height: 100%;
+  max-height: 100%;
+  overflow-y: auto; }
   .container-iframes > div {
     height: 100%;
     width: 100%;

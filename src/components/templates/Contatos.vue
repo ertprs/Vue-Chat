@@ -230,7 +230,7 @@ export default {
       const todosContatos = document.querySelector('#todos-contatos')
       if(todosContatos){
         const containerTodosContatos = todosContatos.parentElement
-        containerTodosContatos.style.transitionDuration = '500ms'
+        containerTodosContatos.style.transitionDuration = '750ms'
         if(!this.fechado){
           containerTodosContatos.style.width = '20%'
         }else{
