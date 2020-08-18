@@ -75,12 +75,9 @@ var app = new Vue({
                   }
                 }
                 carregarIframe(mainData.atendimentos)
-
                 this.$store.dispatch('setAtendimentos', mainData.atendimentos)
-
                 const agenda = ['Maria', 'Joao', 'Joana', 'Frederico']
                 this.$store.dispatch('setAgenda', agenda)
-                
                 mainData.token_atd != null ? this.$store.dispatch('setTokenAtd', mainData.token_atd) : this.$store.dispatch('setTokenAtd', '')
                 mainData.token_manager != null ? this.$store.dispatch('setTokenManager', mainData.token_manager) : this.$store.dispatch('setTokenManager', '')
                 this.loopAtualizacaoDeAtendimentos()
@@ -105,7 +102,6 @@ var app = new Vue({
               setTimeout( () => {
                 this.buscaAtendimentos()
               }, 1000)
-            
               break;
 
             default:
