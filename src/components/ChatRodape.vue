@@ -311,7 +311,10 @@ export default {
       return horaFormatada;
     },
     selecionarMsgFormatada() {
-      obterMsgFormatada("")
+      let valor = ''
+      let tokenCliente = this.atendimentoAtivo.token_cliente
+
+      obterMsgFormatada(valor, tokenCliente)
         .then((data) => {
           this.exibirMsgFormatada(data)
         })
@@ -327,10 +330,11 @@ export default {
       }
 
       this.mensagensFormatadas = objMsgFormatada
-      console.log('mensagensFormatadas: ', this.mensagensFormatadas)
+      console.log(this.mensagensFormatadas)
     },
     recebeValorMSGFormatada(valor){
-      obterMsgFormatada(valor)
+      let tokenCliente = this.atendimentoAtivo.token_cliente
+      obterMsgFormatada(valor, tokenCliente)
         .then((data) => {
           this.exibirMsgFormatada(data)
         })
