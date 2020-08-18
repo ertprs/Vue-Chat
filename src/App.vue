@@ -3,14 +3,14 @@
     <Blocker />
     
     <!-- Contatos -->
-    <!-- <vue-resizable
+    <vue-resizable
       :minWidth="60"
       :width="widthContatos"
       :maxWidth="275"
       :active="handlers"
-      @resize:end="resizeContatos"> -->
+      @resize:end="resizeContatos">
       <Contatos />
-    <!-- </vue-resizable> -->
+    </vue-resizable>
 
     <!-- Chat -->
     <vue-resizable
@@ -78,6 +78,11 @@ export default {
       localStorage.setItem('largura-chat', widthAtual)
     },
     verificaLocalStorage(){
+      let fechado = localStorage.getItem('status-contatos')
+      if(fechado == "true"){
+        this.widthContatos = "60px"
+      }
+
       let width = localStorage.getItem('largura-chat')
       if(width){
         this.widthChat = width 
