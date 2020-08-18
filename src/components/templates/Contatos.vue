@@ -1,5 +1,5 @@
 <template>
-  <div id="todos-contatos" :class="{'fechado' : fechado}"> <!-- class="resizable-content" -->
+  <div id="todos-contatos" :class="{'fechado' : fechado}" class="resizable-content">
     <div class="titulo-contatos">
       <div class="titulo-contatos--icone-container" :class="{'fechado' : fechado}">
         <i class="fas fa-address-book" title="Contatos"></i>
@@ -226,6 +226,17 @@ export default {
     toggleContatos() {
       this.rotate = !this.rotate
       this.fechado = !this.fechado;
+
+      const todosContatos = document.querySelector('#todos-contatos')
+      if(todosContatos){
+        const containerTodosContatos = todosContatos.parentElement
+        containerTodosContatos.style.transitionDuration = '500ms'
+        if(!this.fechado){
+          containerTodosContatos.style.width = '20%'
+        }else{
+          containerTodosContatos.style.width = '60px'
+        }
+      }
 
       this.$store.dispatch('setAbaContatos', this.fechado)
 
