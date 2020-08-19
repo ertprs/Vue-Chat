@@ -18,6 +18,7 @@
       :maxWidth="700"
       :width="widthChat"
       :active="handlers"
+      @resize:start="adicionaBlocker"
       @resize:end="insereWidthChatNoLocalStorage">
       <Chat />
     </vue-resizable>
@@ -76,6 +77,8 @@ export default {
     insereWidthChatNoLocalStorage(data){
       let widthAtual = data.width+'px'
       localStorage.setItem('largura-chat', widthAtual)
+
+      this.$store.dispatch('setBlocker', false)
     },
     verificaLocalStorage(){
       let fechado = localStorage.getItem('status-contatos')
@@ -94,6 +97,9 @@ export default {
       if(chat){
         chat.style.width = widthNovo
       }
+    },
+    adicionaBlocker(){
+      this.$store.dispatch('setBlocker', true)
     }
   },
   created(){
