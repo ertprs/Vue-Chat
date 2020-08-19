@@ -72,8 +72,8 @@ export default {
       await axios_api.delete('end-atendimento', {data: {...data}})
         .then(response => {
           if(response.data.st_ret == 'OK'){
-            this.$store.dispatch('limparAtendimentoAtivo')
 
+            this.$store.dispatch('limparAtendimentoAtivo')
             var novosAtendimentos = {}
             for(var ramal_local in this.todosAtendimentos) {
               if(this.todosAtendimentos[ramal_local].id_cli !== this.idAtendimentoAtivo) {
@@ -82,10 +82,13 @@ export default {
             }
             this.$root.$off('atualizar_mensagem', this.criaObjMensagem)
             this.$store.dispatch('setAtendimentos', novosAtendimentos)
+
           }
         })
         .catch(error => {
           console.log('Error end atd: ', error)
+          // Força sumir, porem caso tenha ctt novo, some a classe de destaque
+          this.$root.$emit('busca-atendimentos')
           // this.$toasted.global.defaultError({msg: 'Nao foi possivel encerrar o atendimento. Tente novamente'})
         })
 

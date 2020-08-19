@@ -43,6 +43,10 @@ var app = new Vue({
   },
   mounted() {
     this.buscaAtendimentos()
+
+    this.$root.$on('busca-atendimentos', () => {
+      this.buscaAtendimentos()
+    })
   },
   methods: {
     buscaAtendimentos() {
