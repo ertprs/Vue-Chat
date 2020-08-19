@@ -397,9 +397,11 @@ export default {
       if(valor.length == 1){
         if(this.mensagensFormatadas_02.length){
           this.mensagensFormatadas_02 = []
+          this.chaveAtual_02 = ''
         }
         if(this.mensagensFormatadas_03.length){
           this.mensagensFormatadas_03 = []
+          this.chaveAtual_03 = ''
         }
       }
       

@@ -9522,7 +9522,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 10px; }
+    margin: 15px auto; }
     .chat-rodape .chat-rodape-msg-formatada .select-msg-formatada {
       margin-bottom: 5px;
       padding: 4px 8px;
