@@ -168,7 +168,20 @@ var app = new Vue({
             this.buscaAtendimentos()
           } else {
             console.log('ERRO! Status:', response)
-            this.buscaAtendimentos()
+            if(response.data){
+              for(let atd in response.data){
+                if(typeof response.data[atd] == 'object'){
+                  if(response.data[atd].arrMsg > 0){
+                    response.data[atd].novoContato = true
+                    let novoAtd = new Object(),
+                    chave = atd
+                    novoAtd[chave] = response.data[atd]
+                  }
+                }
+              }
+            }else{
+              this.buscaAtendimentos()
+            }
           }
           this.liberaRequest()
         })

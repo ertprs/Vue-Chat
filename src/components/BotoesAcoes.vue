@@ -86,7 +86,7 @@ export default {
         })
         .catch(error => {
           console.log('Error end atd: ', error)
-          this.$toasted.global.defaultError({msg: 'Nao foi possivel encerrar o atendimento. Tente novamente'})
+          // this.$toasted.global.defaultError({msg: 'Nao foi possivel encerrar o atendimento. Tente novamente'})
         })
 
     }
