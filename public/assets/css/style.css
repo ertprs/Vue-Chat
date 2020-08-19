@@ -9517,17 +9517,22 @@ body {
             background-color: #7986cb;
             margin-right: 5px; }
   .chat-rodape .chat-rodape-msg-formatada {
-    width: 100%;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin: 10px; }
-    .chat-rodape .chat-rodape-msg-formatada #select-msg-formatada {
-      padding: 8px 12px;
+    .chat-rodape .chat-rodape-msg-formatada .select-msg-formatada {
+      margin-bottom: 5px;
+      padding: 4px 8px;
       color: #333;
       background-color: #EEE;
       border: 1px solid #DDD;
       cursor: pointer;
       border-radius: 5px;
       transition-duration: 200ms;
-      min-width: 120px;
+      width: 100%;
       appearance: none;
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -9536,10 +9541,12 @@ body {
       background-position-x: 100%;
       background-position-y: 10px;
       background-size: 20px; }
-      .chat-rodape .chat-rodape-msg-formatada #select-msg-formatada:focus, .chat-rodape .chat-rodape-msg-formatada #select-msg-formatada:hover {
+      .chat-rodape .chat-rodape-msg-formatada .select-msg-formatada:last-child {
+        margin-bottom: 0; }
+      .chat-rodape .chat-rodape-msg-formatada .select-msg-formatada:focus, .chat-rodape .chat-rodape-msg-formatada .select-msg-formatada:hover {
         outline: none;
         border: 1px solid #999; }
-      .chat-rodape .chat-rodape-msg-formatada #select-msg-formatada option {
+      .chat-rodape .chat-rodape-msg-formatada .select-msg-formatada option {
         background-color: #FFF; }
 
 .z-index-2 {

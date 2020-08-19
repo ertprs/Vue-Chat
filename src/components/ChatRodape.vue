@@ -128,13 +128,48 @@
     <!-- Container mensagens formatadas-->
     <transition name="fade">
       <div class="chat-rodape-msg-formatada" v-show="msgFormatadaAberto">
-        <select name="select-msg-formatada" id="select-msg-formatada" v-model="chaveAtual" v-on:change="recebeValorMSGFormatada(chaveAtual)">
+        <!-- Select 01 -->
+        <select 
+          name="select-msg-formatada_01"
+          class="select-msg-formatada"
+          v-model="chaveAtual_01"
+          v-on:change="recebeValorMSGFormatada(chaveAtual_01, 2)">
           <option disabled value="">Selecione</option>
-          <option v-for="(valor, chave) in mensagensFormatadas" :key="chave+valor"
+          <option v-for="(valor, chave) in mensagensFormatadas_01" :key="chave+valor"
             :value="chave">
             {{ valor }}
           </option>
         </select>
+        <!-- Select 02 -->
+        <transition name="fade">
+          <select
+            v-show="mensagensFormatadas_02.length" 
+            name="select-msg-formatada_02" 
+            class="select-msg-formatada"
+            v-model="chaveAtual_02"
+            v-on:change="recebeValorMSGFormatada(chaveAtual_01+'/'+chaveAtual_02, 3)">
+            <option disabled value="">Selecione</option>
+            <option v-for="(valor, indice) in mensagensFormatadas_02" :key="indice"
+              :value="valor.cod">
+              {{ valor.value }}
+            </option>
+          </select>
+        </transition>
+        <!-- Select 03 -->
+        <transition name="fade">
+          <select
+            v-show="mensagensFormatadas_03.length" 
+            name="select-msg-formatada_03" 
+            class="select-msg-formatada"
+            v-model="chaveAtual_03"
+            v-on:change="insereMsgFormatadaNoTextarea(mensagensFormatadas_03[chaveAtual_03].cod, mensagensFormatadas_03[chaveAtual_03].value)">
+            <option disabled value="">Selecione</option>
+            <option v-for="(valor, indice) in mensagensFormatadas_03" :key="indice"
+              :value="indice">
+              {{ valor.value }}
+            </option>
+          </select>
+        </transition>
       </div>
     </transition>
   </div>
@@ -176,8 +211,12 @@ export default {
       selecioneAnexo: true,
       abrirEmojis: false,
       msgFormatadaAberto: false,
-      mensagensFormatadas: [],
-      chaveAtual: ''
+      mensagensFormatadas_01: [],
+      chaveAtual_01: '',
+      mensagensFormatadas_02: [],
+      chaveAtual_02: '',
+      mensagensFormatadas_03: [],
+      chaveAtual_03: ''
     };
   },
   mounted() {
@@ -310,36 +349,69 @@ export default {
       const horaFormatada = hora + "h" + minutos;
       return horaFormatada;
     },
+    abreFechaMsgFormatada(){
+      this.msgFormatadaAberto = !this.msgFormatadaAberto;
+
+      const chatCorpo = document.querySelector("#chat-operador");
+      if (this.msgFormatadaAberto == true) {
+        chatCorpo.style.height = "55%";
+      } else {
+        chatCorpo.style.height = "80%";
+      }
+    },
     selecionarMsgFormatada() {
+      this.abreFechaMsgFormatada()
+
       let valor = ''
       let tokenCliente = this.atendimentoAtivo.token_cliente
 
       obterMsgFormatada(valor, tokenCliente)
         .then((data) => {
-          this.exibirMsgFormatada(data)
+          this.exibirMsgFormatada(data, 1)
         })
         .catch((err) => console.log(err));
     },
-    exibirMsgFormatada(objMsgFormatada) {
-      this.msgFormatadaAberto = !this.msgFormatadaAberto;
-      const chatCorpo = document.querySelector("#chat-operador");
-      if (this.msgFormatadaAberto == true) {
-        chatCorpo.style.height = "70%";
-      } else {
-        chatCorpo.style.height = "80%";
+    exibirMsgFormatada(objMsgFormatada, numReq) {
+      switch(numReq){
+        case 1:
+          this.mensagensFormatadas_01 = objMsgFormatada
+          console.log('msgFormatada_01: ', this.mensagensFormatadas_01)
+        break;
+        case 2:
+          this.mensagensFormatadas_02 = objMsgFormatada
+          console.log('msgFormatada_02: ', this.mensagensFormatadas_02)
+        break;
+        case 3:
+          if(objMsgFormatada.length){
+            this.mensagensFormatadas_03 = objMsgFormatada
+            console.log('msgFormatada_03: ', this.mensagensFormatadas_03)
+          }else{
+            this.$toasted.global.emConstrucao({msg: 'Sem mensagens para as opcoes selecionadas'})
+            console.log('Nao a msgs formatadas: ', objMsgFormatada)
+          }
+        break;
       }
-
-      this.mensagensFormatadas = objMsgFormatada
-      console.log(this.mensagensFormatadas)
     },
-    recebeValorMSGFormatada(valor){
+    recebeValorMSGFormatada(valor, numReq){
+      console.log('valor: ', valor)
+      if(valor.length == 1){
+        if(this.mensagensFormatadas_02.length){
+          this.mensagensFormatadas_02 = []
+        }
+        if(this.mensagensFormatadas_03.length){
+          this.mensagensFormatadas_03 = []
+        }
+      }
+      
       let tokenCliente = this.atendimentoAtivo.token_cliente
       obterMsgFormatada(valor, tokenCliente)
         .then((data) => {
-          this.exibirMsgFormatada(data)
+          this.exibirMsgFormatada(data, numReq)
         })
         .catch((err) => console.log(err));
-      // console.log('Valor selecionado: ', valor)
+    },
+    insereMsgFormatadaNoTextarea(cod, msg){
+      this.mensagem = msg      
     },
     selecionarEmoji() {
       this.$store.dispatch("setOrigemBlocker", "chat");
@@ -435,24 +507,6 @@ export default {
       this.aparecerPrevia = false;
       this.imagemPrevia = "";
     },
-    obterAtendimentos() {
-      axios
-        .get(this.$store.getters.getURL + "get-atendimento")
-        .then((response) => {
-          mostrarAtendimentos(response.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    obterMensagens() {
-      var idClientes = [55987654321, 5517987654321];
-      axios_api.post("search-message", idClientes);
-    },
-    enviarInformacao() {
-      var informacao = "Testando alguma informacao";
-      axios_api.put("send-information", informacao);
-    },
     initResize() {
       var observe;
       if (window.attachEvent) {
@@ -481,7 +535,7 @@ export default {
         emojisContainer.style.height = text.scrollHeight + "px";
         rodapeBotoes.style.height = text.scrollHeight + "px";
 
-        if (chatCorpo.style.height !== "70%") {
+        if (chatCorpo.style.height !== "55%") {
           if (text.scrollHeight > 60) {
             chatCorpo.style.height = "77%";
           } else {
