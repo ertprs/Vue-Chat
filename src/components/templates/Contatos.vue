@@ -126,6 +126,10 @@ export default {
     this.$root.$on('toggle-contatos', () => {
       this.toggleContatos()
     })
+
+    this.$root.$on('encerrar-atd', atdAtivo => {
+      this.encerrarAtdNaTela(atdAtivo)
+    })
   },
   computed: {
     ...mapGetters({

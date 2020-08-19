@@ -69,6 +69,7 @@ export default {
     },
     async finalizarAtendimentoNaApi() {
       let data = { "token_cliente": this.atendimentoAtivo.token_cliente }
+
       await axios_api.delete('end-atendimento', {data: {...data}})
         .then(response => {
           if(response.data.st_ret == 'OK'){
@@ -82,14 +83,11 @@ export default {
             }
             this.$root.$off('atualizar_mensagem', this.criaObjMensagem)
             this.$store.dispatch('setAtendimentos', novosAtendimentos)
-
           }
         })
         .catch(error => {
           console.log('Error end atd: ', error)
-          // Força sumir, porem caso tenha ctt novo, some a classe de destaque
-          this.$root.$emit('busca-atendimentos')
-          // this.$toasted.global.defaultError({msg: 'Nao foi possivel encerrar o atendimento. Tente novamente'})
+          this.$toasted.global.defaultError({msg: 'Nao foi possivel encerrar o atendimento. Tente novamente'})
         })
 
     }
