@@ -199,8 +199,10 @@ var app = new Vue({
       for (var ramal_server in atendimentosServer) {
         var temClienteNovo = true
         for (var ramal_local in this.todosAtendimentos) {
-          if (atendimentosServer[ramal_server].id_cli === atendimentosLocal[ramal_local].id_cli) {
-            temClienteNovo = false
+          if(atendimentosServer[ramal_server] && atendimentosLocal[ramal_local]){
+            if (atendimentosServer[ramal_server].id_cli === atendimentosLocal[ramal_local].id_cli) {
+              temClienteNovo = false
+            }
           }
         }
         if (temClienteNovo) {
