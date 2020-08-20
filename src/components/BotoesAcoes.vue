@@ -74,6 +74,11 @@ export default {
         .then(response => {
           if(response.data.st_ret == 'OK'){
 
+            // Forma alternativa para excluir  posicao em um ARRAY (não obj, por isso não se aplica ao caso abaixo)
+            /* Ex: 
+              this.todosAtendimentos.filter(atendimento => atendimento.id_cli != this.idAtendimentoAtivo)
+            */
+
             this.$store.dispatch('limparAtendimentoAtivo')
             var novosAtendimentos = {}
             for(var ramal_local in this.todosAtendimentos) {
