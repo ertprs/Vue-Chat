@@ -21,7 +21,7 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.config.productionTip = false;
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
-const TEMPO_ATUALIZACAO = 4000
+var TEMPO_ATUALIZACAO = 4000
 
 var app = new Vue({
   router,
@@ -42,10 +42,13 @@ var app = new Vue({
     })
   },
   mounted() {
-    this.buscaAtendimentos()
+    setTimeout( () => {
+      this.buscaAtendimentos()
+    }, TEMPO_ATUALIZACAO)
 
     this.$root.$on('busca-atendimentos', () => {
-      this.buscaAtendimentos()
+      console.log('chamando busca atendimentos pelo on')
+      // this.buscaAtendimentos()
     })
   },
   methods: {
@@ -62,8 +65,10 @@ var app = new Vue({
               var mainData = response.data
               if (!mainData) {
                 console.log('IF negacao do mainData')
-                this.adicionaCaso(200)
-                this.buscaAtendimentos()
+                setTimeout( () => {
+                  this.adicionaCaso(200)
+                  this.buscaAtendimentos()
+                }, TEMPO_ATUALIZACAO)
               }
               if (mainData.atendimentos != null && mainData.token_manager != null) {
                 this.adicionaCaso('')
@@ -86,15 +91,18 @@ var app = new Vue({
                 mainData.token_manager != null ? this.$store.dispatch('setTokenManager', mainData.token_manager) : this.$store.dispatch('setTokenManager', '')
                 this.loopAtualizacaoDeAtendimentos()
               } else {
-                // quando o token e valido mas nao recebemos o atendimento
-                if (mainData.token_manager != null) {
-                  this.adicionaCaso(206)
-                  this.buscaAtendimentos()
+                if (mainData.token_manager != null) { // quando o token e valido mas nao recebemos o atendimento
+                  setTimeout( () => {
+                    this.adicionaCaso(206)
+                    this.buscaAtendimentos()
+                  }, TEMPO_ATUALIZACAO)
                 } else {
                   console.log('Erro ao tentar obter dados no servidor')
                   console.log(mainData)
-                  this.adicionaCaso(200)
-                  this.buscaAtendimentos()
+                  setTimeout( () => {
+                    this.adicionaCaso(200)
+                    this.buscaAtendimentos()
+                  }, TEMPO_ATUALIZACAO)
                 }
               }
               break;
@@ -102,10 +110,11 @@ var app = new Vue({
             case 206:
               console.log('Status ' + response.status + ' ' + response.statusText)
               console.log('Aguardando Cliente')
-              this.adicionaCaso(206)
               setTimeout( () => {
+                // alert('aqui')
                 this.buscaAtendimentos()
-              }, 1000)
+                this.adicionaCaso(206)
+              }, TEMPO_ATUALIZACAO)
               break;
 
             default:
@@ -169,7 +178,9 @@ var app = new Vue({
             this.atualizarClientes(mainData)
           } else if (mainData.st_ret === 'AVISO') {
             console.log('Nao existe clientes na fila')
-            this.buscaAtendimentos()
+            setTimeout( () => {
+              this.buscaAtendimentos()
+            }, TEMPO_ATUALIZACAO)
           } else {
             console.log('ERRO! Status:', response)
             if(response.data){
@@ -184,7 +195,9 @@ var app = new Vue({
                 }
               }
             }else{
-              this.buscaAtendimentos()
+              setTimeout( () => {
+                this.buscaAtendimentos()
+              }, TEMPO_ATUALIZACAO)
             }
           }
           this.liberaRequest()
