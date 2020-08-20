@@ -354,9 +354,9 @@ export default {
 
       const chatCorpo = document.querySelector("#chat-operador");
       if (this.msgFormatadaAberto == true) {
-        chatCorpo.style.height = "55%";
+        chatCorpo.style.height = "50%";
       } else {
-        chatCorpo.style.height = "80%";
+        chatCorpo.style.height = "76%";
       }
     },
     selecionarMsgFormatada() {
@@ -537,11 +537,11 @@ export default {
         emojisContainer.style.height = text.scrollHeight + "px";
         rodapeBotoes.style.height = text.scrollHeight + "px";
 
-        if (chatCorpo.style.height !== "55%") {
+        if (chatCorpo.style.height !== "50%") {
           if (text.scrollHeight > 60) {
-            chatCorpo.style.height = "77%";
+            chatCorpo.style.height = "73%";
           } else {
-            chatCorpo.style.height = "80%";
+            chatCorpo.style.height = "76%";
           }
         }
       }
