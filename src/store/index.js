@@ -43,6 +43,9 @@ export default new Vuex.Store({
     setIdAtendimentoAtivo(state, idAtendimentoAtivo){
       state.idAtendimentoAtivo = idAtendimentoAtivo
     },
+    limparIdAtendimentoAtivo(state){
+      state.idAtendimentoAtivo = ''
+    },
     setAtendimentoAtivo(state, objInformacoes){
       state.atendimentoAtivo = objInformacoes
     },
@@ -80,6 +83,9 @@ export default new Vuex.Store({
     },
     setIdAtendimentoAtivo: (context, payload) => {
       context.commit('setIdAtendimentoAtivo', payload)
+    },
+    limparIdAtendimentoAtivo: context => {
+      context.commit('limparIdAtendimentoAtivo')
     },
     setAtendimentoAtivo: (context, payload) => {
       context.commit('setAtendimentoAtivo', payload)

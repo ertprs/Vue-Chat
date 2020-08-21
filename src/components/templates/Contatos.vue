@@ -30,7 +30,7 @@
       </div>
       <!-- Caso haja Cliente -->
       <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 200">
-        <ul :class="{'fechado' : fechado}" v-if="objAtendimentos.length && caso !== 206">
+        <ul :class="{'fechado' : fechado}" v-if="objAtendimentos.length && caso !== 206" id="lista-contatos">
           <li
             v-for="(atd, indice) in objAtendimentos"
             :key="indice"
@@ -109,7 +109,6 @@ export default {
       fechado: false,
       rotate: false,
       haContatos: true,
-      idAtendimentoAtivo: '',
       objAtendimentos: []
     };
   },
@@ -117,6 +116,9 @@ export default {
     todosAtendimentos() {
       if(this.todosAtendimentos){
         this.objAtendimentos = Object.values(this.todosAtendimentos)
+        if(this.objAtendimentos.length == 1 && this.idAtendimentoAtivo == ''){
+          this.ativarConversa(this.objAtendimentos[0], 0)
+        }
       }
     }
   },
@@ -138,7 +140,8 @@ export default {
       todosAtendimentos: "getTodosAtendimentos",
       minhaAgenda: "getAgenda",
       caso: 'getCaso',
-      iframesDisponiveis: 'getIframesDisponiveis'
+      iframesDisponiveis: 'getIframesDisponiveis',
+      idAtendimentoAtivo: 'getIdAtendimentoAtivo'
     })
   },
   methods: {
@@ -162,8 +165,7 @@ export default {
       }
 
       atd.qtdMsgNova = 0;
-      this.idAtendimentoAtivo = atd.id_cli
-      this.$store.dispatch('setIdAtendimentoAtivo', this.idAtendimentoAtivo)
+      this.$store.dispatch('setIdAtendimentoAtivo', atd.id_cli)
       this.setMensagensClienteAtivo(atd.id_cli, atd.arrMsg)
       this.exibirInformacoes(atd, indice)
       
@@ -290,6 +292,3 @@ export default {
   }
 };
 </script>
-
-<style>
-</style>

@@ -40,6 +40,7 @@ var app = new Vue({
     })
   },
   mounted() {
+    this.buscaAtendimentos()
     this.adicionaCaso('aguardando')
     setTimeout( () => {
       this.buscaAtendimentos()
@@ -177,6 +178,7 @@ var app = new Vue({
             this.atualizarClientes(mainData)
           } else if (mainData.st_ret === 'AVISO') {
             console.log('Nao existe clientes na fila')
+            this.adicionaCaso(206)
             setTimeout( () => {
               this.buscaAtendimentos()
             }, TEMPO_ATUALIZACAO)

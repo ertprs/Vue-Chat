@@ -2,9 +2,9 @@
   <div class="container-iframes" style="height: 100%">
     <div
       class="iframes_disponiveis"
-      v-for="frame in iframesDisponiveis"
-      v-bind:id = "'iframe_' + frame.id"
-      :key="frame.id"
+      v-for="(frame, indice) in iframesDisponiveis"
+      :id="'iframe_' + frame.id"
+      :key="indice"
     >
       <iframe :src="frame.url" frameborder="0"></iframe>
     </div>

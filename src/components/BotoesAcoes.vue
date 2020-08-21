@@ -80,6 +80,7 @@ export default {
             */
 
             this.$store.dispatch('limparAtendimentoAtivo')
+
             var novosAtendimentos = {}
             for(var ramal_local in this.todosAtendimentos) {
               if(this.todosAtendimentos[ramal_local].id_cli !== this.idAtendimentoAtivo) {
@@ -88,6 +89,7 @@ export default {
             }
             this.$root.$off('atualizar_mensagem', this.criaObjMensagem)
             this.$store.dispatch('setAtendimentos', novosAtendimentos)
+            this.$store.dispatch('limparIdAtendimentoAtivo')
           }
         })
         .catch(error => {
