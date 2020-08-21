@@ -1,51 +1,52 @@
 <template>
-  <div id="popup" popup v-on:click="fecharPopup($event)">
+  <div id="popup" popup @click="fecharPopup($event)">
     <div>
       <h2>{{ titulo }}</h2>
-      <template v-if="titulo == 'Retornar'">
-        <ul lista-retornar v-if="!pessoalData">
-          <li v-for="(opt, i) in arrOptRetorno" :key="i"
-          v-on:click="opt.funcao">
-            {{ opt.descricao }}
-          </li>
+      <template v-if="origem == 'Retornar'">
+        <ul lista-retornar :class="{'tres-mais' : tamanhoChat()}" v-if="!pessoalData">
+          <li @click="$toasted.global.emConstrucao(), fecharPopup()"> Todos </li>
+          <li @click="$toasted.global.emConstrucao(), fecharPopup()"> Pessoal </li>
+          <li @click="pessoalData = true"> Pessoal/Data </li>
         </ul>
         <div v-if="pessoalData" agendar-retorno>
           <input type="datetime-local" :min="setData('minimo')" :max="setData('maximo')" v-model="dataHora" />
         </div>
       </template>
-      <template v-else-if="titulo == 'Transferir'">
-        <ul lista-transferir>
-          <li v-for="(opt, i) in arrOptTransferir" :key="i"
-          v-on:click="opt.funcao">
-            {{ opt.descricao }}
-          </li>
+      <template v-else-if="origem == 'Transferir'">
+        <ul lista-transferir v-if="!abrirAgentes && !abrirGrupos">
+          <li @click="preencherAgente()"> Agente </li>
+          <li @click="preencherGrupo()"> Grupo </li>
         </ul>
-        <div v-if="arrGrupos.length" grupos-transferir>
-          <vSelect
-          :options="arrGrupos"
-          label="label"
-          @input="enviaGrupo"
-          :reduce="arrGrupos => arrGrupos.grupo"
-          >
-          <!-- :value="arrGrupos[0].label" -->
-          </vSelect>
-        </div>
-        <div v-if="arrAgentes.length" grupos-agentes>
+        <div v-if="abrirAgentes" grupos-agentes>
           <vSelect
           :options="arrAgentes"
           label="login"
-
           @input="enviaAgente"
           :reduce="arrAgentes => arrAgentes.login"
           >
           <!-- :value="arrAgentes[0].login" -->
           </vSelect>
         </div>
+        <div v-if="abrirGrupos" grupos-transferir>
+          <select name="select-grupos-transferir">
+            <option value="" v-for="(grupo, indice) in arrGrupos" :key="indice">
+              {{ grupo }}
+            </option>
+          </select>
+          <!-- <vSelect
+          :options="arrGrupos"
+          label="label"
+          @input="enviaGrupo"
+          :reduce="arrGrupos => arrGrupos.grupo"
+          > -->
+          <!-- :value="arrGrupos[0].label" -->
+          </vSelect>
+        </div>
       </template>
-      <template v-else-if="titulo == 'Encerrar'">
+      <template v-else-if="origem == 'Encerrar'">
         <ul lista-retornar>
-          <li v-on:click="encerrar()"> Confirmar </li>
-          <li v-on:click="fecharPopup()"> Cancelar </li>
+          <li @click="encerrar()"> Confirmar </li>
+          <li @click="fecharPopup()"> Cancelar </li>
         </ul>
       </template>
     </div>
@@ -62,19 +63,14 @@ export default {
   components:{
     vSelect,
   },
-  props: ['titulo', 'origem'],
+  props: ['titulo', 'origem', 'arrGrupos', 'arrAgentes'],
   data(){
     return{
-      arrOptRetorno: [],
-      arrOptTransferir: [],
-      arrGrupos: [],
-      arrAgentes: [],
+      abrirAgentes: false,
+      abrirGrupos: false,
       pessoalData: false,
       dataHora: ''
     }
-  },
-  mounted(){
-    this.preencherArrOpt(this.titulo)
   },
   watch: {
     dataHora(){
@@ -85,7 +81,7 @@ export default {
       if(!document.querySelector('.toasted.toasted-primary.success')){
         this.$toasted.global.defaultSuccess({msg: 'Retorno Agendado'})
       }
-    }
+    },
   },
   methods: {
     fecharPopup(event){
@@ -97,109 +93,48 @@ export default {
         this.$store.dispatch('setBlocker', false)
       }
     },
-    getGrupos(){
-      let url = this.$store.getters.getURL
-
-      axios.get(url+'get-groups')
-      .then(response => {
-        this.arrGrupos = response.data
-        document.querySelector('[lista-transferir]').remove()
-      })
-      .catch(error => {
-        console.log('Erro get grupos: ', error)
-      })
+    tamanhoChat(){
+      const widthChat = localStorage.getItem('largura-chat')
+      if(widthChat){
+        if(widthChat < '400px'){
+          return true
+        }else{
+          return false
+        }  
+      }else{
+        return false
+      }
     },
     enviaGrupo(grupo){
-      axios_api.put('transfer',grupo).then(response => {
-        this.fecharPopup()
-        console.log('Sucesso enviar grupo: ', response)
-        if(!document.querySelector('.toasted.toasted-primary.success')){
-          this.$toasted.global.sucessoTransferencia()
-        }
-      })
-      .catch(error => {
-        console.log('Erro ao enviar o grupo: : ', error)
-        if(!document.querySelector('.toasted.toasted-primary.error')){
-          this.$toasted.global.defaultError('Erro na transferencia')
-        }
-      })
-    },
-    getAgente(){
-      let url = this.$store.getters.getURL
-
-      axios.get(url+'get-agente')
-      .then(response => {
-        console.log('Sucesso get agente: ', response)
-        this.arrAgentes = response.data
-        document.querySelector('[lista-transferir]').remove()
-      })
-      .catch(error => {
-        console.log('Erro get agente: ', error)
-        if(!document.querySelector('.toasted.toasted-primary.error')){
-          this.$toasted.global.defaultError('Erro na transferencia')
-        }
-      })
+      // axios_api.put('transfer',grupo).then(response => {
+      //   this.fecharPopup()
+      //   console.log('Sucesso enviar grupo: ', response)
+      //   if(!document.querySelector('.toasted.toasted-primary.success')){
+      //     this.$toasted.global.sucessoTransferencia()
+      //   }
+      // })
+      // .catch(error => {
+      //   console.log('Erro ao enviar o grupo: : ', error)
+      //   if(!document.querySelector('.toasted.toasted-primary.error')){
+      //     this.$toasted.global.defaultError('Erro na transferencia')
+      //   }
+      // })
     },
     enviaAgente(agente){
-      axios_api.put('transfer', agente)
-      .then(response => {
-        this.fecharPopup()
-        console.log('Sucesso enviar agente: ', response)
-        if(!document.querySelector('.toasted.toasted-primary.success')){
-          this.$toasted.global.sucessoTransferencia()
-        }
-      })
-      .catch(error => {
-        console.log('Erro ao enviar o agente: : ', error)
-        if(!document.querySelector('.toasted.toasted-primary.error')){
-          this.$toasted.global.defaultError('Erro na transferencia')
-        }
-      })
-    },
-    preencherArrOpt(tipo){
-      let url = this.$store.getters.getURL
-
-      let arrAux
-      if(tipo == 'Retornar'){
-        arrAux = ["Todos", "Pessoal", "Pessoal/Data"]
-        for(let i = 0; i < arrAux.length; i++){
-          this.arrOptRetorno.push({
-            descricao: arrAux[i],
-            funcao: () => {
-              if(arrAux[i] == arrAux[2]){
-                this.pessoalData = true
-              }else{
-                this.fecharPopup()
-                if(!document.querySelector('.toasted.toasted-primary.success')){
-                  this.$toasted.global.defaultSuccess({msg: 'Retorno realizado'})
-                }
-              }
-            }
-          })
-        }
-      }else if(tipo == 'Transferir'){
-        arrAux = ["Agente", "Grupo"]
-        for(let i = 0; i < arrAux.length; i++){
-          this.arrOptTransferir.push({
-            descricao: arrAux[i],
-            funcao: () => {
-              if(arrAux[i] == arrAux[0]){
-                this.getAgente()
-              }else if(arrAux[i] == arrAux[1]){
-                this.getGrupos()
-              }
-              data = {"id_schedule": "5516987987955", "id_attedant":"re028771"}
-              axios_api.put('transfer', data)
-              .then(response => {
-                console.log('sucesso transferencia: ', response)
-              })
-              .catch(error => {
-                console.log('erro transferencia: ', error)
-              })
-            }
-          })
-        }
-      }
+      // axios_api.put('transfer', agente)
+      // .then(response => {
+      //   this.fecharPopup()
+      //   console.log('Sucesso enviar agente: ', response)
+      //   if(!document.querySelector('.toasted.toasted-primary.success')){
+      //     this.$toasted.global.sucessoTransferencia()
+      //   }
+      // })
+      // .catch(error => {
+      //   console.log('Erro ao enviar o agente: : ', error)
+      //   if(!document.querySelector('.toasted.toasted-primary.error')){
+      //     this.$toasted.global.defaultError('Erro na transferencia')
+      //   }
+      // })
     },
     setData(opt){
       let data = new Date()
@@ -242,11 +177,21 @@ export default {
       // Limpando pilha de eventos afim de evitar que a função de encerrar seja chamada mais de uma vez
       this.$root.$off('encerrarAtendimento')
       this.fecharPopup()
+    },
+    preencherAgente(){
+      if(this.arrAgentes.length){
+        this.abrirAgentes = true
+      }else{
+        this.$toasted.global.emConstrucao({msg: 'Nao existem agentes disponiveis'})
+      }
+    },
+    preencherGrupo(){
+      if(this.arrGrupos.length){
+        this.abrirGrupos = true
+      }else{
+        this.$toasted.global.emConstrucao({msg: 'Nao existem agentes disponiveis'})
+      }
     }
   }
 }
 </script>
-
-<style>
-
-</style>

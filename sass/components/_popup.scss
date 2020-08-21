@@ -7,13 +7,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 10px;
   > div{
-    min-width: 200px;
     background-color: lighten(#FFF, 15);
     display: flex;
     align-items: center; 
     flex-wrap: wrap;
     > h2{
+      margin: 0;
       font-size: 1.5rem;
       font-weight: 100;
       padding: 5px 10px;
@@ -24,8 +25,16 @@
     > ul{
       display: flex;
       list-style-type: none;
-      margin: 15px auto;
+      margin: 10px auto;
       padding: 0;
+      &.tres-mais{
+        flex-direction: column;
+        li{
+          &:nth-child(2n){
+            margin: 10px 0;
+          }
+        }
+      }
       li{
         @include estiloBotao(-4px, -2px, 1, $cor);
         min-width: 85px;
@@ -47,12 +56,11 @@
     div[agendar-retorno]{
       width: 100%;
       margin: 10px auto;
-      margin-top: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       > div{
-        min-width: 300px;
+        min-width: 200px;
       }
       > input{
         outline: unset;

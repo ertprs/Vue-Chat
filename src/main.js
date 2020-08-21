@@ -40,11 +40,8 @@ var app = new Vue({
     })
   },
   mounted() {
-    this.buscaAtendimentos()
     this.adicionaCaso('aguardando')
-    setTimeout( () => {
-      this.buscaAtendimentos()
-    }, TEMPO_ATUALIZACAO)
+    this.buscaAtendimentos()
 
     this.$root.$on('busca-atendimentos', () => {
       console.log('chamando busca atendimentos pelo on')
@@ -65,6 +62,7 @@ var app = new Vue({
               var mainData = response.data
               if (!mainData) {
                 console.log('IF negacao do mainData')
+                alert('aqui')
                 setTimeout( () => {
                   this.adicionaCaso(200)
                   this.buscaAtendimentos()
@@ -75,6 +73,8 @@ var app = new Vue({
 
                 // Percorrendo todas mensagens para transformar em emojis
                 for (let atd in mainData.atendimentos) {
+                  this.getRules(mainData.atendimentos[atd].token_cliente, mainData.atendimentos[atd].login_usu)
+                  
                   for (let i = 0; i < mainData.atendimentos[atd].arrMsg.length; i++) {
                     let regex = ''
                     for (let j = 0; j < this.emojis.length; j++) {
@@ -83,12 +83,14 @@ var app = new Vue({
                     }
                   }
                 }
+
                 carregarIframe(mainData.atendimentos)
                 this.$store.dispatch('setAtendimentos', mainData.atendimentos)
                 const agenda = ['Maria', 'Joao', 'Joana', 'Frederico']
                 this.$store.dispatch('setAgenda', agenda)
                 mainData.token_atd != null ? this.$store.dispatch('setTokenAtd', mainData.token_atd) : this.$store.dispatch('setTokenAtd', '')
                 mainData.token_manager != null ? this.$store.dispatch('setTokenManager', mainData.token_manager) : this.$store.dispatch('setTokenManager', '')
+                
                 this.loopAtualizacaoDeAtendimentos()
               } else {
                 if (mainData.token_manager != null) { // quando o token e valido mas nao recebemos o atendimento
@@ -111,7 +113,6 @@ var app = new Vue({
               console.log('Status ' + response.status + ' ' + response.statusText)
               console.log('Aguardando Cliente')
               setTimeout( () => {
-                // alert('aqui')
                 this.buscaAtendimentos()
                 this.adicionaCaso(206)
               }, TEMPO_ATUALIZACAO)
@@ -277,6 +278,23 @@ var app = new Vue({
       }
 
       this.$store.dispatch('setAtendimentos', novosAtendimentos)
+    },
+    getRules(tokenCliente, id){
+
+      axios_api.get(`get-rules?token_cliente=${tokenCliente}`)
+        .then(response => {
+          if(response.data.st_ret == 'OK'){
+            const arrayRegras = response.data
+            let objRegra = {
+              id: id,
+              regras: arrayRegras
+            }
+            this.$store.dispatch('setTodasRegras', objRegra)
+          }
+        })
+        .catch(error => {
+          console.log('Erro getRules: ', error)
+        })
     }
   }
 }).$mount("#app");
