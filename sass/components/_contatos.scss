@@ -135,7 +135,7 @@ $tamanhoBoxShadow: 5px;
         p{
           margin: 0;
           padding: 0;
-          font-weight: 600;
+          font-weight: bold;
           // user-select: none;
           text-align: center;
           height: auto;
@@ -154,7 +154,7 @@ $tamanhoBoxShadow: 5px;
         animation-duration: 800ms;
         animation-direction: alternate;
         animation-iteration-count: 7;
-        font-weight: 700;
+        font-weight: bolder;
         order: -1;
       }
       &.destaque-novo-contato{
@@ -164,7 +164,7 @@ $tamanhoBoxShadow: 5px;
         animation-direction: alternate;
         animation-iteration-count: 7;
         order: -2;
-        font-weight: 700;
+        font-weight: bolder;
       }
       &.ativo{
         animation: unset;
@@ -209,7 +209,7 @@ $tamanhoBoxShadow: 5px;
         align-items: center;
         border-radius: 50%;
         color: #FFF;
-        font-weight: 600;
+        font-weight: bold;
         transition: .3s;
       }
       .ultima-msg{

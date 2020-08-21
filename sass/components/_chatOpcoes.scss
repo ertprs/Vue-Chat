@@ -52,7 +52,7 @@
           color: #000;
           margin: 0;
           padding: 0;
-          font-weight: 600;
+          font-weight: bold;
           user-select: none;
           text-align: center;
           height: auto;
@@ -70,7 +70,7 @@
           color: #FFF;
           &:nth-child(1){
             font-size: 1rem;
-            font-weight: 600
+            font-weight: bold
           }
         }
       }

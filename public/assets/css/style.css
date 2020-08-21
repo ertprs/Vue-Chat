@@ -8947,7 +8947,7 @@ body {
         #todos-contatos ul li .circulo-contatos p {
           margin: 0;
           padding: 0;
-          font-weight: 600;
+          font-weight: bold;
           text-align: center;
           height: auto;
           width: auto; }
@@ -8962,7 +8962,7 @@ body {
         animation-duration: 800ms;
         animation-direction: alternate;
         animation-iteration-count: 7;
-        font-weight: 700;
+        font-weight: bolder;
         order: -1; }
       #todos-contatos ul li.destaque-novo-contato {
         background-color: #fdffb6 !important;
@@ -8971,7 +8971,7 @@ body {
         animation-direction: alternate;
         animation-iteration-count: 7;
         order: -2;
-        font-weight: 700; }
+        font-weight: bolder; }
       #todos-contatos ul li.ativo {
         animation: unset;
         opacity: 1;
@@ -9007,7 +9007,7 @@ body {
         align-items: center;
         border-radius: 50%;
         color: #FFF;
-        font-weight: 600;
+        font-weight: bold;
         transition: .3s; }
       #todos-contatos ul li .ultima-msg {
         position: absolute;
@@ -9197,7 +9197,7 @@ body {
           color: #000;
           margin: 0;
           padding: 0;
-          font-weight: 600;
+          font-weight: bold;
           user-select: none;
           text-align: center;
           height: auto;
@@ -9213,7 +9213,7 @@ body {
           color: #FFF; }
           .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container .chat-opcoes-titulo-container--lista li:nth-child(1) {
             font-size: 1rem;
-            font-weight: 600; }
+            font-weight: bold; }
       .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container .chat-opcoes-titulo-container--logo {
         position: absolute;
         right: 10px; }
