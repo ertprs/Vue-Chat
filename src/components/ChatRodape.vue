@@ -172,6 +172,7 @@
         </transition>
       </div>
     </transition>
+    <botoes-acoes />
   </div>
 </template>
 
@@ -187,6 +188,8 @@
 <script>
 
 import { mapGetters } from "vuex";
+
+import BotoesAcoes from './BotoesAcoes'
 
 import { obterMsgFormatada } from "../services/serviceMsgFormatada";
 import axios_api from "../services/serviceAxios";
@@ -218,6 +221,9 @@ export default {
       mensagensFormatadas_03: [],
       chaveAtual_03: ''
     };
+  },
+  components: {
+    'botoes-acoes': BotoesAcoes
   },
   mounted() {
     this.$root.$on("atualizar_mensagem", (objMessage, event) => {
@@ -361,7 +367,7 @@ export default {
       if (this.msgFormatadaAberto == true) {
         chatCorpo.style.height = "50%";
       } else {
-        chatCorpo.style.height = "76%";
+        chatCorpo.style.height = "70%";
       }
     },
     selecionarMsgFormatada() {
@@ -544,9 +550,9 @@ export default {
 
         if (chatCorpo.style.height !== "50%") {
           if (text.scrollHeight > 60) {
-            chatCorpo.style.height = "73%";
+            chatCorpo.style.height = "67%";
           } else {
-            chatCorpo.style.height = "76%";
+            chatCorpo.style.height = "70%";
           }
         }
       }

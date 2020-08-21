@@ -53,9 +53,9 @@
           </div>
         </div>
         <!-- Rodape - Botoes Acoes -->
-        <div class="container-acoes">
+        <!-- <div class="container-acoes">
           <BotoesAcoes />
-        </div>
+        </div> -->
       </div>
       <!-- Caso não haja informacoes -->
       <div class="lista-informacoes-container-vazio" v-else-if="!atendimentoAtivo.informacoes || caso == 200 || caso == 206">
