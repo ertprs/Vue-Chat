@@ -157,18 +157,23 @@
         </transition>
         <!-- Select 03 -->
         <transition name="fade">
-          <select
-            v-show="mensagensFormatadas_03.length" 
-            name="select-msg-formatada_03" 
-            class="select-msg-formatada"
-            v-model="chaveAtual_03"
-            v-on:change="insereMsgFormatadaNoTextarea(mensagensFormatadas_03[chaveAtual_03].cod, mensagensFormatadas_03[chaveAtual_03].value)">
-            <option disabled value="">Selecione</option>
-            <option v-for="(valor, indice) in mensagensFormatadas_03" :key="indice"
-              :value="indice">
-              {{ valor.value }}
-            </option>
-          </select>
+          <div class="select-03" v-show="mensagensFormatadas_03.length" >  
+            <select
+              name="select-msg-formatada_03" 
+              class="select-msg-formatada"
+              v-model="chaveAtual_03">
+              <option disabled value="">Selecione</option>
+              <option v-for="(valor, indice) in mensagensFormatadas_03" :key="indice"
+                :value="indice">
+                {{ valor.value }}
+              </option>
+            </select>
+            <div class="btn-select-03"
+              title="Preencher campo de mensagem"
+              @click="insereMsgFormatadaNoTextarea(mensagensFormatadas_03, chaveAtual_03)">
+              <i class="fas fa-level-up-alt"></i>
+            </div>
+          </div>
         </transition>
       </div>
     </transition>
@@ -398,7 +403,7 @@ export default {
             console.log('msgFormatada_03: ', this.mensagensFormatadas_03)
           }else{
             this.$toasted.global.emConstrucao({msg: 'Sem mensagens para as opcoes selecionadas'})
-            console.log('Nao a msgs formatadas: ', objMsgFormatada)
+            console.log('Nao ha msgs formatadas: ', objMsgFormatada)
           }
         break;
       }
@@ -423,8 +428,24 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    insereMsgFormatadaNoTextarea(cod, msg){
-      this.mensagem = msg      
+    insereMsgFormatadaNoTextarea(arrayMsgFormatada, indice){
+
+      if(typeof indice !== 'number'){
+        this.$toasted.global.defaultError({msg: 'Selecione uma mensagem'})
+        return
+      }
+
+      const cod = arrayMsgFormatada[indice].cod
+      const msg = arrayMsgFormatada[indice].value
+      if(msg){
+        if(this.mensagem == msg){
+          return
+        }else{
+          this.mensagem = this.mensagem == '' ? msg : this.mensagem + ' ' + msg
+        }
+      }else{
+        this.$toasted.global.emConstrucao({msg: 'Mensagem vazia'})
+      }
     },
     selecionarEmoji() {
       this.$store.dispatch("setOrigemBlocker", "chat");

@@ -220,6 +220,24 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
     justify-content: center;
     align-items: center;
     margin: 15px auto;
+    .select-03{
+      display: flex;
+      align-items: center;
+      width: 100%;
+      .btn-select-03{
+        @include estiloBotao(-3px, -1px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 5px;
+        background-color: #F7FE72;
+        width: 32px;
+        height: 32px;
+        svg{
+          font-size: 1rem;
+        }
+      }
+    }
     .select-msg-formatada{
       margin-bottom: 5px;
       &:last-child{
