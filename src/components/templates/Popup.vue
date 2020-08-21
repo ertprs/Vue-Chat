@@ -33,12 +33,12 @@
               {{ grupo }}
             </option>
           </select>
-          <!-- <vSelect
+          <vSelect
           :options="arrGrupos"
           label="label"
           @input="enviaGrupo"
           :reduce="arrGrupos => arrGrupos.grupo"
-          > -->
+          >
           <!-- :value="arrGrupos[0].label" -->
           </vSelect>
         </div>
