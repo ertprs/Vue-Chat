@@ -6,15 +6,15 @@
   justify-content: center;
   align-items: center;
   // border-top: 1px solid #CCC;
-  min-height: 60px;
-  position: absolute;
-  bottom: 0;
 
   .rodape-botoes-encerramento{
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
+    min-height: 60px;
+    position: absolute;
+    bottom: 0;
     // height: 100%;
     .rodape-botoes-botao{
       @include estiloBotao(-3px, -1px);

@@ -114,6 +114,7 @@ export default {
     },
     adicionaBlocker(){
       this.$store.dispatch('setBlocker', true)
+      this.$store.dispatch('setOrigemBlocker', 'chat')
     }
   },
   created(){
