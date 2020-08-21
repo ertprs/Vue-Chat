@@ -40,6 +40,7 @@ var app = new Vue({
     })
   },
   mounted() {
+    this.adicionaCaso('aguardando')
     setTimeout( () => {
       this.buscaAtendimentos()
     }, TEMPO_ATUALIZACAO)

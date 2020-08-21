@@ -8,6 +8,7 @@
       :width="widthContatos"
       :maxWidth="275"
       :active="handlers"
+      @resize:start="adicionaBlocker"
       @resize:end="resizeContatos">
       <Contatos />
     </vue-resizable>
@@ -73,6 +74,9 @@ export default {
       }else if(widthContatos > 90 && this.fechado){
         this.$root.$emit('toggle-contatos')
       }
+
+      localStorage.setItem('largura-contatos', widthContatos + 'px')
+      this.$store.dispatch('setBlocker', false)
     },
     insereWidthChatNoLocalStorage(data){
       let widthAtual = data.width+'px'
@@ -84,18 +88,28 @@ export default {
       let fechado = localStorage.getItem('status-contatos')
       if(fechado == "true"){
         this.widthContatos = "60px"
+      }else{
+        let widthCtt = localStorage.getItem('largura-contatos')
+        if(widthCtt){
+          this.alteraWidth("todos-contatos", widthCtt)
+          setTimeout( () => {
+            if(document.querySelector('#todos-contatos')){
+              document.querySelector('#todos-contatos').parentElement.style.width = widthCtt
+            }
+          }, 100)
+        }
       }
 
-      let width = localStorage.getItem('largura-chat')
-      if(width){
-        this.widthChat = width 
-        this.alteraWidthChat(width)
+      let widthChat = localStorage.getItem('largura-chat')
+      if(widthChat){
+        this.widthChat = widthChat 
+        this.alteraWidth("chat", widthChat)
       }
     },
-    alteraWidthChat(widthNovo){
-      const chat = document.querySelector('#chat')
-      if(chat){
-        chat.style.width = widthNovo
+    alteraWidth(id, widthNovo){
+      const elem = document.querySelector(`#${id}`)
+      if(elem){
+        elem.style.width = widthNovo
       }
     },
     adicionaBlocker(){

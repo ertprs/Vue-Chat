@@ -231,9 +231,14 @@ export default {
   },
   methods: {
     adicionarEmoji(value) {
+      document.querySelector('#textarea').focus()
       this.mensagem += value;
     },
     enviarMensagem() {
+      if(this.blocker){
+        this.$store.dispatch('setBlocker', false)
+      }
+
       this.mensagem = this.mensagem.replace(/\n$/, "", this.mensagem);
       let msgAux = this.mensagem;
 

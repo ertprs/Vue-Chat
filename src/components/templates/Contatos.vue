@@ -16,13 +16,14 @@
       </div>
     </div>
     <template v-if="objAtendimentos">
-      <!-- Caso Aguardando Cliente -->
-      <div class="lista-contatos-container-vazio load-container" v-if="caso == 206">
+      <!-- Caso Aguardando Cliente ou esperando a primeira requisicao ao buscaAtendimentos -->
+      <div class="lista-contatos-container-vazio load-container" v-if="caso == 206 || caso == 'aguardando'">
         <div id="load">
           <i class="fas fa-hourglass-end"></i>
           <transition name="fade">
             <p v-show="!fechado" >
-              Aguardando cliente
+              <template v-if="caso == 206">Aguardando clientes</template>
+              <template v-else>Carregando clientes</template>
             </p>
           </transition>
         </div>
@@ -152,7 +153,6 @@ export default {
       this.$store.dispatch('setCaso', caso)
     },
     ativarConversa: function(atd, indice) {
-      this.$root.$emit('rolaChat')
       if(atd.novoContato){
         atd.novoContato = false
       }
@@ -160,11 +160,19 @@ export default {
       if(atd.alertaMsgNova){
         atd.alertaMsgNova = false
       }
+
       atd.qtdMsgNova = 0;
       this.idAtendimentoAtivo = atd.id_cli
       this.$store.dispatch('setIdAtendimentoAtivo', this.idAtendimentoAtivo)
       this.setMensagensClienteAtivo(atd.id_cli, atd.arrMsg)
       this.exibirInformacoes(atd, indice)
+      
+      setTimeout(() => {
+        if(document.querySelector('#textarea')){
+          document.querySelector('#textarea').focus()
+        }
+        this.$root.$emit('rolaChat')
+      }, 100)
 
     },
     exibirInformacoes: function(atd, indice) {
@@ -234,16 +242,20 @@ export default {
       const todosContatos = document.querySelector('#todos-contatos')
       if(todosContatos){
         const containerTodosContatos = todosContatos.parentElement
-        containerTodosContatos.style.transitionDuration = '750ms'
+        containerTodosContatos.style.transitionDuration = '300ms'
         if(!this.fechado){
-          containerTodosContatos.style.width = '20%'
+          let widthCtt = localStorage.getItem('largura-contatos')
+          if(widthCtt){
+            containerTodosContatos.style.width = widthCtt
+          }else{
+            containerTodosContatos.style.width = '20%'
+          }
         }else{
           containerTodosContatos.style.width = '60px'
         }
       }
 
       this.$store.dispatch('setAbaContatos', this.fechado)
-
       localStorage.setItem('status-contatos', this.fechado)
     },
     verificaLocalStorage(){
