@@ -271,6 +271,7 @@ export default {
             .put("send-message", data)
             .then((response) => {
               this.$root.$emit("rolaChat");
+              this.$root.$off("rolaChat")
               this.abrirEmojis = false;
               this.abrirOpcoes = false;
             })

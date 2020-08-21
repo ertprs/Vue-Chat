@@ -87,7 +87,6 @@ export default {
                 novosAtendimentos[ramal_local] = this.todosAtendimentos[ramal_local]
               }
             }
-            this.$root.$off('atualizar_mensagem', this.criaObjMensagem)
             this.$store.dispatch('setAtendimentos', novosAtendimentos)
             this.$store.dispatch('limparIdAtendimentoAtivo')
           }
