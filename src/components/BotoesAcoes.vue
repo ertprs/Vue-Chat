@@ -50,7 +50,6 @@ import { mapGetters } from 'vuex'
 export default {
   data(){
     return{
-      titulos: ['Transferir', 'Retornar'],
       titulo: '',
       origem: '',
       regrasDoClienteAtivo: [],
@@ -109,8 +108,44 @@ export default {
       axios_api.get(`get-transfer?token_cliente=${tokenCliente}`)
         .then(response => {
           console.log('response transferir: ', response.data.options)
-          this.arrAgentes = response.data.options.agentes
-          this.arrGrupos = response.data.options.grupos
+          
+          let arrChaves = []
+          let arrValores = []
+
+          if(response.data.options.agentes.length){
+            response.data.options.agentes.map(objAgentes => {
+              arrChaves = Object.keys(objAgentes)
+              arrValores = Object.values(objAgentes)
+            })
+
+            for(let i = 0; i < arrChaves.length; i++){
+              if(this.arrAgentes.length){
+                if(this.arrAgentes[i].cod !== arrChaves[i]){
+                  this.arrAgentes.push({ label: arrValores[i], cod: arrChaves[i] })
+                }              
+              }else{
+                this.arrAgentes.push({ label: arrValores[i], cod: arrChaves[i] })
+              }
+            }
+          }
+
+          if(response.data.options.grupos.length){
+            
+            response.data.options.grupos.map(objGrupos => {
+              arrChaves = Object.keys(objGrupos)
+              arrValores = Object.values(objGrupos)
+            })
+
+            for(let i = 0; i < arrChaves.length; i++){
+              if(this.arrGrupos.length){
+                if(this.arrGrupos[i].cod !== arrChaves[i]){
+                  this.arrGrupos.push({ label: arrValores[i], cod: arrChaves[i] })
+                }              
+              }else{
+                this.arrGrupos.push({ label: arrValores[i], cod: arrChaves[i] })
+              }
+            }
+          }
         })
         .catch(error => {
           console.log('Erro transferir: ', error)
@@ -167,7 +202,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>
