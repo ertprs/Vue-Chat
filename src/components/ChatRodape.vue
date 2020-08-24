@@ -403,6 +403,7 @@ export default {
             this.mensagensFormatadas_03 = objMsgFormatada
             console.log('msgFormatada_03: ', this.mensagensFormatadas_03)
           }else{
+            this.mensagensFormatadas_03 = []
             this.$toasted.global.emConstrucao({msg: 'Sem mensagens para as opcoes selecionadas'})
             console.log('Nao ha msgs formatadas: ', objMsgFormatada)
           }
