@@ -9666,6 +9666,9 @@ body {
       width: 100%;
       white-space: nowrap; }
 
+:root {
+  --bg-alternativo: #999; }
+
 #popup {
   position: absolute;
   z-index: 2;
@@ -9681,7 +9684,7 @@ body {
     display: flex;
     align-items: center;
     flex-wrap: wrap; }
-    #popup > div > h2 {
+    #popup > div .popup-titulo {
       margin: 0;
       font-size: 1.5rem;
       font-weight: 100;
@@ -9725,6 +9728,10 @@ body {
           transform: translateY(1px); }
         #popup > div > ul li:nth-child(2) {
           margin: 0 15px; }
+      #popup > div > ul.bg li {
+        box-shadow: inset 0 -4px var(--bg-alternativo); }
+        #popup > div > ul.bg li:active {
+          box-shadow: inset 0 -2px var(--bg-alternativo); }
     #popup > div div[grupos-transferir],
     #popup > div div[grupos-agentes],
     #popup > div div[agendar-retorno] {
@@ -9748,7 +9755,9 @@ body {
       display: flex;
       flex-direction: column; }
       #popup > div div[agendar-retorno] .btns-agendamento-container {
-        display: flex; }
+        display: flex;
+        margin: 0;
+        padding: 0; }
         #popup > div div[agendar-retorno] .btns-agendamento-container .btn-cancelar-agendamento {
           margin-left: 10px; }
         #popup > div div[agendar-retorno] .btns-agendamento-container .btn-confirmar-agendamento, #popup > div div[agendar-retorno] .btns-agendamento-container .btn-cancelar-agendamento {
@@ -9777,9 +9786,10 @@ body {
             -o-transform: translateY(1px);
             -ms-transform: translateY(1px);
             transform: translateY(1px); }
-          #popup > div div[agendar-retorno] .btns-agendamento-container .btn-confirmar-agendamento p, #popup > div div[agendar-retorno] .btns-agendamento-container .btn-cancelar-agendamento p {
-            margin: 0;
-            padding: 0; }
+        #popup > div div[agendar-retorno] .btns-agendamento-container.bg .btn-confirmar-agendamento, #popup > div div[agendar-retorno] .btns-agendamento-container.bg .btn-cancelar-agendamento {
+          box-shadow: inset 0 -4px var(--bg-alternativo); }
+          #popup > div div[agendar-retorno] .btns-agendamento-container.bg .btn-confirmar-agendamento:active, #popup > div div[agendar-retorno] .btns-agendamento-container.bg .btn-cancelar-agendamento:active {
+            box-shadow: inset 0 -2px var(--bg-alternativo); }
 
 #rodape-botoes-encerramento-container {
   width: 100%;

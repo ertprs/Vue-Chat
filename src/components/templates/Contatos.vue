@@ -117,7 +117,9 @@ export default {
       if(this.todosAtendimentos){
         this.objAtendimentos = Object.values(this.todosAtendimentos)
         if(this.objAtendimentos.length == 1 && this.idAtendimentoAtivo == ''){
-          this.ativarConversa(this.objAtendimentos[0], 0)
+          setTimeout(() => {
+            this.ativarConversa(this.objAtendimentos[0], 0)
+          }, 200)
         }
       }
     }
@@ -167,6 +169,7 @@ export default {
       atd.qtdMsgNova = 0;
       this.$store.dispatch('setIdAtendimentoAtivo', atd.id_cli)
       this.setMensagensClienteAtivo(atd.id_cli, atd.arrMsg)
+      
       this.exibirInformacoes(atd, indice)
       
       setTimeout(() => {
