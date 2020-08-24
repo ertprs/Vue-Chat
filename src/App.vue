@@ -68,13 +68,13 @@ export default {
   methods: {
     resizeContatos(data){
       let widthContatos = data.width
-      
+
       if(widthContatos < 90 && !this.fechado){
         this.$root.$emit('toggle-contatos')
-        this.$root.$off('toggle-contatos')
+        // this.$root.$off('toggle-contatos')
       }else if(widthContatos > 90 && this.fechado){
         this.$root.$emit('toggle-contatos')
-        this.$root.$off('toggle-contatos')
+        // this.$root.$off('toggle-contatos')
       }
 
       localStorage.setItem('largura-contatos', widthContatos + 'px')

@@ -10,6 +10,14 @@
         </ul>
         <div v-if="pessoalData" agendar-retorno>
           <input type="datetime-local" :min="setData('minimo')" :max="setData('maximo')" v-model="dataHora" />
+          <div class="btns-agendamento-container">
+            <div class="btn-confirmar-agendamento" @click="agendarRetorno(dataHora)">
+              <p>Confirmar</p>
+            </div>
+            <div class="btn-cancelar-agendamento" @click="fecharPopup">
+              <p>Cancelar</p>
+            </div>
+          </div>
         </div>
       </template>
       <template v-else-if="origem == 'Transferir'">
@@ -20,26 +28,21 @@
         <div v-if="abrirAgentes" grupos-agentes>
           <vSelect
           :options="arrAgentes"
-          label="login"
+          label="label"
           @input="enviaAgente"
-          :reduce="arrAgentes => arrAgentes.login"
+          :reduce="arrAgentes => arrAgentes.cod"
           >
-          <!-- :value="arrAgentes[0].login" -->
+            <div slot="no-options">Nenhuma correspondencia encontrada</div>
           </vSelect>
         </div>
         <div v-if="abrirGrupos" grupos-transferir>
-          <select name="select-grupos-transferir">
-            <option value="" v-for="(grupo, indice) in arrGrupos" :key="indice">
-              {{ grupo }}
-            </option>
-          </select>
           <vSelect
-          :options="arrGrupos"
-          label="label"
-          @input="enviaGrupo"
-          :reduce="arrGrupos => arrGrupos.grupo"
-          >
-          <!-- :value="arrGrupos[0].label" -->
+            :options="arrGrupos"
+            label="label"
+            @input="enviaGrupo"
+            :reduce="arrGrupos => arrGrupos.cod"
+            >
+            <div slot="no-options">Nenhuma correspondencia encontrada</div>
           </vSelect>
         </div>
       </template>
@@ -72,17 +75,6 @@ export default {
       dataHora: ''
     }
   },
-  watch: {
-    dataHora(){
-      let data = this.dataHora.slice(0, 10)
-      let hora = this.dataHora.slice(11, this.dataHora.length)
-
-      this.fecharPopup()
-      if(!document.querySelector('.toasted.toasted-primary.success')){
-        this.$toasted.global.defaultSuccess({msg: 'Retorno Agendado'})
-      }
-    },
-  },
   methods: {
     fecharPopup(event){
       if(event){
@@ -105,36 +97,23 @@ export default {
         return false
       }
     },
+    agendarRetorno(dataHora){
+      if(dataHora){
+        console.log('dataHora: ', dataHora)
+        this.$toasted.global.defaultSuccess({msg: 'Retorno agendado'})
+      }else{
+        this.$toasted.global.defaultError({msg: 'Data e hora indefinidas'})
+      }
+    },
     enviaGrupo(grupo){
-      // axios_api.put('transfer',grupo).then(response => {
-      //   this.fecharPopup()
-      //   console.log('Sucesso enviar grupo: ', response)
-      //   if(!document.querySelector('.toasted.toasted-primary.success')){
-      //     this.$toasted.global.sucessoTransferencia()
-      //   }
-      // })
-      // .catch(error => {
-      //   console.log('Erro ao enviar o grupo: : ', error)
-      //   if(!document.querySelector('.toasted.toasted-primary.error')){
-      //     this.$toasted.global.defaultError('Erro na transferencia')
-      //   }
-      // })
+      console.log('grupo: ', grupo)
+      this.$toasted.global.sucessoTransferencia()
+      this.fecharPopup()
     },
     enviaAgente(agente){
-      // axios_api.put('transfer', agente)
-      // .then(response => {
-      //   this.fecharPopup()
-      //   console.log('Sucesso enviar agente: ', response)
-      //   if(!document.querySelector('.toasted.toasted-primary.success')){
-      //     this.$toasted.global.sucessoTransferencia()
-      //   }
-      // })
-      // .catch(error => {
-      //   console.log('Erro ao enviar o agente: : ', error)
-      //   if(!document.querySelector('.toasted.toasted-primary.error')){
-      //     this.$toasted.global.defaultError('Erro na transferencia')
-      //   }
-      // })
+      console.log('agente: ', agente)
+      this.$toasted.global.sucessoTransferencia()
+      this.fecharPopup()
     },
     setData(opt){
       let data = new Date()

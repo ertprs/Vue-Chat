@@ -64,7 +64,7 @@ var app = new Vue({
                 console.log('IF negacao do mainData')
                 alert('aqui')
                 setTimeout( () => {
-                  this.adicionaCaso(200)
+                  this.adicionaCaso(400)
                   this.buscaAtendimentos()
                 }, TEMPO_ATUALIZACAO)
               }
@@ -98,7 +98,7 @@ var app = new Vue({
                 console.log('Erro ao tentar obter dados no servidor')
                 console.log(mainData)
                 setTimeout( () => {
-                  this.adicionaCaso(200)
+                  this.adicionaCaso(400)
                   this.buscaAtendimentos()
                 }, TEMPO_ATUALIZACAO)
                 // }
@@ -117,13 +117,13 @@ var app = new Vue({
             default:
               console.log('ERRO STATUS ' + response.status + ' ' + response.statusText)
               console.log(response)
-              this.adicionaCaso(200)
+              this.adicionaCaso(400)
               this.reiniciarApp()
               break
           }
         })
         .catch(err =>{
-          this.adicionaCaso(200)
+          this.adicionaCaso(400)
           console.log(err)
           }
         )

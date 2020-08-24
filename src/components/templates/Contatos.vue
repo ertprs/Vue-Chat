@@ -29,7 +29,7 @@
         </div>
       </div>
       <!-- Caso haja Cliente -->
-      <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 200">
+      <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 400">
         <ul :class="{'fechado' : fechado}" v-if="objAtendimentos.length && caso !== 206" id="lista-contatos">
           <li
             v-for="(atd, indice) in objAtendimentos"
@@ -78,7 +78,7 @@
       </div>
     </template>
     <!-- Caso não haja atendimentos -->
-    <div v-if="caso == 200 && !todosAtendimentos.length" class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
+    <div v-if="caso == 400 && !todosAtendimentos.length" class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
       <div>
         <i class="far fa-folder-open"></i>
         <transition name="fade">
@@ -249,7 +249,7 @@ export default {
         containerTodosContatos.style.transitionDuration = '300ms'
         if(!this.fechado){
           let widthCtt = localStorage.getItem('largura-contatos')
-          if(widthCtt){
+          if(widthCtt && widthCtt !== '60px'){
             containerTodosContatos.style.width = widthCtt
           }else{
             containerTodosContatos.style.width = '20%'
