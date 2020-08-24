@@ -94,12 +94,12 @@ export default new Vuex.Store({
     limparAtendimentoAtivo: context => {
       context.commit('limparAtendimentoAtivo')
     },
-    setTokenAtd: (context, payload) => {
-      context.commit('setTokenAtd', payload)
-    },
-    setTokenManager: (context, payload) => {
-      context.commit('setTokenManager', payload)
-    },
+    // setTokenAtd: (context, payload) => {
+    //   context.commit('setTokenAtd', payload)
+    // },
+    // setTokenManager: (context, payload) => {
+    //   context.commit('setTokenManager', payload)
+    // },
     setAbaContatos: (context, payload) => {
       context.commit('setAbaContatos', payload)
     }
@@ -123,12 +123,12 @@ export default new Vuex.Store({
     getAtendimentoAtivo(state){
       return state.atendimentoAtivo
     },
-    getTokenAtd(state) {
-      return state.tokenAtd
-    },
-    getTokenManager(state) {
-      return state.tokenManager
-    },
+    // getTokenAtd(state) {
+    //   return state.tokenAtd
+    // },
+    // getTokenManager(state) {
+    //   return state.tokenManager
+    // },
     getAbaContatos(state){
       return state.abaContatos
     },

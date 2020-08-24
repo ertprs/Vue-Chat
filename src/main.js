@@ -31,8 +31,8 @@ var app = new Vue({
   },
   computed: {
     ...mapGetters({
-      tokenAtd: 'getTokenAtd',
-      tokenManager: 'getTokenManager',
+      // tokenAtd: 'getTokenAtd',
+      // tokenManager: 'getTokenManager',
       todosAtendimentos: 'getTodosAtendimentos',
       idAtendimentoAtivo: 'getIdAtendimentoAtivo',
       tokenJWT: 'getTokenJWT',
@@ -68,7 +68,7 @@ var app = new Vue({
                   this.buscaAtendimentos()
                 }, TEMPO_ATUALIZACAO)
               }
-              if (mainData.atendimentos != null && mainData.token_manager != null) {
+              if (mainData.atendimentos != null ) {
                 this.adicionaCaso('')
 
                 // Percorrendo todas mensagens para transformar em emojis
@@ -88,24 +88,23 @@ var app = new Vue({
                 this.$store.dispatch('setAtendimentos', mainData.atendimentos)
                 const agenda = ['Maria', 'Joao', 'Joana', 'Frederico']
                 this.$store.dispatch('setAgenda', agenda)
-                mainData.token_atd != null ? this.$store.dispatch('setTokenAtd', mainData.token_atd) : this.$store.dispatch('setTokenAtd', '')
-                mainData.token_manager != null ? this.$store.dispatch('setTokenManager', mainData.token_manager) : this.$store.dispatch('setTokenManager', '')
-                
+                // mainData.token_atd != null ? this.$store.dispatch('setTokenAtd', mainData.token_atd) : this.$store.dispatch('setTokenAtd', '')
+                // mainData.token_manager != null ? this.$store.dispatch('setTokenManager', mainData.token_manager) : this.$store.dispatch('setTokenManager', '')
                 this.loopAtualizacaoDeAtendimentos()
               } else {
-                if (mainData.token_manager != null) { // quando o token e valido mas nao recebemos o atendimento
-                  setTimeout( () => {
-                    this.adicionaCaso(206)
-                    this.buscaAtendimentos()
-                  }, TEMPO_ATUALIZACAO)
-                } else {
-                  console.log('Erro ao tentar obter dados no servidor')
-                  console.log(mainData)
-                  setTimeout( () => {
-                    this.adicionaCaso(400)
-                    this.buscaAtendimentos()
-                  }, TEMPO_ATUALIZACAO)
-                }
+                // if (mainData.token_manager != null) { // quando o token e valido mas nao recebemos o atendimento
+                //   setTimeout( () => {
+                //     this.adicionaCaso(206)
+                //     this.buscaAtendimentos()
+                //   }, TEMPO_ATUALIZACAO)
+                // } else {
+                console.log('Erro ao tentar obter dados no servidor')
+                console.log(mainData)
+                setTimeout( () => {
+                  this.adicionaCaso(400)
+                  this.buscaAtendimentos()
+                }, TEMPO_ATUALIZACAO)
+                // }
               }
               break;
 
@@ -165,17 +164,17 @@ var app = new Vue({
       status_gerenciador = 0
     },
     async atualizarAtendimentos() {
-      let urlComToken = 'get-atendimento?token_atd=' + this.tokenAtd + '&token_manager=' + this.tokenManager
+      // let urlComToken = 'get-atendimento?token_atd=' + this.tokenAtd + '&token_manager=' + this.tokenManager
       await axios_api({
         method: 'get',
-        url: this.$store.getters.getURL + urlComToken
+        url: this.$store.getters.getURL + 'get-atendimento'
       }) // segundo get-atendimento, agora com parametros
         .then(response => {
           let mainData = response.data
           // Quando chega um novo contato, o st_ret não vem, e acaba caindo no ultimo else
           if (mainData.st_ret === 'OK' || mainData.atendimentos) {
-            mainData.token_atd != null ? this.$store.dispatch('setTokenAtd', mainData.token_atd) : this.$store.dispatch('setTokenAtd', '')
-            mainData.token_manager != null ? this.$store.dispatch('setTokenManager', mainData.token_manager) : this.$store.dispatch('setTokenManager', '')
+            // mainData.token_atd != null ? this.$store.dispatch('setTokenAtd', mainData.token_atd) : this.$store.dispatch('setTokenAtd', '')
+            // mainData.token_manager != null ? this.$store.dispatch('setTokenManager', mainData.token_manager) : this.$store.dispatch('setTokenManager', '')
             this.atualizarClientes(mainData)
           } else if (mainData.st_ret === 'AVISO') {
             console.log('Nao existe clientes na fila')
@@ -188,7 +187,7 @@ var app = new Vue({
             if(response.data){
               for(let atd in response.data){
                 if(typeof response.data[atd] == 'object'){
-                  if(response.data[atd].arrMsg > 0){
+                  if(response.data[atd].arrMsg > 0) {
                     response.data[atd].novoContato = true
                     let novoAtd = new Object(),
                     chave = atd
