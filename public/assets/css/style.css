@@ -9674,14 +9674,15 @@ body {
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  padding: 10px; }
   #popup > div {
-    min-width: 200px;
     background-color: white;
     display: flex;
     align-items: center;
     flex-wrap: wrap; }
     #popup > div > h2 {
+      margin: 0;
       font-size: 1.5rem;
       font-weight: 100;
       padding: 5px 10px;
@@ -9691,8 +9692,12 @@ body {
     #popup > div > ul {
       display: flex;
       list-style-type: none;
-      margin: 15px auto;
+      margin: 10px auto;
       padding: 0; }
+      #popup > div > ul.tres-mais {
+        flex-direction: column; }
+        #popup > div > ul.tres-mais li:nth-child(2n) {
+          margin: 10px 0; }
       #popup > div > ul li {
         transition-duration: .3s;
         user-select: none;
@@ -9725,14 +9730,13 @@ body {
     #popup > div div[agendar-retorno] {
       width: 100%;
       margin: 10px auto;
-      margin-top: 0;
       display: flex;
       justify-content: center;
       align-items: center; }
       #popup > div div[grupos-transferir] > div,
       #popup > div div[grupos-agentes] > div,
       #popup > div div[agendar-retorno] > div {
-        min-width: 300px; }
+        min-width: 200px; }
       #popup > div div[grupos-transferir] > input,
       #popup > div div[grupos-agentes] > input,
       #popup > div div[agendar-retorno] > input {

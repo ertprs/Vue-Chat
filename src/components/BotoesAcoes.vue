@@ -1,20 +1,43 @@
 <template>
   <div id="rodape-botoes-encerramento-container">
     <div class="rodape-botoes-encerramento">
-        <div class="rodape-botoes-botao botao-transferencia" :title="titulos[0]" v-on:click="abrirTransferir()">
+      <template v-if="tudoPronto">
+        <div 
+          class="rodape-botoes-botao botao-transferencia"
+          v-if="regrasBotoes.button_transfer.use == 'S'"
+          :title="regrasBotoes.button_transfer.name"
+          @click="abrirTransferir()">
+
           <i class="fas fa-random"></i>
-          <span>{{ titulos[0] }}</span>
+          <span>{{ regrasBotoes.button_transfer.name }}</span>
         </div>
-        <div class="rodape-botoes-botao botao-retornar" :title="titulos[1]" v-on:click="retornarForm()">
+        <div
+          class="rodape-botoes-botao botao-retornar"
+          v-if="regrasBotoes.button_suspend.use == 'S'"
+          :title="regrasBotoes.button_suspend.name"
+          @click="retornarForm()">
+
           <i class="fas fa-undo"></i>
-          <span>{{ titulos[1] }}</span>
+          <span>{{ regrasBotoes.button_suspend.name }}</span>
         </div>
-        <div class="rodape-botoes-botao botao-encerrar" title="Encerrar" v-on:click="popupEncerrar()">
+        <div 
+          class="rodape-botoes-botao botao-encerrar"
+          v-if="regrasBotoes.button_end.use == 'S'"
+          :title="regrasBotoes.button_end.name" 
+          @click="popupEncerrar()">
+
           <i class="fas fa-sign-out-alt"></i>
-          <span> Encerrar </span>
+          <span>{{ regrasBotoes.button_end.name }}</span>
         </div>
-      </div>
-      <Popup v-if="blocker && titulo && origemBlocker == 'btn-acoes'" :titulo='titulo' />
+      </template>
+    </div>
+    <!-- Tentar remover daqui -->
+    <Popup 
+      v-if="blocker && origem && titulo && origemBlocker == 'btn-acoes'"
+      :titulo="titulo"
+      :origem="origem"
+      :arrAgentes="arrAgentes"
+      :arrGrupos="arrGrupos" />
   </div>
 </template>
 
@@ -28,37 +51,81 @@ export default {
   data(){
     return{
       titulos: ['Transferir', 'Retornar'],
-      titulo: ''
+      titulo: '',
+      origem: '',
+      regrasDoClienteAtivo: [],
+      regrasBotoes: [],
+      tudoPronto: false,
+      arrAgentes: [],
+      arrGrupos: []
     }
   },
   components: {
     Popup
   },
+  watch: {
+    regras(){
+      if(this.regras.length){
+        this.preencherRegrasDoClienteAtivo()
+      }
+    }
+  },
   mounted(){
     this.$root.$on('encerrarAtendimento', () => {
       this.encerrarAtendimento()
     })
+
+  },
+  computed: {
+    ...mapGetters({
+      atendimentoAtivo: 'getAtendimentoAtivo',
+      todosAtendimentos: 'getTodosAtendimentos',
+      idAtendimentoAtivo: 'getIdAtendimentoAtivo',
+      blocker: 'getBlocker',
+      origemBlocker: 'getOrigemBlocker',
+      regras: 'getTodasRegras'
+    })
   },
   methods: {
-    checaBlocker(criar){
-      this.$store.dispatch('setOrigemBlocker', 'btn-acoes')
-      if(criar){
-        this.$store.dispatch('setBlocker', true)
-      }else{
-        this.$store.dispatch('setBlocker', false)
+    preencherRegrasDoClienteAtivo(){
+      if(!this.regrasBotoes.length){
+        const login_usu = this.atendimentoAtivo.login_usu
+        this.regrasDoClienteAtivo = this.regras.filter(regra => regra.id == login_usu)
+        this.regrasBotoes = this.regrasDoClienteAtivo[0].regras.rules
+
+        this.tudoPronto = true
       }
     },
+    checaBlocker(){
+      this.$store.dispatch('setOrigemBlocker', 'btn-acoes')
+      this.$store.dispatch('setBlocker', true)
+    },
     abrirTransferir(){
-      this.checaBlocker(true)
-      this.titulo = 'Transferir'
+      this.checaBlocker()
+      this.origem = 'Transferir'
+      this.titulo = this.regrasBotoes.button_transfer.name
+
+      const tokenCliente = this.atendimentoAtivo.token_cliente
+      axios_api.get(`get-transfer?token_cliente=${tokenCliente}`)
+        .then(response => {
+          console.log('response transferir: ', response.data.options)
+          this.arrAgentes = response.data.options.agentes
+          this.arrGrupos = response.data.options.grupos
+        })
+        .catch(error => {
+          console.log('Erro transferir: ', error)
+        })
+
     },
     retornarForm(){
-      this.titulo = 'Retornar'
-      this.checaBlocker(true)
+      this.origem = 'Retornar'
+      this.titulo = this.regrasBotoes.button_suspend.name
+      this.checaBlocker()
     },
     popupEncerrar(){
-      this.titulo = 'Encerrar'
-      this.checaBlocker(true)
+      this.origem = 'Encerrar'
+      this.titulo = this.regrasBotoes.button_end.name
+      this.checaBlocker()
     },
     async encerrarAtendimento() {
       if( this.atendimentoAtivo.informacoes.nome != null ) {
@@ -97,15 +164,6 @@ export default {
         })
 
     }
-  },
-  computed: {
-    ...mapGetters({
-      atendimentoAtivo: 'getAtendimentoAtivo',
-      blocker: 'getBlocker',
-      todosAtendimentos: 'getTodosAtendimentos',
-      idAtendimentoAtivo: 'getIdAtendimentoAtivo',
-      origemBlocker: 'getOrigemBlocker'
-    })
   }
 }
 </script>
