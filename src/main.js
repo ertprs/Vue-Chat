@@ -70,11 +70,9 @@ var app = new Vue({
               }
               if (mainData.atendimentos != null ) {
                 this.adicionaCaso('')
-
                 // Percorrendo todas mensagens para transformar em emojis
                 for (let atd in mainData.atendimentos) {
                   this.getRules(mainData.atendimentos[atd].token_cliente, mainData.atendimentos[atd].login_usu)
-                  
                   for (let i = 0; i < mainData.atendimentos[atd].arrMsg.length; i++) {
                     let regex = ''
                     for (let j = 0; j < this.emojis.length; j++) {
@@ -83,7 +81,6 @@ var app = new Vue({
                     }
                   }
                 }
-
                 carregarIframe(mainData.atendimentos)
                 this.$store.dispatch('setAtendimentos', mainData.atendimentos)
                 const agenda = ['Maria', 'Joao', 'Joana', 'Frederico']
