@@ -189,6 +189,9 @@ export default {
                 novosAtendimentos[ramal_local] = this.todosAtendimentos[ramal_local]
               }
             }
+            if(!Object.keys(novosAtendimentos).length){
+              this.$store.dispatch('setCaso', 206)
+            }
             this.$store.dispatch('setAtendimentos', novosAtendimentos)
             this.$store.dispatch('limparIdAtendimentoAtivo')
           }
