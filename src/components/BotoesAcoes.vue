@@ -37,14 +37,17 @@
       :titulo="titulo"
       :origem="origem"
       :arrAgentes="arrAgentes"
-      :arrGrupos="arrGrupos" />
+      :arrGrupos="arrGrupos"
+      :bg="bgPopup" />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import axios_api from '../services/serviceAxios'
+
 import Popup from './templates/Popup'
+
 import { mapGetters } from 'vuex'
 
 export default {
@@ -53,28 +56,30 @@ export default {
       titulo: '',
       origem: '',
       regrasDoClienteAtivo: [],
-      regrasBotoes: [],
+      regrasBotoes: {},
+      regrasCor: [],
       tudoPronto: false,
       arrAgentes: [],
-      arrGrupos: []
+      arrGrupos: [],
+      bgPopup: '',
+      limitador: 0
     }
   },
   components: {
     Popup
   },
-  watch: {
-    regras(){
-      if(this.regras.length){
-        this.preencherRegrasDoClienteAtivo()
-      }
-    }
-  },
   mounted(){
     this.preencherRegrasDoClienteAtivo()
     this.$root.$on('encerrarAtendimento', () => {
       this.encerrarAtendimento()
+      this.reverterCoresClienteAtivo()
     })
 
+    this.preencherRegrasDoClienteAtivo()
+
+  },
+  beforeDestroy(){
+    this.$root.$off('encerrarAtendimento')
   },
   computed: {
     ...mapGetters({
@@ -88,14 +93,75 @@ export default {
   },
   methods: {
     preencherRegrasDoClienteAtivo(){
-      if(!this.regrasBotoes.length){
-        const login_usu = this.atendimentoAtivo.login_usu
-        this.regrasDoClienteAtivo = this.regras.filter(regra => regra.id == login_usu)
-        if(this.regrasDoClienteAtivo[0].regras.rules) {
-          this.regrasBotoes = this.regrasDoClienteAtivo[0].regras.rules
-        }
+      const login_usu = this.atendimentoAtivo.login_usu
+      this.regrasDoClienteAtivo  = this.regras.filter(regra => regra.id == login_usu)
+      if(!this.tudoPronto && this.regrasDoClienteAtivo[0]){
+        this.regrasBotoes = this.regrasDoClienteAtivo[0].regras.rules
+        setTimeout(() => {
+          this.setCoresClienteAtivo()
+        }, 100)
+
         this.tudoPronto = true
+        this.limitador = 0
+      }else{
+        this.limitador++
+        if(this.limitador == 10){
+          return
+        }else{
+          setTimeout(() => {
+            this.preencherRegrasDoClienteAtivo()
+          }, 300)
+        }
       }
+    },
+    setCoresClienteAtivo(){
+      this.regrasCor = this.regrasBotoes.primary_color
+      if(this.regrasCor){
+        this.aplicarCoresNoElemento('.chat-opcoes-titulo', this.regrasCor)
+        this.aplicarCoresNoElemento('.titulo-contatos', this.lightenDarkenColor(this.regrasCor, 10))
+        this.aplicarCoresNoElemento('.lista-agenda--titulo', this.lightenDarkenColor(this.regrasCor, 30))
+        this.aplicarCoresNoElemento('#informacoes-titulo', this.lightenDarkenColor(this.regrasCor, -10))
+        
+        this.bgPopup = this.lightenDarkenColor(this.regrasCor, 15)
+      }
+    },
+    reverterCoresClienteAtivo(){
+      this.aplicarCoresNoElemento('.chat-opcoes-titulo', '')
+      this.aplicarCoresNoElemento('.titulo-contatos', '')
+      this.aplicarCoresNoElemento('.lista-agenda--titulo', '')
+      this.aplicarCoresNoElemento('#informacoes-titulo', '')
+      
+      this.bgPopup = ''
+    },
+    aplicarCoresNoElemento(elem, cor){
+      if(document.querySelector(elem)){
+        document.querySelector(elem).style.backgroundColor = cor
+      }
+    },
+    lightenDarkenColor(col, amt) {
+
+      let usePound = false
+      if (col[0] == "#") {
+          col = col.slice(1)
+          usePound = true
+      }
+    
+      let num = parseInt(col,16)
+
+      let r = (num >> 16) + amt
+      if (r > 255) r = 255
+      else if  (r < 0) r = 0
+
+      let b = ((num >> 8) & 0x00FF) + amt  
+      if (b > 255) b = 255
+      else if  (b < 0) b = 0
+  
+      let g = (num & 0x0000FF) + amt
+      if (g > 255) g = 255
+      else if (g < 0) g = 0
+
+      const color = (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16)
+      return color
     },
     checaBlocker(){
       this.$store.dispatch('setOrigemBlocker', 'btn-acoes')
@@ -109,7 +175,6 @@ export default {
       const tokenCliente = this.atendimentoAtivo.token_cliente
       axios_api.get(`get-transfer?token_cliente=${tokenCliente}`)
         .then(response => {
-          console.log('response transferir: ', response.data.options)
           
           let arrChaves = []
           let arrValores = []
@@ -191,8 +256,14 @@ export default {
                 novosAtendimentos[ramal_local] = this.todosAtendimentos[ramal_local]
               }
             }
+            if(!Object.keys(novosAtendimentos).length){
+              this.$store.dispatch('setCaso', 206)
+            }
             this.$store.dispatch('setAtendimentos', novosAtendimentos)
             this.$store.dispatch('limparIdAtendimentoAtivo')
+
+            this.$root.$off('atualizar_mensagem')
+            this.$root.$off('rolaChat')
           }
         })
         .catch(error => {

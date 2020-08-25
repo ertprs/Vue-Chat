@@ -1,27 +1,31 @@
 <template>
   <div id="popup" popup @click="fecharPopup($event)">
     <div>
-      <h2>{{ titulo }}</h2>
+      <h2 class="popup-titulo" :style="'background-color: '+bg">{{ titulo }}</h2>
       <template v-if="origem == 'Retornar'">
-        <ul lista-retornar :class="{'tres-mais' : tamanhoChat()}" v-if="!pessoalData">
+        <ul 
+          lista-retornar 
+          :class="{'tres-mais' : tamanhoChat(), 'bg' : bg}"
+          v-if="!pessoalData">
           <li @click="$toasted.global.emConstrucao(), fecharPopup()"> Todos </li>
           <li @click="$toasted.global.emConstrucao(), fecharPopup()"> Pessoal </li>
           <li @click="pessoalData = true"> Pessoal/Data </li>
         </ul>
         <div v-if="pessoalData" agendar-retorno>
           <input type="datetime-local" :min="setData('minimo')" :max="setData('maximo')" v-model="dataHora" />
-          <div class="btns-agendamento-container">
-            <div class="btn-confirmar-agendamento" @click="agendarRetorno(dataHora)">
-              <p>Confirmar</p>
-            </div>
-            <div class="btn-cancelar-agendamento" @click="fecharPopup">
-              <p>Cancelar</p>
-            </div>
-          </div>
+          <ul 
+            class="btns-agendamento-container"
+            :class="{'bg' : bg}">
+            <li class="btn-confirmar-agendamento" @click="agendarRetorno(dataHora)"> Confirmar </li>
+            <li class="btn-cancelar-agendamento" @click="fecharPopup()"> Cancelar </li>
+          </ul>
         </div>
       </template>
       <template v-else-if="origem == 'Transferir'">
-        <ul lista-transferir v-if="!abrirAgentes && !abrirGrupos">
+        <ul 
+          lista-transferir 
+          :class="{'bg' : bg}"
+          v-if="!abrirAgentes && !abrirGrupos">
           <li @click="preencherAgente()"> Agente </li>
           <li @click="preencherGrupo()"> Grupo </li>
         </ul>
@@ -47,7 +51,9 @@
         </div>
       </template>
       <template v-else-if="origem == 'Encerrar'">
-        <ul lista-retornar>
+        <ul 
+          :class="{'bg' : bg}"
+          lista-retornar>
           <li @click="encerrar()"> Confirmar </li>
           <li @click="fecharPopup()"> Cancelar </li>
         </ul>
@@ -66,7 +72,7 @@ export default {
   components:{
     vSelect,
   },
-  props: ['titulo', 'origem', 'arrGrupos', 'arrAgentes'],
+  props: ['titulo', 'origem', 'arrGrupos', 'arrAgentes', 'bg'],
   data(){
     return{
       abrirAgentes: false,
@@ -169,7 +175,14 @@ export default {
       }else{
         this.$toasted.global.emConstrucao({msg: 'Nao existem agentes disponiveis'})
       }
+    },
+    alterarCoresLi(){
+      const root = document.documentElement
+      root.style.setProperty('--bg-alternativo', this.bg)
     }
+  },
+  mounted(){
+    this.alterarCoresLi()
   }
 }
 </script>

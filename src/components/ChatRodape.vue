@@ -258,6 +258,8 @@ export default {
             message: this.mensagem,
           };
 
+          
+
           this.mensagem = "";
           setTimeout(() => {
             document.querySelector("#textarea").value = "";
@@ -267,9 +269,9 @@ export default {
           axios_api
             .put("send-message", data)
             .then((response) => {
-              this.$root.$emit("rolaChat")
               this.abrirEmojis = false;
               this.abrirOpcoes = false;
+              this.$root.$emit("rolaChat")
             })
             .catch((error) => {
               this.mensagem = msgAux;
@@ -399,6 +401,7 @@ export default {
             this.mensagensFormatadas_03 = objMsgFormatada
             console.log('msgFormatada_03: ', this.mensagensFormatadas_03)
           }else{
+            this.mensagensFormatadas_03 = []
             this.$toasted.global.emConstrucao({msg: 'Sem mensagens para as opcoes selecionadas'})
             console.log('Nao ha msgs formatadas: ', objMsgFormatada)
           }

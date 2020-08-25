@@ -4,8 +4,8 @@
     <!-- Contatos -->
     <vue-resizable
       :minWidth="60"
-      :width="widthContatos"
       :maxWidth="275"
+      :width="widthContatos"
       :active="handlers"
       @resize:start="adicionaBlocker"
       @resize:end="resizeContatos">
@@ -116,10 +116,21 @@ export default {
     adicionaBlocker(){
       this.$store.dispatch('setBlocker', true)
       this.$store.dispatch('setOrigemBlocker', 'chat')
+    },
+    setHeightMaximo(){
+      setTimeout(() => {
+        const paiChat = document.querySelector('#chat').parentElement
+        const paiContatos = document.querySelector('#todos-contatos').parentElement
+        paiChat.style.height = '100%'
+        paiContatos.style.height = '100%'
+      }, 1000)
     }
   },
   created(){
     this.verificaLocalStorage()
+  },
+  mounted(){
+    this.setHeightMaximo()
   },
   computed: {
     ...mapGetters({

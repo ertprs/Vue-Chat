@@ -1,5 +1,9 @@
 @import 'default';
 
+// :root{
+//   --bg-titulo-contatos: lighten($cor, 10);
+// }
+
 $valorOpacidade: .8;
 $corBoxShadow: rgba(0, 0, 0, 0.5);
 $tamanhoBoxShadow: 5px;
@@ -20,7 +24,7 @@ $tamanhoBoxShadow: 5px;
     position: relative;
     display: flex;
     align-items: center;
-    background-color: lighten($cor, 10);
+    background-color: lighten($cor, 10); // var(--bg-titulo-contatos)
     height: 10%;
     max-height: $alturaMaxTitulos;
     width: 100%;

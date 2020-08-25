@@ -1,3 +1,5 @@
+import { stat } from "fs";
+
 export default {
   state: {
     todasRegras: []

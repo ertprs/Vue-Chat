@@ -191,7 +191,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                     }
                     novosAtendimentos[ramal].arrMsg.push(message)// adiciono as mensagens novas no array global
                     console.log('seq: ' + message.seq + ' msg: ' + message.msg + ', tipo: ' + message.resp_msg)
-                    if (store.getters.getIdAtendimentoAtivo !== novosAtendimentos[ramal].id_cli) {
+                    if (store.getters.getIdAtendimentoAtivo !== novosAtendimentos[ramal].id_cli && message.resp_msg == 'CLI') {
                         novosAtendimentos[ramal].alertaMsgNova = true
                         if (!novosAtendimentos[ramal].qtdMsgNova) {
                             novosAtendimentos[ramal].qtdMsgNova = 1;
@@ -200,7 +200,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                         }
                     } else {
                         if (message.resp_msg == 'CLI') {
-                            app.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
+                            app.$root.$emit('rolaChat')
                             app.$root.$emit('atualizar_mensagem', message)
                         }
                     }

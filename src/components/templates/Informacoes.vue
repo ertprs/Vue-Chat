@@ -4,11 +4,11 @@
       <!-- Título -->
       <div class="informacoes-titulo" v-if="!atendimentoAtivo.informacoes">
         <i class="fas fa-info-circle"></i>
-        <h1 title="Informacoes" v-if="!atendimentoAtivo.informacoes"> Informacoes </h1>
+        <h1 title="Informacoes"> Informacoes </h1>
       </div>
       <!-- Caso haja informacoes -->
       <div class="container-principal-informacoes" v-if="atendimentoAtivo.informacoes">
-        <div class="informacoes-titulo">
+        <div class="informacoes-titulo" id="informacoes-titulo">
           <i class="fas fa-info-circle"></i>
           <!-- Lista de Informacoes Superiores -->
           <div class="informacoes-superiores-container">
