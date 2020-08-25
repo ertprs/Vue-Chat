@@ -101,3 +101,13 @@
     }
   }
 }
+
+#iframe-msg-container{
+  position: absolute;
+  background-color: #FFF;
+  z-index: 3;
+  top: 10%;
+  width: 95%;
+  height: 85%;
+  margin: 0 2.5%;
+}

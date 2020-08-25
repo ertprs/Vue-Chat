@@ -1,5 +1,5 @@
 <template>
-  <div blocker v-if="blocker" v-on:click="fecharBlocker()" :class="{'bg-blocker-padrao' : origemBlocker == 'btn-acoes'}"></div>
+  <div blocker v-if="blocker" v-on:click="fecharBlocker()" :class="{'bg-blocker-padrao' : origemBlocker == 'btn-acoes' || origemBlocker == 'msg-formatada'}"></div>
 </template>
 
 <script>

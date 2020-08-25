@@ -177,7 +177,7 @@
             <div class="btn-select-03"
               v-show="tipoMsg == 2"
               title="Abrir msg tipo 02"
-              @click="insereMsgFormatadaNoTextarea(mensagensFormatadas_03, chaveAtual_03)">
+              @click="abrePopupMsgTipo2(mensagensFormatadas_03, chaveAtual_03)">
               <i class="far fa-file-alt"></i>
             </div>
           </div>
@@ -452,6 +452,17 @@ export default {
         this.$toasted.global.emConstrucao({msg: 'Mensagem vazia'})
       }
     },
+    abrePopupMsgTipo2(arrayMsgFormatada, indice){
+      console.log('msg: ', arrayMsgFormatada[indice])
+      const objMsg = arrayMsgFormatada[indice]
+      if(objMsg){
+        this.$store.dispatch("setOrigemBlocker", "msg-formatada")
+        this.$store.dispatch("setBlocker", true)
+        this.$store.dispatch("setAbrirMsgTipo2", true)
+      }
+
+      this.$toasted.global.emConstrucao()
+    },
     selecionarEmoji() {
       this.$store.dispatch("setOrigemBlocker", "chat");
       this.abrirEmojis = !this.abrirEmojis;
@@ -616,6 +627,7 @@ export default {
       if (!this.blocker) {
         this.abrirOpcoes = false;
         this.abrirEmojis = false;
+        this.$store.dispatch("setAbrirMsgTipo2", false)
       }
     },
     erroFormatoAnexo() {

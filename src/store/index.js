@@ -5,6 +5,7 @@ import tratativaDeCasos from './modulos/tratativaDeCasos'
 import emojis from './modulos/emojis'
 import iframeModulo from './modulos/iframeModulo'
 import rules from './modulos/rules'
+import msgFormatada from './modulos/msgFormatada'
 
 Vue.use(Vuex);
 
@@ -20,8 +21,7 @@ export default new Vuex.Store({
     tokenAtd: '',
     tokenManager: '',
     todosAtendimentos: {},
-    url: '',
-    tipoMsg: ''
+    url: ''
   },
   mutations: {
     setTodasMensagens(state, novaMensagem){
@@ -62,9 +62,6 @@ export default new Vuex.Store({
     },
     setAbaContatos(state, abaContatos){
       state.abaContatos = abaContatos
-    },
-    setTipoMsg(state, tipoMsg){
-      state.tipoMsg = tipoMsg
     }
   },
   actions: {
@@ -98,17 +95,8 @@ export default new Vuex.Store({
     limparAtendimentoAtivo: context => {
       context.commit('limparAtendimentoAtivo')
     },
-    // setTokenAtd: (context, payload) => {
-    //   context.commit('setTokenAtd', payload)
-    // },
-    // setTokenManager: (context, payload) => {
-    //   context.commit('setTokenManager', payload)
-    // },
     setAbaContatos: (context, payload) => {
       context.commit('setAbaContatos', payload)
-    },
-    setTipoMsg: (context, payload) => {
-      context.commit('setTipoMsg', payload)
     }
   },
   getters: {
@@ -130,21 +118,12 @@ export default new Vuex.Store({
     getAtendimentoAtivo(state){
       return state.atendimentoAtivo
     },
-    // getTokenAtd(state) {
-    //   return state.tokenAtd
-    // },
-    // getTokenManager(state) {
-    //   return state.tokenManager
-    // },
     getAbaContatos(state){
       return state.abaContatos
     },
     getIdAtendimentoAtivo(state){
       return state.idAtendimentoAtivo
-    },
-    getTipoMsg(state){
-      return state.tipoMsg
     }
   },
-  modules: { controleBlocker, tratativaDeCasos, emojis, iframeModulo, rules }
+  modules: { controleBlocker, tratativaDeCasos, emojis, iframeModulo, rules, msgFormatada }
 });

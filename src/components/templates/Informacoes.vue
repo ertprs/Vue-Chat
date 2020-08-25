@@ -52,6 +52,10 @@
             <IframeTemplate v-if="atendimentoAtivo.url" />
           </div>
         </div>
+        <!-- Iframe Msg Tipo 2 -->
+        <div id="iframe-msg-container" v-if="abrirMsgTipo2">
+          <!-- Iframe do Caio -->
+        </div>
         <!-- Rodape - Botoes Acoes -->
         <!-- <div class="container-acoes">
           <BotoesAcoes />
@@ -107,7 +111,8 @@ export default {
   computed: {
     ...mapGetters({
       atendimentoAtivo: 'getAtendimentoAtivo',
-      caso: 'getCaso'
+      caso: 'getCaso',
+      abrirMsgTipo2: 'getAbrirMsgTipo2'
     })
   },
 }
