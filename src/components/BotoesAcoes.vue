@@ -139,8 +139,8 @@ export default {
         document.querySelector(elem).style.backgroundColor = cor
       }
     },
-    lightenDarkenColor(col, amt) {
-      let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(col)
+    lightenDarkenColor(cor, qtd) {
+      let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(cor)
 
       result = result ? {
         r: parseInt(result[1], 16),
@@ -153,32 +153,32 @@ export default {
       }
       
       if(result.r > 0 && result.r < 255){
-        if(result.r + amt < 0 || result.r + amt > 255){
+        if(result.r + qtd < 0 || result.r + qtd > 255){
           result.r = result.r
         }else{
-          result.r = result.r + amt
+          result.r = result.r + qtd
         }
       }
 
       if(result.g > 0 && result.g < 255){
-        if(result.g + amt < 0 || result.g + amt > 255){
+        if(result.g + qtd < 0 || result.g + qtd > 255){
           result.g = result.g
         }else{
-          result.g = result.g + amt
+          result.g = result.g + qtd
         }
       }
 
       if(result.b > 0 && result.b < 255){
-        if(result.b + amt < 0 || result.b + amt > 255){
+        if(result.b + qtd < 0 || result.b + qtd > 255){
           result.b = result.b
         }else{
-          result.b = result.b + amt
+          result.b = result.b + qtd
         }
       }
 
-      result = "#" + componentToHex(result.r) + componentToHex(result.g) + componentToHex(result.b);
+      result = "#" + componenteRGBParaHex(result.r) + componenteRGBParaHex(result.g) + componenteRGBParaHex(result.b);
 
-      function componentToHex(color){
+      function componenteRGBParaHex(color){
         let hex = color.toString(16);
         return hex.length == 1 ? "0" + hex : hex;
       }

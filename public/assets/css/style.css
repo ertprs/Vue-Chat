@@ -9207,6 +9207,8 @@ body {
         padding: 0;
         list-style-type: none; }
         .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container .chat-opcoes-titulo-container--lista li {
+          white-space: nowrap;
+          text-overflow: ellipsis;
           font-size: .8rem;
           margin: 0;
           padding: 0;

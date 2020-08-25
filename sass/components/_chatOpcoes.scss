@@ -2,19 +2,16 @@
 
 .chat-opcoes{
   display: flex;
-  // flex-wrap: wrap;
   justify-content: space-between;
   height: fit-content;
-  height: 10%; // *
+  height: 10%;
   max-height: $alturaMaxTitulos;
   border-bottom: 1px solid #CCC;
   .chat-opcoes-titulo{
-    // user-select: none;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     width: 100%;
-    // background-color: #93BD94;
     background-color: $cor;
     p{
       white-space: nowrap;
@@ -64,6 +61,8 @@
         padding: 0;
         list-style-type: none;
         li{
+          white-space: nowrap;
+          text-overflow: ellipsis;
           font-size: .8rem;
           margin: 0;
           padding: 0;
