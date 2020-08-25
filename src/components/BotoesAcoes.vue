@@ -261,6 +261,7 @@ export default {
             this.$store.dispatch('setAtendimentos', novosAtendimentos)
             this.$store.dispatch('limparIdAtendimentoAtivo')
 
+            this.$root.$off('atualizar_mensagem')
           }
         })
         .catch(error => {
