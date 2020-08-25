@@ -11,15 +11,14 @@ var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
 var app
 
 export function getAtendimentos(appVue) {
-    app = appVue
+    appVue ? app = appVue : false
     liberaRequest()
     axios({
         method: 'get',
         url: store.getters.getURL + 'get-atendimento'
     })
         .then(response => {
-            axiosTokenJWT(response.headers.authorization)
-            tratarResponse(response.status, response.data)
+            tratarResponse(response)
         })
         .catch(err => {
             adicionaCaso(400)
@@ -38,32 +37,43 @@ function loopAtualizacaoDeAtendimentos(count = 0) {
     }, TEMPO_ATUALIZACAO);
 }
 
-function tratarResponse(status, mainData) {
+function tratarResponse(response) {
+    console.log(response)
 
+    if (response.headers.authorization) {
+        axiosTokenJWT(response.headers.authorization)
+    } else {
+        console.error('Erro na autorização')
+        console.log(response)
+    }
+    var status = response.status
+    var mainData = response.data
     switch (status) {
         case 200:
             if (!mainData) {
-                console.log('Negação do mainData')
+                console.error('Negacao do mainData')
                 setTimeout(() => {
                     adicionaCaso(400)
                     getAtendimentos()
                 }, TEMPO_ATUALIZACAO)
-            }
-            if (mainData.atendimentos != null) {
-                mainData = converterHexaParaEmojis(mainData)
-                executarRegrasFormatacao(mainData)
-                carregarIframe(mainData.atendimentos)
-                store.dispatch('setAtendimentos', mainData.atendimentos)
-                const agenda = ['Maria', 'Joao', 'Joana', 'Frederico']
-                store.dispatch('setAgenda', agenda)
-                loopAtualizacaoDeAtendimentos()
             } else {
-                console.log('Erro ao tentar obter dados no servidor')
-                console.log(mainData)
-                setTimeout(() => {
-                    adicionaCaso(400)
-                    getAtendimentos()
-                }, TEMPO_ATUALIZACAO)
+
+                if (mainData.atendimentos != null) {
+                    mainData = converterHexaParaEmojis(mainData)
+                    executarRegrasFormatacao(mainData)
+                    carregarIframe(mainData.atendimentos)
+                    store.dispatch('setAtendimentos', mainData.atendimentos)
+                    const agenda = ['Maria', 'Joao', 'Joana', 'Frederico']
+                    store.dispatch('setAgenda', agenda)
+                    loopAtualizacaoDeAtendimentos()
+                } else {
+                    console.log('Erro ao tentar obter dados no servidor')
+                    console.log(mainData)
+                    setTimeout(() => {
+                        adicionaCaso(400)
+                        getAtendimentos()
+                    }, TEMPO_ATUALIZACAO)
+                }
             }
             break;
 
