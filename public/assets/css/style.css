@@ -8847,7 +8847,7 @@ body {
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   background-color: rgba(100, 100, 100, 0.1); }
   #todos-contatos.fechado {
-    width: 60px !important; }
+    width: 100%; }
   #todos-contatos > div {
     margin: 0 auto;
     width: 95%; }
