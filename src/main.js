@@ -251,7 +251,7 @@ var app = new Vue({
               novosAtendimentos[ramal].arrMsg.push(message)// adiciono as mensagens novas no array global
 
               console.log('seq: ' + message.seq + ' msg: ' + message.msg + ', tipo: ' + message.resp_msg)
-              if (this.idAtendimentoAtivo !== novosAtendimentos[ramal].id_cli) {
+              if (this.idAtendimentoAtivo !== novosAtendimentos[ramal].id_cli && message.resp_msg == 'CLI') {
                 novosAtendimentos[ramal].alertaMsgNova = true
                 if (!novosAtendimentos[ramal].qtdMsgNova) {
                   novosAtendimentos[ramal].qtdMsgNova = 1;

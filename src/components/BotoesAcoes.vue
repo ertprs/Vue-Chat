@@ -262,6 +262,7 @@ export default {
             this.$store.dispatch('limparIdAtendimentoAtivo')
 
             this.$root.$off('atualizar_mensagem')
+            this.$root.$off('rolaChat')
           }
         })
         .catch(error => {
