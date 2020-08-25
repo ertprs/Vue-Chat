@@ -20,7 +20,8 @@ export default new Vuex.Store({
     tokenAtd: '',
     tokenManager: '',
     todosAtendimentos: {},
-    url: ''
+    url: '',
+    tipoMsg: ''
   },
   mutations: {
     setTodasMensagens(state, novaMensagem){
@@ -61,6 +62,9 @@ export default new Vuex.Store({
     },
     setAbaContatos(state, abaContatos){
       state.abaContatos = abaContatos
+    },
+    setTipoMsg(state, tipoMsg){
+      state.tipoMsg = tipoMsg
     }
   },
   actions: {
@@ -102,6 +106,9 @@ export default new Vuex.Store({
     // },
     setAbaContatos: (context, payload) => {
       context.commit('setAbaContatos', payload)
+    },
+    setTipoMsg: (context, payload) => {
+      context.commit('setTipoMsg', payload)
     }
   },
   getters: {
@@ -134,6 +141,9 @@ export default new Vuex.Store({
     },
     getIdAtendimentoAtivo(state){
       return state.idAtendimentoAtivo
+    },
+    getTipoMsg(state){
+      return state.tipoMsg
     }
   },
   modules: { controleBlocker, tratativaDeCasos, emojis, iframeModulo, rules }

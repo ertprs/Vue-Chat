@@ -8,6 +8,7 @@ export function obterMsgFormatada(tipo, tokenCliente) {
         })
         .then(response => {
             if(response.data.st_ret === 'OK') {
+                store.dispatch('setTipoMsg', response.data.tipo)
                 return response.data.nivel
             }
         })

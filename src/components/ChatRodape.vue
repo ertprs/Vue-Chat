@@ -169,9 +169,16 @@
               </option>
             </select>
             <div class="btn-select-03"
+              v-show="tipoMsg == 1"
               title="Preencher campo de mensagem"
               @click="insereMsgFormatadaNoTextarea(mensagensFormatadas_03, chaveAtual_03)">
               <i class="fas fa-level-up-alt"></i>
+            </div>
+            <div class="btn-select-03"
+              v-show="tipoMsg == 2"
+              title="Abrir msg tipo 02"
+              @click="insereMsgFormatadaNoTextarea(mensagensFormatadas_03, chaveAtual_03)">
+              <i class="far fa-file-alt"></i>
             </div>
           </div>
         </transition>
@@ -257,8 +264,6 @@ export default {
             token_cliente: this.atendimentoAtivo.token_cliente,
             message: this.mensagem,
           };
-
-          
 
           this.mensagem = "";
           setTimeout(() => {
@@ -638,6 +643,7 @@ export default {
       url: "getURL",
       emojis: "getEmojis",
       blocker: "getBlocker",
+      tipoMsg: 'getTipoMsg'
     })
   },
   beforeDestroy: function() {
