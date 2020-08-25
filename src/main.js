@@ -260,10 +260,8 @@ var app = new Vue({
                 }
               } else {
                 if (message.resp_msg == 'CLI') {
-                  this.$root.$emit('rolaChatClienteAtivo', cliente.id_cli)
-                  this.$root.$off('rolaChatClienteAtivo')
+                  this.$root.$emit('rolaChat')
                   this.$root.$emit('atualizar_mensagem', message)
-                  this.$root.$off('atualizar_mensagem')
                 }
               }
 

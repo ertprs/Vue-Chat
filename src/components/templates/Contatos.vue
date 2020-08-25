@@ -177,7 +177,6 @@ export default {
           document.querySelector('#textarea').focus()
         }
         this.$root.$emit('rolaChat')
-        this.$root.$off('rolaChat')
       }, 100)
 
     },

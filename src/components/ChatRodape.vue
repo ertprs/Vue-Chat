@@ -261,6 +261,8 @@ export default {
             message: this.mensagem,
           };
 
+          
+
           this.mensagem = "";
           setTimeout(() => {
             document.querySelector("#textarea").value = "";
@@ -270,10 +272,9 @@ export default {
           axios_api
             .put("send-message", data)
             .then((response) => {
-              this.$root.$emit("rolaChat");
-              this.$root.$off("rolaChat")
               this.abrirEmojis = false;
               this.abrirOpcoes = false;
+              this.$root.$emit("rolaChat")
             })
             .catch((error) => {
               this.mensagem = msgAux;

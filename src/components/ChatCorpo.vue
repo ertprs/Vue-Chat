@@ -29,41 +29,31 @@ export default {
   components: {
     Mensagens
   },
+  data(){
+    return{
+      limitador: 0
+    }
+  },
   mounted() {
     this.$root.$on('rolaChat', () => {
-      this.rolaChat('novaMensagem')
-    })
-    this.$root.$on('rolaChatClienteAtivo',(id) => {
-      this.rolaChatClienteAtivo(id)
+      this.rolaChat()
     })
   },
   methods:{
-    rolaChat(origem){
-      let corpoMensagens = document.querySelector("#chat-operador > div")
+    rolaChat(){
+      const corpoMensagens = document.querySelector('.chat-corpo-mensagens')
       if(corpoMensagens){
-        let tamanhoCorpoMensagem = corpoMensagens.offsetHeight
-        let tamanhoScroll = corpoMensagens.scrollHeight
-
-        if(origem == 'novaMensagem'){
-          let corpoMensagens = document.querySelector("#chat-operador > div")
-          if(corpoMensagens){
-            corpoMensagens.scrollTo(0, corpoMensagens.scrollHeight )
-          }
+        setTimeout(() => {
+          corpoMensagens.scroll(0, corpoMensagens.scrollHeight)
+        }, 150)
+      }else{
+        this.limitador++
+        if(this.limitador >= 10){
           return
         }
-
-        if(tamanhoScroll && tamanhoCorpoMensagem){
-          if(tamanhoScroll > tamanhoCorpoMensagem){
-            corpoMensagens.scrollTo(0, corpoMensagens.scrollHeight )
-
-            this.$store.dispatch('setHabilitaRolagem', false)
-          }
-        }
-      }
-    },
-    rolaChatClienteAtivo(id) {
-      if(id === this.atendimentoAtivo.id_cli) {
-        this.rolaChat('novaMensagem')
+        setTimeout(() => {
+          this.rolaChat
+        }, 300)
       }
     },
     verificaPosicaoBarraRolagem(){
