@@ -2,7 +2,7 @@
   <div id="chat" class="resizable-content">
     <template v-if="atendimentoAtivo.informacoes && caso !== 600">
       <ChatOpcoes />
-      <ChatCorpo id="chat-operador" />
+      <ChatCorpo id="chat-operador"/>
       <ChatRodape />
     </template>
     <template v-else-if="!atendimentoAtivo.informacoes || 400 || caso == 206 || caso == 600">

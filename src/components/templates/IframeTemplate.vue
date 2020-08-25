@@ -10,17 +10,18 @@
     </div>
   </div>
 </template>
-
 <script>
 import { mapGetters } from "vuex";
-
 export default {
   mounted() {
     this.$root.$on('mostrarIframe', (idCliente, urlFrame) => {
       this.mostraIframe(idCliente, urlFrame)
     })
-  },
-  watch: {
+    for(let i in this.iframesDisponiveis) {
+      if(this.iframesDisponiveis[i].id === this.atendimentoAtivo.id) {
+        this.mostraIframe(this.iframesDisponiveis[i].id, this.iframesDisponiveis[i].url)
+      }
+    }
   },
   methods: {
     mostraIframe: function(idCliente, urlFrame) {
@@ -54,8 +55,12 @@ export default {
   computed: {
     ...mapGetters({
       iframesDisponiveis: "getIframesDisponiveis",
+      atendimentoAtivo: "getAtendimentoAtivo"
     }),
   },
+  beforeDestroy: function() {
+    this.$root.$off('mostrarIframe')
+  }
 };
 </script>
 

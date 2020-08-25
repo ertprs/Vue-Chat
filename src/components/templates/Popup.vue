@@ -154,7 +154,6 @@ export default {
     encerrar(){
       this.$root.$emit('encerrarAtendimento')
       // Limpando pilha de eventos afim de evitar que a função de encerrar seja chamada mais de uma vez
-      this.$root.$off('encerrarAtendimento')
       this.fecharPopup()
     },
     preencherAgente(){

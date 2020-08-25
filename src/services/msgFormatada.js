@@ -7,7 +7,6 @@ export function obterMsgFormatada(tipo, tokenCliente) {
             url: `${store.getters.getURL}get-messages/${tipo}?token_cliente=${tokenCliente}`
         })
         .then(response => {
-            // console.log(response.data)
             if(response.data.st_ret === 'OK') {
                 return response.data.nivel
             }

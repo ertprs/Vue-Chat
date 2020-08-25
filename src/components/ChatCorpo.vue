@@ -68,14 +68,12 @@ export default {
     },
     verificaPosicaoBarraRolagem(){
       this.$store.dispatch('setHabilitaRolagem', true)
-      
       if(this.habilitaRolagem){
         let containerMensagens = document.querySelector("#chat-operador > div")
         if(containerMensagens){
           let posicaoDaBarra = containerMensagens.scrollTop
           let tamanhoContainer = containerMensagens.offsetHeight
           let tamanhoBarra = containerMensagens.scrollHeight
-  
           if(posicaoDaBarra == (tamanhoBarra - tamanhoContainer)){
             this.$store.dispatch('setHabilitaRolagem', false)
           }else if(parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra || parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra + 1 || parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra - 1){
@@ -91,6 +89,10 @@ export default {
       habilitaRolagem: 'getHabilitaRolagem',
       atendimentoAtivo: 'getAtendimentoAtivo'
     })
+  },
+  beforeDestroy: function () {
+    // this.$root.off('rolaChat')
+    // this.$root.off('rolaChatClienteAtivo')
   }
 }
 </script>

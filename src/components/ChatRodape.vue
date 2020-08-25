@@ -129,7 +129,7 @@
     <transition name="fade">
       <div class="chat-rodape-msg-formatada" v-show="msgFormatadaAberto">
         <!-- Select 01 -->
-        <select 
+        <select
           name="select-msg-formatada_01"
           class="select-msg-formatada"
           v-model="chaveAtual_01"
@@ -143,8 +143,8 @@
         <!-- Select 02 -->
         <transition name="fade">
           <select
-            v-show="mensagensFormatadas_02.length" 
-            name="select-msg-formatada_02" 
+            v-show="mensagensFormatadas_02.length"
+            name="select-msg-formatada_02"
             class="select-msg-formatada"
             v-model="chaveAtual_02"
             v-on:change="recebeValorMSGFormatada(chaveAtual_01+'/'+chaveAtual_02, 3)">
@@ -157,9 +157,9 @@
         </transition>
         <!-- Select 03 -->
         <transition name="fade">
-          <div class="select-03" v-show="mensagensFormatadas_03.length" >  
+          <div class="select-03" v-show="mensagensFormatadas_03.length" >
             <select
-              name="select-msg-formatada_03" 
+              name="select-msg-formatada_03"
               class="select-msg-formatada"
               v-model="chaveAtual_03">
               <option disabled value="">Selecione</option>
@@ -193,12 +193,9 @@
 <script>
 
 import { mapGetters } from "vuex";
-
 import BotoesAcoes from './BotoesAcoes'
-
-import { obterMsgFormatada } from "../services/serviceMsgFormatada";
+import { obterMsgFormatada } from "../services/msgFormatada";
 import axios_api from "../services/serviceAxios";
-
 import axios from "axios";
 
 export default {
@@ -270,8 +267,7 @@ export default {
           axios_api
             .put("send-message", data)
             .then((response) => {
-              this.$root.$emit("rolaChat");
-              this.$root.$off("rolaChat")
+              this.$root.$emit("rolaChat")
               this.abrirEmojis = false;
               this.abrirOpcoes = false;
             })
@@ -639,8 +635,10 @@ export default {
       url: "getURL",
       emojis: "getEmojis",
       blocker: "getBlocker",
-    }),
+    })
   },
+  beforeDestroy: function() {
+  }
 };
 </script>
 

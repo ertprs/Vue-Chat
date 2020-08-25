@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <Blocker />
-    
     <!-- Contatos -->
     <vue-resizable
       :minWidth="60"

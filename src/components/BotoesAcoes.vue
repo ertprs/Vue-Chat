@@ -70,6 +70,7 @@ export default {
     }
   },
   mounted(){
+    this.preencherRegrasDoClienteAtivo()
     this.$root.$on('encerrarAtendimento', () => {
       this.encerrarAtendimento()
     })
@@ -90,8 +91,9 @@ export default {
       if(!this.regrasBotoes.length){
         const login_usu = this.atendimentoAtivo.login_usu
         this.regrasDoClienteAtivo = this.regras.filter(regra => regra.id == login_usu)
-        this.regrasBotoes = this.regrasDoClienteAtivo[0].regras.rules
-
+        if(this.regrasDoClienteAtivo[0].regras.rules) {
+          this.regrasBotoes = this.regrasDoClienteAtivo[0].regras.rules
+        }
         this.tudoPronto = true
       }
     },
@@ -199,6 +201,9 @@ export default {
         })
 
     }
-  }
+  },
+  beforeDestroy: function() {
+    this.$root.$off('encerrarAtendimento')
+}
 }
 </script>

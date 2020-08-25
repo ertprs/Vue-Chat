@@ -174,7 +174,7 @@ export default {
           document.querySelector('#textarea').focus()
         }
         this.$root.$emit('rolaChat')
-        this.$root.$off('rolaChat')
+        // this.$root.$off('rolaChat')
       }, 100)
 
     },
@@ -182,9 +182,8 @@ export default {
       atd.informacoes = {}
       atd.informacoes.nome = atd.nome_usu
       atd.id = atd.login_usu
-      this.$root.$emit('mostrarIframe', atd.id, atd.url)
-      this.$root.$off('mostrarIframe')
       this.$store.dispatch('setAtendimentoAtivo', atd)
+      this.$root.$emit('mostrarIframe', atd.id, atd.url)
     },
     setMensagensClienteAtivo(id, arrMensagens) {
       this.$store.dispatch('limparTodasMensagens')
