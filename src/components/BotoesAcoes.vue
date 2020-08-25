@@ -117,6 +117,7 @@ export default {
     setCoresClienteAtivo(){
       this.regrasCor = this.regrasBotoes.primary_color
       if(this.regrasCor){
+
         this.aplicarCoresNoElemento('.chat-opcoes-titulo', this.regrasCor)
         this.aplicarCoresNoElemento('.titulo-contatos', this.lightenDarkenColor(this.regrasCor, 10))
         this.aplicarCoresNoElemento('.lista-agenda--titulo', this.lightenDarkenColor(this.regrasCor, 30))
@@ -138,30 +139,51 @@ export default {
         document.querySelector(elem).style.backgroundColor = cor
       }
     },
-    lightenDarkenColor(col, amt) {
+    lightenDarkenColor(cor, qtd) {
+      let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(cor)
 
-      let usePound = false
-      if (col[0] == "#") {
-          col = col.slice(1)
-          usePound = true
+      result = result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null
+
+      if(!result){
+        return
       }
-    
-      let num = parseInt(col,16)
+      
+      if(result.r > 0 && result.r < 255){
+        if(result.r + qtd < 0 || result.r + qtd > 255){
+          result.r = result.r
+        }else{
+          result.r = result.r + qtd
+        }
+      }
 
-      let r = (num >> 16) + amt
-      if (r > 255) r = 255
-      else if  (r < 0) r = 0
+      if(result.g > 0 && result.g < 255){
+        if(result.g + qtd < 0 || result.g + qtd > 255){
+          result.g = result.g
+        }else{
+          result.g = result.g + qtd
+        }
+      }
 
-      let b = ((num >> 8) & 0x00FF) + amt  
-      if (b > 255) b = 255
-      else if  (b < 0) b = 0
-  
-      let g = (num & 0x0000FF) + amt
-      if (g > 255) g = 255
-      else if (g < 0) g = 0
+      if(result.b > 0 && result.b < 255){
+        if(result.b + qtd < 0 || result.b + qtd > 255){
+          result.b = result.b
+        }else{
+          result.b = result.b + qtd
+        }
+      }
 
-      const color = (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16)
-      return color
+      result = "#" + componenteRGBParaHex(result.r) + componenteRGBParaHex(result.g) + componenteRGBParaHex(result.b);
+
+      function componenteRGBParaHex(color){
+        let hex = color.toString(16);
+        return hex.length == 1 ? "0" + hex : hex;
+      }
+      
+      return result
     },
     checaBlocker(){
       this.$store.dispatch('setOrigemBlocker', 'btn-acoes')
