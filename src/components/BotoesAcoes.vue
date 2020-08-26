@@ -117,7 +117,6 @@ export default {
     setCoresClienteAtivo(){
       this.regrasCor = this.regrasBotoes.primary_color
       if(this.regrasCor){
-
         this.aplicarCoresNoElemento('.chat-opcoes-titulo', this.regrasCor)
         this.aplicarCoresNoElemento('.titulo-contatos', this.lightenDarkenColor(this.regrasCor, 10))
         this.aplicarCoresNoElemento('.lista-agenda--titulo', this.lightenDarkenColor(this.regrasCor, 30))
@@ -152,27 +151,21 @@ export default {
         return
       }
       
-      if(result.r > 0 && result.r < 255){
-        if(result.r + qtd < 0 || result.r + qtd > 255){
-          result.r = result.r
-        }else{
-          result.r = result.r + qtd
-        }
-      }
+      let r = result.r
+      let g = result.g
+      let b = result.b
 
-      if(result.g > 0 && result.g < 255){
-        if(result.g + qtd < 0 || result.g + qtd > 255){
-          result.g = result.g
-        }else{
-          result.g = result.g + qtd
-        }
-      }
-
-      if(result.b > 0 && result.b < 255){
-        if(result.b + qtd < 0 || result.b + qtd > 255){
-          result.b = result.b
-        }else{
-          result.b = result.b + qtd
+      result.r = novaCor(r, qtd)
+      result.g = novaCor(g, qtd)
+      result.b = novaCor(b, qtd)
+      
+      function novaCor(c, qtd){
+        if(c >= 0 && c <= 255){
+          if(c + qtd < 0 || c + qtd > 255){
+            return c
+          }else{
+            return c + qtd
+          }
         }
       }
 
