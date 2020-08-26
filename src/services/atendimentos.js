@@ -59,6 +59,7 @@ function tratarResponse(response) {
             } else {
 
                 if (mainData.atendimentos != null) {
+                    adicionaCaso('')
                     mainData = converterHexaParaEmojis(mainData)
                     executarRegrasFormatacao(mainData)
                     carregarIframe(mainData.atendimentos)

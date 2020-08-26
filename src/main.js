@@ -24,6 +24,7 @@ var app = new Vue({
     store.dispatch('setURL', "https://linux03/im/atdHumano/middleware/atd_api.php/")
   },
   mounted() {
+    store.dispatch('setCaso', 206)
     getAtendimentos(this)
   }
 }).$mount("#app");
