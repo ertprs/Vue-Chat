@@ -6,7 +6,7 @@ import { carregarIframe } from "./iframe"
 import { converterHexaParaEmojis } from "./emojis"
 import { executarRegrasFormatacao } from "./regrasFormatacao"
 
-const TEMPO_ATUALIZACAO = 4000
+const TEMPO_ATUALIZACAO = 100
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
 var app
 
@@ -28,18 +28,18 @@ export function getAtendimentos(appVue) {
 }
 
 function loopAtualizacaoDeAtendimentos(count = 0) {
+    start()
     setTimeout(async () => {
         if (verificaRequest()) {
             bloqueiaRequest()
             await atualizarAtendimentos()
         }
+        end()
         loopAtualizacaoDeAtendimentos(count = count + 1)
     }, TEMPO_ATUALIZACAO);
 }
 
 function tratarResponse(response) {
-    console.log(response)
-
     if (response.headers.authorization) {
         axiosTokenJWT(response.headers.authorization)
     } else {
@@ -79,8 +79,8 @@ function tratarResponse(response) {
             break;
 
         case 206:
-            console.log('Status ' + response.status + ' ' + response.statusText)
-            console.log('Aguardando Cliente')
+            // console.log('Status ' + response.status + ' ' + response.statusText)
+            // console.log('Aguardando Cliente')
             setTimeout(() => {
                 getAtendimentos()
                 adicionaCaso(206)
@@ -231,4 +231,21 @@ function reiniciarApp() {
     setTimeout(function () {
         document.location.reload(true);
     }, TEMPO_ATUALIZACAO)
+}
+
+var startTime, endTime;
+
+function start() {
+  startTime = new Date();
+};
+
+function end() {
+  endTime = new Date();
+  var timeDiff = endTime - startTime; //in ms
+  // strip the ms
+  timeDiff
+
+  // get seconds
+  var seconds = Math.round(timeDiff);
+  console.log(seconds + " miliseconds");
 }
