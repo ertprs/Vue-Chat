@@ -9442,15 +9442,28 @@ body {
         align-items: center;
         flex-wrap: wrap;
         margin-bottom: 5px; }
-        .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .chat-rodape-previa-img img {
-          margin: 5px;
-          max-height: 35px; }
         .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .chat-rodape-previa-img h3 {
           font-size: 1rem;
           color: #444; }
         .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .chat-rodape-previa-img h4 {
           font-size: .8rem;
           color: #444; }
+        .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .chat-rodape-previa-img .container-previa-img {
+          overflow: auto;
+          position: absolute;
+          top: -200px;
+          left: 20px;
+          width: 100%;
+          height: 200px;
+          padding: 5px;
+          border-top-left-radius: 15px;
+          border-top-right-radius: 15px;
+          background-color: rgba(0, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center; }
+          .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .chat-rodape-previa-img .container-previa-img img {
+            height: 100%; }
       .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .caracteres-disponiveis {
         font-size: .575rem;
         z-index: 1;
