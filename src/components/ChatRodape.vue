@@ -40,7 +40,7 @@
           <!-- Textarea -->
           <textarea
             v-show="!aparecerPrevia"
-            v-on:keydown.enter="enviarMensagem()"
+            v-on:keydown.enter="enviarMensagem($event)"
             id="textarea"
             v-model="mensagem"
             placeholder="Digite sua mensagem"
@@ -249,9 +249,13 @@ export default {
       document.querySelector('#textarea').focus()
       this.mensagem += value;
     },
-    enviarMensagem() {
+    enviarMensagem(event) {
       if(this.blocker){
         this.$store.dispatch('setBlocker', false)
+      }
+      
+      if(event.shiftKey){
+        return
       }
 
       this.mensagem = this.mensagem.replace(/\n$/, "", this.mensagem);
