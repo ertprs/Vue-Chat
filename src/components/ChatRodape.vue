@@ -12,11 +12,18 @@
             <template v-if="selecioneAnexo">
               <h3>{{ txtSelecioneAnexo }}</h3>
             </template>
-            <img
-              :src="imagemPrevia"
-              v-show="aparecerPrevia && imagemPrevia !== ''"
-              alt="Previa da Imagem Selecionada"
-            />
+            <template v-if="arquivo.name">
+              <h3>{{ this.arquivo.name }}</h3>
+            </template>
+            <div class="container-previa-img" v-show="aparecerPrevia && imagemPrevia !== ''">
+              <div v-on:click="excluirAnexo()">
+                <i class="fas fa-times-circle"></i>
+              </div>
+              <img
+                :src="imagemPrevia"
+                alt="Previa da Imagem Selecionada"
+              />
+            </div>
           </div>
           <!-- Emoji -->
           <div id="emoji-container" v-show="!aparecerPrevia">

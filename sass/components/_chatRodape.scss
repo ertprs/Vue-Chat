@@ -119,10 +119,6 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
         align-items: center;
         flex-wrap: wrap;
         margin-bottom: 5px;
-        img{
-          margin: 5px;
-          max-height: 35px;
-        }
         h3{
           font-size: 1rem;
           color: #444;
@@ -130,6 +126,24 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
         h4{
           font-size: .8rem;
           color: #444;
+        }
+        .container-previa-img{
+          overflow: auto;
+          position: absolute;
+          top: -200px;
+          left: 20px;
+          width: 100%;
+          height: 200px;
+          padding: 5px;
+          border-top-left-radius: 15px;
+          border-top-right-radius: 15px;
+          background-color: rgba(0, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          img{
+            height: 100%;
+          }
         }
       }
       .caracteres-disponiveis{
@@ -213,6 +227,7 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
       }
     }
   }
+
   .chat-rodape-msg-formatada{
     width: 95%;
     display: flex;

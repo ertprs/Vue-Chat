@@ -54,6 +54,7 @@ function tratarResponse(response) {
                 console.error('Negacao do mainData')
                 setTimeout(() => {
                     adicionaCaso(400)
+                    console.log('Timeout negacao mainData')
                     getAtendimentos()
                 }, TEMPO_ATUALIZACAO)
             } else {
@@ -72,6 +73,7 @@ function tratarResponse(response) {
                     console.log(mainData)
                     setTimeout(() => {
                         adicionaCaso(400)
+                        console.log('timeout erro obter dados no servidor')
                         getAtendimentos()
                     }, TEMPO_ATUALIZACAO)
                 }
@@ -82,6 +84,7 @@ function tratarResponse(response) {
             // console.log('Status ' + response.status + ' ' + response.statusText)
             // console.log('Aguardando Cliente')
             setTimeout(() => {
+                console.log('Timeout aguardando cliente')
                 getAtendimentos()
                 adicionaCaso(206)
             }, TEMPO_ATUALIZACAO)
@@ -126,13 +129,16 @@ async function atualizarAtendimentos() {
             let mainData = response.data
             // Quando chega um novo contato, o st_ret não vem, e acaba caindo no ultimo else
             if (mainData.st_ret === 'OK' || mainData.atendimentos) {
+                adicionaCaso(200)
                 atualizarClientes(mainData)
             } else if (mainData.st_ret === 'AVISO') {
                 console.log('Nao existe clientes na fila')
                 adicionaCaso(206)
-                setTimeout(() => {
-                    getAtendimentos()
-                }, TEMPO_ATUALIZACAO)
+                
+                // setTimeout(() => {
+                //     console.log('Timeout st_ret == Aviso')
+                //     getAtendimentos()
+                // }, TEMPO_ATUALIZACAO)
             } else {
                 console.log('ERRO! Status:', response)
                 if (response.data) {
@@ -148,6 +154,7 @@ async function atualizarAtendimentos() {
                     }
                 } else {
                     setTimeout(() => {
+                        console.log('Timeout sem st_ret')
                         getAtendimentos()
                     }, TEMPO_ATUALIZACAO)
                 }

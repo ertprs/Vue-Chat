@@ -7,7 +7,7 @@
         <h1 title="Informacoes"> Informacoes </h1>
       </div>
       <!-- Caso haja informacoes -->
-      <div class="container-principal-informacoes" v-if="atendimentoAtivo.informacoes">
+      <div class="container-principal-informacoes" v-if="atendimentoAtivo.informacoes && (caso == 200 || caso == '')">
         <div class="informacoes-titulo" id="informacoes-titulo">
           <i class="fas fa-info-circle"></i>
           <!-- Lista de Informacoes Superiores -->
