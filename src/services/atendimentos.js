@@ -4,9 +4,9 @@ import axios_api from "./serviceAxios"
 import { axiosTokenJWT } from "./serviceAxios"
 import { carregarIframe } from "./iframe"
 import { converterHexaParaEmojis } from "./emojis"
-import { executarRegrasFormatacao } from "./regrasFormatacao"
+// import { executarRegrasFormatacao } from "./regrasFormatacao"
 
-const TEMPO_ATUALIZACAO = 100
+const TEMPO_ATUALIZACAO = 4000
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
 var app
 
@@ -62,7 +62,7 @@ function tratarResponse(response) {
                 if (mainData.atendimentos != null) {
                     adicionaCaso('')
                     mainData = converterHexaParaEmojis(mainData)
-                    executarRegrasFormatacao(mainData)
+                    // executarRegrasFormatacao(mainData)
                     carregarIframe(mainData.atendimentos)
                     store.dispatch('setAtendimentos', mainData.atendimentos)
                     const agenda = ['Maria', 'Joao', 'Joana', 'Frederico']
