@@ -9466,6 +9466,7 @@ body {
             height: 100%; }
         .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .chat-rodape-previa-img .btn-excluir-anexo {
           width: 1.6rem;
+          height: 1.6rem;
           background-color: #FFF;
           border-radius: 50%;
           display: flex;
