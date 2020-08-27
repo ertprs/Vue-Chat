@@ -5,24 +5,28 @@
         <div class="chat-rodape-textarea">
           <!-- Prévia imagem -->
           <div class="chat-rodape-previa-img" v-show="aparecerPrevia">
-            <template v-if="erroFormatoAnexo">
+            <div class="formato-invalido" v-if="erroFormatoAnexo">
               <h3>{{ txtFormatoInvalido }}</h3>
               <h4>{{ txtFormatosValidos }}</h4>
-            </template>
+            </div>
             <template v-if="selecioneAnexo">
               <h3>{{ txtSelecioneAnexo }}</h3>
             </template>
-            <template v-if="arquivo.name">
+            <template v-if="arquivo.name && !erroFormatoAnexo && !selecioneAnexo">
               <h3>{{ this.arquivo.name }}</h3>
             </template>
             <div class="container-previa-img" v-show="aparecerPrevia && imagemPrevia !== ''">
-              <div v-on:click="excluirAnexo()">
-                <i class="fas fa-times-circle"></i>
-              </div>
               <img
                 :src="imagemPrevia"
                 alt="Previa da Imagem Selecionada"
               />
+            </div>
+            <div 
+              v-show="aparecerPrevia && imagemPrevia !== ''"
+              v-on:click="excluirAnexo()" 
+              title="Cancelar selecao de anexo" 
+              class="btn-excluir-anexo">
+              <i class="fas fa-times-circle"></i>
             </div>
           </div>
           <!-- Emoji -->
@@ -124,7 +128,7 @@
           </div>
           <div
             class="chat-rodape-botoes-botao botao-excluir-anexo"
-            title="Excluir Anexo"
+            title="Cancelar selecao de anexo"
             v-on:click="excluirAnexo()"
           >
             <i class="fas fa-times-circle"></i>
