@@ -286,7 +286,6 @@ export default {
             }
 
             this.tudoPronto = false
-            this.$store.dispatch('limparRegra', login_usu)
 
             this.$store.dispatch('setAtendimentos', novosAtendimentos)
             this.$store.dispatch('limparIdAtendimentoAtivo')
