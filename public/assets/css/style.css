@@ -9499,7 +9499,7 @@ body {
     .chat-rodape .chat-rodape-botoes > div {
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-end;
       border: 1px solid #CCC;
       border-radius: 30px;
       border-left: 0;

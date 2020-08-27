@@ -15,7 +15,7 @@
     <!-- Chat -->
     <vue-resizable
       :minWidth="300"
-      :maxWidth="700"
+      :maxWidth="540"
       :width="widthChat"
       :active="handlers"
       @resize:start="adicionaBlocker"
