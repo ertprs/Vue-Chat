@@ -264,13 +264,18 @@ export default {
       if(this.blocker){
         this.$store.dispatch('setBlocker', false)
       }
-      
+
+      if(event.keyCode == 13 && !event.shiftKey){
+        event.preventDefault()
+      }
+
       if(event.shiftKey){
         return
       }
 
       this.mensagem = this.mensagem.replace(/\n$/, "", this.mensagem);
-      let msgAux = this.mensagem;
+
+      const msgAux = this.mensagem
 
       if (this.validaMensagem()) {
         if (this.atendimentoAtivo.token_cliente != "" && this.mensagem != "") {
@@ -281,10 +286,6 @@ export default {
           };
 
           this.mensagem = "";
-          setTimeout(() => {
-            document.querySelector("#textarea").value = "";
-            this.mensagem = this.mensagem.replace(/\n$/, "", this.mensagem);
-          }, 100);
 
           axios_api
             .put("send-message", data)
@@ -294,8 +295,8 @@ export default {
               this.$root.$emit("rolaChat")
             })
             .catch((error) => {
-              this.mensagem = msgAux;
               console.log("erro send-message: ", error);
+              this.mensagem = msgAux
               if (!document.querySelector(".toasted.toasted-primary.error")) {
                 this.$toasted.global.defaultError({
                   msg: "Nao foi possivel enviar a mensagem",
@@ -661,7 +662,7 @@ export default {
       } else {
         this.txtSelecioneAnexo = "Selecione um anexo";
       }
-    },
+    }
   },
   computed: {
     ...mapGetters({
