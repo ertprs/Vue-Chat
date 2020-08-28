@@ -6,11 +6,7 @@ import { carregarIframe } from "./iframe"
 import { converterHexaParaEmojis } from "./emojis"
 // import { executarRegrasFormatacao } from "./regrasFormatacao"
 
-<<<<<<< HEAD
-const TEMPO_ATUALIZACAO = 1000
-=======
 const TEMPO_ATUALIZACAO = 4000
->>>>>>> 286be9e80f9663c063b34d5b98c9196d51bf5675
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
 var app
 
