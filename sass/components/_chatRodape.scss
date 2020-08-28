@@ -145,6 +145,29 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
             height: 100%;
           }
         }
+        .btn-excluir-anexo{
+          width: 1.6rem;
+          height: 1.6rem;
+          background-color: #FFF;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center; 
+          position: absolute;
+          right: -35px;
+          top: -215px;
+          cursor: pointer;
+          z-index: 2;
+          opacity: .9;
+          transition-duration: 300ms;
+          &:hover{
+            opacity: 1;
+          }
+          svg{
+            font-size: 2rem;
+            color: #BE1E2A;
+          }
+        }
       }
       .caracteres-disponiveis{
         font-size: .575rem;
@@ -165,7 +188,7 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
     > div{
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-end;
       border: 1px solid #CCC;
       border-radius: 30px;
       border-left: 0;

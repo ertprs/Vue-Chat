@@ -55,27 +55,25 @@ export default {
     return{
       titulo: '',
       origem: '',
-      regrasDoClienteAtivo: [],
+      regrasDoClienteAtivo: {},
       regrasBotoes: {},
-      regrasCor: [],
+      regrasCor: {},
       tudoPronto: false,
       arrAgentes: [],
       arrGrupos: [],
       bgPopup: '',
-      limitador: 0
     }
   },
   components: {
     Popup
   },
   mounted(){
-    this.preencherRegrasDoClienteAtivo()
+    this.getRegras()
+
     this.$root.$on('encerrarAtendimento', () => {
       this.encerrarAtendimento()
       this.reverterCoresClienteAtivo()
     })
-
-    this.preencherRegrasDoClienteAtivo()
 
   },
   beforeDestroy(){
@@ -87,35 +85,47 @@ export default {
       todosAtendimentos: 'getTodosAtendimentos',
       idAtendimentoAtivo: 'getIdAtendimentoAtivo',
       blocker: 'getBlocker',
-      origemBlocker: 'getOrigemBlocker',
-      regras: 'getTodasRegras'
+      origemBlocker: 'getOrigemBlocker'
     })
   },
+  watch: {
+    atendimentoAtivo(){
+      if(this.atendimentoAtivo.login_usu !== this.regrasDoClienteAtivo.id){
+        this.tudoPronto = false
+        this.getRegras()
+      }
+    }
+  },
   methods: {
-    preencherRegrasDoClienteAtivo(){
-      const login_usu = this.atendimentoAtivo.login_usu
-      this.regrasDoClienteAtivo  = this.regras.filter(regra => regra.id == login_usu)
-      if(!this.tudoPronto && this.regrasDoClienteAtivo[0]){
-        this.regrasBotoes = this.regrasDoClienteAtivo[0].regras.rules
-        setTimeout(() => {
-          this.setCoresClienteAtivo()
-        }, 100)
-
-        this.tudoPronto = true
-        this.limitador = 0
-      }else{
-        this.limitador++
-        if(this.limitador == 10){
-          return
-        }else{
-          setTimeout(() => {
+    getRegras(){
+      this.reqRegras(this.atendimentoAtivo.token_cliente, this.atendimentoAtivo.login_usu)
+    },
+    reqRegras(tokenCliente, id){
+        axios_api.get(`get-rules?token_cliente=${tokenCliente}`)
+        .then(response => {
+          if (response.data.st_ret == 'OK') {
+            const arrayRegras = response.data
+            let objRegra = {
+              id: id,
+              regras: arrayRegras
+            }
+            this.regrasDoClienteAtivo = objRegra
             this.preencherRegrasDoClienteAtivo()
-          }, 300)
-        }
+          }
+        })
+        .catch(error => {
+            console.log('Erro getRules: ', error)
+        })
+    },
+    preencherRegrasDoClienteAtivo(){
+      if(this.regrasDoClienteAtivo.regras){
+        this.regrasBotoes = this.regrasDoClienteAtivo.regras.rules
+        this.setCoresClienteAtivo()
+        this.tudoPronto = true
       }
     },
     setCoresClienteAtivo(){
-      this.regrasCor = this.regrasBotoes.primary_color
+      this.regrasCor = this.regrasDoClienteAtivo.regras.rules.primary_color
       if(this.regrasCor){
         this.aplicarCoresNoElemento('.chat-opcoes-titulo', this.regrasCor)
         this.aplicarCoresNoElemento('.titulo-contatos', this.lightenDarkenColor(this.regrasCor, 10))
@@ -274,6 +284,9 @@ export default {
             if(!Object.keys(novosAtendimentos).length){
               this.$store.dispatch('setCaso', 206)
             }
+
+            this.tudoPronto = false
+
             this.$store.dispatch('setAtendimentos', novosAtendimentos)
             this.$store.dispatch('limparIdAtendimentoAtivo')
 

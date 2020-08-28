@@ -1,9 +1,11 @@
+// Arquivo a ser excluido caso nao esteja sendo utilizado
+
 export default {
   state: {
     todasRegras: []
   },
   mutations: {
-    setTodasRegras(state, regras){
+    setTodasRegras(state, regras) {
       state.todasRegras.push(regras)
     }
   },
@@ -13,7 +15,7 @@ export default {
     }
   },
   getters: {
-    getTodasRegras(state){
+    getTodasRegras(state) {
       return state.todasRegras
     }
   }
