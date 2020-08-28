@@ -2,7 +2,7 @@
   <div id="rodape-botoes-encerramento-container">
     <div class="rodape-botoes-encerramento">
       <template v-if="tudoPronto">
-        <div 
+        <div
           class="rodape-botoes-botao botao-transferencia"
           v-if="regrasBotoes.button_transfer.use == 'S'"
           :title="regrasBotoes.button_transfer.name"
@@ -20,10 +20,10 @@
           <i class="fas fa-undo"></i>
           <span>{{ regrasBotoes.button_suspend.name }}</span>
         </div>
-        <div 
+        <div
           class="rodape-botoes-botao botao-encerrar"
           v-if="regrasBotoes.button_end.use == 'S'"
-          :title="regrasBotoes.button_end.name" 
+          :title="regrasBotoes.button_end.name"
           @click="popupEncerrar()">
 
           <i class="fas fa-sign-out-alt"></i>
@@ -32,7 +32,7 @@
       </template>
     </div>
     <!-- Tentar remover daqui -->
-    <Popup 
+    <Popup
       v-if="blocker && origem && titulo && origemBlocker == 'btn-acoes'"
       :titulo="titulo"
       :origem="origem"
@@ -45,10 +45,9 @@
 <script>
 import axios from 'axios'
 import axios_api from '../services/serviceAxios'
-
 import Popup from './templates/Popup'
-
 import { mapGetters } from 'vuex'
+import { bloqueiaRequest, liberaRequest } from '../services/atendimentos'
 
 export default {
   data(){
@@ -69,12 +68,10 @@ export default {
   },
   mounted(){
     this.getRegras()
-
     this.$root.$on('encerrarAtendimento', () => {
       this.encerrarAtendimento()
       this.reverterCoresClienteAtivo()
     })
-
   },
   beforeDestroy(){
     this.$root.$off('encerrarAtendimento')
@@ -131,7 +128,6 @@ export default {
         this.aplicarCoresNoElemento('.titulo-contatos', this.lightenDarkenColor(this.regrasCor, 10))
         this.aplicarCoresNoElemento('.lista-agenda--titulo', this.lightenDarkenColor(this.regrasCor, 30))
         this.aplicarCoresNoElemento('#informacoes-titulo', this.lightenDarkenColor(this.regrasCor, -10))
-        
         this.bgPopup = this.lightenDarkenColor(this.regrasCor, 15)
       }
     },
@@ -140,7 +136,6 @@ export default {
       this.aplicarCoresNoElemento('.titulo-contatos', '')
       this.aplicarCoresNoElemento('.lista-agenda--titulo', '')
       this.aplicarCoresNoElemento('#informacoes-titulo', '')
-      
       this.bgPopup = ''
     },
     aplicarCoresNoElemento(elem, cor){
@@ -160,7 +155,7 @@ export default {
       if(!result){
         return
       }
-      
+
       let r = result.r
       let g = result.g
       let b = result.b
@@ -168,7 +163,7 @@ export default {
       result.r = novaCor(r, qtd)
       result.g = novaCor(g, qtd)
       result.b = novaCor(b, qtd)
-      
+
       function novaCor(c, qtd){
         if(c >= 0 && c <= 255){
           if(c + qtd < 0 || c + qtd > 255){
@@ -185,7 +180,6 @@ export default {
         let hex = color.toString(16);
         return hex.length == 1 ? "0" + hex : hex;
       }
-      
       return result
     },
     checaBlocker(){
@@ -196,11 +190,9 @@ export default {
       this.checaBlocker()
       this.origem = 'Transferir'
       this.titulo = this.regrasBotoes.button_transfer.name
-
       const tokenCliente = this.atendimentoAtivo.token_cliente
       axios_api.get(`get-transfer?token_cliente=${tokenCliente}`)
         .then(response => {
-          
           let arrChaves = []
           let arrValores = []
 
@@ -214,7 +206,7 @@ export default {
               if(this.arrAgentes.length){
                 if(this.arrAgentes[i].cod !== arrChaves[i]){
                   this.arrAgentes.push({ label: arrValores[i], cod: arrChaves[i] })
-                }              
+                }
               }else{
                 this.arrAgentes.push({ label: arrValores[i], cod: arrChaves[i] })
               }
@@ -222,7 +214,6 @@ export default {
           }
 
           if(response.data.options.grupos.length){
-            
             response.data.options.grupos.map(objGrupos => {
               arrChaves = Object.keys(objGrupos)
               arrValores = Object.values(objGrupos)
@@ -232,7 +223,7 @@ export default {
               if(this.arrGrupos.length){
                 if(this.arrGrupos[i].cod !== arrChaves[i]){
                   this.arrGrupos.push({ label: arrValores[i], cod: arrChaves[i] })
-                }              
+                }
               }else{
                 this.arrGrupos.push({ label: arrValores[i], cod: arrChaves[i] })
               }
@@ -263,18 +254,12 @@ export default {
     },
     async finalizarAtendimentoNaApi() {
       let data = { "token_cliente": this.atendimentoAtivo.token_cliente }
+      bloqueiaRequest()
 
       await axios_api.delete('end-atendimento', {data: {...data}})
         .then(response => {
           if(response.data.st_ret == 'OK'){
-
-            // Forma alternativa para excluir  posicao em um ARRAY (não obj, por isso não se aplica ao caso abaixo)
-            /* Ex: 
-              this.todosAtendimentos.filter(atendimento => atendimento.id_cli != this.idAtendimentoAtivo)
-            */
-
             this.$store.dispatch('limparAtendimentoAtivo')
-
             var novosAtendimentos = {}
             for(var ramal_local in this.todosAtendimentos) {
               if(this.todosAtendimentos[ramal_local].id_cli !== this.idAtendimentoAtivo) {
@@ -284,12 +269,9 @@ export default {
             if(!Object.keys(novosAtendimentos).length){
               this.$store.dispatch('setCaso', 206)
             }
-
             this.tudoPronto = false
-
             this.$store.dispatch('setAtendimentos', novosAtendimentos)
             this.$store.dispatch('limparIdAtendimentoAtivo')
-
             this.$root.$off('atualizar_mensagem')
             this.$root.$off('rolaChat')
           }
@@ -298,6 +280,11 @@ export default {
           console.log('Error end atd: ', error)
           this.$toasted.global.defaultError({msg: 'Nao foi possivel encerrar o atendimento. Tente novamente'})
         })
+
+        setTimeout(() => {
+          console.log('liberou!')
+          liberaRequest()
+        }, 10000);
 
     }
   },

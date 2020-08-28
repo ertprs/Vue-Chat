@@ -6,7 +6,7 @@ import { carregarIframe } from "./iframe"
 import { converterHexaParaEmojis } from "./emojis"
 // import { executarRegrasFormatacao } from "./regrasFormatacao"
 
-const TEMPO_ATUALIZACAO = 4000
+const TEMPO_ATUALIZACAO = 1000
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
 var app
 
@@ -15,7 +15,7 @@ export function getAtendimentos(appVue) {
     liberaRequest()
     axios({
         method: 'get',
-        url: store.getters.getURL + 'get-atendimento'
+        url: store.getters.getURL + 'get-atendimento?teste=ok'
     })
         .then(response => {
             tratarResponse(response)
@@ -28,6 +28,7 @@ export function getAtendimentos(appVue) {
 }
 
 function loopAtualizacaoDeAtendimentos(count = 0) {
+    // console.log(count)
     start()
     setTimeout(async () => {
         if (verificaRequest()) {
@@ -107,11 +108,11 @@ function verificaRequest() {
     }
 }
 
-function bloqueiaRequest() {
+export function bloqueiaRequest() {
     status_gerenciador = 1
 }
 
-function liberaRequest() {
+export function liberaRequest() {
     status_gerenciador = 0
 }
 
@@ -169,9 +170,20 @@ function atualizarClientes(mainData) {
     var atendimentosLocal = store.getters.getTodosAtendimentos
     var novosAtendimentos = {}
 
-    for (var ramal_local in atendimentosLocal) {
-        novosAtendimentos[ramal_local] = atendimentosLocal[ramal_local]
+    // console.log('server', Object.keys(atendimentosServer).length)
+    // console.log('local', Object.keys(atendimentosLocal).length)
+
+    if(Object.keys(atendimentosServer).length < Object.keys(atendimentosLocal).length) {
+        for (var ramal_server in atendimentosServer) {
+            novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
+        }
+    } else {
+        for (var ramal_local in atendimentosLocal) {
+            novosAtendimentos[ramal_local] = atendimentosLocal[ramal_local]
+        }
     }
+
+
 
     for (var ramal_server in atendimentosServer) {
         var temClienteNovo = true
@@ -249,10 +261,9 @@ function start() {
 function end() {
   endTime = new Date();
   var timeDiff = endTime - startTime; //in ms
-  // strip the ms
-  timeDiff
 
   // get seconds
   var seconds = Math.round(timeDiff);
-  console.log(seconds + " miliseconds");
+  return seconds
+//   console.log(seconds + " miliseconds");
 }
