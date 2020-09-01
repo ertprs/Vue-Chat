@@ -261,7 +261,7 @@ export default {
       this.mensagem += value;
     },
     enviarMensagem(event) {
-      if(this.blocker){
+      if(this.blocker && this.origemBlocker !== 'msg-formatada'){
         this.$store.dispatch('setBlocker', false)
       }
 
@@ -671,7 +671,8 @@ export default {
       url: "getURL",
       emojis: "getEmojis",
       blocker: "getBlocker",
-      tipoMsg: 'getTipoMsg'
+      tipoMsg: 'getTipoMsg',
+      origemBlocker: 'getOrigemBlocker'
     })
   },
   beforeDestroy: function() {

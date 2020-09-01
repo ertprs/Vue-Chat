@@ -9082,6 +9082,8 @@ body {
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   background-color: #bbbbbb;
   position: relative; }
+  #chat.z-index-superior {
+    z-index: 10; }
   #chat .chat-corpo-rodape {
     height: 90%; }
   #chat.chat-aberto {
