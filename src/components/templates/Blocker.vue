@@ -4,10 +4,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { liberarEncerrar } from '../../services/atendimentos'
 
 export default {
   methods: {
     fecharBlocker(){
+      liberarEncerrar()
       this.$store.dispatch('setBlocker', false)
     }
   },

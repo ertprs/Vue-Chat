@@ -47,7 +47,7 @@ import axios from 'axios'
 import axios_api from '../services/serviceAxios'
 import Popup from './templates/Popup'
 import { mapGetters } from 'vuex'
-import { bloqueiaRequest, liberaRequest } from '../services/atendimentos'
+import { executandoEncerrar, liberarEncerrar } from '../services/atendimentos'
 
 export default {
   data(){
@@ -241,6 +241,7 @@ export default {
       this.checaBlocker()
     },
     popupEncerrar(){
+      executandoEncerrar()
       this.origem = 'Encerrar'
       this.titulo = this.regrasBotoes.button_end.name
       this.checaBlocker()
@@ -254,7 +255,6 @@ export default {
     },
     async finalizarAtendimentoNaApi() {
       let data = { "token_cliente": this.atendimentoAtivo.token_cliente }
-      bloqueiaRequest()
 
       await axios_api.delete('end-atendimento', {data: {...data}})
         .then(response => {
@@ -275,17 +275,17 @@ export default {
             this.$root.$off('atualizar_mensagem')
             this.$root.$off('rolaChat')
           }
+          setTimeout(() => {
+            liberarEncerrar()
+          }, 5000);
         })
         .catch(error => {
+          setTimeout(() => {
+            liberarEncerrar()
+          }, 5000);
           console.log('Error end atd: ', error)
           this.$toasted.global.defaultError({msg: 'Nao foi possivel encerrar o atendimento. Tente novamente'})
         })
-
-        setTimeout(() => {
-          console.log('liberou!')
-          liberaRequest()
-        }, 10000);
-
     }
   },
   beforeDestroy: function() {

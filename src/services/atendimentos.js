@@ -8,6 +8,7 @@ import { converterHexaParaEmojis } from "./emojis"
 
 const TEMPO_ATUALIZACAO = 1000
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
+var status_encerrando = 0 //
 var app
 
 export function getAtendimentos(appVue) {
@@ -108,12 +109,27 @@ function verificaRequest() {
     }
 }
 
-export function bloqueiaRequest() {
+function bloqueiaRequest() {
+    console.log('aguardando retorno do request')
     status_gerenciador = 1
 }
 
-export function liberaRequest() {
-    status_gerenciador = 0
+function liberaRequest() {
+    if(status_encerrando === 0) {
+        console.log('request liberado')
+        status_gerenciador = 0
+    }
+}
+
+export function executandoEncerrar() {
+    console.log('pausar para encerrar contato')
+    status_encerrando = 1
+}
+
+export function liberarEncerrar() {
+    console.log('voltando ao fluxo normal')
+    status_encerrando = 0
+    liberaRequest()
 }
 
 function adicionaCaso(caso) {

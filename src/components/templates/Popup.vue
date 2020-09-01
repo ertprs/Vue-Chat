@@ -54,7 +54,7 @@
         <ul 
           :class="{'bg' : bg}"
           lista-retornar>
-          <li @click="encerrar()"> Confirmar </li>
+          <li id="encerrarAtendimento" @click="encerrar()"> Confirmar </li>
           <li @click="fecharPopup()"> Cancelar </li>
         </ul>
       </template>
@@ -67,6 +67,8 @@ import axios from 'axios'
 import axios_api from '../../services/serviceAxios'
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css'
+import { liberarEncerrar } from '../../services/atendimentos'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   components:{
@@ -78,17 +80,33 @@ export default {
       abrirAgentes: false,
       abrirGrupos: false,
       pessoalData: false,
-      dataHora: ''
+      dataHora: '',
+      auxBlocker: true
     }
+  },
+  computed: {
+    ...mapGetters({
+      blocker: 'getBlocker'
+    })
   },
   methods: {
     fecharPopup(event){
-      if(event){
-        if(event.target === document.querySelector('#popup')){
+      if(this.auxBlocker) { // evitar que o fecharPopup seja executado duas vezes seguidas
+        this.auxBlocker = false
+        if(event){
+          if(event !== "encerrarAtendimento") {
+            liberarEncerrar()
+            if(event.target === document.querySelector('#popup')){
+              this.$store.dispatch('setBlocker', false)
+            }
+          }
+        }else{
           this.$store.dispatch('setBlocker', false)
+          liberarEncerrar()
         }
-      }else{
-        this.$store.dispatch('setBlocker', false)
+        setTimeout(() => {
+          this.auxBlocker = true
+        }, 2000);
       }
     },
     tamanhoChat(){
@@ -98,7 +116,7 @@ export default {
           return true
         }else{
           return false
-        }  
+        }
       }else{
         return false
       }
@@ -160,7 +178,7 @@ export default {
     encerrar(){
       this.$root.$emit('encerrarAtendimento')
       // Limpando pilha de eventos afim de evitar que a função de encerrar seja chamada mais de uma vez
-      this.fecharPopup()
+      this.fecharPopup('encerrarAtendimento')
     },
     preencherAgente(){
       if(this.arrAgentes.length){
@@ -183,6 +201,6 @@ export default {
   },
   mounted(){
     this.alterarCoresLi()
-  }
+  },
 }
 </script>
