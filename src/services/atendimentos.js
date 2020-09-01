@@ -6,7 +6,7 @@ import { carregarIframe } from "./iframe"
 import { converterHexaParaEmojis } from "./emojis"
 // import { executarRegrasFormatacao } from "./regrasFormatacao"
 
-const TEMPO_ATUALIZACAO = 1000
+const TEMPO_ATUALIZACAO = 2000
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
 var status_encerrando = 0 //
 var app
@@ -132,6 +132,14 @@ export function liberarEncerrar() {
     liberaRequest()
 }
 
+function verificaEncerramento() {
+    if(status_encerrando = 0) {
+        return true
+    } else {
+        return false
+    }
+}
+
 function adicionaCaso(caso) {
     store.dispatch('setCaso', caso)
 }
@@ -151,7 +159,6 @@ async function atualizarAtendimentos() {
             } else if (mainData.st_ret === 'AVISO') {
                 console.log('Nao existe clientes na fila')
                 adicionaCaso(206)
-                
                 // setTimeout(() => {
                 //     console.log('Timeout st_ret == Aviso')
                 //     getAtendimentos()
@@ -210,7 +217,7 @@ function atualizarClientes(mainData) {
                 }
             }
         }
-        if (temClienteNovo) {
+        if (temClienteNovo && verificaEncerramento()) {
             novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
             novosAtendimentos[ramal_server].novoContato = true
             store.dispatch('setAtendimentos', novosAtendimentos)
