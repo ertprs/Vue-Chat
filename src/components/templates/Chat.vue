@@ -1,5 +1,5 @@
 <template>
-  <div id="chat" class="resizable-content">
+  <div id="chat" class="resizable-content" :class="{'z-index-superior' : blocker && origemBlocker == 'msg-formatada'}">
     <template v-if="atendimentoAtivo.informacoes && (caso == '' || caso == 200)">
       <ChatOpcoes />
       <ChatCorpo id="chat-operador"/>
@@ -37,7 +37,9 @@ export default {
     ...mapGetters({
       zonaDeTeste: 'getZonaDeTeste',
       atendimentoAtivo: 'getAtendimentoAtivo',
-      caso: 'getCaso'
+      caso: 'getCaso',
+      blocker: 'getBlocker',
+      origemBlocker: 'getOrigemBlocker'
     })
   }
 }
