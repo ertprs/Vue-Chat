@@ -115,25 +115,23 @@ function bloqueiaRequest() {
 }
 
 function liberaRequest() {
-    if(status_encerrando === 0) {
-        console.log('request liberado')
-        status_gerenciador = 0
-    }
+    console.log('request liberado')
+    status_gerenciador = 0
 }
 
 export function executandoEncerrar() {
-    console.log('pausar para encerrar contato')
+    console.log('-> pausar para encerrar contato')
     status_encerrando = 1
 }
 
 export function liberarEncerrar() {
-    console.log('voltando ao fluxo normal')
+    console.log('-> voltando ao fluxo normal')
     status_encerrando = 0
     liberaRequest()
 }
 
 function verificaEncerramento() {
-    if(status_encerrando = 0) {
+    if(status_encerrando === 0) {
         return true
     } else {
         return false
