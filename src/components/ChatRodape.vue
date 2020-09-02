@@ -253,6 +253,8 @@ export default {
         0x1f61c
       ));
 
+    window.addEventListener("message", this.listenerPostMessage, false);
+
     this.initResize();
   },
   methods: {
@@ -486,7 +488,7 @@ export default {
         this.$store.dispatch("setGrupo", this.atendimentoAtivo.grupo)
       }
 
-      this.$toasted.global.emConstrucao()
+      // this.$toasted.global.emConstrucao()
     },
     selecionarEmoji() {
       this.$store.dispatch("setOrigemBlocker", "chat");
@@ -628,6 +630,10 @@ export default {
       observe(text, "drop", delayedResize);
       observe(text, "keydown", delayedResize);
     },
+    listenerPostMessage(event){
+      console.log('evento: ', event)
+      console.log(event.origin)
+    }
   },
   watch: {
     todasMensagens() {

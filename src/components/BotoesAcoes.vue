@@ -267,15 +267,16 @@ export default {
 
     },
     retornarForm(){
+      this.checaBlocker()
       this.origem = 'Retornar'
       if(this.tudoPronto){
         this.titulo = this.regrasBotoes.button_suspend.name
       }else{
         this.titulo = 'Retornar'
       }
-      this.checaBlocker()
     },
     popupEncerrar(){
+      this.checaBlocker()
       executandoEncerrar()
       this.origem = 'Encerrar'
       if(this.tudoPronto){
@@ -283,10 +284,10 @@ export default {
       }else{
         this.titulo = 'Encerrar'
       }
-      this.checaBlocker()
     },
     async encerrarAtendimento() {
       if( this.atendimentoAtivo.informacoes.nome != null ) {
+
         await this.finalizarAtendimentoNaApi()
       } else {
         this.$toasted.global.defaultError({msg: 'Selecione um cliente antes de tentar finalizar o atendimento'})
