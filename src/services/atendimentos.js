@@ -16,7 +16,7 @@ export function getAtendimentos(appVue) {
     liberaRequest()
     axios({
         method: 'get',
-        url: store.getters.getURL + 'get-atendimento?teste=ok'
+        url: store.getters.getURL + 'get-atendimento'
     })
         .then(response => {
             tratarResponse(response)
@@ -228,9 +228,6 @@ function atualizarClientes(mainData) {
 }
 
 function atualizarMensagens(cliente, ramal, novosAtendimentos) {
-    if(!novosAtendimentos || !novosAtendimentos[ramal]){
-        return
-    }
     if (novosAtendimentos[ramal].arrMsg.length > 0) { //verifica se o cliente antigo ou novo
         const seqs = novosAtendimentos[ramal].arrMsg.map(message => (message.seq)); //seq das mensagens antigas
         if (cliente.arrMsg.length > 0) {
