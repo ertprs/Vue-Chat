@@ -398,6 +398,12 @@ export default {
         chatCorpo.style.height = "50%";
       } else {
         chatCorpo.style.height = "70%";
+        this.mensagensFormatadas_01 = []
+        this.chaveAtual_01 = ''
+        this.mensagensFormatadas_02 = []
+        this.chaveAtual_02 = ''
+        this.mensagensFormatadas_03 = []
+        this.chaveAtual_03 = ''
       }
     },
     selecionarMsgFormatada() {
@@ -631,8 +637,6 @@ export default {
       observe(text, "keydown", delayedResize);
     },
     listenerPostMessage(event){
-      console.log('evento: ', event)
-      console.log(event.origin)
       
       let baseUrl = ''
       if(window.location.hostname == 'localhost'){
@@ -642,12 +646,12 @@ export default {
       }
 
       if(event.origin == baseUrl){
-        console.log('data: ', event.data)
         this.mensagem = event.data
         document.querySelector('#textarea').focus()
-        
+
         this.$store.dispatch("setBlocker", false)
         this.$store.dispatch("setAbrirMsgTipo2", false)
+        this.abreFechaMsgFormatada()
       }
     }
   },
