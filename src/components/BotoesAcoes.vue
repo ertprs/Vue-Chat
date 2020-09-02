@@ -30,6 +30,33 @@
           <span>{{ regrasBotoes.button_end.name }}</span>
         </div>
       </template>
+      <!-- PARA TESTES, COMENTAR ANTES DO BUILD -->
+      <template v-else>
+        <div
+          class="rodape-botoes-botao botao-transferencia"
+          :title="'Transferir'"
+          @click="abrirTransferir()">
+
+          <i class="fas fa-random"></i>
+          <span> {{ 'Transferir' }}</span>
+        </div>
+        <div
+          class="rodape-botoes-botao botao-retornar"
+          :title="'Retornar'"
+          @click="retornarForm()">
+
+          <i class="fas fa-undo"></i>
+          <span>{{ 'Retornar' }}</span>
+        </div>
+        <div
+          class="rodape-botoes-botao botao-encerrar"
+          :title="'Encerrar'"
+          @click="popupEncerrar()">
+
+          <i class="fas fa-sign-out-alt"></i>
+          <span>{{ 'Encerrar' }}</span>
+        </div>
+      </template>
     </div>
     <!-- Tentar remover daqui -->
     <Popup
