@@ -216,7 +216,11 @@ export default {
     abrirTransferir(){
       this.checaBlocker()
       this.origem = 'Transferir'
-      this.titulo = this.regrasBotoes.button_transfer.name
+      if(this.tudoPronto){
+        this.titulo = this.regrasBotoes.button_transfer.name
+      }else{
+        this.titulo = 'Transferir'
+      }
       const tokenCliente = this.atendimentoAtivo.token_cliente
       axios_api.get(`get-transfer?token_cliente=${tokenCliente}`)
         .then(response => {
@@ -264,13 +268,21 @@ export default {
     },
     retornarForm(){
       this.origem = 'Retornar'
-      this.titulo = this.regrasBotoes.button_suspend.name
+      if(this.tudoPronto){
+        this.titulo = this.regrasBotoes.button_suspend.name
+      }else{
+        this.titulo = 'Retornar'
+      }
       this.checaBlocker()
     },
     popupEncerrar(){
       executandoEncerrar()
       this.origem = 'Encerrar'
-      this.titulo = this.regrasBotoes.button_end.name
+      if(this.tudoPronto){
+        this.titulo = this.regrasBotoes.button_end.name
+      }else{
+        this.titulo = 'Encerrar'
+      }
       this.checaBlocker()
     },
     async encerrarAtendimento() {
