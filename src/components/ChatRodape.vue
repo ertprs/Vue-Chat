@@ -265,13 +265,16 @@ export default {
         this.$store.dispatch('setBlocker', false)
       }
 
-      if(event.keyCode == 13 && !event.shiftKey){
-        event.preventDefault()
+      if(event){
+        if(event.keyCode == 13 && !event.shiftKey){
+          event.preventDefault()
+        }
+  
+        if(event.shiftKey){
+          return
+        }
       }
 
-      if(event.shiftKey){
-        return
-      }
 
       this.mensagem = this.mensagem.replace(/\n$/, "", this.mensagem);
 
