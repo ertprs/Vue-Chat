@@ -56,7 +56,7 @@
         <div id="iframe-msg-container" v-if="abrirMsgTipo2">
           <!-- Iframe do Caio -->
           <!-- {{ `${baseUrl}im/atdHumano/view/atd_valida.php?grupo=${grupo}&categoria=${categoria}&assunto=${assunto}&nro_chat=${nroChat}` }} -->
-          <iframe :src="`${baseUrl}im/atdHumano/view/atd_valida.php?grupo=${grupo}&categoria=${categoria}&assunto=${assunto}&nro_chat=${nroChat}`" frameborder="0"></iframe> <!-- tipo_popup=AJ2& -->
+          <iframe :src="`${baseUrl}im/atdHumano/view/atd_valida.php?grupo=${grupo}&categoria=${categoria}&assunto=${assunto}&nro_chat=${nroChat}${teste}`" frameborder="0"></iframe> <!-- tipo_popup=AJ2& -->
         </div>
         <!-- Rodape - Botoes Acoes -->
         <!-- <div class="container-acoes">
@@ -85,7 +85,8 @@ import IframeTemplate from './IframeTemplate'
 export default {
   data(){
     return{
-      baseUrl: ''
+      baseUrl: '',
+      teste
     }
   },
   components: {
@@ -115,6 +116,8 @@ export default {
       return timeString
     },
     getBaseUrl(){
+      this.teste = `&teste=${window.location.hostname}`
+
       if(window.location.hostname == 'localhost'){
         this.baseUrl = 'https://linux03/'
       }else{
