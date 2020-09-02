@@ -2,7 +2,7 @@
   <div id="informacoes" class="resizable-content">
     <template>
       <!-- Título -->
-      <div class="informacoes-titulo" v-if="!atendimentoAtivo.informacoes">
+      <div class="informacoes-titulo" v-if="!atendimentoAtivo.informacoes || caso == 206 || caso == 404">
         <i class="fas fa-info-circle"></i>
         <h1 title="Informacoes"> Informacoes </h1>
       </div>
