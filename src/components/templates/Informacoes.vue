@@ -56,7 +56,7 @@
         <div id="iframe-msg-container" v-if="abrirMsgTipo2">
           <!-- Iframe do Caio -->
           <!-- {{ `${baseUrl}im/atdHumano/view/atd_valida.php?grupo=${grupo}&categoria=${categoria}&assunto=${assunto}&nro_chat=${nroChat}` }} -->
-          <iframe :src="`${baseUrl}im/atdHumano/view/atd_valida.php?tipo_popup=AJ2&grupo=${grupo}&categoria=${categoria}&assunto=${assunto}&nro_chat=${nroChat}`" frameborder="0"></iframe> <!-- tipo_popup=AJ2& -->
+          <iframe :src="`${baseUrl}im/atdHumano/view/atd_valida.php?grupo=${grupo}&categoria=${categoria}&assunto=${assunto}&nro_chat=${nroChat}`" frameborder="0"></iframe> <!-- tipo_popup=AJ2& -->
         </div>
         <!-- Rodape - Botoes Acoes -->
         <!-- <div class="container-acoes">
