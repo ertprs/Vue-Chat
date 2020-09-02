@@ -116,10 +116,9 @@ export default {
       return timeString
     },
     getBaseUrl(){
-      this.teste = `&teste=${window.location.origin}`
-
       if(window.location.hostname == 'localhost'){
         this.baseUrl = 'https://linux03/'
+        this.teste = `&teste=${window.location.origin}`
       }else{
         this.baseUrl = 'https://'+window.location.hostname+'/'
       }

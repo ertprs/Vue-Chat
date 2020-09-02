@@ -636,10 +636,14 @@ export default {
       
       let baseUrl = ''
       if(window.location.hostname == 'localhost'){
-        baseUrl = 'https://linux03/'
+        baseUrl = 'https://linux03'
       }else{
-        baseUrl = 'https://'+window.location.hostname+'/'
+        baseUrl = 'https://'+window.location.hostname
       }
+
+
+      console.log(event.origin)
+      console.log(baseUrl)
 
       if(event.origin == baseUrl){
         console.log('data: ', event.data)
