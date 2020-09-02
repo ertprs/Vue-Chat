@@ -474,10 +474,16 @@ export default {
     abrePopupMsgTipo2(arrayMsgFormatada, indice){
       console.log('msg: ', arrayMsgFormatada[indice])
       const objMsg = arrayMsgFormatada[indice]
+
       if(objMsg){
         this.$store.dispatch("setOrigemBlocker", "msg-formatada")
         this.$store.dispatch("setBlocker", true)
         this.$store.dispatch("setAbrirMsgTipo2", true)
+        
+        this.$store.dispatch("setAssunto", objMsg.cod)
+        this.$store.dispatch("setCategoria", this.chaveAtual_02)
+        this.$store.dispatch("setNroChat", this.atendimentoAtivo.nro_chat)
+        this.$store.dispatch("setGrupo", this.atendimentoAtivo.grupo)
       }
 
       this.$toasted.global.emConstrucao()

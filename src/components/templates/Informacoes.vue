@@ -55,6 +55,8 @@
         <!-- Iframe Msg Tipo 2 -->
         <div id="iframe-msg-container" v-if="abrirMsgTipo2">
           <!-- Iframe do Caio -->
+          <!-- {{ `${baseUrl}im/atdHumano/view/atd_valida.php?grupo=${grupo}&categoria=${categoria}&assunto=${assunto}&nro_chat=${nroChat}` }} -->
+          <iframe :src="`${baseUrl}im/atdHumano/view/atd_valida.php?tipo_popup=AJ2&grupo=${grupo}&categoria=${categoria}&assunto=${assunto}&nro_chat=${nroChat}`" frameborder="0"></iframe> <!-- tipo_popup=AJ2& -->
         </div>
         <!-- Rodape - Botoes Acoes -->
         <!-- <div class="container-acoes">
@@ -81,6 +83,11 @@ import BotoesAcoes from '../BotoesAcoes'
 import IframeTemplate from './IframeTemplate'
 
 export default {
+  data(){
+    return{
+      baseUrl: ''
+    }
+  },
   components: {
     BotoesAcoes,
     IframeTemplate
@@ -106,13 +113,27 @@ export default {
       let timeString = date.toISOString().substr(11, 8);
       timeString = timeString.replace(/\d+:/, horas.h.toString().padStart(2, 0) + ':')
       return timeString
+    },
+    getBaseUrl(){
+      if(window.location.hostname == 'localhost'){
+        this.baseUrl = 'https://linux03/'
+      }else{
+        this.baseUrl = 'https://'+window.location.hostname+'/'
+      }
     }
+  },
+  mounted(){
+    this.getBaseUrl()
   },
   computed: {
     ...mapGetters({
       atendimentoAtivo: 'getAtendimentoAtivo',
       caso: 'getCaso',
-      abrirMsgTipo2: 'getAbrirMsgTipo2'
+      abrirMsgTipo2: 'getAbrirMsgTipo2',
+      grupo: 'getGrupo',
+      categoria: 'getCategoria',
+      assunto: 'getAssunto',
+      nroChat: 'getNroChat'
     })
   },
 }
