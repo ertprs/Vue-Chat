@@ -633,6 +633,22 @@ export default {
     listenerPostMessage(event){
       console.log('evento: ', event)
       console.log(event.origin)
+      
+      let baseUrl = ''
+      if(window.location.hostname == 'localhost'){
+        baseUrl = 'https://linux03/'
+      }else{
+        baseUrl = 'https://'+window.location.hostname+'/'
+      }
+
+      if(event.origin == baseUrl){
+        console.log('data: ', event.data)
+        this.mensagem = event.data
+        document.querySelector('#textarea').focus()
+        
+        this.$store.dispatch("setBlocker", false)
+        this.$store.dispatch("setAbrirMsgTipo2", false)
+      }
     }
   },
   watch: {

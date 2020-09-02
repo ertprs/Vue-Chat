@@ -86,7 +86,7 @@ export default {
   data(){
     return{
       baseUrl: '',
-      teste
+      teste: ''
     }
   },
   components: {
@@ -116,7 +116,7 @@ export default {
       return timeString
     },
     getBaseUrl(){
-      this.teste = `&teste=${window.location.hostname}`
+      this.teste = `&teste=${window.location.origin}`
 
       if(window.location.hostname == 'localhost'){
         this.baseUrl = 'https://linux03/'
