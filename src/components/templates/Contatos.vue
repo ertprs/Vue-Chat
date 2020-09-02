@@ -11,7 +11,7 @@
       </div>
       <div>
       </div>
-      <div v-on:click="toggleContatos()" class="container-flecha" :class="rotate ? 'rotate' : ''">
+      <div v-on:click="toggleContatos($event)" class="container-flecha" :class="rotate ? 'rotate' : ''">
         <i class="fas fa-long-arrow-alt-left flecha"></i>
       </div>
     </div>
@@ -240,16 +240,23 @@ export default {
       const horaFormatada = hora + "h" + minutos;
       return horaFormatada;
     },
-    toggleContatos() {
+    toggleContatos(event) {
       this.rotate = !this.rotate
       this.fechado = !this.fechado;
+
+      let widthCtt = localStorage.getItem('largura-contatos')
+
+      if(event){
+        if(widthCtt == '60px' && !this.fechado){
+          localStorage.setItem('largura-contatos', '275px')
+        }
+      }
 
       const todosContatos = document.querySelector('#todos-contatos')
       if(todosContatos){
         const containerTodosContatos = todosContatos.parentElement
         containerTodosContatos.style.transitionDuration = '300ms'
         if(!this.fechado){
-          let widthCtt = localStorage.getItem('largura-contatos')
           if(widthCtt && widthCtt !== '60px'){
             containerTodosContatos.style.width = widthCtt
           }else{
