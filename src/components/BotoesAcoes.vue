@@ -31,7 +31,7 @@
         </div>
       </template>
       <!-- PARA TESTES, COMENTAR ANTES DO BUILD -->
-      <template v-else>
+      <!-- <template v-else>
         <div
           class="rodape-botoes-botao botao-transferencia"
           :title="'Transferir'"
@@ -56,7 +56,7 @@
           <i class="fas fa-sign-out-alt"></i>
           <span>{{ 'Encerrar' }}</span>
         </div>
-      </template>
+      </template> -->
     </div>
     <!-- Tentar remover daqui -->
     <Popup

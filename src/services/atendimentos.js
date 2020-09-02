@@ -16,7 +16,7 @@ export function getAtendimentos(appVue) {
     liberaRequest()
     axios({
         method: 'get',
-        url: store.getters.getURL + 'get-atendimento'
+        url: store.getters.getURL + 'get-atendimento' //?teste
     })
         .then(response => {
             tratarResponse(response)
