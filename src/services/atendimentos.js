@@ -22,8 +22,11 @@ export function getAtendimentos(appVue) {
             tratarResponse(response)
         })
         .catch(err => {
-            adicionaCaso(400)
-            console.log(err)
+            setTimeout(() => {
+                console.log(err)
+                getAtendimentos()
+                adicionaCaso(400)
+            }, TEMPO_ATUALIZACAO)
         }
         )
 }
@@ -183,7 +186,13 @@ async function atualizarAtendimentos() {
             }
             liberaRequest()
         })
-        .catch(err => console.log(err))
+        .catch(
+            err => {
+                console.log(err)
+                liberaRequest()
+                getAtendimentos()
+            }
+        )
 }
 
 function atualizarClientes(mainData) {
