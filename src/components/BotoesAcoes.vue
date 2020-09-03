@@ -88,6 +88,7 @@ export default {
       arrAgentes: [],
       arrGrupos: [],
       bgPopup: '',
+      contadorRequisicoesFalhas: 0 
     }
   },
   components: {
@@ -128,6 +129,8 @@ export default {
         axios_api.get(`get-rules?token_cliente=${tokenCliente}`)
         .then(response => {
           if (response.data.st_ret == 'OK') {
+            this.contadorRequisicoesFalhas = 0
+
             const arrayRegras = response.data
             let objRegra = {
               id: id,
@@ -138,7 +141,11 @@ export default {
           }
         })
         .catch(error => {
-            console.log('Erro getRules: ', error)
+          this.contadorRequisicoesFalhas++
+          if(this.contadorRequisicoesFalhas < 10){
+            this.getRegras()
+          }
+          console.log('Erro getRules: ', error)
         })
     },
     preencherRegrasDoClienteAtivo(){
