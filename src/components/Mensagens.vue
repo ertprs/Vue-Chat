@@ -2,10 +2,10 @@
   <div :class="'mensagem-'+origem">
     <div></div>
     <div class="mensagem">
-      <p v-if="!anexo"> {{ msg }} </p>
-      <div v-else class="mensagem-div-anexo">
+      <div v-if="anexo" class="mensagem-div-anexo">
         <img :src="imgAnexo" alt="Imagem Anexada">
       </div>
+      <p> {{ msg }} </p>
       <span class="horario-envio"> {{ horario }} </span>
       <span class="check" :class="status ? status : ''">
         <template v-if="status == 'enviado'">

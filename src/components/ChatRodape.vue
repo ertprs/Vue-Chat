@@ -1,36 +1,31 @@
 <template>
   <div class="chat-rodape">
     <div class="chat-rodape-container">
-      <div class="chat-rodape-mensagens" :class="aparecerPrevia ? 'anexo-aberto' : ''">
-        <div class="chat-rodape-textarea">
-          <!-- Prévia imagem -->
-          <div class="chat-rodape-previa-img" v-show="aparecerPrevia">
-            <div class="formato-invalido" v-if="erroFormatoAnexo">
-              <h3>{{ txtFormatoInvalido }}</h3>
-              <h4>{{ txtFormatosValidos }}</h4>
-            </div>
-            <template v-if="selecioneAnexo">
-              <h3>{{ txtSelecioneAnexo }}</h3>
-            </template>
-            <template v-if="arquivo.name && !erroFormatoAnexo && !selecioneAnexo">
-              <h3>{{ this.arquivo.name }}</h3>
-            </template>
-            <div class="container-previa-img" v-show="aparecerPrevia && imagemPrevia !== ''">
-              <img
-                :src="imagemPrevia"
-                alt="Previa da Imagem Selecionada"
-              />
-            </div>
-            <div 
-              v-show="aparecerPrevia && imagemPrevia !== ''"
-              v-on:click="excluirAnexo()" 
-              title="Cancelar selecao de anexo" 
-              class="btn-excluir-anexo">
-              <i class="fas fa-times-circle"></i>
-            </div>
+      <div class="chat-rodape-mensagens">
+        <!-- Prévia imagem -->
+        <div class="container-previa-img" v-show="aparecerPrevia">
+          <h3 v-if="arquivo.name">{{ this.arquivo.name }}</h3>
+          <div class="formato-invalido">
+            <h3 v-if="erroFormatoAnexo">{{ txtFormatoInvalido }}</h3>
+            <h4 v-if="erroFormatoAnexo">{{ txtFormatosValidos }}</h4>
           </div>
+          <div class="div-previa" v-if="imagemPrevia !== ''">
+            <img
+              :src="imagemPrevia"
+              alt="Previa da Imagem Selecionada"
+            />
+          </div>
+        </div>
+        <div 
+          v-show="aparecerPrevia"
+          v-on:click="excluirAnexo()" 
+          title="Cancelar selecao de anexo" 
+          class="btn-excluir-anexo">
+          <i class="fas fa-times-circle"></i>
+        </div>
+        <div class="chat-rodape-textarea">
           <!-- Emoji -->
-          <div id="emoji-container" v-show="!aparecerPrevia">
+          <div id="emoji-container">
             <div class="lista-emoji" v-if="abrirEmojis" :class="{'z-index-2' : abrirEmojis}">
               <ul>
                 <li
@@ -45,31 +40,27 @@
               v-on:click="selecionarEmoji()"
               :class="{'z-index-2' : abrirEmojis}"
             >
-              <!-- -->
             </div>
           </div>
           <!-- Textarea -->
-          <textarea
-            v-show="!aparecerPrevia"
-            v-on:keydown.enter="enviarMensagem($event)"
+          <textarea 
+            v-on:keydown.enter="enviarMensagem($event, aparecerPrevia)"
             id="textarea"
             v-model="mensagem"
             placeholder="Digite sua mensagem"
             no-resize
             rows="1"
           ></textarea>
-          <span
-            v-show="!aparecerPrevia"
+          <span 
             class="caracteres-disponiveis"
           >({{ qtdCaracteresDisponiveis - mensagem.length }})</span>
         </div>
       </div>
       <!-- Outros Botões -->
-      <div class="chat-rodape-botoes" :class="aparecerPrevia ? 'anexo-aberto' : ''">
-        <!-- Anexo não selecionado -->
-        <div :class="{'d-none' : aparecerPrevia}">
+      <div class="chat-rodape-botoes">
+        <div>
           <!-- Btn enviar msg -->
-          <div class="chat-rodape-botoes-botao" title="Enviar" v-on:click="enviarMensagem()">
+          <div class="chat-rodape-botoes-botao" title="Enviar" v-on:click="enviarMensagem('', aparecerPrevia)">
             <i class="fas fa-paper-plane"></i>
           </div>
           <!-- Btn abrir msg formatada -->
@@ -86,7 +77,7 @@
             class="chat-rodape-botoes-botao botao-enviar-anexo"
             :class="abrirOpcoes ? 'btn-ativo z-index-2': ''"
             title="Selecionar Anexo"
-            v-on:click="selecionarAnexo()"
+            v-on:click="selecionarAnexo(aparecerPrevia)"
           >
             <i class="fas fa-paperclip"></i>
             <!-- Modal Opcoes -->
@@ -106,32 +97,9 @@
                 <!-- <span> Documento </span> -->
               </div>
             </div>
-          </div>
-        </div>
-        <div :class="{'d-none' : !aparecerPrevia}">
-          <div
-            class="chat-rodape-botoes-botao botao-enviar-msg"
-            title="Enviar Anexo"
-            v-on:click="enviarAnexo()"
-          >
-            <i class="fas fa-paper-plane"></i>
-          </div>
-          <div
-            class="chat-rodape-botoes-botao botao-enviar-anexo"
-            title="Alterar Anexo"
-            v-on:click="selecionarImagem()"
-          >
-            <i class="fas fa-paperclip"></i>
             <div class="chat-rodape-botoes-container-anexo d-none">
               <input type="file" id="file" ref="file" accept="image/*" v-on:change="fileUpload()" />
             </div>
-          </div>
-          <div
-            class="chat-rodape-botoes-botao botao-excluir-anexo"
-            title="Cancelar selecao de anexo"
-            v-on:click="excluirAnexo()"
-          >
-            <i class="fas fa-times-circle"></i>
           </div>
         </div>
       </div>
@@ -262,7 +230,7 @@ export default {
       document.querySelector('#textarea').focus()
       this.mensagem += value;
     },
-    enviarMensagem(event) {
+    enviarMensagem(event, previa) {
       if(this.blocker && this.origemBlocker !== 'msg-formatada'){
         this.$store.dispatch('setBlocker', false)
       }
@@ -282,15 +250,19 @@ export default {
 
       const msgAux = this.mensagem
 
-      if (this.validaMensagem()) {
-        if (this.atendimentoAtivo.token_cliente != "" && this.mensagem != "") {
+      if (this.validaMensagem(previa)) {
+        if (this.atendimentoAtivo.token_cliente != "") {
           this.criaObjMensagem();
+
+          let anexoMsg = ""
+          anexoMsg = this.arquivo.name ? this.arquivo.name + " " + this.mensagem : this.mensagem
+
           let data = {
             token_cliente: this.atendimentoAtivo.token_cliente,
-            message: this.mensagem,
+            message: anexoMsg,
           };
 
-          this.mensagem = "";
+          this.resetar()
 
           axios_api
             .put("send-message", data)
@@ -311,6 +283,25 @@ export default {
         }
       }
     },
+    resetar(){
+      const rodapeMsg = document.querySelector(".chat-rodape-mensagens");
+      const containerText = document.querySelector(".chat-rodape-textarea");
+      const text = document.getElementById("textarea");
+      const emojisContainer = document.getElementById("emoji-container");
+      const rodapeBotoes = document.querySelector(".chat-rodape-botoes > div");
+
+      rodapeMsg.style.height = '50px'
+      containerText.style.height = '50px'
+      text.style.height = '50px'
+      emojisContainer.style.height = '50px'
+      rodapeBotoes.style.height = '50px'
+      text.value = text.value.trim('')
+
+      this.mensagem = "";
+      this.aparecerPrevia = false;
+      this.arquivo = ""
+      this.imagemPrevia = ""
+    },
     verificaRolagem() {
       let corpoMensagens = document.querySelector("#chat-operador > div");
       let tamanhoCorpoMensagem = corpoMensagens.offsetHeight;
@@ -320,7 +311,16 @@ export default {
         this.$store.dispatch("setHabilitaRolagem", true);
       }
     },
-    validaMensagem() {
+    validaMensagem(previa) {
+      if(previa){
+        let anexoValidado = this.validaAnexo(this.arquivo)
+        if(anexoValidado){
+          return true
+        }else{
+          return false
+        }
+      }
+
       let msg = this.mensagem;
 
       if (msg.length === 0 || !msg.trim()) {
@@ -347,14 +347,22 @@ export default {
           this.mensagem = this.mensagem.replace(regex, this.emojis[j].hexa);
         }
 
+        let anexo = false
+        let imgAnexo = ""
+        if(this.arquivo){
+          anexo = true
+          imgAnexo = this.imagemPrevia
+        }
+
         objMensagem = {
           autor: "Operador", // Operador, Cliente
           origem: "principal", // principal e outros
           msg: msg,
           horario: hora,
-          anexo: false,
-          imgAnexo: "",
+          anexo: anexo,
+          imgAnexo: imgAnexo,
         };
+
       } else {
         msg = objMessage.msg;
 
@@ -503,7 +511,11 @@ export default {
       this.abrirEmojis = !this.abrirEmojis;
       this.$store.dispatch("setBlocker", this.abrirEmojis);
     },
-    selecionarAnexo() {
+    selecionarAnexo(previa) {
+      if(previa){
+        this.selecionarImagem()
+        return
+      }
       this.$store.dispatch("setOrigemBlocker", "chat");
       this.abrirOpcoes = !this.abrirOpcoes;
       this.$store.dispatch("setBlocker", this.abrirOpcoes);
@@ -524,21 +536,6 @@ export default {
       this.$store.dispatch("setBlocker", this.abrirOpcoes);
     },
     fileUpload() {
-      this.mensagem = ''
-
-      const rodapeMsg = document.querySelector(".chat-rodape-mensagens");
-      const containerText = document.querySelector(".chat-rodape-textarea");
-      const text = document.getElementById("textarea");
-      const emojisContainer = document.getElementById("emoji-container");
-      const rodapeBotoes = document.querySelector(".chat-rodape-botoes > div");
-
-      rodapeMsg.style.height = '50px'
-      containerText.style.height = '50px'
-      text.style.height = '50px'
-      emojisContainer.style.height = '50px'
-      rodapeBotoes.style.height = '50px'
-      text.value = text.value.trim('')
-
       this.arquivo = this.$refs.file.files[0];
       let leitorDeImagem = new FileReader();
       leitorDeImagem.addEventListener(
@@ -566,17 +563,8 @@ export default {
         this.selecioneAnexo = true;
       }
     },
-    enviarAnexo() {
-      if (this.validaAnexo(this.arquivo)) {
-        this.$store.dispatch("setTodasMensagens", this.criaObjAnexo());
-        this.verificaRolagem();
-        this.arquivo = "";
-        this.imagemPrevia = "";
-        this.selecioneAnexo = true;
-      }
-    },
     validaAnexo(arquivo) {
-      if (arquivo !== "") {
+      if (arquivo) {
         if (/\.(jpe?g|png|gif)$/i.test(arquivo.name)) {
           return true;
         } else {
@@ -586,23 +574,15 @@ export default {
 
           return false;
         }
+      }else{
+        if (!document.querySelector(".toasted.toasted-primary.error")) {
+          this.$toasted.global.formatoInvalido();
+        }
+        return false
       }
     },
-    criaObjAnexo() {
-      const hora = this.formataHoraAtual();
-
-      let objMensagem = {
-        autor: "Operador", // Operador, Cliente
-        origem: "principal", // principal e outros
-        msg: "",
-        horario: hora,
-        anexo: true,
-        imgAnexo: this.imagemPrevia,
-      };
-      objMensagem = this.verificaStatusDaMensagem(objMensagem);
-      return objMensagem;
-    },
     excluirAnexo() {
+      this.$refs.file = ""
       this.arquivo = "";
       this.aparecerPrevia = false;
       this.imagemPrevia = "";

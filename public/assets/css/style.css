@@ -9214,6 +9214,7 @@ body {
         .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container .chat-opcoes-titulo-container--lista li {
           white-space: nowrap;
           text-overflow: ellipsis;
+          overflow: hidden;
           font-size: .8rem;
           margin: 0;
           padding: 0;
@@ -9355,7 +9356,8 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin: 10px 0; }
+    margin: 10px 0;
+    position: relative; }
   .chat-rodape .chat-rodape-mensagens {
     max-height: 70px;
     min-height: 50px;
@@ -9363,6 +9365,7 @@ body {
     width: 100%;
     margin-left: 10px; }
     .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea {
+      display: flex;
       width: 100%;
       max-height: 70px;
       height: 50px;
@@ -9372,7 +9375,7 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 20%;
+        width: 40px;
         max-height: 70px;
         min-height: 50px;
         background-color: #FFF;
@@ -9385,6 +9388,7 @@ body {
         border-top-right-radius: 0;
         border-bottom-right-radius: 0; }
         .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea #emoji-container .btn-emoji {
+          margin-left: 5px;
           opacity: .8;
           transition-duration: .3s;
           cursor: pointer;
@@ -9418,77 +9422,21 @@ body {
               .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea #emoji-container .lista-emoji ul li:hover {
                 opacity: 1; }
       .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea textarea {
-        margin-left: 20%;
-        width: 80%;
         resize: none;
         min-height: 50px;
-        height: 50px;
         max-height: 70px;
         font-size: .775rem;
         padding: 5px;
-        line-height: 15px;
-        border: 1px solid #CCC;
-        border-left: 0;
-        border-right: 0; }
+        line-height: 15px; }
         .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea textarea:focus, .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea textarea:active {
           outline: 0; }
-      .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .chat-rodape-previa-img {
+      .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea textarea {
+        margin-left: 40px;
         height: 50px;
-        border-radius: 30px;
         border: 1px solid #CCC;
+        border-left: 0;
         border-right: 0;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-        background: #FFF;
-        position: relative;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        margin-bottom: 5px; }
-        .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .chat-rodape-previa-img h3 {
-          font-size: 1rem;
-          color: #444; }
-        .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .chat-rodape-previa-img h4 {
-          font-size: .8rem;
-          color: #444; }
-        .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .chat-rodape-previa-img .container-previa-img {
-          overflow: auto;
-          position: absolute;
-          top: -200px;
-          left: 20px;
-          width: 100%;
-          height: 200px;
-          padding: 5px;
-          border-top-left-radius: 15px;
-          border-top-right-radius: 15px;
-          background-color: rgba(0, 0, 0, 0.5);
-          display: flex;
-          justify-content: center;
-          align-items: center; }
-          .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .chat-rodape-previa-img .container-previa-img img {
-            height: 100%; }
-        .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .chat-rodape-previa-img .btn-excluir-anexo {
-          width: 1.6rem;
-          height: 1.6rem;
-          background-color: #FFF;
-          border-radius: 50%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          position: absolute;
-          right: -35px;
-          top: -215px;
-          cursor: pointer;
-          z-index: 2;
-          opacity: .9;
-          transition-duration: 300ms; }
-          .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .chat-rodape-previa-img .btn-excluir-anexo:hover {
-            opacity: 1; }
-          .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .chat-rodape-previa-img .btn-excluir-anexo svg {
-            font-size: 2rem;
-            color: #BE1E2A; }
+        flex: 1; }
       .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea .caracteres-disponiveis {
         font-size: .575rem;
         z-index: 1;
@@ -9496,6 +9444,71 @@ body {
         position: absolute;
         right: -30px;
         bottom: -11px; }
+  .chat-rodape .container-previa-img {
+    overflow: hidden;
+    position: absolute;
+    top: -210px;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    padding-bottom: 10px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    background-color: #AAA;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap; }
+    .chat-rodape .container-previa-img h3, .chat-rodape .container-previa-img h4 {
+      margin: 10px;
+      width: 100%;
+      font-size: 1rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap; }
+    .chat-rodape .container-previa-img h4 {
+      font-size: .9rem; }
+    .chat-rodape .container-previa-img .formato-invalido {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.1);
+      width: 100%; }
+      .chat-rodape .container-previa-img .formato-invalido h3 {
+        font-weight: bold; }
+      .chat-rodape .container-previa-img .formato-invalido h3, .chat-rodape .container-previa-img .formato-invalido h4 {
+        width: auto; }
+    .chat-rodape .container-previa-img .div-previa {
+      width: 100%;
+      height: 145px;
+      display: flex;
+      justify-content: center;
+      background-color: rgba(0, 0, 0, 0.1);
+      overflow: unset; }
+      .chat-rodape .container-previa-img .div-previa img {
+        padding: 2%;
+        max-width: 98%;
+        max-height: 98%; }
+  .chat-rodape .btn-excluir-anexo {
+    width: 1.6rem;
+    height: 1.6rem;
+    background-color: #FFF;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 15px;
+    top: -220px;
+    cursor: pointer;
+    z-index: 2;
+    opacity: .9;
+    transition-duration: 300ms; }
+    .chat-rodape .btn-excluir-anexo:hover {
+      opacity: 1; }
+    .chat-rodape .btn-excluir-anexo svg {
+      font-size: 2rem;
+      color: #BE1E2A; }
   .chat-rodape .chat-rodape-botoes {
     margin-right: 10px; }
     .chat-rodape .chat-rodape-botoes > div {
