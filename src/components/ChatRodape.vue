@@ -387,7 +387,9 @@ export default {
       hora = hora < 10 ? "0" + hora : hora;
       let minutos = data.getMinutes();
       minutos = minutos < 10 ? "0" + minutos : minutos;
-      const horaFormatada = hora + "h" + minutos;
+      let segundos = data.getSeconds()
+      segundos = segundos < 10 ? "0" + segundos : segundos;
+      const horaFormatada = hora + ":" + minutos + ":" + segundos;
       return horaFormatada;
     },
     abreFechaMsgFormatada(){

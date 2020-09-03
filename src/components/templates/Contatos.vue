@@ -256,6 +256,9 @@ export default {
       if(todosContatos){
         const containerTodosContatos = todosContatos.parentElement
         containerTodosContatos.style.transitionDuration = '300ms'
+        setTimeout(() => {
+          containerTodosContatos.style.transitionDuration = ''
+        }, 300)
         if(!this.fechado){
           if(widthCtt && widthCtt !== '60px'){
             containerTodosContatos.style.width = widthCtt
