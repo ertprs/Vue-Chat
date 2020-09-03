@@ -86,7 +86,7 @@ function tratarResponse(response) {
             // console.log('Status ' + response.status + ' ' + response.statusText)
             // console.log('Aguardando Cliente')
             setTimeout(() => {
-                console.log('Timeout aguardando cliente')
+                // console.log('Timeout aguardando cliente')
                 getAtendimentos()
                 adicionaCaso(206)
             }, TEMPO_ATUALIZACAO)
@@ -110,22 +110,22 @@ function verificaRequest() {
 }
 
 function bloqueiaRequest() {
-    console.log('aguardando retorno do request')
+    // console.log('aguardando retorno do request')
     status_gerenciador = 1
 }
 
 function liberaRequest() {
-    console.log('request liberado')
+    // console.log('request liberado')
     status_gerenciador = 0
 }
 
 export function executandoEncerrar() {
-    console.log('-> pausar para encerrar contato')
+    // console.log('-> pausar para encerrar contato')
     status_encerrando = 1
 }
 
 export function liberarEncerrar() {
-    console.log('-> voltando ao fluxo normal')
+    // console.log('-> voltando ao fluxo normal')
     status_encerrando = 0
     liberaRequest()
 }
