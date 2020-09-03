@@ -525,11 +525,12 @@ export default {
     },
     fileUpload() {
       this.mensagem = ''
-      var rodapeMsg = document.querySelector(".chat-rodape-mensagens");
-      var containerText = document.querySelector(".chat-rodape-textarea");
-      var text = document.getElementById("textarea");
-      var emojisContainer = document.getElementById("emoji-container");
-      var rodapeBotoes = document.querySelector(".chat-rodape-botoes > div");
+
+      const rodapeMsg = document.querySelector(".chat-rodape-mensagens");
+      const containerText = document.querySelector(".chat-rodape-textarea");
+      const text = document.getElementById("textarea");
+      const emojisContainer = document.getElementById("emoji-container");
+      const rodapeBotoes = document.querySelector(".chat-rodape-botoes > div");
 
       rodapeMsg.style.height = '50px'
       containerText.style.height = '50px'
@@ -618,13 +619,13 @@ export default {
         };
       }
 
-      var rodapeMsg = document.querySelector(".chat-rodape-mensagens");
-      var containerText = document.querySelector(".chat-rodape-textarea");
-      var text = document.getElementById("textarea");
-      var emojisContainer = document.getElementById("emoji-container");
-      var rodapeBotoes = document.querySelector(".chat-rodape-botoes > div");
+      const rodapeMsg = document.querySelector(".chat-rodape-mensagens");
+      const containerText = document.querySelector(".chat-rodape-textarea");
+      const text = document.getElementById("textarea");
+      const emojisContainer = document.getElementById("emoji-container");
+      const rodapeBotoes = document.querySelector(".chat-rodape-botoes > div");
 
-      var chatCorpo = document.getElementById("chat-operador");
+      const chatCorpo = document.getElementById("chat-operador");
 
       function resize() {
         text.style.height = "auto";
