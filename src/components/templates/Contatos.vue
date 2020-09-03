@@ -116,7 +116,7 @@ export default {
     todosAtendimentos() {
       if(this.todosAtendimentos){
         this.objAtendimentos = Object.values(this.todosAtendimentos)
-        if(this.objAtendimentos.length == 1 && this.idAtendimentoAtivo == ''){
+        if(this.objAtendimentos.length && this.idAtendimentoAtivo == ''){
           setTimeout(() => {
             this.ativarConversa(this.objAtendimentos[0], 0)
           }, 200)

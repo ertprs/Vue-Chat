@@ -524,6 +524,20 @@ export default {
       this.$store.dispatch("setBlocker", this.abrirOpcoes);
     },
     fileUpload() {
+      this.mensagem = ''
+      var rodapeMsg = document.querySelector(".chat-rodape-mensagens");
+      var containerText = document.querySelector(".chat-rodape-textarea");
+      var text = document.getElementById("textarea");
+      var emojisContainer = document.getElementById("emoji-container");
+      var rodapeBotoes = document.querySelector(".chat-rodape-botoes > div");
+
+      rodapeMsg.style.height = '50px'
+      containerText.style.height = '50px'
+      text.style.height = '50px'
+      emojisContainer.style.height = '50px'
+      rodapeBotoes.style.height = '50px'
+      text.value = text.value.trim('')
+
       this.arquivo = this.$refs.file.files[0];
       let leitorDeImagem = new FileReader();
       leitorDeImagem.addEventListener(
@@ -646,10 +660,6 @@ export default {
       }else{
         baseUrl = 'https://'+window.location.hostname
       }
-
-
-      console.log(event.origin)
-      console.log(baseUrl)
 
       if(event.origin == baseUrl){
         this.mensagem = event.data

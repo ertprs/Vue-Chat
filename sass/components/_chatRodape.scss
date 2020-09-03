@@ -20,12 +20,10 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
     max-height: $maxAltura;
     min-height: $altura;
     height: $altura;
-    width: $tamanhoContainerTxt;
+    width: 100%;
     margin-left: $margin;
-    &.anexo-aberto{
-      width: 65%;
-    }
     .chat-rodape-textarea{
+      width: 100%;
       max-height: $maxAltura;
       height: $altura;
       min-height: $altura;
@@ -94,9 +92,9 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
         min-height: $altura;
         height: $altura;
         max-height: $maxAltura;
-        font-size: .9rem;
-        padding-left: 15px;
-        padding-top: 10px;
+        font-size: .775rem;
+        padding: 5px;
+        line-height: 15px;
         border: 1px solid #CCC;
         border-left: 0;
         border-right: 0;
@@ -181,10 +179,6 @@ $tamanhoTextarea: 100% - $tamanhoEmoji;
   }
   .chat-rodape-botoes{
     margin-right: $margin;
-    width: (100% - $tamanhoContainerTxt);
-    &.anexo-aberto{
-      width: 35%;
-    }
     > div{
       display: flex;
       align-items: center;

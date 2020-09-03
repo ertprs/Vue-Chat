@@ -1,6 +1,6 @@
 <template>
   <div class="chat-opcoes">
-      <div class="chat-opcoes-titulo">
+      <div class="chat-opcoes-titulo" :class="{'cliente-ativo' : atendimentoAtivo}">
         <div class="chat-opcoes-titulo-container">
           <div class="circulo-contatos">
             <p>{{ formataSigla(atendimentoAtivo.nome_usu[0], 'upper') }}</p>
