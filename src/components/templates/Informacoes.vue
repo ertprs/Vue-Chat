@@ -101,9 +101,10 @@ export default {
       return nome
     },
     formataTelefone(telefone){
-      if(!telefone){ return '' }
+      if(!telefone){ return '' } 
 
       telefone = "+"+telefone.slice(0,2)+" ("+telefone.slice(2,4)+") "+telefone.slice(4, 9)+"-"+telefone.slice(9, telefone.length)
+
       return telefone
     },
     formataHorario(horas){
