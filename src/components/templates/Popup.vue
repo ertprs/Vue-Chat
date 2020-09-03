@@ -54,7 +54,7 @@
         <ul 
           :class="{'bg' : bg}"
           lista-retornar>
-          <li id="encerrarAtendimento" @click="encerrar()"> Confirmar </li>
+          <li id="encerrarAtendimento" @click="encerrar(), fecharPopup()"> Confirmar </li>
           <li @click="fecharPopup()"> Cancelar </li>
         </ul>
       </template>
@@ -91,12 +91,12 @@ export default {
   },
   methods: {
     fecharPopup(event){
-      if(this.auxBlocker) { // evitar que o fecharPopup seja executado duas vezes seguidas
-        this.auxBlocker = false
+      // if(this.auxBlocker) { // evitar que o fecharPopup seja executado duas vezes seguidas
+      //   this.auxBlocker = false
         if(event){
           if(event !== "encerrarAtendimento") {
             liberarEncerrar()
-            if(event.target === document.querySelector('#popup')){
+            if(event.target === document.querySelector('#popup')){       
               this.$store.dispatch('setBlocker', false)
             }
           }
@@ -104,10 +104,10 @@ export default {
           this.$store.dispatch('setBlocker', false)
           liberarEncerrar()
         }
-        setTimeout(() => {
-          this.auxBlocker = true
-        }, 2000);
-      }
+        // setTimeout(() => {
+        //   this.auxBlocker = true
+        // }, 100);
+      // }
     },
     tamanhoChat(){
       const widthChat = localStorage.getItem('largura-chat')
