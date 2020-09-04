@@ -30,6 +30,11 @@
           <span>{{ regrasBotoes.button_end.name }}</span>
         </div>
       </template>
+      <template v-else>
+        <div class="load">
+          <i class="fas fa-hourglass-end"></i>
+        </div>
+      </template>
       <!-- PARA TESTES, COMENTAR ANTES DO BUILD -->
       <!-- <template v-else>
         <div

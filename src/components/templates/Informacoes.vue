@@ -2,7 +2,7 @@
   <div id="informacoes" class="resizable-content">
     <template>
       <!-- Título -->
-      <div class="informacoes-titulo" v-if="!atendimentoAtivo.informacoes || caso == 206 || caso == 404">
+      <div class="informacoes-titulo" v-if="!atendimentoAtivo.informacoes || caso == 206 || caso == 400">
         <i class="fas fa-info-circle"></i>
         <h1 title="Informacoes"> Informacoes </h1>
       </div>
@@ -56,7 +56,17 @@
         <div id="iframe-msg-container" v-if="abrirMsgTipo2">
           <!-- Iframe do Caio -->
           <!-- {{ `${baseUrl}im/atdHumano/view/atd_valida.php?grupo=${grupo}&categoria=${categoria}&assunto=${assunto}&nro_chat=${nroChat}` }} -->
-          <iframe :src="`${baseUrl}im/atdHumano/view/atd_valida.php?grupo=${grupo}&categoria=${categoria}&assunto=${assunto}&nro_chat=${nroChat}${teste}`" frameborder="0"></iframe> <!-- tipo_popup=AJ2& -->
+          <div class="informacoes-load-container" v-if="gif">
+            <div class="load">
+              <i class="fas fa-hourglass-end"></i>
+              <p> Carregando </p>
+            </div>
+          </div>
+          <iframe 
+            :src="`${baseUrl}im/atdHumano/view/atd_valida.php?grupo=${grupo}&categoria=${categoria}&assunto=${assunto}&nro_chat=${nroChat}${teste}`" frameborder="0"
+            @load="gif = false"
+            @loadstart="gif = true"
+            > </iframe> <!-- tipo_popup=AJ2& -->
         </div>
         <!-- Rodape - Botoes Acoes -->
         <!-- <div class="container-acoes">
@@ -86,7 +96,8 @@ export default {
   data(){
     return{
       baseUrl: '',
-      teste: ''
+      teste: '',
+      gif: true
     }
   },
   components: {

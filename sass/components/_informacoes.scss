@@ -43,6 +43,16 @@
   }
 }
 
+.informacoes-load-container{
+  position: absolute;
+  .load{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column
+  }
+}
+
 .container-acoes{
   height: 11%;
   width: 100%;
