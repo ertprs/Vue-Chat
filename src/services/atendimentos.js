@@ -36,7 +36,10 @@ export function getAtendimentos(appVue) {
 }
 
 function verificarAlertaErroRequest() {
-    console.error('Erro de conexao ' + contador_request_erro)
+    if(contador_request_erro > 0) {
+        console.error('Erro de conexao ' + contador_request_erro)
+    }
+
     if(contador_request_erro > 2) {
         alert('Existe um erro na conexao com a internet')
         document.location.reload(true);
@@ -124,22 +127,22 @@ function verificaRequest() {
 }
 
 function bloqueiaRequest() {
-    // console.log('aguardando retorno do request')
+    console.log('aguardando retorno do request')
     status_gerenciador = 1
 }
 
 function liberaRequest() {
-    // console.log('request liberado')
+    console.log('request liberado')
     status_gerenciador = 0
 }
 
 export function executandoEncerrar() {
-    // console.log('-> pausar para encerrar contato')
+    console.log('-> pausar para encerrar contato')
     status_encerrando = 1
 }
 
 export function liberarEncerrar() {
-    // console.log('-> voltando ao fluxo normal')
+    console.log('-> voltando ao fluxo normal')
     status_encerrando = 0
     liberaRequest()
 }
