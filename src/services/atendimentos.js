@@ -110,7 +110,7 @@ function tratarResponse(response) {
             break;
 
         default:
-            console.log('ERRO STATUS ' + response.status + ' ' + response.statusText)
+            console.error('ERRO STATUS ' + response.status + ' ' + response.statusText)
             console.log(response)
             adicionaCaso(400)
             // this.reiniciarApp()
@@ -127,22 +127,22 @@ function verificaRequest() {
 }
 
 function bloqueiaRequest() {
-    console.log('aguardando retorno do request')
+    // console.log('aguardando retorno do request')
     status_gerenciador = 1
 }
 
 function liberaRequest() {
-    console.log('request liberado')
+    // console.log('request liberado')
     status_gerenciador = 0
 }
 
 export function executandoEncerrar() {
-    console.log('-> pausar para encerrar contato')
+    // console.log('-> pausar para encerrar contato')
     status_encerrando = 1
 }
 
 export function liberarEncerrar() {
-    console.log('-> voltando ao fluxo normal')
+    // console.log('-> voltando ao fluxo normal')
     status_encerrando = 0
     liberaRequest()
 }
@@ -212,7 +212,6 @@ async function atualizarAtendimentos() {
 
 function atualizarClientes(mainData) {
     var atendimentosServer = mainData.atendimentos
-    console.log(atendimentosServer)
     var atendimentosLocal = store.getters.getTodosAtendimentos
     var novosAtendimentos = {}
 
@@ -237,19 +236,18 @@ function atualizarClientes(mainData) {
                 }
             }
         }
-        console.log(atendimentosServer[ramal_server].id_cli)
-        console.log(store.getters.getUltimoIdRemovido)
+        // console.log(atendimentosServer[ramal_server].id_cli)
+        // console.log(store.getters.getUltimoIdRemovido)
 
         if (temClienteNovo && verificaEncerramento()) {
             if(store.getters.getUltimoIdRemovido == atendimentosServer[ramal_server].id_cli){
-                alert('entrou')
                 store.dispatch('setUltimoIdRemovido', '')
                 return
             }
             novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
             novosAtendimentos[ramal_server].novoContato = true
             store.dispatch('setAtendimentos', novosAtendimentos)
-            console.log('cliente novo: ', novosAtendimentos)
+            // console.log('cliente novo: ', novosAtendimentos)
             temClienteNovo = false
         } else {
             atualizarMensagens(atendimentosServer[ramal_server], ramal_server, novosAtendimentos)
@@ -261,7 +259,6 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
     if(!novosAtendimentos[ramal]){
         return
     }
-    
 
     if (novosAtendimentos[ramal].arrMsg.length > 0) { //verifica se o cliente antigo ou novo
         const seqs = novosAtendimentos[ramal].arrMsg.map(message => (message.seq)); //seq das mensagens antigas
@@ -276,7 +273,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                         message.msg = message.msg.replace(regex, store.getters.getEmojis[i].emoji)
                     }
                     novosAtendimentos[ramal].arrMsg.push(message)// adiciono as mensagens novas no array global
-                    console.log('seq: ' + message.seq + ' msg: ' + message.msg + ', tipo: ' + message.resp_msg)
+                    // console.log('seq: ' + message.seq + ' msg: ' + message.msg + ', tipo: ' + message.resp_msg)
                     if (store.getters.getIdAtendimentoAtivo !== novosAtendimentos[ramal].id_cli && message.resp_msg == 'CLI') {
                         novosAtendimentos[ramal].alertaMsgNova = true
                         if (!novosAtendimentos[ramal].qtdMsgNova) {
