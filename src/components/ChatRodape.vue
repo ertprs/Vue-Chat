@@ -582,7 +582,6 @@ export default {
       }
     },
     excluirAnexo() {
-      this.$refs.file = ""
       this.arquivo = "";
       this.aparecerPrevia = false;
       this.imagemPrevia = "";
