@@ -216,9 +216,6 @@ function atualizarClientes(mainData) {
     var atendimentosLocal = store.getters.getTodosAtendimentos
     var novosAtendimentos = {}
 
-    // console.log('server', Object.keys(atendimentosServer).length)
-    // console.log('local', Object.keys(atendimentosLocal).length)
-
     if(Object.keys(atendimentosServer).length < Object.keys(atendimentosLocal).length) {
         for (var ramal_server in atendimentosServer) {
             novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]

@@ -22,7 +22,6 @@ export default {
       state.atendimentoAtivo = {}
     },
     setUltimoIdRemovido(state, ultimoIdRemovido){
-      console.log('store: ', ultimoIdRemovido)
       state.ultimoIdRemovido = ultimoIdRemovido
     }
   },
