@@ -212,6 +212,7 @@ async function atualizarAtendimentos() {
 
 function atualizarClientes(mainData) {
     var atendimentosServer = mainData.atendimentos
+    console.log(atendimentosServer)
     var atendimentosLocal = store.getters.getTodosAtendimentos
     var novosAtendimentos = {}
 
@@ -239,7 +240,15 @@ function atualizarClientes(mainData) {
                 }
             }
         }
+        console.log(atendimentosServer[ramal_server].id_cli)
+        console.log(store.getters.getUltimoIdRemovido)
+
         if (temClienteNovo && verificaEncerramento()) {
+            if(store.getters.getUltimoIdRemovido == atendimentosServer[ramal_server].id_cli){
+                alert('entrou')
+                store.dispatch('setUltimoIdRemovido', '')
+                return
+            }
             novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
             novosAtendimentos[ramal_server].novoContato = true
             store.dispatch('setAtendimentos', novosAtendimentos)
@@ -256,9 +265,6 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
         return
     }
     
-    if(store.getters.getUltimoIdRemovido == novosAtendimentos[ramal].token_cliente){
-        return
-    }
 
     if (novosAtendimentos[ramal].arrMsg.length > 0) { //verifica se o cliente antigo ou novo
         const seqs = novosAtendimentos[ramal].arrMsg.map(message => (message.seq)); //seq das mensagens antigas

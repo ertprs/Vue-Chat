@@ -285,8 +285,7 @@ export default {
     },
     popupEncerrar(){
       this.checaBlocker()
-      
-      this.$store.dispatch('setUltimoIdRemovido', this.atendimentoAtivo.token_cliente)
+      this.$store.dispatch('setUltimoIdRemovido', this.atendimentoAtivo.id_cli)
 
       executandoEncerrar()
       this.origem = 'Encerrar'
