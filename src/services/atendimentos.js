@@ -8,27 +8,39 @@ import { converterHexaParaEmojis } from "./emojis"
 
 const TEMPO_ATUALIZACAO = 2000
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
-var status_encerrando = 0 //
+var status_encerrando = 0 // 0 = liberado; 1 = em pausa
+var contador_request_erro = 0
 var app
 
 export function getAtendimentos(appVue) {
     appVue ? app = appVue : false
     liberaRequest()
+    verificarAlertaErroRequest()
     axios({
         method: 'get',
         url: store.getters.getURL + 'get-atendimento?teste' //?teste
     })
         .then(response => {
+            contador_request_erro = 0
             tratarResponse(response)
         })
         .catch(err => {
             setTimeout(() => {
+                contador_request_erro ++
                 console.log(err)
                 getAtendimentos()
                 adicionaCaso(400)
-            }, TEMPO_ATUALIZACAO)
+            }, 500)
         }
         )
+}
+
+function verificarAlertaErroRequest() {
+    console.log(contador_request_erro)
+    if(contador_request_erro > 2) {
+        alert('Existe um erro na conexao com a internet')
+        document.location.reload(true);
+    }
 }
 
 function loopAtualizacaoDeAtendimentos(count = 0) {
@@ -63,7 +75,6 @@ function tratarResponse(response) {
                     getAtendimentos()
                 }, TEMPO_ATUALIZACAO)
             } else {
-
                 if (mainData.atendimentos != null) {
                     adicionaCaso('')
                     mainData = converterHexaParaEmojis(mainData)
@@ -188,6 +199,7 @@ async function atualizarAtendimentos() {
         })
         .catch(
             err => {
+                contador_request_erro ++
                 console.log(err)
                 liberaRequest()
                 getAtendimentos()
