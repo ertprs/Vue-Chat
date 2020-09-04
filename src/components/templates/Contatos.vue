@@ -18,7 +18,7 @@
     <template v-if="objAtendimentos">
       <!-- Caso Aguardando Cliente ou esperando a primeira requisicao ao buscaAtendimentos -->
       <div class="lista-contatos-container-vazio load-container" v-if="caso == 206 || caso == 'aguardando'">
-        <div id="load">
+        <div class="load">
           <i class="fas fa-hourglass-end"></i>
           <transition name="fade">
             <p v-show="!fechado" >
@@ -124,7 +124,7 @@ export default {
       }
     },
     caso(){
-      if(this.caso == 206 || this.caso == 404){
+      if(this.caso == 206 || this.caso == 400){
         document.querySelector('.titulo-contatos').style.background = ''
         document.querySelector('.lista-agenda--titulo').style.background = ''
       }

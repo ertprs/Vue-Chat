@@ -23,7 +23,7 @@ $tamanhoEmoji: 40px;
     min-height: $altura;
     height: $altura;
     width: 100%;
-    margin-left: $margin;
+    margin-left: 3px;
     .chat-rodape-textarea{
       display: flex;
       width: 100%;
@@ -213,7 +213,7 @@ $tamanhoEmoji: 40px;
     }
   }
   .chat-rodape-botoes{
-    margin-right: $margin;
+    margin-right: 3px;
     > div{
       display: flex;
       align-items: center;

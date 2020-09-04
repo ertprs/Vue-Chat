@@ -79,7 +79,7 @@ function tratarResponse(response) {
                 }, TEMPO_ATUALIZACAO)
             } else {
                 if (mainData.atendimentos != null) {
-                    adicionaCaso('')
+                    adicionaCaso(200)
                     mainData = converterHexaParaEmojis(mainData)
                     // executarRegrasFormatacao(mainData)
                     carregarIframe(mainData.atendimentos)
@@ -90,8 +90,8 @@ function tratarResponse(response) {
                 } else {
                     console.log('Erro ao tentar obter dados no servidor')
                     console.log(mainData)
+                    adicionaCaso(400)
                     setTimeout(() => {
-                        adicionaCaso(400)
                         console.log('timeout erro obter dados no servidor')
                         getAtendimentos()
                     }, TEMPO_ATUALIZACAO)
@@ -237,12 +237,9 @@ function atualizarClientes(mainData) {
                 }
             }
         }
-        console.log(atendimentosServer[ramal_server].id_cli)
-        console.log(store.getters.getUltimoIdRemovido)
 
         if (temClienteNovo && verificaEncerramento()) {
             if(store.getters.getUltimoIdRemovido == atendimentosServer[ramal_server].id_cli){
-                alert('entrou')
                 store.dispatch('setUltimoIdRemovido', '')
                 return
             }
