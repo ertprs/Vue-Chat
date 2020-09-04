@@ -122,6 +122,12 @@ export default {
           }, 200)
         }
       }
+    },
+    caso(){
+      if(this.caso == 206 || this.caso == 404){
+        document.querySelector('.titulo-contatos').style.background = ''
+        document.querySelector('.lista-agenda--titulo').style.background = ''
+      }
     }
   },
   created(){

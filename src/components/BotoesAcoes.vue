@@ -110,7 +110,8 @@ export default {
       todosAtendimentos: 'getTodosAtendimentos',
       idAtendimentoAtivo: 'getIdAtendimentoAtivo',
       blocker: 'getBlocker',
-      origemBlocker: 'getOrigemBlocker'
+      origemBlocker: 'getOrigemBlocker',
+      caso: 'getCaso'
     })
   },
   watch: {
@@ -284,6 +285,9 @@ export default {
     },
     popupEncerrar(){
       this.checaBlocker()
+      
+      this.$store.dispatch('setUltimoIdRemovido', this.atendimentoAtivo.token_cliente)
+
       executandoEncerrar()
       this.origem = 'Encerrar'
       if(this.tudoPronto){
@@ -294,30 +298,36 @@ export default {
     },
     async encerrarAtendimento() {
       if( this.atendimentoAtivo.informacoes.nome != null ) {
-
         await this.finalizarAtendimentoNaApi()
       } else {
         this.$toasted.global.defaultError({msg: 'Selecione um cliente antes de tentar finalizar o atendimento'})
       }
     },
     async finalizarAtendimentoNaApi() {
+
       let data = { "token_cliente": this.atendimentoAtivo.token_cliente }
 
       await axios_api.delete('end-atendimento', {data: {...data}})
         .then(response => {
           if(response.data.st_ret == 'OK'){
-            this.$store.dispatch('limparAtendimentoAtivo')
-            var novosAtendimentos = {}
-            for(var ramal_local in this.todosAtendimentos) {
-              if(this.todosAtendimentos[ramal_local].id_cli !== this.idAtendimentoAtivo) {
-                novosAtendimentos[ramal_local] = this.todosAtendimentos[ramal_local]
-              }
+
+            let todosAtendimentosFiltrado = []
+            for(let ramal_local in this.todosAtendimentos){
+              todosAtendimentosFiltrado.push(this.todosAtendimentos[ramal_local])
             }
-            if(!Object.keys(novosAtendimentos).length){
+            
+            todosAtendimentosFiltrado = todosAtendimentosFiltrado.filter(el => {
+              return el.token_cliente !== this.atendimentoAtivo.token_cliente
+            })
+            
+            if(!todosAtendimentosFiltrado.length){
               this.$store.dispatch('setCaso', 206)
             }
+
             this.tudoPronto = false
-            this.$store.dispatch('setAtendimentos', novosAtendimentos)
+            this.$store.dispatch('setAtendimentos', todosAtendimentosFiltrado)
+            
+            this.$store.dispatch('limparAtendimentoAtivo')
             this.$store.dispatch('limparIdAtendimentoAtivo')
             this.$root.$off('atualizar_mensagem')
             this.$root.$off('rolaChat')
@@ -337,6 +347,6 @@ export default {
   },
   beforeDestroy: function() {
     this.$root.$off('encerrarAtendimento')
-}
+  }
 }
 </script>
