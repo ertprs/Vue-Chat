@@ -253,6 +253,10 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
         return
     }
     
+    if(store.getters.getUltimoIdRemovido == novosAtendimentos[ramal].token_cliente){
+        return
+    }
+
     if (novosAtendimentos[ramal].arrMsg.length > 0) { //verifica se o cliente antigo ou novo
         const seqs = novosAtendimentos[ramal].arrMsg.map(message => (message.seq)); //seq das mensagens antigas
         if (cliente.arrMsg.length > 0) {

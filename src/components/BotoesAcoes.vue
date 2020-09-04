@@ -285,6 +285,9 @@ export default {
     },
     popupEncerrar(){
       this.checaBlocker()
+      
+      this.$store.dispatch('setUltimoIdRemovido', this.atendimentoAtivo.token_cliente)
+
       executandoEncerrar()
       this.origem = 'Encerrar'
       if(this.tudoPronto){
@@ -301,7 +304,7 @@ export default {
       }
     },
     async finalizarAtendimentoNaApi() {
-    
+
       let data = { "token_cliente": this.atendimentoAtivo.token_cliente }
 
       await axios_api.delete('end-atendimento', {data: {...data}})
@@ -337,7 +340,6 @@ export default {
           setTimeout(() => {
             liberarEncerrar()
           }, 5000);
-          this.$store.dispatch('setUltimoIdRemovido', '')
           console.log('Error end atd: ', error)
           this.$toasted.global.defaultError({msg: 'Nao foi possivel encerrar o atendimento. Tente novamente'})
         })

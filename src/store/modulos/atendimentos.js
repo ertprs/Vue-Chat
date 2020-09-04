@@ -2,7 +2,8 @@ export default {
   state: {
     todosAtendimentos: {},
     idAtendimentoAtivo: '',
-    atendimentoAtivo: {}
+    atendimentoAtivo: {},
+    ultimoIdRemovido: ''
   },
   mutations: {
     setAtendimentos(state, todosAtendimentos){
@@ -19,6 +20,10 @@ export default {
     },
     limparAtendimentoAtivo(state) {
       state.atendimentoAtivo = {}
+    },
+    setUltimoIdRemovido(state, ultimoIdRemovido){
+      console.log('store: ', ultimoIdRemovido)
+      state.ultimoIdRemovido = ultimoIdRemovido
     }
   },
   actions: {
@@ -36,6 +41,9 @@ export default {
     },
     limparAtendimentoAtivo: context => {
       context.commit('limparAtendimentoAtivo')
+    },
+    setUltimoIdRemovido: (context, payload) => {
+      context.commit('setUltimoIdRemovido', payload)
     }
   },
   getters: {
@@ -47,6 +55,9 @@ export default {
     },
     getAtendimentoAtivo(state){
       return state.atendimentoAtivo
+    },
+    getUltimoIdRemovido(state){
+      return state.ultimoIdRemovido
     }
   } 
 }
