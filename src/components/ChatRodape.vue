@@ -354,6 +354,9 @@ export default {
           imgAnexo = this.imagemPrevia
         }
 
+        let tipoDoc = ""
+        let docAnexo = ""
+
         objMensagem = {
           autor: "Operador", // Operador, Cliente
           origem: "principal", // principal e outros
@@ -361,19 +364,52 @@ export default {
           horario: hora,
           anexo: anexo,
           imgAnexo: imgAnexo,
+          anexo: anexo,
+          imgAnexo: imgAnexo,
+          tipoDoc: tipoDoc,
+          docAnexo: docAnexo
         };
 
       } else {
         msg = objMessage.msg;
+
+        let anexo = false
+        let imgAnexo = ""
+        let tipoDoc = ""
+        let docAnexo = ""
+
+        if(objMessage.anexos){
+          anexo = true
+          let baseUrl = ''
+          if(window.location.hostname == 'localhost'){
+            baseUrl = 'http://linux03'
+          }else{
+            baseUrl = 'https://'+window.location.hostname
+          }
+          
+          let regex = /(\w+)\/(\w+)/g;
+          let type = regex.exec(objMessage.anexos.type);
+          switch (type[1]) {
+            case "image": 
+              imgAnexo = `${baseUrl}/callcenter/docs.php?mku=${objMessage.anexos.mku}`
+              break;
+            default:
+              tipoDoc = objMessage.anexos.type
+              docAnexo = `${baseUrl}/callcenter/docs.php?mku=${objMessage.anexos.mku}`
+          }
+        }
 
         objMensagem = {
           autor: "Cliente", // Operador, Cliente
           origem: "outros", // principal e outros
           msg: msg,
           horario: objMessage.hora,
-          anexo: false,
-          imgAnexo: "",
+          anexo: anexo,
+          imgAnexo: imgAnexo,
+          tipoDoc: tipoDoc,
+          docAnexo: docAnexo
         };
+
       }
       objMensagem = this.verificaStatusDaMensagem(objMensagem);
 
@@ -645,12 +681,10 @@ export default {
 
       let baseUrl = ''
       if(window.location.hostname == 'localhost'){
-        console.log('linux03')
         baseUrl = 'https://linux03'
       }else{
         baseUrl = 'https://'+window.location.hostname
       }
-      console.log('baseUrl:', baseUrl)
 
       if(event.origin == baseUrl){
         if(event.data == ''){
