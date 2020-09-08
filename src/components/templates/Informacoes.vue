@@ -2,13 +2,13 @@
   <div id="informacoes" class="resizable-content">
     <template>
       <!-- Título -->
-      <div class="informacoes-titulo" v-if="!atendimentoAtivo.informacoes || caso == 206 || caso == 400">
+      <div class="informacoes-titulo tamanho-titulos" v-if="!atendimentoAtivo.informacoes || caso == 206 || caso == 400">
         <i class="fas fa-info-circle"></i>
         <h1 title="Informacoes"> Informacoes </h1>
       </div>
       <!-- Caso haja informacoes -->
       <div class="container-principal-informacoes" v-if="atendimentoAtivo.informacoes && (caso == 200 || caso == '')">
-        <div class="informacoes-titulo" id="informacoes-titulo">
+        <div class="informacoes-titulo tamanho-titulos" id="informacoes-titulo">
           <i class="fas fa-info-circle"></i>
           <!-- Lista de Informacoes Superiores -->
           <div class="informacoes-superiores-container">

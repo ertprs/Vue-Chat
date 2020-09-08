@@ -1,15 +1,16 @@
 $altura: 50px;
-$margin: 10px;
+$margin: 5px;
 $maxAltura: 70px;
 
 $tamanhoContainerTxt: 70%;
 
 $tamanhoEmoji: 40px;
 
-// $tamanhoTextarea: 100% - $tamanhoEmoji;
-
 .chat-rodape{
   background-color: darken(#eeeeee, 20);
+  position: relative;
+  height: 20%;
+  transition-duration: 300ms;
   .chat-rodape-container{
     display: flex;
     justify-content: space-between;

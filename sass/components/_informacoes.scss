@@ -2,6 +2,7 @@
   width: 50%;
   flex: 1;
   transition: .5s;
+  background-color: #CCC;
 }
 
 .container-principal-informacoes{
@@ -14,7 +15,6 @@
   display: flex;
   align-items: center;
   height: 10%;
-  max-height: $alturaMaxTitulos;
   background-color: darken($cor, 10);
   border-bottom: 1px solid #CCC;
   color: #FFF;
@@ -30,7 +30,6 @@
 }
 
 .lista-informacoes-container{
-  // height: 79%;
   height: 90%;
   .iframe-informacoes{
     width: 100%;
@@ -65,7 +64,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: $alturaMaxTitulos;
+  height: 10%;
   width: 90%;
   font-size: .8375rem;
   margin-right: 15px;
@@ -115,7 +114,7 @@
   position: absolute;
   background-color: #FFF;
   z-index: 3;
-  top: $alturaMaxTitulos;
+  top: 10%;
   width: 95%;
   height: 85%;
   margin: 2.5%;

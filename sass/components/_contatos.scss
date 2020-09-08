@@ -9,8 +9,9 @@ $corBoxShadow: rgba(0, 0, 0, 0.5);
 $tamanhoBoxShadow: 5px;
 
 #todos-contatos{
-  // width: 20%;
   transition-duration: 2s;
+  height: 100%;
+  background-color: #CCC;
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   &.fechado{
     width: 100%;
@@ -18,7 +19,7 @@ $tamanhoBoxShadow: 5px;
   background-color: rgba(100, 100, 100, 0.1);
   > div{
     margin: 0 auto;
-    width: 95%;
+    width: 100%;
   }
   .titulo-contatos{
     position: relative;
@@ -26,7 +27,6 @@ $tamanhoBoxShadow: 5px;
     align-items: center;
     background-color: lighten($cor, 10); // var(--bg-titulo-contatos)
     height: 10%;
-    max-height: $alturaMaxTitulos;
     width: 100%;
     border-bottom: 1px solid #CCC;
     display: flex;
@@ -72,6 +72,7 @@ $tamanhoBoxShadow: 5px;
   }
   .lista-contatos-container{
     width: 100%;
+    // height: 90%;
     background-color: #FFF;
     ul{
       display: flex;
@@ -140,7 +141,6 @@ $tamanhoBoxShadow: 5px;
           margin: 0;
           padding: 0;
           font-weight: bold;
-          // user-select: none;
           text-align: center;
           height: auto;
           width: auto;
@@ -276,7 +276,7 @@ $tamanhoBoxShadow: 5px;
 }
 
 .lista-contatos-container-vazio{
-  width: 100%!important;
+  width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;

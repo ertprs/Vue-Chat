@@ -1,6 +1,6 @@
 <template>
   <div id="todos-contatos" :class="{'fechado' : fechado}" class="resizable-content">
-    <div class="titulo-contatos">
+    <div class="titulo-contatos tamanho-titulos">
       <div class="titulo-contatos--icone-container" :class="{'fechado' : fechado}">
         <i class="fas fa-address-book" title="Contatos"></i>
         <transition name="fade">
@@ -17,7 +17,7 @@
     </div>
     <template v-if="objAtendimentos">
       <!-- Caso Aguardando Cliente ou esperando a primeira requisicao ao buscaAtendimentos -->
-      <div class="lista-contatos-container-vazio load-container" v-if="caso == 206 || caso == 'aguardando'">
+      <div class="lista-contatos-container-vazio" v-if="caso == 206 || caso == 'aguardando'">
         <div class="load">
           <i class="fas fa-hourglass-end"></i>
           <transition name="fade">
@@ -48,7 +48,7 @@
             <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && idAtendimentoAtivo !== atd.id_cli" class="destaque-nova-msg">{{ atd.qtdMsgNova }}</span>
           </li>
         </ul>
-        <div class="lista-agenda">
+        <div class="lista-agenda" v-if="minhaAgenda.length">
           <div class="lista-agenda--titulo">
             <div :class="{'fechado' : fechado}">
               <i class="far fa-address-book"  title="Minha Agenda"></i>
@@ -125,8 +125,13 @@ export default {
     },
     caso(){
       if(this.caso == 206 || this.caso == 400){
-        document.querySelector('.titulo-contatos').style.background = ''
-        document.querySelector('.lista-agenda--titulo').style.background = ''
+        const tituloContatos = document.querySelector('.titulo-contatos')
+        const tituloAgenda = document.querySelector('.lista-agenda--titulo')
+
+        if(tituloContatos, tituloAgenda){
+          tituloContatos.style.background = ''
+          tituloAgenda.style.background = ''
+        }
       }
     }
   },

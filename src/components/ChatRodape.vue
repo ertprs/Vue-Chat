@@ -404,9 +404,13 @@ export default {
       this.msgFormatadaAberto = !this.msgFormatadaAberto;
 
       const chatCorpo = document.querySelector("#chat-operador");
+      const chatRodape = document.querySelector(".chat-rodape")
+
       if (this.msgFormatadaAberto == true) {
-        chatCorpo.style.height = "45%";
+        chatRodape.style.height = "40%";
+        chatCorpo.style.height = "50%";
       } else {
+        chatRodape.style.height = "20%";
         chatCorpo.style.height = "70%";
         this.mensagensFormatadas_01 = []
         this.chaveAtual_01 = ''
@@ -605,6 +609,7 @@ export default {
       const rodapeBotoes = document.querySelector(".chat-rodape-botoes > div");
 
       const chatCorpo = document.getElementById("chat-operador");
+      const chatRodape = document.querySelector(".chat-rodape");
 
       function resize() {
         text.style.height = "auto";
@@ -614,10 +619,12 @@ export default {
         emojisContainer.style.height = text.scrollHeight + "px";
         rodapeBotoes.style.height = text.scrollHeight + "px";
 
-        if (chatCorpo.style.height !== "45%") {
+        if (chatCorpo.style.height !== "50%") {
           if (text.scrollHeight > 60) {
             chatCorpo.style.height = "67%";
+            chatRodape.style.height = "23%";
           } else {
+            chatRodape.style.height = "20%%";
             chatCorpo.style.height = "70%";
           }
         }

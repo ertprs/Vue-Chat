@@ -5,8 +5,8 @@
       <ChatCorpo id="chat-operador"/>
       <ChatRodape />
     </template>
-    <template v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206 || caso == 600">
-      <div class="chat-opcoes">
+    <template v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206">
+      <div class="chat-opcoes tamanho-titulos">
         <div class="chat-opcoes-titulo">
           <h1> <i class="fas fa-comments"></i> Chat </h1>
         </div>

@@ -35,7 +35,6 @@
           <i class="fas fa-hourglass-end"></i>
         </div>
       </template>
-      <!-- PARA TESTES, COMENTAR ANTES DO BUILD -->
       <!-- <template v-else>
         <div
           class="rodape-botoes-botao botao-transferencia"

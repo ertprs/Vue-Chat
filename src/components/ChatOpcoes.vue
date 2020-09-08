@@ -1,5 +1,5 @@
 <template>
-  <div class="chat-opcoes">
+  <div class="chat-opcoes tamanho-titulos">
       <div class="chat-opcoes-titulo" :class="{'cliente-ativo' : atendimentoAtivo}">
         <div class="chat-opcoes-titulo-container">
           <div class="circulo-contatos">

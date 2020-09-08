@@ -7,12 +7,6 @@
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   background-color: darken(#eeeeee, 20);
   position: relative;
-  .chat-corpo-rodape{
-    height: 90%;
-  }
-  &.chat-aberto{
-    width: 46%!important;
-  }
   .lista-chat-container-vazio{
     height: 100%;
     display: flex;
