@@ -9349,6 +9349,8 @@ body {
         justify-content: center;
         align-items: center;
         overflow: auto; }
+        #chat-operador .chat-corpo-mensagens .mensagem .mensagem-div-anexo svg {
+          font-size: 2rem; }
       #chat-operador .chat-corpo-mensagens .mensagem img {
         margin: 10px 0;
         max-width: 100%; }
