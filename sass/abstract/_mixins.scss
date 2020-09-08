@@ -146,8 +146,21 @@
         justify-content: center;
         align-items: center;
         overflow: auto;
-        svg{
-          font-size: 2rem;
+        .anexo-container{
+          a{
+            padding: 10px 15px 15px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            p{
+              margin: 0;
+              margin-left: 15px;
+              font-size: .9rem
+            }
+            svg{
+              font-size: 2rem;
+            }
+          }
         }
       }
       img{

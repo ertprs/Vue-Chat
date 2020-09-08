@@ -4,14 +4,15 @@
     <div class="mensagem">
       <div v-if="anexo" class="mensagem-div-anexo">
         <img v-if="imgAnexo" :src="imgAnexo" alt="Imagem Anexada">
-        <div v-if="tipoDoc">
+        <div v-if="tipoDoc" class="anexo-container">
           <a :href="docAnexo" target="_blank" :title="`${tipoDoc} - ${msg}`">
             <i class="fas fa-file-pdf"></i>
+            <p> {{ msg }} </p>
           </a>
           <!-- <embed :src="docAnexo" :type="tipoDoc"> -->
         </div>
       </div>
-      <p> {{ msg }} </p>
+      <p v-if="!tipoDoc"> {{ msg }} </p>
       <span class="horario-envio"> {{ horario }} </span>
       <span class="check" :class="status ? status : ''">
         <template v-if="status == 'enviado'">

@@ -9349,8 +9349,17 @@ body {
         justify-content: center;
         align-items: center;
         overflow: auto; }
-        #chat-operador .chat-corpo-mensagens .mensagem .mensagem-div-anexo svg {
-          font-size: 2rem; }
+        #chat-operador .chat-corpo-mensagens .mensagem .mensagem-div-anexo .anexo-container a {
+          padding: 10px 15px 15px 15px;
+          display: flex;
+          justify-content: center;
+          align-items: center; }
+          #chat-operador .chat-corpo-mensagens .mensagem .mensagem-div-anexo .anexo-container a p {
+            margin: 0;
+            margin-left: 15px;
+            font-size: .9rem; }
+          #chat-operador .chat-corpo-mensagens .mensagem .mensagem-div-anexo .anexo-container a svg {
+            font-size: 2rem; }
       #chat-operador .chat-corpo-mensagens .mensagem img {
         margin: 10px 0;
         max-width: 100%; }
