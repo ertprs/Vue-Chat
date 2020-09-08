@@ -633,15 +633,22 @@ export default {
       observe(text, "keydown", delayedResize);
     },
     listenerPostMessage(event){
-      
+      console.log(event)
+      console.log('origin', event.origin)
+
       let baseUrl = ''
       if(window.location.hostname == 'localhost'){
+        console.log('linux03')
         baseUrl = 'https://linux03'
       }else{
         baseUrl = 'https://'+window.location.hostname
       }
+      console.log('baseUrl:', baseUrl)
 
       if(event.origin == baseUrl){
+        if(event.data == '') {
+          // alert('nada aqui no iframe')
+        }
         this.mensagem = event.data
         document.querySelector('#textarea').focus()
 
