@@ -101,7 +101,7 @@
 </style>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from "vuex"
 
 export default {
   data() {
@@ -207,8 +207,21 @@ export default {
           let origem;
           arrMensagens[i].resp_msg == "CLI" ? (origem = "outros") : (origem = "principal");
           let horario = arrMensagens[i].hora;
+          
           let anexo = false;
           let imgAnexo = "";
+          if(arrMensagens[i].anexos){
+            let baseUrl = ''
+            if(window.location.hostname == 'localhost'){
+              baseUrl = 'http://linux03'
+            }else{
+              baseUrl = 'https://'+window.location.hostname
+            }
+
+            anexo = true
+            imgAnexo = `${baseUrl}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
+          }
+
           let autor = arrMensagens[i].resp_msg;
           switch (autor) {
             case "CLI":
@@ -218,6 +231,7 @@ export default {
               autor = "Operador";
               break;
           }
+
           let objMensagem = this.getObjMensagem( autor, origem, mensagem, horario, anexo, imgAnexo );
           
           this.$store.dispatch('setTodasMensagens', objMensagem)
