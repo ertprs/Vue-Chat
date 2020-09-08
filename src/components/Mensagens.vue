@@ -5,7 +5,7 @@
       <div v-if="anexo" class="mensagem-div-anexo">
         <img v-if="imgAnexo" :src="imgAnexo" alt="Imagem Anexada">
         <div v-if="tipoDoc">
-          <a :href="docAnexo" target="_blank">
+          <a :href="docAnexo" target="_blank" :title="`${tipoDoc} - ${msg}`">
             <i class="fas fa-file-pdf"></i>
           </a>
           <!-- <embed :src="docAnexo" :type="tipoDoc"> -->
