@@ -12,7 +12,9 @@
       :status="msg.status"
       :logo="msg.logo"
       :anexo="msg.anexo"
-      :imgAnexo="msg.imgAnexo"/>
+      :imgAnexo="msg.imgAnexo"
+      :tipoDoc="msg.tipoDoc"
+      :docAnexo="msg.docAnexo"/>
 
       <div class="btn-rolagem" v-show="habilitaRolagem" v-on:click="rolaChat()">
         <i class="fas fa-arrow-circle-down"></i>

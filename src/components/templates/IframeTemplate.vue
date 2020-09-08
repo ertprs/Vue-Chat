@@ -44,10 +44,16 @@ export default {
               return false
             }
             for(let i = 0; i < elementos.length; i++) {
-              elementos[i].classList.add('d-none')
+              let listaElem = elementos[i]
+              if(listaElem){
+                listaElem.classList.add('d-none')
+              }
             }
           }
-          document.querySelector("#iframe_" + idCliente).classList.remove('d-none')
+          const iframeCliente = document.querySelector("#iframe_" + idCliente)
+          if(iframeCliente){
+            iframeCliente.classList.remove('d-none')
+          }
         })
       }
     }

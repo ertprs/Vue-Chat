@@ -209,8 +209,14 @@ export default {
           let horario = arrMensagens[i].hora;
           
           let anexo = false;
+
           let imgAnexo = "";
+          let tipoDoc = ""
+          let docAnexo = "";
+
           if(arrMensagens[i].anexos){
+            anexo = true
+            
             let baseUrl = ''
             if(window.location.hostname == 'localhost'){
               baseUrl = 'http://linux03'
@@ -218,8 +224,17 @@ export default {
               baseUrl = 'https://'+window.location.hostname
             }
 
-            anexo = true
-            imgAnexo = `${baseUrl}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
+            var regex = /(\w+)\/(\w+)/g;
+            var type = regex.exec(arrMensagens[i].anexos.type);
+            switch (type[1]) {
+              case "image": 
+                imgAnexo = `${baseUrl}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
+                break;
+              default:
+                tipoDoc = arrMensagens[i].anexos.type
+                docAnexo = `${baseUrl}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
+            }
+            
           }
 
           let autor = arrMensagens[i].resp_msg;
@@ -232,7 +247,7 @@ export default {
               break;
           }
 
-          let objMensagem = this.getObjMensagem( autor, origem, mensagem, horario, anexo, imgAnexo );
+          let objMensagem = this.getObjMensagem( autor, origem, mensagem, horario, anexo, imgAnexo, tipoDoc, docAnexo );
           
           this.$store.dispatch('setTodasMensagens', objMensagem)
         }
@@ -244,7 +259,9 @@ export default {
       inMensagem,
       inHorario,
       inAnexo,
-      inImgAnexo
+      inImgAnexo,
+      inTipoDoc,
+      inDocAnexo
     ) {
       let objMensagem = {
         autor: inAutor, // Operador, Cliente
@@ -252,7 +269,9 @@ export default {
         msg: inMensagem,
         horario: inHorario,
         anexo: inAnexo,
-        imgAnexo: inImgAnexo
+        imgAnexo: inImgAnexo,
+        tipoDoc: inTipoDoc,
+        docAnexo: inDocAnexo
       };
       return objMensagem;
     },
