@@ -75,7 +75,7 @@ $tamanhoBoxShadow: 5px;
     background-color: #FFF;
     ul{
       display: flex;
-      flex-direction: column;
+      flex-direction: column-reverse;
     }
   }
 
@@ -159,7 +159,7 @@ $tamanhoBoxShadow: 5px;
         animation-direction: alternate;
         animation-iteration-count: 7;
         font-weight: bolder;
-        order: -1;
+        // order: -1;
       }
       &.destaque-novo-contato{
         background-color: #fdffb6!important;
@@ -167,7 +167,7 @@ $tamanhoBoxShadow: 5px;
         animation-duration: 800ms;
         animation-direction: alternate;
         animation-iteration-count: 7;
-        order: -2;
+        // order: -2;
         font-weight: bolder;
       }
       &.ativo{
@@ -251,6 +251,9 @@ $tamanhoBoxShadow: 5px;
       color: #FFF;
       font-size: 1.1rem;
       white-space: nowrap;
+    }
+    ul{
+      flex-direction: column
     }
   }
 }

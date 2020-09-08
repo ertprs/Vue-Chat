@@ -54,7 +54,12 @@
         <ul 
           :class="{'bg' : bg}"
           lista-retornar>
-          <li id="encerrarAtendimento" @click="encerrar(), fecharPopup()"> Confirmar </li>
+          <li id="encerrarAtendimento" 
+            tabindex="-1"
+            @keydown="encerrar(), fecharPopup()"
+            @click="encerrar(), fecharPopup()">
+            Confirmar
+          </li>
           <li @click="fecharPopup()"> Cancelar </li>
         </ul>
       </template>
@@ -197,10 +202,17 @@ export default {
     alterarCoresLi(){
       const root = document.documentElement
       root.style.setProperty('--bg-alternativo', this.bg)
+    },
+    focusEncerrar(){
+      const btnEncerrar = document.querySelector('#encerrarAtendimento')
+      if(btnEncerrar){
+        btnEncerrar.focus()
+      }
     }
   },
   mounted(){
     this.alterarCoresLi()
+    this.focusEncerrar()
   },
 }
 </script>

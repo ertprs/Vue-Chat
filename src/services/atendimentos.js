@@ -65,6 +65,7 @@ function tratarResponse(response) {
     } else {
         console.error('Erro na autorização')
         console.log(response)
+        adicionaCaso(400)
     }
     var status = response.status
     var mainData = response.data
