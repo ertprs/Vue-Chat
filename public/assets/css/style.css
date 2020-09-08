@@ -8898,7 +8898,7 @@ body {
     background-color: #FFF; }
     #todos-contatos .lista-contatos-container ul {
       display: flex;
-      flex-direction: column; }
+      flex-direction: column-reverse; }
   #todos-contatos .semClick {
     cursor: unset; }
   #todos-contatos ul {
@@ -8962,15 +8962,13 @@ body {
         animation-duration: 800ms;
         animation-direction: alternate;
         animation-iteration-count: 7;
-        font-weight: bolder;
-        order: -1; }
+        font-weight: bolder; }
       #todos-contatos ul li.destaque-novo-contato {
         background-color: #fdffb6 !important;
         animation-name: blink;
         animation-duration: 800ms;
         animation-direction: alternate;
         animation-iteration-count: 7;
-        order: -2;
         font-weight: bolder; }
       #todos-contatos ul li.ativo {
         animation: unset;
@@ -9036,6 +9034,8 @@ body {
     color: #FFF;
     font-size: 1.1rem;
     white-space: nowrap; }
+  #todos-contatos .lista-agenda ul {
+    flex-direction: column; }
 
 .load svg {
   animation: rotate;
@@ -9693,17 +9693,16 @@ body {
     margin-top: 18px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis; }
+    justify-content: center; }
     .informacoes-superiores-container .informacoes-item .informacoes-item-titulo {
       display: flex; }
       .informacoes-superiores-container .informacoes-item .informacoes-item-titulo p {
-        white-space: nowrap;
         margin: 0;
         margin-left: 5px; }
     .informacoes-superiores-container .informacoes-item p {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       margin-left: 15px; }
 
 .lista-informacoes-container-vazio {
@@ -9874,7 +9873,7 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    min-height: 60px;
+    min-height: 40px;
     position: absolute;
     bottom: 0; }
     #rodape-botoes-encerramento-container .rodape-botoes-encerramento .rodape-botoes-botao {
@@ -9886,7 +9885,7 @@ body {
       color: #FFF;
       margin: 0 5px;
       width: 100%;
-      height: 40px;
+      height: 35px;
       display: flex;
       justify-content: center;
       align-items: center;

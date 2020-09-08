@@ -432,26 +432,26 @@ export default {
       switch(numReq){
         case 1:
           this.mensagensFormatadas_01 = objMsgFormatada
-          console.log('msgFormatada_01: ', this.mensagensFormatadas_01)
+          // console.log('msgFormatada_01: ', this.mensagensFormatadas_01)
         break;
         case 2:
           this.mensagensFormatadas_02 = objMsgFormatada
-          console.log('msgFormatada_02: ', this.mensagensFormatadas_02)
+          // console.log('msgFormatada_02: ', this.mensagensFormatadas_02)
         break;
         case 3:
           if(objMsgFormatada.length){
             this.mensagensFormatadas_03 = objMsgFormatada
-            console.log('msgFormatada_03: ', this.mensagensFormatadas_03)
+            // console.log('msgFormatada_03: ', this.mensagensFormatadas_03)
           }else{
             this.mensagensFormatadas_03 = []
             this.$toasted.global.emConstrucao({msg: 'Sem mensagens para as opcoes selecionadas'})
-            console.log('Nao ha msgs formatadas: ', objMsgFormatada)
+            // console.log('Nao ha msgs formatadas: ', objMsgFormatada)
           }
         break;
       }
     },
     recebeValorMSGFormatada(valor, numReq){
-      console.log('valor: ', valor)
+      // console.log('valor: ', valor)
       if(valor.length == 1){
         if(this.mensagensFormatadas_02.length){
           this.mensagensFormatadas_02 = []
@@ -490,7 +490,7 @@ export default {
       }
     },
     abrePopupMsgTipo2(arrayMsgFormatada, indice){
-      console.log('msg: ', arrayMsgFormatada[indice])
+      // console.log('msg: ', arrayMsgFormatada[indice])
       const objMsg = arrayMsgFormatada[indice]
 
       if(objMsg){
@@ -642,6 +642,11 @@ export default {
       }
 
       if(event.origin == baseUrl){
+        
+        if(event.data == ''){
+          this.$toasted.global.emConstrucao({msg: 'Sem mensagens para as opcoes selecionadas'})
+        }
+
         this.mensagem = event.data
         document.querySelector('#textarea').focus()
 
