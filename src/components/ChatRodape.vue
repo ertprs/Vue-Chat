@@ -65,6 +65,7 @@
           </div>
           <!-- Btn abrir msg formatada -->
           <div
+            v-if="temMsgFormatada"
             class="chat-rodape-botoes-botao"
             title="Mensagem Formatada"
             v-on:click="selecionarMsgFormatada()"
@@ -201,6 +202,7 @@ export default {
       erroFormatoAnexo: false,
       selecioneAnexo: true,
       abrirEmojis: false,
+      temMsgFormatada: false,
       msgFormatadaAberto: false,
       mensagensFormatadas_01: [],
       chaveAtual_01: '',
@@ -225,6 +227,7 @@ export default {
     window.addEventListener("message", this.listenerPostMessage, false);
 
     this.initResize();
+    this.verificaTemMsgFormatada()
   },
   methods: {
     adicionarEmoji(value) {
@@ -438,6 +441,23 @@ export default {
       segundos = segundos < 10 ? "0" + segundos : segundos;
       const horaFormatada = hora + ":" + minutos + ":" + segundos;
       return horaFormatada;
+    },
+    verificaTemMsgFormatada(){
+      let valor = ''
+      let tokenCliente = this.atendimentoAtivo.token_cliente
+
+      obterMsgFormatada(valor, tokenCliente)
+        .then((data) => {
+          if(!data){
+            this.temMsgFormatada = false
+          }else{
+            this.temMsgFormatada = true
+          }
+        })
+        .catch((err) => {
+          console.log('Erro msg formatada: ', err)
+          this.temMsgFormatada = false
+        }); 
     },
     abreFechaMsgFormatada(){
       this.msgFormatadaAberto = !this.msgFormatadaAberto;
