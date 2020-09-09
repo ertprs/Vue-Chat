@@ -347,6 +347,8 @@ export default {
           regex = new RegExp(this.emojis[j].emoji, "gi");
           this.mensagem = this.mensagem.replace(regex, this.emojis[j].hexa);
         }
+        
+        msg = msg.replace(/<\/?[\d\w\s=\-:\.\/\'\";]+>/gi, ' ')
 
         let anexo = false
         let imgAnexo = ""
