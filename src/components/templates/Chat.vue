@@ -4,6 +4,15 @@
       <ChatOpcoes />
       <ChatCorpo id="chat-operador"/>
       <ChatRodape />
+      <Popup />
+      <!--
+        v-if="blocker && origem && titulo && origemBlocker == 'btn-acoes'"
+        :titulo="titulo"
+        :origem="origem"
+        :arrAgentes="arrAgentes"
+        :arrGrupos="arrGrupos"
+        :bg="bgPopup"
+       -->
     </template>
     <template v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206">
       <div class="chat-opcoes tamanho-titulos">
@@ -23,15 +32,18 @@
 
 <script>
 import { mapGetters } from 'vuex'
+
 import ChatOpcoes from '../ChatOpcoes'
 import ChatCorpo from '../ChatCorpo'
 import ChatRodape from '../ChatRodape'
+import Popup from '../templates/Popup'
 
 export default {
   components: {
     ChatOpcoes,
     ChatCorpo,
-    ChatRodape
+    ChatRodape,
+    Popup
   },
   computed: {
     ...mapGetters({

@@ -11,12 +11,16 @@ export default {
     fecharBlocker(){
       liberarEncerrar()
       this.$store.dispatch('setBlocker', false)
+      if(this.abrirPopup){
+        this.$store.dispatch('setAbrirPopup', false)
+      }
     }
   },
   computed: {
     ...mapGetters({
       blocker: 'getBlocker',
-      origemBlocker: 'getOrigemBlocker'
+      origemBlocker: 'getOrigemBlocker',
+      abrirPopup: 'getAbrirPopup'
     })
   }
 }

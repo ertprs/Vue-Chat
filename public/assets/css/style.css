@@ -8812,8 +8812,8 @@ body {
   height: 100%;
   display: flex;
   justify-content: flex-start;
-  max-width: 1366px;
-  max-height: 768px; }
+  max-width: 1335px;
+  max-height: 550px; }
 
 .tamanho-titulos {
   max-height: 58px; }
@@ -9126,8 +9126,8 @@ body {
   height: 100%;
   display: flex;
   justify-content: flex-start;
-  max-width: 1366px;
-  max-height: 768px; }
+  max-width: 1335px;
+  max-height: 550px; }
 
 .tamanho-titulos {
   max-height: 58px; }
@@ -9766,9 +9766,10 @@ body {
 #popup {
   position: absolute;
   z-index: 3;
-  top: -200%;
+  top: 0;
   transition-duration: .5s;
   height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9982,8 +9983,8 @@ body {
   height: 100%;
   display: flex;
   justify-content: flex-start;
-  max-width: 1366px;
-  max-height: 768px; }
+  max-width: 1335px;
+  max-height: 550px; }
 
 .tamanho-titulos {
   max-height: 58px; }

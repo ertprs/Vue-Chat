@@ -443,8 +443,8 @@ export default {
       const chatRodape = document.querySelector(".chat-rodape")
 
       if (this.msgFormatadaAberto == true) {
-        chatRodape.style.height = "40%";
-        chatCorpo.style.height = "50%";
+        chatRodape.style.height = "44%";
+        chatCorpo.style.height = "45%";
       } else {
         chatRodape.style.height = "20%";
         chatCorpo.style.height = "70%";
@@ -655,7 +655,7 @@ export default {
         emojisContainer.style.height = text.scrollHeight + "px";
         rodapeBotoes.style.height = text.scrollHeight + "px";
 
-        if (chatCorpo.style.height !== "50%") {
+        if (chatCorpo.style.height !== "45%") {
           if (text.scrollHeight > 60) {
             chatCorpo.style.height = "67%";
             chatRodape.style.height = "23%";

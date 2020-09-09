@@ -62,42 +62,29 @@
         </div>
       </template> -->
     </div>
-    <!-- Tentar remover daqui -->
-    <Popup
-      v-if="blocker && origem && titulo && origemBlocker == 'btn-acoes'"
-      :titulo="titulo"
-      :origem="origem"
-      :arrAgentes="arrAgentes"
-      :arrGrupos="arrGrupos"
-      :bg="bgPopup" />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import axios_api from '../services/serviceAxios'
-import Popup from './templates/Popup'
+
 import { mapGetters } from 'vuex'
 import { executandoEncerrar, liberarEncerrar } from '../services/atendimentos'
 
 export default {
   data(){
     return{
-      titulo: '',
-      origem: '',
       regrasDoClienteAtivo: {},
       regrasBotoes: {},
       regrasCor: {},
       tudoPronto: false,
-      arrAgentes: [],
-      arrGrupos: [],
-      bgPopup: '',
       contadorRequisicoesFalhas: 0 
     }
   },
-  components: {
-    Popup
-  },
+  // components: {
+  //   Popup
+  // },
   mounted(){
     this.getRegras()
     this.$root.$on('encerrarAtendimento', () => {
@@ -114,6 +101,8 @@ export default {
       todosAtendimentos: 'getTodosAtendimentos',
       idAtendimentoAtivo: 'getIdAtendimentoAtivo',
       blocker: 'getBlocker',
+      arrAgentes: 'getArrAgentes',
+      arrGrupos: 'getArrGrupos',
       origemBlocker: 'getOrigemBlocker',
       caso: 'getCaso'
     })
@@ -146,7 +135,8 @@ export default {
           }
         })
         .catch(error => {
-          this.contadorRequisicoesFalhas++
+          this.contadorRequisicoesFalhas += 1
+          console.log('contador: ', this.contadorRequisicoesFalhas)
           if(this.contadorRequisicoesFalhas < 10){
             this.getRegras()
           }
@@ -167,7 +157,7 @@ export default {
         this.aplicarCoresNoElemento('.titulo-contatos', this.lightenDarkenColor(this.regrasCor, 10))
         this.aplicarCoresNoElemento('.lista-agenda--titulo', this.lightenDarkenColor(this.regrasCor, 30))
         this.aplicarCoresNoElemento('#informacoes-titulo', this.lightenDarkenColor(this.regrasCor, -10))
-        this.bgPopup = this.lightenDarkenColor(this.regrasCor, 15)
+        this.$store.dispatch("setBgPopup", this.lightenDarkenColor(this.regrasCor, 15))
       }
     },
     reverterCoresClienteAtivo(){
@@ -175,7 +165,7 @@ export default {
       this.aplicarCoresNoElemento('.titulo-contatos', '')
       this.aplicarCoresNoElemento('.lista-agenda--titulo', '')
       this.aplicarCoresNoElemento('#informacoes-titulo', '')
-      this.bgPopup = ''
+      this.$store.dispatch("setBgPopup", "")
     },
     aplicarCoresNoElemento(elem, cor){
       if(document.querySelector(elem)){
@@ -224,15 +214,18 @@ export default {
     checaBlocker(){
       this.$store.dispatch('setOrigemBlocker', 'btn-acoes')
       this.$store.dispatch('setBlocker', true)
+      this.$store.dispatch('setAbrirPopup', true)
     },
     abrirTransferir(){
       this.checaBlocker()
-      this.origem = 'Transferir'
+
+      this.$store.dispatch('setOrigem', 'Transferir')
       if(this.tudoPronto){
-        this.titulo = this.regrasBotoes.button_transfer.name
+        this.$store.dispatch('setTitulo', this.regrasBotoes.button_transfer.name)
       }else{
-        this.titulo = 'Transferir'
+        this.$store.dispatch('setTitulo', 'Transferir')
       }
+
       const tokenCliente = this.atendimentoAtivo.token_cliente
       axios_api.get(`get-transfer?token_cliente=${tokenCliente}`)
         .then(response => {
@@ -248,10 +241,10 @@ export default {
             for(let i = 0; i < arrChaves.length; i++){
               if(this.arrAgentes.length){
                 if(this.arrAgentes[i].cod !== arrChaves[i]){
-                  this.arrAgentes.push({ label: arrValores[i], cod: arrChaves[i] })
+                  this.$store.dispatch("setArrAGentes", {label: arrValores[i], cod: arrChaves[i]})
                 }
               }else{
-                this.arrAgentes.push({ label: arrValores[i], cod: arrChaves[i] })
+                this.$store.dispatch("setArrAGentes", {label: arrValores[i], cod: arrChaves[i]})
               }
             }
           }
@@ -265,10 +258,10 @@ export default {
             for(let i = 0; i < arrChaves.length; i++){
               if(this.arrGrupos.length){
                 if(this.arrGrupos[i].cod !== arrChaves[i]){
-                  this.arrGrupos.push({ label: arrValores[i], cod: arrChaves[i] })
+                  this.$store.dispatch("setArrGrupos", {label: arrValores[i], cod: arrChaves[i]})
                 }
               }else{
-                this.arrGrupos.push({ label: arrValores[i], cod: arrChaves[i] })
+                this.$store.dispatch("setArrGrupos", {label: arrValores[i], cod: arrChaves[i]})
               }
             }
           }
@@ -280,11 +273,12 @@ export default {
     },
     retornarForm(){
       this.checaBlocker()
-      this.origem = 'Retornar'
+      
+      this.$store.dispatch("setOrigem", "Retornar")
       if(this.tudoPronto){
-        this.titulo = this.regrasBotoes.button_suspend.name
+        this.$store.dispatch("setTitulo", this.regrasBotoes.button_suspend.name)
       }else{
-        this.titulo = 'Retornar'
+        this.$store.dispatch("setTitulo", "Retornar")
       }
     },
     popupEncerrar(){
@@ -292,11 +286,12 @@ export default {
       this.$store.dispatch('setUltimoIdRemovido', this.atendimentoAtivo.id_cli)
 
       executandoEncerrar()
-      this.origem = 'Encerrar'
+
+      this.$store.dispatch("setOrigem", "Encerrar")
       if(this.tudoPronto){
-        this.titulo = this.regrasBotoes.button_end.name
+        this.$store.dispatch("setTitulo", this.regrasBotoes.button_end.name)
       }else{
-        this.titulo = 'Encerrar'
+        this.$store.dispatch("setTitulo", "Encerrar")
       }
     },
     async encerrarAtendimento() {
