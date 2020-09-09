@@ -79,7 +79,6 @@ export default {
   components:{
     vSelect,
   },
-  // props: ['titulo', 'origem', 'arrGrupos', 'arrAgentes', 'bg'],
   data(){
     return{
       abrirAgentes: false,

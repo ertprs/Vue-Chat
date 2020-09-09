@@ -82,9 +82,6 @@ export default {
       contadorRequisicoesFalhas: 0 
     }
   },
-  // components: {
-  //   Popup
-  // },
   mounted(){
     this.getRegras()
     this.$root.$on('encerrarAtendimento', () => {

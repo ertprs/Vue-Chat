@@ -5,14 +5,6 @@
       <ChatCorpo id="chat-operador"/>
       <ChatRodape />
       <Popup />
-      <!--
-        v-if="blocker && origem && titulo && origemBlocker == 'btn-acoes'"
-        :titulo="titulo"
-        :origem="origem"
-        :arrAgentes="arrAgentes"
-        :arrGrupos="arrGrupos"
-        :bg="bgPopup"
-       -->
     </template>
     <template v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206">
       <div class="chat-opcoes tamanho-titulos">
