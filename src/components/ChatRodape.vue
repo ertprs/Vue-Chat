@@ -259,7 +259,21 @@ export default {
           this.criaObjMensagem();
 
           let anexoMsg = ""
-          anexoMsg = this.arquivo.name ? this.arquivo.name + " " + this.mensagem : this.mensagem
+          // anexoMsg = this.arquivo ? this.arquivo + " " + this.mensagem : this.mensagem
+          console.log('arquivo: ', this.arquivo)
+
+          if(this.arquivo){
+            anexoMsg = {
+              name: this.arquivo.name,
+              size: this.arquivo.size,
+              type: this.arquivo.type,
+              dados: ""
+            }
+          }else{
+            anexoMsg = this.mensagem
+          }
+
+          console.log('anexoMsg: ', anexoMsg)
 
           let data = {
             token_cliente: this.atendimentoAtivo.token_cliente,
@@ -609,6 +623,7 @@ export default {
       leitorDeImagem.addEventListener(
         "load",
         function () {
+          document.querySelector('#textarea').focus()
           this.aparecerPrevia = true;
           this.imagemPrevia = leitorDeImagem.result;
         }.bind(this),

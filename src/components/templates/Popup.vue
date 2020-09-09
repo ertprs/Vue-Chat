@@ -33,21 +33,33 @@
           <vSelect
           :options="arrAgentes"
           label="label"
-          @input="enviaAgente"
           :reduce="arrAgentes => arrAgentes.cod"
           >
+          <!-- @input="enviaAgente" -->
             <div slot="no-options">Nenhuma correspondencia encontrada</div>
           </vSelect>
+          <ul 
+            class="btns-agendamento-container"
+            :class="{'bg' : bg}">
+            <li class="btn-confirmar-agendamento" @click="enviaAgente()"> Confirmar </li>
+            <li class="btn-cancelar-agendamento" @click="fecharPopup()"> Cancelar </li>
+          </ul>
         </div>
         <div v-if="abrirGrupos" grupos-transferir>
           <vSelect
             :options="arrGrupos"
             label="label"
-            @input="enviaGrupo"
             :reduce="arrGrupos => arrGrupos.cod"
             >
+             <!-- @input="enviaGrupo" -->
             <div slot="no-options">Nenhuma correspondencia encontrada</div>
           </vSelect>
+          <ul 
+            class="btns-agendamento-container"
+            :class="{'bg' : bg}">
+            <li class="btn-confirmar-agendamento" @click="enviaGrupo()"> Confirmar </li>
+            <li class="btn-cancelar-agendamento" @click="fecharPopup()"> Cancelar </li>
+          </ul>
         </div>
       </template>
       <template v-else-if="origem == 'Encerrar'">
@@ -84,8 +96,7 @@ export default {
       abrirAgentes: false,
       abrirGrupos: false,
       pessoalData: false,
-      dataHora: '',
-      auxBlocker: true
+      dataHora: ''
     }
   },
   computed: {
@@ -111,18 +122,24 @@ export default {
     }
   },
   methods: {
+    resetar(){
+      this.$store.dispatch('setBlocker', false)
+      this.$store.dispatch('setAbrirPopup', false)
+      this.abrirAgentes = false
+      this.abrirGrupos = false
+      this.pessoalData = false
+      this.dataHora = ""
+    },
     fecharPopup(event){
       if(event){
         if(event !== "encerrarAtendimento") {
           liberarEncerrar()
           if(event.target === document.querySelector('#popup')){       
-            this.$store.dispatch('setBlocker', false)
-            this.$store.dispatch('setAbrirPopup', false)
+            this.resetar()
           }
         }
       }else{
-        this.$store.dispatch('setBlocker', false)
-        this.$store.dispatch('setAbrirPopup', false)
+        this.resetar()
         liberarEncerrar()
       }
     },
