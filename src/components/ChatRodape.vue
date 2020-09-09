@@ -266,7 +266,7 @@ export default {
           this.resetar()
 
           axios_api
-            .put("send-message", data)
+            .post("send-message", data)
             .then((response) => {
               this.abrirEmojis = false;
               this.abrirOpcoes = false;
