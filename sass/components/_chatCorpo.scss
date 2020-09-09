@@ -1,7 +1,11 @@
+:root{
+  --altura-chat-corpo: 70%;
+}
+
 #chat-operador{
   padding: unset!important;
   @include chat-corpo;
-  height: 70%;
+  height: var(--altura-chat-corpo);
   transition-duration: 300ms;
   box-shadow: inset 5px 0px 15px -5px rgba(0,0,0,0.5);
 }

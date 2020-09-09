@@ -1,5 +1,5 @@
 <template>
-  <div id="popup" popup @click="fecharPopup($event)">
+  <div id="popup" popup @click="fecharPopup($event)" v-if="abrirPopup && blocker">
     <div>
       <h2 class="popup-titulo" :style="'background-color: '+bg">{{ titulo }}</h2>
       <template v-if="origem == 'Retornar'">
@@ -79,7 +79,6 @@ export default {
   components:{
     vSelect,
   },
-  props: ['titulo', 'origem', 'arrGrupos', 'arrAgentes', 'bg'],
   data(){
     return{
       abrirAgentes: false,
@@ -91,28 +90,41 @@ export default {
   },
   computed: {
     ...mapGetters({
-      blocker: 'getBlocker'
+      blocker: 'getBlocker',
+      abrirPopup: 'getAbrirPopup',
+      titulo: 'getTitulo',
+      origem: 'getOrigem',
+      arrGrupos: 'getArrGrupos',
+      arrAgentes: 'getArrAgentes',
+      bg: 'getBgPopup'
     })
+  },
+  watch: {
+    abrirPopup(){
+      if(this.abrirPopup){
+        this.alterarCoresLi()
+
+        setTimeout(() => {
+          this.focusEncerrar()
+        , 100})
+      }
+    }
   },
   methods: {
     fecharPopup(event){
-      // if(this.auxBlocker) { // evitar que o fecharPopup seja executado duas vezes seguidas
-      //   this.auxBlocker = false
-        if(event){
-          if(event !== "encerrarAtendimento") {
-            liberarEncerrar()
-            if(event.target === document.querySelector('#popup')){       
-              this.$store.dispatch('setBlocker', false)
-            }
-          }
-        }else{
-          this.$store.dispatch('setBlocker', false)
+      if(event){
+        if(event !== "encerrarAtendimento") {
           liberarEncerrar()
+          if(event.target === document.querySelector('#popup')){       
+            this.$store.dispatch('setBlocker', false)
+            this.$store.dispatch('setAbrirPopup', false)
+          }
         }
-        // setTimeout(() => {
-        //   this.auxBlocker = true
-        // }, 100);
-      // }
+      }else{
+        this.$store.dispatch('setBlocker', false)
+        this.$store.dispatch('setAbrirPopup', false)
+        liberarEncerrar()
+      }
     },
     tamanhoChat(){
       const widthChat = localStorage.getItem('largura-chat')
@@ -209,10 +221,6 @@ export default {
         btnEncerrar.focus()
       }
     }
-  },
-  mounted(){
-    this.alterarCoresLi()
-    this.focusEncerrar()
-  },
+  }
 }
 </script>
