@@ -5,9 +5,7 @@ div[blocker]{
   top: 0;
   left: 0;
   z-index: 2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include d-flex-center();
   &.bg-blocker-padrao{
     background-color: rgba(0, 0, 0, 0.1);
   }

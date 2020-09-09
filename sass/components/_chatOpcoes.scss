@@ -7,9 +7,8 @@
   height: 10%;
   border-bottom: 1px solid #CCC;
   .chat-opcoes-titulo{
-    display: flex;
+    @include d-flex-center('vertical');
     flex-wrap: wrap;
-    align-items: center;
     width: 100%;
     background-color: $cor;
     &.cliente-ativo{
@@ -32,8 +31,7 @@
       }
     }
     .chat-opcoes-titulo-container{
-      display: flex;
-      align-items: center;
+      @include d-flex-center('vertical');
       width: 100%;
       height: 100%;
       position: relative;
@@ -43,9 +41,7 @@
         height: 35px;
         min-width: 35px;
         min-height: 35px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include d-flex-center();
         margin: 0 10px;
         background-color: #FFF;
         p{

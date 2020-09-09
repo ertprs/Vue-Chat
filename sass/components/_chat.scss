@@ -9,17 +9,13 @@
   position: relative;
   .lista-chat-container-vazio{
     height: 90%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include d-flex-center();
     background-color: #FFF;
     div{
       font-size: 1.1rem;
       color: lighten(#222, 10);
-      display: flex;
+      @include d-flex-center();
       flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
       p{
         text-align: center;
         width: 100%;

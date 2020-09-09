@@ -9,14 +9,11 @@
   transition-duration: .5s;
   height: 100%;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include d-flex-center();
   padding: 10px;
   > div{
     background-color: lighten(#FFF, 15);
-    display: flex;
-    align-items: center; 
+    @include d-flex-center('vertical');
     flex-wrap: wrap;
     .popup-titulo{
       margin: 0;
@@ -41,14 +38,12 @@
         }
       }
       li{
-        @include estiloBotao(-4px, -2px, 1, $cor);
+        @include estilo-botao(-4px, -2px, 1, $cor);
         min-width: 85px;
         height: 45px;
         background-color: #FFF;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid #999;
+        @include d-flex-center();
+        @include border(1px, #999);
         border-bottom: 0;
         padding: 0 10px;
         &:nth-child(2){
@@ -72,9 +67,7 @@
     div[agendar-retorno]{
       width: 100%;
       margin: 10px auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      @include d-flex-center();
       > div{
         min-width: 200px;
       }
@@ -82,7 +75,7 @@
         outline: unset;
         border-radius: 3px;
         padding: 7px;
-        border: 1px solid #CCC;
+        @include border();
       }
     }
     div[agendar-retorno], div[grupos-agentes], div[grupos-transferir]{
@@ -98,14 +91,12 @@
       margin-left: 10px;
     }
     .btn-confirmar-agendamento, .btn-cancelar-agendamento{
-      @include estiloBotao(-4px, -2px, 1, $cor);
+      @include estilo-botao(-4px, -2px, 1, $cor);
       min-width: 85px;
       height: 45px;
       background-color: #FFF;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 1px solid #999;
+      @include d-flex-center();
+      @include border(1px, #999);
       border-bottom: 0;
       padding: 0 10px;
       margin-top: 10px;

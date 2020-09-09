@@ -1,5 +1,5 @@
-@mixin estiloBotao($insetBorder, $insetBorderHover, $opacity: .9, $corBorda: rgba(0, 0, 0, 0.2)){
-  transition-duration: .3s;
+@mixin estilo-botao($insetBorder, $insetBorderHover, $opacity: .9, $corBorda: rgba(0, 0, 0, 0.2)){
+  transition-duration: 300ms;
   user-select: none;
   cursor: pointer;
   box-shadow: inset 0 $insetBorder $corBorda;
@@ -38,11 +38,7 @@
       svg{
         font-size: 2.4rem;
         color: #757575;
-        opacity: .8;
-        cursor: pointer;
-        &:hover{
-          opacity: 1;
-        }
+        @include efeito-hover-padrao();
       }
     }
 
@@ -141,16 +137,12 @@
       }
       .mensagem-div-anexo{
         width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include d-flex-center();
         overflow: auto;
         .anexo-container{
           a{
             padding: 10px 15px 15px 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            @include d-flex-center();
             p{
               margin: 0;
               margin-left: 15px;
@@ -173,4 +165,32 @@
       font-size: 2rem;
     }
   }
+}
+
+@mixin d-flex-center($direcao: 'ambos'){
+  display: flex;
+
+  @if $direcao == 'ambos' {
+    justify-content: center;
+    align-items: center;
+  }@else if $direcao == 'horizontal' {
+    justify-content: center;
+  }@else if $direcao == 'vertical' {
+    align-items: center;
+  }
+  
+}
+
+@mixin efeito-hover-padrao(){
+  transition-duration: 300ms;
+  transition-property: opacity;
+  opacity: .8;
+  cursor: pointer;
+  &:hover{
+    opacity: 1;
+  }
+}
+
+@mixin border($espessura: 1px, $cor: #CCC){
+  border: $espessura solid $cor;
 }
