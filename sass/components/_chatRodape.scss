@@ -279,6 +279,9 @@ $tamanhoEmoji: 40px;
       display: flex;
       align-items: center;
       width: 100%;
+      select{
+        width: 90%;
+      }
       .btn-select-03{
         @include estiloBotao(-3px, -1px);
         display: flex;
