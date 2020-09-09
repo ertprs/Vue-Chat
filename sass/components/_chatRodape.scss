@@ -6,10 +6,14 @@ $tamanhoContainerTxt: 70%;
 
 $tamanhoEmoji: 40px;
 
+:root{
+  --altura-chat-rodape: 20%;
+}
+
 .chat-rodape{
   background-color: darken(#eeeeee, 20);
   position: relative;
-  height: 20%;
+  height: var(--altura-chat-rodape);
   transition-duration: 300ms;
   .chat-rodape-container{
     display: flex;
@@ -101,7 +105,7 @@ $tamanhoEmoji: 40px;
           outline: 0;
         }
       }
-      textarea{ //, .chat-rodape-previa-img
+      textarea{
         margin-left: $tamanhoEmoji;
         height: $altura;
         border: 1px solid #CCC;
@@ -109,22 +113,6 @@ $tamanhoEmoji: 40px;
         border-right: 0;
         flex: 1;
       }
-      // .chat-rodape-previa-img{
-      //   background: #FFF;
-      //   position: relative;
-      //   display: flex;
-      //   justify-content: center;
-      //   align-items: center;
-      //   flex-wrap: wrap;
-      //   h3{
-      //     font-size: 1rem;
-      //     color: #444;
-      //   }
-      //   h4{
-      //     font-size: .8rem;
-      //     color: #444;
-      //   }
-      // }
       
       .caracteres-disponiveis{
         font-size: .575rem;
@@ -139,7 +127,7 @@ $tamanhoEmoji: 40px;
   .container-previa-img{
     overflow: hidden;
     position: absolute;
-    top: -210px;
+    top: -205px;
     left: 0;
     width: 100%;
     height: 200px;

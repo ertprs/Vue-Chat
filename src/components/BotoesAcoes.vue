@@ -133,7 +133,7 @@ export default {
         })
         .catch(error => {
           this.contadorRequisicoesFalhas += 1
-          console.log('contador: ', this.contadorRequisicoesFalhas)
+          console.log('contador de erros: ', this.contadorRequisicoesFalhas)
           if(this.contadorRequisicoesFalhas < 10){
             this.getRegras()
           }

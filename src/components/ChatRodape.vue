@@ -207,7 +207,8 @@ export default {
       mensagensFormatadas_02: [],
       chaveAtual_02: '',
       mensagensFormatadas_03: [],
-      chaveAtual_03: ''
+      chaveAtual_03: '',
+      tamanhoText: ''
     };
   },
   components: {
@@ -439,15 +440,20 @@ export default {
     abreFechaMsgFormatada(){
       this.msgFormatadaAberto = !this.msgFormatadaAberto;
 
-      const chatCorpo = document.querySelector("#chat-operador");
-      const chatRodape = document.querySelector(".chat-rodape")
+      const root = document.documentElement
 
       if (this.msgFormatadaAberto == true) {
-        chatRodape.style.height = "44%";
-        chatCorpo.style.height = "45%";
+        root.style.setProperty('--altura-chat-rodape', "45%")
+        root.style.setProperty('--altura-chat-corpo', "43%")
       } else {
-        chatRodape.style.height = "20%";
-        chatCorpo.style.height = "70%";
+        if(this.tamanhoText < 70){
+          root.style.setProperty('--altura-chat-rodape', "20%")
+          root.style.setProperty('--altura-chat-corpo', "68%")
+        }else{
+          root.style.setProperty('--altura-chat-rodape', "23%")
+          root.style.setProperty('--altura-chat-corpo', "65%")
+        }
+        
         this.mensagensFormatadas_01 = []
         this.chaveAtual_01 = ''
         this.mensagensFormatadas_02 = []
@@ -644,10 +650,16 @@ export default {
       const emojisContainer = document.getElementById("emoji-container");
       const rodapeBotoes = document.querySelector(".chat-rodape-botoes > div");
 
-      const chatCorpo = document.getElementById("chat-operador");
-      const chatRodape = document.querySelector(".chat-rodape");
+      let vm = this
+      const root = document.documentElement
 
       function resize() {
+        vm.tamanhoText = text.scrollHeight
+
+        if(text.value == ""){
+          vm.resetar()
+        }
+
         text.style.height = "auto";
         text.style.height = text.scrollHeight + "px";
         rodapeMsg.style.height = text.scrollHeight + "px";
@@ -655,15 +667,6 @@ export default {
         emojisContainer.style.height = text.scrollHeight + "px";
         rodapeBotoes.style.height = text.scrollHeight + "px";
 
-        if (chatCorpo.style.height !== "45%") {
-          if (text.scrollHeight > 60) {
-            chatCorpo.style.height = "67%";
-            chatRodape.style.height = "23%";
-          } else {
-            chatRodape.style.height = "20%%";
-            chatCorpo.style.height = "70%";
-          }
-        }
       }
       /* Timeout para garantir que estamos pegando o texto atualizado */
       function delayedResize() {
@@ -701,6 +704,18 @@ export default {
     }
   },
   watch: {
+    tamanhoText(){
+      const root = document.documentElement
+      if(!this.msgFormatadaAberto){
+        if(this.tamanhoText >= 70){
+          root.style.setProperty('--altura-chat-rodape', "23%")
+          root.style.setProperty('--altura-chat-corpo', "65%")
+        }else{
+          root.style.setProperty('--altura-chat-rodape', "20%")
+          root.style.setProperty('--altura-chat-corpo', "68%")
+        }
+      }
+    },
     todasMensagens() {
       if (this.controle == true) {
         this.qtdInicial = this.todasMensagens.length;
