@@ -45,6 +45,21 @@ export default {
       blocker: 'getBlocker',
       origemBlocker: 'getOrigemBlocker'
     })
+  },
+  mounted(){
+    this.diminuirWidthResize()
+  },
+  methods: {
+    diminuirWidthResize(){
+      const todosResizes = document.querySelectorAll("#app > .resizable-component > div.resizable-r")
+      if(!todosResizes){
+        return
+      }
+      if(todosResizes[1]){
+        let resizeChat = todosResizes[1]
+        resizeChat.style.width = "6px"
+      }
+    }
   }
 }
 </script>
