@@ -9812,83 +9812,81 @@ body {
       width: 100%;
       color: #FFF;
       background-color: #6573cc; }
-    #popup > div > ul {
+    #popup > div .popup-container {
       display: flex;
-      list-style-type: none;
-      margin: 10px auto;
-      padding: 0; }
-      #popup > div > ul.tres-mais {
-        flex-direction: column; }
-        #popup > div > ul.tres-mais li:nth-child(2n) {
-          margin: 10px 0; }
-      #popup > div > ul li {
-        transition-duration: 300ms;
-        user-select: none;
-        cursor: pointer;
-        box-shadow: inset 0 -4px #3949ab;
-        opacity: 1;
-        min-width: 85px;
-        height: 45px;
-        background-color: #FFF;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
+      margin: 10px auto; }
+      #popup > div .popup-container .popup-lista {
+        display: flex;
+        list-style-type: none;
+        margin: 10px auto;
+        padding: 0; }
+        #popup > div .popup-container .popup-lista.tres-mais {
+          flex-direction: column; }
+          #popup > div .popup-container .popup-lista.tres-mais li:nth-child(2n) {
+            margin: 10px 0; }
+        #popup > div .popup-container .popup-lista li {
+          transition-duration: 300ms;
+          user-select: none;
+          cursor: pointer;
+          box-shadow: inset 0 -4px #3949ab;
+          opacity: 1;
+          min-width: 85px;
+          height: 45px;
+          background-color: #FFF;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: 1px solid #999;
+          border-bottom: 0;
+          padding: 0 10px; }
+          #popup > div .popup-container .popup-lista li:hover {
+            opacity: 1; }
+          #popup > div .popup-container .popup-lista li:active {
+            opacity: 1;
+            box-shadow: inset 0 -2px #3949ab;
+            -webkit-transform: translateY(1px);
+            -moz-transform: translateY(1px);
+            -o-transform: translateY(1px);
+            -ms-transform: translateY(1px);
+            transform: translateY(1px); }
+          #popup > div .popup-container .popup-lista li:nth-child(2) {
+            margin: 0 15px; }
+          #popup > div .popup-container .popup-lista li#encerrarAtendimento:focus {
+            outline: none; }
+        #popup > div .popup-container .popup-lista.bg li {
+          box-shadow: inset 0 -4px var(--bg-alternativo); }
+          #popup > div .popup-container .popup-lista.bg li:active {
+            box-shadow: inset 0 -2px var(--bg-alternativo); }
+      #popup > div .popup-container > div {
         display: flex;
         justify-content: center;
         align-items: center;
-        border: 1px solid #999;
-        border-bottom: 0;
-        padding: 0 10px; }
-        #popup > div > ul li:hover {
-          opacity: 1; }
-        #popup > div > ul li:active {
-          opacity: 1;
-          box-shadow: inset 0 -2px #3949ab;
-          -webkit-transform: translateY(1px);
-          -moz-transform: translateY(1px);
-          -o-transform: translateY(1px);
-          -ms-transform: translateY(1px);
-          transform: translateY(1px); }
-        #popup > div > ul li:nth-child(2) {
-          margin: 0 15px; }
-        #popup > div > ul li#encerrarAtendimento:focus {
-          outline: none; }
-      #popup > div > ul.bg li {
-        box-shadow: inset 0 -4px var(--bg-alternativo); }
-        #popup > div > ul.bg li:active {
-          box-shadow: inset 0 -2px var(--bg-alternativo); }
-    #popup > div div[grupos-transferir],
-    #popup > div div[grupos-agentes],
-    #popup > div div[agendar-retorno] {
-      width: 100%;
-      margin: 10px auto;
-      display: flex;
-      justify-content: center;
-      align-items: center; }
-      #popup > div div[grupos-transferir] > div,
-      #popup > div div[grupos-agentes] > div,
-      #popup > div div[agendar-retorno] > div {
+        flex-direction: column;
         min-width: 200px; }
-      #popup > div div[grupos-transferir] > input,
-      #popup > div div[grupos-agentes] > input,
-      #popup > div div[agendar-retorno] > input {
+        #popup > div .popup-container > div > div {
+          width: 100%; }
+      #popup > div .popup-container > input {
         outline: unset;
         border-radius: 3px;
         padding: 7px;
         border: 1px solid #CCC; }
-    #popup > div div[agendar-retorno], #popup > div div[grupos-agentes], #popup > div div[grupos-transferir] {
-      display: flex;
-      flex-direction: column; }
-  #popup .btns-agendamento-container {
+  #popup .btns-confirmacao-container {
     display: flex;
+    justify-content: space-between;
     margin: 0;
-    padding: 0; }
-    #popup .btns-agendamento-container .btn-cancelar-agendamento {
-      margin-left: 10px; }
-    #popup .btns-agendamento-container .btn-confirmar-agendamento, #popup .btns-agendamento-container .btn-cancelar-agendamento {
+    padding: 0;
+    width: 100%; }
+    #popup .btns-confirmacao-container .btn-confirmar, #popup .btns-confirmacao-container .btn-cancelar {
       transition-duration: 300ms;
       user-select: none;
       cursor: pointer;
       box-shadow: inset 0 -4px #3949ab;
       opacity: 1;
-      min-width: 85px;
+      min-width: 48%;
       height: 45px;
       background-color: #FFF;
       display: flex;
@@ -9898,9 +9896,9 @@ body {
       border-bottom: 0;
       padding: 0 10px;
       margin-top: 10px; }
-      #popup .btns-agendamento-container .btn-confirmar-agendamento:hover, #popup .btns-agendamento-container .btn-cancelar-agendamento:hover {
+      #popup .btns-confirmacao-container .btn-confirmar:hover, #popup .btns-confirmacao-container .btn-cancelar:hover {
         opacity: 1; }
-      #popup .btns-agendamento-container .btn-confirmar-agendamento:active, #popup .btns-agendamento-container .btn-cancelar-agendamento:active {
+      #popup .btns-confirmacao-container .btn-confirmar:active, #popup .btns-confirmacao-container .btn-cancelar:active {
         opacity: 1;
         box-shadow: inset 0 -2px #3949ab;
         -webkit-transform: translateY(1px);
@@ -9908,9 +9906,9 @@ body {
         -o-transform: translateY(1px);
         -ms-transform: translateY(1px);
         transform: translateY(1px); }
-    #popup .btns-agendamento-container.bg .btn-confirmar-agendamento, #popup .btns-agendamento-container.bg .btn-cancelar-agendamento {
+    #popup .btns-confirmacao-container.bg .btn-confirmar, #popup .btns-confirmacao-container.bg .btn-cancelar {
       box-shadow: inset 0 -4px var(--bg-alternativo); }
-      #popup .btns-agendamento-container.bg .btn-confirmar-agendamento:active, #popup .btns-agendamento-container.bg .btn-cancelar-agendamento:active {
+      #popup .btns-confirmacao-container.bg .btn-confirmar:active, #popup .btns-confirmacao-container.bg .btn-cancelar:active {
         box-shadow: inset 0 -2px var(--bg-alternativo); }
 
 #rodape-botoes-encerramento-container {
