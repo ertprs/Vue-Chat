@@ -5,6 +5,7 @@
       <ChatCorpo id="chat-operador"/>
       <ChatRodape />
       <Popup />
+      <BotoesAcoes />
     </template>
     <template v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206">
       <div class="chat-opcoes tamanho-titulos">
@@ -29,13 +30,15 @@ import ChatOpcoes from '../ChatOpcoes'
 import ChatCorpo from '../ChatCorpo'
 import ChatRodape from '../ChatRodape'
 import Popup from '../templates/Popup'
+import BotoesAcoes from '../BotoesAcoes'
 
 export default {
   components: {
     ChatOpcoes,
     ChatCorpo,
     ChatRodape,
-    Popup
+    Popup,
+    BotoesAcoes
   },
   computed: {
     ...mapGetters({
@@ -45,6 +48,21 @@ export default {
       blocker: 'getBlocker',
       origemBlocker: 'getOrigemBlocker'
     })
+  },
+  mounted(){
+    this.diminuirWidthResize()
+  },
+  methods: {
+    diminuirWidthResize(){
+      const todosResizes = document.querySelectorAll("#app > .resizable-component > div.resizable-r")
+      if(!todosResizes){
+        return
+      }
+      if(todosResizes[1]){
+        let resizeChat = todosResizes[1]
+        resizeChat.style.width = "6px"
+      }
+    }
   }
 }
 </script>

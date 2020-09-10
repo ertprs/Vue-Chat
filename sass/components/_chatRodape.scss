@@ -1,10 +1,9 @@
 $altura: 50px;
-$margin: 5px;
+$margin-lateral: 3px;
 $maxAltura: 70px;
-
-$tamanhoContainerTxt: 70%;
-
 $tamanhoEmoji: 40px;
+$border-radius: 30px;
+
 
 :root{
   --altura-chat-rodape: 20%;
@@ -16,11 +15,10 @@ $tamanhoEmoji: 40px;
   height: var(--altura-chat-rodape);
   transition-duration: 300ms;
   .chat-rodape-container{
-    display: flex;
+    @include d-flex-center('vertical');
     justify-content: space-between;
-    align-items: center;
     width: 100%;
-    margin: $margin 0;
+    margin: 5px 0;
     position: relative;
   }
   .chat-rodape-mensagens{
@@ -28,7 +26,7 @@ $tamanhoEmoji: 40px;
     min-height: $altura;
     height: $altura;
     width: 100%;
-    margin-left: 3px;
+    margin-left: $margin-lateral;
     .chat-rodape-textarea{
       display: flex;
       width: 100%;
@@ -37,30 +35,24 @@ $tamanhoEmoji: 40px;
       min-height: $altura;
       position: relative;
       #emoji-container{
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include d-flex-center();
         width: $tamanhoEmoji;
         max-height: $maxAltura;
         min-height: $altura;
         background-color: #FFF;
         position: absolute;
         left: 0;
-        border-radius: 30px;
+        border-radius: $border-radius;
         height: $altura;
-        border: 1px solid #CCC;
+        @include border();
         border-right: 0;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
         .btn-emoji{
           margin-left: 5px;
-          opacity: .8;
-          transition-duration: .3s;
-          cursor: pointer;
           font-size: 1.2rem;
-          &:hover{
-            opacity: 1;
-          }
+          
+          @include efeito-hover-padrao();
         }
         .lista-emoji{
           $alturaUl: 70px;
@@ -83,13 +75,9 @@ $tamanhoEmoji: 40px;
             li{
               padding: 0;
               margin: 2px;
-              opacity: .8;
-              transition-duration: .3s;
               font-size: 1.125rem;
-              cursor: pointer;
-              &:hover{
-                opacity: 1;
-              }
+              
+              @include efeito-hover-padrao();
             }
           }
         }
@@ -108,7 +96,7 @@ $tamanhoEmoji: 40px;
       textarea{
         margin-left: $tamanhoEmoji;
         height: $altura;
-        border: 1px solid #CCC;
+        @include border();
         border-left: 0;
         border-right: 0;
         flex: 1;
@@ -135,8 +123,7 @@ $tamanhoEmoji: 40px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     background-color: #AAA;
-    display: flex;
-    justify-content: center;
+    @include d-flex-center('horizontal');
     align-items: flex-start;
     flex-wrap: wrap;
     h3, h4{
@@ -151,9 +138,7 @@ $tamanhoEmoji: 40px;
       font-size: .9rem
     }
     .formato-invalido{
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      @include d-flex-center();
       background-color: rgba(0, 0, 0, 0.1);
       width: 100%;
       h3{
@@ -166,8 +151,7 @@ $tamanhoEmoji: 40px;
     .div-previa{
       width: 100%;
       height: 145px;
-      display: flex;
-      justify-content: center;
+      @include d-flex-center('horizontal');
       background-color: rgba(0, 0, 0, 0.1);
       overflow: unset;
       img{
@@ -182,9 +166,7 @@ $tamanhoEmoji: 40px;
     height: 1.6rem;
     background-color: #FFF;
     border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center; 
+    @include d-flex-center();
     position: absolute;
     right: 15px;
     top: -220px;
@@ -201,13 +183,12 @@ $tamanhoEmoji: 40px;
     }
   }
   .chat-rodape-botoes{
-    margin-right: 3px;
+    margin-right: $margin-lateral;
     > div{
-      display: flex;
-      align-items: center;
+      @include d-flex-center('vertical');
       justify-content: flex-end;
-      border: 1px solid #CCC;
-      border-radius: 30px;
+      @include border();
+      border-radius: $border-radius;
       border-left: 0;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;
@@ -218,14 +199,12 @@ $tamanhoEmoji: 40px;
     }
     .chat-rodape-botoes-botao{
       color: #777;
-      transition-duration: .5s;
+      transition-duration: 500ms;
       border-radius: 50%;
       font-size: 1rem;
       padding: 10px;
       cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      @include d-flex-center();
       &:hover, &.btn-ativo{
         background-color: rgba(0, 0, 0, 0.1)
       }
@@ -243,9 +222,7 @@ $tamanhoEmoji: 40px;
         display: flex;
         justify-content: space-between;
         > div{
-          display: flex;
-          justify-content: center;
-          align-items: center;
+          @include d-flex-center();
           border-radius: 10px;
           padding: 3px;
           width: 40px;
@@ -270,20 +247,18 @@ $tamanhoEmoji: 40px;
 
   .chat-rodape-msg-formatada{
     width: 95%;
-    display: flex;
+    @include d-flex-center();
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     margin: 15px auto;
     .select-03{
-      display: flex;
-      align-items: center;
+      @include d-flex-center('vertical');
       width: 100%;
+      select{
+        width: 90%;
+      }
       .btn-select-03{
-        @include estiloBotao(-3px, -1px);
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include estilo-botao(-3px, -1px);
+        @include d-flex-center();
         margin-left: 5px;
         background-color: #F7FE72;
         width: 32px;
@@ -301,7 +276,7 @@ $tamanhoEmoji: 40px;
       padding: 4px 8px;
       color: #333;
       background-color: #EEE;
-      border: 1px solid #DDD;
+      @include border(1px, #DDD);
       cursor: pointer;
       border-radius: 5px;
       transition-duration: 200ms;
@@ -319,7 +294,7 @@ $tamanhoEmoji: 40px;
       &:focus,
       &:hover{
         outline: none;
-        border: 1px solid #999;
+        @include border(1px, #999);
       }
       option{
         background-color: #FFF;

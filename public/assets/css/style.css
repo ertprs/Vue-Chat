@@ -8845,7 +8845,7 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #555; }
 
-.toasted.toasted-primary.info svg {
+.toasted.toasted-primary.info svg, .toasted.toasted-primary.success svg {
   margin-right: 10px; }
 
 #todos-contatos {
@@ -8867,8 +8867,6 @@ body {
     height: 10%;
     width: 100%;
     border-bottom: 1px solid #CCC;
-    display: flex;
-    align-items: center;
     padding-left: 10px; }
     #todos-contatos .titulo-contatos div.container-flecha {
       position: absolute;
@@ -8980,7 +8978,8 @@ body {
       #todos-contatos ul li.ativo {
         animation: unset;
         opacity: 1;
-        background-color: #a8dadc !important; }
+        background-color: #a8dadc !important;
+        font-weight: normal !important; }
       #todos-contatos ul li svg {
         margin-right: 5px;
         font-size: 1.2rem; }
@@ -8998,22 +8997,35 @@ body {
         #todos-contatos ul li:nth-child(even):hover {
           background-color: rgba(255, 255, 255, 0.1);
           opacity: 1; }
+      #todos-contatos ul li .ctt-ativo {
+        position: absolute;
+        right: 10px;
+        padding: 1.5px 3px;
+        width: 10px;
+        height: 10px;
+        transition: 300ms;
+        background-color: #E63946;
+        border-radius: 50%;
+        animation-name: blink;
+        animation-duration: 1s;
+        animation-direction: alternate;
+        animation-iteration-count: infinite; }
       #todos-contatos ul li .destaque-nova-msg {
         position: absolute;
         right: 10px;
-        background-color: #55a630;
         padding: 1.5px 3px;
         width: auto;
         min-width: 1rem;
         line-height: 1rem;
         font-size: .8rem;
+        transition: 300ms;
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: #55a630;
         border-radius: 50%;
         color: #FFF;
-        font-weight: bold;
-        transition: .3s; }
+        font-weight: bold; }
       #todos-contatos ul li .ultima-msg {
         position: absolute;
         bottom: 0;
@@ -9062,13 +9074,15 @@ body {
   justify-content: center;
   align-items: center;
   background-color: whitesmoke; }
+  .lista-contatos-container-vazio.existe-agenda {
+    height: 40%; }
   .lista-contatos-container-vazio div {
     font-size: 1.1rem;
     color: #3c3c3c;
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    align-items: center; }
+    align-items: center;
+    flex-wrap: wrap; }
     .lista-contatos-container-vazio div p {
       text-align: center;
       width: 100%;
@@ -9101,9 +9115,9 @@ body {
       font-size: 1.1rem;
       color: #3c3c3c;
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
-      align-items: center; }
+      align-items: center;
+      flex-wrap: wrap; }
       #chat .lista-chat-container-vazio div p {
         text-align: center;
         width: 100%;
@@ -9159,7 +9173,7 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #555; }
 
-.toasted.toasted-primary.info svg {
+.toasted.toasted-primary.info svg, .toasted.toasted-primary.success svg {
   margin-right: 10px; }
 
 .chat-opcoes {
@@ -9170,8 +9184,8 @@ body {
   border-bottom: 1px solid #CCC; }
   .chat-opcoes .chat-opcoes-titulo {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
+    flex-wrap: wrap;
     width: 100%;
     background-color: #3949ab; }
     .chat-opcoes .chat-opcoes-titulo.cliente-ativo {
@@ -9266,6 +9280,8 @@ body {
       #chat-operador .chat-corpo-mensagens .btn-rolagem svg {
         font-size: 2.4rem;
         color: #757575;
+        transition-duration: 300ms;
+        transition-property: opacity;
         opacity: .8;
         cursor: pointer; }
         #chat-operador .chat-corpo-mensagens .btn-rolagem svg:hover {
@@ -9380,8 +9396,8 @@ body {
   transition-duration: 300ms; }
   .chat-rodape .chat-rodape-container {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     width: 100%;
     margin: 5px 0;
     position: relative; }
@@ -9416,10 +9432,11 @@ body {
         border-bottom-right-radius: 0; }
         .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea #emoji-container .btn-emoji {
           margin-left: 5px;
+          font-size: 1.2rem;
+          transition-duration: 300ms;
+          transition-property: opacity;
           opacity: .8;
-          transition-duration: .3s;
-          cursor: pointer;
-          font-size: 1.2rem; }
+          cursor: pointer; }
           .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea #emoji-container .btn-emoji:hover {
             opacity: 1; }
         .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea #emoji-container .lista-emoji {
@@ -9442,9 +9459,10 @@ body {
             .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea #emoji-container .lista-emoji ul li {
               padding: 0;
               margin: 2px;
-              opacity: .8;
-              transition-duration: .3s;
               font-size: 1.125rem;
+              transition-duration: 300ms;
+              transition-property: opacity;
+              opacity: .8;
               cursor: pointer; }
               .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea #emoji-container .lista-emoji ul li:hover {
                 opacity: 1; }
@@ -9553,7 +9571,7 @@ body {
       min-height: 50px; }
     .chat-rodape .chat-rodape-botoes .chat-rodape-botoes-botao {
       color: #777;
-      transition-duration: .5s;
+      transition-duration: 500ms;
       border-radius: 50%;
       font-size: 1rem;
       padding: 10px;
@@ -9595,16 +9613,18 @@ body {
   .chat-rodape .chat-rodape-msg-formatada {
     width: 95%;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     margin: 15px auto; }
     .chat-rodape .chat-rodape-msg-formatada .select-03 {
       display: flex;
       align-items: center;
       width: 100%; }
+      .chat-rodape .chat-rodape-msg-formatada .select-03 select {
+        width: 90%; }
       .chat-rodape .chat-rodape-msg-formatada .select-03 .btn-select-03 {
-        transition-duration: .3s;
+        transition-duration: 300ms;
         user-select: none;
         cursor: pointer;
         box-shadow: inset 0 -3px rgba(0, 0, 0, 0.2);
@@ -9719,8 +9739,8 @@ body {
   .informacoes-superiores-container .informacoes-item {
     margin-top: 18px;
     display: flex;
-    flex-direction: column;
-    justify-content: center; }
+    justify-content: center;
+    flex-direction: column; }
     .informacoes-superiores-container .informacoes-item .informacoes-item-titulo {
       display: flex; }
       .informacoes-superiores-container .informacoes-item .informacoes-item-titulo p {
@@ -9742,9 +9762,9 @@ body {
     font-size: 1.1rem;
     color: #3c3c3c;
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    align-items: center; }
+    align-items: center;
+    flex-wrap: wrap; }
     .lista-informacoes-container-vazio div p {
       text-align: center;
       width: 100%;
@@ -9772,19 +9792,19 @@ body {
   position: absolute;
   z-index: 3;
   top: 0;
-  transition-duration: .5s;
+  transition-duration: 500ms;
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px; }
-  #popup > div {
+  #popup .popup-container-geral {
     background-color: white;
     display: flex;
     align-items: center;
     flex-wrap: wrap; }
-    #popup > div .popup-titulo {
+    #popup .popup-container-geral .popup-titulo {
       margin: 0;
       font-size: 1.5rem;
       font-weight: 100;
@@ -9792,78 +9812,24 @@ body {
       width: 100%;
       color: #FFF;
       background-color: #6573cc; }
-    #popup > div > ul {
-      display: flex;
-      list-style-type: none;
-      margin: 10px auto;
-      padding: 0; }
-      #popup > div > ul.tres-mais {
-        flex-direction: column; }
-        #popup > div > ul.tres-mais li:nth-child(2n) {
-          margin: 10px 0; }
-      #popup > div > ul li {
-        transition-duration: .3s;
-        user-select: none;
-        cursor: pointer;
-        box-shadow: inset 0 -4px #3949ab;
-        opacity: 1;
-        min-width: 85px;
-        height: 45px;
-        background-color: #FFF;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border: 1px solid #999;
-        border-bottom: 0;
-        padding: 0 10px; }
-        #popup > div > ul li:hover {
-          opacity: 1; }
-        #popup > div > ul li:active {
-          opacity: 1;
-          box-shadow: inset 0 -2px #3949ab;
-          -webkit-transform: translateY(1px);
-          -moz-transform: translateY(1px);
-          -o-transform: translateY(1px);
-          -ms-transform: translateY(1px);
-          transform: translateY(1px); }
-        #popup > div > ul li:nth-child(2) {
-          margin: 0 15px; }
-        #popup > div > ul li#encerrarAtendimento:focus {
-          outline: none; }
-      #popup > div > ul.bg li {
-        box-shadow: inset 0 -4px var(--bg-alternativo); }
-        #popup > div > ul.bg li:active {
-          box-shadow: inset 0 -2px var(--bg-alternativo); }
-    #popup > div div[grupos-transferir],
-    #popup > div div[grupos-agentes],
-    #popup > div div[agendar-retorno] {
-      width: 100%;
-      margin: 10px auto;
+    #popup .popup-container-geral .popup-container {
       display: flex;
       justify-content: center;
-      align-items: center; }
-      #popup > div div[grupos-transferir] > div,
-      #popup > div div[grupos-agentes] > div,
-      #popup > div div[agendar-retorno] > div {
-        min-width: 200px; }
-      #popup > div div[grupos-transferir] > input,
-      #popup > div div[grupos-agentes] > input,
-      #popup > div div[agendar-retorno] > input {
-        outline: unset;
-        border-radius: 3px;
-        padding: 7px;
-        border: 1px solid #CCC; }
-    #popup > div div[agendar-retorno] {
-      display: flex;
-      flex-direction: column; }
-      #popup > div div[agendar-retorno] .btns-agendamento-container {
+      align-items: center;
+      flex-direction: column;
+      width: 100%;
+      margin: 10px auto; }
+      #popup .popup-container-geral .popup-container .popup-lista {
         display: flex;
-        margin: 0;
+        list-style-type: none;
+        margin: 10px auto;
         padding: 0; }
-        #popup > div div[agendar-retorno] .btns-agendamento-container .btn-cancelar-agendamento {
-          margin-left: 10px; }
-        #popup > div div[agendar-retorno] .btns-agendamento-container .btn-confirmar-agendamento, #popup > div div[agendar-retorno] .btns-agendamento-container .btn-cancelar-agendamento {
-          transition-duration: .3s;
+        #popup .popup-container-geral .popup-container .popup-lista.tres-mais {
+          flex-direction: column; }
+          #popup .popup-container-geral .popup-container .popup-lista.tres-mais li:nth-child(2n) {
+            margin: 10px 0; }
+        #popup .popup-container-geral .popup-container .popup-lista li {
+          transition-duration: 300ms;
           user-select: none;
           cursor: pointer;
           box-shadow: inset 0 -4px #3949ab;
@@ -9876,11 +9842,10 @@ body {
           align-items: center;
           border: 1px solid #999;
           border-bottom: 0;
-          padding: 0 10px;
-          margin-top: 10px; }
-          #popup > div div[agendar-retorno] .btns-agendamento-container .btn-confirmar-agendamento:hover, #popup > div div[agendar-retorno] .btns-agendamento-container .btn-cancelar-agendamento:hover {
+          padding: 0 10px; }
+          #popup .popup-container-geral .popup-container .popup-lista li:hover {
             opacity: 1; }
-          #popup > div div[agendar-retorno] .btns-agendamento-container .btn-confirmar-agendamento:active, #popup > div div[agendar-retorno] .btns-agendamento-container .btn-cancelar-agendamento:active {
+          #popup .popup-container-geral .popup-container .popup-lista li:active {
             opacity: 1;
             box-shadow: inset 0 -2px #3949ab;
             -webkit-transform: translateY(1px);
@@ -9888,13 +9853,63 @@ body {
             -o-transform: translateY(1px);
             -ms-transform: translateY(1px);
             transform: translateY(1px); }
-        #popup > div div[agendar-retorno] .btns-agendamento-container.bg .btn-confirmar-agendamento, #popup > div div[agendar-retorno] .btns-agendamento-container.bg .btn-cancelar-agendamento {
+          #popup .popup-container-geral .popup-container .popup-lista li:nth-child(2) {
+            margin: 0 15px; }
+          #popup .popup-container-geral .popup-container .popup-lista li#encerrarAtendimento:focus {
+            outline: none; }
+        #popup .popup-container-geral .popup-container .popup-lista.bg li {
           box-shadow: inset 0 -4px var(--bg-alternativo); }
-          #popup > div div[agendar-retorno] .btns-agendamento-container.bg .btn-confirmar-agendamento:active, #popup > div div[agendar-retorno] .btns-agendamento-container.bg .btn-cancelar-agendamento:active {
+          #popup .popup-container-geral .popup-container .popup-lista.bg li:active {
+            box-shadow: inset 0 -2px var(--bg-alternativo); }
+      #popup .popup-container-geral .popup-container .popup-container-tela-2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        min-width: 200px; }
+        #popup .popup-container-geral .popup-container .popup-container-tela-2 > div {
+          width: 100%; }
+      #popup .popup-container-geral .popup-container .btns-confirmacao-container {
+        display: flex;
+        justify-content: space-between;
+        margin: 0;
+        padding: 0;
+        width: 100%; }
+        #popup .popup-container-geral .popup-container .btns-confirmacao-container .btn-confirmar, #popup .popup-container-geral .popup-container .btns-confirmacao-container .btn-cancelar {
+          transition-duration: 300ms;
+          user-select: none;
+          cursor: pointer;
+          box-shadow: inset 0 -4px #3949ab;
+          opacity: 1;
+          min-width: 48%;
+          height: 45px;
+          background-color: #FFF;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border: 1px solid #999;
+          border-bottom: 0;
+          padding: 0 10px;
+          margin-top: 10px; }
+          #popup .popup-container-geral .popup-container .btns-confirmacao-container .btn-confirmar:hover, #popup .popup-container-geral .popup-container .btns-confirmacao-container .btn-cancelar:hover {
+            opacity: 1; }
+          #popup .popup-container-geral .popup-container .btns-confirmacao-container .btn-confirmar:active, #popup .popup-container-geral .popup-container .btns-confirmacao-container .btn-cancelar:active {
+            opacity: 1;
+            box-shadow: inset 0 -2px #3949ab;
+            -webkit-transform: translateY(1px);
+            -moz-transform: translateY(1px);
+            -o-transform: translateY(1px);
+            -ms-transform: translateY(1px);
+            transform: translateY(1px); }
+        #popup .popup-container-geral .popup-container .btns-confirmacao-container.bg .btn-confirmar, #popup .popup-container-geral .popup-container .btns-confirmacao-container.bg .btn-cancelar {
+          box-shadow: inset 0 -4px var(--bg-alternativo); }
+          #popup .popup-container-geral .popup-container .btns-confirmacao-container.bg .btn-confirmar:active, #popup .popup-container-geral .popup-container .btns-confirmacao-container.bg .btn-cancelar:active {
             box-shadow: inset 0 -2px var(--bg-alternativo); }
 
 #rodape-botoes-encerramento-container {
   width: 100%;
+  position: absolute;
+  bottom: 5px;
   display: flex;
   justify-content: center;
   align-items: center; }
@@ -9903,11 +9918,9 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 40px;
-    position: absolute;
-    bottom: 0; }
+    height: 40px; }
     #rodape-botoes-encerramento-container .rodape-botoes-encerramento .rodape-botoes-botao {
-      transition-duration: .3s;
+      transition-duration: 300ms;
       user-select: none;
       cursor: pointer;
       box-shadow: inset 0 -3px rgba(0, 0, 0, 0.2);
@@ -9943,11 +9956,11 @@ body {
         margin: 0;
         background-color: #184A8C; }
         #rodape-botoes-encerramento-container .rodape-botoes-encerramento .rodape-botoes-botao.botao-retornar svg {
-          color: #012136; }
+          color: #091c35; }
       #rodape-botoes-encerramento-container .rodape-botoes-encerramento .rodape-botoes-botao.botao-encerrar {
         background-color: #E74C3C; }
         #rodape-botoes-encerramento-container .rodape-botoes-encerramento .rodape-botoes-botao.botao-encerrar svg {
-          color: #BE1E2A; }
+          color: #7b190f; }
 
 .container-iframes {
   height: 100%;
@@ -10021,5 +10034,5 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background-color: #555; }
 
-.toasted.toasted-primary.info svg {
+.toasted.toasted-primary.info svg, .toasted.toasted-primary.success svg {
   margin-right: 10px; }

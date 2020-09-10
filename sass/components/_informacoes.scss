@@ -12,8 +12,7 @@
 }
 
 .informacoes-titulo{
-  display: flex;
-  align-items: center;
+  @include d-flex-center('vertical');
   height: 10%;
   background-color: darken($cor, 10);
   border-bottom: 1px solid #CCC;
@@ -45,24 +44,19 @@
 .informacoes-load-container{
   position: absolute;
   .load{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column
+    @include d-flex-center();
+    flex-direction: column;
   }
 }
 
 .container-acoes{
   height: 11%;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include d-flex-center();
 }
 
 .informacoes-superiores-container{
-  display: flex;
-  align-items: center;
+  @include d-flex-center('vertical');
   justify-content: space-between;
   height: 10%;
   width: 90%;
@@ -70,9 +64,8 @@
   margin-right: 15px;
   .informacoes-item{
     margin-top: 18px;
-    display: flex;
+    @include d-flex-center('horizontal');
     flex-direction: column;
-    justify-content: center;
     .informacoes-item-titulo{
       display: flex;
       p{
@@ -91,17 +84,13 @@
 
 .lista-informacoes-container-vazio{
   height: 90%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include d-flex-center();
   background-color: whitesmoke;
   div{
     font-size: 1.1rem;
     color: lighten(#222, 10);
-    display: flex;
+    @include d-flex-center();
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
     p{
       text-align: center;
       width: 100%;
@@ -118,9 +107,7 @@
   width: 95%;
   height: 85%;
   margin: 2.5%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include d-flex-center();
   iframe{
     width: 100%;
     height: 100%;

@@ -294,6 +294,8 @@ export default {
     async encerrarAtendimento() {
       if( this.atendimentoAtivo.informacoes.nome != null ) {
         await this.finalizarAtendimentoNaApi()
+        // this.$store.dispatch("setBlocker", true)
+        // this.$store.dispatch("setOrigemBlocker", "encerramento")
       } else {
         this.$toasted.global.defaultError({msg: 'Selecione um cliente antes de tentar finalizar o atendimento'})
       }
@@ -326,6 +328,10 @@ export default {
             this.$store.dispatch('limparIdAtendimentoAtivo')
             this.$root.$off('atualizar_mensagem')
             this.$root.$off('rolaChat')
+
+            // console.log('passou')
+            // this.$store.dispatch("setBlocker", false)
+            // this.$store.dispatch("setOrigemBlocker", "btn-acoes")
           }
           setTimeout(() => {
             liberarEncerrar()

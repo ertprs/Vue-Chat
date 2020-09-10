@@ -6,9 +6,7 @@ html, body{
 }
 
 body{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include d-flex-center();
   flex-wrap: wrap;
   overflow: hidden;
   background-color: #EEE;
@@ -66,7 +64,7 @@ body{
   background-color: #555
 }
 
-.toasted.toasted-primary.info{
+.toasted.toasted-primary.info, .toasted.toasted-primary.success{
   svg{
     margin-right: 10px
   }
