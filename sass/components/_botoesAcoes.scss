@@ -6,14 +6,14 @@ $bg-encerrar: #E74C3C;
 
 #rodape-botoes-encerramento-container{
   width: 100%;
+  position: absolute;
+  bottom: 5px;
   @include d-flex-center();
 
   .rodape-botoes-encerramento{
     @include d-flex-center();
     width: 100%;
     height: 40px;
-    position: absolute;
-    bottom: 0;
     .rodape-botoes-botao{
       @include estilo-botao(-3px, -1px);
       color: #FFF;

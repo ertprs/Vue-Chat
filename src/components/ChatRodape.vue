@@ -164,7 +164,6 @@
         </transition>
       </div>
     </transition>
-    <botoes-acoes />
   </div>
 </template>
 
@@ -180,7 +179,6 @@
 <script>
 
 import { mapGetters } from "vuex";
-import BotoesAcoes from './BotoesAcoes'
 import { obterMsgFormatada } from "../services/msgFormatada";
 import axios_api from "../services/serviceAxios";
 import axios from "axios";
@@ -212,9 +210,6 @@ export default {
       chaveAtual_03: '',
       tamanhoText: ''
     };
-  },
-  components: {
-    'botoes-acoes': BotoesAcoes
   },
   mounted() {
     this.$root.$on("atualizar_mensagem", (objMessage, event) => {
