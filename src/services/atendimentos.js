@@ -83,6 +83,14 @@ function tratarResponse(response) {
                     adicionaCaso(200)
                     mainData = converterHexaParaEmojis(mainData)
                     // executarRegrasFormatacao(mainData)
+
+                    let regex = /\s/g
+                    for(let atd in mainData.atendimentos){
+                        if(mainData.atendimentos[atd].login_usu.match(regex)){
+                            mainData.atendimentos[atd].login_usu = mainData.atendimentos[atd].login_usu.replace(regex, '')
+                        }
+                    }
+
                     carregarIframe(mainData.atendimentos)
                     store.dispatch('setAtendimentos', mainData.atendimentos)
                     const agenda = ['Maria', 'Joao', 'Joana', 'Frederico']

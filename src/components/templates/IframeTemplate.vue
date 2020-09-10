@@ -50,6 +50,15 @@ export default {
               }
             }
           }
+
+          let regex = /\s/g
+          
+          if(idCliente.match(regex)){
+              idCliente = idCliente.replace(regex, '')
+          }else{
+              idCliente = idCliente
+          }
+
           const iframeCliente = document.querySelector("#iframe_" + idCliente)
           if(iframeCliente){
             iframeCliente.classList.remove('d-none')

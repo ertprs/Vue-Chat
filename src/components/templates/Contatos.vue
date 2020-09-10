@@ -17,7 +17,7 @@
     </div>
     <template v-if="objAtendimentos">
       <!-- Caso Aguardando Cliente ou esperando a primeira requisicao ao buscaAtendimentos -->
-      <div class="lista-contatos-container-vazio" v-if="caso == 206 || caso == 'aguardando'">
+      <div class="lista-contatos-container-vazio" :class="{'existe-agenda' : minhaAgenda.length}" v-if="caso == 206 || caso == 'aguardando'">
         <div class="load">
           <i class="fas fa-hourglass-end"></i>
           <transition name="fade">
@@ -46,6 +46,7 @@
             <template v-if="!fechado">{{ formataNome(atd.nome_usu) }}</template>
             <span v-if="!fechado" class="ultima-msg">{{formataUltimaMsg(atd.arrMsg)}}</span>
             <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && idAtendimentoAtivo !== atd.id_cli" class="destaque-nova-msg">{{ atd.qtdMsgNova }}</span>
+            <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
           </li>
         </ul>
         <div class="lista-agenda" v-if="minhaAgenda.length">
@@ -169,6 +170,7 @@ export default {
       this.$store.dispatch('setCaso', caso)
     },
     ativarConversa: function(atd, indice) {
+
       if(atd.novoContato){
         atd.novoContato = false
       }
