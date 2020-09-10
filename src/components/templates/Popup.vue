@@ -1,13 +1,24 @@
 <template>
-  <div id="popup" popup @click="fecharPopup($event)" v-if="abrirPopup && blocker">
-    <div>
-      <h2 class="popup-titulo" :style="'background-color: '+bg">{{ titulo }}</h2>
-      <popup-transferir v-if="origem == 'Transferir'" />
-      <popup-retornar v-else-if="origem == 'Retornar'" />
-      <popup-encerrar v-else-if="origem == 'Encerrar'" />
-    </div>
+  <div id="popup" popup @click="fecharPopup($event)" v-show="abrirPopup && blocker">
+    <transition name="fade">
+      <div class="popup-container-geral" v-show="abrirPopup && blocker">
+        <h2 class="popup-titulo" :style="'background-color: '+bg">{{ titulo }}</h2>
+        <popup-transferir v-if="origem == 'Transferir'" />
+        <popup-retornar v-else-if="origem == 'Retornar'" />
+        <popup-encerrar v-else-if="origem == 'Encerrar'" />
+      </div>
+    </transition>
   </div>
 </template>
+
+<style scoped>
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity 300ms;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active em versões anteriores a 2.1.8 */ {
+    opacity: 0;
+  }
+</style>
 
 <script>
 import axios from 'axios'

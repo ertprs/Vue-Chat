@@ -6,12 +6,12 @@
   position: absolute;
   z-index: 3;
   top: 0;
-  transition-duration: .5s;
+  transition-duration: 500ms;
   height: 100%;
   width: 100%;
   @include d-flex-center();
   padding: 10px;
-  > div{
+  .popup-container-geral{
     background-color: lighten(#FFF, 15);
     @include d-flex-center('vertical');
     flex-wrap: wrap;
@@ -67,7 +67,7 @@
           }
         }
       }
-      > div{
+      .popup-container-tela-2{
         @include d-flex-center();
         flex-direction: column;
         min-width: 200px;
@@ -75,37 +75,31 @@
           width: 100%;
         }
       }
-      > input{
-        outline: unset;
-        border-radius: 3px;
-        padding: 7px;
-        @include border();
-      }
-    }
-  }
-  .btns-confirmacao-container{
-    display: flex;
-    justify-content: space-between;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    
-    .btn-confirmar, .btn-cancelar{
-      @include estilo-botao(-4px, -2px, 1, $cor);
-      min-width: 48%;
-      height: 45px;
-      background-color: #FFF;
-      @include d-flex-center();
-      @include border(1px, #999);
-      border-bottom: 0;
-      padding: 0 10px;
-      margin-top: 10px;
-    }
-    &.bg{
-      .btn-confirmar, .btn-cancelar{
-        box-shadow: inset 0 -4px var(--bg-alternativo);
-        &:active{
-          box-shadow: inset 0 -2px var(--bg-alternativo);
+      .btns-confirmacao-container{
+        display: flex;
+        justify-content: space-between;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        
+        .btn-confirmar, .btn-cancelar{
+          @include estilo-botao(-4px, -2px, 1, $cor);
+          min-width: 48%;
+          height: 45px;
+          background-color: #FFF;
+          @include d-flex-center();
+          @include border(1px, #999);
+          border-bottom: 0;
+          padding: 0 10px;
+          margin-top: 10px;
+        }
+        &.bg{
+          .btn-confirmar, .btn-cancelar{
+            box-shadow: inset 0 -4px var(--bg-alternativo);
+            &:active{
+              box-shadow: inset 0 -2px var(--bg-alternativo);
+            }
+          }
         }
       }
     }

@@ -8,7 +8,10 @@
       <li @click="preencherAgente()"> Agente </li>
       <li @click="preencherGrupo()"> Grupo </li>
     </ul>
-    <div v-if="abrirAgentes" grupos-agentes>
+    <div 
+      grupos-agentes
+      v-if="abrirAgentes"
+      class="popup-container-tela-2">
       <vSelect
       :options="arrAgentes"
       label="label"
@@ -24,7 +27,10 @@
         <li class="btn-cancelar" @click="fecharPopup()"> Cancelar </li>
       </ul>
     </div>
-    <div v-if="abrirGrupos" grupos-transferir>
+    <div 
+      grupos-transferir
+      v-if="abrirGrupos"
+      class="popup-container-tela-2">
       <vSelect
         :options="arrGrupos"
         label="label"

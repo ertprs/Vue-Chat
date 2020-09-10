@@ -9,7 +9,10 @@
       <li @click="$toasted.global.emConstrucao(), fecharPopup()"> Pessoal </li>
       <li @click="pessoalData = true"> Pessoal/Data </li>
     </ul>
-    <div v-if="pessoalData" agendar-retorno>
+    <div 
+      agendar-retorno
+      v-if="pessoalData"
+      class="popup-container-tela-2">
       <input type="datetime-local" :min="setData('minimo')" :max="setData('maximo')" v-model="dataHora" />
       <ul 
         class="btns-confirmacao-container"
