@@ -235,6 +235,17 @@ export default {
       document.querySelector('#textarea').focus()
       this.mensagem += value;
     },
+    executaTeste(event, previa, cont) {
+      var self = this
+      setTimeout( function () {
+          cont = cont + 1
+          if(cont < 600) {
+            self.mensagem = 'MSG ' + String(cont)
+            self.enviarMensagem(event, previa)
+            self.executaTeste(event, previa, cont)
+          }
+        }, 1000);
+    },
     enviarMensagem(event, previa) {
       if(this.blocker && this.origemBlocker !== 'msg-formatada'){
         this.$store.dispatch('setBlocker', false)
@@ -244,13 +255,16 @@ export default {
         if(event.keyCode == 13 && !event.shiftKey){
           event.preventDefault()
         }
-  
         if(event.shiftKey){
           return
         }
       }
 
       this.mensagem = this.mensagem.replace(/\n$/, "", this.mensagem);
+
+      if(this.mensagem === 'executaTeste') {
+        this.executaTeste(event, previa, 0)
+      }
 
       const msgAux = this.mensagem
 
