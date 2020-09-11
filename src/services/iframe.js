@@ -3,7 +3,7 @@ import store from "../store"
 export function carregarIframe(atendimentos) {
     for(let ramal in atendimentos) {
         if(atendimentos[ramal].url !== '') {
-            let regex = /\s/g
+            let regex =  /\s|\]|\[/g
             let id = ""
             
             if(atendimentos[ramal].login_usu.match(regex)){

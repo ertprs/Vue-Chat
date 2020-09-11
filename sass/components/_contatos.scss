@@ -66,6 +66,17 @@ $tamanhoBoxShadow: 5px;
   .lista-contatos-container{
     width: 100%;
     background-color: #FFF;
+    h4{
+      width: 100%;
+      font-size: 1rem;
+      padding-left: 10px;
+      border-bottom: 1px solid #CCC;
+      @include efeito-hover-padrao();
+      &.ativo{
+        opacity: 1;
+      }
+    }
+    
     ul{
       display: flex;
       flex-direction: column-reverse;

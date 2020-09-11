@@ -31,8 +31,13 @@
         </div>
       </template>
       <template v-else>
-        <div class="load">
+        <div>
+        <div class="load" v-if="contadorRequisicoesFalhas < 10">
           <i class="fas fa-hourglass-end"></i>
+        </div>
+        <div class="load" v-else>
+          <p> {{ msgErro }} </p>
+        </div>
         </div>
       </template>
       <!-- <template v-else>
@@ -79,7 +84,8 @@ export default {
       regrasBotoes: {},
       regrasCor: {},
       tudoPronto: false,
-      contadorRequisicoesFalhas: 0 
+      contadorRequisicoesFalhas: 0,
+      msgErro: "Nao foi possivel carregar esta area"
     }
   },
   mounted(){

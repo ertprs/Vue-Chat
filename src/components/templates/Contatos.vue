@@ -5,7 +5,7 @@
         <i class="fas fa-address-book" title="Contatos"></i>
         <transition name="fade">
           <h1 v-show="!fechado">
-            Contatos
+            Atendimentos
           </h1>
         </transition>
       </div>
@@ -30,6 +30,7 @@
       </div>
       <!-- Caso haja Cliente -->
       <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 400">
+        <h4 :class="{'ativo' : true}" v-if="objAtendimentos.length && caso !== 206"> Em Atendimento </h4>
         <ul :class="{'fechado' : fechado}" v-if="objAtendimentos.length && caso !== 206" id="lista-contatos">
           <li
             v-for="(atd, indice) in objAtendimentos"
@@ -49,6 +50,7 @@
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
           </li>
         </ul>
+        <h4 v-if="objAtendimentos.length && caso !== 206"> Aguardando </h4>
         <div class="lista-agenda" v-if="minhaAgenda.length">
           <div class="lista-agenda--titulo">
             <div :class="{'fechado' : fechado}">

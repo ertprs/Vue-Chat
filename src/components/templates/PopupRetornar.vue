@@ -5,8 +5,8 @@
       class="popup-lista" 
       :class="{'tres-mais' : tamanhoChat(), 'bg' : bg}"
       v-if="!pessoalData">
-      <li @click="$toasted.global.emConstrucao(), fecharPopup()"> Todos </li>
-      <li @click="$toasted.global.emConstrucao(), fecharPopup()"> Pessoal </li>
+      <li @click="retornar('todos'), fecharPopup()"> Todos </li>
+      <li @click="retornar('pessoal'), fecharPopup()"> Pessoal </li>
       <li @click="pessoalData = true"> Pessoal/Data </li>
     </ul>
     <div 
@@ -17,7 +17,7 @@
       <ul 
         class="btns-confirmacao-container"
         :class="{'bg' : bg}">
-        <li class="btn-confirmar" @click="agendarRetorno(dataHora), fecharPopup()"> Confirmar </li>
+        <li class="btn-confirmar" @click="retornar('pessoal/data'), fecharPopup()"> Confirmar </li>
         <li class="btn-cancelar" @click="fecharPopup()"> Cancelar </li>
       </ul>
     </div>
@@ -26,6 +26,8 @@
 
 <script>
 import { mapGetters } from "vuex"
+
+import axios_api from "../../services/serviceAxios"
 
 export default {
   data(){
@@ -36,10 +38,69 @@ export default {
   },
   computed: {
     ...mapGetters({
-      bg: 'getBgPopup'
+      bg: 'getBgPopup',
+      atendimentoAtivo: "getAtendimentoAtivo"
     })
   },
   methods: {
+    retornar(tipo){
+      let dados = {
+        token_cliente: this.atendimentoAtivo.token_cliente
+      }
+
+      switch(tipo){
+        case "todos":
+          dados.destino = "universal"
+          axios_api.put("suspend", dados)
+            .then(response => {
+              if(response.status == 200){
+                console.log('Sucesso: ', response)
+                this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
+              }
+            })
+            .catch(error => {
+              console.log('error suspend todos: ', error)
+              this.$toasted.global.defaultError({msg: "Nao foi possivel realizar o retorno"})
+            })
+        break;
+        case "pessoal":
+          dados.destino = "decidado"
+          axios_api.put("suspend", dados)
+            .then(response => {
+              if(response.status == 200){
+                console.log('Sucesso: ', response)
+                this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
+              }
+            })
+            .catch(error => {
+              console.log('error suspend pessoal: ', error)
+              this.$toasted.global.defaultError({msg: "Nao foi possivel realizar o retorno"})
+            })
+        break;
+        case "pessoal/data":
+          let data = dataHora.slice(0, 10)
+          let hora = dataHora.slice(11)
+
+          dados.destino = "decidado"
+          dados.data = data
+          dados.hora = hora
+
+          axios_api.put("suspend", dados)
+            .then(response => {
+              if(response.status == 200){
+                console.log('Sucesso: ', response)
+                this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
+              }
+            })
+            .catch(error => {
+              console.log('error suspend pessoal/data: ', error)
+              this.$toasted.global.defaultError({msg: "Nao foi possivel realizar o retorno"})
+            })
+        break;
+        default:
+        break;
+      }
+    },
     tamanhoChat(){
       const widthChat = localStorage.getItem('largura-chat')
       if(widthChat){
@@ -86,14 +147,6 @@ export default {
 
         let agora = ano + '-' + mes + '-' + dia + 'T' + hora + ':' + minutos + ':00'
         return agora
-      }
-    },
-    agendarRetorno(dataHora){
-      if(dataHora){
-        console.log('dataHora: ', dataHora)
-        this.$toasted.global.defaultSuccess({msg: 'Retorno agendado'})
-      }else{
-        this.$toasted.global.defaultError({msg: 'Data e hora indefinidas'})
       }
     },
     fecharPopup(event){

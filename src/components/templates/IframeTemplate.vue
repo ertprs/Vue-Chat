@@ -51,7 +51,7 @@ export default {
             }
           }
 
-          let regex = /\s/g
+          let regex =  /\s|\]|\[/g
           
           if(idCliente.match(regex)){
               idCliente = idCliente.replace(regex, '')
