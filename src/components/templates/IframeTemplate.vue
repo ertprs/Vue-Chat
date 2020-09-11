@@ -6,13 +6,22 @@
       :id="'iframe_' + frame.id"
       :key="indice"
     >
-      <iframe :src="frame.url" frameborder="0"></iframe>
+      <iframe :src="frame.url" frameborder="0" @load="gif = false" @loadstart="gif = true"></iframe>
+    </div>
+    <div class="load" v-if="gif">
+      <i class="fas fa-hourglass-end"></i>
+      <p> Carregando </p>
     </div>
   </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
 export default {
+  data(){
+    return{
+      gif: true
+    }
+  },
   mounted() {
     this.$root.$on('mostrarIframe', (idCliente, urlFrame) => {
       this.mostraIframe(idCliente, urlFrame)
