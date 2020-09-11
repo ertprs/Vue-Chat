@@ -8914,6 +8914,9 @@ body {
     #todos-contatos ul.fechado li .circulo-contatos img {
       width: 15px;
       right: -5px; }
+    #todos-contatos ul.fechado li .ctt-ativo {
+      top: 5px;
+      right: 5px; }
     #todos-contatos ul.fechado li .destaque-nova-msg {
       bottom: 5px;
       right: 5px; }
@@ -8937,7 +8940,8 @@ body {
       max-height: 50px;
       cursor: pointer;
       border-bottom: 1px solid #CCC;
-      position: relative; }
+      position: relative;
+      white-space: nowrap; }
       #todos-contatos ul li .circulo-contatos {
         border-radius: 50%;
         width: 35px;
