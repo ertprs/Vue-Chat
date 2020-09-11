@@ -30,8 +30,14 @@
       </div>
       <!-- Caso haja Cliente -->
       <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 400">
-        <h4 :class="{'ativo' : true}" v-if="objAtendimentos.length && caso !== 206"> Em Atendimento </h4>
-        <ul :class="{'fechado' : fechado}" v-if="objAtendimentos.length && caso !== 206" id="lista-contatos">
+        <h4 
+          v-on:click="alternaAbaAberta()"
+          :class="abaAberta == 'atendimento' ? 'ativo' : ''"
+          v-if="objAtendimentos.length && caso !== 206"
+          > 
+          Em Atendimento
+        </h4>
+        <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta == 'aguardando'}" v-if="objAtendimentos.length && caso !== 206" id="lista-contatos">
           <li
             v-for="(atd, indice) in objAtendimentos"
             :key="indice"
@@ -50,7 +56,30 @@
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
           </li>
         </ul>
-        <h4 v-if="objAtendimentos.length && caso !== 206"> Aguardando </h4>
+        <h4
+          v-on:click="alternaAbaAberta()"
+          :class="abaAberta == 'aguardando' ? 'ativo' : ''"
+          v-if="objAtendimentos.length && caso !== 206"
+          >
+          Aguardando
+        </h4>
+        <div class="lista-aguardando" v-if="minhaAgenda.length">
+          <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta !== 'aguardando'}">
+            <li
+              v-for="(atd, indice) in minhaAgenda"
+              :key="'id_'+indice"
+              :id="'li_'+indice"
+              :title="atd"
+              class="semClick"
+            >
+              <div class="circulo-contatos">
+                <p>{{ formataSigla(atd[0], 'upper') }}</p>
+                <p v-if="fechado">{{ formataSigla(atd[1], 'lower') }}</p>
+              </div>
+              <template v-if="!fechado">{{ atd }}</template>
+            </li>
+          </ul>
+        </div>
         <div class="lista-agenda" v-if="minhaAgenda.length">
           <div class="lista-agenda--titulo">
             <div :class="{'fechado' : fechado}">
@@ -112,7 +141,8 @@ export default {
       fechado: false,
       rotate: false,
       haContatos: true,
-      objAtendimentos: []
+      objAtendimentos: [],
+      abaAberta: 'atendimento'
     };
   },
   watch: {
@@ -161,6 +191,19 @@ export default {
     })
   },
   methods: {
+    alternaAbaAberta(){
+      switch (this.abaAberta){
+        case "atendimento":
+          this.abaAberta = "aguardando"
+        break;
+        case "aguardando":
+          this.abaAberta = "atendimento"
+        break;
+        default:
+          this.abaAberta = "atendimento"
+        break;
+      }
+    },
     formataSigla(letra, acao){
       if(acao == 'upper'){
         return letra.toUpperCase()

@@ -67,13 +67,18 @@ $tamanhoBoxShadow: 5px;
     width: 100%;
     background-color: #FFF;
     h4{
+      user-select: none;
       width: 100%;
       font-size: 1rem;
+      padding: 3px 0;
       padding-left: 10px;
+      margin: 0;
       border-bottom: 1px solid #CCC;
       @include efeito-hover-padrao();
       &.ativo{
         opacity: 1;
+        padding: 0;
+        padding-left: 10px;
       }
     }
     
@@ -92,6 +97,10 @@ $tamanhoBoxShadow: 5px;
     max-height: 200px;
     overflow-y: auto;
     overflow-x: hidden;
+    transition: max-height 400ms ease-out;
+    &.aba-fechada{
+      max-height: 0;   
+    }
     &.fechado{
       li{
         .circulo-contatos{
