@@ -8812,7 +8812,6 @@ body {
   height: 100%;
   display: flex;
   justify-content: flex-start;
-  max-width: 1366px;
   max-height: 768px; }
 
 .tamanho-titulos {
@@ -9144,7 +9143,6 @@ body {
   height: 100%;
   display: flex;
   justify-content: flex-start;
-  max-width: 1366px;
   max-height: 768px; }
 
 .tamanho-titulos {
@@ -10015,7 +10013,6 @@ body {
   height: 100%;
   display: flex;
   justify-content: flex-start;
-  max-width: 1366px;
   max-height: 768px; }
 
 .tamanho-titulos {
