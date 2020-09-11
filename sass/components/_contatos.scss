@@ -79,6 +79,9 @@ $tamanhoBoxShadow: 5px;
   .lista-contatos-container{
     width: 100%;
     background-color: #FFF;
+    max-height: 90%;
+    overflow-y: auto;
+    padding-right: 5px;
     h4{
       white-space: nowrap;
       text-overflow: ellipsis;

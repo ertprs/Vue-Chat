@@ -67,7 +67,60 @@
           Aguardando
         </h4>
         <div class="lista-aguardando" v-if="minhaAgenda.length">
+          <!-- Lista repetida para simular mais contatos -->
           <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta !== 'aguardando'}">
+            <li
+              v-for="(atd, indice) in minhaAgenda"
+              :key="'id_'+indice"
+              :id="'li_'+indice"
+              :title="atd"
+              class="semClick"
+            >
+              <div class="circulo-contatos">
+                <p>{{ formataSigla(atd[0], 'upper') }}</p>
+                <p v-if="fechado">{{ formataSigla(atd[1], 'lower') }}</p>
+              </div>
+              <template v-if="!fechado">{{ atd }}</template>
+            </li>
+            <li
+              v-for="(atd, indice) in minhaAgenda"
+              :key="'id_'+indice"
+              :id="'li_'+indice"
+              :title="atd"
+              class="semClick"
+            >
+              <div class="circulo-contatos">
+                <p>{{ formataSigla(atd[0], 'upper') }}</p>
+                <p v-if="fechado">{{ formataSigla(atd[1], 'lower') }}</p>
+              </div>
+              <template v-if="!fechado">{{ atd }}</template>
+            </li>
+            <li
+              v-for="(atd, indice) in minhaAgenda"
+              :key="'id_'+indice"
+              :id="'li_'+indice"
+              :title="atd"
+              class="semClick"
+            >
+              <div class="circulo-contatos">
+                <p>{{ formataSigla(atd[0], 'upper') }}</p>
+                <p v-if="fechado">{{ formataSigla(atd[1], 'lower') }}</p>
+              </div>
+              <template v-if="!fechado">{{ atd }}</template>
+            </li>
+            <li
+              v-for="(atd, indice) in minhaAgenda"
+              :key="'id_'+indice"
+              :id="'li_'+indice"
+              :title="atd"
+              class="semClick"
+            >
+              <div class="circulo-contatos">
+                <p>{{ formataSigla(atd[0], 'upper') }}</p>
+                <p v-if="fechado">{{ formataSigla(atd[1], 'lower') }}</p>
+              </div>
+              <template v-if="!fechado">{{ atd }}</template>
+            </li>
             <li
               v-for="(atd, indice) in minhaAgenda"
               :key="'id_'+indice"
