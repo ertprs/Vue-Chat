@@ -11,6 +11,9 @@
       </div>
       <div>
       </div>
+      <div class="container-add-novo-cliente" :class="{'fechado' : fechado}" title="Adicionar novo cliente">
+        <i class="fas fa-user-plus"></i>
+      </div>
       <div v-on:click="toggleContatos($event)" class="container-flecha" :class="rotate ? 'rotate' : ''">
         <i class="fas fa-long-arrow-alt-left flecha"></i>
       </div>

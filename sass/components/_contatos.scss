@@ -25,6 +25,19 @@ $tamanhoBoxShadow: 5px;
     width: 100%;
     border-bottom: 1px solid #CCC;
     padding-left: 10px;
+    div.container-add-novo-cliente{
+      position: absolute;
+      top: 5px;
+      right: 15px;
+      @include efeito-hover-padrao();
+      &.fechado{
+        right: 5px;
+      }
+      svg{
+        font-size: 1.2rem;
+        color: #FFF;
+      }
+    }
     div.container-flecha{
       position: absolute;
       bottom: 0;
