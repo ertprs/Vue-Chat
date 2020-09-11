@@ -84,7 +84,7 @@ function tratarResponse(response) {
                     mainData = converterHexaParaEmojis(mainData)
                     // executarRegrasFormatacao(mainData)
 
-                    let regex = /\s/g
+                    let regex = /\s|\]|\[/g
                     for(let atd in mainData.atendimentos){
                         if(mainData.atendimentos[atd].login_usu.match(regex)){
                             mainData.atendimentos[atd].login_usu = mainData.atendimentos[atd].login_usu.replace(regex, '')
