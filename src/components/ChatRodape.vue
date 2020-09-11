@@ -3,13 +3,17 @@
     <div class="chat-rodape-container">
       <div class="chat-rodape-mensagens">
         <!-- Prévia imagem -->
-        <div class="container-previa-img" v-show="aparecerPrevia">
-          <h3 v-if="arquivo.name">{{ this.arquivo.name }}</h3>
+        <div class="container-previa-img" v-show="aparecerPrevia" :class="{'previa-anexo' : docPrevia, 'previa-anexo-erro' : docPrevia && erroFormatoAnexo}">
+          <h3 v-if="arquivo.name">
+            <i class="fas fa-image" v-if="!docPrevia"></i>
+            <i class="fas fa-file-alt" v-else></i>
+            {{ this.arquivo.name }}
+          </h3>
           <div class="formato-invalido">
             <h3 v-if="erroFormatoAnexo">{{ txtFormatoInvalido }}</h3>
             <h4 v-if="erroFormatoAnexo">{{ txtFormatosValidos }}</h4>
           </div>
-          <div class="div-previa" v-if="imagemPrevia !== ''">
+          <div class="div-previa" v-if="imagemPrevia">
             <img
               :src="imagemPrevia"
               alt="Previa da Imagem Selecionada"
@@ -20,7 +24,9 @@
           v-show="aparecerPrevia"
           v-on:click="excluirAnexo()" 
           title="Cancelar selecao de anexo" 
-          class="btn-excluir-anexo">
+          class="btn-excluir-anexo"
+          :class="{'previa-anexo' : docPrevia, 'previa-anexo-erro' : docPrevia && erroFormatoAnexo}"
+          >
           <i class="fas fa-times-circle"></i>
         </div>
         <div class="chat-rodape-textarea">
@@ -100,6 +106,7 @@
             </div>
             <div class="chat-rodape-botoes-container-anexo d-none">
               <input type="file" id="file" ref="file" accept="image/*" v-on:change="fileUpload()" />
+              <input type="file" id="doc"  ref="doc" accept="application/*" v-on:change="fileUpload(false)" />
             </div>
           </div>
         </div>
@@ -191,14 +198,13 @@ export default {
       arquivo: "",
       aparecerPrevia: false,
       imagemPrevia: "",
-      txtFormatoInvalido: "",
+      docPrevia: false,
+      txtFormatoInvalido: "Formato Invalido!",
       txtFormatosValidos: "",
-      txtSelecioneAnexo: "",
       controle: true,
       qtdInicial: 0,
       abrirOpcoes: false,
       erroFormatoAnexo: false,
-      selecioneAnexo: true,
       abrirEmojis: false,
       temMsgFormatada: false,
       msgFormatadaAberto: false,
@@ -244,7 +250,6 @@ export default {
         }
       }
 
-
       this.mensagem = this.mensagem.replace(/\n$/, "", this.mensagem);
 
       const msgAux = this.mensagem
@@ -253,27 +258,22 @@ export default {
         if (this.atendimentoAtivo.token_cliente != "") {
           this.criaObjMensagem();
 
-          let anexoMsg = ""
-          // anexoMsg = this.arquivo ? this.arquivo + " " + this.mensagem : this.mensagem
-          console.log('arquivo: ', this.arquivo)
-
+          let data = ""
           if(this.arquivo){
-            anexoMsg = {
-              name: this.arquivo.name,
-              size: this.arquivo.size,
-              type: this.arquivo.type,
-              dados: ""
+            const form = new FormData()
+            form.append("token_cliente", this.atendimentoAtivo.token_cliente)
+            form.append("file", this.arquivo)
+            if(this.mensagem){
+              form.append("message", this.mensagem)
             }
+
+            data = form
           }else{
-            anexoMsg = this.mensagem
+            data = {
+              token_cliente: this.atendimentoAtivo.token_cliente,
+              message: this.mensagem,
+            };
           }
-
-          console.log('anexoMsg: ', anexoMsg)
-
-          let data = {
-            token_cliente: this.atendimentoAtivo.token_cliente,
-            message: anexoMsg,
-          };
 
           this.resetar()
 
@@ -326,7 +326,7 @@ export default {
     },
     validaMensagem(previa) {
       if(previa){
-        let anexoValidado = this.validaAnexo(this.arquivo)
+        let anexoValidado = this.validaAnexo(this.arquivo, !this.docPrevia)
         if(anexoValidado){
           return true
         }else{
@@ -364,13 +364,21 @@ export default {
 
         let anexo = false
         let imgAnexo = ""
-        if(this.arquivo){
-          anexo = true
-          imgAnexo = this.imagemPrevia
-        }
-
         let tipoDoc = ""
         let docAnexo = ""
+        let nomeArquivo = ""
+        
+        if(this.arquivo){
+          anexo = true
+          if(!this.docPrevia){
+            imgAnexo = this.imagemPrevia
+          }else{
+            tipoDoc = this.arquivo.type
+            let url = window.URL.createObjectURL(this.arquivo)
+            docAnexo = url
+            nomeArquivo = this.arquivo.name
+          }
+        }
 
         objMensagem = {
           autor: "Operador", // Operador, Cliente
@@ -382,7 +390,8 @@ export default {
           anexo: anexo,
           imgAnexo: imgAnexo,
           tipoDoc: tipoDoc,
-          docAnexo: docAnexo
+          docAnexo: docAnexo,
+          nomeArquivo: nomeArquivo
         };
 
       } else {
@@ -392,6 +401,7 @@ export default {
         let imgAnexo = ""
         let tipoDoc = ""
         let docAnexo = ""
+        let nomeArquivo = ""
 
         if(objMessage.anexos){
           anexo = true
@@ -411,6 +421,7 @@ export default {
             default:
               tipoDoc = objMessage.anexos.type
               docAnexo = `${baseUrl}/callcenter/docs.php?mku=${objMessage.anexos.mku}`
+              nomeArquivo = objMessage.anexos.name
           }
         }
 
@@ -422,7 +433,8 @@ export default {
           anexo: anexo,
           imgAnexo: imgAnexo,
           tipoDoc: tipoDoc,
-          docAnexo: docAnexo
+          docAnexo: docAnexo,
+          nomeArquivo: nomeArquivo
         };
 
       }
@@ -590,7 +602,11 @@ export default {
     },
     selecionarAnexo(previa) {
       if(previa){
-        this.selecionarImagem()
+        if(!this.docPrevia){
+          this.selecionarImagem()
+        }else{
+          this.selecionarDoc()
+        }
         return
       }
       this.$store.dispatch("setOrigemBlocker", "chat");
@@ -605,57 +621,74 @@ export default {
       this.$store.dispatch("setBlocker", this.abrirOpcoes);
     },
     selecionarDoc() {
-      if (!document.querySelector(".toasted.toasted-primary.info")) {
-        this.$toasted.global.emConstrucao();
-      }
+      let inputFile = document.querySelector("#doc");
+      inputFile.click();
 
       this.abrirOpcoes = !this.abrirOpcoes;
       this.$store.dispatch("setBlocker", this.abrirOpcoes);
     },
-    fileUpload() {
-      this.arquivo = this.$refs.file.files[0];
+    fileUpload(img = true) {
       let leitorDeImagem = new FileReader();
-      leitorDeImagem.addEventListener(
-        "load",
-        function () {
-          document.querySelector('#textarea').focus()
-          this.aparecerPrevia = true;
+      if(img){
+        document.querySelector('#textarea').focus()
+        this.arquivo = this.$refs.file.files[0];
+        this.aparecerPrevia = true;
+        leitorDeImagem.onload = () => {
           this.imagemPrevia = leitorDeImagem.result;
-        }.bind(this),
-        false
-      );
-
-      if (this.arquivo) {
-        if (/\.(jpe?g|png|gif)$/i.test(this.arquivo.name)) {
-          leitorDeImagem.readAsDataURL(this.arquivo);
-          this.erroFormatoAnexo = false;
-          this.selecioneAnexo = false;
-        } else {
-          this.aparecerPrevia = true;
-          this.imagemPrevia = "";
-          this.erroFormatoAnexo = true;
-        }
-      } else {
-        this.arquivo = "";
-        this.imagemPrevia = "";
-        this.selecioneAnexo = true;
-      }
-    },
-    validaAnexo(arquivo) {
-      if (arquivo) {
-        if (/\.(jpe?g|png|gif)$/i.test(arquivo.name)) {
-          return true;
-        } else {
-          if (!document.querySelector(".toasted.toasted-primary.error")) {
-            this.$toasted.global.formatoInvalido();
-          }
-
-          return false;
         }
       }else{
-        if (!document.querySelector(".toasted.toasted-primary.error")) {
-          this.$toasted.global.formatoInvalido();
+        document.querySelector('#textarea').focus()
+        this.arquivo = this.$refs.doc.files[0];
+        this.aparecerPrevia = true;
+        this.docPrevia = true
+      }
+
+      if (this.arquivo) {
+        if(img){
+          this.docPrevia = false
+          if (this.validaAnexo(this.arquivo, true)) {
+            leitorDeImagem.readAsDataURL(this.arquivo);
+            this.erroFormatoAnexo = false;
+          } else {
+            this.imagemPrevia = "";
+            this.erroFormatoAnexo = true;
+            this.txtFormatosValidos = ".gif, .jpg/jpeg ou .png sao aceitos";
+          }
+        }else{
+          this.imagemPrevia = "";
+          if (this.validaAnexo(this.arquivo, false)) {
+            this.erroFormatoAnexo = false;
+          }else{
+            this.erroFormatoAnexo = true;
+            this.txtFormatosValidos = ".doc/docx, .pdf ou .txt sao aceitos";
+          }
         }
+      } else {
+        this.aparecerPrevia = false
+        this.arquivo = "";
+        this.imagemPrevia = "";
+        this.docPrevia = false
+      }
+    },
+    validaAnexo(arquivo, img = true) {
+      if (arquivo) {
+        if(img){
+          if (/\.(jpe?g|png|gif)$/i.test(arquivo.name)) {
+            return true;
+          } else {
+            this.$toasted.global.formatoInvalido();
+            return false;
+          }
+        }else{
+          if (/\.(doc?x|pdf|txt)$/i.test(arquivo.name)) {
+            return true;
+          }else{
+            this.$toasted.global.formatoInvalido();
+            return false;
+          }
+        }
+      }else{
+        this.$toasted.global.formatoInvalido();
         return false
       }
     },
@@ -771,23 +804,6 @@ export default {
         this.abrirOpcoes = false;
         this.abrirEmojis = false;
         this.$store.dispatch("setAbrirMsgTipo2", false)
-      }
-    },
-    erroFormatoAnexo() {
-      if (this.erroFormatoAnexo == false) {
-        this.txtFormatoInvalido = "";
-        this.txtFormatosValidos = "";
-      } else {
-        this.txtFormatoInvalido = "Formato Invalido!";
-        this.txtFormatosValidos = ".gif, .jpg/jpeg ou .png sao aceitos";
-        this.selecioneAnexo = false;
-      }
-    },
-    selecioneAnexo() {
-      if (this.selecioneAnexo == false) {
-        this.txtSelecioneAnexo = "";
-      } else {
-        this.txtSelecioneAnexo = "Selecione um anexo";
       }
     }
   },

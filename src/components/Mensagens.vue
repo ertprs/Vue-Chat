@@ -5,14 +5,14 @@
       <div v-if="anexo" class="mensagem-div-anexo">
         <img v-if="imgAnexo" :src="imgAnexo" alt="Imagem Anexada">
         <div v-if="tipoDoc" class="anexo-container">
-          <a :href="docAnexo" target="_blank" :title="`${tipoDoc} - ${msg}`">
-            <i class="fas fa-file-pdf"></i>
-            <p> {{ msg }} </p>
+          <a :href="docAnexo" target="_blank" :title="`${tipoDoc} - ${nomeArquivo}`">
+            <i class="fas fa-file-alt"></i>
+            <p> {{ nomeArquivo }} </p>
           </a>
           <!-- <embed :src="docAnexo" :type="tipoDoc"> -->
         </div>
       </div>
-      <p v-if="!tipoDoc"> {{ msg }} </p>
+      <p> {{ msg }} </p>
       <span class="horario-envio"> {{ horario }} </span>
       <span class="check" :class="status ? status : ''">
         <template v-if="status == 'enviado'">
@@ -36,6 +36,6 @@
 
 <script>
 export default {
-  props: ["autor", "origem", "msg", "anexo", "imgAnexo", "horario", "status", "logo", "tipoDoc", "docAnexo"]
+  props: ["autor", "origem", "msg", "anexo", "imgAnexo", "horario", "status", "logo", "tipoDoc", "docAnexo", "nomeArquivo"]
 }
 </script>

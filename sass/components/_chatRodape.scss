@@ -116,9 +116,17 @@ $border-radius: 30px;
     overflow: hidden;
     position: absolute;
     top: -205px;
+    height: 200px;
+    &.previa-anexo{
+      top: -50px;
+      height: 45px;
+    }
+    &.previa-anexo-erro{
+      top: -105px;
+      height: 100px;
+    }
     left: 0;
     width: 100%;
-    height: 200px;
     padding-bottom: 10px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -170,6 +178,12 @@ $border-radius: 30px;
     position: absolute;
     right: 15px;
     top: -220px;
+    &.previa-anexo{
+      top: -65px;
+    }
+    &.previa-anexo-erro{
+      top: -120px;
+    }
     cursor: pointer;
     z-index: 2;
     opacity: .9;

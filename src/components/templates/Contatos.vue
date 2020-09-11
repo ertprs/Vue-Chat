@@ -215,6 +215,7 @@ export default {
           let imgAnexo = "";
           let tipoDoc = ""
           let docAnexo = "";
+          let nomeArquivo = ""
 
           if(arrMensagens[i].anexos){
             anexo = true
@@ -235,6 +236,7 @@ export default {
               default:
                 tipoDoc = arrMensagens[i].anexos.type
                 docAnexo = `${baseUrl}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
+                nomeArquivo = arrMensagens[i].anexos.name
             }
             
           }
@@ -249,7 +251,7 @@ export default {
               break;
           }
 
-          let objMensagem = this.getObjMensagem( autor, origem, mensagem, horario, anexo, imgAnexo, tipoDoc, docAnexo );
+          let objMensagem = this.getObjMensagem( autor, origem, mensagem, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo );
           
           this.$store.dispatch('setTodasMensagens', objMensagem)
         }
@@ -263,7 +265,8 @@ export default {
       inAnexo,
       inImgAnexo,
       inTipoDoc,
-      inDocAnexo
+      inDocAnexo,
+      inNomeArquivo
     ) {
       let objMensagem = {
         autor: inAutor, // Operador, Cliente
@@ -273,7 +276,8 @@ export default {
         anexo: inAnexo,
         imgAnexo: inImgAnexo,
         tipoDoc: inTipoDoc,
-        docAnexo: inDocAnexo
+        docAnexo: inDocAnexo,
+        nomeArquivo: inNomeArquivo
       };
       return objMensagem;
     },
@@ -335,11 +339,23 @@ export default {
     formataUltimaMsg(arrMsgs){
       if(arrMsgs.length > 0) {
         let indexRef = arrMsgs.length - 1
-        if(arrMsgs[indexRef].msg.length > 30){
-          let msgFormatada = arrMsgs[indexRef].msg.slice(0, 30) + '...'
+        let msgFormatada = arrMsgs[indexRef].msg
+
+        if(arrMsgs[indexRef].msg.length > 30 && !arrMsgs[indexRef].anexos){
+          msgFormatada = arrMsgs[indexRef].msg.slice(0, 30) + '...'
+          return msgFormatada
+        }else if(arrMsgs[indexRef].anexos){
+          if(arrMsgs[indexRef].msg){
+            msgFormatada = arrMsgs[indexRef].anexos.name + " " + arrMsgs[indexRef].msg
+          }else{
+            msgFormatada = arrMsgs[indexRef].anexos.name
+          }
+          if(msgFormatada.length > 30){
+            msgFormatada = msgFormatada.slice(0, 30) + '...'
+          }
           return msgFormatada
         }else{
-          return arrMsgs[indexRef].msg
+          return msgFormatada
         }
       }
     },

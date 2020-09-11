@@ -14,7 +14,8 @@
       :anexo="msg.anexo"
       :imgAnexo="msg.imgAnexo"
       :tipoDoc="msg.tipoDoc"
-      :docAnexo="msg.docAnexo"/>
+      :docAnexo="msg.docAnexo"
+      :nomeArquivo="msg.nomeArquivo"/>
 
       <div class="btn-rolagem" v-show="habilitaRolagem" v-on:click="rolaChat()">
         <i class="fas fa-arrow-circle-down"></i>
