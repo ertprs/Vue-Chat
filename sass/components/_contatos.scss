@@ -25,6 +25,19 @@ $tamanhoBoxShadow: 5px;
     width: 100%;
     border-bottom: 1px solid #CCC;
     padding-left: 10px;
+    div.container-add-novo-cliente{
+      position: absolute;
+      top: 5px;
+      right: 15px;
+      @include efeito-hover-padrao();
+      &.fechado{
+        right: 5px;
+      }
+      svg{
+        font-size: 1.2rem;
+        color: #FFF;
+      }
+    }
     div.container-flecha{
       position: absolute;
       bottom: 0;
@@ -66,6 +79,28 @@ $tamanhoBoxShadow: 5px;
   .lista-contatos-container{
     width: 100%;
     background-color: #FFF;
+    max-height: 90%;
+    overflow-y: auto;
+    padding-right: 5px;
+    h4{
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      user-select: none;
+      width: 100%;
+      font-size: 1rem;
+      padding: 3px 0;
+      padding-left: 10px;
+      margin: 0;
+      border-bottom: 1px solid #CCC;
+      @include efeito-hover-padrao();
+      &.ativo{
+        opacity: 1;
+        padding: 0;
+        padding-left: 10px;
+      }
+    }
+    
     ul{
       display: flex;
       flex-direction: column-reverse;
@@ -81,6 +116,10 @@ $tamanhoBoxShadow: 5px;
     max-height: 200px;
     overflow-y: auto;
     overflow-x: hidden;
+    transition: max-height 400ms ease-out;
+    &.aba-fechada{
+      max-height: 0;   
+    }
     &.fechado{
       li{
         .circulo-contatos{

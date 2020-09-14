@@ -8861,11 +8861,26 @@ body {
     position: relative;
     display: flex;
     align-items: center;
-    background-color: #5262c5;
+    background-color: #b3b3b3;
     height: 10%;
     width: 100%;
     border-bottom: 1px solid #CCC;
     padding-left: 10px; }
+    #todos-contatos .titulo-contatos div.container-add-novo-cliente {
+      position: absolute;
+      top: 5px;
+      right: 15px;
+      transition-duration: 300ms;
+      transition-property: opacity;
+      opacity: .8;
+      cursor: pointer; }
+      #todos-contatos .titulo-contatos div.container-add-novo-cliente:hover {
+        opacity: 1; }
+      #todos-contatos .titulo-contatos div.container-add-novo-cliente.fechado {
+        right: 5px; }
+      #todos-contatos .titulo-contatos div.container-add-novo-cliente svg {
+        font-size: 1.2rem;
+        color: #FFF; }
     #todos-contatos .titulo-contatos div.container-flecha {
       position: absolute;
       bottom: 0;
@@ -8898,7 +8913,31 @@ body {
         opacity: .8; }
   #todos-contatos .lista-contatos-container {
     width: 100%;
-    background-color: #FFF; }
+    background-color: #FFF;
+    max-height: 90%;
+    overflow-y: auto;
+    padding-right: 5px; }
+    #todos-contatos .lista-contatos-container h4 {
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      user-select: none;
+      width: 100%;
+      font-size: 1rem;
+      padding: 3px 0;
+      padding-left: 10px;
+      margin: 0;
+      border-bottom: 1px solid #CCC;
+      transition-duration: 300ms;
+      transition-property: opacity;
+      opacity: .8;
+      cursor: pointer; }
+      #todos-contatos .lista-contatos-container h4:hover {
+        opacity: 1; }
+      #todos-contatos .lista-contatos-container h4.ativo {
+        opacity: 1;
+        padding: 0;
+        padding-left: 10px; }
     #todos-contatos .lista-contatos-container ul {
       display: flex;
       flex-direction: column-reverse; }
@@ -8908,7 +8947,10 @@ body {
     padding: 0;
     max-height: 200px;
     overflow-y: auto;
-    overflow-x: hidden; }
+    overflow-x: hidden;
+    transition: max-height 400ms ease-out; }
+    #todos-contatos ul.aba-fechada {
+      max-height: 0; }
     #todos-contatos ul.fechado li .circulo-contatos img {
       width: 15px;
       right: -5px; }
@@ -9043,7 +9085,7 @@ body {
     display: flex;
     align-items: center;
     padding: 5px 10px;
-    background-color: #7885d2; }
+    background-color: #cccccc; }
     #todos-contatos .lista-agenda .lista-agenda--titulo svg {
       margin-right: 5px;
       font-size: 1.2rem;
@@ -9187,7 +9229,7 @@ body {
     align-items: center;
     flex-wrap: wrap;
     width: 100%;
-    background-color: #3949ab; }
+    background-color: #999; }
     .chat-opcoes .chat-opcoes-titulo.cliente-ativo {
       box-shadow: 0px 5px 15px -5px rgba(0, 0, 0, 0.5);
       z-index: 1; }
@@ -9702,7 +9744,7 @@ body {
   display: flex;
   align-items: center;
   height: 10%;
-  background-color: #2c3985;
+  background-color: gray;
   border-bottom: 1px solid #CCC;
   color: #FFF;
   width: 100%; }
@@ -9821,7 +9863,7 @@ body {
       padding: 5px 10px;
       width: 100%;
       color: #FFF;
-      background-color: #6573cc; }
+      background-color: #bfbfbf; }
     #popup .popup-container-geral .popup-container {
       display: flex;
       justify-content: center;
@@ -9842,7 +9884,7 @@ body {
           transition-duration: 300ms;
           user-select: none;
           cursor: pointer;
-          box-shadow: inset 0 -4px #3949ab;
+          box-shadow: inset 0 -4px #999;
           opacity: 1;
           min-width: 85px;
           height: 45px;
@@ -9857,7 +9899,7 @@ body {
             opacity: 1; }
           #popup .popup-container-geral .popup-container .popup-lista li:active {
             opacity: 1;
-            box-shadow: inset 0 -2px #3949ab;
+            box-shadow: inset 0 -2px #999;
             -webkit-transform: translateY(1px);
             -moz-transform: translateY(1px);
             -o-transform: translateY(1px);
@@ -9889,7 +9931,7 @@ body {
           transition-duration: 300ms;
           user-select: none;
           cursor: pointer;
-          box-shadow: inset 0 -4px #3949ab;
+          box-shadow: inset 0 -4px #999;
           opacity: 1;
           min-width: 48%;
           height: 45px;
@@ -9905,7 +9947,7 @@ body {
             opacity: 1; }
           #popup .popup-container-geral .popup-container .btns-confirmacao-container .btn-confirmar:active, #popup .popup-container-geral .popup-container .btns-confirmacao-container .btn-cancelar:active {
             opacity: 1;
-            box-shadow: inset 0 -2px #3949ab;
+            box-shadow: inset 0 -2px #999;
             -webkit-transform: translateY(1px);
             -moz-transform: translateY(1px);
             -o-transform: translateY(1px);
@@ -9975,11 +10017,20 @@ body {
 .container-iframes {
   height: 100%;
   max-height: 100%;
-  overflow-y: auto; }
+  overflow-y: auto;
+  position: relative; }
   .container-iframes > div {
     height: 100%;
     width: 100%;
     background-color: rgba(255, 255, 255, 0.3); }
+  .container-iframes .load {
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%; }
 
 div[blocker] {
   width: 100%;

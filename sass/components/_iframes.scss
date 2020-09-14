@@ -2,9 +2,17 @@
   height: 100%;
   max-height: 100%;
   overflow-y: auto;
+  position: relative;
   > div{
     height: 100%;
     width: 100%;
     background-color: rgba(255, 255, 255, 0.3)
+  }
+  .load{
+    position: absolute;
+    top: 0;
+    @include d-flex-center;
+    flex-direction: column;
+    width: 100%;
   }
 }
