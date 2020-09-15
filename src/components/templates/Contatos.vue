@@ -84,8 +84,8 @@
             </li>
             <li
               v-for="(atd, indice) in minhaAgenda"
-              :key="'id_'+indice"
-              :id="'li_'+indice"
+              :key="'id_'+indice+'a'"
+              :id="'li_'+indice+'a'"
               :title="atd"
               class="semClick"
             >
@@ -97,8 +97,8 @@
             </li>
             <li
               v-for="(atd, indice) in minhaAgenda"
-              :key="'id_'+indice"
-              :id="'li_'+indice"
+              :key="'id_'+indice+'b'"
+              :id="'li_'+indice+'b'"
               :title="atd"
               class="semClick"
             >
@@ -110,8 +110,8 @@
             </li>
             <li
               v-for="(atd, indice) in minhaAgenda"
-              :key="'id_'+indice"
-              :id="'li_'+indice"
+              :key="'id_'+indice+'c'"
+              :id="'li_'+indice+'c'"
               :title="atd"
               class="semClick"
             >
@@ -123,8 +123,8 @@
             </li>
             <li
               v-for="(atd, indice) in minhaAgenda"
-              :key="'id_'+indice"
-              :id="'li_'+indice"
+              :key="'id_'+indice+'d'"
+              :id="'li_'+indice+'d'"
               :title="atd"
               class="semClick"
             >
@@ -190,6 +190,7 @@
 
 <script>
 import { mapGetters } from "vuex"
+import axios_api from '../../services/serviceAxios';
 
 export default {
   data() {
@@ -270,6 +271,24 @@ export default {
     adicionaCaso(caso){
       this.$store.dispatch('setCaso', caso)
     },
+    statusMensagens(atd){
+
+      axios_api.get(`get-status-messages?grupo=${atd.grupo}&nro_chat=${atd.nro_chat}`)  
+      .then(response => {
+        if(response.status === 200){
+          let arrStatusMsg = response.data.msg_ret
+          for(let msg in atd.arrMsg){
+            if(arrStatusMsg[msg].seq === atd.arrMsg[msg].seq){
+              atd.arrMsg[msg].status = arrStatusMsg[msg].status
+            }
+          }
+          this.setMensagensClienteAtivo(atd.id_cli, atd.arrMsg)
+        }
+      })
+      .catch(error => {
+        console.log('Erro get status messages: ', error)
+      })
+    },
     ativarConversa: function(atd, indice) {
 
       if(atd.novoContato){
@@ -280,9 +299,10 @@ export default {
         atd.alertaMsgNova = false
       }
 
+      this.statusMensagens(atd)
+
       atd.qtdMsgNova = 0;
       this.$store.dispatch('setIdAtendimentoAtivo', atd.id_cli)
-      this.setMensagensClienteAtivo(atd.id_cli, atd.arrMsg)
       
       this.exibirInformacoes(atd, indice)
       
@@ -307,6 +327,7 @@ export default {
       for (let i in arrMensagens) {
         if(i != 'st_ret') {
           let mensagem = arrMensagens[i].msg;
+          let status = arrMensagens[i].status
           let origem;
           arrMensagens[i].resp_msg == "CLI" ? (origem = "outros") : (origem = "principal");
           let horario = arrMensagens[i].hora;
@@ -352,8 +373,7 @@ export default {
               break;
           }
 
-          let objMensagem = this.getObjMensagem( autor, origem, mensagem, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo );
-          
+          let objMensagem = this.getObjMensagem( autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo );
           this.$store.dispatch('setTodasMensagens', objMensagem)
         }
       }
@@ -362,6 +382,7 @@ export default {
       inAutor,
       inOrigem,
       inMensagem,
+      inStatus,
       inHorario,
       inAnexo,
       inImgAnexo,
@@ -373,6 +394,7 @@ export default {
         autor: inAutor, // Operador, Cliente
         origem: inOrigem, // principal e outros
         msg: inMensagem,
+        status: inStatus,
         horario: inHorario,
         anexo: inAnexo,
         imgAnexo: inImgAnexo,
