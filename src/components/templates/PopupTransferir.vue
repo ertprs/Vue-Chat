@@ -1,14 +1,14 @@
 <template>
   <div class="popup-container">
-    <ul 
-      lista-transferir 
+    <ul
+      lista-transferir
       class="popup-lista"
       :class="{'bg' : bg}"
       v-if="!abrirAgentes && !abrirGrupos">
       <li @click="preencherAgente()"> Agente </li>
       <li @click="preencherGrupo()"> Grupo </li>
     </ul>
-    <div 
+    <div
       grupos-agentes
       v-if="abrirAgentes"
       class="popup-container-tela-2">
@@ -20,14 +20,14 @@
       >
         <div slot="no-options">Nenhuma correspondencia encontrada</div>
       </vSelect>
-      <ul 
+      <ul
         class="btns-confirmacao-container"
         :class="{'bg' : bg}">
         <li class="btn-confirmar" @click="transferir('agente', agente)"> Confirmar </li>
         <li class="btn-cancelar" @click="fecharPopup()"> Cancelar </li>
       </ul>
     </div>
-    <div 
+    <div
       grupos-transferir
       v-if="abrirGrupos"
       class="popup-container-tela-2">
@@ -39,7 +39,7 @@
         >
         <div slot="no-options">Nenhuma correspondencia encontrada</div>
       </vSelect>
-      <ul 
+      <ul
         class="btns-confirmacao-container"
         :class="{'bg' : bg}">
         <li class="btn-confirmar" @click="transferir('grupo', grupo)"> Confirmar </li>
