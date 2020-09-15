@@ -14,22 +14,22 @@
       </div>
       <p> {{ msg }} </p>
       <span class="horario-envio"> {{ horario }} </span>
-      <span class="check" :class="status ? status : ''">
-        <template v-if="status == 'enviado'">
+      <span class="check" :class="{'visualizado' : status == 'L'}">
+        <template v-if="status == 'G'">
           enviado
           <i class="fas fa-check"></i>
         </template>
-        <template v-else-if="status == 'recebido'">
+        <!-- <template v-else-if="status == 'recebido'">
           recebido
           <i class="fas fa-check-double"></i>
-        </template>
-        <template v-else-if="status == 'visualizado'">
+        </template> -->
+        <template v-else-if="status == 'L'">
           visualizado
           <i class="fas fa-check-double"></i>
         </template>
-        <template v-else>
-          <!-- nao enviado
-          <i class="fas fa-times-circle"></i> -->
+        <template v-else-if="status == 'E' || status == 'T'">
+          falha no envio
+          <i class="fas fa-times-circle"></i>
         </template>
       </span>
       <span class="autor-mensagem"> {{ autor }} </span>
