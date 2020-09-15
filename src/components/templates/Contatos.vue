@@ -33,12 +33,13 @@
       </div>
       <!-- Caso haja Cliente -->
       <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 400">
-        <h4 
+        <h4
           v-on:click="alternaAbaAberta()"
           :class="abaAberta == 'atendimento' ? 'ativo' : ''"
           v-if="objAtendimentos.length && caso !== 206"
-          > 
-          Em Atendimento
+          >Em Atendimento
+          <span v-if="totalClientesNovos != ''" class="total-clientes-novos"> CLI:{{ totalClientesNovos }}</span>
+          <span v-if="totalMsgNovas != ''" class="total-msgs-novas"> MSG:{{ totalMsgNovas }}</span>
         </h4>
         <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta == 'aguardando'}" v-if="objAtendimentos.length && caso !== 206" id="lista-contatos">
           <li
@@ -199,7 +200,9 @@ export default {
       rotate: false,
       haContatos: true,
       objAtendimentos: [],
-      abaAberta: 'atendimento'
+      abaAberta: 'atendimento',
+      totalMsgNovas: '',
+      totalClientesNovos: ''
     };
   },
   watch: {
@@ -252,12 +255,31 @@ export default {
       switch (this.abaAberta){
         case "atendimento":
           this.abaAberta = "aguardando"
+          this.totalMsgNovas = ''
+          this.totalClientesNovos = ''
+          var auxContMsgNova = 0
+          var auxContNovoContato = 0
+          for(let index in this.objAtendimentos) {
+            // console.log(this.objAtendimentos[index])
+            if(this.objAtendimentos[index].qtdMsgNova) {
+              auxContMsgNova = auxContMsgNova + this.objAtendimentos[index].qtdMsgNova
+            }
+            if(this.objAtendimentos[index].novoContato) {
+              auxContNovoContato ++
+            }
+          }
+          this.totalMsgNovas = auxContMsgNova
+          this.totalClientesNovos = auxContNovoContato
         break;
         case "aguardando":
           this.abaAberta = "atendimento"
+          this.totalMsgNovas = ''
+          this.totalClientesNovos = ''
         break;
         default:
           this.abaAberta = "atendimento"
+          this.totalMsgNovas = ''
+          this.totalClientesNovos = ''
         break;
       }
     },
