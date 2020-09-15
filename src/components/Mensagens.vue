@@ -15,14 +15,14 @@
       <p> {{ msg }} </p>
       <span class="horario-envio"> {{ horario }} </span>
       <span class="check" :class="{'visualizado' : status == 'L'}">
-        <template v-if="status == 'G'">
+        <template v-if="status == 'G' || status=='D'">
           enviado
           <i class="fas fa-check"></i>
         </template>
-        <!-- <template v-else-if="status == 'recebido'">
-          recebido
-          <i class="fas fa-check-double"></i>
-        </template> -->
+        <template v-else-if="status == 'Q'">
+          enviando
+          <i class="fas fa-clock"></i>
+        </template>
         <template v-else-if="status == 'L'">
           visualizado
           <i class="fas fa-check-double"></i>

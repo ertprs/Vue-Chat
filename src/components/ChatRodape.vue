@@ -214,7 +214,8 @@ export default {
       chaveAtual_02: '',
       mensagensFormatadas_03: [],
       chaveAtual_03: '',
-      tamanhoText: ''
+      tamanhoText: '',
+      statusEnvio: ''
     };
   },
   mounted() {
@@ -246,7 +247,7 @@ export default {
           }
         }, 1000);
     },
-    enviarMensagem(event, previa) {
+    async enviarMensagem(event, previa) {
       if(this.blocker && this.origemBlocker !== 'msg-formatada'){
         this.$store.dispatch('setBlocker', false)
       }
@@ -270,7 +271,6 @@ export default {
 
       if (this.validaMensagem(previa)) {
         if (this.atendimentoAtivo.token_cliente != "") {
-          this.criaObjMensagem();
 
           let data = ""
           if(this.arquivo){
@@ -289,24 +289,29 @@ export default {
             };
           }
 
-          this.resetar()
-
-          axios_api
+          await axios_api
             .post("send-message", data)
             .then((response) => {
               this.abrirEmojis = false;
               this.abrirOpcoes = false;
               this.$root.$emit("rolaChat")
+              this.statusEnvio = "D"
             })
             .catch((error) => {
               console.log("erro send-message: ", error);
               this.mensagem = msgAux
+              this.statusEnvio = "E"
               if (!document.querySelector(".toasted.toasted-primary.error")) {
                 this.$toasted.global.defaultError({
                   msg: "Nao foi possivel enviar a mensagem",
                 });
               }
             });
+
+          this.criaObjMensagem()
+          if(this.statusEnvio !== "E"){
+            this.resetar()
+          }
         }
       }
     },
@@ -394,6 +399,14 @@ export default {
           }
         }
 
+        let status = ""
+
+        if(this.statusEnvio){
+          status = this.statusEnvio
+        }else{
+          status = "Q"
+        }
+
         objMensagem = {
           autor: "Operador", // Operador, Cliente
           origem: "principal", // principal e outros
@@ -405,6 +418,7 @@ export default {
           imgAnexo: imgAnexo,
           tipoDoc: tipoDoc,
           docAnexo: docAnexo,
+          status: status,
           nomeArquivo: nomeArquivo
         };
 
@@ -452,19 +466,8 @@ export default {
         };
 
       }
-      objMensagem = this.verificaStatusDaMensagem(objMensagem);
 
-      this.$store.dispatch("setTodasMensagens", objMensagem);
-    },
-    verificaStatusDaMensagem(objMensagem) {
-      // enviado, recebido, visualizado e ''
-      if (objMensagem.origem == "principal") {
-        objMensagem.status = "enviado";
-      } else {
-        objMensagem.status = "";
-      }
-
-      return objMensagem;
+      this.$store.dispatch("setTodasMensagens", objMensagem)
     },
     formataHoraAtual() {
       let data = new Date();
