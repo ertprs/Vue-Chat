@@ -467,11 +467,7 @@ export default {
 
       }
 
-      this.$store.dispatch("setTodasMensagens", objMensagem);
-
-      setTimeout(() => {
-        console.log('objMensagem: ', objMensagem)
-      }, 1000)
+      this.$store.dispatch("setTodasMensagens", objMensagem)
     },
     formataHoraAtual() {
       let data = new Date();
