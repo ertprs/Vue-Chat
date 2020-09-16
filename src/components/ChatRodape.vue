@@ -215,7 +215,8 @@ export default {
       mensagensFormatadas_03: [],
       chaveAtual_03: '',
       tamanhoText: '',
-      statusEnvio: ''
+      statusEnvio: '',
+      larguraTela: ''
     };
   },
   mounted() {
@@ -227,6 +228,8 @@ export default {
       ));
 
     window.addEventListener("message", this.listenerPostMessage, false);
+
+    this.larguraTela = document.querySelector("html").offsetWidth
 
     this.initResize();
     this.verificaTemMsgFormatada()
@@ -309,13 +312,11 @@ export default {
             });
 
           this.criaObjMensagem()
-          if(this.statusEnvio !== "E"){
-            this.resetar()
-          }
         }
       }
     },
     resetar(){
+
       const rodapeMsg = document.querySelector(".chat-rodape-mensagens");
       const containerText = document.querySelector(".chat-rodape-textarea");
       const text = document.getElementById("textarea");
@@ -468,6 +469,9 @@ export default {
       }
 
       this.$store.dispatch("setTodasMensagens", objMensagem)
+      if(this.statusEnvio !== "E"){
+        this.resetar()
+      }
     },
     formataHoraAtual() {
       let data = new Date();
@@ -503,15 +507,38 @@ export default {
       const root = document.documentElement
 
       if (this.msgFormatadaAberto == true) {
-        root.style.setProperty('--altura-chat-rodape', "45%")
-        root.style.setProperty('--altura-chat-corpo', "43%")
-      } else {
-        if(this.tamanhoText < 70){
-          root.style.setProperty('--altura-chat-rodape', "20%")
-          root.style.setProperty('--altura-chat-corpo', "68%")
-        }else{
-          root.style.setProperty('--altura-chat-rodape', "23%")
+        // Telas grandes
+        if(this.larguraTela >= 1441){
           root.style.setProperty('--altura-chat-corpo', "65%")
+          root.style.setProperty('--altura-chat-rodape', "25%")
+        // Telas pequenas
+        }else{
+          root.style.setProperty('--altura-chat-rodape', "45%")
+          root.style.setProperty('--altura-chat-corpo', "43%")
+        }
+      } else {
+        // Textarea menor que 3 linhas
+        if(this.tamanhoText < 70){
+          // Telas grandes
+          if(this.larguraTela >= 1441){
+            root.style.setProperty('--altura-chat-corpo', "80%")
+            root.style.setProperty('--altura-chat-rodape', "10%")
+          // Telas pequenas
+          }else{
+            root.style.setProperty('--altura-chat-rodape', "20%")
+            root.style.setProperty('--altura-chat-corpo', "68%")
+          }
+        // Textarea maior/igual a 3 linhas
+        }else{
+          // Telas grandes 
+          if(this.larguraTela >= 1441){
+            root.style.setProperty('--altura-chat-corpo', "78%")
+            root.style.setProperty('--altura-chat-rodape', "12%")
+          // Telas pequenas
+          }else{
+            root.style.setProperty('--altura-chat-rodape', "23%")
+            root.style.setProperty('--altura-chat-corpo', "65%")
+          }
         }
         
         this.mensagensFormatadas_01 = []
@@ -739,7 +766,9 @@ export default {
         vm.tamanhoText = text.scrollHeight
 
         if(text.value == ""){
-          vm.resetar()
+          if(!vm.arquivo){
+            vm.resetar()
+          }
         }
 
         text.style.height = "auto";
@@ -783,19 +812,41 @@ export default {
         this.$store.dispatch("setAbrirMsgTipo2", false)
         this.abreFechaMsgFormatada()
       }
+    },
+    resizeEvent(event){
+      this.larguraTela = event.target.outerWidth
     }
   },
   watch: {
     tamanhoText(){
       const root = document.documentElement
+
       if(!this.msgFormatadaAberto){
+        
+        // Textarea maior que 70 (tres/quatro linhas)
         if(this.tamanhoText >= 70){
-          root.style.setProperty('--altura-chat-rodape', "23%")
-          root.style.setProperty('--altura-chat-corpo', "65%")
+          // telas grandes
+          if(this.larguraTela >= 1441){
+            root.style.setProperty('--altura-chat-rodape', "12%")
+            root.style.setProperty('--altura-chat-corpo', "78%")
+          // telas pequenas
+          }else{
+            root.style.setProperty('--altura-chat-rodape', "23%")
+            root.style.setProperty('--altura-chat-corpo', "65%")
+          }
+        // Textarea menor que 70 (uma/duas linha)
         }else{
-          root.style.setProperty('--altura-chat-rodape', "20%")
-          root.style.setProperty('--altura-chat-corpo', "68%")
+          // telas grandes
+          if(this.larguraTela >= 1441){
+            root.style.setProperty('--altura-chat-rodape', "10%")
+            root.style.setProperty('--altura-chat-corpo', "80%")
+          // telas pequenas
+          }else{
+            root.style.setProperty('--altura-chat-rodape', "20%")
+            root.style.setProperty('--altura-chat-corpo', "68%")
+          }
         }
+
       }
     },
     todasMensagens() {
@@ -835,7 +886,11 @@ export default {
       origemBlocker: 'getOrigemBlocker'
     })
   },
-  beforeDestroy: function() {
+  created(){
+    window.addEventListener("resize", this.resizeEvent)
+  },
+  destroyed(){
+    window.removeEventListener("resize", this.resizeEvent)
   }
 };
 </script>
