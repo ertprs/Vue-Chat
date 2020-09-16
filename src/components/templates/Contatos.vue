@@ -214,6 +214,12 @@ export default {
             this.ativarConversa(this.objAtendimentos[0], 0)
           }, 200)
         }
+        if(this.abaAberta === "aguardando") {
+          this.contarMsgClientes()
+        } else {
+          this.totalMsgNovas = ''
+          this.totalClientesNovos = ''
+        }
       }
     },
     caso(){
@@ -255,33 +261,31 @@ export default {
       switch (this.abaAberta){
         case "atendimento":
           this.abaAberta = "aguardando"
-          this.totalMsgNovas = ''
-          this.totalClientesNovos = ''
-          var auxContMsgNova = 0
-          var auxContNovoContato = 0
-          for(let index in this.objAtendimentos) {
-            // console.log(this.objAtendimentos[index])
-            if(this.objAtendimentos[index].qtdMsgNova) {
-              auxContMsgNova = auxContMsgNova + this.objAtendimentos[index].qtdMsgNova
-            }
-            if(this.objAtendimentos[index].novoContato) {
-              auxContNovoContato ++
-            }
-          }
-          this.totalMsgNovas = auxContMsgNova
-          this.totalClientesNovos = auxContNovoContato
         break;
         case "aguardando":
           this.abaAberta = "atendimento"
-          this.totalMsgNovas = ''
-          this.totalClientesNovos = ''
         break;
         default:
           this.abaAberta = "atendimento"
-          this.totalMsgNovas = ''
-          this.totalClientesNovos = ''
         break;
       }
+    },
+    contarMsgClientes() {
+      this.totalMsgNovas = ''
+      this.totalClientesNovos = ''
+      var auxContMsgNova = 0
+      var auxContNovoContato = 0
+      for(let index in this.objAtendimentos) {
+        // console.log(this.objAtendimentos[index])
+        if(this.objAtendimentos[index].qtdMsgNova) {
+          auxContMsgNova = auxContMsgNova + this.objAtendimentos[index].qtdMsgNova
+        }
+        if(this.objAtendimentos[index].novoContato) {
+          auxContNovoContato ++
+        }
+      }
+      this.totalMsgNovas = auxContMsgNova
+      this.totalClientesNovos = auxContNovoContato
     },
     formataSigla(letra, acao){
       if(acao == 'upper'){
@@ -295,7 +299,7 @@ export default {
     },
     statusMensagens(atd){
 
-      axios_api.get(`get-status-messages?grupo=${atd.grupo}&nro_chat=${atd.nro_chat}`)  
+      axios_api.get(`get-status-messages?grupo=${atd.grupo}&nro_chat=${atd.nro_chat}`)
       .then(response => {
         if(response.status === 200){
           let arrStatusMsg = response.data.msg_ret
