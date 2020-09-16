@@ -787,15 +787,16 @@ export default {
       }
     },
     resizeEvent(event){
-      this.alturaTela = event.target.outerHeight
+      this.alturaTela = document.querySelector('html').offsetHeight
+
       if(this.msgFormatadaAberto){
-        this.msgFormatadaAberto = false
-      }
-      
-      if(this.tamanhoText >= 70){
-        this.alterarValoresVariaveisCSS("medio")
+        this.alterarValoresVariaveisCSS("aberto")
       }else{
-        this.alterarValoresVariaveisCSS("padrao")
+        if(this.tamanhoText >= 70){
+          this.alterarValoresVariaveisCSS("medio")
+        }else{
+          this.alterarValoresVariaveisCSS("padrao")
+        }
       }
     },
     alterarValoresVariaveisCSS(tipo){
@@ -809,7 +810,7 @@ export default {
             root.style.setProperty('--altura-chat-corpo', "80%")
           // Setimo breakpoint
           }else if(this.alturaTela >= 800){
-            root.style.setProperty('--altura-chat-corpo', "78%")
+            root.style.setProperty('--altura-chat-corpo', "77%")
           // Sexto breakpoint
           }else if(this.alturaTela >= 750){
             root.style.setProperty('--altura-chat-corpo', "76.5%")
@@ -836,7 +837,7 @@ export default {
             root.style.setProperty('--altura-chat-corpo', "78%")
           // Setimo breakpoint
           }else if(this.alturaTela >= 800){
-            root.style.setProperty('--altura-chat-corpo', "76%")
+            root.style.setProperty('--altura-chat-corpo', "75%")
           // Sexto breakpoint
           }else if(this.alturaTela >= 750){
             root.style.setProperty('--altura-chat-corpo', "74%")
@@ -860,7 +861,7 @@ export default {
         case "aberto":
           // Ultimo breakpoint
           if(this.alturaTela >= 900){
-            root.style.setProperty('--altura-chat-corpo', "65%")
+            root.style.setProperty('--altura-chat-corpo', "64%")
           // Setimo breakpoint
           }else if(this.alturaTela >= 800){
             root.style.setProperty('--altura-chat-corpo', "60%")
