@@ -8814,7 +8814,7 @@ body {
   display: flex;
   justify-content: flex-start; }
 
-@media screen and (min-width: 1441px) {
+@media screen and (min-height: 900px) {
   :root {
     --altura-chat-corpo: 80%;
     --altura-chat-rodape: 10%; }
@@ -8832,7 +8832,7 @@ body {
   .lista-informacoes-container {
     height: calc(90% + 34px); } }
 
-@media screen and (max-width: 1441px) {
+@media screen and (max-height: 900px) {
   :root {
     --altura-chat-corpo: 68%;
     --altura-chat-rodape: 20%; } }
@@ -9225,7 +9225,7 @@ body {
   display: flex;
   justify-content: flex-start; }
 
-@media screen and (min-width: 1441px) {
+@media screen and (min-height: 900px) {
   :root {
     --altura-chat-corpo: 80%;
     --altura-chat-rodape: 10%; }
@@ -9243,7 +9243,7 @@ body {
   .lista-informacoes-container {
     height: calc(90% + 34px); } }
 
-@media screen and (max-width: 1441px) {
+@media screen and (max-height: 900px) {
   :root {
     --altura-chat-corpo: 68%;
     --altura-chat-rodape: 20%; } }
@@ -10127,7 +10127,7 @@ body {
   display: flex;
   justify-content: flex-start; }
 
-@media screen and (min-width: 1441px) {
+@media screen and (min-height: 900px) {
   :root {
     --altura-chat-corpo: 80%;
     --altura-chat-rodape: 10%; }
@@ -10145,7 +10145,7 @@ body {
   .lista-informacoes-container {
     height: calc(90% + 34px); } }
 
-@media screen and (max-width: 1441px) {
+@media screen and (max-height: 900px) {
   :root {
     --altura-chat-corpo: 68%;
     --altura-chat-rodape: 20%; } }

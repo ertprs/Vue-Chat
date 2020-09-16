@@ -504,41 +504,15 @@ export default {
     abreFechaMsgFormatada(){
       this.msgFormatadaAberto = !this.msgFormatadaAberto;
 
-      const root = document.documentElement
-
       if (this.msgFormatadaAberto == true) {
-        // Telas grandes
-        if(this.larguraTela >= 1441){
-          root.style.setProperty('--altura-chat-corpo', "65%")
-          root.style.setProperty('--altura-chat-rodape', "25%")
-        // Telas pequenas
-        }else{
-          root.style.setProperty('--altura-chat-rodape', "45%")
-          root.style.setProperty('--altura-chat-corpo', "43%")
-        }
+        this.alterarValoresVariaveisCSS("aberto")
       } else {
         // Textarea menor que 3 linhas
         if(this.tamanhoText < 70){
-          // Telas grandes
-          if(this.larguraTela >= 1441){
-            root.style.setProperty('--altura-chat-corpo', "80%")
-            root.style.setProperty('--altura-chat-rodape', "10%")
-          // Telas pequenas
-          }else{
-            root.style.setProperty('--altura-chat-rodape', "20%")
-            root.style.setProperty('--altura-chat-corpo', "68%")
-          }
+          this.alterarValoresVariaveisCSS("padrao")
         // Textarea maior/igual a 3 linhas
         }else{
-          // Telas grandes 
-          if(this.larguraTela >= 1441){
-            root.style.setProperty('--altura-chat-corpo', "78%")
-            root.style.setProperty('--altura-chat-rodape', "12%")
-          // Telas pequenas
-          }else{
-            root.style.setProperty('--altura-chat-rodape', "23%")
-            root.style.setProperty('--altura-chat-corpo', "65%")
-          }
+          this.alterarValoresVariaveisCSS("medio")
         }
         
         this.mensagensFormatadas_01 = []
@@ -760,7 +734,6 @@ export default {
       const rodapeBotoes = document.querySelector(".chat-rodape-botoes > div");
 
       let vm = this
-      const root = document.documentElement
 
       function resize() {
         vm.tamanhoText = text.scrollHeight
@@ -814,30 +787,24 @@ export default {
       }
     },
     resizeEvent(event){
-      this.larguraTela = event.target.outerWidth
-    }
-  },
-  watch: {
-    tamanhoText(){
+      this.larguraTela = event.target.outerHeight
+      if(this.msgFormatadaAberto){
+        this.msgFormatadaAberto = false
+      }
+      
+      if(this.tamanhoText >= 70){
+        this.alterarValoresVariaveisCSS("medio")
+      }else{
+        this.alterarValoresVariaveisCSS("padrao")
+      }
+    },
+    alterarValoresVariaveisCSS(tipo){
       const root = document.documentElement
 
-      if(!this.msgFormatadaAberto){
-        
-        // Textarea maior que 70 (tres/quatro linhas)
-        if(this.tamanhoText >= 70){
+      switch(tipo){
+        case "padrao":
           // telas grandes
-          if(this.larguraTela >= 1441){
-            root.style.setProperty('--altura-chat-rodape', "12%")
-            root.style.setProperty('--altura-chat-corpo', "78%")
-          // telas pequenas
-          }else{
-            root.style.setProperty('--altura-chat-rodape', "23%")
-            root.style.setProperty('--altura-chat-corpo', "65%")
-          }
-        // Textarea menor que 70 (uma/duas linha)
-        }else{
-          // telas grandes
-          if(this.larguraTela >= 1441){
+          if(this.larguraTela >= 900){
             root.style.setProperty('--altura-chat-rodape', "10%")
             root.style.setProperty('--altura-chat-corpo', "80%")
           // telas pequenas
@@ -845,6 +812,42 @@ export default {
             root.style.setProperty('--altura-chat-rodape', "20%")
             root.style.setProperty('--altura-chat-corpo', "68%")
           }
+        break;
+        case "medio": 
+          // telas grandes
+          if(this.larguraTela >= 900){
+            root.style.setProperty('--altura-chat-rodape', "12%")
+            root.style.setProperty('--altura-chat-corpo', "78%")
+          // telas pequenas
+          }else{
+            root.style.setProperty('--altura-chat-rodape', "23%")
+            root.style.setProperty('--altura-chat-corpo', "65%")
+          }
+        break;
+        case "aberto":
+          // Telas grandes
+          if(this.larguraTela >= 900){
+            root.style.setProperty('--altura-chat-corpo', "65%")
+            root.style.setProperty('--altura-chat-rodape', "25%")
+          // Telas pequenas
+          }else{
+            root.style.setProperty('--altura-chat-rodape', "45%")
+            root.style.setProperty('--altura-chat-corpo', "43%")
+          }
+        break;
+      }
+
+    }
+  },
+  watch: {
+    tamanhoText(){
+      if(!this.msgFormatadaAberto){
+        // Textarea maior que 70 (tres/quatro linhas)
+        if(this.tamanhoText >= 70){
+          this.alterarValoresVariaveisCSS("medio")
+        // Textarea menor que 70 (uma/duas linha)
+        }else{
+          this.alterarValoresVariaveisCSS("padrao")
         }
 
       }
