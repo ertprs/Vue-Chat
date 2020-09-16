@@ -17,12 +17,23 @@
       :docAnexo="msg.docAnexo"
       :nomeArquivo="msg.nomeArquivo"/>
 
+    </div>
+    <transition name="fade">
       <div class="btn-rolagem" v-show="habilitaRolagem" v-on:click="rolaChat()">
         <i class="fas fa-arrow-circle-down"></i>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
+
+<style scoped>
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
+</style>
 
 <script>
 import Mensagens from './Mensagens'

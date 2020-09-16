@@ -11,6 +11,7 @@ body{
   flex-wrap: wrap;
   overflow: hidden;
   background-color: #EEE;
+  text-rendering: optimizeLegibility;
 }
 
 #app{
@@ -22,6 +23,13 @@ body{
   // max-height: 768px;
   // max-width: 1335px;
   // max-height: 550px;
+}
+
+@media screen and (min-width: 1441px){
+  #app{
+    width: 1396px;
+    height: calc(100% - 38px)
+  }
 }
 
 .tamanho-titulos{
