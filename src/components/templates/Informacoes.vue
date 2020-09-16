@@ -53,7 +53,7 @@
           </div>
         </div>
         <!-- Iframe Msg Tipo 2 -->
-        <div id="iframe-msg-container" v-if="abrirMsgTipo2">
+        <div class="iframe-msg-container" v-if="abrirMsgTipo2">
           <!-- Iframe do Caio -->
           <!-- {{ `${baseUrl}im/atdHumano/view/atd_valida.php?grupo=${grupo}&categoria=${categoria}&assunto=${assunto}&nro_chat=${nroChat}` }} -->
           <div class="informacoes-load-container" v-if="gif">
@@ -67,6 +67,20 @@
             @load="gif = false"
             @loadstart="gif = true"
             > </iframe> <!-- tipo_popup=AJ2& -->
+        </div>
+        <!-- Iframe Chamar Cliente -->
+        <div class="iframe-msg-container" v-if="iframeCttAtivo">
+          <div class="informacoes-load-container" v-if="gif">
+            <div class="load">
+              <i class="fas fa-hourglass-end"></i>
+              <p> Carregando </p>
+            </div>
+          </div>
+          <iframe 
+            :src="`${baseUrl}im/atdHumano/view/atd_contato_atv.php`" frameborder="0"
+            @load="gif = false"
+            @loadstart="gif = true"
+            > </iframe>
         </div>
         <!-- Rodape - Botoes Acoes -->
         <!-- <div class="container-acoes">
@@ -148,7 +162,8 @@ export default {
       grupo: 'getGrupo',
       categoria: 'getCategoria',
       assunto: 'getAssunto',
-      nroChat: 'getNroChat'
+      nroChat: 'getNroChat',
+      iframeCttAtivo: 'getIframeCttAtivo'
     })
   },
 }

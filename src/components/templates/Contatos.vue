@@ -11,7 +11,7 @@
       </div>
       <div>
       </div>
-      <div class="container-add-novo-cliente" :class="{'fechado' : fechado}" title="Adicionar novo cliente">
+      <div class="container-add-novo-cliente" :class="{'fechado' : fechado}" title="Adicionar novo cliente" v-on:click="abrirAtivarCtt()">
         <i class="fas fa-user-plus"></i>
       </div>
       <div v-on:click="toggleContatos($event)" class="container-flecha" :class="rotate ? 'rotate' : ''">
@@ -253,10 +253,18 @@ export default {
       minhaAgenda: "getAgenda",
       caso: 'getCaso',
       iframesDisponiveis: 'getIframesDisponiveis',
-      idAtendimentoAtivo: 'getIdAtendimentoAtivo'
+      idAtendimentoAtivo: 'getIdAtendimentoAtivo',
+      iframeCttAtivo: 'getIframeCttAtivo'
     })
   },
   methods: {
+    abrirAtivarCtt(){
+      if(this.iframeCttAtivo){
+        this.$store.dispatch("setIframeCttAtivo", false)
+      }else{
+        this.$store.dispatch("setIframeCttAtivo", true)
+      }
+    },
     alternaAbaAberta(){
       switch (this.abaAberta){
         case "atendimento":
