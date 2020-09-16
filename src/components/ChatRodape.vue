@@ -216,7 +216,7 @@ export default {
       chaveAtual_03: '',
       tamanhoText: '',
       statusEnvio: '',
-      larguraTela: ''
+      alturaTela: ''
     };
   },
   mounted() {
@@ -229,7 +229,7 @@ export default {
 
     window.addEventListener("message", this.listenerPostMessage, false);
 
-    this.larguraTela = document.querySelector("html").offsetWidth
+    this.alturaTela = document.querySelector("html").offsetHeight
 
     this.initResize();
     this.verificaTemMsgFormatada()
@@ -787,7 +787,7 @@ export default {
       }
     },
     resizeEvent(event){
-      this.larguraTela = event.target.outerHeight
+      this.alturaTela = event.target.outerHeight
       if(this.msgFormatadaAberto){
         this.msgFormatadaAberto = false
       }
@@ -804,7 +804,7 @@ export default {
       switch(tipo){
         case "padrao":
           // telas grandes
-          if(this.larguraTela >= 900){
+          if(this.alturaTela >= 900){
             root.style.setProperty('--altura-chat-rodape', "10%")
             root.style.setProperty('--altura-chat-corpo', "80%")
           // telas pequenas
@@ -815,7 +815,7 @@ export default {
         break;
         case "medio": 
           // telas grandes
-          if(this.larguraTela >= 900){
+          if(this.alturaTela >= 900){
             root.style.setProperty('--altura-chat-rodape', "12%")
             root.style.setProperty('--altura-chat-corpo', "78%")
           // telas pequenas
@@ -826,7 +826,7 @@ export default {
         break;
         case "aberto":
           // Telas grandes
-          if(this.larguraTela >= 900){
+          if(this.alturaTela >= 900){
             root.style.setProperty('--altura-chat-corpo', "65%")
             root.style.setProperty('--altura-chat-rodape', "25%")
           // Telas pequenas
