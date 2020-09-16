@@ -799,40 +799,89 @@ export default {
       }
     },
     alterarValoresVariaveisCSS(tipo){
+
       const root = document.documentElement
 
       switch(tipo){
         case "padrao":
-          // telas grandes
+          // Ultimo breakpoint
           if(this.alturaTela >= 900){
-            root.style.setProperty('--altura-chat-rodape', "10%")
             root.style.setProperty('--altura-chat-corpo', "80%")
-          // telas pequenas
-          }else{
-            root.style.setProperty('--altura-chat-rodape', "20%")
+          // Setimo breakpoint
+          }else if(this.alturaTela >= 800){
+            root.style.setProperty('--altura-chat-corpo', "78%")
+          // Sexto breakpoint
+          }else if(this.alturaTela >= 750){
+            root.style.setProperty('--altura-chat-corpo', "76.5%")
+          // Quinto breakpoint
+          } else if(this.alturaTela >= 700){
+            root.style.setProperty('--altura-chat-corpo', "75%")
+          // Quarto breakpoint
+          }else if(this.alturaTela >= 637){
+            root.style.setProperty('--altura-chat-corpo', "73%")
+          // Terceiro breakpoint
+          }else if(this.alturaTela >= 550){
             root.style.setProperty('--altura-chat-corpo', "68%")
+          // Segundo breakpoint
+          }else if(this.alturaTela >= 500){
+            root.style.setProperty('--altura-chat-corpo', "66%")
+          // Primeiro breakpoint
+          }else{
+            root.style.setProperty('--altura-chat-corpo', "64%")
           }
         break;
         case "medio": 
-          // telas grandes
+          // Ultimo breakpoint
           if(this.alturaTela >= 900){
-            root.style.setProperty('--altura-chat-rodape', "12%")
             root.style.setProperty('--altura-chat-corpo', "78%")
-          // telas pequenas
-          }else{
-            root.style.setProperty('--altura-chat-rodape', "23%")
+          // Setimo breakpoint
+          }else if(this.alturaTela >= 800){
+            root.style.setProperty('--altura-chat-corpo', "76%")
+          // Sexto breakpoint
+          }else if(this.alturaTela >= 750){
+            root.style.setProperty('--altura-chat-corpo', "74%")
+          // Quinto breakpoint
+          } else if(this.alturaTela >= 700){
+            root.style.setProperty('--altura-chat-corpo', "72%")
+          // Quarto breakpoint
+          }else if(this.alturaTela >= 637){
+            root.style.setProperty('--altura-chat-corpo', "70%")
+          // Terceiro breakpoint
+          }else if(this.alturaTela >= 550){
             root.style.setProperty('--altura-chat-corpo', "65%")
+          // Segundo breakpoint
+          }else if(this.alturaTela >= 500){
+            root.style.setProperty('--altura-chat-corpo', "63%")
+          // Primeiro breakpoint
+          }else{
+            root.style.setProperty('--altura-chat-corpo', "62%")
           }
         break;
         case "aberto":
-          // Telas grandes
+          // Ultimo breakpoint
           if(this.alturaTela >= 900){
             root.style.setProperty('--altura-chat-corpo', "65%")
-            root.style.setProperty('--altura-chat-rodape', "25%")
-          // Telas pequenas
-          }else{
-            root.style.setProperty('--altura-chat-rodape', "45%")
+          // Setimo breakpoint
+          }else if(this.alturaTela >= 800){
+            root.style.setProperty('--altura-chat-corpo', "60%")
+          // Sexto breakpoint
+          }else if(this.alturaTela >= 750){
+            root.style.setProperty('--altura-chat-corpo', "58.5%")
+          // Quinto breakpoint
+          } else if(this.alturaTela >= 700){
+            root.style.setProperty('--altura-chat-corpo', "55%")
+          // Quarto breakpoint
+          }else if(this.alturaTela >= 637){
+            root.style.setProperty('--altura-chat-corpo', "50%")
+          // Terceiro breakpoint
+          }else if(this.alturaTela >= 550){
             root.style.setProperty('--altura-chat-corpo', "43%")
+          // Segundo breakpoint
+          }else if(this.alturaTela >= 500){
+            root.style.setProperty('--altura-chat-corpo', "38%")
+          // Primeiro breakpoint
+          }else{
+            root.style.setProperty('--altura-chat-corpo', '35%')
           }
         break;
       }
