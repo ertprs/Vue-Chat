@@ -9885,7 +9885,7 @@ body {
       width: 100%;
       white-space: nowrap; }
 
-#iframe-msg-container {
+.iframe-msg-container {
   position: absolute;
   background-color: #FFF;
   z-index: 3;
@@ -9896,7 +9896,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center; }
-  #iframe-msg-container iframe {
+  .iframe-msg-container iframe {
     width: 100%;
     height: 100%; }
 
