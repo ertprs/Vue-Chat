@@ -38,8 +38,8 @@
           :class="abaAberta == 'atendimento' ? 'ativo' : ''"
           v-if="objAtendimentos.length && caso !== 206"
           >Em Atendimento
-          <span v-if="totalClientesNovos != ''" class="total-clientes-novos"> CLI:{{ totalClientesNovos }}</span>
-          <span v-if="totalMsgNovas != ''" class="total-msgs-novas"> MSG:{{ totalMsgNovas }}</span>
+          <span v-if="totalClientesNovos != ''" title="Total de novos clientes" class="total-clientes-novos">{{ totalClientesNovos }}</span>
+          <span v-if="totalMsgNovas != ''" title="Total de novas mensagens" class="total-msgs-novas">{{ totalMsgNovas }}</span>
         </h4>
         <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta == 'aguardando'}" v-if="objAtendimentos.length && caso !== 206" id="lista-contatos">
           <li

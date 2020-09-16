@@ -93,11 +93,29 @@ $tamanhoBoxShadow: 5px;
       padding-left: 10px;
       margin: 0;
       border-bottom: 1px solid #CCC;
+      position: relative;
       @include efeito-hover-padrao();
       &.ativo{
         opacity: 1;
         padding: 0;
         padding-left: 10px;
+      }
+      .total-clientes-novos, .total-msgs-novas{
+        position: absolute;
+        min-width: 20px;
+        min-height: 20px;
+        text-align: center;
+        border-radius: 50%;
+        padding: 1px;
+        font-size: .9rem;
+      }
+      .total-clientes-novos{
+        right: 45px;
+        background-color: darken(#fdffb6, 10);
+      }
+      .total-msgs-novas{
+        right: 10px;
+        background-color: #55a630;
       }
     }
     

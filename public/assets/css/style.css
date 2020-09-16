@@ -8928,6 +8928,7 @@ body {
       padding-left: 10px;
       margin: 0;
       border-bottom: 1px solid #CCC;
+      position: relative;
       transition-duration: 300ms;
       transition-property: opacity;
       opacity: .8;
@@ -8938,6 +8939,20 @@ body {
         opacity: 1;
         padding: 0;
         padding-left: 10px; }
+      #todos-contatos .lista-contatos-container h4 .total-clientes-novos, #todos-contatos .lista-contatos-container h4 .total-msgs-novas {
+        position: absolute;
+        min-width: 20px;
+        min-height: 20px;
+        text-align: center;
+        border-radius: 50%;
+        padding: 1px;
+        font-size: .9rem; }
+      #todos-contatos .lista-contatos-container h4 .total-clientes-novos {
+        right: 45px;
+        background-color: #fcff83; }
+      #todos-contatos .lista-contatos-container h4 .total-msgs-novas {
+        right: 10px;
+        background-color: #55a630; }
     #todos-contatos .lista-contatos-container ul {
       display: flex;
       flex-direction: column-reverse; }
