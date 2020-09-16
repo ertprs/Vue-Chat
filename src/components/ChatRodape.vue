@@ -243,12 +243,12 @@ export default {
       var self = this
       setTimeout( function () {
           cont = cont + 1
-          if(cont < 600) {
+          if(cont < 300) {
             self.mensagem = 'MSG ' + String(cont)
             self.enviarMensagem(event, previa)
             self.executaTeste(event, previa, cont)
           }
-        }, 1000);
+        }, 5000);
     },
     async enviarMensagem(event, previa) {
       if(this.blocker && this.origemBlocker !== 'msg-formatada'){
