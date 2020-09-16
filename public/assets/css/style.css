@@ -9423,6 +9423,7 @@ body {
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
         overflow: auto; }
         #chat-operador .chat-corpo-mensagens .mensagem .mensagem-div-anexo .anexo-container a {
           padding: 10px 15px 15px 15px;

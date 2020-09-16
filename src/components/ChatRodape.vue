@@ -309,13 +309,11 @@ export default {
             });
 
           this.criaObjMensagem()
-          if(this.statusEnvio !== "E"){
-            this.resetar()
-          }
         }
       }
     },
     resetar(){
+
       const rodapeMsg = document.querySelector(".chat-rodape-mensagens");
       const containerText = document.querySelector(".chat-rodape-textarea");
       const text = document.getElementById("textarea");
@@ -468,6 +466,9 @@ export default {
       }
 
       this.$store.dispatch("setTodasMensagens", objMensagem)
+      if(this.statusEnvio !== "E"){
+        this.resetar()
+      }
     },
     formataHoraAtual() {
       let data = new Date();
@@ -739,7 +740,9 @@ export default {
         vm.tamanhoText = text.scrollHeight
 
         if(text.value == ""){
-          vm.resetar()
+          if(!vm.arquivo){
+            vm.resetar()
+          }
         }
 
         text.style.height = "auto";
