@@ -4,15 +4,9 @@ $maxAltura: 70px;
 $tamanhoEmoji: 40px;
 $border-radius: 30px;
 
-
-:root{
-  --altura-chat-rodape: 20%;
-}
-
 .chat-rodape{
   background-color: darken(#eeeeee, 20);
   position: relative;
-  height: var(--altura-chat-rodape);
   transition-duration: 300ms;
   .chat-rodape-container{
     @include d-flex-center('vertical');
