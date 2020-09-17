@@ -40,7 +40,7 @@ function verificarAlertaErroRequest() {
         console.error('Erro de conexao ' + contador_request_erro)
     }
 
-    if(contador_request_erro > 2) {
+    if(contador_request_erro > 5) {
         alert('Existe um erro na conexao com a internet')
         document.location.reload(true);
     }
