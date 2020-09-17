@@ -220,13 +220,27 @@ export default {
           setTimeout(() => {
             this.ativarConversa(this.objAtendimentos[0], 0)
           }, 200)
+        }else if(this.objAtendimentos.length && this.idAtendimentoAtivo){
+          let qtdNegativo = 0
+          for(let atd in this.objAtendimentos){
+            if(this.objAtendimentos[atd].id_cli !== this.idAtendimentoAtivo){
+              qtdNegativo++
+            }
+          }
+
+          if(qtdNegativo == this.objAtendimentos.length){
+            this.ativarConversa(this.objAtendimentos[0], 0)
+          }
         }
-        if(this.abaAberta === "aguardando") {
-          this.contarMsgClientes()
-        } else {
-          this.totalMsgNovas = ''
-          this.totalClientesNovos = ''
-        }
+      }
+    },
+    abaAberta(){
+      if(this.abaAberta === "aguardando") {
+        this.contarMsgClientes()
+      } else {
+        console.log('zerou')
+        this.totalMsgNovas = ''
+        this.totalClientesNovos = ''
       }
     },
     caso(){
@@ -286,6 +300,7 @@ export default {
       }
     },
     contarMsgClientes() {
+      console.log('chamou')
       this.totalMsgNovas = ''
       this.totalClientesNovos = ''
       var auxContMsgNova = 0

@@ -1,6 +1,5 @@
 <template>
   <div :class="'mensagem-'+origem">
-    <div></div>
     <div class="mensagem">
       <div v-if="anexo" class="mensagem-div-anexo">
         <img v-if="imgAnexo" :src="imgAnexo" alt="Imagem Anexada">
