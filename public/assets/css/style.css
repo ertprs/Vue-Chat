@@ -8847,7 +8847,7 @@ body {
 .toasted.toasted-primary.info svg, .toasted.toasted-primary.success svg {
   margin-right: 10px; }
 
-@media screen and (min-width: 1441px) {
+@media (min-width: 1441px) and (min-height: 850px) {
   body:after {
     content: "";
     width: 100%;
@@ -9342,7 +9342,7 @@ body {
 .toasted.toasted-primary.info svg, .toasted.toasted-primary.success svg {
   margin-right: 10px; }
 
-@media screen and (min-width: 1441px) {
+@media (min-width: 1441px) and (min-height: 850px) {
   body:after {
     content: "";
     width: 100%;
@@ -10268,7 +10268,7 @@ body {
 .toasted.toasted-primary.info svg, .toasted.toasted-primary.success svg {
   margin-right: 10px; }
 
-@media screen and (min-width: 1441px) {
+@media (min-width: 1441px) and (min-height: 850px) {
   body:after {
     content: "";
     width: 100%;

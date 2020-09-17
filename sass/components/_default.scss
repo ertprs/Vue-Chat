@@ -72,7 +72,7 @@ body{
   }
 }
 
-@media screen and (min-width: 1441px){
+@media (min-width: 1441px) and (min-height: 850px){
   body:after{
     content: "";
     width: 100%;
