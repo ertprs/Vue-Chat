@@ -293,9 +293,13 @@ export default {
         break;
         case "aguardando":
           this.abaAberta = "atendimento"
+          this.totalMsgNovas = ''
+          this.totalClientesNovos = ''
         break;
         default:
           this.abaAberta = "atendimento"
+          this.totalMsgNovas = ''
+          this.totalClientesNovos = ''
         break;
       }
     },
