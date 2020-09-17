@@ -4,6 +4,51 @@ $valorOpacidade: .8;
 $corBoxShadow: rgba(0, 0, 0, 0.5);
 $tamanhoBoxShadow: 5px;
 
+:root{
+  --height-li: 50px;
+  --height-ul: 200px; // --height-li * 4 
+  --circulo-ctt: 35px;
+  --top-img: 20px;
+  --flex-start: center;
+}
+
+@media screen and (min-height: 900px){
+  :root{
+    --height-li: 50px;
+    --height-ul: 200px;
+    --circulo-ctt: 35px;
+  }
+}
+
+@media (min-height: 560px) and (max-height: 899px){
+  :root{
+    --height-li: 45px;
+    --height-ul: 180px;
+    --circulo-ctt: 35px;
+  }
+}
+
+@media (min-height: 516px) and (max-height: 559px){
+  :root{
+    --height-li: 40px;
+    --height-ul: 160px;
+    --circulo-ctt: 30px;
+    --top-img: 17px;
+    --flex-start: flex-start;
+  }
+}
+
+@media (min-height: 470px) and (max-height: 515px){
+  :root{
+    --height-li: 34px;
+    --height-ul: 136px;
+    --circulo-ctt: 30px;
+    --top-img: 15px;
+    --flex-start: flex-start;
+  }
+}
+
+
 #todos-contatos{
   transition-duration: 2s;
   height: 100%;
@@ -82,39 +127,63 @@ $tamanhoBoxShadow: 5px;
     max-height: 90%;
     overflow-y: auto;
     padding-right: 5px;
-    h4{
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      user-select: none;
-      width: 100%;
-      font-size: 1rem;
-      padding: 3px 0;
-      padding-left: 10px;
-      margin: 0;
+    .fieldset-container{
+      display: flex;
       border-bottom: 1px solid #CCC;
       position: relative;
-      @include efeito-hover-padrao();
-      &.ativo{
-        opacity: 1;
-        padding: 0;
+      transition: 300ms;
+      &.fechado{
+        flex-direction: column;
+        padding-bottom: 5px;
+        > div{
+          position: relative;
+          justify-content: space-around;
+          .total-clientes-novos{
+            margin-right: 0;
+          }
+        }
+      }
+      h4{
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        user-select: none;
+        width: 100%;
+        font-size: 1rem;
+        padding: 3px 0;
         padding-left: 10px;
+        margin: 0;
+        @include efeito-hover-padrao();
+        &.ativo{
+          opacity: 1;
+          padding: 0;
+          padding-left: 10px;
+        }
+      }
+      > div{
+        transition: 300ms;
+        position: absolute;
+        right: 0;
+        top: 3px;
+        display: flex;
       }
       .total-clientes-novos, .total-msgs-novas{
-        position: absolute;
-        min-width: 20px;
-        min-height: 20px;
+        cursor: pointer;
+        width: auto;
+        min-width: 1rem;
+        line-height: 1rem;
         text-align: center;
         border-radius: 50%;
-        padding: 1px;
-        font-size: .9rem;
+        padding: 1.5px 3px;
+        font-size: .8rem;
+        font-weight: bold;
+        color: #FFF;
       }
       .total-clientes-novos{
-        right: 45px;
-        background-color: darken(#fdffb6, 10);
+        background-color: #FDC43F; 
+        margin-right: 5px;
       }
       .total-msgs-novas{
-        right: 10px;
         background-color: #55a630;
       }
     }
@@ -131,7 +200,7 @@ $tamanhoBoxShadow: 5px;
 
   ul{
     padding: 0;
-    max-height: 200px;
+    max-height: var(--height-ul);
     overflow-y: auto;
     overflow-x: hidden;
     transition: max-height 400ms ease-out;
@@ -156,8 +225,8 @@ $tamanhoBoxShadow: 5px;
         }
         p{
           margin: 0;
-          height: 35px;
-          width: 35px;
+          height: var(--circulo-ctt);
+          width: var(--circulo-ctt);
         }
         span{
           margin-left: 5px;
@@ -171,20 +240,22 @@ $tamanhoBoxShadow: 5px;
       transition: 500ms ease-in-out;
       font-size: .9rem;
       @include d-flex-center('vertical');
+      align-items: var(--flex-start);
       list-style-type: none;
-      min-height: 50px;
-      height: 50px;
-      max-height: 50px;
+      min-height: var(--height-li);
+      height: var(--height-li);
+      max-height: var(--height-li);
       cursor: pointer;
       border-bottom: 1px solid #CCC;
       position: relative;
       white-space: nowrap;
       .circulo-contatos{
+        align-self: center;
         border-radius: 50%;
-        width: 35px;
-        height: 35px;
-        min-width: 35px;
-        min-height: 35px;
+        width: var(--circulo-ctt);
+        height: var(--circulo-ctt);
+        min-width: var(--circulo-ctt);
+        min-height: var(--circulo-ctt);
         @include d-flex-center();
         position: relative;
         margin-right: 20px;
@@ -199,7 +270,7 @@ $tamanhoBoxShadow: 5px;
         img{
           transition: .3s;
           position: absolute;
-          top: 20px;
+          top: var(--top-img);
           right: -8px;
           width: 15px;
         }

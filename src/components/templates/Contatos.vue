@@ -33,14 +33,18 @@
       </div>
       <!-- Caso haja Cliente -->
       <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 400">
-        <h4
-          v-on:click="alternaAbaAberta()"
-          :class="abaAberta == 'atendimento' ? 'ativo' : ''"
-          v-if="objAtendimentos.length && caso !== 206"
-          >Em Atendimento
-          <span v-if="totalClientesNovos != ''" title="Total de novos clientes" class="total-clientes-novos">{{ totalClientesNovos }}</span>
-          <span v-if="totalMsgNovas != ''" title="Total de novas mensagens" class="total-msgs-novas">{{ totalMsgNovas }}</span>
-        </h4>
+        <div class="fieldset-container" :class="{'fechado' : fechado}" v-on:click="alternaAbaAberta()">
+          <h4
+            :class="{'ativo' : abaAberta == 'atendimento'}"
+            v-if="objAtendimentos.length && caso !== 206"
+            >
+            Em Atendimento
+          </h4>
+          <div>
+            <span v-if="totalClientesNovos != ''" title="Total de novos clientes" class="total-clientes-novos">{{ totalClientesNovos }}</span>
+            <span v-if="totalMsgNovas != ''" title="Total de novas mensagens" class="total-msgs-novas">{{ totalMsgNovas }}</span>
+          </div>
+        </div>
         <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta == 'aguardando'}" v-if="objAtendimentos.length && caso !== 206" id="lista-contatos">
           <li
             v-for="(atd, indice) in objAtendimentos"
@@ -60,13 +64,15 @@
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
           </li>
         </ul>
-        <h4
-          v-on:click="alternaAbaAberta()"
-          :class="abaAberta == 'aguardando' ? 'ativo' : ''"
-          v-if="objAtendimentos.length && caso !== 206"
-          >
-          Aguardando
-        </h4>
+        <div class="fieldset-container">
+          <h4
+            v-on:click="alternaAbaAberta()"
+            :class="abaAberta == 'aguardando' ? 'ativo' : ''"
+            v-if="objAtendimentos.length && caso !== 206"
+            >
+            Aguardando
+          </h4>
+        </div>
         <div class="lista-aguardando" v-if="minhaAgenda.length">
           <!-- Lista repetida para simular mais contatos -->
           <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta !== 'aguardando'}">
@@ -202,7 +208,8 @@ export default {
       objAtendimentos: [],
       abaAberta: 'atendimento',
       totalMsgNovas: '',
-      totalClientesNovos: ''
+      totalClientesNovos: '',
+      contadorErros: 0
     };
   },
   watch: {
@@ -324,7 +331,12 @@ export default {
         }
       })
       .catch(error => {
+        if(this.contadorErros < 10){
+          this.statusMensagens(atd)
+        }
+        this.contadorErros++
         console.log('Erro get status messages: ', error)
+        console.log('Contador de erros status message: ', this.contadorErros)
       })
     },
     ativarConversa: function(atd, indice) {

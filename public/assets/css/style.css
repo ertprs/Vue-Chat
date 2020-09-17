@@ -8898,6 +8898,41 @@ body {
     --altura-chat-corpo: 64%
   ; } }
 
+:root {
+  --height-li: 50px;
+  --height-ul: 200px;
+  --circulo-ctt: 35px;
+  --top-img: 20px;
+  --flex-start: center; }
+
+@media screen and (min-height: 900px) {
+  :root {
+    --height-li: 50px;
+    --height-ul: 200px;
+    --circulo-ctt: 35px; } }
+
+@media (min-height: 560px) and (max-height: 899px) {
+  :root {
+    --height-li: 45px;
+    --height-ul: 180px;
+    --circulo-ctt: 35px; } }
+
+@media (min-height: 516px) and (max-height: 559px) {
+  :root {
+    --height-li: 40px;
+    --height-ul: 160px;
+    --circulo-ctt: 30px;
+    --top-img: 17px;
+    --flex-start: flex-start; } }
+
+@media (min-height: 470px) and (max-height: 515px) {
+  :root {
+    --height-li: 34px;
+    --height-ul: 136px;
+    --circulo-ctt: 30px;
+    --top-img: 15px;
+    --flex-start: flex-start; } }
+
 #todos-contatos {
   transition-duration: 2s;
   height: 100%;
@@ -8969,41 +9004,60 @@ body {
     max-height: 90%;
     overflow-y: auto;
     padding-right: 5px; }
-    #todos-contatos .lista-contatos-container h4 {
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      user-select: none;
-      width: 100%;
-      font-size: 1rem;
-      padding: 3px 0;
-      padding-left: 10px;
-      margin: 0;
+    #todos-contatos .lista-contatos-container .fieldset-container {
+      display: flex;
       border-bottom: 1px solid #CCC;
       position: relative;
-      transition-duration: 300ms;
-      transition-property: opacity;
-      opacity: .8;
-      cursor: pointer; }
-      #todos-contatos .lista-contatos-container h4:hover {
-        opacity: 1; }
-      #todos-contatos .lista-contatos-container h4.ativo {
-        opacity: 1;
-        padding: 0;
-        padding-left: 10px; }
-      #todos-contatos .lista-contatos-container h4 .total-clientes-novos, #todos-contatos .lista-contatos-container h4 .total-msgs-novas {
+      transition: 300ms; }
+      #todos-contatos .lista-contatos-container .fieldset-container.fechado {
+        flex-direction: column;
+        padding-bottom: 5px; }
+        #todos-contatos .lista-contatos-container .fieldset-container.fechado > div {
+          position: relative;
+          justify-content: space-around; }
+          #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .total-clientes-novos {
+            margin-right: 0; }
+      #todos-contatos .lista-contatos-container .fieldset-container h4 {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        user-select: none;
+        width: 100%;
+        font-size: 1rem;
+        padding: 3px 0;
+        padding-left: 10px;
+        margin: 0;
+        transition-duration: 300ms;
+        transition-property: opacity;
+        opacity: .8;
+        cursor: pointer; }
+        #todos-contatos .lista-contatos-container .fieldset-container h4:hover {
+          opacity: 1; }
+        #todos-contatos .lista-contatos-container .fieldset-container h4.ativo {
+          opacity: 1;
+          padding: 0;
+          padding-left: 10px; }
+      #todos-contatos .lista-contatos-container .fieldset-container > div {
+        transition: 300ms;
         position: absolute;
-        min-width: 20px;
-        min-height: 20px;
+        right: 0;
+        top: 3px;
+        display: flex; }
+      #todos-contatos .lista-contatos-container .fieldset-container .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-container .total-msgs-novas {
+        cursor: pointer;
+        width: auto;
+        min-width: 1rem;
+        line-height: 1rem;
         text-align: center;
         border-radius: 50%;
-        padding: 1px;
-        font-size: .9rem; }
-      #todos-contatos .lista-contatos-container h4 .total-clientes-novos {
-        right: 45px;
-        background-color: #fcff83; }
-      #todos-contatos .lista-contatos-container h4 .total-msgs-novas {
-        right: 10px;
+        padding: 1.5px 3px;
+        font-size: .8rem;
+        font-weight: bold;
+        color: #FFF; }
+      #todos-contatos .lista-contatos-container .fieldset-container .total-clientes-novos {
+        background-color: #FDC43F;
+        margin-right: 5px; }
+      #todos-contatos .lista-contatos-container .fieldset-container .total-msgs-novas {
         background-color: #55a630; }
     #todos-contatos .lista-contatos-container ul {
       display: flex;
@@ -9012,7 +9066,7 @@ body {
     cursor: unset; }
   #todos-contatos ul {
     padding: 0;
-    max-height: 200px;
+    max-height: var(--height-ul);
     overflow-y: auto;
     overflow-x: hidden;
     transition: max-height 400ms ease-out; }
@@ -9029,8 +9083,8 @@ body {
       right: 5px; }
     #todos-contatos ul.fechado li p {
       margin: 0;
-      height: 35px;
-      width: 35px; }
+      height: var(--circulo-ctt);
+      width: var(--circulo-ctt); }
     #todos-contatos ul.fechado li span {
       margin-left: 5px; }
     #todos-contatos ul li {
@@ -9041,20 +9095,22 @@ body {
       font-size: .9rem;
       display: flex;
       align-items: center;
+      align-items: var(--flex-start);
       list-style-type: none;
-      min-height: 50px;
-      height: 50px;
-      max-height: 50px;
+      min-height: var(--height-li);
+      height: var(--height-li);
+      max-height: var(--height-li);
       cursor: pointer;
       border-bottom: 1px solid #CCC;
       position: relative;
       white-space: nowrap; }
       #todos-contatos ul li .circulo-contatos {
+        align-self: center;
         border-radius: 50%;
-        width: 35px;
-        height: 35px;
-        min-width: 35px;
-        min-height: 35px;
+        width: var(--circulo-ctt);
+        height: var(--circulo-ctt);
+        min-width: var(--circulo-ctt);
+        min-height: var(--circulo-ctt);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -9070,7 +9126,7 @@ body {
         #todos-contatos ul li .circulo-contatos img {
           transition: .3s;
           position: absolute;
-          top: 20px;
+          top: var(--top-img);
           right: -8px;
           width: 15px; }
       #todos-contatos ul li.nova-msg {
