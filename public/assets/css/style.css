@@ -8898,6 +8898,41 @@ body {
     --altura-chat-corpo: 64%
   ; } }
 
+:root {
+  --height-li: 50px;
+  --height-ul: 200px;
+  --circulo-ctt: 35px;
+  --top-img: 20px;
+  --flex-start: center; }
+
+@media screen and (min-height: 900px) {
+  :root {
+    --height-li: 50px;
+    --height-ul: 200px;
+    --circulo-ctt: 35px; } }
+
+@media (min-height: 560px) and (max-height: 899px) {
+  :root {
+    --height-li: 45px;
+    --height-ul: 180px;
+    --circulo-ctt: 35px; } }
+
+@media (min-height: 516px) and (max-height: 559px) {
+  :root {
+    --height-li: 40px;
+    --height-ul: 160px;
+    --circulo-ctt: 30px;
+    --top-img: 17px;
+    --flex-start: flex-start; } }
+
+@media (min-height: 470px) and (max-height: 515px) {
+  :root {
+    --height-li: 34px;
+    --height-ul: 136px;
+    --circulo-ctt: 30px;
+    --top-img: 15px;
+    --flex-start: flex-start; } }
+
 #todos-contatos {
   transition-duration: 2s;
   height: 100%;
@@ -9031,7 +9066,7 @@ body {
     cursor: unset; }
   #todos-contatos ul {
     padding: 0;
-    max-height: 180px;
+    max-height: var(--height-ul);
     overflow-y: auto;
     overflow-x: hidden;
     transition: max-height 400ms ease-out; }
@@ -9048,8 +9083,8 @@ body {
       right: 5px; }
     #todos-contatos ul.fechado li p {
       margin: 0;
-      height: 35px;
-      width: 35px; }
+      height: var(--circulo-ctt);
+      width: var(--circulo-ctt); }
     #todos-contatos ul.fechado li span {
       margin-left: 5px; }
     #todos-contatos ul li {
@@ -9060,20 +9095,22 @@ body {
       font-size: .9rem;
       display: flex;
       align-items: center;
+      align-items: var(--flex-start);
       list-style-type: none;
-      min-height: 45px;
-      height: 45px;
-      max-height: 45px;
+      min-height: var(--height-li);
+      height: var(--height-li);
+      max-height: var(--height-li);
       cursor: pointer;
       border-bottom: 1px solid #CCC;
       position: relative;
       white-space: nowrap; }
       #todos-contatos ul li .circulo-contatos {
+        align-self: center;
         border-radius: 50%;
-        width: 35px;
-        height: 35px;
-        min-width: 35px;
-        min-height: 35px;
+        width: var(--circulo-ctt);
+        height: var(--circulo-ctt);
+        min-width: var(--circulo-ctt);
+        min-height: var(--circulo-ctt);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -9089,7 +9126,7 @@ body {
         #todos-contatos ul li .circulo-contatos img {
           transition: .3s;
           position: absolute;
-          top: 20px;
+          top: var(--top-img);
           right: -8px;
           width: 15px; }
       #todos-contatos ul li.nova-msg {

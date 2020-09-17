@@ -4,10 +4,50 @@ $valorOpacidade: .8;
 $corBoxShadow: rgba(0, 0, 0, 0.5);
 $tamanhoBoxShadow: 5px;
 
-$height-li: 45px;
-$height-ul: $height-li * 4;
+:root{
+  --height-li: 50px;
+  --height-ul: 200px; // --height-li * 4 
+  --circulo-ctt: 35px;
+  --top-img: 20px;
+  --flex-start: center;
+}
 
-$circulo-ctt: 35px;
+@media screen and (min-height: 900px){
+  :root{
+    --height-li: 50px;
+    --height-ul: 200px;
+    --circulo-ctt: 35px;
+  }
+}
+
+@media (min-height: 560px) and (max-height: 899px){
+  :root{
+    --height-li: 45px;
+    --height-ul: 180px;
+    --circulo-ctt: 35px;
+  }
+}
+
+@media (min-height: 516px) and (max-height: 559px){
+  :root{
+    --height-li: 40px;
+    --height-ul: 160px;
+    --circulo-ctt: 30px;
+    --top-img: 17px;
+    --flex-start: flex-start;
+  }
+}
+
+@media (min-height: 470px) and (max-height: 515px){
+  :root{
+    --height-li: 34px;
+    --height-ul: 136px;
+    --circulo-ctt: 30px;
+    --top-img: 15px;
+    --flex-start: flex-start;
+  }
+}
+
 
 #todos-contatos{
   transition-duration: 2s;
@@ -160,7 +200,7 @@ $circulo-ctt: 35px;
 
   ul{
     padding: 0;
-    max-height: $height-ul;
+    max-height: var(--height-ul);
     overflow-y: auto;
     overflow-x: hidden;
     transition: max-height 400ms ease-out;
@@ -185,8 +225,8 @@ $circulo-ctt: 35px;
         }
         p{
           margin: 0;
-          height: $circulo-ctt;
-          width: $circulo-ctt;
+          height: var(--circulo-ctt);
+          width: var(--circulo-ctt);
         }
         span{
           margin-left: 5px;
@@ -200,20 +240,22 @@ $circulo-ctt: 35px;
       transition: 500ms ease-in-out;
       font-size: .9rem;
       @include d-flex-center('vertical');
+      align-items: var(--flex-start);
       list-style-type: none;
-      min-height: $height-li;
-      height: $height-li;
-      max-height: $height-li;
+      min-height: var(--height-li);
+      height: var(--height-li);
+      max-height: var(--height-li);
       cursor: pointer;
       border-bottom: 1px solid #CCC;
       position: relative;
       white-space: nowrap;
       .circulo-contatos{
+        align-self: center;
         border-radius: 50%;
-        width: $circulo-ctt;
-        height: $circulo-ctt;
-        min-width: $circulo-ctt;
-        min-height: $circulo-ctt;
+        width: var(--circulo-ctt);
+        height: var(--circulo-ctt);
+        min-width: var(--circulo-ctt);
+        min-height: var(--circulo-ctt);
         @include d-flex-center();
         position: relative;
         margin-right: 20px;
@@ -228,7 +270,7 @@ $circulo-ctt: 35px;
         img{
           transition: .3s;
           position: absolute;
-          top: 20px;
+          top: var(--top-img);
           right: -8px;
           width: 15px;
         }
