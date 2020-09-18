@@ -787,7 +787,7 @@ export default {
       }
     },
     resizeEvent(event){
-      this.alturaTela = event.target.outerHeight
+      this.alturaTela = document.querySelector("html").offsetHeight
       if(this.msgFormatadaAberto){
         this.msgFormatadaAberto = false
       }
@@ -800,15 +800,15 @@ export default {
     },
     alterarValoresVariaveisCSS(tipo){
       const root = document.documentElement
-      
+
       switch(tipo){
         case "padrao":
           // Ultimo breakpoint
           if(this.alturaTela >= 900){
-            root.style.setProperty('--altura-chat-corpo', "80%")
+            root.style.setProperty('--altura-chat-corpo', "79%")
           // Setimo breakpoint
           }else if(this.alturaTela >= 800){
-            root.style.setProperty('--altura-chat-corpo', "77%")
+            root.style.setProperty('--altura-chat-corpo', "78%")
           // Sexto breakpoint
           }else if(this.alturaTela >= 750){
             root.style.setProperty('--altura-chat-corpo', "76.5%")
@@ -859,7 +859,7 @@ export default {
         case "aberto":
           // Ultimo breakpoint
           if(this.alturaTela >= 900){
-            root.style.setProperty('--altura-chat-corpo', "64%")
+            root.style.setProperty('--altura-chat-corpo', "63%")
           // Setimo breakpoint
           }else if(this.alturaTela >= 800){
             root.style.setProperty('--altura-chat-corpo', "60%")
