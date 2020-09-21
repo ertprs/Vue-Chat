@@ -3,7 +3,7 @@
     <ul 
       lista-retornar
       class="popup-lista" 
-      :class="{'tres-mais' : tamanhoChat(), 'bg' : bg}"
+      :class="{'tres-mais' : ajustar, 'bg' : bg}"
       v-if="!pessoalData">
       <li @click="retornar('todos'), fecharPopup()"> Todos </li>
       <li @click="retornar('pessoal'), fecharPopup()"> Pessoal </li>
@@ -33,13 +33,18 @@ export default {
   data(){
     return{
       pessoalData: false,
-      dataHora: ''
+      dataHora: '',
+      ajustar: false
     }
+  },
+  mounted(){
+    this.tamanhoChat()
   },
   computed: {
     ...mapGetters({
       bg: 'getBgPopup',
-      atendimentoAtivo: "getAtendimentoAtivo"
+      atendimentoAtivo: "getAtendimentoAtivo",
+      abrirPopup: "getAbrirPopup"
     })
   },
   methods: {
@@ -105,12 +110,12 @@ export default {
       const widthChat = localStorage.getItem('largura-chat')
       if(widthChat){
         if(widthChat < '400px'){
-          return true
+          this.ajustar = true
         }else{
-          return false
+          this.ajustar = false
         }
       }else{
-        return false
+        this.ajustar = false
       }
     },
     setData(opt){

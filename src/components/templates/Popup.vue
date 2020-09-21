@@ -57,6 +57,7 @@ export default {
       if(event.target === document.querySelector('#popup')){       
         this.$store.dispatch('setBlocker', false)
         this.$store.dispatch('setAbrirPopup', false)
+        this.$store.dispatch('setOrigem', "")
       }
     },
     alterarCoresLi(){
