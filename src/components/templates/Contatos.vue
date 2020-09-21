@@ -33,7 +33,7 @@
       </div>
       <!-- Caso haja Cliente -->
       <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 400">
-        <div class="fieldset-container" :class="{'fechado' : fechado}" v-on:click="alternarAbaAberta()">
+        <div class="fieldset-container" v-if="caso !== 400 && caso !== 206" :class="{'fechado' : fechado}" v-on:click="alternarAbaAberta()">
           <h4
             :class="{'ativo' : abaAberta == 'atendimento'}"
             v-if="objAtendimentos.length && caso !== 206"
@@ -64,7 +64,7 @@
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
           </li>
         </ul>
-        <div class="fieldset-container">
+        <div class="fieldset-container" v-if="caso !== 400 && caso !== 206">
           <h4
             v-on:click="alternarAbaAberta()"
             :class="abaAberta == 'aguardando' ? 'ativo' : ''"
