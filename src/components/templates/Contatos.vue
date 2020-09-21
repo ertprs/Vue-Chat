@@ -68,78 +68,25 @@
           <h4
             v-on:click="alternaAbaAberta()"
             :class="abaAberta == 'aguardando' ? 'ativo' : ''"
-            v-if="objAtendimentos.length && caso !== 206"
+            v-if="objAtendimentos.length && caso !== 206 && aguardando.length"
             >
             Aguardando
           </h4>
         </div>
-        <div class="lista-aguardando" v-if="minhaAgenda.length">
-          <!-- Lista repetida para simular mais contatos -->
+        <div class="lista-aguardando" v-if="aguardando.length">
           <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta !== 'aguardando'}">
             <li
-              v-for="(atd, indice) in minhaAgenda"
+              v-for="(atd, indice) in aguardando"
               :key="'id_'+indice"
               :id="'li_'+indice"
-              :title="atd"
+              :title="atd.nome_usu"
               class="semClick"
             >
               <div class="circulo-contatos">
-                <p>{{ formataSigla(atd[0], 'upper') }}</p>
-                <p v-if="fechado">{{ formataSigla(atd[1], 'lower') }}</p>
+                <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
+                <p v-if="fechado">{{ formataSigla(atd.nome_usu[1], 'lower') }}</p>
               </div>
-              <template v-if="!fechado">{{ atd }}</template>
-            </li>
-            <li
-              v-for="(atd, indice) in minhaAgenda"
-              :key="'id_'+indice+'a'"
-              :id="'li_'+indice+'a'"
-              :title="atd"
-              class="semClick"
-            >
-              <div class="circulo-contatos">
-                <p>{{ formataSigla(atd[0], 'upper') }}</p>
-                <p v-if="fechado">{{ formataSigla(atd[1], 'lower') }}</p>
-              </div>
-              <template v-if="!fechado">{{ atd }}</template>
-            </li>
-            <li
-              v-for="(atd, indice) in minhaAgenda"
-              :key="'id_'+indice+'b'"
-              :id="'li_'+indice+'b'"
-              :title="atd"
-              class="semClick"
-            >
-              <div class="circulo-contatos">
-                <p>{{ formataSigla(atd[0], 'upper') }}</p>
-                <p v-if="fechado">{{ formataSigla(atd[1], 'lower') }}</p>
-              </div>
-              <template v-if="!fechado">{{ atd }}</template>
-            </li>
-            <li
-              v-for="(atd, indice) in minhaAgenda"
-              :key="'id_'+indice+'c'"
-              :id="'li_'+indice+'c'"
-              :title="atd"
-              class="semClick"
-            >
-              <div class="circulo-contatos">
-                <p>{{ formataSigla(atd[0], 'upper') }}</p>
-                <p v-if="fechado">{{ formataSigla(atd[1], 'lower') }}</p>
-              </div>
-              <template v-if="!fechado">{{ atd }}</template>
-            </li>
-            <li
-              v-for="(atd, indice) in minhaAgenda"
-              :key="'id_'+indice+'d'"
-              :id="'li_'+indice+'d'"
-              :title="atd"
-              class="semClick"
-            >
-              <div class="circulo-contatos">
-                <p>{{ formataSigla(atd[0], 'upper') }}</p>
-                <p v-if="fechado">{{ formataSigla(atd[1], 'lower') }}</p>
-              </div>
-              <template v-if="!fechado">{{ atd }}</template>
+              <template v-if="!fechado">{{ atd.nome_usu }}</template>
             </li>
           </ul>
         </div>
@@ -159,14 +106,14 @@
               v-for="(atd, indice) in minhaAgenda"
               :key="'id_'+indice"
               :id="'li_'+indice"
-              :title="atd"
+              :title="atd.nome_usu"
               class="semClick"
             >
               <div class="circulo-contatos">
-                <p>{{ formataSigla(atd[0], 'upper') }}</p>
-                <p v-if="fechado">{{ formataSigla(atd[1], 'lower') }}</p>
+                <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
+                <p v-if="fechado">{{ formataSigla(atd.nome_usu[1], 'lower') }}</p>
               </div>
-              <template v-if="!fechado">{{ atd }}</template>
+              <template v-if="!fechado">{{ atd.nome_usu }}</template>
             </li>
           </ul>
         </div>
@@ -239,7 +186,6 @@ export default {
       if(this.abaAberta === "aguardando") {
         this.contarMsgClientes()
       } else {
-        console.log('zerou')
         this.totalMsgNovas = ''
         this.totalClientesNovos = ''
       }
@@ -267,12 +213,14 @@ export default {
     this.$root.$on('encerrar-atd', atdAtivo => {
       this.encerrarAtdNaTela(atdAtivo)
     })
+
   },
   computed: {
     ...mapGetters({
       clienteMandouMensagem: "getClienteMandouMensagem",
       todosAtendimentos: "getTodosAtendimentos",
       minhaAgenda: "getAgenda",
+      aguardando: "getAguardando",
       caso: 'getCaso',
       iframesDisponiveis: 'getIframesDisponiveis',
       idAtendimentoAtivo: 'getIdAtendimentoAtivo',
@@ -305,7 +253,6 @@ export default {
       }
     },
     contarMsgClientes() {
-      console.log('chamou')
       this.totalMsgNovas = ''
       this.totalClientesNovos = ''
       var auxContMsgNova = 0

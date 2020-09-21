@@ -405,7 +405,7 @@ export default {
         if(this.statusEnvio){
           status = this.statusEnvio
         }else{
-          status = "Q"
+          status = "D"
         }
 
         objMensagem = {

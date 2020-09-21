@@ -94,8 +94,25 @@ function tratarResponse(response) {
 
                     carregarIframe(mainData.atendimentos)
                     store.dispatch('setAtendimentos', mainData.atendimentos)
-                    const agenda = ['Maria', 'Joao', 'Joana', 'Frederico']
-                    store.dispatch('setAgenda', agenda)
+
+                    axios_api.get("get-agenda")
+                        .then(response => {
+                            store.dispatch("setAgenda", response.data.contatos)
+                        })
+                        .catch(error => {
+                            console.log('error get agenda: ', error)
+                        })
+
+                    axios_api.get("get-aguardando")
+                    .then(response => {
+                        store.dispatch("setAguardando", response.data.contatos)
+                    })
+                    .catch(error => {
+                        console.log('error get aguardando: ', error)
+                    })
+
+                    // const agenda = ['Maria', 'Joao', 'Joana', 'Frederico']
+                    // store.dispatch('setAgenda', agenda)
                     loopAtualizacaoDeAtendimentos()
                 } else {
                     console.log('Erro ao tentar obter dados no servidor')
