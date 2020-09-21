@@ -33,7 +33,7 @@
       </div>
       <!-- Caso haja Cliente -->
       <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 400">
-        <div class="fieldset-container" :class="{'fechado' : fechado}" v-on:click="alternaAbaAberta()">
+        <div class="fieldset-container" :class="{'fechado' : fechado}" v-on:click="alternarAbaAberta()">
           <h4
             :class="{'ativo' : abaAberta == 'atendimento'}"
             v-if="objAtendimentos.length && caso !== 206"
@@ -66,7 +66,7 @@
         </ul>
         <div class="fieldset-container">
           <h4
-            v-on:click="alternaAbaAberta()"
+            v-on:click="alternarAbaAberta()"
             :class="abaAberta == 'aguardando' ? 'ativo' : ''"
             v-if="objAtendimentos.length && caso !== 206 && aguardando.length"
             >
@@ -179,7 +179,9 @@ export default {
             this.ativarConversa(this.objAtendimentos[0], 0)
           }
         }
-        this.contarMsgClientes()
+        if(this.abaAberta == "aguardando"){
+          this.contarMsgClientes()
+        }
       }
     },
     abaAberta(){
@@ -235,7 +237,7 @@ export default {
         this.$store.dispatch("setIframeCttAtivo", true)
       }
     },
-    alternaAbaAberta(){
+    alternarAbaAberta(){
       switch (this.abaAberta){
         case "atendimento":
           this.abaAberta = "aguardando"
