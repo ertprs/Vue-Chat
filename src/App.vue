@@ -24,13 +24,7 @@
     </vue-resizable>
 
     <!-- Informacoes -->
-    <!-- <vue-resizable
-      :minWidth="500"
-      :width="widthInformacoes"
-      :active="handlers"
-      :fitParent="true"> -->
-      <Informacoes v-on:click="clickInformacoes($event)"/>
-    <!-- </vue-resizable> -->
+    <Informacoes v-on:click="clickInformacoes($event)"/>
 
   </div>
 </template>
@@ -60,7 +54,6 @@ export default {
     return{
       widthContatos: '20%',
       widthChat: '30%',
-      widthInformacoes: '50%',
       handlers: ['r']
     }
   },
@@ -70,10 +63,8 @@ export default {
 
       if(widthContatos < 90 && !this.fechado){
         this.$root.$emit('toggle-contatos')
-        // this.$root.$off('toggle-contatos')
       }else if(widthContatos > 90 && this.fechado){
         this.$root.$emit('toggle-contatos')
-        // this.$root.$off('toggle-contatos')
       }
 
       localStorage.setItem('largura-contatos', widthContatos + 'px')

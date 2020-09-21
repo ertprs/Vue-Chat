@@ -11,9 +11,10 @@ import mensagens from './modulos/mensagens'
 import agenda from './modulos/agenda'
 import url from './modulos/url'
 import popup from './modulos/popup'
+import aguardando from './modulos/aguardando'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules: { atendimentos, controlesFront, emojis, iframeModulo, regras, mensagens, agenda, url, popup }
+  modules: { atendimentos, controlesFront, emojis, iframeModulo, regras, mensagens, agenda, url, popup, aguardando }
 });
