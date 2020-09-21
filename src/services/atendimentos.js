@@ -61,7 +61,7 @@ function loopAtualizacaoDeAtendimentos(count = 0) {
 
 function tratarResponse(response) {
     if (response.headers.authorization) {
-        alert(response.headers.authorization)
+        // alert(response.headers.authorization)
         axiosTokenJWT(response.headers.authorization)
     } else {
         console.error('Erro na autorização')
