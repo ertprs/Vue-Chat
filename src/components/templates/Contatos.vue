@@ -179,7 +179,6 @@ export default {
             this.ativarConversa(this.objAtendimentos[0], 0)
           }
         }
-        this.contarMsgClientes()
       }
     },
     abaAberta(){
