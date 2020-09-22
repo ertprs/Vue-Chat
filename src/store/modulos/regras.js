@@ -2,21 +2,21 @@
 
 export default {
   state: {
-    todasRegras: []
+    regrasDoClienteAtivo: {}
   },
   mutations: {
-    setTodasRegras(state, regras) {
-      state.todasRegras.push(regras)
+    setRegrasDoClienteAtivo(state, regras) {
+      state.regrasDoClienteAtivo = regras
     }
   },
   actions: {
-    setTodasRegras: (context, payload) => {
-      context.commit('setTodasRegras', payload)
+    setRegrasDoClienteAtivo: (context, payload) => {
+      context.commit('setRegrasDoClienteAtivo', payload)
     }
   },
   getters: {
-    getTodasRegras(state) {
-      return state.todasRegras
+    getRegrasDoClienteAtivo(state) {
+      return state.regrasDoClienteAtivo
     }
   }
 }

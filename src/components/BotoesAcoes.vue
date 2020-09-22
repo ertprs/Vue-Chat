@@ -39,7 +39,7 @@
           <p> {{ msgErro }} </p>
         </div>
         </div>
-      </template>
+      </template> 
       <!-- <template v-else>
         <div
           class="rodape-botoes-botao botao-transferencia"
@@ -80,7 +80,6 @@ import { executandoEncerrar, liberarEncerrar } from '../services/atendimentos'
 export default {
   data(){
     return{
-      regrasDoClienteAtivo: {},
       regrasBotoes: {},
       regrasCor: {},
       tudoPronto: false,
@@ -100,6 +99,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      regrasDoClienteAtivo: 'getRegrasDoClienteAtivo',
       atendimentoAtivo: 'getAtendimentoAtivo',
       todosAtendimentos: 'getTodosAtendimentos',
       idAtendimentoAtivo: 'getIdAtendimentoAtivo',
@@ -112,9 +112,23 @@ export default {
   },
   watch: {
     atendimentoAtivo(){
-      if(this.atendimentoAtivo.login_usu !== this.regrasDoClienteAtivo.id){
+      if(!this.atendimentoAtivo.rules){
         this.tudoPronto = false
+        if(this.regrasDoClienteAtivo.regras){
+          this.reverterCoresClienteAtivo()
+        }
         this.getRegras()
+      }else{
+        if(this.atendimentoAtivo.login_usu !== this.regrasDoClienteAtivo.id){
+          this.tudoPronto = false
+          this.reverterCoresClienteAtivo()
+
+          this.$store.commit("setRegrasDoClienteAtivo", { id: this.atendimentoAtivo.login_usu, regras: this.atendimentoAtivo.rules })
+          this.preencherRegrasDoClienteAtivo()
+
+        }else{
+          this.preencherRegrasDoClienteAtivo()
+        }
       }
     }
   },
@@ -127,14 +141,21 @@ export default {
         .then(response => {
           if (response.data.st_ret == 'OK') {
             this.contadorRequisicoesFalhas = 0
+            if(response.data.st_ret == "OK"){
+              const arrayRegras = response.data.rules
+              let auxAtdAtivo = this.atendimentoAtivo
+              auxAtdAtivo.rules = arrayRegras
+              this.$store.commit("setAtendimentoAtivo", auxAtdAtivo)
 
-            const arrayRegras = response.data
-            let objRegra = {
-              id: id,
-              regras: arrayRegras
+              let objRegra = {
+                id: id,
+                regras: arrayRegras
+              }
+              this.$store.commit("setRegrasDoClienteAtivo", objRegra)
+
+              this.preencherRegrasDoClienteAtivo()
             }
-            this.regrasDoClienteAtivo = objRegra
-            this.preencherRegrasDoClienteAtivo()
+
           }
         })
         .catch(error => {
@@ -148,13 +169,13 @@ export default {
     },
     preencherRegrasDoClienteAtivo(){
       if(this.regrasDoClienteAtivo.regras){
-        this.regrasBotoes = this.regrasDoClienteAtivo.regras.rules
+        this.regrasBotoes = this.regrasDoClienteAtivo.regras
         this.setCoresClienteAtivo()
         this.tudoPronto = true
       }
     },
     setCoresClienteAtivo(){
-      this.regrasCor = this.regrasDoClienteAtivo.regras.rules.primary_color
+      this.regrasCor = this.regrasDoClienteAtivo.regras.primary_color
       if(this.regrasCor){
         this.aplicarCoresNoElemento('.chat-opcoes-titulo', this.regrasCor)
         this.aplicarCoresNoElemento('.titulo-contatos', this.lightenDarkenColor(this.regrasCor, 10))
