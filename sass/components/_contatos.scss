@@ -358,6 +358,12 @@ $tamanhoBoxShadow: 5px;
         white-space: nowrap;
         user-select: none;
       }
+      .data-retorno{
+        position: absolute;
+        font-size: .6rem;
+        bottom: 0;
+        right: 15px;
+      }
     }
   }
   .lista-agenda{

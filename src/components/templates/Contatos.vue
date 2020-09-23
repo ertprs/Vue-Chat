@@ -80,7 +80,7 @@
               :key="'id_'+indice"
               :id="'li_'+indice"
               :title="atd.nome_usu"
-              class="semClick"
+              @click="ativarCliente()"
             >
               <div class="circulo-contatos">
                 <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
@@ -107,13 +107,14 @@
               :key="'id_'+indice"
               :id="'li_'+indice"
               :title="atd.nome_usu"
-              class="semClick"
+              @click="ativarCliente()"
             >
               <div class="circulo-contatos">
                 <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
                 <p v-if="fechado">{{ formataSigla(atd.nome_usu[1], 'lower') }}</p>
               </div>
               <template v-if="!fechado">{{ atd.nome_usu }}</template>
+              <span class="data-retorno">{{ formataData(atd.data) }}</span>
             </li>
           </ul>
         </div>
@@ -237,6 +238,17 @@ export default {
         this.$store.dispatch("setIframeCttAtivo", true)
       }
     },
+    ativarCliente(){
+      axios_api.post("start-contato")
+        .then(response => {
+          console.log('Sucesso! ', response)
+          this.$toasted.global.defaultSuccess({msg: response.data.msg_ret})
+        })
+        .catch(error => {
+          console.log("Erro ativar cliente: ", error)
+          this.$toasted.global.defaultError({msg: "Nao foi possivel ativar o contato"})
+        })
+    },
     alternarAbaAberta(){
       switch (this.abaAberta){
         case "atendimento":
@@ -260,7 +272,6 @@ export default {
       var auxContMsgNova = 0
       var auxContNovoContato = 0
       for(let index in this.objAtendimentos) {
-        // console.log(this.objAtendimentos[index])
         if(this.objAtendimentos[index].qtdMsgNova) {
           auxContMsgNova = auxContMsgNova + this.objAtendimentos[index].qtdMsgNova
         }
@@ -280,6 +291,21 @@ export default {
     },
     adicionaCaso(caso){
       this.$store.dispatch('setCaso', caso)
+    },
+    formataData(data){
+      let aux = data.split(/\s/)
+      let dataAux = aux[0]
+      let horaAux = aux[1]
+
+      dataAux = dataAux.replace(/-/g, "\/")
+      dataAux = dataAux.split(/\//)
+      dataAux = dataAux.reverse()
+      dataAux = dataAux.join("/")
+
+      horaAux = horaAux.replace(/:/g, "h")
+      horaAux = horaAux.slice(0, horaAux.length-3)
+
+      return dataAux + ' ' + horaAux
     },
     statusMensagens(atd){
 
