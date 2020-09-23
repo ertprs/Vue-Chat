@@ -304,10 +304,12 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                         } else {
                             novosAtendimentos[ramal].qtdMsgNova += 1;
                         }
-                    } else {
+                    } else if(message.resp_msg == "CLI") {
                         app.$root.$emit('rolaChat')
                         app.$root.$emit('atualizar_mensagem', message)
-
+                    } else if(message.resp_msg == "SYS"){
+                        app.$root.$emit('rolaChat')
+                        app.$root.$emit('atualizar_mensagem', message)
                     }
 
                 }

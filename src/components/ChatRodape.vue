@@ -369,13 +369,22 @@ export default {
       return true;
     },
     criaObjMensagem(objMessage) {
-
-      const hora = this.formataHoraAtual();
-      let objMensagem = {};
+      let objMensagem = {}
+      let autor = ""
+      let origem = ""
+      let hora = this.formataHoraAtual()
       let msg = this.mensagem;
+      let anexo = false
+      let imgAnexo = ""
+      let tipoDoc = ""
+      let docAnexo = ""
+      let nomeArquivo = ""
+      let status = ""
 
+      let regex = ""
+
+      // Msg sendo disparada pelo textarea
       if (!objMessage) {
-        let regex = "";
         for (let j = 0; j < this.emojis.length; j++) {
           regex = new RegExp(this.emojis[j].emoji, "gi");
           this.mensagem = this.mensagem.replace(regex, this.emojis[j].hexa);
@@ -383,12 +392,6 @@ export default {
         
         msg = msg.replace(/<\/?[\d\w\s=\-:\.\/\'\";]+>/gi, ' ')
 
-        let anexo = false
-        let imgAnexo = ""
-        let tipoDoc = ""
-        let docAnexo = ""
-        let nomeArquivo = ""
-        
         if(this.arquivo){
           anexo = true
           if(!this.docPrevia){
@@ -401,38 +404,18 @@ export default {
           }
         }
 
-        let status = ""
-
         if(this.statusEnvio){
           status = this.statusEnvio
         }else{
           status = "D"
         }
 
-        objMensagem = {
-          autor: "Operador", // Operador, Cliente
-          origem: "principal", // principal e outros
-          msg: msg,
-          horario: hora,
-          anexo: anexo,
-          imgAnexo: imgAnexo,
-          anexo: anexo,
-          imgAnexo: imgAnexo,
-          tipoDoc: tipoDoc,
-          docAnexo: docAnexo,
-          status: status,
-          nomeArquivo: nomeArquivo
-        };
+        autor = "Operador"
+        origem = "principal"
 
       } else {
 
         msg = objMessage.msg;
-
-        let anexo = false
-        let imgAnexo = ""
-        let tipoDoc = ""
-        let docAnexo = ""
-        let nomeArquivo = ""
 
         if(objMessage.anexos){
           anexo = true
@@ -443,7 +426,7 @@ export default {
             baseUrl = 'https://'+window.location.hostname
           }
           
-          let regex = /(\w+)\/(\w+)/g;
+          regex = /(\w+)\/(\w+)/g;
           let type = regex.exec(objMessage.anexos.type);
           switch (type[1]) {
             case "image": 
@@ -456,25 +439,26 @@ export default {
           }
         }
 
-        let autor = objMessage.resp_msg == "CLI" ? "Cliente" : "Operador"
-        let origem = autor == "Cliente" ? "outros" : "principal"
+        status = objMessage.status
 
-        objMensagem = {
-          autor: autor, // Operador, Cliente
-          origem: origem, // principal e outros
-          msg: msg,
-          horario: objMessage.hora,
-          anexo: anexo,
-          imgAnexo: imgAnexo,
-          tipoDoc: tipoDoc,
-          docAnexo: docAnexo,
-          nomeArquivo: nomeArquivo
-        };
-
-        console.log('enviado: ', objMensagem)
-
-        this.$store.dispatch("setTodasMensagens", objMensagem)
+        autor = objMessage.resp_msg == "CLI" ? "Cliente" : "Operador"
+        origem = autor == "Cliente" ? "outros" : "principal"
       }
+
+      objMensagem = {
+        autor: autor, // Operador, Cliente
+        origem: origem, // principal e outros
+        msg: msg,
+        horario: hora,
+        anexo: anexo,
+        imgAnexo: imgAnexo,
+        tipoDoc: tipoDoc,
+        docAnexo: docAnexo,
+        nomeArquivo: nomeArquivo,
+        status: status
+      };
+
+      this.$store.dispatch("setTodasMensagens", objMensagem)
 
       if(this.statusEnvio !== "E"){
         this.resetar()

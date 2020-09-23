@@ -81,6 +81,9 @@ export default {
     },
     getNroChat(state){
       return state.nroChat
+    },
+    getAtualizarMensagens(state){
+      return state.atualizarMensagens
     }
   }
 }
