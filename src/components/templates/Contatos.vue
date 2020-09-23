@@ -120,7 +120,7 @@
         </div>
       </div>
     </template>
-    <!-- Caso n�o haja atendimentos -->
+    <!-- Caso nÃ£o haja atendimentos -->
     <div v-if="caso == 400 && !todosAtendimentos.length" class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
       <div>
         <i class="far fa-folder-open"></i>
@@ -138,7 +138,7 @@
   .fade-enter-active, .fade-leave-active {
     transition: opacity .5s;
   }
-  .fade-enter, .fade-leave-to /* .fade-leave-active em vers�es anteriores a 2.1.8 */ {
+  .fade-enter, .fade-leave-to /* .fade-leave-active em versÃµes anteriores a 2.1.8 */ {
     opacity: 0;
   }
 </style>
@@ -246,7 +246,7 @@ export default {
         })
         .catch(error => {
           console.log("Erro ativar cliente: ", error)
-          this.$toasted.global.defaultError({msg: "Nao foi possivel ativar o contato"})
+          this.$toasted.global.defaultError({msg: "NÃ£o foi possivel ativar o contato"})
         })
     },
     alternarAbaAberta(){

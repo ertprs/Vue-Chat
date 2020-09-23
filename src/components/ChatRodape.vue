@@ -2,7 +2,7 @@
   <div class="chat-rodape">
     <div class="chat-rodape-container">
       <div class="chat-rodape-mensagens">
-        <!-- Pr�via imagem -->
+        <!-- Prévia imagem -->
         <div class="container-previa-img" v-show="aparecerPrevia" :class="{'previa-anexo' : docPrevia, 'previa-anexo-erro' : docPrevia && erroFormatoAnexo}">
           <h3 v-if="arquivo.name">
             <i class="fas fa-image" v-if="!docPrevia"></i>
@@ -16,7 +16,7 @@
           <div class="div-previa" v-if="imagemPrevia">
             <img
               :src="imagemPrevia"
-              alt="Previa da Imagem Selecionada"
+              alt="Prévia da Imagem Selecionada"
             />
           </div>
         </div>
@@ -62,7 +62,7 @@
           >({{ qtdCaracteresDisponiveis - mensagem.length }})</span>
         </div>
       </div>
-      <!-- Outros Bot�es -->
+      <!-- Outros Botoes -->
       <div class="chat-rodape-botoes">
         <div>
           <!-- Btn enviar msg -->
@@ -178,7 +178,7 @@
   .fade-enter-active, .fade-leave-active {
     transition: opacity .5s;
   }
-  .fade-enter, .fade-leave-to /* .fade-leave-active em vers�es anteriores a 2.1.8 */ {
+  .fade-enter, .fade-leave-to /* .fade-leave-active em versï¿½es anteriores a 2.1.8 */ {
     opacity: 0;
   }
 </style>
@@ -199,7 +199,7 @@ export default {
       aparecerPrevia: false,
       imagemPrevia: "",
       docPrevia: false,
-      txtFormatoInvalido: "Formato Invalido!",
+      txtFormatoInvalido: "Formato Inválido!",
       txtFormatosValidos: "",
       controle: true,
       qtdInicial: 0,
@@ -306,7 +306,7 @@ export default {
               this.statusEnvio = "E"
               if (!document.querySelector(".toasted.toasted-primary.error")) {
                 this.$toasted.global.defaultError({
-                  msg: "Nao foi possivel enviar a mensagem",
+                  msg: "Não foi possível enviar a mensagem",
                 });
               }
             });
@@ -369,6 +369,7 @@ export default {
       return true;
     },
     criaObjMensagem(objMessage) {
+
       const hora = this.formataHoraAtual();
       let objMensagem = {};
       let msg = this.mensagem;
@@ -424,6 +425,7 @@ export default {
         };
 
       } else {
+
         msg = objMessage.msg;
 
         let anexo = false
@@ -454,9 +456,12 @@ export default {
           }
         }
 
+        let autor = objMessage.resp_msg == "CLI" ? "Cliente" : "Operador"
+        let origem = autor == "Cliente" ? "outros" : "principal"
+
         objMensagem = {
-          autor: "Cliente", // Operador, Cliente
-          origem: "outros", // principal e outros
+          autor: autor, // Operador, Cliente
+          origem: origem, // principal e outros
           msg: msg,
           horario: objMessage.hora,
           anexo: anexo,
@@ -466,9 +471,11 @@ export default {
           nomeArquivo: nomeArquivo
         };
 
+        console.log('enviado: ', objMensagem)
+
+        this.$store.dispatch("setTodasMensagens", objMensagem)
       }
 
-      this.$store.dispatch("setTodasMensagens", objMensagem)
       if(this.statusEnvio !== "E"){
         this.resetar()
       }
@@ -934,7 +941,8 @@ export default {
       emojis: "getEmojis",
       blocker: "getBlocker",
       tipoMsg: 'getTipoMsg',
-      origemBlocker: 'getOrigemBlocker'
+      origemBlocker: 'getOrigemBlocker',
+      todasMensagens: "getTodasMensagens"
     })
   },
   created(){

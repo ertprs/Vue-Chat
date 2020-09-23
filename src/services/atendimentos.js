@@ -63,7 +63,7 @@ function tratarResponse(response) {
         // alert(response.headers.authorization)
         axiosTokenJWT(response.headers.authorization)
     } else {
-        console.error('Erro na autorização')
+        console.error('Erro na autorizaï¿½ï¿½o')
         console.log(response)
         adicionaCaso(400)
     }
@@ -192,7 +192,7 @@ async function atualizarAtendimentos() {
     })
         .then(response => {
             let mainData = response.data
-            // Quando chega um novo contato, o st_ret não vem, e acaba caindo no ultimo else
+            // Quando chega um novo contato, o st_ret nï¿½o vem, e acaba caindo no ultimo else
             if (mainData.st_ret === 'OK' || mainData.atendimentos) {
                 adicionaCaso(200)
                 atualizarClientes(mainData)
@@ -305,10 +305,9 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                             novosAtendimentos[ramal].qtdMsgNova += 1;
                         }
                     } else {
-                        if (message.resp_msg == 'CLI') {
-                            app.$root.$emit('rolaChat')
-                            app.$root.$emit('atualizar_mensagem', message)
-                        }
+                        app.$root.$emit('rolaChat')
+                        app.$root.$emit('atualizar_mensagem', message)
+
                     }
 
                 }

@@ -1,10 +1,10 @@
 <template>
   <div id="informacoes" class="resizable-content">
     <template>
-      <!-- T�tulo -->
+      <!-- Título -->
       <div class="informacoes-titulo tamanho-titulos" v-if="!atendimentoAtivo.informacoes || caso == 206 || caso == 400">
         <i class="fas fa-info-circle"></i>
-        <h1 title="Informacoes"> Informacoes </h1>
+        <h1 title="Informacoes"> Informações </h1>
       </div>
       <!-- Caso haja informacoes -->
       <div class="container-principal-informacoes" v-if="atendimentoAtivo.informacoes && (caso == 200 || caso == '')">
@@ -87,12 +87,12 @@
           <BotoesAcoes />
         </div> -->
       </div>
-      <!-- Caso n�o haja informacoes -->
+      <!-- Caso não haja informacoes -->
       <div class="lista-informacoes-container-vazio" v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206">
         <div>
           <i class="far fa-folder-open"></i>
           <p>
-            Sem informacoes para mostrar
+            Sem informações para mostrar
           </p>
         </div>
       </div>
