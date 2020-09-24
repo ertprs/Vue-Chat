@@ -20,6 +20,8 @@
   }
 }
 
+$cor-textos-secundarios: #AAA;
+
 @mixin chat-corpo(){
   background-image: url('../../../public/assets/img/messages-wallpaper.png');
   position: relative;
@@ -97,7 +99,7 @@
       position: absolute;
       left: 10px;
       bottom: 0px;
-      color: #CCC;
+      color: $cor-textos-secundarios;
     }
     p{
       margin: unset;
@@ -118,9 +120,9 @@
         right: 10px;
         bottom: 0;
         font-size: 0.7rem;
-        color: #CCC;
+        color: $cor-textos-secundarios;
         svg{
-          color: #CCC
+          color: $cor-textos-secundarios
         }
         &.visualizado, &.visualizado svg{
           color: #006DAA
@@ -130,7 +132,8 @@
         position: absolute;
         font-size: 0.6rem;
         white-space: nowrap;
-        color: #CCC;
+        color: $cor-textos-secundarios;
+        font-weight: bold;
         top: 2px;
       }
       .mensagem-div-anexo{

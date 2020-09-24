@@ -11,9 +11,9 @@
       </div>
       <div>
       </div>
-      <div class="container-add-novo-cliente" :class="{'fechado' : fechado}" title="Adicionar novo cliente" v-on:click="abrirAtivarCtt()">
+      <!-- <div class="container-add-novo-cliente" :class="{'fechado' : fechado}" title="Adicionar novo cliente" v-on:click="abrirAtivarCtt()">
         <i class="fas fa-user-plus"></i>
-      </div>
+      </div> -->
       <div v-on:click="toggleContatos($event)" class="container-flecha" :class="rotate ? 'rotate' : ''">
         <i class="fas fa-long-arrow-alt-left flecha"></i>
       </div>
@@ -120,7 +120,7 @@
         </div>
       </div>
     </template>
-    <!-- Caso nÃ£o haja atendimentos -->
+    <!-- Caso nao haja atendimentos -->
     <div v-if="caso == 400 && !todosAtendimentos.length" class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
       <div>
         <i class="far fa-folder-open"></i>
@@ -227,17 +227,17 @@ export default {
       caso: 'getCaso',
       iframesDisponiveis: 'getIframesDisponiveis',
       idAtendimentoAtivo: 'getIdAtendimentoAtivo',
-      iframeCttAtivo: 'getIframeCttAtivo'
+      // iframeCttAtivo: 'getIframeCttAtivo'
     })
   },
   methods: {
-    abrirAtivarCtt(){
-      if(this.iframeCttAtivo){
-        this.$store.dispatch("setIframeCttAtivo", false)
-      }else{
-        this.$store.dispatch("setIframeCttAtivo", true)
-      }
-    },
+    // abrirAtivarCtt(){
+    //   if(this.iframeCttAtivo){
+    //     this.$store.dispatch("setIframeCttAtivo", false)
+    //   }else{
+    //     this.$store.dispatch("setIframeCttAtivo", true)
+    //   }
+    // },
     ativarCliente(){
       axios_api.post("start-contato")
         .then(response => {
@@ -246,7 +246,7 @@ export default {
         })
         .catch(error => {
           console.log("Erro ativar cliente: ", error)
-          this.$toasted.global.defaultError({msg: "NÃ£o foi possivel ativar o contato"})
+          this.$toasted.global.defaultError({msg: "Não foi possível ativar o contato"})
         })
     },
     alternarAbaAberta(){
