@@ -35,6 +35,9 @@ export default {
       estadoAtendimento: "em-atendimento"
     }
   },
+  mounted(){
+    this.preencherDiv()
+  },
   methods: {
     mudarEstadoAtendimento(){
       if(this.estadoAtendimento == "em-atendimento"){
