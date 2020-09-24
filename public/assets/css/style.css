@@ -10232,11 +10232,12 @@ div[blocker] {
   border-radius: 10px;
   display: flex;
   align-items: center;
-  transition: background 300ms; }
+  transition: background 300ms;
+  border: 2px solid #495057; }
   #gerenciador-container.em-atendimento {
-    background: #2d6a4f; }
+    background: #248232; }
   #gerenciador-container.parado {
-    background: #bc4749; }
+    background: #bf211e; }
 
 .gerenciador-btn {
   margin: 0 10px;
@@ -10250,7 +10251,10 @@ div[blocker] {
 .gerenciador-lista {
   display: flex;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  border-left: 2px solid #495057;
+  border-right: 2px solid #495057;
+  padding: 0 10px; }
   .gerenciador-lista > div {
     display: flex;
     align-items: center;

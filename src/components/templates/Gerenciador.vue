@@ -1,10 +1,10 @@
 <template>
-  <div id="gerenciador-container" :class="{'em-atendimento' : estadoAtendimento == 'em-atendimento', 'parado' : estadoAtendimento == 'parado'}">
+  <div id="gerenciador-container" :class="{'em-atendimento' : estadoAtendimento == 'em-atendimento', 'parado' : estadoAtendimento == 'parado'}" v-if="gerenciador && gerenciador.length ? true : false">
     <div class="gerenciador-btn" @click="mudarEstadoAtendimento()">
-      <div v-show="estadoAtendimento == 'em-atendimento'">
+      <div v-show="estadoAtendimento == 'em-atendimento'" title="Em atendimento">
         <i class="fas fa-pause"></i>
       </div>
-      <div v-show="estadoAtendimento == 'parado'">
+      <div v-show="estadoAtendimento == 'parado'" title="Parado">
         <i class="fas fa-play"></i>
       </div>
     </div>
@@ -35,9 +35,6 @@ export default {
       estadoAtendimento: "em-atendimento"
     }
   },
-  mounted(){
-    this.preencherDiv()
-  },
   methods: {
     mudarEstadoAtendimento(){
       if(this.estadoAtendimento == "em-atendimento"){
@@ -59,7 +56,14 @@ export default {
         const gerenciador = document.querySelector("#gerenciador-container")
         gerenciadorV8.innerHTML = gerenciador.innerHTML
 
-        gerenciador.remove()
+        gerenciador.classList.add('d-none')
+      }
+    }
+  },
+  watch: {
+    gerenciador(){
+      if(this.gerenciador){
+        this.preencherDiv()
       }
     }
   }
