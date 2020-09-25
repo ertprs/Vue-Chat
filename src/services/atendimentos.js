@@ -314,9 +314,13 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                     } else if(message.resp_msg == "CLI") {
                         app.$root.$emit('rolaChat')
                         app.$root.$emit('atualizar_mensagem', message)
-                    } else if(message.resp_msg == "SYS"){
-                        app.$root.$emit('rolaChat')
-                        app.$root.$emit('atualizar_mensagem', message)
+                    } else if(message.resp_msg == "OPE"){
+                        if(store.getters.getMensagemViaTextarea){
+                            store.dispatch("setMensagemViaTextarea", false)
+                        }else{ 
+                            app.$root.$emit('rolaChat')
+                            app.$root.$emit('atualizar_mensagem', message)
+                        }
                     }
 
                 }
