@@ -9201,11 +9201,18 @@ body {
         font-size: .7rem;
         white-space: nowrap;
         user-select: none; }
-      #todos-contatos ul li .data-retorno {
+      #todos-contatos ul li .retorno-container {
         position: absolute;
+        display: flex;
+        align-items: flex-end;
         font-size: .6rem;
         bottom: 0;
         right: 15px; }
+        #todos-contatos ul li .retorno-container svg {
+          font-size: .9rem;
+          margin-right: 2px; }
+        #todos-contatos ul li .retorno-container .data-retorno {
+          margin-right: 5px; }
   #todos-contatos .lista-agenda .lista-agenda--titulo {
     width: 100%;
     height: 50px;
