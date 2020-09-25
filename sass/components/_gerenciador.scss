@@ -1,0 +1,39 @@
+#gerenciador-container{
+  position: absolute;
+  z-index: 15;
+  bottom: 10px;
+  right: 10px;
+  color: #FFF;
+  font-size: .9rem;
+  border-radius: 10px;
+  @include d-flex-center("vertical");
+  transition: background 300ms;
+  border: 2px solid #495057;
+
+  &.em-atendimento{ 
+    background: #248232
+  }
+  &.parado{
+    background: #bf211e;
+  } 
+}
+
+.gerenciador-btn{
+  margin: 0 10px;
+  @include efeito-hover-padrao;
+}
+
+.gerenciador-lista{
+  @include d-flex-center("ambos");
+  border-left: 2px solid #495057;
+  border-right: 2px solid #495057;
+  padding: 0 10px;
+  > div{
+    @include d-flex-center("vertical");
+    flex-direction: column;
+    margin-right: 10px;
+    &:last-child{
+      margin-right: 0;
+    }
+  }
+}

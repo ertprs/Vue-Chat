@@ -89,6 +89,10 @@ function tratarResponse(response) {
                             mainData.atendimentos[atd].login_usu = mainData.atendimentos[atd].login_usu.replace(regex, '')
                         }
                     }
+                    
+                    if(mainData.gerenciador){
+                        store.dispatch("setGerenciador", mainData.gerenciador)
+                    }
 
                     carregarIframe(mainData.atendimentos)
                     store.dispatch('setAtendimentos', mainData.atendimentos)
@@ -196,6 +200,9 @@ async function atualizarAtendimentos() {
             if (mainData.st_ret === 'OK' || mainData.atendimentos) {
                 adicionaCaso(200)
                 atualizarClientes(mainData)
+                if(mainData.gerenciador){
+                    store.dispatch("setGerenciador", mainData.gerenciador)
+                }
             } else if (mainData.st_ret === 'AVISO') {
                 console.log('Nao existe clientes na fila')
                 adicionaCaso(206)

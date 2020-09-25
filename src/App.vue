@@ -26,6 +26,9 @@
     <!-- Informacoes -->
     <Informacoes v-on:click="clickInformacoes($event)"/>
 
+    <!-- Gerenciador -->
+    <Gerenciador />
+
   </div>
 </template>
 
@@ -39,6 +42,7 @@ import Blocker from './components/templates/Blocker'
 import Contatos from './components/templates/Contatos'
 import Chat from './components/templates/Chat'
 import Informacoes from './components/templates/Informacoes'
+import Gerenciador from './components/templates/Gerenciador'
 import Teste from './components/templates/Teste'
 
 export default {
@@ -48,6 +52,7 @@ export default {
     Contatos,
     Chat,
     Informacoes,
+    Gerenciador,
     Teste
   },
   data(){
