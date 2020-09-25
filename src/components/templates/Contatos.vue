@@ -116,7 +116,7 @@
               <template v-if="!fechado">{{ atd.nome_usu }}</template>
               <div class="retorno-container" :id="'retorno_'+indice">
                 <span class="data-retorno">{{ formataData(atd.data) }}</span>
-                <span class="contador-data-retorno"><i class="fas fa-stopwatch"></i>{{ formataData(atd.data, "retorno", `#retorno_${indice}`) }}</span>
+                <span class="contador-data-retorno"><i class="fas fa-stopwatch"></i>{{ formataData(atd.data, "retorno", `#retorno_${indice}`, atd) }}</span>
               </div>
             </li>
           </ul>
@@ -161,7 +161,8 @@ export default {
       totalMsgNovas: '',
       totalClientesNovos: '',
       contadorErros: 0,
-      contadorErrosAgenda: 0
+      contadorErrosAgenda: 0,
+      contadorChamadasAtivaCli: 0
     };
   },
   watch: {
@@ -296,7 +297,7 @@ export default {
     adicionaCaso(caso){
       this.$store.dispatch('setCaso', caso)
     },
-    formataData(data, retorno, id){
+    formataData(data, retorno, id, atd){
       let aux = data.split(/\s/)
       let dataAux = aux[0]
       let horaAux = aux[1]
@@ -352,11 +353,26 @@ export default {
               return `${difHoras}h e ${difMinutos}min`
             }
           }else{
+            
             // Significa que chegou a hora de chamar o ctt
             if(difHoras == 0 && difMinutos == 0){
               spanContador.classList.add("d-none")
+              
+              if(this.contadorChamadasAtivaCli == 0){
+                this.ativarCliente()
+
+                let arrAgenda = this.minhaAgenda
+                arrAgenda = arrAgenda.filter(atdAux => {
+                  return atdAux.login_usu != atd.login_usu 
+                })
+                this.$store.dispatch("setAgenda", arrAgenda)
+              }
+
+              this.contadorChamadasAtivaCli++
               return 
             }
+
+            this.contadorChamadasAtivaCli = 0
 
             // Significa que o horario agendado ja passou
             if(difHoras <= 0 && difMinutos < 0){
