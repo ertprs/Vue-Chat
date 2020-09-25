@@ -1,3 +1,4 @@
+
 <template>
   <div class="chat-rodape">
     <div class="chat-rodape-container">
@@ -248,7 +249,7 @@ export default {
             self.enviarMensagem(event, previa)
             self.executaTeste(event, previa, cont)
           }
-        }, 5000);
+        }, 500);
     },
     enviarMensagem(event, previa) {
       if(this.blocker && this.origemBlocker !== 'msg-formatada'){

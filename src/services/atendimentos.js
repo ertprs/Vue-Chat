@@ -307,11 +307,17 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                     } else if(message.resp_msg == "CLI") {
                         app.$root.$emit('rolaChat')
                         app.$root.$emit('atualizar_mensagem', message)
-                    } else if(message.resp_msg == "SYS"){
-                        app.$root.$emit('rolaChat')
-                        app.$root.$emit('atualizar_mensagem', message)
+                    } else if(message.resp_msg == "OPE"){
+                        // const lastMessage = novosAtendimentos[ramal].arrMsg[novosAtendimentos[ramal].arrMsg.length-2];
+                        // const dataLastMessage = new Date(`${lastMessage.data} ${lastMessage.hora}`)
+                        // const dataNewMessage  = new Date(`${message.data} ${message.hora}`)
+                        // if(dataLastMessage.getTime() < dataNewMessage.getTime()){
+                        //     app.$root.$emit('rolaChat')
+                        //     app.$root.$emit('atualizar_mensagem', message)
+                        // }
                     }
-
+                    
+                    
                 }
             });
         }
