@@ -9437,7 +9437,8 @@ body {
       align-items: center;
       width: 100%;
       height: 100%;
-      position: relative; }
+      position: relative;
+      overflow: hidden; }
       .chat-opcoes .chat-opcoes-titulo .chat-opcoes-titulo-container .circulo-contatos {
         border-radius: 50%;
         width: 35px;
