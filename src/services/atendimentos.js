@@ -31,7 +31,7 @@ export function getAtendimentos(appVue) {
                 adicionaCaso(400)
             }, 500)
         }
-        )
+    )
 }
 
 function verificarAlertaErroRequest() {
