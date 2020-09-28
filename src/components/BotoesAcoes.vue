@@ -137,25 +137,27 @@ export default {
       this.reqRegras(this.atendimentoAtivo.token_cliente, this.atendimentoAtivo.login_usu)
     },
     reqRegras(tokenCliente, id){
+        this.$store.dispatch("setReqRegras", true)
+
         axios_api.get(`get-rules?token_cliente=${tokenCliente}`)
         .then(response => {
           if (response.data.st_ret == 'OK') {
             this.contadorRequisicoesFalhas = 0
-            if(response.data.st_ret == "OK"){
-              const arrayRegras = response.data.rules
-              let auxAtdAtivo = this.atendimentoAtivo
-              auxAtdAtivo.rules = arrayRegras
-              this.$store.commit("setAtendimentoAtivo", auxAtdAtivo)
 
-              let objRegra = {
-                id: id,
-                regras: arrayRegras
-              }
-              this.$store.commit("setRegrasDoClienteAtivo", objRegra)
+            const arrayRegras = response.data.rules
+            let auxAtdAtivo = this.atendimentoAtivo
+            auxAtdAtivo.rules = arrayRegras
+            this.$store.commit("setAtendimentoAtivo", auxAtdAtivo)
 
-              this.preencherRegrasDoClienteAtivo()
+            let objRegra = {
+              id: id,
+              regras: arrayRegras
             }
+            this.$store.commit("setRegrasDoClienteAtivo", objRegra)
 
+            this.preencherRegrasDoClienteAtivo()
+
+            this.$store.dispatch("setReqRegras", false)
           }
         })
         .catch(error => {

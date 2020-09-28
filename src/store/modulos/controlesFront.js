@@ -5,7 +5,8 @@ export default {
     blocker: false,
     origemBlocker: '',
     caso: '',
-    mensagemViaTextarea: false
+    mensagemViaTextarea: false,
+    reqRegras: false
   },
   mutations: {
     setAbaContatos(state, abaContatos){
@@ -25,6 +26,9 @@ export default {
     },
     setMensagemViaTextarea(state, mensagemViaTextarea){
       state.mensagemViaTextarea = mensagemViaTextarea
+    },
+    setReqRegras(state, reqRegras){
+      state.reqRegras = reqRegras
     }
   },
   actions: {
@@ -45,6 +49,9 @@ export default {
     },
     setMensagemViaTextarea: (context, payload) => {
       context.commit('setMensagemViaTextarea', payload)
+    },
+    setReqRegras: (context, payload) => {
+      context.commit('setReqRegras', payload)
     }
   },
   getters: {
@@ -65,6 +72,9 @@ export default {
     },
     getMensagemViaTextarea(state){
       return state.mensagemViaTextarea
+    },
+    getReqRegras(state){
+      return state.reqRegras
     }
   } 
 }

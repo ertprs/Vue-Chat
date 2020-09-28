@@ -116,7 +116,7 @@
               <template v-if="!fechado">{{ atd.nome_usu }}</template>
               <div class="retorno-container" :id="'retorno_'+indice" v-if="!fechado">
                 <span class="data-retorno">{{ formataData(atd.data) }}</span>
-                <span class="contador-data-retorno"><i class="fas fa-stopwatch"></i>{{ formataData(atd.data, "retorno", `#retorno_${indice}`, atd) }}</span>
+                <span class="contador-data-retorno d-none"><i class="fas fa-stopwatch"></i>{{ formataData(atd.data, "retorno", `#retorno_${indice}`, atd) }}</span>
               </div>
             </li>
           </ul>
@@ -232,6 +232,7 @@ export default {
       caso: 'getCaso',
       iframesDisponiveis: 'getIframesDisponiveis',
       idAtendimentoAtivo: 'getIdAtendimentoAtivo',
+      reqRegras: 'getReqRegras'
       // iframeCttAtivo: 'getIframeCttAtivo'
     })
   },
@@ -299,12 +300,7 @@ export default {
     },
     formataData(data, retorno, id, atd){
       if(!data){
-        if(document.querySelector(`${id} span.contador-data-retorno`)){
-          document.querySelector(`${id} span.contador-data-retorno`).classList.add("d-none")
-          return
-        }else{
-          return
-        }
+        return
       }
 
       let aux = data.split(/\s/)
@@ -357,8 +353,10 @@ export default {
               difHoras = difHoras - 1
             }
             if(difHoras == 0){
+              spanContador.classList.remove("d-none")
               return `${difMinutos}min`
             }else{
+              spanContador.classList.remove("d-none")
               return `${difHoras}h e ${difMinutos}min`
             }
           }else{
@@ -438,6 +436,10 @@ export default {
       })
     },
     ativarConversa: function(atd, indice) {
+
+      if(this.reqRegras){
+        return
+      }
 
       if(atd.novoContato){
         atd.novoContato = false
