@@ -135,6 +135,9 @@ function tratarResponse(response) {
                 // console.log('Timeout aguardando cliente')
                 getAtendimentos()
                 adicionaCaso(206)
+                if(mainData.gerenciador){
+                    store.dispatch("setGerenciador", mainData.gerenciador)
+                }
             }, TEMPO_ATUALIZACAO)
             break;
 
@@ -206,6 +209,9 @@ async function atualizarAtendimentos() {
             } else if (mainData.st_ret === 'AVISO') {
                 console.log('Nao existe clientes na fila')
                 adicionaCaso(206)
+                if(mainData.gerenciador){
+                    store.dispatch("setGerenciador", mainData.gerenciador)
+                }
                 // setTimeout(() => {
                 //     console.log('Timeout st_ret == Aviso')
                 //     getAtendimentos()
