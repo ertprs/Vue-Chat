@@ -5,19 +5,25 @@
       class="popup-lista" 
       :class="{'tres-mais' : ajustar, 'bg' : bg}"
       v-if="!pessoalData">
-      <li @click="retornar('todos'), fecharPopup()"> Todos </li>
-      <li @click="retornar('pessoal'), fecharPopup()"> Pessoal </li>
+      <li @click="retornar('todos')"> Todos </li>
+      <li @click="retornar('pessoal')"> Pessoal </li>
       <li @click="pessoalData = true"> Pessoal/Data </li>
     </ul>
     <div 
       agendar-retorno
       v-if="pessoalData"
       class="popup-container-tela-2">
-      <input type="datetime-local" :min="setData('minimo')" :max="setData('maximo')" v-model="dataHora" />
+      <datetime 
+        v-model="dataHora"
+        placeholder="Selecione uma data e hora"
+        :min-datetime="setData('minimo')"
+        :max-datetime="setData('maximo')"
+        :phrases="{ok: 'Continuar', cancel: 'Fechar'}"
+        type="datetime" />
       <ul 
         class="btns-confirmacao-container"
         :class="{'bg' : bg}">
-        <li class="btn-confirmar" @click="retornar('pessoal/data'), fecharPopup()"> Confirmar </li>
+        <li class="btn-confirmar" @click="retornar('pessoal/data')"> Confirmar </li>
         <li class="btn-cancelar" @click="fecharPopup()"> Cancelar </li>
       </ul>
     </div>
@@ -25,6 +31,8 @@
 </template>
 
 <script>
+import { Datetime } from 'vue-datetime';
+
 import { mapGetters } from "vuex"
 
 import axios_api from "../../services/serviceAxios"
@@ -47,6 +55,9 @@ export default {
       abrirPopup: "getAbrirPopup"
     })
   },
+  components: {
+    'datetime' : Datetime
+  },
   methods: {
     retornar(tipo){
       let dados = {
@@ -61,11 +72,13 @@ export default {
               if(response.status == 200){
                 console.log('Sucesso: ', response)
                 this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
+
+                this.fecharPopup()
               }
             })
             .catch(error => {
               console.log('error suspend todos: ', error)
-              this.$toasted.global.defaultError({msg: "Não foi possível realizar o retorno"})
+              this.$toasted.global.defaultError({msg: "Nï¿½o foi possï¿½vel realizar o retorno"})
             })
         break;
         case "pessoal":
@@ -75,16 +88,23 @@ export default {
               if(response.status == 200){
                 console.log('Sucesso: ', response)
                 this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
+
+                this.fecharPopup()
               }
             })
             .catch(error => {
               console.log('error suspend pessoal: ', error)
-              this.$toasted.global.defaultError({msg: "Não foi possível realizar o retorno"})
+              this.$toasted.global.defaultError({msg: "Nï¿½o foi possï¿½vel realizar o retorno"})
             })
         break;
         case "pessoal/data":
-          let data = dataHora.slice(0, 10)
-          let hora = dataHora.slice(11)
+          if(this.dataHora == ""){
+            this.$toasted.global.defaultError({msg: "Selecione uma data e hora valida"})
+            return
+          }
+
+          let data = this.dataHora.slice(0, 10)
+          let hora = this.dataHora.slice(11)
 
           dados.destino = "decidado"
           dados.data = data
@@ -95,11 +115,12 @@ export default {
               if(response.status == 200){
                 console.log('Sucesso: ', response)
                 this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
+                this.fecharPopup()
               }
             })
             .catch(error => {
               console.log('error suspend pessoal/data: ', error)
-              this.$toasted.global.defaultError({msg: "Não foi possível realizar o retorno"})
+              this.$toasted.global.defaultError({msg: "Nï¿½o foi possï¿½vel realizar o retorno"})
             })
         break;
         default:
@@ -141,6 +162,9 @@ export default {
 
       if(opt == 'minimo'){
         let agora = ano + '-' + mes + '-' + dia + 'T' + hora + ':' + minutos + ':00'
+
+        console.log('agora min: ', agora)
+
         return agora
       }else{
         mes = parseInt(mes)
@@ -151,6 +175,8 @@ export default {
         }
 
         let agora = ano + '-' + mes + '-' + dia + 'T' + hora + ':' + minutos + ':00'
+
+        console.log('agora max: ', agora)
         return agora
       }
     },

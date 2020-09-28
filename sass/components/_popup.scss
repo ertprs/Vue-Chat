@@ -73,6 +73,9 @@
         min-width: 200px;
         > div{
           width: 100%;
+          > input{
+            width: 100%;
+          }
         }
       }
       .btns-confirmacao-container{

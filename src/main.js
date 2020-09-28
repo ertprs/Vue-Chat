@@ -1,6 +1,8 @@
 import Vue from "vue";
 import "@babel/polyfill"
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import { Datetime } from 'vue-datetime'
+import 'vue-datetime/dist/vue-datetime.css'
 import "../public/assets/css/style.css";
 import "./config/msgs";
 import '@fortawesome/fontawesome-free/css/all.css'
@@ -11,6 +13,7 @@ import Chat from './components/templates/Chat'
 import store from "./store"
 import { getAtendimentos } from "./services/atendimentos"
 
+Vue.use(Datetime)
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.config.productionTip = false;
