@@ -31,7 +31,7 @@ export function getAtendimentos(appVue) {
                 adicionaCaso(400)
             }, 500)
         }
-        )
+    )
 }
 
 function verificarAlertaErroRequest() {
@@ -317,12 +317,11 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                     } else if(message.resp_msg == "OPE"){
                         if(store.getters.getMensagemViaTextarea){
                             store.dispatch("setMensagemViaTextarea", false)
-                        }else{ 
+                        }else{
                             app.$root.$emit('rolaChat')
                             app.$root.$emit('atualizar_mensagem', message)
                         }
                     }
-
                 }
             });
         }
