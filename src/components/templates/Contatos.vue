@@ -455,13 +455,6 @@ export default {
       this.$store.dispatch('setIdAtendimentoAtivo', atd.id_cli)
       
       this.exibirInformacoes(atd, indice)
-      
-      setTimeout(() => {
-        if(document.querySelector('#textarea')){
-          document.querySelector('#textarea').focus()
-        }
-        this.$root.$emit('rolaChat')
-      }, 100)
 
     },
     exibirInformacoes: function(atd, indice) {
@@ -525,6 +518,11 @@ export default {
 
           let objMensagem = this.getObjMensagem( autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo );
           this.$store.dispatch('setTodasMensagens', objMensagem)
+
+          if(document.querySelector('#textarea')){
+            document.querySelector('#textarea').focus()
+          }
+          this.$root.$emit('rolaChat')
         }
       }
     },
