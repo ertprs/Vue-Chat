@@ -114,7 +114,7 @@
                 <p v-if="fechado">{{ formataSigla(atd.nome_usu[1], 'lower') }}</p>
               </div>
               <template v-if="!fechado">{{ atd.nome_usu }}</template>
-              <div class="retorno-container" :id="'retorno_'+indice">
+              <div class="retorno-container" :id="'retorno_'+indice" v-if="!fechado">
                 <span class="data-retorno">{{ formataData(atd.data) }}</span>
                 <span class="contador-data-retorno"><i class="fas fa-stopwatch"></i>{{ formataData(atd.data, "retorno", `#retorno_${indice}`, atd) }}</span>
               </div>

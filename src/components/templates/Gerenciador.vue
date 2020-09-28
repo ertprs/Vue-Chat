@@ -54,8 +54,15 @@ export default {
       const gerenciadorV8 = parent.document.querySelector("#TelaOpeGer")
       if(gerenciadorV8){
         const gerenciador = document.querySelector("#gerenciador-container")
-        gerenciadorV8.innerHTML = gerenciador.innerHTML
 
+        const gerenciadorLista = document.querySelector(".gerenciador-lista")
+        const gerenciadorListaV8 = parent.document.querySelector("#TelaOpeGer .gerenciador-lista")
+
+        if(gerenciadorLista){
+          gerenciadorListaV8.innerHTML = gerenciadorLista.innerHTML
+        }
+
+        gerenciadorV8.classList.remove('d-none')
         gerenciador.classList.add('d-none')
       }
     }

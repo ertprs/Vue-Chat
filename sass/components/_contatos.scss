@@ -126,6 +126,7 @@ $tamanhoBoxShadow: 5px;
     background-color: #FFF;
     max-height: 90%;
     overflow-y: auto;
+    overflow-x: hidden;
     padding-right: 5px;
     .fieldset-container{
       display: flex;

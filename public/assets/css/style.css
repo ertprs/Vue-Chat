@@ -9003,6 +9003,7 @@ body {
     background-color: #FFF;
     max-height: 90%;
     overflow-y: auto;
+    overflow-x: hidden;
     padding-right: 5px; }
     #todos-contatos .lista-contatos-container .fieldset-container {
       display: flex;
