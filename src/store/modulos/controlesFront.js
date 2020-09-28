@@ -4,7 +4,8 @@ export default {
     habilitaRolagem: false,
     blocker: false,
     origemBlocker: '',
-    caso: ''
+    caso: '',
+    mensagemViaTextarea: false
   },
   mutations: {
     setAbaContatos(state, abaContatos){
@@ -21,6 +22,9 @@ export default {
     },
     setCaso(state, caso){
       state.caso = caso
+    },
+    setMensagemViaTextarea(state, mensagemViaTextarea){
+      state.mensagemViaTextarea = mensagemViaTextarea
     }
   },
   actions: {
@@ -38,6 +42,9 @@ export default {
     },
     setCaso: (context, payload) => {
       context.commit('setCaso', payload)
+    },
+    setMensagemViaTextarea: (context, payload) => {
+      context.commit('setMensagemViaTextarea', payload)
     }
   },
   getters: {
@@ -55,6 +62,9 @@ export default {
     },
     getCaso(state){
       return state.caso
+    },
+    getMensagemViaTextarea(state){
+      return state.mensagemViaTextarea
     }
   } 
 }

@@ -414,6 +414,8 @@ export default {
         autor = "Operador"
         origem = "principal"
 
+        this.$store.dispatch("setMensagemViaTextarea", true)
+
       } else {
 
         msg = objMessage.msg;

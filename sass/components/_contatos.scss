@@ -126,6 +126,7 @@ $tamanhoBoxShadow: 5px;
     background-color: #FFF;
     max-height: 90%;
     overflow-y: auto;
+    overflow-x: hidden;
     padding-right: 5px;
     .fieldset-container{
       display: flex;
@@ -358,11 +359,20 @@ $tamanhoBoxShadow: 5px;
         white-space: nowrap;
         user-select: none;
       }
-      .data-retorno{
+      .retorno-container{
         position: absolute;
+        display: flex;
+        align-items: flex-end;
         font-size: .6rem;
         bottom: 0;
         right: 15px;
+        svg{
+          font-size: .9rem;
+          margin-right: 2px;
+        }
+        .data-retorno{
+          margin-right: 5px;
+        }
       }
     }
   }

@@ -315,16 +315,13 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                         app.$root.$emit('rolaChat')
                         app.$root.$emit('atualizar_mensagem', message)
                     } else if(message.resp_msg == "OPE"){
-                        // const lastMessage = novosAtendimentos[ramal].arrMsg[novosAtendimentos[ramal].arrMsg.length-2];
-                        // const dataLastMessage = new Date(`${lastMessage.data} ${lastMessage.hora}`)
-                        // const dataNewMessage  = new Date(`${message.data} ${message.hora}`)
-                        // if(dataLastMessage.getTime() < dataNewMessage.getTime()){
-                        //     app.$root.$emit('rolaChat')
-                        //     app.$root.$emit('atualizar_mensagem', message)
-                        // }
+                        if(store.getters.getMensagemViaTextarea){
+                            store.dispatch("setMensagemViaTextarea", false)
+                        }else{
+                            app.$root.$emit('rolaChat')
+                            app.$root.$emit('atualizar_mensagem', message)
+                        }
                     }
-                    
-                    
                 }
             });
         }
