@@ -18,7 +18,7 @@
       v-model="agente"
       :reduce="arrAgentes => arrAgentes.cod"
       >
-        <div slot="no-options">Nenhuma correspondência encontrada</div>
+        <div slot="no-options">Nenhuma correspondencia encontrada</div>
       </vSelect>
       <ul
         class="btns-confirmacao-container"
@@ -37,7 +37,7 @@
         v-model="grupo"
         :reduce="arrGrupos => arrGrupos.cod"
         >
-        <div slot="no-options">Nenhuma correspondência encontrada</div>
+        <div slot="no-options">Nenhuma correspondencia encontrada</div>
       </vSelect>
       <ul
         class="btns-confirmacao-container"

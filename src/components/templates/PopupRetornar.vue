@@ -78,7 +78,7 @@ export default {
             })
             .catch(error => {
               console.log('error suspend todos: ', error)
-              this.$toasted.global.defaultError({msg: "N�o foi poss�vel realizar o retorno"})
+              this.$toasted.global.defaultError({msg: "Nao foi possivel realizar o retorno"})
             })
         break;
         case "pessoal":
@@ -94,7 +94,7 @@ export default {
             })
             .catch(error => {
               console.log('error suspend pessoal: ', error)
-              this.$toasted.global.defaultError({msg: "N�o foi poss�vel realizar o retorno"})
+              this.$toasted.global.defaultError({msg: "Nao foi possivel realizar o retorno"})
             })
         break;
         case "pessoal/data":
@@ -120,7 +120,7 @@ export default {
             })
             .catch(error => {
               console.log('error suspend pessoal/data: ', error)
-              this.$toasted.global.defaultError({msg: "N�o foi poss�vel realizar o retorno"})
+              this.$toasted.global.defaultError({msg: "Nao foi possivel realizar o retorno"})
             })
         break;
         default:

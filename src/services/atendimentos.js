@@ -63,7 +63,7 @@ function tratarResponse(response) {
         // alert(response.headers.authorization)
         axiosTokenJWT(response.headers.authorization)
     } else {
-        console.error('Erro na autoriza��o')
+        console.error('Erro na autorizacao')
         console.log(response)
         adicionaCaso(400)
     }
@@ -199,7 +199,7 @@ async function atualizarAtendimentos() {
     })
         .then(response => {
             let mainData = response.data
-            // Quando chega um novo contato, o st_ret n�o vem, e acaba caindo no ultimo else
+            // Quando chega um novo contato, o st_ret nao vem, e acaba caindo no ultimo else
             if (mainData.st_ret === 'OK' || mainData.atendimentos) {
                 adicionaCaso(200)
                 atualizarClientes(mainData)

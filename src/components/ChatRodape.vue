@@ -3,7 +3,7 @@
   <div class="chat-rodape">
     <div class="chat-rodape-container">
       <div class="chat-rodape-mensagens">
-        <!-- Prévia imagem -->
+        <!-- Previa imagem -->
         <div class="container-previa-img" v-show="aparecerPrevia" :class="{'previa-anexo' : docPrevia, 'previa-anexo-erro' : docPrevia && erroFormatoAnexo}">
           <h3 v-if="arquivo.name">
             <i class="fas fa-image" v-if="!docPrevia"></i>
@@ -17,7 +17,7 @@
           <div class="div-previa" v-if="imagemPrevia">
             <img
               :src="imagemPrevia"
-              alt="Prévia da Imagem Selecionada"
+              alt="Previa da Imagem Selecionada"
             />
           </div>
         </div>
