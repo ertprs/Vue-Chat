@@ -298,6 +298,15 @@ export default {
       this.$store.dispatch('setCaso', caso)
     },
     formataData(data, retorno, id, atd){
+      if(!data){
+        if(document.querySelector(`${id} span.contador-data-retorno`)){
+          document.querySelector(`${id} span.contador-data-retorno`).classList.add("d-none")
+          return
+        }else{
+          return
+        }
+      }
+
       let aux = data.split(/\s/)
       let dataAux = aux[0]
       let horaAux = aux[1]
