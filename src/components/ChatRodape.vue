@@ -768,6 +768,10 @@ export default {
       }
 
       if(event.origin == baseUrl){
+        if(event.data.gerenciador){
+          return
+        }
+
         if(event.data == ''){
           this.$toasted.global.emConstrucao({msg: 'Sem mensagens para as opcoes selecionadas'})
         }

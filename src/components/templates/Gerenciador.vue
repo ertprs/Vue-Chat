@@ -35,7 +35,25 @@ export default {
       estadoAtendimento: "em-atendimento"
     }
   },
+  mounted(){
+    window.addEventListener("message", this.listenerPostMessage, false);
+  },
   methods: {
+    listenerPostMessage(event){
+
+      let baseUrl = ''
+      if(window.location.hostname == 'localhost'){
+        baseUrl = 'https://linux03'
+      }else{
+        baseUrl = 'https://'+window.location.hostname
+      }
+
+      if(event.origin == baseUrl){
+        if(event.data.gerenciador){
+          this.abrirAtivarCtt()
+        }
+      }  
+    },
     mudarEstadoAtendimento(){
       if(this.estadoAtendimento == "em-atendimento"){
         this.estadoAtendimento = "parado"
@@ -61,9 +79,11 @@ export default {
         if(gerenciadorLista){
           gerenciadorListaV8.innerHTML = gerenciadorLista.innerHTML
         }
-
-        gerenciadorV8.classList.remove('d-none')
-        gerenciador.classList.add('d-none')
+        
+        setTimeout(() => {
+          gerenciadorV8.classList.remove('d-none')
+          gerenciador.classList.add('d-none')
+        }, 300)
       }
     }
   },

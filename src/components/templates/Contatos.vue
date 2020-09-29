@@ -64,7 +64,7 @@
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
           </li>
         </ul>
-        <div class="fieldset-container" v-if="caso !== 400 && caso !== 206 && aguardando.length">
+        <div class="fieldset-container" v-if="caso !== 400 && caso !== 206 && aguardando && aguardando.length">
           <h4
             v-on:click="alternarAbaAberta()"
             :class="abaAberta == 'aguardando' ? 'ativo' : ''"
@@ -72,7 +72,7 @@
             Aguardando
           </h4>
         </div>
-        <div class="lista-aguardando" v-if="aguardando.length"> 
+        <div class="lista-aguardando" v-if="aguardando && aguardando.length"> 
           <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta !== 'aguardando'}">
             <li
               v-for="(atd, indice) in aguardando"
