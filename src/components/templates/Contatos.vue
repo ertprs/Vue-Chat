@@ -45,7 +45,7 @@
             <span v-if="totalMsgNovas != ''" title="Total de novas mensagens" class="total-msgs-novas">{{ totalMsgNovas }}</span>
           </div>
         </div>
-        <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta == 'aguardando'}" v-if="objAtendimentos.length && caso !== 206" id="lista-contatos">
+        <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta == 'aguardando'}"  id="lista-contatos" v-if="objAtendimentos.length && caso !== 206">
           <li
             v-for="(atd, indice) in objAtendimentos"
             :key="indice"
@@ -64,16 +64,15 @@
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
           </li>
         </ul>
-        <div class="fieldset-container" v-if="caso !== 400 && caso !== 206">
+        <div class="fieldset-container" v-if="caso !== 400 && caso !== 206 && aguardando.length">
           <h4
             v-on:click="alternarAbaAberta()"
             :class="abaAberta == 'aguardando' ? 'ativo' : ''"
-            v-if="objAtendimentos.length && caso !== 206 && aguardando.length"
             >
             Aguardando
           </h4>
         </div>
-        <div class="lista-aguardando" v-if="aguardando.length">
+        <div class="lista-aguardando" v-if="aguardando.length"> 
           <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta !== 'aguardando'}">
             <li
               v-for="(atd, indice) in aguardando"
@@ -90,7 +89,7 @@
             </li>
           </ul>
         </div>
-        <div class="lista-agenda" v-if="minhaAgenda.length">
+        <div class="lista-agenda" v-if="objAtendimentos.length">
           <div class="lista-agenda--titulo">
             <div :class="{'fechado' : fechado}">
               <i class="far fa-address-book"  title="Minha Agenda"></i>
@@ -101,7 +100,7 @@
               </h2>
             </transition>
           </div>
-          <ul :class="{'fechado' : fechado}">
+          <ul :class="{'fechado' : fechado}" v-if="minhaAgenda && minhaAgenda.length"> 
             <li
               v-for="(atd, indice) in minhaAgenda"
               :key="'id_'+indice"
@@ -120,11 +119,14 @@
               </div>
             </li>
           </ul>
+          <div class="agenda-vazia" v-else>
+            <p> Sem clientes para mostrar </p>
+          </div>
         </div>
       </div>
     </template>
     <!-- Caso nao haja atendimentos -->
-    <div v-if="caso == 400 && !todosAtendimentos.length" class="lista-contatos-container-vazio" :class="{'fechado' : fechado}">
+    <div  class="lista-contatos-container-vazio" :class="{'fechado' : fechado}" v-if="caso == 400 && !todosAtendimentos.length">
       <div>
         <i class="far fa-folder-open"></i>
         <transition name="fade">

@@ -19,6 +19,7 @@
         :min-datetime="setData('minimo')"
         :max-datetime="setData('maximo')"
         :phrases="{ok: 'Continuar', cancel: 'Fechar'}"
+        class="theme-custom"
         type="datetime" />
       <ul 
         class="btns-confirmacao-container"

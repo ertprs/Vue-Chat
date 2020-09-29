@@ -63,6 +63,7 @@ export default {
     alterarCoresLi(){
       const root = document.documentElement
       root.style.setProperty('--bg-alternativo', this.bg)
+      root.style.setProperty('--bg-calendar', this.bg)
     }
   }
 }

@@ -108,3 +108,19 @@
     }
   }
 }
+
+:root{
+  --bg-calendar: #777;
+}
+
+.theme-custom .vdatetime-popup__header,
+.theme-custom .vdatetime-calendar__month__day--selected > span > span,
+.theme-custom .vdatetime-calendar__month__day--selected:hover > span > span {
+  background: var(--bg-calendar);
+}
+
+.theme-custom .vdatetime-year-picker__item--selected,
+.theme-custom .vdatetime-time-picker__item--selected,
+.theme-custom .vdatetime-popup__actions__button {
+  color: var(--bg-calendar);
+}
