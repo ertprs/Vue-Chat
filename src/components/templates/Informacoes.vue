@@ -76,6 +76,9 @@
               <p> Carregando </p>
             </div>
           </div>
+          <span v-if="!gif" class="btn-fechar-ctt-cliente" @click="fecharIframeCttAtivo()">
+            <i class="fas fa-times-circle"></i>
+          </span>
           <iframe 
             :src="`${baseUrl}im/atdHumano/view/atd_contato_atv.php`" frameborder="0"
             @load="gif = false"
@@ -149,6 +152,9 @@ export default {
       }else{
         this.baseUrl = 'https://'+window.location.hostname+'/'
       }
+    },
+    fecharIframeCttAtivo(){
+      this.$store.dispatch('setIframeCttAtivo', false)
     }
   },
   mounted(){
