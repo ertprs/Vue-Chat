@@ -72,7 +72,7 @@
             Aguardando
           </h4>
         </div>
-        <div class="lista-aguardando" v-if="aguardando && aguardando.length"> 
+        <div class="lista-aguardando" v-if="aguardando && aguardando.length">
           <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta !== 'aguardando'}">
             <li
               v-for="(atd, indice) in aguardando"

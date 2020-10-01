@@ -4,6 +4,7 @@ import axios_api from "./serviceAxios"
 import { axiosTokenJWT } from "./serviceAxios"
 import { carregarIframe } from "./iframe"
 import { converterHexaParaEmojis } from "./emojis"
+import { isObject } from "util";
 
 const TEMPO_ATUALIZACAO = 2000
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
@@ -99,7 +100,19 @@ function tratarResponse(response) {
 
                     axios_api.get("get-agenda")
                         .then(response => {
-                            store.dispatch("setAgenda", response.data.contatos)
+                            const gruposAgenda = Object.values(response.data.ret)
+                            let arrFinal = []
+                            for(let grupo in gruposAgenda){
+                                if(Object.entries(gruposAgenda[grupo]).length){
+                                    let arrAgenda = Object.entries(gruposAgenda[grupo])
+                                    arrAgenda.filter(cli => {
+                                        arrFinal.push(cli[1])
+                                    })
+                                }
+                            }
+                            if(arrFinal.length){
+                                store.dispatch("setAgenda", arrFinal)
+                            }
                         })
                         .catch(error => {
                             console.log('error get agenda: ', error)
@@ -107,7 +120,19 @@ function tratarResponse(response) {
 
                     axios_api.get("get-aguardando")
                     .then(response => {
-                        store.dispatch("setAguardando", response.data.contatos)
+                        const gruposAguardando = Object.values(response.data.ret)
+                        let arrFinal = []
+                        for(let grupo in gruposAguardando){
+                            if(Object.entries(gruposAguardando[grupo]).length){
+                                let arrAguardando = Object.entries(gruposAguardando[grupo])
+                                arrAguardando.filter(cli => {
+                                    arrFinal.push(cli[1])
+                                })
+                            }
+                        }
+                        if(arrFinal.length){
+                            store.dispatch("setAguardando", arrFinal)
+                        }
                     })
                     .catch(error => {
                         console.log('error get aguardando: ', error)
