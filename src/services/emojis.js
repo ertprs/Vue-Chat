@@ -1,6 +1,5 @@
 import store from "../store"
 
-
 export function converterHexaParaEmojis(mainData) {
     var emojis = store.getters.getEmojis
     // Percorrendo todas mensagens para transformar em emojis

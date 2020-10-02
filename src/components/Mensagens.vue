@@ -12,7 +12,7 @@
           <!-- <embed :src="docAnexo" :type="tipoDoc"> -->
         </div>
       </div>
-      <p> {{ msg }} </p>
+      <p v-html="msg"></p>
       <span class="horario-envio"> {{ horario }} </span>
       
       <span class="check visualizado" v-if="status == 'L'"> visualizado <i class="fas fa-check-double"></i> </span>

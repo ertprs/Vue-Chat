@@ -100,7 +100,7 @@ function tratarResponse(response) {
 
                     axios_api.get("get-agenda")
                         .then(response => {
-                            const gruposAgenda = Object.values(response.data.ret)
+                            const gruposAgenda = Object.values(response.data.response)
                             let arrFinal = []
                             for(let grupo in gruposAgenda){
                                 if(Object.entries(gruposAgenda[grupo]).length){
