@@ -9681,6 +9681,8 @@ body {
         color: #666666;
         font-size: .7rem;
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         user-select: none; }
       #todos-contatos ul li .retorno-container {
         position: absolute;
