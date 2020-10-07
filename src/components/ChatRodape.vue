@@ -463,7 +463,7 @@ export default {
 
       this.$store.dispatch("setTodasMensagens", objMensagem)
 
-      if(this.statusEnvio !== "E"){
+      if(this.statusEnvio !== "E" && !objMessage){
         this.resetar()
       }
     },
