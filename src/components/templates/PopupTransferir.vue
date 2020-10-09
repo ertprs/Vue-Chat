@@ -82,7 +82,7 @@ export default {
       if(this.arrGrupos.length){
         this.abrirGrupos = true
       }else{
-        this.$toasted.global.emConstrucao({msg: 'Nao existem agentes disponiveis'})
+        this.$toasted.global.emConstrucao({msg: 'Nao existem grupos disponiveis'})
       }
     },
     transferir(tipo, param){

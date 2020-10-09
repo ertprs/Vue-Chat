@@ -10505,7 +10505,7 @@ body {
 .iframe-msg-container {
   position: absolute;
   background-color: #FFF;
-  z-index: 3;
+  z-index: 2;
   top: 10%;
   width: 95%;
   height: 85%;
