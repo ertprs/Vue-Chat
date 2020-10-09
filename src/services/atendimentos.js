@@ -42,7 +42,7 @@ function verificarAlertaErroRequest() {
 
     if(contador_request_erro > 5) {
         alert('Existe um erro na conexao com a internet')
-        document.location.reload(true);
+        document.location.reload();
     }
 }
 
@@ -83,14 +83,12 @@ function tratarResponse(response) {
                 if (mainData.atendimentos != null) {
                     adicionaCaso(200)
                     mainData = converterHexaParaEmojis(mainData)
-                    
                     let regex = /\s|\]|\[/g
                     for(let atd in mainData.atendimentos){
                         if(mainData.atendimentos[atd].login_usu.match(regex)){
                             mainData.atendimentos[atd].login_usu = mainData.atendimentos[atd].login_usu.replace(regex, '')
                         }
                     }
-                    
                     if(mainData.gerenciador){
                         store.dispatch("setGerenciador", mainData.gerenciador)
                     }
@@ -325,6 +323,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
         const seqs = novosAtendimentos[ramal].arrMsg.map(message => (message.seq)); //seq das mensagens antigas
         if (cliente.arrMsg.length > 0) {
             cliente.arrMsg.map((message) => { //mensagens novas
+                // console.log(message)
                 if (!seqs.includes(message.seq)) {
 
                     // Transformando codigo hexadecimal recebido em emoji
@@ -350,7 +349,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                             store.dispatch("setMensagemViaTextarea", false)
                         }else{
                             app.$root.$emit('rolaChat')
-                            app.$root.$emit('atualizar_mensagem', message)
+                            // app.$root.$emit('atualizar_mensagem', message) // comentado para não duplicar as msgs enquanto o back ficar retornando todas as msgs sem parar
                         }
                     }
                 }
@@ -366,7 +365,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
 
 function reiniciarApp() {
     setTimeout(function () {
-        document.location.reload(true);
+        document.location.reload();
     }, TEMPO_ATUALIZACAO)
 }
 

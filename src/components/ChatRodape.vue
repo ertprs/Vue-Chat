@@ -252,7 +252,7 @@ export default {
         }, 500);
     },
     enviarMensagem(event, previa) {
-      if(this.blocker && this.origemBlocker !== 'msg-formatada'){
+      if(this.blocker && this.origemBlocker !== 'msg-formatada') {
         this.$store.dispatch('setBlocker', false)
       }
 
@@ -428,7 +428,6 @@ export default {
           }else{
             baseUrl = 'https://'+window.location.hostname
           }
-          
           regex = /(\w+)\/(\w+)/g;
           let type = regex.exec(objMessage.anexos.type);
           switch (type[1]) {
