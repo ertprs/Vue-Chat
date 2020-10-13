@@ -82,7 +82,9 @@ export default {
         
         setTimeout(() => {
           gerenciadorV8.classList.remove('d-none')
-          gerenciador.classList.add('d-none')
+          if(gerenciador){
+            gerenciador.classList.add('d-none')
+          }
         }, 300)
       }
     }
