@@ -72,7 +72,99 @@ export default {
       {
         hexa: "&#x1f62e;",
         emoji: String.fromCodePoint(0x1F62E)
+      },
+      {
+        hexa: "&#x1F44D;",
+        emoji: String.fromCodePoint(0x1F44D)
+      },
+      {
+        hexa: "&#x1F44F;",
+        emoji: String.fromCodePoint(0x1F44F)
+      },
+      {
+        hexa: "&#x231B;",
+        emoji: String.fromCodePoint(0x231B)
+      },
+      {
+        hexa: "&#x261D;",
+        emoji: String.fromCodePoint(0x261D)
+      },
+      {
+        hexa: "&#x2614;",
+        emoji: String.fromCodePoint(0x2614)
+      },
+      {
+        hexa: "&#x26A1;",
+        emoji: String.fromCodePoint(0x26A1)
+      },
+      {
+        hexa: "&#x270B;",
+        emoji: String.fromCodePoint(0x270B)
+      },
+      {
+        hexa: "&#x2714;",
+        emoji: String.fromCodePoint(0x2714)
+      },
+      {
+        hexa: "&#x2B50;",
+        emoji: String.fromCodePoint(0x2B50)
+      },
+      {
+        hexa: "&#x1F30E;",
+        emoji: String.fromCodePoint(0x1F30E)
+      },
+      {
+        hexa: "&#x1F385;",
+        emoji: String.fromCodePoint(0x1F385)
+      },
+      {
+        hexa: "&#x1F389;",
+        emoji: String.fromCodePoint(0x1F389)
+      },
+      {
+        hexa: "&#x1F38A;",
+        emoji: String.fromCodePoint(0x1F38A)
+      },
+      {
+        hexa: "&#x1F3C6;",
+        emoji: String.fromCodePoint(0x1F3C6)
+      },
+      {
+        hexa: "&#x1F44B;",
+        emoji: String.fromCodePoint(0x1F44B)
+      },
+      {
+        hexa: "&#x1F4B0;",
+        emoji: String.fromCodePoint(0x1F4B0)
+      },
+      {
+        hexa: "&#x1F4CC;",
+        emoji: String.fromCodePoint(0x1F4CC)
+      },
+      {
+        hexa: "&#x1F4CE;",
+        emoji: String.fromCodePoint(0x1F4CE)
+      },
+      {
+        hexa: "&#x1F4D1;",
+        emoji: String.fromCodePoint(0x1F4D1)
+      },
+      {
+        hexa: "&#x1F4E2;",
+        emoji: String.fromCodePoint(0x1F4E2)
+      },
+      {
+        hexa: "&#x1F4E7;",
+        emoji: String.fromCodePoint(0x1F4E7)
       }
+      // {
+      //   hexa: "&#x",
+      //   emoji: String.fromCodePoint(0x)
+      // }
+      // {
+      //   hexa: "&#x",
+      //   emoji: String.fromCodePoint(0x)
+      // }
     ],
     todaBiblioteca: []
   },
