@@ -74,10 +74,19 @@ export default {
         emoji: String.fromCodePoint(0x1F62E)
       }
     ],
+    todaBiblioteca: []
+  },
+  mutations: {
+    setBiblioteca(state, emojis){
+      state.todaBiblioteca = emojis
+    }
   },
   getters: {
     getEmojis(state){
       return state.emojis
+    },
+    getTodaBliblioteca(state){
+      return state.todaBiblioteca
     }
   }
 }

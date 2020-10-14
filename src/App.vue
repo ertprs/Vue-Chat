@@ -44,6 +44,7 @@ import Chat from './components/templates/Chat'
 import Informacoes from './components/templates/Informacoes'
 import Gerenciador from './components/templates/Gerenciador'
 import Teste from './components/templates/Teste'
+import axios_api from './services/serviceAxios'
 
 export default {
   components: {
@@ -63,6 +64,10 @@ export default {
     }
   },
   methods: {
+    carregarBibliotecaEmojis(){
+      let emojis = new Emojis().get();
+      this.$store.commit("setBiblioteca", emojis)
+    },
     resizeContatos(data){
       let widthContatos = data.width
 
@@ -127,6 +132,8 @@ export default {
   },
   mounted(){
     this.setHeightMaximo()
+
+    this.carregarBibliotecaEmojis()
   },
   computed: {
     ...mapGetters({

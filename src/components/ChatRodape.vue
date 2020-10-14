@@ -221,8 +221,8 @@ export default {
     };
   },
   mounted() {
-    this.$root.$on("atualizar_mensagem", (objMessage, event) => {
-      this.criaObjMensagem(objMessage);
+    this.$root.$on("atualizar_mensagem", (objMsgExterno, event) => {
+      this.criaObjMensagem(objMsgExterno);
     }),
       (document.querySelector(".btn-emoji").innerText = String.fromCodePoint(
         0x1f61c
@@ -287,6 +287,14 @@ export default {
 
             data = form
           }else{
+            this.mensagem = this.mensagem.replace(/<\/?[\d\w\s=\-:\.\/\'\";]+>/gi, ' ')
+
+            let regex = ""
+            for (let j = 0; j < this.emojis.length; j++) {
+              regex = new RegExp(this.emojis[j].emoji, "gi");
+              this.mensagem = this.mensagem.replace(regex, this.emojis[j].hexa);
+            }
+
             data = {
               token_cliente: this.atendimentoAtivo.token_cliente,
               message: this.mensagem,
@@ -369,7 +377,7 @@ export default {
       // this.mensagem = msg.trim()
       return true;
     },
-    criaObjMensagem(objMessage) {
+    criaObjMensagem(objMsgExterno) {
       let objMensagem = {}
       let autor = ""
       let origem = ""
@@ -385,13 +393,13 @@ export default {
       let regex = ""
 
       // Msg sendo disparada pelo textarea
-      if (!objMessage) {
+      if (!objMsgExterno) {
         for (let j = 0; j < this.emojis.length; j++) {
           regex = new RegExp(this.emojis[j].emoji, "gi");
           this.mensagem = this.mensagem.replace(regex, this.emojis[j].hexa);
         }
-        
-        msg = msg.replace(/<\/?[\d\w\s=\-:\.\/\'\";]+>/gi, ' ')
+
+        msg = this.mensagem.replace(/<\/?[\d\w\s=\-:\.\/\'\";]+>/gi, ' ')
 
         if(this.arquivo){
           anexo = true
@@ -418,9 +426,9 @@ export default {
 
       } else {
 
-        msg = objMessage.msg;
+        msg = objMsgExterno.msg;
 
-        if(objMessage.anexos){
+        if(objMsgExterno.anexos){
           anexo = true
           let baseUrl = ''
           if(window.location.hostname == 'localhost'){
@@ -429,21 +437,21 @@ export default {
             baseUrl = 'https://'+window.location.hostname
           }
           regex = /(\w+)\/(\w+)/g;
-          let type = regex.exec(objMessage.anexos.type);
+          let type = regex.exec(objMsgExterno.anexos.type);
           switch (type[1]) {
             case "image": 
-              imgAnexo = `${baseUrl}/callcenter/docs.php?mku=${objMessage.anexos.mku}`
+              imgAnexo = `${baseUrl}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
               break;
             default:
-              tipoDoc = objMessage.anexos.type
-              docAnexo = `${baseUrl}/callcenter/docs.php?mku=${objMessage.anexos.mku}`
-              nomeArquivo = objMessage.anexos.name
+              tipoDoc = objMsgExterno.anexos.type
+              docAnexo = `${baseUrl}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
+              nomeArquivo = objMsgExterno.anexos.name
           }
         }
 
-        status = objMessage.status
+        status = objMsgExterno.status
 
-        autor = objMessage.resp_msg == "CLI" ? "Cliente" : "Operador"
+        autor = objMsgExterno.resp_msg == "CLI" ? "Cliente" : "Operador"
         origem = autor == "Cliente" ? "outros" : "principal"
       }
 
@@ -462,7 +470,7 @@ export default {
 
       this.$store.dispatch("setTodasMensagens", objMensagem)
 
-      if(this.statusEnvio !== "E" && !objMessage){
+      if(this.statusEnvio !== "E" && !objMsgExterno){
         this.resetar()
       }
     },
@@ -932,7 +940,8 @@ export default {
       blocker: "getBlocker",
       tipoMsg: 'getTipoMsg',
       origemBlocker: 'getOrigemBlocker',
-      todasMensagens: "getTodasMensagens"
+      todasMensagens: "getTodasMensagens",
+      todaBiblioteca: "getTodaBliblioteca"
     })
   },
   created(){
