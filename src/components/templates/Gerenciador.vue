@@ -82,6 +82,14 @@ export default {
         if(gerenciadorLista){
           gerenciadorListaV8.innerHTML = gerenciadorLista.innerHTML
         }
+
+        if(this.ativo){
+          gerenciadorListaV8.classList.add("existe-ativo")
+          const btnChamarCliente = parent.document.querySelector(".gerenciador-btn.icone-mais")
+          if(btnChamarCliente){
+            btnChamarCliente.classList.remove("d-none")
+          }
+        }
         
         setTimeout(() => {
           gerenciadorV8.classList.remove('d-none')

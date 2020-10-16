@@ -107,7 +107,7 @@ export default {
           let data = this.dataHora.slice(0, 10)
           let hora = this.dataHora.slice(11)
 
-          dados.destino = "decidado"
+          dados.destino = "dedicado"
           dados.data = data
           dados.hora = hora
 
