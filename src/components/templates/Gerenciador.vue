@@ -1,5 +1,5 @@
 <template>
-  <div id="gerenciador-container" :class="{'em-atendimento' : estadoAtendimento == 'em-atendimento', 'parado' : estadoAtendimento == 'parado'}" v-if="gerenciador && gerenciador.length ? true : false">
+  <div id="gerenciador-container" :class="{'em-atendimento' : estadoAtendimento == 'em-atendimento', 'parado' : estadoAtendimento == 'parado', 'existe-ativo' : ativo}" v-if="gerenciador && gerenciador.length ? true : false">
     <div class="gerenciador-btn" @click="mudarEstadoAtendimento()">
       <div v-show="estadoAtendimento == 'em-atendimento'" title="Em atendimento">
         <i class="fas fa-pause"></i>
@@ -14,7 +14,7 @@
         <span class="valor">{{ tipo.count }}</span>
       </div>
     </div>
-    <div class="gerenciador-btn" title="Adicionar novo cliente" @click="abrirAtivarCtt()">
+    <div class="gerenciador-btn" title="Adicionar novo cliente" @click="abrirAtivarCtt()" v-if="ativo">
         <i class="fas fa-user-plus"></i>
     </div>
   </div>
@@ -22,17 +22,20 @@
 
 <script>
 import { mapGetters } from "vuex"
+import axios_api from '../../services/serviceAxios';
 
 export default {
   computed: {
     ...mapGetters({
       gerenciador: "getGerenciador",
-      iframeCttAtivo: "getIframeCttAtivo"
+      iframeCttAtivo: "getIframeCttAtivo",
+      ativo: "getAtivo"
     })
   },
   data(){
     return{
-      estadoAtendimento: "em-atendimento"
+      estadoAtendimento: "em-atendimento",
+      qtdAgenda: 0
     }
   },
   mounted(){
@@ -93,6 +96,23 @@ export default {
     gerenciador(){
       if(this.gerenciador){
         this.preencherDiv()
+
+        this.gerenciador.map((i) => {
+          if(i.cod == 2){
+            if(i.count !== this.qtdAgenda && i.count !== 0){
+              axios_api.get("get-agenda")
+                .then(response => {
+                  const arrAgenda = response.data.ret
+                  if(arrAgenda.length){
+                    this.$store.dispatch(arrAgenda)
+                  }
+                })
+                .catch(error => {
+                  console.log("Error get agenda: ", error)
+                })
+            }
+          }
+        })
       }
     }
   }

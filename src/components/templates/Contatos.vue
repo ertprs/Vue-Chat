@@ -100,7 +100,7 @@
               </h2>
             </transition>
           </div>
-          <ul :class="{'fechado' : fechado}" v-if="minhaAgenda && minhaAgenda.length"> 
+          <ul :class="{'fechado' : fechado}" v-if="minhaAgenda && minhaAgenda.length">
             <li
               v-for="(atd, indice) in minhaAgenda"
               :key="'id_'+indice"

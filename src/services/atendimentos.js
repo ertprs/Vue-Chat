@@ -22,6 +22,7 @@ export function getAtendimentos(appVue) {
     })
         .then(response => {
             contador_request_erro = 0
+            console.log('response: ', response.data)
             tratarResponse(response)
         })
         .catch(err => {
@@ -89,55 +90,35 @@ function tratarResponse(response) {
                             mainData.atendimentos[atd].login_usu = mainData.atendimentos[atd].login_usu.replace(regex, '')
                         }
                     }
+
+                    if(mainData.ativo){
+                        store.dispatch("setAtivo", mainData.ativo)
+                    }
+
                     if(mainData.gerenciador){
                         store.dispatch("setGerenciador", mainData.gerenciador)
                     }
-
+                    
                     carregarIframe(mainData.atendimentos)
                     store.dispatch('setAtendimentos', mainData.atendimentos)
-
-                    axios_api.get("get-agenda")
-                        .then(response => {
-                            const gruposAgenda = Object.values(response.data.response)
-                            let arrFinal = []
-                            for(let grupo in gruposAgenda){
-                                if(Object.entries(gruposAgenda[grupo]).length){
-                                    let arrAgenda = Object.entries(gruposAgenda[grupo])
-                                    arrAgenda.filter(cli => {
-                                        arrFinal.push(cli[1])
-                                    })
-                                }
-                            }
-                            if(arrFinal.length){
-                                store.dispatch("setAgenda", arrFinal)
-                            }
-                        })
-                        .catch(error => {
-                            console.log('error get agenda: ', error)
-                        })
-
+                    
+                    // Agenda
+                    if(mainData.agenda && mainData.agenda.length){
+                        store.dispatch("setAgenda", mainData.agenda)
+                    }
+                    
+                    // Aguardando
                     axios_api.get("get-aguardando")
                     .then(response => {
-                        const gruposAguardando = Object.values(response.data.ret)
-                        let arrFinal = []
-                        for(let grupo in gruposAguardando){
-                            if(Object.entries(gruposAguardando[grupo]).length){
-                                let arrAguardando = Object.entries(gruposAguardando[grupo])
-                                arrAguardando.filter(cli => {
-                                    arrFinal.push(cli[1])
-                                })
-                            }
-                        }
-                        if(arrFinal.length){
-                            store.dispatch("setAguardando", arrFinal)
+                        const arrAguardando = response.data.ret
+                        if(arrAguardando.length){
+                            store.dispatch("setAguardando", arrAguardando)
                         }
                     })
                     .catch(error => {
                         console.log('error get aguardando: ', error)
                     })
 
-                    // const agenda = ['Maria', 'Joao', 'Joana', 'Frederico']
-                    // store.dispatch('setAgenda', agenda)
                     loopAtualizacaoDeAtendimentos()
                 } else {
                     console.log('Erro ao tentar obter dados no servidor')
