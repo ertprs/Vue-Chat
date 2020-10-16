@@ -111,8 +111,9 @@ export default {
               axios_api.get("get-agenda")
                 .then(response => {
                   const arrAgenda = response.data.ret
-                  if(arrAgenda.length){
+                  if(arrAgenda && arrAgenda.length){
                     this.$store.dispatch(arrAgenda)
+                    this.qtdAgenda = i.count
                   }
                 })
                 .catch(error => {
