@@ -112,7 +112,7 @@ export default {
                 .then(response => {
                   const arrAgenda = response.data.ret
                   if(arrAgenda && arrAgenda.length){
-                    this.$store.dispatch(arrAgenda)
+                    this.$store.dispatch("setAgenda", arrAgenda)
                     this.qtdAgenda = i.count
                   }
                 })

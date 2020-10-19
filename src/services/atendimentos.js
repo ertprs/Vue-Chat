@@ -139,9 +139,15 @@ function tratarResponse(response) {
                 // console.log('Timeout aguardando cliente')
                 getAtendimentos()
                 adicionaCaso(206)
+                // Gerenciador
                 if(mainData.gerenciador){
                     store.dispatch("setGerenciador", mainData.gerenciador)
                 }
+                // Agenda
+                if(mainData.agenda && mainData.agenda.length){
+                    store.dispatch("setAgenda", mainData.agenda)
+                }
+
             }, TEMPO_ATUALIZACAO)
             break;
 

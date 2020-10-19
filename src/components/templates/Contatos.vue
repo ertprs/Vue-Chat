@@ -89,7 +89,7 @@
             </li>
           </ul>
         </div>
-        <div class="lista-agenda" v-if="objAtendimentos.length">
+        <div class="lista-agenda">
           <div class="lista-agenda--titulo">
             <div :class="{'fechado' : fechado}">
               <i class="far fa-address-book"  title="Minha Agenda"></i>
@@ -114,8 +114,8 @@
               </div>
               <template v-if="!fechado">{{ atd.nome_usu }}</template>
               <div class="retorno-container" :id="'retorno_'+indice" v-if="!fechado">
-                <span class="data-retorno">{{ formataData(atd.data) }}</span>
-                <span class="contador-data-retorno d-none"><i class="fas fa-stopwatch"></i>{{ formataData(atd.data, "retorno", `#retorno_${indice}`, atd) }}</span>
+                <span class="data-retorno">{{ formataData(atd.data_agenda, atd.hora_agenda) }}</span>
+                <span class="contador-data-retorno d-none"><i class="fas fa-stopwatch"></i>{{ formataData(atd.data_agenda, atd.hora_agenda, "retorno", `#retorno_${indice}`, atd) }}</span>
               </div>
             </li>
           </ul>
@@ -300,14 +300,14 @@ export default {
     adicionaCaso(caso){
       this.$store.dispatch('setCaso', caso)
     },
-    formataData(data, retorno, id, atd){
-      if(!data){
+    formataData(data, hora, retorno, id, atd){
+      
+      if(!data || !hora){
         return
       }
 
-      let aux = data.split(/\s/)
-      let dataAux = aux[0]
-      let horaAux = aux[1]
+      let dataAux = data
+      let horaAux = hora
 
       if(!retorno){
         dataAux = dataAux.replace(/-/g, "\/")

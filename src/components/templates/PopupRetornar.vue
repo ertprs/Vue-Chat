@@ -83,7 +83,7 @@ export default {
             })
         break;
         case "pessoal":
-          dados.destino = "decidado"
+          dados.destino = "dedicado"
           axios_api.put("suspend", dados)
             .then(response => {
               if(response.status == 200){
@@ -105,7 +105,7 @@ export default {
           }
 
           let data = this.dataHora.slice(0, 10)
-          let hora = this.dataHora.slice(11)
+          let hora = this.dataHora.slice(11, 19)
 
           dados.destino = "dedicado"
           dados.data = data
