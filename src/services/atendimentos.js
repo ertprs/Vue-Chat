@@ -4,7 +4,6 @@ import axios_api from "./serviceAxios"
 import { axiosTokenJWT } from "./serviceAxios"
 import { carregarIframe } from "./iframe"
 import { converterHexaParaEmojis } from "./emojis"
-import { isObject } from "util";
 
 const TEMPO_ATUALIZACAO = 2000
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
@@ -22,7 +21,6 @@ export function getAtendimentos(appVue) {
     })
         .then(response => {
             contador_request_erro = 0
-            console.log('response: ', response.data)
             tratarResponse(response)
         })
         .catch(err => {
@@ -66,7 +64,6 @@ function tratarResponse(response) {
         axiosTokenJWT(response.headers.authorization)
     } else {
         console.error('Erro na autorizacao')
-        console.log(response)
         adicionaCaso(400)
     }
     var status = response.status

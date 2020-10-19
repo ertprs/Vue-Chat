@@ -14,7 +14,7 @@
         <span class="valor">{{ tipo.count }}</span>
       </div>
     </div>
-    <div class="gerenciador-btn" title="Adicionar novo cliente" @click="abrirAtivarCtt()" v-if="ativo">
+    <div class="gerenciador-btn" title="Adicionar novo cliente" @click="abrirAtivarCtt()" v-if="!ativo">
         <i class="fas fa-user-plus"></i>
     </div>
   </div>

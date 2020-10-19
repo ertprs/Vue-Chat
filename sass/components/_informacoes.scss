@@ -3,6 +3,7 @@
   flex: 1;
   transition: .5s;
   background-color: #CCC;
+  position: relative;
 }
 
 .container-principal-informacoes{
@@ -115,7 +116,7 @@
   .btn-fechar-ctt-cliente{
     position: absolute;
     top: 10px;
-    right: 10px;
+    right: 25px;
     @include efeito-hover-padrao;
     color: #E63946
   }

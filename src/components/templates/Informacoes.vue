@@ -68,8 +68,17 @@
           > </iframe> <!-- tipo_popup=AJ2& -->
       </div>
     </div>
+    <!-- Caso não haja informacoes -->
+    <div class="lista-informacoes-container-vazio" v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206"> <!-- !iframeCttAtivo -->
+      <div>
+        <i class="far fa-folder-open"></i>
+        <p>
+          Sem informacoes para mostrar
+        </p>
+      </div>
+    </div>
     <!-- Iframe Chamar Cliente -->
-    <!-- <div class="iframe-msg-container" v-if="iframeCttAtivo && caso !== 400">
+    <div class="iframe-msg-container" v-if="iframeCttAtivo">
       <div class="informacoes-load-container" v-if="gif">
         <div class="load">
           <i class="fas fa-hourglass-end"></i>
@@ -84,15 +93,6 @@
         @load="gif = false"
         @loadstart="gif = true"
         > </iframe>
-    </div> -->
-    <!-- Caso não haja informacoes -->
-    <div class="lista-informacoes-container-vazio" v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206"> <!-- !iframeCttAtivo -->
-      <div>
-        <i class="far fa-folder-open"></i>
-        <p>
-          Sem informacoes para mostrar
-        </p>
-      </div>
     </div>
   </div>
 </template>

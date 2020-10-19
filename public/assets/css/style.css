@@ -10413,7 +10413,8 @@ body {
   width: 50%;
   flex: 1;
   transition: .5s;
-  background-color: #CCC; }
+  background-color: #CCC;
+  position: relative; }
 
 .container-principal-informacoes {
   height: 100%;
@@ -10519,7 +10520,7 @@ body {
   .iframe-msg-container .btn-fechar-ctt-cliente {
     position: absolute;
     top: 10px;
-    right: 10px;
+    right: 25px;
     transition-duration: 300ms;
     transition-property: opacity;
     opacity: .8;
