@@ -16,6 +16,7 @@
       <datetime 
         v-model="dataHora"
         placeholder="Selecione uma data e hora"
+        zone="America/Bahia"
         :min-datetime="setData('minimo')"
         :max-datetime="setData('maximo')"
         :phrases="{ok: 'Continuar', cancel: 'Fechar'}"
@@ -107,6 +108,11 @@ export default {
           let data = this.dataHora.slice(0, 10)
           let hora = this.dataHora.slice(11, 19)
 
+          let horaAux = hora[0]+hora[1]
+          horaAux = parseInt(horaAux) - 3
+
+          hora = horaAux + hora.slice(2)
+
           dados.destino = "dedicado"
           dados.data = data
           dados.hora = hora
@@ -164,8 +170,6 @@ export default {
       if(opt == 'minimo'){
         let agora = ano + '-' + mes + '-' + dia + 'T' + hora + ':' + minutos + ':00'
 
-        console.log('agora min: ', agora)
-
         return agora
       }else{
         mes = parseInt(mes)
@@ -177,7 +181,6 @@ export default {
 
         let agora = ano + '-' + mes + '-' + dia + 'T' + hora + ':' + minutos + ':00'
 
-        console.log('agora max: ', agora)
         return agora
       }
     },

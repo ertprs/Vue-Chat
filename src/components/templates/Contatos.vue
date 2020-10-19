@@ -302,6 +302,9 @@ export default {
     },
     formataData(data, hora, retorno, id, atd){
       
+      // console.log("data: ", data)
+      // console.log("hora: ", hora)
+
       if(!data || !hora){
         return
       }
@@ -332,8 +335,9 @@ export default {
         }
 
         // Diferenca entre dias
+        let dataAux2 = data + " " + hora
         let dataAtual = new Date()
-        let dataAgenda = new Date(data)
+        let dataAgenda = new Date(dataAux2)
         
         let difDatas = Date.UTC(dataAgenda.getYear(), dataAgenda.getMonth(), dataAgenda.getDate(),0,0,0) - Date.UTC(dataAtual.getYear(), dataAtual.getMonth(), dataAtual.getDate(),0,0,0)
         // Retorna o valor em horas
