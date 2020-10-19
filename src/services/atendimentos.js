@@ -326,14 +326,12 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                             novosAtendimentos[ramal].qtdMsgNova += 1;
                         }
                     } else if(message.resp_msg == "CLI") {
-                        app.$root.$emit('rolaChat')
                         app.$root.$emit('atualizar_mensagem', message)
                     } else if(message.resp_msg == "OPE"){
                         if(store.getters.getMensagemViaTextarea){
                             store.dispatch("setMensagemViaTextarea", false)
                         }else{
-                            app.$root.$emit('rolaChat')
-                            // app.$root.$emit('atualizar_mensagem', message) // comentado para não duplicar as msgs enquanto o back ficar retornando todas as msgs sem parar
+                            app.$root.$emit('atualizar_mensagem', message) // comentado para não duplicar as msgs enquanto o back ficar retornando todas as msgs sem parar
                         }
                     }
                 }

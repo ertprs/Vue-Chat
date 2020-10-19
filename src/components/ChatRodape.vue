@@ -306,7 +306,6 @@ export default {
             .then((response) => {
               this.abrirEmojis = false;
               this.abrirOpcoes = false;
-              this.$root.$emit("rolaChat")
               this.statusEnvio = "D"
             })
             .catch((error) => {
@@ -469,10 +468,12 @@ export default {
       };
 
       this.$store.dispatch("setTodasMensagens", objMensagem)
+      this.$root.$emit("rolaChat")
 
       if(this.statusEnvio !== "E" && !objMsgExterno){
         this.resetar()
       }
+
     },
     formataHoraAtual() {
       let data = new Date();
