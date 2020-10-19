@@ -301,9 +301,6 @@ export default {
       this.$store.dispatch('setCaso', caso)
     },
     formataData(data, hora, retorno, id, atd){
-      
-      // console.log("data: ", data)
-      // console.log("hora: ", hora)
 
       if(!data || !hora){
         return
@@ -363,7 +360,11 @@ export default {
               return `${difMinutos}min`
             }else{
               spanContador.classList.remove("d-none")
-              return `${difHoras}h e ${difMinutos}min`
+              if(difMinutos > 0){
+                return `${difHoras}h e ${difMinutos}min`
+              }else{
+                return `${difHoras}h`
+              }
             }
           }else{
             
