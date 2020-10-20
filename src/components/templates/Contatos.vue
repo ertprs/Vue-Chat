@@ -167,13 +167,13 @@ export default {
       contadorChamadasAtivaCli: 0
     };
   },
-  beforeUpdate() {
-    this.$nextTick(() => {
-      if(this.objAtendimentos.length){
-        console.log("objatendimentos: ", this.objAtendimentos)
-      }
-    })
-  },
+  // beforeUpdate() {
+  //   this.$nextTick(() => {
+      // if(this.objAtendimentos.length){
+      //   console.log("objatendimentos: ", this.objAtendimentos)
+      // }
+  //   })
+  // },
   watch: {
     todosAtendimentos() {
       if(this.todosAtendimentos){

@@ -17,7 +17,7 @@ export function getAtendimentos(appVue) {
     verificarAlertaErroRequest()
     axios({
         method: 'get',
-        url: store.getters.getURL + 'get-atendimento?teste' //?teste
+        url: store.getters.getURL + 'get-atendimento' //?teste
     })
         .then(response => {
             contador_request_erro = 0
@@ -206,6 +206,10 @@ async function atualizarAtendimentos() {
         url: store.getters.getURL + 'get-atendimento'
     })
         .then(response => {
+            if(response.headers.authorization){
+                axiosTokenJWT(response.headers.authorization)
+            }
+
             let mainData = response.data
             // Quando chega um novo contato, o st_ret nao vem, e acaba caindo no ultimo else
             if (mainData.st_ret === 'OK' || mainData.atendimentos) {
@@ -332,7 +336,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                         if(store.getters.getMensagemViaTextarea){
                             store.dispatch("setMensagemViaTextarea", false)
                         }else{
-                            app.$root.$emit('atualizar_mensagem', message) // comentado para não duplicar as msgs enquanto o back ficar retornando todas as msgs sem parar
+                            app.$root.$emit('atualizar_mensagem', message) // pode haver duplicacoes de mensagens
                         }
                     }
                 }

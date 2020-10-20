@@ -44,7 +44,8 @@ export default {
     return{
       pessoalData: false,
       dataHora: '',
-      ajustar: false
+      ajustar: false,
+      reqEmAndamento: false
     }
   },
   mounted(){
@@ -62,6 +63,17 @@ export default {
   },
   methods: {
     retornar(tipo){
+      if(this.reqEmAndamento){
+        console.log("Retornou")
+        return
+      }else{
+        this.reqEmAndamento = true
+      }
+
+      setTimeout(() => {
+        this.reqEmAndamento = false
+      }, 500)
+
       let dados = {
         token_cliente: this.atendimentoAtivo.token_cliente
       }
