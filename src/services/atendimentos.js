@@ -218,11 +218,20 @@ async function atualizarAtendimentos() {
                 if(mainData.gerenciador){
                     store.dispatch("setGerenciador", mainData.gerenciador)
                 }
+
+                if(mainData.agenda){
+                    store.dispatch("setAgenda", mainData.agenda)
+                }
+
             } else if (mainData.st_ret === 'AVISO') {
                 console.log('Nao existe clientes na fila')
                 adicionaCaso(206)
                 if(mainData.gerenciador){
                     store.dispatch("setGerenciador", mainData.gerenciador)
+                }
+
+                if(mainData.agenda){
+                    store.dispatch("setAgenda", mainData.agenda)
                 }
                 // setTimeout(() => {
                 //     console.log('Timeout st_ret == Aviso')

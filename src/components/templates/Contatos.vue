@@ -316,6 +316,12 @@ export default {
         return
       }
 
+      if(retorno){
+        if(!id || !atd){
+          return
+        }
+      }
+
       let dataAux = data
       let horaAux = hora
 
@@ -390,6 +396,7 @@ export default {
                 this.ativarCliente()
 
                 let arrAgenda = this.minhaAgenda
+
                 arrAgenda = arrAgenda.filter(atdAux => {
                   return atdAux.login_usu != atd.login_usu 
                 })
