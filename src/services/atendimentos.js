@@ -66,6 +66,7 @@ function tratarResponse(response) {
         console.error('Erro na autorizacao')
         adicionaCaso(400)
     }
+
     var status = response.status
     var mainData = response.data
     switch (status) {
@@ -342,6 +343,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
         novosAtendimentos[ramal].qtdMsgNova = cliente.arrMsg.length;
         novosAtendimentos[ramal].alertaMsgNova = true
     }
+
     store.dispatch('setAtendimentos', novosAtendimentos)
 }
 
