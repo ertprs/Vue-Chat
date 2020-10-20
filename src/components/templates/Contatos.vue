@@ -176,6 +176,9 @@ export default {
   //   })
   // },
   watch: {
+    // minhaAgenda(){
+    //   console.log("Agenda: ", this.minhaAgenda)
+    // },
     todosAtendimentos() {
       if(this.todosAtendimentos){
         this.objAtendimentos = Object.values(this.todosAtendimentos)
@@ -401,6 +404,8 @@ export default {
                   return atdAux.login_usu != atd.login_usu 
                 })
                 this.$store.dispatch("setAgenda", arrAgenda)
+                // Poderia ter uma fc que sinaliza ao gerenciador que foi removido um cliente da agenda
+
               }
 
               this.contadorChamadasAtivaCli++

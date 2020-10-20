@@ -9,6 +9,7 @@ const TEMPO_ATUALIZACAO = 2000
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
 var status_encerrando = 0 // 0 = liberado; 1 = em pausa
 var contador_request_erro = 0
+var parar_request = false
 var app
 
 export function getAtendimentos(appVue) {
@@ -27,7 +28,9 @@ export function getAtendimentos(appVue) {
             setTimeout(() => {
                 contador_request_erro ++
                 console.log(err)
-                getAtendimentos()
+                if(!parar_request){
+                    getAtendimentos()
+                }
                 adicionaCaso(400)
             }, 500)
         }
@@ -40,8 +43,11 @@ function verificarAlertaErroRequest() {
     }
 
     if(contador_request_erro > 5) {
-        alert('Existe um erro na conexao com a internet')
-        document.location.reload();
+        if(window.confirm('Nao foi possivel estabelecer conexao. \nClique em "OK" para se quiser tentar novamente.')){
+            document.location.reload();
+        }else{
+            parar_request = true
+        }
     }
 }
 
