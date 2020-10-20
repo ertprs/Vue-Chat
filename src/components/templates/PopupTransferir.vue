@@ -64,7 +64,8 @@ export default {
       abrirAgentes: false,
       abrirGrupos: false,
       agente: '',
-      grupo: ''
+      grupo: '',
+      reqEmAndamento: false
     }
   },
   components: {
@@ -86,6 +87,16 @@ export default {
       }
     },
     transferir(tipo, param){
+      if(this.reqEmAndamento){
+        return
+      }else{
+        this.reqEmAndamento = true
+      }
+
+      setTimeout(() => {
+        this.reqEmAndamento = false
+      }, 1000)
+
       let dados = {
         token_cliente: this.atendimentoAtivo.token_cliente,
         transfer_to: param

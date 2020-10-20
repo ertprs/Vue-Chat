@@ -64,7 +64,6 @@ export default {
   methods: {
     retornar(tipo){
       if(this.reqEmAndamento){
-        console.log("Retornou")
         return
       }else{
         this.reqEmAndamento = true
@@ -72,7 +71,7 @@ export default {
 
       setTimeout(() => {
         this.reqEmAndamento = false
-      }, 500)
+      }, 1000)
 
       let dados = {
         token_cliente: this.atendimentoAtivo.token_cliente

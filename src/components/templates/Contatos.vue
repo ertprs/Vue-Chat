@@ -164,7 +164,8 @@ export default {
       totalClientesNovos: '',
       contadorErros: 0,
       contadorErrosAgenda: 0,
-      contadorChamadasAtivaCli: 0
+      contadorChamadasAtivaCli: 0,
+      reqEmAndamento: false
     };
   },
   // beforeUpdate() {
@@ -246,6 +247,16 @@ export default {
   },
   methods: {
     ativarCliente(){
+      if(this.reqEmAndamento){
+        return
+      }else{
+        this.reqEmAndamento = true
+      }
+
+      setTimeout(() => {
+        this.reqEmAndamento = false
+      }, 1000)
+
       axios_api.post("start-contato")
         .then(response => {
           console.log('Sucesso! ', response)
@@ -388,7 +399,7 @@ export default {
               this.contadorChamadasAtivaCli++
               return 
             }
-
+            
             this.contadorChamadasAtivaCli = 0
 
             // Significa que o horario agendado ja passou
