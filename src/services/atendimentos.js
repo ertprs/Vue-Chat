@@ -103,8 +103,9 @@ function tratarResponse(response) {
                         store.dispatch("setGerenciador", mainData.gerenciador)
                     }
                     
-                    carregarIframe(mainData.atendimentos)
                     store.dispatch('setAtendimentos', mainData.atendimentos)
+                    
+                    carregarIframe(mainData.atendimentos)
                     
                     // Agenda
                     if(mainData.agenda && mainData.agenda.length){

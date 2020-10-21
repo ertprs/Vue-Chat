@@ -79,7 +79,6 @@
               :key="'id_'+indice"
               :id="'li_'+indice"
               :title="atd.nome_usu"
-              @click="ativarCliente()"
             >
               <div class="circulo-contatos">
                 <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
@@ -106,7 +105,6 @@
               :key="'id_'+indice"
               :id="'li_'+indice"
               :title="atd.nome_usu"
-              @click="ativarCliente()"
             >
               <div class="circulo-contatos">
                 <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
@@ -114,8 +112,8 @@
               </div>
               <template v-if="!fechado">{{ atd.nome_usu }}</template>
               <div class="retorno-container" :id="'retorno_'+indice" v-if="!fechado">
-                <span class="data-retorno">{{ formataData(atd.data_agenda, atd.hora_agenda) }}</span>
-                <span class="contador-data-retorno d-none"><i class="fas fa-stopwatch"></i>{{ formataData(atd.data_agenda, atd.hora_agenda, "retorno", `#retorno_${indice}`, atd) }}</span>
+                <span class="data-retorno">{{ atd.data_agenda_formatada || formataData(atd.data_agenda, atd.hora_agenda, atd) }}</span>
+                <span class="contador-data-retorno d-none"><i class="fas fa-stopwatch"></i>{{ formataData(atd.data_agenda, atd.hora_agenda, atd, "retorno", `#retorno_${indice}`) }}</span>
               </div>
             </li>
           </ul>
@@ -163,9 +161,7 @@ export default {
       totalMsgNovas: '',
       totalClientesNovos: '',
       contadorErros: 0,
-      contadorErrosAgenda: 0,
-      contadorChamadasAtivaCli: 0,
-      reqEmAndamento: false
+      contadorErrosAgenda: 0
     };
   },
   // beforeUpdate() {
@@ -176,9 +172,6 @@ export default {
   //   })
   // },
   watch: {
-    // minhaAgenda(){
-    //   console.log("Agenda: ", this.minhaAgenda)
-    // },
     todosAtendimentos() {
       if(this.todosAtendimentos){
         this.objAtendimentos = Object.values(this.todosAtendimentos)
@@ -201,6 +194,19 @@ export default {
         if(this.abaAberta == "aguardando"){
           this.contarMsgClientes()
         }
+
+        let auxAgenda = this.minhaAgenda
+        // Verificando se o cliente esta em mais de um array
+        for(let atd in this.objAtendimentos){
+          auxAgenda = auxAgenda.filter((agenda) => {
+            return agenda.id_cli !== this.objAtendimentos[atd].id_cli
+          })
+        }
+
+        if(this.minhaAgenda.length !== auxAgenda.length){
+          this.$store.dispatch("setAgenda", auxAgenda)
+        }
+
       }
     },
     abaAberta(){
@@ -249,27 +255,6 @@ export default {
     })
   },
   methods: {
-    ativarCliente(){
-      if(this.reqEmAndamento){
-        return
-      }else{
-        this.reqEmAndamento = true
-      }
-
-      setTimeout(() => {
-        this.reqEmAndamento = false
-      }, 1000)
-
-      axios_api.post("start-contato")
-        .then(response => {
-          console.log('Sucesso! ', response)
-          this.$toasted.global.defaultSuccess({msg: response.data.msg_ret})
-        })
-        .catch(error => {
-          console.log("Erro ativar cliente: ", error)
-          this.$toasted.global.defaultError({msg: "Não foi possível ativar o contato"})
-        })
-    },
     alternarAbaAberta(){
       switch (this.abaAberta){
         case "atendimento":
@@ -313,7 +298,7 @@ export default {
     adicionaCaso(caso){
       this.$store.dispatch('setCaso', caso)
     },
-    formataData(data, hora, retorno, id, atd){
+    formataData(data, hora, atd, retorno, id){
 
       if(!data || !hora){
         return
@@ -336,15 +321,21 @@ export default {
   
         horaAux = horaAux.replace(/:/g, "h")
         horaAux = horaAux.slice(0, horaAux.length-3)
-  
+
+        if(typeof(atd) == "object"){
+          atd.data_agenda_formatada = dataAux + ' ' + horaAux
+        }
+
+
         return dataAux + ' ' + horaAux
       }else{
+
         const spanContador = document.querySelector(`${id} span.contador-data-retorno`)
         if(!spanContador){
           this.contadorErrosAgenda++
           if(this.contadorErrosAgenda < 10){
             setTimeout(() => {
-              this.formataData(data, retorno, id)
+              this.formataData(data, retorno, atd)
             }, 500)
           }
           return
@@ -394,25 +385,9 @@ export default {
             // Significa que chegou a hora de chamar o ctt
             if(difHoras == 0 && difMinutos == 0){
               spanContador.classList.add("d-none")
-              
-              if(this.contadorChamadasAtivaCli == 0){
-                this.ativarCliente()
 
-                let arrAgenda = this.minhaAgenda
-
-                arrAgenda = arrAgenda.filter(atdAux => {
-                  return atdAux.login_usu != atd.login_usu 
-                })
-                this.$store.dispatch("setAgenda", arrAgenda)
-                // Poderia ter uma fc que sinaliza ao gerenciador que foi removido um cliente da agenda
-
-              }
-
-              this.contadorChamadasAtivaCli++
               return 
             }
-            
-            this.contadorChamadasAtivaCli = 0
 
             // Significa que o horario agendado ja passou
             if(difHoras <= 0 && difMinutos < 0){
