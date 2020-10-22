@@ -43,7 +43,7 @@ function verificarAlertaErroRequest() {
     }
 
     if(contador_request_erro > 5) {
-        if(window.confirm('Nao foi possivel estabelecer conexao. \nClique em "OK" para se quiser tentar novamente.')){
+        if(window.confirm('Nao foi possivel estabelecer conexao. \nClique em "OK" se quiser tentar novamente.')){
             document.location.reload();
         }else{
             parar_request = true
@@ -94,35 +94,12 @@ function tratarResponse(response) {
                             mainData.atendimentos[atd].login_usu = mainData.atendimentos[atd].login_usu.replace(regex, '')
                         }
                     }
-
-                    if(mainData.ativo){
-                        store.dispatch("setAtivo", mainData.ativo)
-                    }
-
-                    if(mainData.gerenciador){
-                        store.dispatch("setGerenciador", mainData.gerenciador)
-                    }
                     
                     store.dispatch('setAtendimentos', mainData.atendimentos)
                     
                     carregarIframe(mainData.atendimentos)
-                    
-                    // Agenda
-                    if(mainData.agenda && mainData.agenda.length){
-                        store.dispatch("setAgenda", mainData.agenda)
-                    }
-                    
-                    // Aguardando
-                    axios_api.get("get-aguardando")
-                    .then(response => {
-                        const arrAguardando = response.data.ret
-                        if(arrAguardando.length){
-                            store.dispatch("setAguardando", arrAguardando)
-                        }
-                    })
-                    .catch(error => {
-                        console.log('error get aguardando: ', error)
-                    })
+
+                    acionaProcessos(mainData)
 
                     loopAtualizacaoDeAtendimentos()
                 } else {
@@ -145,32 +122,7 @@ function tratarResponse(response) {
                 getAtendimentos()
                 adicionaCaso(206)
 
-                if(mainData.ativo){
-                    store.dispatch("setAtivo", mainData.ativo)
-                }
-
-                // Gerenciador
-                if(mainData.gerenciador){
-                    store.dispatch("setGerenciador", mainData.gerenciador)
-                }
-                // Agenda
-                if(mainData.agenda && mainData.agenda.length){
-                    store.dispatch("setAgenda", mainData.agenda)
-                }else{
-                    store.dispatch("setAgenda", [])
-                }
-
-                // Aguardando
-                axios_api.get("get-aguardando")
-                .then(response => {
-                    const arrAguardando = response.data.ret
-                    if(arrAguardando.length){
-                        store.dispatch("setAguardando", arrAguardando)
-                    }
-                })
-                .catch(error => {
-                    console.log('error get aguardando: ', error)
-                })
+                acionaProcessos(mainData)
 
             }, TEMPO_ATUALIZACAO)
             break;
@@ -182,6 +134,35 @@ function tratarResponse(response) {
             // this.reiniciarApp()
             break
     }
+}
+
+function acionaProcessos(mainData){
+    // Ativar Cliente
+    if(mainData.ativo){
+        store.dispatch("setAtivo", mainData.ativo)
+    }
+    
+    // Gerenciador
+    if(mainData.gerenciador){
+        store.dispatch("setGerenciador", mainData.gerenciador)
+    }
+    
+    // Agenda
+    if(mainData.agenda && mainData.agenda.length){
+        store.dispatch("setAgenda", mainData.agenda)
+    }
+    
+    // Aguardando
+    axios_api.get("get-aguardando")
+    .then(response => {
+        const arrAguardando = response.data.ret
+        if(arrAguardando.length){
+            store.dispatch("setAguardando", arrAguardando)
+        }
+    })
+    .catch(error => {
+        console.log('error get aguardando: ', error)
+    })
 }
 
 function verificaRequest() {

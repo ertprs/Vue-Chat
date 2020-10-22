@@ -693,7 +693,7 @@ export default {
     validaAnexo(arquivo, img = true) {
       if (arquivo) {
         if(img){
-          if (/\.(jpe?g|png|gif)$/i.test(arquivo.name)) {
+          if (/\.(jpe?g|png|gif|svg)$/i.test(arquivo.name)) {
             return true;
           } else {
             this.$toasted.global.formatoInvalido();

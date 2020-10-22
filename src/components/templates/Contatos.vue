@@ -79,6 +79,7 @@
               :key="'id_'+indice"
               :id="'li_'+indice"
               :title="atd.nome_usu"
+              @click="ativarCliente()"
             >
               <div class="circulo-contatos">
                 <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
@@ -105,6 +106,7 @@
               :key="'id_'+indice"
               :id="'li_'+indice"
               :title="atd.nome_usu"
+              @click="ativarCliente()"
             >
               <div class="circulo-contatos">
                 <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
@@ -262,6 +264,17 @@ export default {
     })
   },
   methods: {
+    ativarCliente(){
+      axios_api.post("start-contato")
+        .then((response) => {
+          if(response.data.st_ret == "OK"){
+            this.$toasted.global.defaultSuccess({msg: "Aguarde. Logo o cliente sera ativado"})
+          }
+        })
+        .catch(error => {
+          this.$toasted.global.defaultError({msg: "Nao foi possivel ativar o cliente"})
+        })
+    },
     alternarAbaAberta(){
       switch (this.abaAberta){
         case "atendimento":
