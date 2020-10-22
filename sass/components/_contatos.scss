@@ -454,7 +454,7 @@ $tamanhoBoxShadow: 5px;
   @include d-flex-center();
   background-color: whitesmoke;
   &.existe-agenda{
-    height: 40%;
+    height: 65px;
   }
   div{
     font-size: 1.1rem;
@@ -465,6 +465,7 @@ $tamanhoBoxShadow: 5px;
       text-align: center;
       width: 100%;
       white-space: nowrap;
+      margin: 0;
     }
   }
 }

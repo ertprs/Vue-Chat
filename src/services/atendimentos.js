@@ -144,6 +144,11 @@ function tratarResponse(response) {
                 // console.log('Timeout aguardando cliente')
                 getAtendimentos()
                 adicionaCaso(206)
+
+                if(mainData.ativo){
+                    store.dispatch("setAtivo", mainData.ativo)
+                }
+
                 // Gerenciador
                 if(mainData.gerenciador){
                     store.dispatch("setGerenciador", mainData.gerenciador)

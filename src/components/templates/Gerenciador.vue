@@ -1,5 +1,5 @@
 <template>
-  <div id="gerenciador-container" :class="{'em-atendimento' : estadoAtendimento == 'em-atendimento', 'parado' : estadoAtendimento == 'parado', 'existe-ativo' : ativo}" v-if="gerenciador && gerenciador.length ? true : false">
+  <div id="gerenciador-container" :class="{'em-atendimento' : estadoAtendimento == 'em-atendimento', 'parado' : estadoAtendimento == 'parado'}" v-if="gerenciador && gerenciador.length ? true : false">
     <div class="gerenciador-btn" @click="mudarEstadoAtendimento()">
       <div v-show="estadoAtendimento == 'em-atendimento'" title="Em atendimento">
         <i class="fas fa-pause"></i>
@@ -8,7 +8,7 @@
         <i class="fas fa-play"></i>
       </div>
     </div>
-    <div class="gerenciador-lista">
+    <div class="gerenciador-lista" :class="{'existe-ativo' : ativo == true}">
       <div v-for="(tipo, index) in gerenciador" :key="index">
         <span class="titulo">{{ tipo.texto }}</span>
         <span class="valor">{{ tipo.count }}</span>

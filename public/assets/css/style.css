@@ -9752,7 +9752,7 @@ body {
   align-items: center;
   background-color: whitesmoke; }
   .lista-contatos-container-vazio.existe-agenda {
-    height: 40%; }
+    height: 65px; }
   .lista-contatos-container-vazio div {
     font-size: 1.1rem;
     color: #3c3c3c;
@@ -9763,7 +9763,8 @@ body {
     .lista-contatos-container-vazio div p {
       text-align: center;
       width: 100%;
-      white-space: nowrap; }
+      white-space: nowrap;
+      margin: 0; }
 
 @keyframes blink {
   from {
@@ -10788,7 +10789,7 @@ div[blocker] {
   border-left: 2px solid #495057;
   padding: 0 10px; }
   .gerenciador-lista.existe-ativo {
-    border-right: 2px solid #495057; }
+    border-right: 2px solid #495057 !important; }
   .gerenciador-lista > div {
     display: flex;
     align-items: center;

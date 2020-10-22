@@ -27,7 +27,7 @@
   @include d-flex-center("ambos");
   border-left: 2px solid #495057;
   &.existe-ativo{
-    border-right: 2px solid #495057;
+    border-right: 2px solid #495057!important;
   }
   padding: 0 10px;
   > div{

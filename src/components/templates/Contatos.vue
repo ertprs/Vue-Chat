@@ -20,7 +20,7 @@
     </div>
     <template v-if="objAtendimentos">
       <!-- Caso Aguardando Cliente ou esperando a primeira requisicao ao buscaAtendimentos -->
-      <div class="lista-contatos-container-vazio" :class="{'existe-agenda' : minhaAgenda.length}" v-if="caso == 206 || caso == 'aguardando'">
+      <div class="lista-contatos-container-vazio" :class="{'existe-agenda' : minhaAgenda.length || aguardando.length}" v-if="caso == 206 || caso == 'aguardando'">
         <div class="load">
           <i class="fas fa-hourglass-end"></i>
           <transition name="fade">
@@ -191,6 +191,7 @@ export default {
             this.ativarConversa(this.objAtendimentos[0], 0)
           }
         }
+
         if(this.abaAberta == "aguardando"){
           this.contarMsgClientes()
         }
@@ -206,7 +207,6 @@ export default {
         if(this.minhaAgenda.length !== auxAgenda.length){
           this.$store.dispatch("setAgenda", auxAgenda)
         }
-
       }
     },
     abaAberta(){
@@ -225,6 +225,13 @@ export default {
         if(tituloContatos, tituloAgenda){
           tituloContatos.style.background = ''
           tituloAgenda.style.background = ''
+        }
+      }
+    },
+    aguardando(){
+      if(!this.objAtendimentos.length && this.aguardando.length){
+        if(this.abaAberta == "atendimento"){
+          this.alternarAbaAberta()
         }
       }
     }
