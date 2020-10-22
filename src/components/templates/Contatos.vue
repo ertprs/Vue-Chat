@@ -64,7 +64,7 @@
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
           </li>
         </ul>
-        <div class="fieldset-container" v-if="caso !== 400 && caso !== 206 && aguardando && aguardando.length">
+        <div class="fieldset-container" v-if="caso !== 400 && aguardando && aguardando.length">
           <h4
             v-on:click="alternarAbaAberta()"
             :class="abaAberta == 'aguardando' ? 'ativo' : ''"
@@ -322,10 +322,14 @@ export default {
         horaAux = horaAux.replace(/:/g, "h")
         horaAux = horaAux.slice(0, horaAux.length-3)
 
+        if(!parseInt(horaAux[0])){
+          this.formataData(data, hora, atd)
+          return
+        }
+
         if(typeof(atd) == "object"){
           atd.data_agenda_formatada = dataAux + ' ' + horaAux
         }
-
 
         return dataAux + ' ' + horaAux
       }else{

@@ -151,7 +151,21 @@ function tratarResponse(response) {
                 // Agenda
                 if(mainData.agenda && mainData.agenda.length){
                     store.dispatch("setAgenda", mainData.agenda)
+                }else{
+                    store.dispatch("setAgenda", [])
                 }
+
+                // Aguardando
+                axios_api.get("get-aguardando")
+                .then(response => {
+                    const arrAguardando = response.data.ret
+                    if(arrAguardando.length){
+                        store.dispatch("setAguardando", arrAguardando)
+                    }
+                })
+                .catch(error => {
+                    console.log('error get aguardando: ', error)
+                })
 
             }, TEMPO_ATUALIZACAO)
             break;
