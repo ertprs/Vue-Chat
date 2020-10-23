@@ -350,6 +350,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
             cliente.arrMsg.map((message) => { //mensagens novas
                 // console.log(message)
                 if (!seqs.includes(message.seq)) {
+
                     // Transformando codigo hexadecimal recebido em emoji
                     let regex = ''
                     for (let i = 0; i < store.getters.getEmojis.length; i++) {
