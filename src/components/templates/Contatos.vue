@@ -179,6 +179,9 @@ export default {
         this.objAtendimentos = Object.values(this.todosAtendimentos)
         if(this.objAtendimentos.length && this.idAtendimentoAtivo == ''){
           setTimeout(() => {
+            if(this.abaAberta !== 'atendimento'){
+              this.alternarAbaAberta()
+            }
             this.ativarConversa(this.objAtendimentos[0], 0)
           }, 200)
         }else if(this.objAtendimentos.length && this.idAtendimentoAtivo){

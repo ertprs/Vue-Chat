@@ -301,7 +301,7 @@ export default {
           }
 
           axios_api
-            .post(`send-message&${this.reqTeste}`, data)
+            .post(`send-message?${this.reqTeste}`, data)
             .then((response) => {
               this.abrirEmojis = false;
               this.abrirOpcoes = false;

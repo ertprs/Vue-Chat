@@ -143,8 +143,6 @@ function acionaProcessos(mainData){
     }
     
     // Gerenciador
-    // console.log("mainData.gerenciador: ", mainData.gerenciador)
-
     if(mainData.gerenciador){
         store.dispatch("setGerenciador", mainData.gerenciador)
     }
@@ -209,7 +207,6 @@ function adicionaCaso(caso) {
 }
 
 function acionaProcessosAtualizacao(mainData){
-    // console.log("mainData.gerenciador: ", mainData.gerenciador)
     if(mainData.gerenciador){
         store.dispatch("setGerenciador", mainData.gerenciador)
     }
