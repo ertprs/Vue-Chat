@@ -232,6 +232,18 @@ function acionaProcessosAtualizacao(mainData){
     if(mainData.agenda){
         store.dispatch("setAgenda", mainData.agenda)
     }
+
+    // Aguardando
+    axios_api.get("get-aguardando?teste=teste")
+    .then(response => {
+        const arrAguardando = response.data.ret
+        if(arrAguardando.length){
+            store.dispatch("setAguardando", arrAguardando)
+        }
+    })
+    .catch(error => {
+        console.log('error get aguardando: ', error)
+    })
 }
 
 
