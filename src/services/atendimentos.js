@@ -13,7 +13,12 @@ var parar_request = false
 var app
 
 export function getAtendimentos(appVue) {
-    appVue ? app = appVue : false
+    if(appVue) {
+        app = appVue
+    } else {
+        console.error('É necessário informar a instância do vue')
+        return
+    }
     bloqueiaRequest()
     liberaRequest()
     verificarAlertaErroRequest()
@@ -28,7 +33,7 @@ export function getAtendimentos(appVue) {
         .catch(err => {
             setTimeout(() => {
                 contador_request_erro ++
-                console.log(err)
+                console.error(err)
                 if(!parar_request){
                     getAtendimentos(app)
                 }
@@ -81,16 +86,16 @@ function tratarResponse(response) {
     var mainData = response.data
     switch (status) {
         case 200:
-            if (!mainData) {
+            if (!mainData) { // tratando erro quando os dados não chegaram da api
                 console.error('Negacao do mainData')
                 setTimeout(() => {
+                    console.error('Timeout negacao mainData')
                     adicionaCaso(400)
-                    console.log('Timeout negacao mainData')
                     getAtendimentos(app)
                 }, TEMPO_ATUALIZACAO)
                 return
             } else {
-                if (mainData.atendimentos) {
+                if (mainData.atendimentos) { // executando fluxo normal sem erros
                     adicionaCaso(200)
                     mainData = converterHexaParaEmojis(mainData)
                     let regex = /\s|\]|\[/g
@@ -103,7 +108,7 @@ function tratarResponse(response) {
                     carregarIframe(mainData.atendimentos)
                     acionaProcessos(mainData)
                     loopAtualizacaoDeAtendimentos()
-                } else {
+                } else { // tratando erro quando os atendimentos nao chegaram nos dados da api
                     console.log('Erro ao tentar obter dados no servidor')
                     console.log(mainData)
                     adicionaCaso(400)
@@ -117,10 +122,7 @@ function tratarResponse(response) {
             break;
 
         case 206:
-            // console.log('Status ' + response.status + ' ' + response.statusText)
-            // console.log('Aguardando Cliente')
-            setTimeout(() => {
-                // console.log('Timeout aguardando cliente')
+            setTimeout(() => { // Timeout aguardando cliente
                 adicionaCaso(206)
                 acionaProcessos(mainData)
                 getAtendimentos(app)
@@ -131,7 +133,6 @@ function tratarResponse(response) {
             console.error('ERRO STATUS ' + response.status + ' ' + response.statusText)
             console.log(response)
             adicionaCaso(400)
-            // this.reiniciarApp()
             break
     }
 }
@@ -243,23 +244,17 @@ async function atualizarAtendimentos() {
             if(response.headers.authorization){
                 axiosTokenJWT(response.headers.authorization)
             }
-
             let mainData = response.data
-            // Quando chega um novo contato, o st_ret nao vem, e acaba caindo no ultimo else
             if (mainData.st_ret === 'OK' || mainData.atendimentos) {
                 adicionaCaso(200)
                 atualizarClientes(mainData)
-
                 acionaProcessosAtualizacao(mainData)
-
             } else if (mainData.st_ret === 'AVISO') {
-                console.log('Nao existe clientes na fila')
+                console.error('Nao existe clientes na fila')
                 adicionaCaso(206)
-
                 acionaProcessosAtualizacao(mainData)
-                
             } else {
-                console.log('ERRO! Status:', response)
+                console.error('ERRO! Status:', response)
                 if (response.data) {
                     for (let atd in response.data) {
                         if (typeof response.data[atd] == 'object') {
@@ -305,8 +300,6 @@ function atualizarClientes(mainData) {
             novosAtendimentos[ramal_local] = atendimentosLocal[ramal_local]
         }
     }
-
-
 
     for (var ramal_server in atendimentosServer) {
         var temClienteNovo = true
@@ -382,18 +375,10 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
     store.dispatch('setAtendimentos', novosAtendimentos)
 }
 
-function reiniciarApp() {
-    setTimeout(function () {
-        document.location.reload();
-    }, TEMPO_ATUALIZACAO)
-}
-
 var startTime, endTime;
-
 function start() {
   startTime = new Date();
 };
-
 function end() {
   endTime = new Date();
   var timeDiff = endTime - startTime; //in ms
