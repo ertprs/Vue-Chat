@@ -215,6 +215,8 @@ export default {
         if(this.minhaAgenda.length !== auxAgenda.length){
           this.$store.dispatch("setAgenda", auxAgenda)
         }
+      } else {
+        this.objAtendimentos = []
       }
     },
     abaAberta(){
