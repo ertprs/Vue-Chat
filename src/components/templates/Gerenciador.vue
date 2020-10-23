@@ -1,10 +1,10 @@
 <template>
-  <div id="gerenciador-container" :class="{'em-atendimento' : estadoAtendimento == 'em-atendimento', 'parado' : estadoAtendimento == 'parado'}" v-if="gerenciador && gerenciador.length ? true : false">
+  <div id="gerenciador-container" :class="{'d-none': !reqTeste, 'em-atendimento' : statusAtd == 'em-atendimento', 'parado' : statusAtd == 'parado'}" v-if="gerenciador && gerenciador.length ? true : false">
     <div class="gerenciador-btn" @click="mudarEstadoAtendimento()">
-      <div v-show="estadoAtendimento == 'em-atendimento'" title="Em atendimento">
+      <div v-show="statusAtd == 'em-atendimento'" title="Em atendimento">
         <i class="fas fa-pause"></i>
       </div>
-      <div v-show="estadoAtendimento == 'parado'" title="Parado">
+      <div v-show="statusAtd == 'parado'" title="Parado">
         <i class="fas fa-play"></i>
       </div>
     </div>
@@ -31,12 +31,12 @@ export default {
       iframeCttAtivo: "getIframeCttAtivo",
       ativo: "getAtivo",
       dominio: "getDominio",
-      reqTeste: "getReqTeste"
+      reqTeste: "getReqTeste",
+      statusAtd: "getStatusAtd"
     })
   },
   data(){
     return{
-      estadoAtendimento: "em-atendimento",
       qtdAgenda: 0
     }
   },
@@ -59,10 +59,10 @@ export default {
       axios_api.put(`start-and-stop?${this.reqTeste}`)
         .then(response => {
           if(response.data.st_ret == "OK"){
-            if(this.estadoAtendimento == "em-atendimento"){
-              this.estadoAtendimento = "parado"
+            if(this.statusAtd == "em-atendimento"){
+              this.$store.dispatch("setStatusAtd", "parado")
             }else{
-              this.estadoAtendimento = "em-atendimento"
+              this.$store.dispatch("setStatusAtd", "em-atendimento")
             }
           }
         })
@@ -92,7 +92,7 @@ export default {
         const iconeGerenciador = parent.document.querySelector("#icone-gerenciador")
 
         if(iconeGerenciador){
-          if(this.estadoAtendimento == "em-atendimento"){
+          if(this.statusAtd == "em-atendimento"){
             gerenciadorV8.classList.add("em-atendimento")
             gerenciadorV8.classList.remove("parado")
 
@@ -116,12 +116,12 @@ export default {
           }
         }
         
-        setTimeout(() => {
+        this.$nextTick(() => {
           gerenciadorV8.classList.remove('d-none')
           if(gerenciador){
             gerenciador.classList.add('d-none')
           }
-        }, 300)
+        })
       }
     }
   },
