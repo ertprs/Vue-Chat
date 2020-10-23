@@ -47,8 +47,11 @@ export default {
     listenerPostMessage(event){
 
       if(event.origin == this.dominio){
-        if(event.data.gerenciador){
+        if(event.data.ativarContato){
           this.abrirAtivarCtt()
+        }
+        if(event.data.toggleAtd){
+          this.mudarEstadoAtendimento()
         }
       }  
     },
