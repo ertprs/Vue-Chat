@@ -366,7 +366,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                         if(store.getters.getMensagemViaTextarea){
                             store.dispatch("setMensagemViaTextarea", false)
                         }else{
-                            app.$root.$emit('atualizar_mensagem', message) // pode haver duplicacoes de mensagens
+                            app.$root.$emit('atualizar_mensagem', message)
                         }
                     }
                 }
