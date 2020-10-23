@@ -53,11 +53,18 @@ export default {
       }  
     },
     mudarEstadoAtendimento(){
-      if(this.estadoAtendimento == "em-atendimento"){
-        this.estadoAtendimento = "parado"
-      }else{
-        this.estadoAtendimento = "em-atendimento"
-      }
+      axios_api.put(`start-and-stop?${this.reqTeste}`)
+        .then(response => {
+          console.log("Response: ", response)
+          if(this.estadoAtendimento == "em-atendimento"){
+            this.estadoAtendimento = "parado"
+          }else{
+            this.estadoAtendimento = "em-atendimento"
+          }
+        })
+        .catch(error => {
+          console.log("error start/stop: ", error)
+        })
     },
     abrirAtivarCtt(){
       if(this.iframeCttAtivo){
