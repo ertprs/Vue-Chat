@@ -222,12 +222,6 @@ function adicionaCaso(caso) {
 }
 
 function acionaProcessosAtualizacao(mainData){
-    // Pausa/Em atendimento
-    if(mainData.status_operacao){
-        store.dispatch("setStatusAtd", "em-atendimento")
-    }else{
-        store.dispatch("setStatusAtd", "parado")
-    }
 
     // Gerenciador
     if(mainData.gerenciador){
