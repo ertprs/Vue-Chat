@@ -223,10 +223,7 @@ export default {
 
     this.$root.$on("atualizar_mensagem", (objMsgExterno, event) => {
       this.criaObjMensagem(objMsgExterno);
-    }),
-      (document.querySelector(".btn-emoji").innerText = String.fromCodePoint(
-        0x1f61c
-      ));
+    }),(document.querySelector(".btn-emoji").innerText = String.fromCodePoint(0x1f61c));
 
     window.addEventListener("message", this.listenerPostMessage, false);
 
@@ -377,6 +374,7 @@ export default {
       return true;
     },
     criaObjMensagem(objMsgExterno) {
+      console.log(objMsgExterno)
       let objMensagem = {}
       let autor = ""
       let origem = ""
@@ -429,7 +427,6 @@ export default {
 
         if(objMsgExterno.anexos){
           anexo = true
-          
           regex = /(\w+)\/(\w+)/g;
           let type = regex.exec(objMsgExterno.anexos.type);
           switch (type[1]) {
