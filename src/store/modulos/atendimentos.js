@@ -5,7 +5,7 @@ export default {
     atendimentoAtivo: {},
     ultimoIdRemovido: '',
     dominio: '',
-    reqTeste: false
+    reqTeste: ""
   },
   mutations: {
     setAtendimentos(state, todosAtendimentos){
