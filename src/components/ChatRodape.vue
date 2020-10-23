@@ -447,6 +447,8 @@ export default {
 
         autor = objMsgExterno.resp_msg == "CLI" ? "Cliente" : "Operador"
         origem = autor == "Cliente" ? "outros" : "principal"
+
+        this.$store.dispatch("setMensagemViaTextarea", false)
       }
 
       objMensagem = {
