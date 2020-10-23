@@ -137,13 +137,17 @@ function tratarResponse(response) {
     }
 }
 
-function acionaProcessos(mainData){
+let primeiraRequest = true
 
-    // Pausa/Em atendimento
-    if(mainData.status_operacao){
-        store.dispatch("setStatusAtd", "em-atendimento")
-    }else{
-        store.dispatch("setStatusAtd", "parado")
+function acionaProcessos(mainData){
+    
+    if(primeiraRequest){
+        // Pausa/Em atendimento
+        if(mainData.status_operacao){
+            store.dispatch("setStatusAtd", "em-atendimento")
+        }else{
+            store.dispatch("setStatusAtd", "parado")
+        }
     }
 
     // Ativar Cliente
@@ -172,6 +176,8 @@ function acionaProcessos(mainData){
     .catch(error => {
         console.log('error get aguardando: ', error)
     })
+
+    primeiraRequest = false
 }
 
 function verificaRequest() {
