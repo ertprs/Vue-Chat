@@ -24,7 +24,14 @@ var app = new Vue({
   Chat,
   render: h => h(App),
   created: () => {
-    store.dispatch('setURL', "https://linux03/im/atdHumano/middleware/atd_api.php/")
+    let baseUrl = ''
+    if(window.location.hostname == 'localhost'){
+      baseUrl = 'https://linux03'
+    }else{
+      baseUrl = 'https://'+window.location.hostname
+    }
+
+    store.dispatch('setURL', `${baseUrl}/im/atdHumano/middleware/atd_api.php/`)
   },
   mounted() {
     store.dispatch('setCaso', 206)

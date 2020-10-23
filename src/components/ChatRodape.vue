@@ -189,7 +189,6 @@
 import { mapGetters } from "vuex";
 import { obterMsgFormatada } from "../services/msgFormatada";
 import axios_api from "../services/serviceAxios";
-import axios from "axios";
 
 export default {
   data() {
@@ -221,6 +220,7 @@ export default {
     };
   },
   mounted() {
+
     this.$root.$on("atualizar_mensagem", (objMsgExterno, event) => {
       this.criaObjMensagem(objMsgExterno);
     }),
@@ -302,7 +302,7 @@ export default {
           }
 
           axios_api
-            .post("send-message", data)
+            .post(`send-message?${this.reqTeste}`, data)
             .then((response) => {
               this.abrirEmojis = false;
               this.abrirOpcoes = false;
@@ -429,21 +429,16 @@ export default {
 
         if(objMsgExterno.anexos){
           anexo = true
-          let baseUrl = ''
-          if(window.location.hostname == 'localhost'){
-            baseUrl = 'http://linux03'
-          }else{
-            baseUrl = 'https://'+window.location.hostname
-          }
+          
           regex = /(\w+)\/(\w+)/g;
           let type = regex.exec(objMsgExterno.anexos.type);
           switch (type[1]) {
             case "image": 
-              imgAnexo = `${baseUrl}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
+              imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
               break;
             default:
               tipoDoc = objMsgExterno.anexos.type
-              docAnexo = `${baseUrl}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
+              docAnexo = `${this.dominio}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
               nomeArquivo = objMsgExterno.anexos.name
           }
         }
@@ -672,7 +667,7 @@ export default {
           } else {
             this.imagemPrevia = "";
             this.erroFormatoAnexo = true;
-            this.txtFormatosValidos = ".gif, .jpg/jpeg ou .png sao aceitos";
+            this.txtFormatosValidos = `${this.extImgs} sao aceitos`;
           }
         }else{
           this.imagemPrevia = "";
@@ -680,7 +675,7 @@ export default {
             this.erroFormatoAnexo = false;
           }else{
             this.erroFormatoAnexo = true;
-            this.txtFormatosValidos = ".doc/docx, .pdf ou .txt sao aceitos";
+            this.txtFormatosValidos = `${this.extDocs} sao aceitos`;
           }
         }
       } else {
@@ -691,16 +686,21 @@ export default {
       }
     },
     validaAnexo(arquivo, img = true) {
+      let regex = ""
       if (arquivo) {
-        if(img){
-          if (/\.(jpe?g|png|gif|svg)$/i.test(arquivo.name)) {
+        if(img){   
+          regex = new RegExp("\.("+this.extImgs+")", "i")
+          
+          if (regex.test(arquivo.name)) {
             return true;
           } else {
             this.$toasted.global.formatoInvalido();
             return false;
           }
         }else{
-          if (/\.(doc?x|pdf|txt)$/i.test(arquivo.name)) {
+          regex = new RegExp("\.("+this.extDocs+")", "i")
+
+          if (regex.test(arquivo.name)) {
             return true;
           }else{
             this.$toasted.global.formatoInvalido();
@@ -765,17 +765,8 @@ export default {
       observe(text, "keydown", delayedResize);
     },
     listenerPostMessage(event){
-      // console.log(event)
-      // console.log('origin', event.origin)
 
-      let baseUrl = ''
-      if(window.location.hostname == 'localhost'){
-        baseUrl = 'https://linux03'
-      }else{
-        baseUrl = 'https://'+window.location.hostname
-      }
-
-      if(event.origin == baseUrl){
+      if(event.origin == this.dominio){
         if(event.data.gerenciador){
           return
         }
@@ -942,7 +933,11 @@ export default {
       tipoMsg: 'getTipoMsg',
       origemBlocker: 'getOrigemBlocker',
       todasMensagens: "getTodasMensagens",
-      todaBiblioteca: "getTodaBliblioteca"
+      todaBiblioteca: "getTodaBliblioteca",
+      dominio: "getDominio",
+      reqTeste: "getReqTeste",
+      extImgs: "getExtImgs",
+      extDocs: "getExtDocs"
     })
   },
   created(){

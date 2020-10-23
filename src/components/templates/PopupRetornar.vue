@@ -80,7 +80,7 @@ export default {
       switch(tipo){
         case "todos":
           dados.destino = "universal"
-          axios_api.put("suspend", dados)
+          axios_api.put(`suspend?${this.reqTeste}`, dados)
             .then(response => {
               if(response.status == 200){
                 console.log('Sucesso: ', response)
@@ -96,7 +96,7 @@ export default {
         break;
         case "pessoal":
           dados.destino = "dedicado"
-          axios_api.put("suspend", dados)
+          axios_api.put(`suspend?${this.reqTeste}`, dados)
             .then(response => {
               if(response.status == 200){
                 console.log('Sucesso: ', response)
@@ -128,7 +128,7 @@ export default {
           dados.data = data
           dados.hora = hora
 
-          axios_api.put("suspend", dados)
+          axios_api.put(`suspend?${this.reqTeste}`, dados)
             .then(response => {
               if(response.status == 200){
                 console.log('Sucesso: ', response)

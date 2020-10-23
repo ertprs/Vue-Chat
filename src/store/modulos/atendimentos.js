@@ -3,7 +3,10 @@ export default {
     todosAtendimentos: {},
     idAtendimentoAtivo: '',
     atendimentoAtivo: {},
-    ultimoIdRemovido: ''
+    ultimoIdRemovido: '',
+    dominio: '',
+    reqTeste: "",
+    statusAtd: "em-atendimento"
   },
   mutations: {
     setAtendimentos(state, todosAtendimentos){
@@ -23,6 +26,15 @@ export default {
     },
     setUltimoIdRemovido(state, ultimoIdRemovido){
       state.ultimoIdRemovido = ultimoIdRemovido
+    },
+    setDominio(state, dominio){
+      state.dominio = dominio
+    },
+    setReqTeste(state, reqTeste){
+      state.reqTeste = reqTeste
+    },
+    setStatusAtd(state, statusAtd){
+      state.statusAtd = statusAtd
     }
   },
   actions: {
@@ -43,6 +55,15 @@ export default {
     },
     setUltimoIdRemovido: (context, payload) => {
       context.commit('setUltimoIdRemovido', payload)
+    },
+    setDominio: (context, payload) => {
+      context.commit('setDominio', payload)
+    },
+    setReqTeste: (context, payload) => {
+      context.commit('setReqTeste', payload)
+    },
+    setStatusAtd: (context, payload) => {
+      context.commit("setStatusAtd", payload)
     }
   },
   getters: {
@@ -57,6 +78,15 @@ export default {
     },
     getUltimoIdRemovido(state){
       return state.ultimoIdRemovido
+    },
+    getDominio(state){
+      return state.dominio
+    },
+    getReqTeste(state){
+      return state.reqTeste
+    },
+    getStatusAtd(state){
+      return state.statusAtd
     }
   } 
 }

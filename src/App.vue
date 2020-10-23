@@ -64,6 +64,17 @@ export default {
     }
   },
   methods: {
+    setDominio(){
+      let baseUrl = ''
+      if(window.location.hostname == 'localhost'){
+        baseUrl = 'http://linux03'
+        this.$store.dispatch("setReqTeste", "teste=teste")
+      }else{
+        baseUrl = 'https://'+window.location.hostname
+      }
+
+      this.$store.dispatch("setDominio", baseUrl)
+    },
     carregarBibliotecaEmojis(){
       let emojis = new Emojis().get();
       this.$store.commit("setBiblioteca", emojis)
@@ -131,6 +142,8 @@ export default {
     this.verificaLocalStorage()
   },
   mounted(){
+    this.setDominio()
+
     this.setHeightMaximo()
 
     this.carregarBibliotecaEmojis()

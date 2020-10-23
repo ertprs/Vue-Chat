@@ -54,7 +54,6 @@
       <!-- Iframe Msg Tipo 2 -->
       <div class="iframe-msg-container" v-if="abrirMsgTipo2">
         <!-- Iframe do Caio -->
-        <!-- {{ `${baseUrl}im/atdHumano/view/atd_valida.php?grupo=${grupo}&categoria=${categoria}&assunto=${assunto}&nro_chat=${nroChat}` }} -->
         <div class="informacoes-load-container" v-if="gif">
           <div class="load">
             <i class="fas fa-hourglass-end"></i>
@@ -62,7 +61,7 @@
           </div>
         </div>
         <iframe 
-          :src="`${baseUrl}im/atdHumano/view/atd_valida.php?grupo=${grupo}&categoria=${categoria}&assunto=${assunto}&nro_chat=${nroChat}${teste}`" frameborder="0"
+          :src="`${this.dominio}/im/atdHumano/view/atd_valida.php?grupo=${grupo}&categoria=${categoria}&assunto=${assunto}&nro_chat=${nroChat}&${this.reqTeste}`" frameborder="0"
           @load="gif = false"
           @loadstart="gif = true"
           > </iframe> <!-- tipo_popup=AJ2& -->
@@ -89,7 +88,7 @@
         <i class="fas fa-times-circle"></i>
       </span>
       <iframe 
-        :src="`${baseUrl}im/atdHumano/view/atd_contato_atv.php`" frameborder="0"
+        :src="`${this.dominio}/im/atdHumano/view/atd_contato_atv.php`" frameborder="0"
         @load="gif = false"
         @loadstart="gif = true"
         > </iframe>
@@ -106,8 +105,6 @@ import IframeTemplate from './IframeTemplate'
 export default {
   data(){
     return{
-      baseUrl: '',
-      teste: '',
       gif: true
     }
   },
@@ -138,21 +135,9 @@ export default {
       timeString = timeString.replace(/\d+:/, horas.h.toString().padStart(2, 0) + ':')
       return timeString
     },
-    getBaseUrl(){
-      
-      if(window.location.hostname == 'localhost'){
-        this.baseUrl = 'https://linux03/'
-        this.teste = `&teste=${window.location.origin}`
-      }else{
-        this.baseUrl = 'https://'+window.location.hostname+'/'
-      }
-    },
     fecharIframeCttAtivo(){
       this.$store.dispatch('setIframeCttAtivo', false)
     }
-  },
-  mounted(){
-    this.getBaseUrl()
   },
   computed: {
     ...mapGetters({
@@ -163,7 +148,9 @@ export default {
       categoria: 'getCategoria',
       assunto: 'getAssunto',
       nroChat: 'getNroChat',
-      iframeCttAtivo: 'getIframeCttAtivo'
+      iframeCttAtivo: 'getIframeCttAtivo',
+      dominio: 'getDominio',
+      reqTeste: 'getReqTeste'
     })
   },
 }

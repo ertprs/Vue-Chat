@@ -113,7 +113,7 @@ export default {
         break;
       }
 
-      axios_api.put("transfer", dados)
+      axios_api.put(`transfer?${this.reqTeste}`, dados)
         .then(response => {
           if(response.status == 200){
             console.log('Sucesso: ', response)
@@ -141,7 +141,8 @@ export default {
       arrGrupos: 'getArrGrupos',
       arrAgentes: 'getArrAgentes',
       bg: 'getBgPopup',
-      atendimentoAtivo: "getAtendimentoAtivo"
+      atendimentoAtivo: "getAtendimentoAtivo",
+      reqTeste: "getReqTeste"
     })
   }
 

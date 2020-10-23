@@ -1,10 +1,10 @@
 <template>
-  <div id="gerenciador-container" :class="{'em-atendimento' : estadoAtendimento == 'em-atendimento', 'parado' : estadoAtendimento == 'parado'}" v-if="gerenciador && gerenciador.length ? true : false">
+  <div id="gerenciador-container" :class="{'d-none': !reqTeste, 'em-atendimento' : statusAtd == 'em-atendimento', 'parado' : statusAtd == 'parado'}" v-if="gerenciador && gerenciador.length ? true : false">
     <div class="gerenciador-btn" @click="mudarEstadoAtendimento()">
-      <div v-show="estadoAtendimento == 'em-atendimento'" title="Em atendimento">
+      <div v-show="statusAtd == 'em-atendimento'" title="Em atendimento">
         <i class="fas fa-pause"></i>
       </div>
-      <div v-show="estadoAtendimento == 'parado'" title="Parado">
+      <div v-show="statusAtd == 'parado'" title="Parado">
         <i class="fas fa-play"></i>
       </div>
     </div>
@@ -29,12 +29,14 @@ export default {
     ...mapGetters({
       gerenciador: "getGerenciador",
       iframeCttAtivo: "getIframeCttAtivo",
-      ativo: "getAtivo"
+      ativo: "getAtivo",
+      dominio: "getDominio",
+      reqTeste: "getReqTeste",
+      statusAtd: "getStatusAtd"
     })
   },
   data(){
     return{
-      estadoAtendimento: "em-atendimento",
       qtdAgenda: 0
     }
   },
@@ -44,25 +46,29 @@ export default {
   methods: {
     listenerPostMessage(event){
 
-      let baseUrl = ''
-      if(window.location.hostname == 'localhost'){
-        baseUrl = 'https://linux03'
-      }else{
-        baseUrl = 'https://'+window.location.hostname
-      }
-
-      if(event.origin == baseUrl){
-        if(event.data.gerenciador){
+      if(event.origin == this.dominio){
+        if(event.data.ativarContato){
           this.abrirAtivarCtt()
+        }
+        if(event.data.toggleAtd){
+          this.mudarEstadoAtendimento()
         }
       }  
     },
     mudarEstadoAtendimento(){
-      if(this.estadoAtendimento == "em-atendimento"){
-        this.estadoAtendimento = "parado"
-      }else{
-        this.estadoAtendimento = "em-atendimento"
-      }
+      axios_api.put(`start-and-stop?${this.reqTeste}`)
+        .then(response => {
+          if(response.data.st_ret == "OK"){
+            if(this.statusAtd == "em-atendimento"){
+              this.$store.dispatch("setStatusAtd", "parado")
+            }else{
+              this.$store.dispatch("setStatusAtd", "em-atendimento")
+            }
+          }
+        })
+        .catch(error => {
+          console.log("error start/stop: ", error)
+        })
     },
     abrirAtivarCtt(){
       if(this.iframeCttAtivo){
@@ -83,6 +89,25 @@ export default {
           gerenciadorListaV8.innerHTML = gerenciadorLista.innerHTML
         }
 
+        const iconeGerenciador = parent.document.querySelector("#icone-gerenciador")
+
+        if(iconeGerenciador){
+          if(this.statusAtd == "em-atendimento"){
+            gerenciadorV8.classList.add("em-atendimento")
+            gerenciadorV8.classList.remove("parado")
+
+            iconeGerenciador.classList.remove("i-play-4")
+            iconeGerenciador.classList.add("i-pause-2")
+          }else{
+            gerenciadorV8.classList.add("parado")
+            gerenciadorV8.classList.remove("em-atendimento")
+
+            iconeGerenciador.classList.remove("i-pause-2")
+            iconeGerenciador.classList.add("i-play-4")
+          }
+        }
+
+
         if(this.ativo){
           gerenciadorListaV8.classList.add("existe-ativo")
           const btnChamarCliente = parent.document.querySelector(".gerenciador-btn.icone-mais")
@@ -91,12 +116,12 @@ export default {
           }
         }
         
-        setTimeout(() => {
+        this.$nextTick(() => {
           gerenciadorV8.classList.remove('d-none')
           if(gerenciador){
             gerenciador.classList.add('d-none')
           }
-        }, 300)
+        })
       }
     }
   },
@@ -107,8 +132,8 @@ export default {
 
         this.gerenciador.map((i) => {
           if(i.cod == 2){
-            if(i.count !== this.qtdAgenda && i.count !== 0){
-              axios_api.get("get-agenda")
+            if(i.count != this.qtdAgenda && i.count != 0){
+              axios_api.get(`get-agenda?${this.reqTeste}`)
                 .then(response => {
                   const arrAgenda = response.data.ret
                   if(arrAgenda && arrAgenda.length){

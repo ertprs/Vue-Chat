@@ -179,6 +179,9 @@ export default {
         this.objAtendimentos = Object.values(this.todosAtendimentos)
         if(this.objAtendimentos.length && this.idAtendimentoAtivo == ''){
           setTimeout(() => {
+            if(this.abaAberta !== 'atendimento'){
+              this.alternarAbaAberta()
+            }
             this.ativarConversa(this.objAtendimentos[0], 0)
           }, 200)
         }else if(this.objAtendimentos.length && this.idAtendimentoAtivo){
@@ -260,12 +263,14 @@ export default {
       caso: 'getCaso',
       iframesDisponiveis: 'getIframesDisponiveis',
       idAtendimentoAtivo: 'getIdAtendimentoAtivo',
-      reqRegras: 'getReqRegras'
+      reqRegras: 'getReqRegras',
+      dominio: 'getDominio',
+      reqTeste: 'getReqTeste'
     })
   },
   methods: {
     ativarCliente(){
-      axios_api.post("start-contato")
+      axios_api.post(`start-contato?${this.reqTeste}`)
         .then((response) => {
           if(response.data.st_ret == "OK"){
             this.$toasted.global.defaultSuccess({msg: "Aguarde. Logo o cliente sera ativado"})
@@ -446,7 +451,7 @@ export default {
     },
     statusMensagens(atd){
 
-      axios_api.get(`get-status-messages?grupo=${atd.grupo}&nro_chat=${atd.nro_chat}`)
+      axios_api.get(`get-status-messages?grupo=${atd.grupo}&nro_chat=${atd.nro_chat}&${this.reqTeste}`)
       .then(response => {
         if(response.status === 200){
           let arrStatusMsg = response.data.msg_ret
@@ -516,23 +521,16 @@ export default {
 
           if(arrMensagens[i].anexos){
             anexo = true
-            
-            let baseUrl = ''
-            if(window.location.hostname == 'localhost'){
-              baseUrl = 'http://linux03'
-            }else{
-              baseUrl = 'https://'+window.location.hostname
-            }
 
             var regex = /(\w+)\/(\w+)/g;
             var type = regex.exec(arrMensagens[i].anexos.type);
             switch (type[1]) {
               case "image": 
-                imgAnexo = `${baseUrl}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
+                imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
                 break;
               default:
                 tipoDoc = arrMensagens[i].anexos.type
-                docAnexo = `${baseUrl}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
+                docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
                 nomeArquivo = arrMensagens[i].anexos.name
             }
             
