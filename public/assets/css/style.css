@@ -9518,6 +9518,19 @@ body {
           opacity: 1;
           padding: 0;
           padding-left: 10px; }
+      #todos-contatos .lista-contatos-container .fieldset-container .contador-aguardando {
+        font-size: .8rem;
+        font-weight: bold;
+        position: absolute;
+        right: 15px;
+        bottom: 2px;
+        background-color: #888;
+        border-radius: 50%;
+        width: 1.2rem;
+        height: 1.2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
       #todos-contatos .lista-contatos-container .fieldset-container > div {
         transition: 300ms;
         position: absolute;

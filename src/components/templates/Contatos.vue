@@ -71,6 +71,9 @@
             >
             Aguardando
           </h4>
+          <span class="contador-aguardando" v-show="this.abaAberta == 'atendimento' && aguardando.length">
+            {{ aguardando.length }}
+          </span>
         </div>
         <div class="lista-aguardando" v-if="aguardando && aguardando.length">
           <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta !== 'aguardando'}">

@@ -169,6 +169,18 @@ $tamanhoBoxShadow: 5px;
           padding-left: 10px;
         }
       }
+      .contador-aguardando{
+        font-size: .8rem;
+        font-weight: bold;
+        position: absolute;
+        right: 15px;
+        bottom: 2px;
+        background-color: #888;
+        border-radius: 50%;
+        width: 1.2rem;
+        height: 1.2rem;
+        @include d-flex-center()
+      }
       > div{
         transition: 300ms;
         position: absolute;
