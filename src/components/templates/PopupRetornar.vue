@@ -55,7 +55,8 @@ export default {
     ...mapGetters({
       bg: 'getBgPopup',
       atendimentoAtivo: "getAtendimentoAtivo",
-      abrirPopup: "getAbrirPopup"
+      abrirPopup: "getAbrirPopup",
+      reqTeste: "getReqTeste"
     })
   },
   components: {
