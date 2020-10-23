@@ -79,7 +79,7 @@
               :key="'id_'+indice"
               :id="'li_'+indice"
               :title="atd.nome_usu"
-              @click="ativarCliente()"
+              @click="ativarCliente(atd.nome_usu, atd.login_usu)"
             >
               <div class="circulo-contatos">
                 <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
@@ -106,7 +106,7 @@
               :key="'id_'+indice"
               :id="'li_'+indice"
               :title="atd.nome_usu"
-              @click="ativarCliente()"
+              @click="ativarCliente(atd.nome_usu, atd.login_usu)"
             >
               <div class="circulo-contatos">
                 <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
@@ -269,8 +269,13 @@ export default {
     })
   },
   methods: {
-    ativarCliente(){
-      axios_api.post(`start-contato?${this.reqTeste}`)
+    ativarCliente(nome, id){
+      let data = {
+        nome: nome,
+        id: id
+      }
+
+      axios_api.post(`start-contato?${this.reqTeste}`, data)
         .then((response) => {
           if(response.data.st_ret == "OK"){
             this.$toasted.global.defaultSuccess({msg: "Aguarde. Logo o cliente sera ativado"})
