@@ -58,11 +58,12 @@ export default {
     mudarEstadoAtendimento(){
       axios_api.put(`start-and-stop?${this.reqTeste}`)
         .then(response => {
-          console.log("Response: ", response)
-          if(this.estadoAtendimento == "em-atendimento"){
-            this.estadoAtendimento = "parado"
-          }else{
-            this.estadoAtendimento = "em-atendimento"
+          if(response.data.st_ret == "OK"){
+            if(this.estadoAtendimento == "em-atendimento"){
+              this.estadoAtendimento = "parado"
+            }else{
+              this.estadoAtendimento = "em-atendimento"
+            }
           }
         })
         .catch(error => {
@@ -87,6 +88,25 @@ export default {
         if(gerenciadorLista){
           gerenciadorListaV8.innerHTML = gerenciadorLista.innerHTML
         }
+
+        const iconeGerenciador = parent.document.querySelector("#icone-gerenciador")
+
+        if(iconeGerenciador){
+          if(this.estadoAtendimento == "em-atendimento"){
+            gerenciadorV8.classList.add("em-atendimento")
+            gerenciadorV8.classList.remove("parado")
+
+            iconeGerenciador.classList.remove("i-play-4")
+            iconeGerenciador.classList.add("i-pause-2")
+          }else{
+            gerenciadorV8.classList.add("parado")
+            gerenciadorV8.classList.remove("em-atendimento")
+
+            iconeGerenciador.classList.remove("i-pause-2")
+            iconeGerenciador.classList.add("i-play-4")
+          }
+        }
+
 
         if(this.ativo){
           gerenciadorListaV8.classList.add("existe-ativo")
