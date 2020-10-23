@@ -39,39 +39,12 @@
           <p> {{ msgErro }} </p>
         </div>
         </div>
-      </template> 
-      <!-- <template v-else>
-        <div
-          class="rodape-botoes-botao botao-transferencia"
-          :title="'Transferir'"
-          @click="abrirTransferir()">
-
-          <i class="fas fa-random"></i>
-          <span> {{ 'Transferir' }}</span>
-        </div>
-        <div
-          class="rodape-botoes-botao botao-retornar"
-          :title="'Retornar'"
-          @click="retornarForm()">
-
-          <i class="fas fa-undo"></i>
-          <span>{{ 'Retornar' }}</span>
-        </div>
-        <div
-          class="rodape-botoes-botao botao-encerrar"
-          :title="'Encerrar'"
-          @click="popupEncerrar()">
-
-          <i class="fas fa-sign-out-alt"></i>
-          <span>{{ 'Encerrar' }}</span>
-        </div>
-      </template> -->
+      </template>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 import axios_api from '../services/serviceAxios'
 
 import { mapGetters } from 'vuex'
@@ -84,7 +57,7 @@ export default {
       regrasCor: {},
       tudoPronto: false,
       contadorRequisicoesFalhas: 0,
-      msgErro: "Nao foi possi­vel carregar esta area"
+      msgErro: "Nao foi possivel carregar esta area"
     }
   },
   mounted(){
@@ -107,7 +80,8 @@ export default {
       arrAgentes: 'getArrAgentes',
       arrGrupos: 'getArrGrupos',
       origemBlocker: 'getOrigemBlocker',
-      caso: 'getCaso'
+      caso: 'getCaso',
+      reqTeste: 'getReqTeste'
     })
   },
   watch: {
@@ -139,7 +113,7 @@ export default {
     reqRegras(tokenCliente, id){
         this.$store.dispatch("setReqRegras", true)
 
-        axios_api.get(`get-rules?token_cliente=${tokenCliente}`)
+        axios_api.get(`get-rules?token_cliente=${tokenCliente}&${this.reqTeste}`)
         .then(response => {
           if (response.data.st_ret == 'OK') {
             this.contadorRequisicoesFalhas = 0
@@ -148,6 +122,8 @@ export default {
             let auxAtdAtivo = this.atendimentoAtivo
             auxAtdAtivo.rules = arrayRegras
             this.$store.commit("setAtendimentoAtivo", auxAtdAtivo)
+
+            console.log("array regras: ", arrayRegras)
 
             let objRegra = {
               id: id,
@@ -253,7 +229,7 @@ export default {
       }
 
       const tokenCliente = this.atendimentoAtivo.token_cliente
-      axios_api.get(`get-transfer?token_cliente=${tokenCliente}`)
+      axios_api.get(`get-transfer?token_cliente=${tokenCliente}&${this.reqTeste}`)
         .then(response => {
           let arrChaves = []
           let arrValores = []
@@ -332,7 +308,7 @@ export default {
 
       let data = { "token_cliente": this.atendimentoAtivo.token_cliente }
 
-      await axios_api.delete('end-atendimento', {data: {...data}})
+      await axios_api.delete(`end-atendimento?${this.reqTeste}`, {data: {...data}})
         .then(response => {
           if(response.data.st_ret == 'OK'){
 
@@ -367,7 +343,7 @@ export default {
             liberarEncerrar()
           }, 5000);
           console.log('Error end atd: ', error)
-          this.$toasted.global.defaultError({msg: 'Nao foi possi­vel encerrar o atendimento. Aguarde um pouco e tente novamente'})
+          this.$toasted.global.defaultError({msg: 'Nao foi possivel encerrar o atendimento. Aguarde um pouco e tente novamente'})
         })
     }
   },

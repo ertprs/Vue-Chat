@@ -29,7 +29,9 @@ export default {
     ...mapGetters({
       gerenciador: "getGerenciador",
       iframeCttAtivo: "getIframeCttAtivo",
-      ativo: "getAtivo"
+      ativo: "getAtivo",
+      dominio: "getDominio",
+      reqTeste: "getReqTeste"
     })
   },
   data(){
@@ -44,14 +46,7 @@ export default {
   methods: {
     listenerPostMessage(event){
 
-      let baseUrl = ''
-      if(window.location.hostname == 'localhost'){
-        baseUrl = 'https://linux03'
-      }else{
-        baseUrl = 'https://'+window.location.hostname
-      }
-
-      if(event.origin == baseUrl){
+      if(event.origin == this.dominio){
         if(event.data.gerenciador){
           this.abrirAtivarCtt()
         }
@@ -107,8 +102,12 @@ export default {
 
         this.gerenciador.map((i) => {
           if(i.cod == 2){
-            if(i.count !== this.qtdAgenda && i.count !== 0){
-              axios_api.get("get-agenda")
+            // console.log(i.count)
+            // console.log(this.qtdAgenda)
+            if(i.count != this.qtdAgenda && i.count != 0){
+              // console.log("Entrou")
+
+              axios_api.get(`get-agenda?${this.reqTeste}`)
                 .then(response => {
                   const arrAgenda = response.data.ret
                   if(arrAgenda && arrAgenda.length){

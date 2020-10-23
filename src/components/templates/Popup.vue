@@ -21,8 +21,6 @@
 </style>
 
 <script>
-import axios from 'axios'
-import axios_api from '../../services/serviceAxios'
 
 import { mapGetters } from 'vuex'
 

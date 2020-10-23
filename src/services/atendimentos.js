@@ -18,7 +18,7 @@ export function getAtendimentos(appVue) {
     verificarAlertaErroRequest()
     axios({
         method: 'get',
-        url: store.getters.getURL + 'get-atendimento' //?teste
+        url: store.getters.getURL + 'get-atendimento?teste=teste'
     })
         .then(response => {
             contador_request_erro = 0
@@ -85,7 +85,7 @@ function tratarResponse(response) {
                     getAtendimentos()
                 }, TEMPO_ATUALIZACAO)
             } else {
-                if (mainData.atendimentos != null) {
+                if (mainData.atendimentos) {
                     adicionaCaso(200)
                     mainData = converterHexaParaEmojis(mainData)
                     let regex = /\s|\]|\[/g
@@ -143,6 +143,8 @@ function acionaProcessos(mainData){
     }
     
     // Gerenciador
+    // console.log("mainData.gerenciador: ", mainData.gerenciador)
+
     if(mainData.gerenciador){
         store.dispatch("setGerenciador", mainData.gerenciador)
     }
@@ -153,7 +155,7 @@ function acionaProcessos(mainData){
     }
     
     // Aguardando
-    axios_api.get("get-aguardando")
+    axios_api.get("get-aguardando?teste=teste")
     .then(response => {
         const arrAguardando = response.data.ret
         if(arrAguardando.length){
@@ -206,11 +208,22 @@ function adicionaCaso(caso) {
     store.dispatch('setCaso', caso)
 }
 
+function acionaProcessosAtualizacao(mainData){
+    // console.log("mainData.gerenciador: ", mainData.gerenciador)
+    if(mainData.gerenciador){
+        store.dispatch("setGerenciador", mainData.gerenciador)
+    }
+
+    if(mainData.agenda){
+        store.dispatch("setAgenda", mainData.agenda)
+    }
+}
+
 
 async function atualizarAtendimentos() {
     await axios_api({
         method: 'get',
-        url: store.getters.getURL + 'get-atendimento'
+        url: store.getters.getURL + 'get-atendimento?teste=teste'
     })
         .then(response => {
             if(response.headers.authorization){
@@ -222,28 +235,15 @@ async function atualizarAtendimentos() {
             if (mainData.st_ret === 'OK' || mainData.atendimentos) {
                 adicionaCaso(200)
                 atualizarClientes(mainData)
-                if(mainData.gerenciador){
-                    store.dispatch("setGerenciador", mainData.gerenciador)
-                }
 
-                if(mainData.agenda){
-                    store.dispatch("setAgenda", mainData.agenda)
-                }
+                acionaProcessosAtualizacao(mainData)
 
             } else if (mainData.st_ret === 'AVISO') {
                 console.log('Nao existe clientes na fila')
                 adicionaCaso(206)
-                if(mainData.gerenciador){
-                    store.dispatch("setGerenciador", mainData.gerenciador)
-                }
 
-                if(mainData.agenda){
-                    store.dispatch("setAgenda", mainData.agenda)
-                }
-                // setTimeout(() => {
-                //     console.log('Timeout st_ret == Aviso')
-                //     getAtendimentos()
-                // }, TEMPO_ATUALIZACAO)
+                acionaProcessosAtualizacao(mainData)
+                
             } else {
                 console.log('ERRO! Status:', response)
                 if (response.data) {

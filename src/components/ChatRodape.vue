@@ -189,7 +189,6 @@
 import { mapGetters } from "vuex";
 import { obterMsgFormatada } from "../services/msgFormatada";
 import axios_api from "../services/serviceAxios";
-import axios from "axios";
 
 export default {
   data() {
@@ -302,7 +301,7 @@ export default {
           }
 
           axios_api
-            .post("send-message", data)
+            .post(`send-message&${this.reqTeste}`, data)
             .then((response) => {
               this.abrirEmojis = false;
               this.abrirOpcoes = false;
@@ -429,21 +428,16 @@ export default {
 
         if(objMsgExterno.anexos){
           anexo = true
-          let baseUrl = ''
-          if(window.location.hostname == 'localhost'){
-            baseUrl = 'http://linux03'
-          }else{
-            baseUrl = 'https://'+window.location.hostname
-          }
+          
           regex = /(\w+)\/(\w+)/g;
           let type = regex.exec(objMsgExterno.anexos.type);
           switch (type[1]) {
             case "image": 
-              imgAnexo = `${baseUrl}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
+              imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
               break;
             default:
               tipoDoc = objMsgExterno.anexos.type
-              docAnexo = `${baseUrl}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
+              docAnexo = `${this.dominio}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
               nomeArquivo = objMsgExterno.anexos.name
           }
         }
@@ -765,17 +759,8 @@ export default {
       observe(text, "keydown", delayedResize);
     },
     listenerPostMessage(event){
-      // console.log(event)
-      // console.log('origin', event.origin)
 
-      let baseUrl = ''
-      if(window.location.hostname == 'localhost'){
-        baseUrl = 'https://linux03'
-      }else{
-        baseUrl = 'https://'+window.location.hostname
-      }
-
-      if(event.origin == baseUrl){
+      if(event.origin == this.dominio){
         if(event.data.gerenciador){
           return
         }
@@ -942,7 +927,9 @@ export default {
       tipoMsg: 'getTipoMsg',
       origemBlocker: 'getOrigemBlocker',
       todasMensagens: "getTodasMensagens",
-      todaBiblioteca: "getTodaBliblioteca"
+      todaBiblioteca: "getTodaBliblioteca",
+      dominio: "getDominio",
+      reqTeste: "getReqTeste"
     })
   },
   created(){
