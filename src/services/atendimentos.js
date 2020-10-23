@@ -13,6 +13,7 @@ var parar_request = false
 var app
 
 export function getAtendimentos(appVue) {
+    console.log('atualizando')
     appVue ? app = appVue : false
     liberaRequest()
     verificarAlertaErroRequest()
