@@ -241,6 +241,8 @@ function acionaProcessosAtualizacao(mainData){
         const arrAguardando = response.data.ret
         if(arrAguardando.length){
             store.dispatch("setAguardando", arrAguardando)
+        }else{
+            store.dispatch("setAguardando", [])
         }
     })
     .catch(error => {
