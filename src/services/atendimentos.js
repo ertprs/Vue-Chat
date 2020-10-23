@@ -14,6 +14,7 @@ var app
 
 export function getAtendimentos(appVue) {
     appVue ? app = appVue : false
+    bloqueiaRequest()
     liberaRequest()
     verificarAlertaErroRequest()
     axios({
@@ -29,7 +30,7 @@ export function getAtendimentos(appVue) {
                 contador_request_erro ++
                 console.log(err)
                 if(!parar_request){
-                    getAtendimentos()
+                    getAtendimentos(app)
                 }
                 adicionaCaso(400)
             }, 500)
@@ -66,11 +67,14 @@ function loopAtualizacaoDeAtendimentos(count = 0) {
 
 function tratarResponse(response) {
     if (response.headers.authorization) {
-        // alert(response.headers.authorization)
         axiosTokenJWT(response.headers.authorization)
     } else {
-        console.error('Erro na autorizacao')
-        adicionaCaso(400)
+        setTimeout(() => {
+            console.error('Erro na autorizacao')
+            adicionaCaso(400)
+            getAtendimentos(app)
+        }, TEMPO_ATUALIZACAO)
+        return
     }
 
     var status = response.status
@@ -82,8 +86,9 @@ function tratarResponse(response) {
                 setTimeout(() => {
                     adicionaCaso(400)
                     console.log('Timeout negacao mainData')
-                    getAtendimentos()
+                    getAtendimentos(app)
                 }, TEMPO_ATUALIZACAO)
+                return
             } else {
                 if (mainData.atendimentos) {
                     adicionaCaso(200)
@@ -94,13 +99,9 @@ function tratarResponse(response) {
                             mainData.atendimentos[atd].login_usu = mainData.atendimentos[atd].login_usu.replace(regex, '')
                         }
                     }
-                    
                     store.dispatch('setAtendimentos', mainData.atendimentos)
-                    
                     carregarIframe(mainData.atendimentos)
-
                     acionaProcessos(mainData)
-
                     loopAtualizacaoDeAtendimentos()
                 } else {
                     console.log('Erro ao tentar obter dados no servidor')
@@ -108,8 +109,9 @@ function tratarResponse(response) {
                     adicionaCaso(400)
                     setTimeout(() => {
                         console.log('timeout erro obter dados no servidor')
-                        getAtendimentos()
+                        getAtendimentos(app)
                     }, TEMPO_ATUALIZACAO)
+                    return
                 }
             }
             break;
@@ -119,11 +121,9 @@ function tratarResponse(response) {
             // console.log('Aguardando Cliente')
             setTimeout(() => {
                 // console.log('Timeout aguardando cliente')
-                getAtendimentos()
                 adicionaCaso(206)
-
                 acionaProcessos(mainData)
-
+                getAtendimentos(app)
             }, TEMPO_ATUALIZACAO)
             break;
 
@@ -273,9 +273,10 @@ async function atualizarAtendimentos() {
                     }
                 } else {
                     setTimeout(() => {
-                        console.log('Timeout sem st_ret')
-                        getAtendimentos()
+                        console.error('Timeout sem st_ret')
+                        getAtendimentos(app)
                     }, TEMPO_ATUALIZACAO)
+                    return
                 }
             }
             liberaRequest()
@@ -283,9 +284,9 @@ async function atualizarAtendimentos() {
         .catch(
             err => {
                 contador_request_erro ++
-                console.log(err)
+                console.error(err)
                 liberaRequest()
-                getAtendimentos()
+                getAtendimentos(app)
             }
         )
 }
