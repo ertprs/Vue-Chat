@@ -122,8 +122,34 @@ export default {
             let auxAtdAtivo = this.atendimentoAtivo
             auxAtdAtivo.rules = arrayRegras
             this.$store.commit("setAtendimentoAtivo", auxAtdAtivo)
+            
+            if(arrayRegras.accept_document){
+              const todasExts = arrayRegras.accept_document
 
-            console.log("array regras: ", arrayRegras)
+              let strImgs = ""
+              let strDocs = ""
+
+              for(let ext in todasExts){
+                switch (todasExts[ext]){
+                  case "jpg":
+                  case "jpeg":
+                  case "png":
+                  case "gif":
+                  case "svg":
+                    strImgs += todasExts[ext]+"|"
+                    break;
+                  default:
+                    strDocs += todasExts[ext]+"|"
+                    break;
+                }
+              }
+
+              strImgs = strImgs.slice(0, strImgs.length - 1)
+              strDocs = strDocs.slice(0, strDocs.length - 1)
+
+              this.$store.dispatch("setExtImgs", strImgs)
+              this.$store.dispatch("setExtDocs", strDocs)
+            }
 
             let objRegra = {
               id: id,

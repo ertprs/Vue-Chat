@@ -220,6 +220,7 @@ export default {
     };
   },
   mounted() {
+
     this.$root.$on("atualizar_mensagem", (objMsgExterno, event) => {
       this.criaObjMensagem(objMsgExterno);
     }),
@@ -666,7 +667,7 @@ export default {
           } else {
             this.imagemPrevia = "";
             this.erroFormatoAnexo = true;
-            this.txtFormatosValidos = ".gif, .jpg/jpeg ou .png sao aceitos";
+            this.txtFormatosValidos = `${this.extImgs} sao aceitos`;
           }
         }else{
           this.imagemPrevia = "";
@@ -674,7 +675,7 @@ export default {
             this.erroFormatoAnexo = false;
           }else{
             this.erroFormatoAnexo = true;
-            this.txtFormatosValidos = ".doc/docx, .pdf ou .txt sao aceitos";
+            this.txtFormatosValidos = `${this.extDocs} sao aceitos`;
           }
         }
       } else {
@@ -685,16 +686,21 @@ export default {
       }
     },
     validaAnexo(arquivo, img = true) {
+      let regex = ""
       if (arquivo) {
-        if(img){
-          if (/\.(jpe?g|png|gif|svg)$/i.test(arquivo.name)) {
+        if(img){   
+          regex = new RegExp("\.("+this.extImgs+")", "i")
+          
+          if (regex.test(arquivo.name)) {
             return true;
           } else {
             this.$toasted.global.formatoInvalido();
             return false;
           }
         }else{
-          if (/\.(doc?x|pdf|txt)$/i.test(arquivo.name)) {
+          regex = new RegExp("\.("+this.extDocs+")", "i")
+
+          if (regex.test(arquivo.name)) {
             return true;
           }else{
             this.$toasted.global.formatoInvalido();
@@ -929,7 +935,9 @@ export default {
       todasMensagens: "getTodasMensagens",
       todaBiblioteca: "getTodaBliblioteca",
       dominio: "getDominio",
-      reqTeste: "getReqTeste"
+      reqTeste: "getReqTeste",
+      extImgs: "getExtImgs",
+      extDocs: "getExtDocs"
     })
   },
   created(){
