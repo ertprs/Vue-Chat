@@ -150,6 +150,10 @@ function acionaProcessos(mainData){
             store.dispatch("setStatusAtd", "em-atendimento")
         }else{
             store.dispatch("setStatusAtd", "parado")
+            if(!mainData.atendimentos){
+                store.dispatch("setBlocker", true)
+                store.dispatch("setOrigemBlocker", "atd-parado")
+            }
         }
     }
 
@@ -386,11 +390,6 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                 }
             });
         }
-    } else { //cliente sem mensagens
-
-        // novosAtendimentos[ramal] = cliente;
-        // novosAtendimentos[ramal].qtdMsgNova = cliente.arrMsg.length;
-        // novosAtendimentos[ramal].alertaMsgNova = true
     }
 
     store.dispatch('setAtendimentos', novosAtendimentos)

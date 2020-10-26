@@ -32,7 +32,8 @@ export default {
       ativo: "getAtivo",
       dominio: "getDominio",
       reqTeste: "getReqTeste",
-      statusAtd: "getStatusAtd"
+      statusAtd: "getStatusAtd",
+      todosAtendimentos: "getTodosAtendimentos"
     })
   },
   data(){
@@ -44,6 +45,10 @@ export default {
   },
   mounted(){
     window.addEventListener("message", this.listenerPostMessage, false);
+
+    this.$root.$on("mudarEstadoAtd", () => {
+      this.mudarEstadoAtendimento()
+    })
   },
   methods: {
     listenerPostMessage(event){
@@ -53,13 +58,15 @@ export default {
           this.abrirAtivarCtt()
         }
         if(event.data.toggleAtd){
-          if(!this.reqEmAndamento){
-            this.mudarEstadoAtendimento()
-          }
+          this.mudarEstadoAtendimento()
         }
       }  
     },
     mudarEstadoAtendimento(){
+      if(this.reqEmAndamento){
+        return
+      }
+
       this.reqEmAndamento = true
       this.preencherDiv()
 
@@ -68,8 +75,19 @@ export default {
           if(response.data.st_ret == "OK"){
             if(this.statusAtd == "em-atendimento"){
               this.$store.dispatch("setStatusAtd", "parado")
+              
+              let arrTodosAtds = Object.values(this.todosAtendimentos)
+              if(arrTodosAtds.length == 0){
+                this.$store.dispatch("setBlocker", true)
+                this.$store.dispatch("setOrigemBlocker", "atd-parado")
+              }else{
+                this.$store.dispatch("setBlocker", false)
+              }
+
             }else{
               this.$store.dispatch("setStatusAtd", "em-atendimento")
+
+              this.$store.dispatch("setBlocker", false)
             }
 
             this.reqEmAndamento = false
@@ -78,6 +96,9 @@ export default {
           }
         })
         .catch(error => {
+
+          this.$store.dispatch("setBlocker", false)
+
           console.log("error start/stop: ", error)
         })
     },

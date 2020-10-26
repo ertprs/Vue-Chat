@@ -10784,6 +10784,22 @@ div[blocker] {
   align-items: center; }
   div[blocker].bg-blocker-padrao {
     background-color: rgba(0, 0, 0, 0.1); }
+  div[blocker] .atd-parado-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #bf211e;
+    color: #FFF; }
+    div[blocker] .atd-parado-container h4 {
+      transition-duration: 300ms;
+      transition-property: opacity;
+      opacity: .8;
+      cursor: pointer; }
+      div[blocker] .atd-parado-container h4:hover {
+        opacity: 1; }
 
 #gerenciador-container {
   position: absolute;
