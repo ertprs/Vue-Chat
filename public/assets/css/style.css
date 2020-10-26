@@ -9519,15 +9519,19 @@ body {
           padding: 0;
           padding-left: 10px; }
       #todos-contatos .lista-contatos-container .fieldset-container .contador-aguardando {
+        padding: 1.5px 3px;
+        width: auto;
+        min-width: 1rem;
+        height: 1.2rem;
+        line-height: 1rem;
+        border-radius: 50%;
         font-size: .8rem;
         font-weight: bold;
+        background-color: #888;
+        color: #FFF;
         position: absolute;
         right: 15px;
         bottom: 2px;
-        background-color: #888;
-        border-radius: 50%;
-        width: 1.2rem;
-        height: 1.2rem;
         display: flex;
         justify-content: center;
         align-items: center; }
@@ -9538,21 +9542,30 @@ body {
         top: 3px;
         display: flex; }
       #todos-contatos .lista-contatos-container .fieldset-container .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-container .total-msgs-novas {
-        cursor: pointer;
+        cursor: pointer; }
+      #todos-contatos .lista-contatos-container .fieldset-container .total-clientes-novos {
+        padding: 1.5px 3px;
         width: auto;
         min-width: 1rem;
+        height: 1.2rem;
         line-height: 1rem;
-        text-align: center;
         border-radius: 50%;
-        padding: 1.5px 3px;
         font-size: .8rem;
         font-weight: bold;
-        color: #FFF; }
-      #todos-contatos .lista-contatos-container .fieldset-container .total-clientes-novos {
         background-color: #FDC43F;
+        color: #FFF;
         margin-right: 5px; }
       #todos-contatos .lista-contatos-container .fieldset-container .total-msgs-novas {
-        background-color: #55a630; }
+        padding: 1.5px 3px;
+        width: auto;
+        min-width: 1rem;
+        height: 1.2rem;
+        line-height: 1rem;
+        border-radius: 50%;
+        font-size: .8rem;
+        font-weight: bold;
+        background-color: #55a630;
+        color: #FFF; }
     #todos-contatos .lista-contatos-container ul {
       display: flex;
       flex-direction: column-reverse; }
@@ -9681,15 +9694,14 @@ body {
         min-width: 1rem;
         height: 1.2rem;
         line-height: 1rem;
+        border-radius: 50%;
         font-size: .8rem;
-        transition: 300ms;
+        font-weight: bold;
+        background-color: #55a630;
+        color: #FFF;
         display: flex;
         justify-content: center;
-        align-items: center;
-        background-color: #55a630;
-        border-radius: 50%;
-        color: #FFF;
-        font-weight: bold; }
+        align-items: center; }
       #todos-contatos ul li .ultima-msg {
         position: absolute;
         bottom: 0;
