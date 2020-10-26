@@ -8,7 +8,7 @@
         <i class="fas fa-play"></i>
       </div>
     </div>
-    <div class="gerenciador-lista" :class="{'existe-ativo' : ativo == true}">
+    <div class="gerenciador-lista" ref="gerenciador-lista" :class="{'existe-ativo' : ativo == true}">
       <div v-for="(tipo, index) in gerenciador" :key="index">
         <span class="titulo">{{ tipo.texto }}</span>
         <span class="valor">{{ tipo.count }}</span>
@@ -38,7 +38,8 @@ export default {
   data(){
     return{
       qtdAgenda: 0,
-      reqEmAndamento: false
+      reqEmAndamento: false,
+      contador: 0
     }
   },
   mounted(){
@@ -48,18 +49,19 @@ export default {
     listenerPostMessage(event){
 
       if(event.origin == this.dominio){
-        console.log("Evento! ", event.data)
-
         if(event.data.ativarContato){
           this.abrirAtivarCtt()
         }
         if(event.data.toggleAtd){
-          this.mudarEstadoAtendimento()
+          if(!this.reqEmAndamento){
+            this.mudarEstadoAtendimento()
+          }
         }
       }  
     },
     mudarEstadoAtendimento(){
       this.reqEmAndamento = true
+      this.preencherDiv()
 
       axios_api.put(`start-and-stop?${this.reqTeste}`)
         .then(response => {
@@ -71,6 +73,8 @@ export default {
             }
 
             this.reqEmAndamento = false
+
+            this.preencherDiv()
           }
         })
         .catch(error => {
@@ -85,20 +89,41 @@ export default {
       }
     },
     preencherDiv(){
+
+      if(!this.$refs["gerenciador-lista"]){
+        this.contador++
+        if(this.contador < 10){
+          setTimeout(() => {
+            this.preencherDiv()
+          }, 500)
+        }
+
+        return
+      }
+
+      this.contador = 0
+
       const gerenciadorV8 = parent.document.querySelector("#TelaOpeGer")
       if(gerenciadorV8){
         const gerenciador = document.querySelector("#gerenciador-container")
 
-        const gerenciadorLista = document.querySelector(".gerenciador-lista")
         const gerenciadorListaV8 = parent.document.querySelector("#TelaOpeGer .gerenciador-lista")
-
-        if(gerenciadorLista){
-          gerenciadorListaV8.innerHTML = gerenciadorLista.innerHTML
-        }
-
         const iconeGerenciador = parent.document.querySelector("#icone-gerenciador")
 
+        if(gerenciadorListaV8){
+          gerenciadorListaV8.innerHTML = this.$refs["gerenciador-lista"].innerHTML
+        }
+
         if(iconeGerenciador){
+          if(this.reqEmAndamento){
+            gerenciadorV8.classList.add("aguardando")
+            return
+          }
+
+          if(gerenciadorV8.classList.contains("aguardando")){
+            gerenciadorV8.classList.remove("aguardando")
+          }
+
           if(this.statusAtd == "em-atendimento"){
             gerenciadorV8.classList.add("em-atendimento")
             gerenciadorV8.classList.remove("parado")
