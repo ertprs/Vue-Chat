@@ -16,7 +16,7 @@ export function getAtendimentos(appVue) {
     if(appVue) {
         app = appVue
     } else {
-        console.error('É necessário informar a instância do vue')
+        console.error('E necessario informar a instancia do vue')
         return
     }
     bloqueiaRequest()
@@ -104,6 +104,9 @@ function tratarResponse(response) {
                             mainData.atendimentos[atd].login_usu = mainData.atendimentos[atd].login_usu.replace(regex, '')
                         }
                     }
+
+                    console.log("set atendimentos caso 200")
+
                     store.dispatch('setAtendimentos', mainData.atendimentos)
                     carregarIframe(mainData.atendimentos)
                     acionaProcessos(mainData)
@@ -332,6 +335,8 @@ function atualizarClientes(mainData) {
                 store.dispatch('setUltimoIdRemovido', '')
                 return
             }
+
+            console.log("set atendimentos novos atendimentos")
             novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
             novosAtendimentos[ramal_server].novoContato = true
             store.dispatch('setAtendimentos', novosAtendimentos)
@@ -348,7 +353,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
         return
     }
 
-    if (novosAtendimentos[ramal].arrMsg.length > 0) { //verifica se o cliente antigo ou novo
+    if (novosAtendimentos[ramal].arrMsg.length > 0) { //verifica se o cliente tem mensagens
         const seqs = novosAtendimentos[ramal].arrMsg.map(message => (message.seq)); //seq das mensagens antigas
         if (cliente.arrMsg.length > 0) {
             cliente.arrMsg.map((message) => { //mensagens novas
@@ -381,10 +386,11 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                 }
             });
         }
-    } else { //cliente novo
-        novosAtendimentos[ramal] = cliente;
-        novosAtendimentos[ramal].qtdMsgNova = cliente.arrMsg.length;
-        novosAtendimentos[ramal].alertaMsgNova = true
+    } else { //cliente sem mensagens
+
+        // novosAtendimentos[ramal] = cliente;
+        // novosAtendimentos[ramal].qtdMsgNova = cliente.arrMsg.length;
+        // novosAtendimentos[ramal].alertaMsgNova = true
     }
 
     store.dispatch('setAtendimentos', novosAtendimentos)

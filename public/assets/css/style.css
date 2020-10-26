@@ -9542,7 +9542,11 @@ body {
         top: 3px;
         display: flex; }
       #todos-contatos .lista-contatos-container .fieldset-container .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-container .total-msgs-novas {
-        cursor: pointer; }
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 5px; }
       #todos-contatos .lista-contatos-container .fieldset-container .total-clientes-novos {
         padding: 1.5px 3px;
         width: auto;
@@ -9553,8 +9557,7 @@ body {
         font-size: .8rem;
         font-weight: bold;
         background-color: #FDC43F;
-        color: #FFF;
-        margin-right: 5px; }
+        color: #FFF; }
       #todos-contatos .lista-contatos-container .fieldset-container .total-msgs-novas {
         padding: 1.5px 3px;
         width: auto;

@@ -187,10 +187,11 @@ $tamanhoBoxShadow: 5px;
       }
       .total-clientes-novos, .total-msgs-novas{
         cursor: pointer;
+        @include d-flex-center();
+        margin-right: 5px;
       }
       .total-clientes-novos{
         @include marcadores-contatos(#FDC43F, #FFF);
-        margin-right: 5px;
       }
       .total-msgs-novas{
         @include marcadores-contatos(#55a630, #FFF);
