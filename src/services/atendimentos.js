@@ -24,7 +24,7 @@ export function getAtendimentos(appVue) {
     verificarAlertaErroRequest()
     axios({
         method: 'get',
-        url: store.getters.getURL + 'get-atendimento?teste=teste'
+        url: store.getters.getURL + 'get-atendimento?' + store.getters.getReqTeste
     })
         .then(response => {
             contador_request_erro = 0
@@ -166,7 +166,7 @@ function acionaProcessos(mainData){
     }
     
     // Aguardando
-    axios_api.get("get-aguardando?teste=teste")
+    axios_api.get("get-aguardando?" + store.getters.getReqTeste)
     .then(response => {
         const arrAguardando = response.data.ret
         if(arrAguardando.length){
@@ -236,7 +236,7 @@ function acionaProcessosAtualizacao(mainData){
     }
 
     // Aguardando
-    axios_api.get("get-aguardando?teste=teste")
+    axios_api.get("get-aguardando?" + store.getters.getReqTeste)
     .then(response => {
         const arrAguardando = response.data.ret
         if(arrAguardando.length){
@@ -254,7 +254,7 @@ function acionaProcessosAtualizacao(mainData){
 async function atualizarAtendimentos() {
     await axios_api({
         method: 'get',
-        url: store.getters.getURL + 'get-atendimento?teste=teste'
+        url: store.getters.getURL + 'get-atendimento?' + store.getters.getReqTeste
     })
         .then(response => {
             if(response.headers.authorization){
