@@ -105,7 +105,7 @@ function tratarResponse(response) {
                         }
                     }
 
-                    console.log("set atendimentos caso 200")
+                    console.log("set atendimentos caso 200: ", mainData.atendimentos)
 
                     store.dispatch('setAtendimentos', mainData.atendimentos)
                     carregarIframe(mainData.atendimentos)
@@ -176,7 +176,7 @@ function acionaProcessos(mainData){
     axios_api.get("get-aguardando?" + store.getters.getReqTeste)
     .then(response => {
         const arrAguardando = response.data.ret
-        if(arrAguardando.length){
+        if(arrAguardando && arrAguardando.length){
             store.dispatch("setAguardando", arrAguardando)
         }else{
             store.dispatch("setAguardando", [])
@@ -246,7 +246,7 @@ function acionaProcessosAtualizacao(mainData){
     axios_api.get("get-aguardando?" + store.getters.getReqTeste)
     .then(response => {
         const arrAguardando = response.data.ret
-        if(arrAguardando.length){
+        if(arrAguardando && arrAguardando.length){
             store.dispatch("setAguardando", arrAguardando)
         }else{
             store.dispatch("setAguardando", [])
@@ -340,7 +340,7 @@ function atualizarClientes(mainData) {
                 return
             }
 
-            console.log("set atendimentos novos atendimentos")
+            console.log("set atendimentos novos atendimentos: ", novosAtendimentos)
             novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
             novosAtendimentos[ramal_server].novoContato = true
             store.dispatch('setAtendimentos', novosAtendimentos)
@@ -392,6 +392,8 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
         }
     }
 
+
+    console.log("setAtendimentos msg: ", novosAtendimentos)
     store.dispatch('setAtendimentos', novosAtendimentos)
 }
 
