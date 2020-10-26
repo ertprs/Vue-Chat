@@ -10786,6 +10786,8 @@ div[blocker] {
     background: #248232; }
   #gerenciador-container.parado {
     background: #bf211e; }
+  #gerenciador-container.aguardando {
+    background: goldenrod !important; }
 
 .gerenciador-btn {
   margin: 0 10px;

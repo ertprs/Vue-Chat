@@ -1,5 +1,5 @@
 <template>
-  <div id="gerenciador-container" :class="{'d-none': !reqTeste, 'em-atendimento' : statusAtd == 'em-atendimento', 'parado' : statusAtd == 'parado'}" v-if="gerenciador && gerenciador.length ? true : false">
+  <div id="gerenciador-container" :class="{'d-none': !reqTeste, 'aguardando' : reqEmAndamento, 'em-atendimento' : statusAtd == 'em-atendimento', 'parado' : statusAtd == 'parado'}" v-if="gerenciador && gerenciador.length ? true : false">
     <div class="gerenciador-btn" @click="mudarEstadoAtendimento()">
       <div v-show="statusAtd == 'em-atendimento'" title="Em atendimento">
         <i class="fas fa-pause"></i>
@@ -37,7 +37,8 @@ export default {
   },
   data(){
     return{
-      qtdAgenda: 0
+      qtdAgenda: 0,
+      reqEmAndamento: false
     }
   },
   mounted(){
@@ -47,6 +48,8 @@ export default {
     listenerPostMessage(event){
 
       if(event.origin == this.dominio){
+        console.log("Evento! ", event.data)
+
         if(event.data.ativarContato){
           this.abrirAtivarCtt()
         }
@@ -56,6 +59,8 @@ export default {
       }  
     },
     mudarEstadoAtendimento(){
+      this.reqEmAndamento = true
+
       axios_api.put(`start-and-stop?${this.reqTeste}`)
         .then(response => {
           if(response.data.st_ret == "OK"){
@@ -64,6 +69,8 @@ export default {
             }else{
               this.$store.dispatch("setStatusAtd", "em-atendimento")
             }
+
+            this.reqEmAndamento = false
           }
         })
         .catch(error => {
