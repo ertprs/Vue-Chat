@@ -87,6 +87,7 @@ export default {
               if(response.status == 200){
                 this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
                 this.removerCliente()
+                this.$root.$emit("reverter-cores")
                 this.fecharPopup()
               }
             })
@@ -103,6 +104,7 @@ export default {
               if(response.status == 200){
                 this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
                 this.removerCliente()
+                this.$root.$emit("reverter-cores")
                 this.fecharPopup()
               }
             })
@@ -134,6 +136,7 @@ export default {
               if(response.status == 200){
                 this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
                 this.removerCliente()
+                this.$root.$emit("reverter-cores")
                 this.fecharPopup()
                 
                 this.reqAgenda()

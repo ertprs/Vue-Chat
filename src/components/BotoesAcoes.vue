@@ -66,8 +66,13 @@ export default {
       this.encerrarAtendimento()
       this.reverterCoresClienteAtivo()
     })
+
+    this.$root.$on("reverter-cores", () => {
+      this.reverterCoresClienteAtivo()
+    })
   },
   beforeDestroy(){
+    this.$root.$off("reverter-cores")
     this.$root.$off('encerrarAtendimento')
   },
   computed: {
