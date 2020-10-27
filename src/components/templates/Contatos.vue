@@ -82,7 +82,7 @@
               :key="'id_'+indice"
               :id="'li_'+indice"
               :title="atd.nome_usu"
-              @click="ativarCliente(atd.nome_usu, atd.login_usu, atd.login_dist, atd.grupo)"
+              @click="ativarCliente( atd.login_usu, atd.grupo)"
             >
               <div class="circulo-contatos">
                 <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
@@ -109,7 +109,7 @@
               :key="'id_'+indice"
               :id="'li_'+indice"
               :title="atd.nome_usu"
-              @click="ativarCliente(atd.nome_usu, atd.login_usu, atd.login_dist, atd.grupo)"
+              @click="ativarCliente(atd.login_usu, atd.grupo)"
             >
               <div class="circulo-contatos">
                 <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
@@ -222,6 +222,8 @@ export default {
         if(this.minhaAgenda.length !== auxAgenda.length){
           this.$store.dispatch("setAgenda", auxAgenda)
         }
+      } else {
+        this.objAtendimentos = []
       }
     },
     abaAberta(){
@@ -279,17 +281,15 @@ export default {
     })
   },
   methods: {
-    ativarCliente(nome, id, login, grupo){
-      if(!nome || !id || !login || !grupo){
+    ativarCliente(id, grupo){
+      if(!id || !grupo){
         this.$toasted.global.defaultError({msg: "Nao foi possivel ativar o cliente"})
         console.log("parametros da fc ativar cliente nao estao de acordo com o esperado")
         return
       }
 
       let data = {
-        nome: nome,
-        id: id,
-        login: login,
+        login_usu: id,
         grupo: grupo
       }
 
