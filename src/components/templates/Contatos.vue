@@ -180,6 +180,13 @@ export default {
     todosAtendimentos() {
       if(this.todosAtendimentos){
         this.objAtendimentos = Object.values(this.todosAtendimentos)
+
+        if(this.objAtendimentos.length && !this.aguardando.length){
+          if(this.abaAberta == "aguardando"){
+            this.alternarAbaAberta()
+          }
+        }
+
         if(this.objAtendimentos.length && this.idAtendimentoAtivo == ''){
           setTimeout(() => {
             if(this.abaAberta !== 'atendimento'){
@@ -489,6 +496,10 @@ export default {
       })
     },
     ativarConversa: function(atd, indice) {
+
+      if(atd.id_cli == this.idAtendimentoAtivo){
+        return
+      }
 
       if(this.reqRegras){
         return

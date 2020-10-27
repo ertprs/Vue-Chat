@@ -221,8 +221,8 @@ export default {
   },
   mounted() {
 
-    this.$root.$on("atualizar_mensagem", (objMsgExterno, event) => {
-      this.criaObjMensagem(objMsgExterno);
+    this.$root.$on("atualizar_mensagem", (objMsgExterno) => {
+        this.criaObjMensagem(objMsgExterno)
     }),(document.querySelector(".btn-emoji").innerText = String.fromCodePoint(0x1f61c));
 
     window.addEventListener("message", this.listenerPostMessage, false);
@@ -459,7 +459,7 @@ export default {
         nomeArquivo: nomeArquivo,
         status: status
       };
-
+      
       this.$store.dispatch("setTodasMensagens", objMensagem)
       this.$root.$emit("rolaChat")
 
@@ -943,6 +943,8 @@ export default {
   },
   destroyed(){
     window.removeEventListener("resize", this.resizeEvent)
+
+    this.$root.$off("atualizar_mensagem")
   }
 };
 </script>

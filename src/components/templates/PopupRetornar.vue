@@ -56,7 +56,8 @@ export default {
       bg: 'getBgPopup',
       atendimentoAtivo: "getAtendimentoAtivo",
       abrirPopup: "getAbrirPopup",
-      reqTeste: "getReqTeste"
+      reqTeste: "getReqTeste",
+      todosAtendimentos: "getTodosAtendimentos"
     })
   },
   components: {
@@ -85,6 +86,7 @@ export default {
             .then(response => {
               if(response.status == 200){
                 this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
+                this.removerCliente()
                 this.fecharPopup()
               }
             })
@@ -95,11 +97,12 @@ export default {
         break;
         case "pessoal":
           dados.destino = "dedicado"
+
           axios_api.put(`suspend?${this.reqTeste}`, dados)
             .then(response => {
               if(response.status == 200){
                 this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
-
+                this.removerCliente()
                 this.fecharPopup()
               }
             })
@@ -130,6 +133,7 @@ export default {
             .then(response => {
               if(response.status == 200){
                 this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
+                this.removerCliente()
                 this.fecharPopup()
                 
                 this.reqAgenda()
@@ -155,6 +159,17 @@ export default {
         .catch(error => {
           console.log("error get agenda: ", error)
         })
+    },
+    removerCliente(){
+      let arrAux = Object.values(this.todosAtendimentos)
+      arrAux = arrAux.filter((atd) => {
+        return atd.login_usu != this.atendimentoAtivo.login_usu
+      })
+
+      this.$store.dispatch('limparAtendimentoAtivo')
+      this.$store.dispatch('limparIdAtendimentoAtivo')
+
+      this.$store.dispatch("setAtendimentos", arrAux)
     },
     tamanhoChat(){
       const widthChat = localStorage.getItem('largura-chat')

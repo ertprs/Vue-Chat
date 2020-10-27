@@ -269,10 +269,10 @@ export default {
             for(let i = 0; i < arrChaves.length; i++){
               if(this.arrAgentes.length){
                 if(this.arrAgentes[i].cod !== arrChaves[i]){
-                  this.$store.dispatch("setArrAGentes", {label: arrValores[i], cod: arrChaves[i]})
+                  this.$store.dispatch("setArrAgentes", {label: arrValores[i], cod: arrChaves[i]})
                 }
               }else{
-                this.$store.dispatch("setArrAGentes", {label: arrValores[i], cod: arrChaves[i]})
+                this.$store.dispatch("setArrAgentes", {label: arrValores[i], cod: arrChaves[i]})
               }
             }
           }

@@ -105,8 +105,6 @@ function tratarResponse(response) {
                         }
                     }
 
-                    console.log("set atendimentos caso 200: ", mainData.atendimentos)
-
                     store.dispatch('setAtendimentos', mainData.atendimentos)
                     carregarIframe(mainData.atendimentos)
                     acionaProcessos(mainData)
@@ -340,7 +338,6 @@ function atualizarClientes(mainData) {
                 return
             }
 
-            console.log("set atendimentos novos atendimentos: ", novosAtendimentos)
             novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
             novosAtendimentos[ramal_server].novoContato = true
             store.dispatch('setAtendimentos', novosAtendimentos)
@@ -392,8 +389,6 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
         }
     }
 
-
-    console.log("setAtendimentos msg: ", novosAtendimentos)
     store.dispatch('setAtendimentos', novosAtendimentos)
 }
 
