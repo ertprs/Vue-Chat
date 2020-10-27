@@ -210,18 +210,7 @@ export default {
         if(this.abaAberta == "aguardando"){
           this.contarMsgClientes()
         }
-
-        let auxAgenda = this.minhaAgenda
-        // Verificando se o cliente esta em mais de um array
-        for(let atd in this.objAtendimentos){
-          auxAgenda = auxAgenda.filter((agenda) => {
-            return agenda.id_cli !== this.objAtendimentos[atd].id_cli
-          })
-        }
-
-        if(this.minhaAgenda.length !== auxAgenda.length){
-          this.$store.dispatch("setAgenda", auxAgenda)
-        }
+        
       } else {
         this.objAtendimentos = []
       }
@@ -370,8 +359,15 @@ export default {
         horaAux = horaAux.slice(0, horaAux.length-3)
 
         if(!parseInt(horaAux[0])){
-          this.formataData(data, hora, atd)
+          this.contadorErrosAgenda++
+          if(this.contadorErrosAgenda < 10){
+            setTimeout(() => {
+              this.formataData(data, hora, atd)
+            }, 1000)
+          }
           return
+        }else{
+          this.contadorErrosAgenda = 0
         }
 
         if(typeof(atd) == "object"){
@@ -387,9 +383,11 @@ export default {
           if(this.contadorErrosAgenda < 10){
             setTimeout(() => {
               this.formataData(data, retorno, atd)
-            }, 500)
+            }, 1000)
           }
           return
+        }else{
+          this.contadorErrosAgenda = 0
         }
 
         // Diferenca entre dias

@@ -185,14 +185,13 @@ export default {
 
         this.gerenciador.map((i) => {
           if(i.cod == 2){
-            if(i.count != this.qtdAgenda && i.count != 0){
+            if(i.count != this.qtdAgenda){
               axios_api.get(`get-agenda?${this.reqTeste}`)
                 .then(response => {
-                  const arrAgenda = response.data.ret
-                  if(arrAgenda && arrAgenda.length){
-                    this.$store.dispatch("setAgenda", arrAgenda)
-                    this.qtdAgenda = i.count
-                  }
+                  const arrAgenda = response.data.ret || []
+
+                  this.$store.dispatch("setAgenda", arrAgenda)
+                  this.qtdAgenda = i.count
                 })
                 .catch(error => {
                   console.log("Error get agenda: ", error)
