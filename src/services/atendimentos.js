@@ -104,7 +104,7 @@ function tratarResponse(response) {
                             mainData.atendimentos[atd].login_usu = mainData.atendimentos[atd].login_usu.replace(regex, '')
                         }
                     }
-                    
+
                     store.dispatch('setAtendimentos', mainData.atendimentos)
                     
                     carregarIframe(mainData.atendimentos)

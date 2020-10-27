@@ -495,12 +495,9 @@ export default {
       })
     },
     ativarConversa: function(atd, indice) {
-
+      
+      // Se o id do atendimento for igual ao id do atendimento ativo
       if(atd.id_cli == this.idAtendimentoAtivo){
-        return
-      }
-
-      if(this.reqRegras){
         return
       }
 
@@ -573,6 +570,7 @@ export default {
           }
 
           let objMensagem = this.getObjMensagem( autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo );
+
           this.$store.dispatch('setTodasMensagens', objMensagem)
 
           if(document.querySelector('#textarea')){

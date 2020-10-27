@@ -338,21 +338,20 @@ export default {
         .then(response => {
           if(response.data.st_ret == 'OK'){
 
-            let todosAtendimentosFiltrado = []
-            for(let ramal_local in this.todosAtendimentos){
-              todosAtendimentosFiltrado.push(this.todosAtendimentos[ramal_local])
-            }
-            
-            todosAtendimentosFiltrado = todosAtendimentosFiltrado.filter(el => {
-              return el.token_cliente !== this.atendimentoAtivo.token_cliente
-            })
-            
-            if(!todosAtendimentosFiltrado.length){
-              this.$store.dispatch('setCaso', 206)
+            let objAtdAux = {}
+            for(let ramal in this.todosAtendimentos){
+              if(this.todosAtendimentos[ramal].token_cliente != this.atendimentoAtivo.token_cliente){
+                objAtdAux[ramal] = this.todosAtendimentos[ramal]
+              }
             }
 
+            if(!objAtdAux){
+              this.$store.dispatch("setCaso", 206)
+            }
+              
+            this.$store.dispatch('setAtendimentos', objAtdAux)
+
             this.tudoPronto = false
-            this.$store.dispatch('setAtendimentos', todosAtendimentosFiltrado)
             
             this.$store.dispatch('limparAtendimentoAtivo')
             this.$store.dispatch('limparIdAtendimentoAtivo')

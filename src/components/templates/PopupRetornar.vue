@@ -98,10 +98,6 @@ export default {
         case "pessoal":
           dados.destino = "dedicado"
 
-          // this.removerCliente()
-
-          // return
-
           axios_api.put(`suspend?${this.reqTeste}`, dados)
             .then(response => {
               if(response.status == 200){
@@ -165,12 +161,15 @@ export default {
         })
     },
     removerCliente(){
-      let arrAux = Object.values(this.todosAtendimentos)
-      arrAux = arrAux.filter((atd) => {
-        return atd.login_usu != this.atendimentoAtivo.login_usu
-      })
-
-      this.$store.dispatch("setAtendimentos", arrAux)
+      
+      let objAtdAux = {}
+      for(let ramal in this.todosAtendimentos){
+        if(this.todosAtendimentos[ramal].login_usu != this.atendimentoAtivo.login_usu){
+          objAtdAux[ramal] = this.todosAtendimentos[ramal]
+        }
+      }
+      
+      this.$store.dispatch("setAtendimentos", objAtdAux)
       
       this.$store.dispatch('limparAtendimentoAtivo')
       this.$store.dispatch('limparIdAtendimentoAtivo')
