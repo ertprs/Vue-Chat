@@ -98,6 +98,10 @@ export default {
         case "pessoal":
           dados.destino = "dedicado"
 
+          // this.removerCliente()
+
+          // return
+
           axios_api.put(`suspend?${this.reqTeste}`, dados)
             .then(response => {
               if(response.status == 200){
@@ -166,10 +170,11 @@ export default {
         return atd.login_usu != this.atendimentoAtivo.login_usu
       })
 
+      this.$store.dispatch("setAtendimentos", arrAux)
+      
       this.$store.dispatch('limparAtendimentoAtivo')
       this.$store.dispatch('limparIdAtendimentoAtivo')
 
-      this.$store.dispatch("setAtendimentos", arrAux)
     },
     tamanhoChat(){
       const widthChat = localStorage.getItem('largura-chat')

@@ -268,7 +268,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      clienteMandouMensagem: "getClienteMandouMensagem",
       todosAtendimentos: "getTodosAtendimentos",
       minhaAgenda: "getAgenda",
       aguardando: "getAguardando",

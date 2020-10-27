@@ -104,8 +104,9 @@ function tratarResponse(response) {
                             mainData.atendimentos[atd].login_usu = mainData.atendimentos[atd].login_usu.replace(regex, '')
                         }
                     }
-
+                    
                     store.dispatch('setAtendimentos', mainData.atendimentos)
+                    
                     carregarIframe(mainData.atendimentos)
                     acionaProcessos(mainData)
                     loopAtualizacaoDeAtendimentos()
@@ -340,8 +341,8 @@ function atualizarClientes(mainData) {
 
             novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
             novosAtendimentos[ramal_server].novoContato = true
+
             store.dispatch('setAtendimentos', novosAtendimentos)
-            // console.log('cliente novo: ', novosAtendimentos)
             temClienteNovo = false
         } else {
             atualizarMensagens(atendimentosServer[ramal_server], ramal_server, novosAtendimentos)
@@ -388,9 +389,9 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                 }
             });
         }
+        store.dispatch('setAtendimentos', novosAtendimentos)
     }
-
-    store.dispatch('setAtendimentos', novosAtendimentos)
+    
 }
 
 var startTime, endTime;
