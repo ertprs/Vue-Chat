@@ -84,9 +84,7 @@ export default {
           axios_api.put(`suspend?${this.reqTeste}`, dados)
             .then(response => {
               if(response.status == 200){
-                console.log('Sucesso: ', response)
                 this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
-
                 this.fecharPopup()
               }
             })
@@ -100,7 +98,6 @@ export default {
           axios_api.put(`suspend?${this.reqTeste}`, dados)
             .then(response => {
               if(response.status == 200){
-                console.log('Sucesso: ', response)
                 this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
 
                 this.fecharPopup()
@@ -132,9 +129,10 @@ export default {
           axios_api.put(`suspend?${this.reqTeste}`, dados)
             .then(response => {
               if(response.status == 200){
-                console.log('Sucesso: ', response)
                 this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
                 this.fecharPopup()
+                
+                this.reqAgenda()
               }
             })
             .catch(error => {
@@ -145,6 +143,18 @@ export default {
         default:
         break;
       }
+    },
+    reqAgenda(){
+      axios_api.get(`get-agenda?${this.reqTeste}`)
+        .then(response => {
+          const arrAgenda = response.data.ret
+          if(arrAgenda.length){
+            this.$store.dispatch("setAgenda", arrAgenda)
+          }
+        })
+        .catch(error => {
+          console.log("error get agenda: ", error)
+        })
     },
     tamanhoChat(){
       const widthChat = localStorage.getItem('largura-chat')

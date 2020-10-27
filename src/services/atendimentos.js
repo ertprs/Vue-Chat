@@ -16,7 +16,7 @@ export function getAtendimentos(appVue) {
     if(appVue) {
         app = appVue
     } else {
-        console.error('É necessário informar a instância do vue')
+        console.error('E necessario informar a instancia do vue')
         return
     }
     bloqueiaRequest()
@@ -24,7 +24,7 @@ export function getAtendimentos(appVue) {
     verificarAlertaErroRequest()
     axios({
         method: 'get',
-        url: store.getters.getURL + 'get-atendimento?teste=teste'
+        url: store.getters.getURL + 'get-atendimento?' + store.getters.getReqTeste
     })
         .then(response => {
             contador_request_erro = 0
@@ -104,6 +104,9 @@ function tratarResponse(response) {
                             mainData.atendimentos[atd].login_usu = mainData.atendimentos[atd].login_usu.replace(regex, '')
                         }
                     }
+
+                    console.log("set atendimentos caso 200: ", mainData.atendimentos)
+
                     store.dispatch('setAtendimentos', mainData.atendimentos)
                     carregarIframe(mainData.atendimentos)
                     acionaProcessos(mainData)
@@ -147,6 +150,10 @@ function acionaProcessos(mainData){
             store.dispatch("setStatusAtd", "em-atendimento")
         }else{
             store.dispatch("setStatusAtd", "parado")
+            if(!mainData.atendimentos){
+                store.dispatch("setBlocker", true)
+                store.dispatch("setOrigemBlocker", "atd-parado")
+            }
         }
     }
 
@@ -166,10 +173,10 @@ function acionaProcessos(mainData){
     }
     
     // Aguardando
-    axios_api.get("get-aguardando?teste=teste")
+    axios_api.get("get-aguardando?" + store.getters.getReqTeste)
     .then(response => {
         const arrAguardando = response.data.ret
-        if(arrAguardando.length){
+        if(arrAguardando && arrAguardando.length){
             store.dispatch("setAguardando", arrAguardando)
         }else{
             store.dispatch("setAguardando", [])
@@ -236,10 +243,10 @@ function acionaProcessosAtualizacao(mainData){
     }
 
     // Aguardando
-    axios_api.get("get-aguardando?teste=teste")
+    axios_api.get("get-aguardando?" + store.getters.getReqTeste)
     .then(response => {
         const arrAguardando = response.data.ret
-        if(arrAguardando.length){
+        if(arrAguardando && arrAguardando.length){
             store.dispatch("setAguardando", arrAguardando)
         }else{
             store.dispatch("setAguardando", [])
@@ -254,7 +261,7 @@ function acionaProcessosAtualizacao(mainData){
 async function atualizarAtendimentos() {
     await axios_api({
         method: 'get',
-        url: store.getters.getURL + 'get-atendimento?teste=teste'
+        url: store.getters.getURL + 'get-atendimento?' + store.getters.getReqTeste
     })
         .then(response => {
             if(response.headers.authorization){
@@ -332,6 +339,8 @@ function atualizarClientes(mainData) {
                 store.dispatch('setUltimoIdRemovido', '')
                 return
             }
+
+            console.log("set atendimentos novos atendimentos: ", novosAtendimentos)
             novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
             novosAtendimentos[ramal_server].novoContato = true
             store.dispatch('setAtendimentos', novosAtendimentos)
@@ -348,7 +357,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
         return
     }
 
-    if (novosAtendimentos[ramal].arrMsg.length > 0) { //verifica se o cliente antigo ou novo
+    if (novosAtendimentos[ramal].arrMsg.length > 0) { //verifica se o cliente tem mensagens
         const seqs = novosAtendimentos[ramal].arrMsg.map(message => (message.seq)); //seq das mensagens antigas
         if (cliente.arrMsg.length > 0) {
             cliente.arrMsg.map((message) => { //mensagens novas
@@ -382,12 +391,10 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                 }
             });
         }
-    } else { //cliente novo
-        novosAtendimentos[ramal] = cliente;
-        novosAtendimentos[ramal].qtdMsgNova = cliente.arrMsg.length;
-        novosAtendimentos[ramal].alertaMsgNova = true
     }
 
+
+    console.log("setAtendimentos msg: ", novosAtendimentos)
     store.dispatch('setAtendimentos', novosAtendimentos)
 }
 

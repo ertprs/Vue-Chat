@@ -9,4 +9,15 @@ div[blocker]{
   &.bg-blocker-padrao{
     background-color: rgba(0, 0, 0, 0.1);
   }
+  .atd-parado-container{
+    @include d-flex-center();
+    flex-direction: column;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #bf211e;
+    color: #FFF;
+    h4{
+      @include efeito-hover-padrao();
+    }
+  }
 }

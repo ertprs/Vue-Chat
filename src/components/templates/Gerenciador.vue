@@ -1,5 +1,5 @@
 <template>
-  <div id="gerenciador-container" :class="{'d-none': !reqTeste, 'em-atendimento' : statusAtd == 'em-atendimento', 'parado' : statusAtd == 'parado'}" v-if="gerenciador && gerenciador.length ? true : false">
+  <div id="gerenciador-container" :class="{'d-none': !reqTeste, 'aguardando' : reqEmAndamento, 'em-atendimento' : statusAtd == 'em-atendimento', 'parado' : statusAtd == 'parado'}" v-if="gerenciador && gerenciador.length ? true : false">
     <div class="gerenciador-btn" @click="mudarEstadoAtendimento()">
       <div v-show="statusAtd == 'em-atendimento'" title="Em atendimento">
         <i class="fas fa-pause"></i>
@@ -8,7 +8,7 @@
         <i class="fas fa-play"></i>
       </div>
     </div>
-    <div class="gerenciador-lista" :class="{'existe-ativo' : ativo == true}">
+    <div class="gerenciador-lista" ref="gerenciador-lista" :class="{'existe-ativo' : ativo == true}">
       <div v-for="(tipo, index) in gerenciador" :key="index">
         <span class="titulo">{{ tipo.texto }}</span>
         <span class="valor">{{ tipo.count }}</span>
@@ -32,16 +32,23 @@ export default {
       ativo: "getAtivo",
       dominio: "getDominio",
       reqTeste: "getReqTeste",
-      statusAtd: "getStatusAtd"
+      statusAtd: "getStatusAtd",
+      todosAtendimentos: "getTodosAtendimentos"
     })
   },
   data(){
     return{
-      qtdAgenda: 0
+      qtdAgenda: 0,
+      reqEmAndamento: false,
+      contador: 0
     }
   },
   mounted(){
     window.addEventListener("message", this.listenerPostMessage, false);
+
+    this.$root.$on("mudarEstadoAtd", () => {
+      this.mudarEstadoAtendimento()
+    })
   },
   methods: {
     listenerPostMessage(event){
@@ -56,17 +63,42 @@ export default {
       }  
     },
     mudarEstadoAtendimento(){
+      if(this.reqEmAndamento){
+        return
+      }
+
+      this.reqEmAndamento = true
+      this.preencherDiv()
+
       axios_api.put(`start-and-stop?${this.reqTeste}`)
         .then(response => {
           if(response.data.st_ret == "OK"){
             if(this.statusAtd == "em-atendimento"){
               this.$store.dispatch("setStatusAtd", "parado")
+              
+              let arrTodosAtds = Object.values(this.todosAtendimentos)
+              if(arrTodosAtds.length == 0){
+                this.$store.dispatch("setBlocker", true)
+                this.$store.dispatch("setOrigemBlocker", "atd-parado")
+              }else{
+                this.$store.dispatch("setBlocker", false)
+              }
+
             }else{
               this.$store.dispatch("setStatusAtd", "em-atendimento")
+
+              this.$store.dispatch("setBlocker", false)
             }
+
+            this.reqEmAndamento = false
+
+            this.preencherDiv()
           }
         })
         .catch(error => {
+
+          this.$store.dispatch("setBlocker", false)
+
           console.log("error start/stop: ", error)
         })
     },
@@ -78,20 +110,41 @@ export default {
       }
     },
     preencherDiv(){
+
+      if(!this.$refs["gerenciador-lista"]){
+        this.contador++
+        if(this.contador < 10){
+          setTimeout(() => {
+            this.preencherDiv()
+          }, 500)
+        }
+
+        return
+      }
+
+      this.contador = 0
+
       const gerenciadorV8 = parent.document.querySelector("#TelaOpeGer")
       if(gerenciadorV8){
         const gerenciador = document.querySelector("#gerenciador-container")
 
-        const gerenciadorLista = document.querySelector(".gerenciador-lista")
         const gerenciadorListaV8 = parent.document.querySelector("#TelaOpeGer .gerenciador-lista")
-
-        if(gerenciadorLista){
-          gerenciadorListaV8.innerHTML = gerenciadorLista.innerHTML
-        }
-
         const iconeGerenciador = parent.document.querySelector("#icone-gerenciador")
 
+        if(gerenciadorListaV8){
+          gerenciadorListaV8.innerHTML = this.$refs["gerenciador-lista"].innerHTML
+        }
+
         if(iconeGerenciador){
+          if(this.reqEmAndamento){
+            gerenciadorV8.classList.add("aguardando")
+            return
+          }
+
+          if(gerenciadorV8.classList.contains("aguardando")){
+            gerenciadorV8.classList.remove("aguardando")
+          }
+
           if(this.statusAtd == "em-atendimento"){
             gerenciadorV8.classList.add("em-atendimento")
             gerenciadorV8.classList.remove("parado")

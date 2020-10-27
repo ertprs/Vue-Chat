@@ -374,7 +374,6 @@ export default {
       return true;
     },
     criaObjMensagem(objMsgExterno) {
-      console.log(objMsgExterno)
       let objMensagem = {}
       let autor = ""
       let origem = ""
