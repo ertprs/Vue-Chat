@@ -72,6 +72,21 @@ export default {
     vSelect
   },
   methods: {
+    removerCliente(){
+      
+      let objAtdAux = {}
+      for(let ramal in this.todosAtendimentos){
+        if(this.todosAtendimentos[ramal].login_usu != this.atendimentoAtivo.login_usu){
+          objAtdAux[ramal] = this.todosAtendimentos[ramal]
+        }
+      }
+      
+      this.$store.dispatch("setAtendimentos", objAtdAux)
+      
+      this.$store.dispatch('limparAtendimentoAtivo')
+      this.$store.dispatch('limparIdAtendimentoAtivo')
+
+    },
     preencherAgente(){
       if(this.arrAgentes.length){
         this.abrirAgentes = true
@@ -107,7 +122,7 @@ export default {
           dados.destino = "GRUPO"
         break;
         case 'agente':
-          dados.destino = "AGENTE"
+          dados.destino = "OPE"
         break;
         default:
         break;
@@ -118,6 +133,9 @@ export default {
           if(response.status == 200){
             console.log('Sucesso: ', response)
             this.$toasted.global.sucessoTransferencia()
+
+            // this.removerCliente()
+            // this.$root.$emit("reverter-cores")
           }
         })
         .catch(error => {
@@ -142,7 +160,8 @@ export default {
       arrAgentes: 'getArrAgentes',
       bg: 'getBgPopup',
       atendimentoAtivo: "getAtendimentoAtivo",
-      reqTeste: "getReqTeste"
+      reqTeste: "getReqTeste",
+      todosAtendimentos: "getTodosAtendimentos"
     })
   }
 

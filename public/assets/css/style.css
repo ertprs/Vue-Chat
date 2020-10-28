@@ -9496,7 +9496,7 @@ body {
         #todos-contatos .lista-contatos-container .fieldset-container.fechado > div {
           position: relative;
           justify-content: space-around; }
-          #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .total-clientes-novos {
+          #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .contador-aguardando {
             margin-right: 0; }
       #todos-contatos .lista-contatos-container .fieldset-container h4 {
         white-space: nowrap;
@@ -9518,30 +9518,13 @@ body {
           opacity: 1;
           padding: 0;
           padding-left: 10px; }
-      #todos-contatos .lista-contatos-container .fieldset-container .contador-aguardando {
-        padding: 1.5px 3px;
-        width: auto;
-        min-width: 1rem;
-        height: 1.2rem;
-        line-height: 1rem;
-        border-radius: 50%;
-        font-size: .8rem;
-        font-weight: bold;
-        background-color: #888;
-        color: #FFF;
-        position: absolute;
-        right: 15px;
-        bottom: 2px;
-        display: flex;
-        justify-content: center;
-        align-items: center; }
       #todos-contatos .lista-contatos-container .fieldset-container > div {
         transition: 300ms;
         position: absolute;
         right: 0;
         top: 3px;
         display: flex; }
-      #todos-contatos .lista-contatos-container .fieldset-container .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-container .total-msgs-novas {
+      #todos-contatos .lista-contatos-container .fieldset-container .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-container .total-msgs-novas, #todos-contatos .lista-contatos-container .fieldset-container .contador-aguardando {
         cursor: pointer;
         display: flex;
         justify-content: center;
@@ -9569,6 +9552,21 @@ body {
         font-weight: bold;
         background-color: #55a630;
         color: #FFF; }
+      #todos-contatos .lista-contatos-container .fieldset-container .contador-aguardando {
+        padding: 1.5px 3px;
+        width: auto;
+        min-width: 1rem;
+        height: 1.2rem;
+        line-height: 1rem;
+        border-radius: 50%;
+        font-size: .8rem;
+        font-weight: bold;
+        background-color: #888;
+        color: #FFF;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 5px; }
     #todos-contatos .lista-contatos-container ul {
       display: flex;
       flex-direction: column-reverse; }

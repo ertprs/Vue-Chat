@@ -147,7 +147,7 @@ $tamanhoBoxShadow: 5px;
         > div{
           position: relative;
           justify-content: space-around;
-          .total-clientes-novos{
+          .total-clientes-novos, .contador-aguardando{
             margin-right: 0;
           }
         }
@@ -169,15 +169,6 @@ $tamanhoBoxShadow: 5px;
           padding-left: 10px;
         }
       }
-      .contador-aguardando{
-
-        @include marcadores-contatos(#888, #FFF);
-
-        position: absolute;
-        right: 15px;
-        bottom: 2px;
-        @include d-flex-center()
-      }
       > div{
         transition: 300ms;
         position: absolute;
@@ -185,7 +176,7 @@ $tamanhoBoxShadow: 5px;
         top: 3px;
         display: flex;
       }
-      .total-clientes-novos, .total-msgs-novas{
+      .total-clientes-novos, .total-msgs-novas, .contador-aguardando{
         cursor: pointer;
         @include d-flex-center();
         margin-right: 5px;
@@ -195,6 +186,11 @@ $tamanhoBoxShadow: 5px;
       }
       .total-msgs-novas{
         @include marcadores-contatos(#55a630, #FFF);
+      }
+      .contador-aguardando{
+        @include marcadores-contatos(#888, #FFF);
+        @include d-flex-center();
+        margin-right: 5px;
       }
     }
     
