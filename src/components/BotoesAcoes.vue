@@ -70,10 +70,15 @@ export default {
     this.$root.$on("reverter-cores", () => {
       this.reverterCoresClienteAtivo()
     })
+
+    this.$root.$on("adicionar-cores", () => {
+      this.setCoresClienteAtivo()
+    })
   },
   beforeDestroy(){
     this.$root.$off("reverter-cores")
-    this.$root.$off('encerrarAtendimento')
+    this.$root.$off("encerrarAtendimento")
+    this.$root.$off("adicionar-cores")
   },
   computed: {
     ...mapGetters({

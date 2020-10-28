@@ -3,9 +3,9 @@
     <Blocker />
     <!-- Contatos -->
     <vue-resizable
-      :minWidth="60"
-      :maxWidth="275"
-      :width="widthContatos"
+      :minWidth="objContatos.min_width"
+      :maxWidth="objContatos.max_width"
+      :width="objContatos.width"
       :active="handlers"
       @resize:start="adicionaBlocker"
       @resize:end="resizeContatos">
@@ -14,9 +14,9 @@
 
     <!-- Chat -->
     <vue-resizable
-      :minWidth="300"
-      :maxWidth="540"
-      :width="widthChat"
+      :minWidth="objChat.min_width"
+      :maxWidth="objChat.max_width"
+      :width="objChat.width"
       :active="handlers"
       @resize:start="adicionaBlocker"
       @resize:end="insereWidthChatNoLocalStorage">
@@ -58,8 +58,16 @@ export default {
   },
   data(){
     return{
-      widthContatos: '20%',
-      widthChat: '30%',
+      objContatos: {
+        min_width: 60,
+        width: "20%",
+        max_width: 275
+      },
+      objChat: {
+        min_width: 300,
+        width: "30%",
+        max_width: 540
+      },
       handlers: ['r']
     }
   },
@@ -100,7 +108,7 @@ export default {
     verificaLocalStorage(){
       let fechado = localStorage.getItem('status-contatos')
       if(fechado == "true"){
-        this.widthContatos = "60px"
+        this.objContatos.width = "60px"
       }else{
         let widthCtt = localStorage.getItem('largura-contatos')
         if(widthCtt){
@@ -115,7 +123,7 @@ export default {
 
       let widthChat = localStorage.getItem('largura-chat')
       if(widthChat){
-        this.widthChat = widthChat 
+        this.objChat.width = widthChat 
         this.alteraWidth("chat", widthChat)
       }
     },

@@ -156,6 +156,7 @@
 <script>
 import { mapGetters } from "vuex"
 import axios_api from '../../services/serviceAxios';
+import { gerenciarCores } from "../../services/gerenciarCores"
 
 export default {
   data() {
@@ -171,13 +172,6 @@ export default {
       contadorErrosAgenda: 0
     };
   },
-  // beforeUpdate() {
-  //   this.$nextTick(() => {
-      // if(this.objAtendimentos.length){
-      //   console.log("objatendimentos: ", this.objAtendimentos)
-      // }
-  //   })
-  // },
   watch: {
     todosAtendimentos() {
       if(this.todosAtendimentos){
@@ -243,6 +237,9 @@ export default {
         }
       }
     }
+  },
+  beforeUpdate(){
+    gerenciarCores(this)
   },
   created(){
     this.verificaLocalStorage()
@@ -550,8 +547,6 @@ export default {
           }
 
           let objMensagem = this.getObjMensagem( autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo );
-
-          console.log("objMensagem> ", objMensagem)
 
           this.$store.dispatch('setMensagensAtivas', objMensagem)
 
