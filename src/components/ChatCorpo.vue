@@ -1,10 +1,9 @@
 <template>
   <div class="chat-corpo">
     <div class="chat-corpo-mensagens" v-on:scroll="verificaPosicaoBarraRolagem()">
-
       <!-- MSG Operador -->
       <Mensagens
-      v-for="msg in todasMensagens" :key="msg.id"
+      v-for="msg in mensagensAtivas" :key="msg.id"
       :autor="msg.autor"
       :origem="msg.origem"
       :msg="msg.msg"
@@ -89,7 +88,7 @@ export default {
   },
   computed:{
     ...mapGetters({
-      todasMensagens: 'getTodasMensagens',
+      mensagensAtivas: 'getMensagensAtivas',
       habilitaRolagem: 'getHabilitaRolagem',
       atendimentoAtivo: 'getAtendimentoAtivo'
     })

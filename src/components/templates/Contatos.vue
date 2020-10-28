@@ -505,7 +505,7 @@ export default {
       this.$root.$emit('mostrarIframe', atd.id, atd.url)
     },
     setMensagensClienteAtivo(id, arrMensagens) {
-      this.$store.dispatch('limparTodasMensagens')
+      this.$store.dispatch('limparMensagensAtivas')
       
       for (let i in arrMensagens) {
         if(i != 'st_ret') {
@@ -551,7 +551,9 @@ export default {
 
           let objMensagem = this.getObjMensagem( autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo );
 
-          this.$store.dispatch('setTodasMensagens', objMensagem)
+          console.log("objMensagem> ", objMensagem)
+
+          this.$store.dispatch('setMensagensAtivas', objMensagem)
 
           if(document.querySelector('#textarea')){
             document.querySelector('#textarea').focus()

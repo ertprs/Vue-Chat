@@ -1,6 +1,6 @@
 export default {
   state: {
-    todasMensagens: [],
+    mensagensAtivas: [],
     tipoMsg: '',
     abrirMsgTipo2: false,
     grupo: '',
@@ -9,11 +9,11 @@ export default {
     nroChat: ''
   },
   mutations: {
-    setTodasMensagens(state, novaMensagem){
-      state.todasMensagens.push(novaMensagem)
+    setMensagensAtivas(state, novaMensagem){
+      state.mensagensAtivas.push(novaMensagem)
     },
-    limparTodasMensagens(state){
-      state.todasMensagens = []
+    limparMensagensAtivas(state){
+      state.mensagensAtivas = []
     },
     setTipoMsg(state, tipoMsg){
       state.tipoMsg = tipoMsg
@@ -35,11 +35,11 @@ export default {
     }
   },
   actions: {
-    setTodasMensagens: (context, payload) => {
-      context.commit('setTodasMensagens', payload)
+    setMensagensAtivas: (context, payload) => {
+      context.commit('setMensagensAtivas', payload)
     },
-    limparTodasMensagens: context => {
-      context.commit('limparTodasMensagens')
+    limparMensagensAtivas: context => {
+      context.commit('limparMensagensAtivas')
     },
     setTipoMsg: (context, payload) => {
       context.commit('setTipoMsg', payload)
@@ -61,8 +61,8 @@ export default {
     }
   },
   getters: {
-    getTodasMensagens(state){
-      return state.todasMensagens
+    getMensagensAtivas(state){
+      return state.mensagensAtivas
     },
     getTipoMsg(state){
       return state.tipoMsg
@@ -81,9 +81,6 @@ export default {
     },
     getNroChat(state){
       return state.nroChat
-    },
-    getAtualizarMensagens(state){
-      return state.atualizarMensagens
     }
   }
 }

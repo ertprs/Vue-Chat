@@ -459,8 +459,8 @@ export default {
         nomeArquivo: nomeArquivo,
         status: status
       };
-      
-      this.$store.dispatch("setTodasMensagens", objMensagem)
+
+      this.$store.dispatch("setMensagensAtivas", objMensagem)
       this.$root.$emit("rolaChat")
 
       if(this.statusEnvio !== "E" && !objMsgExterno){
@@ -895,9 +895,9 @@ export default {
 
       }
     },
-    todasMensagens() {
+    mensagensAtivas() {
       if (this.controle == true) {
-        this.qtdInicial = this.todasMensagens.length;
+        this.qtdInicial = this.mensagensAtivas.length;
         this.controle = false;
       } else {
         this.verificaRolagem();
@@ -930,7 +930,7 @@ export default {
       blocker: "getBlocker",
       tipoMsg: 'getTipoMsg',
       origemBlocker: 'getOrigemBlocker',
-      todasMensagens: "getTodasMensagens",
+      mensagensAtivas: "getMensagensAtivas",
       todaBiblioteca: "getTodaBliblioteca",
       dominio: "getDominio",
       reqTeste: "getReqTeste",
