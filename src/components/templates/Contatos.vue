@@ -358,18 +358,6 @@ export default {
         horaAux = horaAux.replace(/:/g, "h")
         horaAux = horaAux.slice(0, horaAux.length-3)
 
-        if(!parseInt(horaAux[0])){
-          this.contadorErrosAgenda++
-          if(this.contadorErrosAgenda < 10){
-            setTimeout(() => {
-              this.formataData(data, hora, atd)
-            }, 1000)
-          }
-          return
-        }else{
-          this.contadorErrosAgenda = 0
-        }
-
         if(typeof(atd) == "object"){
           atd.data_agenda_formatada = dataAux + ' ' + horaAux
         }
@@ -379,15 +367,7 @@ export default {
 
         const spanContador = document.querySelector(`${id} span.contador-data-retorno`)
         if(!spanContador){
-          this.contadorErrosAgenda++
-          if(this.contadorErrosAgenda < 10){
-            setTimeout(() => {
-              this.formataData(data, retorno, atd)
-            }, 1000)
-          }
           return
-        }else{
-          this.contadorErrosAgenda = 0
         }
 
         // Diferenca entre dias
