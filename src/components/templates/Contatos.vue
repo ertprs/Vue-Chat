@@ -210,6 +210,26 @@ export default {
       } else {
         this.objAtendimentos = []
       }
+      
+      if(this.minhaAgenda.length){
+        this.minhaAgenda.map(cliAgenda => {
+          for(let atd in this.todosAtendimentos){
+            if(cliAgenda.id_cli == this.todosAtendimentos[atd].id){
+              axios_api.get(`get-agenda?${this.reqTeste}`)
+                .then(response => {
+                  const arrAgenda = response.data.ret || []
+
+                  this.$store.dispatch("setAgenda", arrAgenda)
+                })
+                .catch(error => {
+                  console.log("Error get agenda: ", error)
+                })
+              
+              return
+            }
+          }
+        })
+      }
     },
     abaAberta(){
       if(this.abaAberta === "aguardando") {

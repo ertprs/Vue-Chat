@@ -186,6 +186,7 @@ export default {
         this.gerenciador.map((i) => {
           if(i.cod == 2){
             if(i.count != this.qtdAgenda){
+              
               axios_api.get(`get-agenda?${this.reqTeste}`)
                 .then(response => {
                   const arrAgenda = response.data.ret || []
