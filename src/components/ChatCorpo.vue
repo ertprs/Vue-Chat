@@ -62,6 +62,9 @@ export default {
       limitador: 0
     }
   },
+  beforeDestroy(){
+    this.$root.$off("rolaChat")
+  },
   mounted() {
     this.$root.$on('rolaChat', () => {
       this.rolaChat()
