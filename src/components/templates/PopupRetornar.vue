@@ -7,7 +7,7 @@
       v-if="!pessoalData">
       <li @click="retornar('todos')"> Todos </li>
       <li @click="retornar('pessoal')"> Pessoal </li>
-      <li @click="pessoalData = true"> Pessoal/Data </li>
+      <li @click="pessoalData = true"> Agendar </li>
     </ul>
     <div 
       agendar-retorno

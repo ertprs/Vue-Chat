@@ -241,6 +241,8 @@ export default {
     },
     caso(){
       if(this.caso == 206 || this.caso == 400){
+        this.$root.$emit("reverter-cores")
+
         const tituloContatos = document.querySelector('.titulo-contatos')
         const tituloAgenda = document.querySelector('.lista-agenda--titulo')
 
@@ -308,6 +310,8 @@ export default {
         .then((response) => {
           if(response.data.st_ret == "OK"){
             this.$toasted.global.defaultSuccess({msg: "Aguarde. Logo o cliente sera ativado"})
+          }else if(response.data.st_ret == "AVISO"){
+            this.$toasted.global.emConstrucao({msg: response.data.msg_ret || "Nao foi possivel ativar o cliente (aviso sem mensagem de retorno)"})
           }
         })
         .catch(error => {

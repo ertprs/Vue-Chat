@@ -82,13 +82,13 @@ body{
     top: 0;
     z-index: -1;
   }
-  #app{
-    width: 1396px;
-    height: calc(100% - 38px)
-  }
-  .lista-informacoes-container{
-    height: calc(90% + 34px);
-  }
+  // #app{
+  //   width: 1396px;
+  //   height: calc(100% - 38px)
+  // }
+  // .lista-informacoes-container{
+  //   height: calc(90% + 34px);
+  // }
 }
 
 @media screen and (min-height: 900px){

@@ -199,16 +199,30 @@ export default {
       }
     },
     reverterCoresClienteAtivo(){
-      this.aplicarCoresNoElemento('.chat-opcoes-titulo', '')
-      this.aplicarCoresNoElemento('.titulo-contatos', '')
-      this.aplicarCoresNoElemento('.lista-agenda--titulo', '')
-      this.aplicarCoresNoElemento('#informacoes-titulo', '')
+      this.aplicarCoresNoElemento('.chat-opcoes-titulo', 'reverter')
+      this.aplicarCoresNoElemento('.titulo-contatos', 'reverter')
+      this.aplicarCoresNoElemento('.lista-agenda--titulo', 'reverter')
+      this.aplicarCoresNoElemento('#informacoes-titulo', 'reverter')
       this.$store.dispatch("setBgPopup", "")
     },
     aplicarCoresNoElemento(elem, cor){
-      if(document.querySelector(elem)){
-        document.querySelector(elem).style.backgroundColor = cor
+      if(!document.querySelector(elem)){
+        return
       }
+
+      let elemento = document.querySelector(elem)
+
+      if(cor == "reverter"){
+        // elemento.style.borderTop = `unset`
+        // elemento.style.backgroundImage = `unset`
+        elemento.style.backgroundColor = ""
+        return
+      }else{
+        // elemento.style.borderTop = `3px solid ${cor}`
+        // elemento.style.backgroundImage = `linear-gradient(to left, rgba(0,0,0,0) 75%, ${cor} 5%)` // -30deg
+        elemento.style.backgroundColor = cor
+      }
+
     },
     lightenDarkenColor(cor, qtd) {
       let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(cor)
