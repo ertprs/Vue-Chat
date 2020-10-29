@@ -67,21 +67,24 @@
   font-size: .8375rem;
   margin-right: 15px;
   .informacoes-item{
-    margin-top: 18px;
     @include d-flex-center('horizontal');
     flex-direction: column;
     .informacoes-item-titulo{
-      display: flex;
+      @include d-flex-center("vertical");
       p{
+        font-weight: bold;
         margin: 0;
         margin-left: 5px;
+        font-size: .875rem;
       }
     }
     p{
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      margin: 0;
       margin-left: 15px;
+      font-size: .775rem;
     }
   }
 }

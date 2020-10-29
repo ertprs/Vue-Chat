@@ -10512,20 +10512,24 @@ body {
   font-size: .8375rem;
   margin-right: 15px; }
   .informacoes-superiores-container .informacoes-item {
-    margin-top: 18px;
     display: flex;
     justify-content: center;
     flex-direction: column; }
     .informacoes-superiores-container .informacoes-item .informacoes-item-titulo {
-      display: flex; }
+      display: flex;
+      align-items: center; }
       .informacoes-superiores-container .informacoes-item .informacoes-item-titulo p {
+        font-weight: bold;
         margin: 0;
-        margin-left: 5px; }
+        margin-left: 5px;
+        font-size: .875rem; }
     .informacoes-superiores-container .informacoes-item p {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-left: 15px; }
+      margin: 0;
+      margin-left: 15px;
+      font-size: .775rem; }
 
 .lista-informacoes-container-vazio {
   height: 90%;
