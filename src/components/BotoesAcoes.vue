@@ -32,12 +32,12 @@
       </template>
       <template v-else>
         <div>
-        <div class="load" v-if="contadorRequisicoesFalhas < 10">
-          <i class="fas fa-hourglass-end"></i>
-        </div>
-        <div class="load" v-else>
-          <p> {{ msgErro }} </p>
-        </div>
+          <div class="load" v-if="contadorRequisicoesFalhas < 10">
+            <i class="fas fa-hourglass-end"></i>
+          </div>
+          <div class="load" v-else>
+            <p> {{ msgErro }} </p>
+          </div>
         </div>
       </template>
     </div>

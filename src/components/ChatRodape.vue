@@ -249,6 +249,10 @@ export default {
         }, 500);
     },
     enviarMensagem(event, previa) {
+      if(this.iniciarLoad){
+        return
+      }
+
       if(this.blocker && this.origemBlocker !== 'msg-formatada') {
         this.$store.dispatch('setBlocker', false)
       }
@@ -923,6 +927,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      iniciarLoad: "getIniciarLoad",
       atendimentoAtivo: "getAtendimentoAtivo",
       informacoesAberto: "getInformacoesAberto",
       url: "getURL",

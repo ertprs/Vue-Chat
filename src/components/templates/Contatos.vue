@@ -498,6 +498,8 @@ export default {
         return
       }
 
+      this.$store.dispatch("setIniciarLoad", true)
+
       if(atd.novoContato){
         atd.novoContato = false
       }
@@ -512,7 +514,6 @@ export default {
       this.$store.dispatch('setIdAtendimentoAtivo', atd.id_cli)
       
       this.exibirInformacoes(atd, indice)
-
     },
     exibirInformacoes: function(atd, indice) {
       atd.informacoes = {}
@@ -523,6 +524,8 @@ export default {
     },
     setMensagensClienteAtivo(id, arrMensagens) {
       this.$store.dispatch('limparMensagensAtivas')
+
+      this.$store.dispatch("setIniciarLoad", false)
       
       for (let i in arrMensagens) {
         if(i != 'st_ret') {

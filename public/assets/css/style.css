@@ -10142,6 +10142,12 @@ body {
       color: #FFF;
       font-size: 2rem; }
 
+#chat-load-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
 .chat-rodape {
   background-color: #bbbbbb;
   position: relative;

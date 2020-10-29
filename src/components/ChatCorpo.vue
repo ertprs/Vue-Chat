@@ -1,20 +1,27 @@
 <template>
   <div class="chat-corpo">
     <div class="chat-corpo-mensagens" v-on:scroll="verificaPosicaoBarraRolagem()">
-      <!-- MSG Operador -->
-      <Mensagens
-      v-for="msg in mensagensAtivas" :key="msg.id"
-      :autor="msg.autor"
-      :origem="msg.origem"
-      :msg="msg.msg"
-      :horario="msg.horario"
-      :status="msg.status"
-      :logo="msg.logo"
-      :anexo="msg.anexo"
-      :imgAnexo="msg.imgAnexo"
-      :tipoDoc="msg.tipoDoc"
-      :docAnexo="msg.docAnexo"
-      :nomeArquivo="msg.nomeArquivo"/>
+      <div id="chat-load-container" v-if="iniciarLoad">
+        <div class="load">
+          <i class="fas fa-hourglass-end"></i>
+        </div>
+      </div>
+      <template v-else>
+        <!-- MSG Operador -->
+        <Mensagens
+        v-for="msg in mensagensAtivas" :key="msg.id"
+        :autor="msg.autor"
+        :origem="msg.origem"
+        :msg="msg.msg"
+        :horario="msg.horario"
+        :status="msg.status"
+        :logo="msg.logo"
+        :anexo="msg.anexo"
+        :imgAnexo="msg.imgAnexo"
+        :tipoDoc="msg.tipoDoc"
+        :docAnexo="msg.docAnexo"
+        :nomeArquivo="msg.nomeArquivo"/>
+      </template>
 
     </div>
     <transition name="fade">
@@ -88,6 +95,7 @@ export default {
   },
   computed:{
     ...mapGetters({
+      iniciarLoad: 'getIniciarLoad',
       mensagensAtivas: 'getMensagensAtivas',
       habilitaRolagem: 'getHabilitaRolagem',
       atendimentoAtivo: 'getAtendimentoAtivo'

@@ -6,9 +6,13 @@ export default {
     grupo: '',
     categoria: '',
     assunto: '',
-    nroChat: ''
+    nroChat: '',
+    iniciarLoad: false
   },
   mutations: {
+    setIniciarLoad(state, iniciarLoad){
+      state.iniciarLoad = iniciarLoad
+    },
     setMensagensAtivas(state, novaMensagem){
       state.mensagensAtivas.push(novaMensagem)
     },
@@ -35,6 +39,9 @@ export default {
     }
   },
   actions: {
+    setIniciarLoad: (context, payload) => {
+      context.commit('setIniciarLoad', payload)
+    },
     setMensagensAtivas: (context, payload) => {
       context.commit('setMensagensAtivas', payload)
     },
@@ -61,6 +68,9 @@ export default {
     }
   },
   getters: {
+    getIniciarLoad(state){
+      return state.iniciarLoad
+    },
     getMensagensAtivas(state){
       return state.mensagensAtivas
     },
