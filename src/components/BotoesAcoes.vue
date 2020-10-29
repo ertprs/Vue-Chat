@@ -193,7 +193,7 @@ export default {
       if(this.regrasCor){
         this.aplicarCoresNoElemento('.chat-opcoes-titulo', this.regrasCor)
         this.aplicarCoresNoElemento('.titulo-contatos', this.lightenDarkenColor(this.regrasCor, 10))
-        this.aplicarCoresNoElemento('.lista-agenda--titulo', this.lightenDarkenColor(this.regrasCor, 30))
+        // this.aplicarCoresNoElemento('.lista-agenda--titulo', this.lightenDarkenColor(this.regrasCor, 30))
         this.aplicarCoresNoElemento('#informacoes-titulo', this.lightenDarkenColor(this.regrasCor, -10))
         this.$store.dispatch("setBgPopup", this.lightenDarkenColor(this.regrasCor, 15))
       }
@@ -201,7 +201,7 @@ export default {
     reverterCoresClienteAtivo(){
       this.aplicarCoresNoElemento('.chat-opcoes-titulo', 'reverter')
       this.aplicarCoresNoElemento('.titulo-contatos', 'reverter')
-      this.aplicarCoresNoElemento('.lista-agenda--titulo', 'reverter')
+      // this.aplicarCoresNoElemento('.lista-agenda--titulo', 'reverter')
       this.aplicarCoresNoElemento('#informacoes-titulo', 'reverter')
       this.$store.dispatch("setBgPopup", "")
     },
@@ -213,14 +213,16 @@ export default {
       let elemento = document.querySelector(elem)
 
       if(cor == "reverter"){
-        // elemento.style.borderTop = `unset`
+        elemento.style.borderBottom = `unset`
         // elemento.style.backgroundImage = `unset`
-        elemento.style.backgroundColor = ""
+
+        // elemento.style.backgroundColor = ""
         return
       }else{
-        // elemento.style.borderTop = `3px solid ${cor}`
-        // elemento.style.backgroundImage = `linear-gradient(to left, rgba(0,0,0,0) 75%, ${cor} 5%)` // -30deg
-        elemento.style.backgroundColor = cor
+        elemento.style.borderBottom = `3px solid ${cor}`
+        // elemento.style.backgroundImage = `linear-gradient( to left, rgba(0,0,0,0) 75%, ${cor} 5%)` // -30deg // to left
+
+        // elemento.style.backgroundColor = cor
       }
 
     },
