@@ -2,9 +2,17 @@
   <div class="chat-corpo">
     <div class="chat-corpo-mensagens" v-on:scroll="verificaPosicaoBarraRolagem()">
       <div id="chat-load-container" v-if="iniciarLoad">
-        <div class="load">
-          <i class="fas fa-hourglass-end"></i>
-        </div>
+        <transition name="fade">
+          <div class="load" v-show="!limiteErrosMsg">
+            <i class="fas fa-hourglass-end"></i>
+          </div>
+        </transition>
+        <transition name="fade">
+          <div id="chat-error-container" v-show="limiteErrosMsg">
+            <p> Falha ao carregar as mensagens </p>
+            <p class="refresh" @click="refreshAtendimento()"> <i class="fas fa-redo"></i> Clique aqui para tentar novamente </p>
+          </div> 
+        </transition>
       </div>
       <template v-else>
         <!-- MSG Operador -->
@@ -34,7 +42,7 @@
 
 <style scoped>
   .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
+    transition: opacity .3s;
   }
   .fade-enter, .fade-leave-to {
     opacity: 0;
@@ -60,6 +68,9 @@ export default {
     })
   },
   methods:{
+    refreshAtendimento(){
+      this.$root.$emit("refresh-msg", this.atendimentoAtivo)
+    },
     rolaChat(){
       const corpoMensagens = document.querySelector('.chat-corpo-mensagens')
       if(corpoMensagens){
@@ -95,6 +106,7 @@ export default {
   },
   computed:{
     ...mapGetters({
+      limiteErrosMsg: 'getLimiteErrosMsg',
       iniciarLoad: 'getIniciarLoad',
       mensagensAtivas: 'getMensagensAtivas',
       habilitaRolagem: 'getHabilitaRolagem',

@@ -7,9 +7,13 @@ export default {
     categoria: '',
     assunto: '',
     nroChat: '',
-    iniciarLoad: false
+    iniciarLoad: false,
+    limiteErrosMsg: false
   },
   mutations: {
+    setLimiteErrosMsg(state, limiteErrosMsg){
+      state.limiteErrosMsg = limiteErrosMsg
+    },
     setIniciarLoad(state, iniciarLoad){
       state.iniciarLoad = iniciarLoad
     },
@@ -39,6 +43,9 @@ export default {
     }
   },
   actions: {
+    setLimiteErrosMsg: (context, payload) => {
+      context.commit('setLimiteErrosMsg', payload)
+    },
     setIniciarLoad: (context, payload) => {
       context.commit('setIniciarLoad', payload)
     },
@@ -68,6 +75,9 @@ export default {
     }
   },
   getters: {
+    getLimiteErrosMsg(state){
+      return state.limiteErrosMsg
+    },
     getIniciarLoad(state){
       return state.iniciarLoad
     },

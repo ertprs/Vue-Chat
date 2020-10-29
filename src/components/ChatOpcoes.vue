@@ -18,7 +18,7 @@
     </div>
 </template>
 <script>
-
+import { gerenciarCores } from "@/services/gerenciarCores"
 import { mapGetters } from 'vuex'
 
 export default {
@@ -26,6 +26,9 @@ export default {
     return{
       chatTitulo: 'Chat'
     }
+  },
+  beforeUpdate(){
+    gerenciarCores(this, "chat")
   },
   methods: {
     formataSigla(letra, acao){

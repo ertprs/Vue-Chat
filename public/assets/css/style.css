@@ -10146,7 +10146,20 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  flex-direction: column; }
+
+#chat-error-container p {
+  text-align: center;
+  margin: 0; }
+  #chat-error-container p:nth-child(1) {
+    margin-bottom: 5px;
+    font-weight: bold; }
+  #chat-error-container p.refresh {
+    transform: .5s;
+    cursor: pointer; }
+    #chat-error-container p.refresh:hover {
+      text-decoration: underline; }
 
 .chat-rodape {
   background-color: #bbbbbb;

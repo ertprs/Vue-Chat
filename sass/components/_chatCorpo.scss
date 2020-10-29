@@ -13,4 +13,23 @@
 #chat-load-container{
   width: 100%;
   @include d-flex-center();
+  flex-direction: column;
+}
+
+#chat-error-container{
+  p{
+    text-align: center;
+    margin: 0;
+    &:nth-child(1){
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    &.refresh{
+      transform: .5s;
+      cursor: pointer;
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+  }
 }

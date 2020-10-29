@@ -97,7 +97,7 @@
 </template>
 
 <script>
-
+import { gerenciarCores } from "@/services/gerenciarCores"
 import { mapGetters } from 'vuex'
 import BotoesAcoes from '../BotoesAcoes'
 import IframeTemplate from './IframeTemplate'
@@ -138,6 +138,9 @@ export default {
     fecharIframeCttAtivo(){
       this.$store.dispatch('setIframeCttAtivo', false)
     }
+  },
+  beforeUpdate(){
+    gerenciarCores(this, "informacoes")
   },
   computed: {
     ...mapGetters({

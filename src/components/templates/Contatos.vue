@@ -156,7 +156,7 @@
 <script>
 import { mapGetters } from "vuex"
 import axios_api from '../../services/serviceAxios';
-import { gerenciarCores } from "../../services/gerenciarCores"
+import { gerenciarCores } from "@/services/gerenciarCores"
 
 export default {
   data() {
@@ -259,7 +259,7 @@ export default {
     }
   },
   beforeUpdate(){
-    gerenciarCores(this)
+    gerenciarCores(this, "contatos")
   },
   created(){
     this.verificaLocalStorage()
@@ -271,6 +271,10 @@ export default {
 
     this.$root.$on('encerrar-atd', atdAtivo => {
       this.encerrarAtdNaTela(atdAtivo)
+    })
+
+    this.$root.$on('refresh-msg', (atd, refresh = true) => {
+      this.statusMensagens(atd, refresh)
     })
 
   },
@@ -468,23 +472,32 @@ export default {
       }
 
     },
-    statusMensagens(atd){
+    statusMensagens(atd, refresh){
+      if(refresh){
+        this.$store.dispatch("setLimiteErrosMsg", false)
+      }
 
       axios_api.get(`get-status-messages?grupo=${atd.grupo}&nro_chat=${atd.nro_chat}&${this.reqTeste}`)
       .then(response => {
         if(response.status === 200){
           let arrStatusMsg = response.data.msg_ret
           for(let msg in atd.arrMsg){
-            if(arrStatusMsg[msg].seq === atd.arrMsg[msg].seq){
-              atd.arrMsg[msg].status = arrStatusMsg[msg].status
+            if(arrStatusMsg[msg]){
+              if(arrStatusMsg[msg].seq === atd.arrMsg[msg].seq){
+                atd.arrMsg[msg].status = arrStatusMsg[msg].status
+              }
             }
           }
+          this.$store.dispatch("setLimiteErrosMsg", false)
           this.setMensagensClienteAtivo(atd.id_cli, atd.arrMsg)
         }
       })
       .catch(error => {
-        if(this.contadorErros < 10){
+        if(this.contadorErros <= 1){
           this.statusMensagens(atd)
+        }else{
+          // Mostrar botão de "refresh" no corpo das mensagens
+          this.$store.dispatch("setLimiteErrosMsg", true)
         }
         this.contadorErros++
         console.log('Erro get status messages: ', error)
