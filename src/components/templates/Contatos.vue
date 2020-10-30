@@ -169,7 +169,8 @@ export default {
       totalMsgNovas: '',
       totalClientesNovos: '',
       contadorErros: 0,
-      contadorErrosAgenda: 0
+      contadorErrosAgenda: 0,
+      reqEmAndamento: false
     };
   },
   watch: {
@@ -301,6 +302,12 @@ export default {
         return
       }
 
+      if(this.reqEmAndamento){
+        return
+      }else{
+        this.reqEmAndamento = true
+      }
+
       let data = {
         login_usu: id,
         grupo: grupo
@@ -308,6 +315,7 @@ export default {
 
       axios_api.post(`start-contato?${this.reqTeste}`, data)
         .then((response) => {
+          this.reqEmAndamento = false
           if(response.data.st_ret == "OK"){
             this.$toasted.global.defaultSuccess({msg: "Aguarde. Logo o cliente sera ativado"})
           }else if(response.data.st_ret == "AVISO"){
@@ -315,6 +323,7 @@ export default {
           }
         })
         .catch(error => {
+          this.reqEmAndamento = false
           this.$toasted.global.defaultError({msg: "Nao foi possivel ativar o cliente"})
         })
     },
