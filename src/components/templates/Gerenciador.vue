@@ -39,6 +39,7 @@ export default {
   data(){
     return{
       qtdAgenda: 0,
+      qtdAguardando: 0,
       reqEmAndamento: false,
       contador: 0
     }
@@ -184,6 +185,26 @@ export default {
         this.preencherDiv()
 
         this.gerenciador.map((i) => {
+          if(i.cod == 3){
+            if(i.count != this.qtdAguardando){
+              // Aguardando
+              axios_api.get(`get-aguardando?${this.reqTeste}`)
+              .then(response => {
+                const arrAguardando = response.data.ret
+                if(arrAguardando && arrAguardando.length){
+                  this.$store.dispatch("setAguardando", arrAguardando)
+                }else{
+                  this.$store.dispatch("setAguardando", [])
+                }
+
+                this.qtdAguardando = i.count
+              })
+              .catch(error => {
+                console.log('error get aguardando: ', error)
+              })
+            }
+          }
+
           if(i.cod == 2){
             if(i.count != this.qtdAgenda){
               

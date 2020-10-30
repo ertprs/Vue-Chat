@@ -170,20 +170,6 @@ function acionaProcessos(mainData){
     if(mainData.agenda && mainData.agenda.length){
         store.dispatch("setAgenda", mainData.agenda)
     }
-    
-    // Aguardando
-    axios_api.get("get-aguardando?" + store.getters.getReqTeste)
-    .then(response => {
-        const arrAguardando = response.data.ret
-        if(arrAguardando && arrAguardando.length){
-            store.dispatch("setAguardando", arrAguardando)
-        }else{
-            store.dispatch("setAguardando", [])
-        }
-    })
-    .catch(error => {
-        console.log('error get aguardando: ', error)
-    })
 
     primeiraRequest = false
 }
@@ -230,7 +216,6 @@ function adicionaCaso(caso) {
 }
 
 function acionaProcessosAtualizacao(mainData){
-
     // Gerenciador
     if(mainData.gerenciador){
         store.dispatch("setGerenciador", mainData.gerenciador)
@@ -240,20 +225,6 @@ function acionaProcessosAtualizacao(mainData){
     if(mainData.agenda){
         store.dispatch("setAgenda", mainData.agenda)
     }
-
-    // Aguardando
-    axios_api.get("get-aguardando?" + store.getters.getReqTeste)
-    .then(response => {
-        const arrAguardando = response.data.ret
-        if(arrAguardando && arrAguardando.length){
-            store.dispatch("setAguardando", arrAguardando)
-        }else{
-            store.dispatch("setAguardando", [])
-        }
-    })
-    .catch(error => {
-        console.log('error get aguardando: ', error)
-    })
 }
 
 
