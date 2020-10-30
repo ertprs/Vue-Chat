@@ -10601,7 +10601,7 @@ body {
       padding: 5px 10px;
       width: 100%;
       color: #FFF;
-      background-color: #8c8c8c; }
+      background-color: #333; }
     #popup .popup-container-geral .popup-container {
       display: flex;
       justify-content: center;
@@ -10648,9 +10648,9 @@ body {
           #popup .popup-container-geral .popup-container .popup-lista li#encerrarAtendimento:focus {
             outline: none; }
         #popup .popup-container-geral .popup-container .popup-lista.bg li {
-          box-shadow: inset 0 -4px var(--bg-alternativo); }
+          box-shadow: inset 0 -3px var(--bg-alternativo); }
           #popup .popup-container-geral .popup-container .popup-lista.bg li:active {
-            box-shadow: inset 0 -2px var(--bg-alternativo); }
+            box-shadow: inset 0 -1px var(--bg-alternativo); }
       #popup .popup-container-geral .popup-container .popup-container-tela-2 {
         display: flex;
         justify-content: center;
@@ -10699,7 +10699,7 @@ body {
             box-shadow: inset 0 -2px var(--bg-alternativo); }
 
 :root {
-  --bg-calendar: #777; }
+  --bg-calendar: #333; }
 
 .theme-custom .vdatetime-popup__header,
 .theme-custom .vdatetime-calendar__month__day--selected > span > span,

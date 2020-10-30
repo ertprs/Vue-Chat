@@ -215,13 +215,11 @@ export default {
       if(cor == "reverter"){
         elemento.style.borderBottom = `unset`
         // elemento.style.backgroundImage = `unset`
-
         // elemento.style.backgroundColor = ""
         return
       }else{
         elemento.style.borderBottom = `3px solid ${cor}`
         // elemento.style.backgroundImage = `linear-gradient( to left, rgba(0,0,0,0) 75%, ${cor} 5%)` // -30deg // to left
-
         // elemento.style.backgroundColor = cor
       }
 
