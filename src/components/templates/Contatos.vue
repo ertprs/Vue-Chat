@@ -20,7 +20,7 @@
     </div>
     <template v-if="objAtendimentos">
       <!-- Caso Aguardando Cliente ou esperando a primeira requisicao ao buscaAtendimentos -->
-      <div class="lista-contatos-container-vazio" :class="{'existe-agenda' : minhaAgenda.length || aguardando.length}" v-if="caso == 206 || caso == 'aguardando'">
+      <div class="lista-contatos-container-vazio" :class="{'existe-agenda' : minhaAgenda.length || aguardando.length || caso !== 400}" v-if="caso == 206 || caso == 'aguardando'">
         <div class="load">
           <i class="fas fa-hourglass-end"></i>
           <transition name="fade">
@@ -33,11 +33,10 @@
       </div>
       <!-- Caso haja Cliente -->
       <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 400">
-        <div class="fieldset-container" v-if="caso !== 400 && caso !== 206" :class="{'fechado' : fechado}" v-on:click="alternarAbaAberta()">
+        <div class="fieldset-container" v-if="caso !== 400 && caso !== 206" :class="{'fechado' : fechado}">
           <h4
-            :class="{'ativo' : abaAberta == 'atendimento'}"
             v-if="objAtendimentos.length && caso !== 206"
-            >
+            > <!-- :class="{'ativo' : abaAberta == 'atendimento'}" -->
             Em Atendimento
           </h4>
           <div>
@@ -45,7 +44,7 @@
             <span v-if="totalMsgNovas != ''" title="Total de novas mensagens" class="total-msgs-novas">{{ totalMsgNovas }}</span>
           </div>
         </div>
-        <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta == 'aguardando'}"  id="lista-contatos" v-if="objAtendimentos.length && caso !== 206">
+        <ul :class="{'fechado' : fechado}"  id="lista-contatos" v-if="objAtendimentos.length && caso !== 206"> <!-- 'aba-fechada' : abaAberta == 'aguardando' -->
           <li
             v-for="(atd, indice) in objAtendimentos"
             :key="indice"
@@ -67,8 +66,7 @@
         <div class="fieldset-container" :class="{'fechado' : fechado}" v-if="caso !== 400 && aguardando && aguardando.length">
           <h4
             v-on:click="alternarAbaAberta()"
-            :class="abaAberta == 'aguardando' ? 'ativo' : ''"
-            >
+            > <!-- :class="abaAberta == 'aguardando' ? 'ativo' : ''" -->
             Aguardando
           </h4>
           <div>
@@ -84,7 +82,7 @@
               :key="'id_'+indice"
               :id="'li_'+indice"
               :title="atd.nome_usu"
-              @click="ativarCliente( atd.login_usu, atd.grupo)"
+              @click="ativarCliente(atd.login_usu, atd.grupo, atd, 'aguardando')"
             >
               <div class="circulo-contatos">
                 <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
@@ -111,7 +109,7 @@
               :key="'id_'+indice"
               :id="'li_'+indice"
               :title="atd.nome_usu"
-              @click="ativarCliente(atd.login_usu, atd.grupo)"
+              @click="ativarCliente(atd.login_usu, atd.grupo, atd, 'agenda')"
             >
               <div class="circulo-contatos">
                 <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
@@ -295,7 +293,7 @@ export default {
     })
   },
   methods: {
-    ativarCliente(id, grupo){
+    ativarCliente(id, grupo, atd, origem){
       if(!id || !grupo){
         this.$toasted.global.defaultError({msg: "Nao foi possivel ativar o cliente"})
         console.log("parametros da fc ativar cliente nao estao de acordo com o esperado")
@@ -318,6 +316,21 @@ export default {
           this.reqEmAndamento = false
           if(response.data.st_ret == "OK"){
             this.$toasted.global.defaultSuccess({msg: "Aguarde. Logo o cliente sera ativado"})
+
+          // Remover do aguardando  
+          if(origem == "aguardando"){
+            let aguardandoAux = this.aguardando
+            aguardandoAux = aguardandoAux.filter((atendimento) => {
+              return atendimento.id_cli != atd.id_cli
+            })
+            this.$store.dispatch("setAguardando", aguardandoAux)
+          }else if(origem == "agenda"){
+            let agendaAux = this.minhaAgenda
+            agendaAux = agendaAux.filter((atendimento) => {
+              return atendimento.id_cli != atd.id_cli
+            })
+          }
+
           }else if(response.data.st_ret == "AVISO"){
             this.$toasted.global.emConstrucao({msg: response.data.msg_ret || "Nao foi possivel ativar o cliente (aviso sem mensagem de retorno)"})
           }

@@ -5,6 +5,9 @@ export default {
   mutations: {
     setAguardando(state, aguardando) {
       state.aguardando = aguardando
+    },
+    adicionarCliAguardando(state, aguardando){
+      state.aguardando.push(aguardando)
     }
   },
   actions: {

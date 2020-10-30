@@ -103,6 +103,9 @@ export default {
             .then(response => {
               if(response.status == 200){
                 this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
+
+                this.$store.commit("adicionarCliAguardando", this.atendimentoAtivo)
+
                 this.removerCliente()
                 this.$root.$emit("reverter-cores")
                 this.fecharPopup()
@@ -173,6 +176,9 @@ export default {
       }
       
       this.$store.dispatch("setAtendimentos", objAtdAux)
+      if(!objAtdAux){
+        this.$store.dispatch("setCaso", 206)
+      }
       
       this.$store.dispatch('limparAtendimentoAtivo')
       this.$store.dispatch('limparIdAtendimentoAtivo')

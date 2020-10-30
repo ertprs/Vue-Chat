@@ -82,6 +82,9 @@ export default {
       }
       
       this.$store.dispatch("setAtendimentos", objAtdAux)
+      if(!objAtdAux){
+        this.$store.dispatch("setCaso", 206)
+      }
       
       this.$store.dispatch('limparAtendimentoAtivo')
       this.$store.dispatch('limparIdAtendimentoAtivo')
