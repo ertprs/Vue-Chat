@@ -165,20 +165,11 @@ export default {
       //   hexa: "&#x",
       //   emoji: String.fromCodePoint(0x)
       // }
-    ],
-    todaBiblioteca: []
-  },
-  mutations: {
-    setBiblioteca(state, emojis){
-      state.todaBiblioteca = emojis
-    }
+    ]
   },
   getters: {
     getEmojis(state){
       return state.emojis
-    },
-    getTodaBliblioteca(state){
-      return state.todaBiblioteca
     }
   }
 }

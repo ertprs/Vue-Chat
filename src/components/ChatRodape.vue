@@ -936,7 +936,6 @@ export default {
       tipoMsg: 'getTipoMsg',
       origemBlocker: 'getOrigemBlocker',
       mensagensAtivas: "getMensagensAtivas",
-      todaBiblioteca: "getTodaBliblioteca",
       dominio: "getDominio",
       reqTeste: "getReqTeste",
       extImgs: "getExtImgs",

@@ -83,10 +83,6 @@ export default {
 
       this.$store.dispatch("setDominio", baseUrl)
     },
-    carregarBibliotecaEmojis(){
-      let emojis = new Emojis().get();
-      this.$store.commit("setBiblioteca", emojis)
-    },
     resizeContatos(data){
       let widthContatos = data.width
 
@@ -153,8 +149,6 @@ export default {
     this.setDominio()
 
     this.setHeightMaximo()
-
-    this.carregarBibliotecaEmojis()
   },
   computed: {
     ...mapGetters({
