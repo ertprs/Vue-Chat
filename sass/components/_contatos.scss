@@ -76,8 +76,8 @@ $tamanhoBoxShadow: 5px;
     position: relative;
     @include d-flex-center('vertical');
     // background-color: lighten($cor, 10); // var(--bg-titulo-contatos)
-    background-color: #242423;
-    border-bottom: 3px solid #242423;
+    background-color: $cor;
+    border-bottom: 3px solid $cor;
     color: #EEE;
     height: 10%;
     width: 100%;
@@ -150,7 +150,7 @@ $tamanhoBoxShadow: 5px;
         > div{
           position: relative;
           justify-content: space-around;
-          .total-clientes-novos, .contador-aguardando{
+          .total-clientes-novos, .contador-aguardando, .total-clientes{
             margin-right: 0;
           }
         }
@@ -179,7 +179,7 @@ $tamanhoBoxShadow: 5px;
         top: 3px;
         display: flex;
       }
-      .total-clientes-novos, .total-msgs-novas, .contador-aguardando{
+      .total-clientes, .total-clientes-novos, .total-msgs-novas, .contador-aguardando{
         cursor: pointer;
         @include d-flex-center();
         margin-right: 5px;
@@ -190,7 +190,7 @@ $tamanhoBoxShadow: 5px;
       .total-msgs-novas{
         @include marcadores-contatos(#55a630, #FFF);
       }
-      .contador-aguardando{
+      .contador-aguardando, .total-clientes{
         @include marcadores-contatos(#888, #FFF);
         @include d-flex-center();
         margin-right: 5px;
@@ -209,7 +209,7 @@ $tamanhoBoxShadow: 5px;
 
   ul{
     padding: 0;
-    max-height: var(--height-ul);
+    // max-height: var(--height-ul);
     overflow-y: auto;
     overflow-x: hidden;
     transition: max-height 400ms ease-out;

@@ -97,6 +97,7 @@ export default {
           }
         })
         .catch(error => {
+          this.reqEmAndamento = false
 
           this.$store.dispatch("setBlocker", false)
 

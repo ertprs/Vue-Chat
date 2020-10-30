@@ -39,7 +39,8 @@
             > <!-- :class="{'ativo' : abaAberta == 'atendimento'}" -->
             Em Atendimento
           </h4>
-          <div>
+          <div :class="{'fechado' : fechado}">
+            <span v-if="objAtendimentos.length" title="Total de clientes" class="total-clientes">{{ objAtendimentos.length }}</span>
             <span v-if="totalClientesNovos != ''" title="Total de novos clientes" class="total-clientes-novos">{{ totalClientesNovos }}</span>
             <span v-if="totalMsgNovas != ''" title="Total de novas mensagens" class="total-msgs-novas">{{ totalMsgNovas }}</span>
           </div>
@@ -174,6 +175,8 @@ export default {
   watch: {
     todosAtendimentos() {
       if(this.todosAtendimentos){
+        this.contarMsgClientes()
+
         this.objAtendimentos = Object.values(this.todosAtendimentos)
 
         if(this.objAtendimentos.length && !this.aguardando.length){
@@ -201,10 +204,6 @@ export default {
             this.ativarConversa(this.objAtendimentos[0], 0)
           }
         }
-
-        if(this.abaAberta == "aguardando"){
-          this.contarMsgClientes()
-        }
         
       } else {
         this.objAtendimentos = []
@@ -228,14 +227,6 @@ export default {
             }
           }
         })
-      }
-    },
-    abaAberta(){
-      if(this.abaAberta === "aguardando") {
-        this.contarMsgClientes()
-      } else {
-        this.totalMsgNovas = ''
-        this.totalClientesNovos = ''
       }
     },
     caso(){

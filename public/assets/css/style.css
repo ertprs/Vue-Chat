@@ -9426,8 +9426,8 @@ body {
     position: relative;
     display: flex;
     align-items: center;
-    background-color: #242423;
-    border-bottom: 3px solid #242423;
+    background-color: #00005A;
+    border-bottom: 3px solid #00005A;
     color: #EEE;
     height: 10%;
     width: 100%;
@@ -9492,7 +9492,7 @@ body {
         #todos-contatos .lista-contatos-container .fieldset-container.fechado > div {
           position: relative;
           justify-content: space-around; }
-          #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .contador-aguardando {
+          #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .contador-aguardando, #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .total-clientes {
             margin-right: 0; }
       #todos-contatos .lista-contatos-container .fieldset-container h4 {
         white-space: nowrap;
@@ -9520,7 +9520,7 @@ body {
         right: 0;
         top: 3px;
         display: flex; }
-      #todos-contatos .lista-contatos-container .fieldset-container .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-container .total-msgs-novas, #todos-contatos .lista-contatos-container .fieldset-container .contador-aguardando {
+      #todos-contatos .lista-contatos-container .fieldset-container .total-clientes, #todos-contatos .lista-contatos-container .fieldset-container .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-container .total-msgs-novas, #todos-contatos .lista-contatos-container .fieldset-container .contador-aguardando {
         cursor: pointer;
         display: flex;
         justify-content: center;
@@ -9548,7 +9548,7 @@ body {
         font-weight: bold;
         background-color: #55a630;
         color: #FFF; }
-      #todos-contatos .lista-contatos-container .fieldset-container .contador-aguardando {
+      #todos-contatos .lista-contatos-container .fieldset-container .contador-aguardando, #todos-contatos .lista-contatos-container .fieldset-container .total-clientes {
         padding: 1.5px 3px;
         width: auto;
         min-width: 1rem;
@@ -9570,7 +9570,6 @@ body {
     cursor: unset; }
   #todos-contatos ul {
     padding: 0;
-    max-height: var(--height-ul);
     overflow-y: auto;
     overflow-x: hidden;
     transition: max-height 400ms ease-out; }
@@ -10467,8 +10466,8 @@ body {
   display: flex;
   align-items: center;
   height: 10%;
-  background-color: #242423;
-  border-bottom: 3px solid #242423;
+  background-color: #00005A;
+  border-bottom: 3px solid #00005A;
   color: #FFF;
   width: 100%; }
   .informacoes-titulo h1 {
@@ -10622,7 +10621,7 @@ body {
           transition-duration: 300ms;
           user-select: none;
           cursor: pointer;
-          box-shadow: inset 0 -4px #666;
+          box-shadow: inset 0 -4px #00005A;
           opacity: 1;
           min-width: 85px;
           height: 45px;
@@ -10637,7 +10636,7 @@ body {
             opacity: 1; }
           #popup .popup-container-geral .popup-container .popup-lista li:active {
             opacity: 1;
-            box-shadow: inset 0 -2px #666;
+            box-shadow: inset 0 -2px #00005A;
             -webkit-transform: translateY(1px);
             -moz-transform: translateY(1px);
             -o-transform: translateY(1px);
@@ -10671,7 +10670,7 @@ body {
           transition-duration: 300ms;
           user-select: none;
           cursor: pointer;
-          box-shadow: inset 0 -4px #666;
+          box-shadow: inset 0 -4px #00005A;
           opacity: 1;
           min-width: 48%;
           height: 45px;
@@ -10687,7 +10686,7 @@ body {
             opacity: 1; }
           #popup .popup-container-geral .popup-container .btns-confirmacao-container .btn-confirmar:active, #popup .popup-container-geral .popup-container .btns-confirmacao-container .btn-cancelar:active {
             opacity: 1;
-            box-shadow: inset 0 -2px #666;
+            box-shadow: inset 0 -2px #00005A;
             -webkit-transform: translateY(1px);
             -moz-transform: translateY(1px);
             -o-transform: translateY(1px);
