@@ -1,20 +1,7 @@
 <template>
   <div class="chat-corpo">
     <div class="chat-corpo-mensagens" v-on:scroll="verificaPosicaoBarraRolagem()">
-      <div id="chat-load-container" v-if="iniciarLoad">
-        <transition name="fade">
-          <div class="load" v-show="!limiteErrosMsg">
-            <i class="fas fa-hourglass-end"></i>
-          </div>
-        </transition>
-        <transition name="fade">
-          <div id="chat-error-container" v-show="limiteErrosMsg">
-            <p> Falha ao carregar as mensagens </p>
-            <p class="refresh" @click="refreshAtendimento()"> <i class="fas fa-redo"></i> Clique aqui para tentar novamente </p>
-          </div> 
-        </transition>
-      </div>
-      <template v-else>
+      <template>
         <!-- MSG Operador -->
         <Mensagens
         v-for="msg in mensagensAtivas" :key="msg.id"
@@ -30,7 +17,6 @@
         :docAnexo="msg.docAnexo"
         :nomeArquivo="msg.nomeArquivo"/>
       </template>
-
     </div>
     <transition name="fade">
       <div class="btn-rolagem" v-show="habilitaRolagem" v-on:click="rolaChat()">
@@ -53,13 +39,17 @@
 import Mensagens from './Mensagens'
 import { mapGetters } from 'vuex'
 
+import axios_api from '@/services/serviceAxios';
+
 export default {
   components: {
     Mensagens
   },
   data(){
     return{
-      limitador: 0
+      limitador: 0,
+      tokenStatus: "",
+      primeiraReq: true
     }
   },
   beforeDestroy(){
@@ -69,11 +59,15 @@ export default {
     this.$root.$on('rolaChat', () => {
       this.rolaChat()
     })
+
+    this.rolaChat()
+
+    this.atualizarStatusMensagens()
+    setInterval(() => {
+      this.atualizarStatusMensagens()
+    }, 5000)
   },
   methods:{
-    refreshAtendimento(){
-      this.$root.$emit("refresh-msg", this.atendimentoAtivo)
-    },
     rolaChat(){
       const corpoMensagens = document.querySelector('.chat-corpo-mensagens')
       if(corpoMensagens){
@@ -105,15 +99,39 @@ export default {
           }
         }
       }
+    },
+    atualizarStatusMensagens(){
+      if(this.atendimentoAtivo){
+        axios_api.get(`get-status-messages?token_cliente=${this.atendimentoAtivo.token_cliente}${this.tokenStatus}&${this.reqTeste}`)
+          .then(response => {
+            if(response.status === 200){
+              this.tokenStatus = response.data.token_status
+
+              let arrStatusMsg = response.data.msg_ret
+              for(let msg in this.atendimentoAtivo.arrMsg){
+                if(arrStatusMsg[msg]){
+                  if(arrStatusMsg[msg].seq === this.atendimentoAtivo.arrMsg[msg].seq && this.atendimentoAtivo.arrMsg[msg].resp_msg == "OPE"){
+                    this.mensagensAtivas[msg].status = arrStatusMsg[msg].status
+                  }
+                }
+              }
+            }
+          })
+          .catch(error => {
+            console.log('Erro get status messages: ', error)
+          })
+
+          this.primeiraReq = false
+      }
     }
   },
   computed:{
     ...mapGetters({
       limiteErrosMsg: 'getLimiteErrosMsg',
-      iniciarLoad: 'getIniciarLoad',
       mensagensAtivas: 'getMensagensAtivas',
       habilitaRolagem: 'getHabilitaRolagem',
-      atendimentoAtivo: 'getAtendimentoAtivo'
+      atendimentoAtivo: 'getAtendimentoAtivo',
+      reqTeste: 'getReqTeste'
     })
   }
 }

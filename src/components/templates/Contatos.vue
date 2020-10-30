@@ -167,8 +167,6 @@ export default {
       abaAberta: 'atendimento',
       totalMsgNovas: '',
       totalClientesNovos: '',
-      contadorErros: 0,
-      contadorErrosAgenda: 0,
       reqEmAndamento: false
     };
   },
@@ -263,10 +261,6 @@ export default {
 
     this.$root.$on('encerrar-atd', atdAtivo => {
       this.encerrarAtdNaTela(atdAtivo)
-    })
-
-    this.$root.$on('refresh-msg', (atd, refresh = true) => {
-      this.statusMensagens(atd, refresh)
     })
 
   },
@@ -489,46 +483,12 @@ export default {
       }
 
     },
-    statusMensagens(atd, refresh){
-      if(refresh){
-        this.$store.dispatch("setLimiteErrosMsg", false)
-      }
-
-      axios_api.get(`get-status-messages?grupo=${atd.grupo}&nro_chat=${atd.nro_chat}&${this.reqTeste}`)
-      .then(response => {
-        if(response.status === 200){
-          let arrStatusMsg = response.data.msg_ret
-          for(let msg in atd.arrMsg){
-            if(arrStatusMsg[msg]){
-              if(arrStatusMsg[msg].seq === atd.arrMsg[msg].seq){
-                atd.arrMsg[msg].status = arrStatusMsg[msg].status
-              }
-            }
-          }
-          this.$store.dispatch("setLimiteErrosMsg", false)
-          this.setMensagensClienteAtivo(atd.id_cli, atd.arrMsg)
-        }
-      })
-      .catch(error => {
-        if(this.contadorErros <= 1){
-          this.statusMensagens(atd)
-        }else{
-          // Mostrar botão de "refresh" no corpo das mensagens
-          this.$store.dispatch("setLimiteErrosMsg", true)
-        }
-        this.contadorErros++
-        console.log('Erro get status messages: ', error)
-        console.log('Contador de erros status message: ', this.contadorErros)
-      })
-    },
     ativarConversa: function(atd, indice) {
       
       // Se o id do atendimento for igual ao id do atendimento ativo
       if(atd.id_cli == this.idAtendimentoAtivo){
         return
       }
-
-      this.$store.dispatch("setIniciarLoad", true)
 
       if(atd.novoContato){
         atd.novoContato = false
@@ -538,7 +498,7 @@ export default {
         atd.alertaMsgNova = false
       }
 
-      this.statusMensagens(atd)
+      this.setMensagensClienteAtivo(atd.id_cli, atd.arrMsg)
 
       atd.qtdMsgNova = 0;
       this.$store.dispatch('setIdAtendimentoAtivo', atd.id_cli)
@@ -554,8 +514,6 @@ export default {
     },
     setMensagensClienteAtivo(id, arrMensagens) {
       this.$store.dispatch('limparMensagensAtivas')
-
-      this.$store.dispatch("setIniciarLoad", false)
       
       for (let i in arrMensagens) {
         if(i != 'st_ret') {
@@ -602,11 +560,11 @@ export default {
           let objMensagem = this.getObjMensagem( autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo );
 
           this.$store.dispatch('setMensagensAtivas', objMensagem)
+          this.$root.$emit('rolaChat')
 
           if(document.querySelector('#textarea')){
             document.querySelector('#textarea').focus()
           }
-          this.$root.$emit('rolaChat')
         }
       }
     },
