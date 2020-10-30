@@ -3,7 +3,7 @@
     <div class="mensagem">
       <div v-if="anexo" class="mensagem-div-anexo">
         <img v-if="imgAnexo" :src="imgAnexo" alt="Imagem Anexada">
-        <a v-if="imgAnexo" :href="imgAnexo" download> Baixar Imagem <i class="fas fa-download"></i> </a>
+        <a v-if="imgAnexo" :href="imgAnexo" download target="_blank"> Baixar Imagem <i class="fas fa-download"></i> </a>
         <div v-if="tipoDoc" class="anexo-container">
           <a :href="docAnexo" target="_blank" :title="`${tipoDoc} - ${nomeArquivo}`">
             <i class="fas fa-file-alt"></i>
