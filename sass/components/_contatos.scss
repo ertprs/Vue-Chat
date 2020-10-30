@@ -246,7 +246,7 @@ $tamanhoBoxShadow: 5px;
       position: relative;
       opacity: $valorOpacidade;
       padding: 0 10px;
-      transition: 500ms ease-in-out;
+      // transition: 500ms ease-in-out;
       font-size: .9rem;
       @include d-flex-center('vertical');
       align-items: var(--flex-start);
