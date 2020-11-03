@@ -314,6 +314,7 @@ export default {
             agendaAux = agendaAux.filter((atendimento) => {
               return atendimento.id_cli != atd.id_cli
             })
+            this.$store.dispatch("setAgenda", agendaAux)
           }
 
           }else if(response.data.st_ret == "AVISO"){
