@@ -110,8 +110,12 @@ export default {
               let arrStatusMsg = response.data.msg_ret
               for(let msg in this.atendimentoAtivo.arrMsg){
                 if(arrStatusMsg[msg]){
-                  if(arrStatusMsg[msg].seq === this.atendimentoAtivo.arrMsg[msg].seq && this.atendimentoAtivo.arrMsg[msg].resp_msg == "OPE"){
-                    this.mensagensAtivas[msg].status = arrStatusMsg[msg].status
+                  if(arrStatusMsg[msg].status){
+                    if(arrStatusMsg[msg].status !== this.mensagensAtivas[msg].status){
+                      if(arrStatusMsg[msg].seq === this.atendimentoAtivo.arrMsg[msg].seq && this.atendimentoAtivo.arrMsg[msg].resp_msg == "OPE"){
+                        this.mensagensAtivas[msg].status = arrStatusMsg[msg].status
+                      }
+                    }
                   }
                 }
               }
