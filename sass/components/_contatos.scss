@@ -75,9 +75,8 @@ $tamanhoBoxShadow: 5px;
   .titulo-contatos{
     position: relative;
     @include d-flex-center('vertical');
-    // background-color: lighten($cor, 10); // var(--bg-titulo-contatos)
-    background-color: $cor;
-    border-bottom: 3px solid $cor;
+    background-color: var(--cor);
+    border-bottom: 3px solid var(--cor);
     color: #EEE;
     height: 10%;
     width: 100%;
@@ -387,7 +386,6 @@ $tamanhoBoxShadow: 5px;
       max-height: 50px;
       @include d-flex-center('vertical');
       padding: 5px 10px;
-      // background-color: lighten($cor, 2
       background-color: #eee;
       
       svg{

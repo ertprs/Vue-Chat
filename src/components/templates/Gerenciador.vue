@@ -97,9 +97,18 @@ export default {
           }
         })
         .catch(error => {
-          this.reqEmAndamento = false
 
-          this.$store.dispatch("setBlocker", false)
+          this.reqEmAndamento = false
+          
+          this.$store.dispatch("setOrigemBlocker", "atd-parado")
+
+          let arrTodosAtds = Object.values(this.todosAtendimentos)
+          if(arrTodosAtds.length == 0){
+            this.$store.dispatch("setBlocker", true)
+            this.$store.dispatch("setOrigemBlocker", "atd-parado")
+          }else{
+            this.$store.dispatch("setBlocker", false)
+          }
 
           console.log("error start/stop: ", error)
         })

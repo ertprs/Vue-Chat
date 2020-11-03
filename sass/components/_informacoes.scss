@@ -15,12 +15,9 @@
 .informacoes-titulo{
   @include d-flex-center('vertical');
   height: 10%;
-  // background-color: darken($cor, 10);
-  // color: #FFF;
-  background-color: $cor;
-  border-bottom: 3px solid $cor;
+  background-color: var(--cor);
+  border-bottom: 3px solid var(--cor);
   color: #FFF;
-  // border-bottom: 1px solid #CCC;
   width: 100%;
   h1{
     font-size: 1.2rem;

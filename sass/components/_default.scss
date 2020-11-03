@@ -1,5 +1,8 @@
-// $cor: #3949ab;
-$cor: #00005A;
+// $cor: #00005A;
+:root{
+  --cor: #00005A
+}
+
 
 html, body{
   height: 100%;
@@ -19,10 +22,6 @@ body{
   height: 100%;
   display: flex;
   justify-content: flex-start;
-  // max-width: 1366px;
-  // max-height: 768px;
-  // max-width: 1335px;
-  // max-height: 550px;
 }
 
 .tamanho-titulos{
@@ -82,13 +81,6 @@ body{
     top: 0;
     z-index: -1;
   }
-  // #app{
-  //   width: 1396px;
-  //   height: calc(100% - 38px)
-  // }
-  // .lista-informacoes-container{
-  //   height: calc(90% + 34px);
-  // }
 }
 
 @media screen and (min-height: 900px){
