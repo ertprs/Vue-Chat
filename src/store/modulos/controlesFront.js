@@ -6,7 +6,8 @@ export default {
     origemBlocker: '',
     caso: '',
     mensagemViaTextarea: false,
-    reqRegras: false
+    reqRegras: false,
+    corDestaque: ""
   },
   mutations: {
     setAbaContatos(state, abaContatos){
@@ -29,6 +30,9 @@ export default {
     },
     setReqRegras(state, reqRegras){
       state.reqRegras = reqRegras
+    },
+    setCorDestaque(state, codCor){
+      state.corDestaque = codCor
     }
   },
   actions: {
@@ -52,6 +56,9 @@ export default {
     },
     setReqRegras: (context, payload) => {
       context.commit('setReqRegras', payload)
+    },
+    setCorDestaque: (context, payload) => {
+      context.commit('setCorDestaque', payload)
     }
   },
   getters: {
@@ -75,6 +82,9 @@ export default {
     },
     getReqRegras(state){
       return state.reqRegras
+    },
+    getCorDestaque(state){
+      return state.corDestaque
     }
   } 
 }

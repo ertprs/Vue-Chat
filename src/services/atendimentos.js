@@ -84,6 +84,9 @@ function tratarResponse(response) {
 
     var status = response.status
     var mainData = response.data
+
+    setCorDestaque(mainData)
+
     switch (status) {
         case 200:
             if (!mainData) { // tratando erro quando os dados não chegaram da api
@@ -277,6 +280,16 @@ async function atualizarAtendimentos() {
                 getAtendimentos(app)
             }
         )
+}
+
+function setCorDestaque(mainData){
+    if(mainData.cor_destaque){
+        const corAtual = store.getters.getCorDestaque
+        if(mainData.cor_destaque != corAtual){
+            store.dispatch("setCorDestaque", mainData.cor_destaque)
+        }
+
+    }
 }
 
 function atualizarClientes(mainData) {

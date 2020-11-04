@@ -150,9 +150,18 @@ export default {
 
     this.setHeightMaximo()
   },
+  watch: {
+    corDestaque(){
+      if(this.corDestaque){
+        const root = document.documentElement
+        root.style.setProperty('--cor', this.corDestaque)
+      }
+    }
+  },
   computed: {
     ...mapGetters({
-      fechado: "getAbaContatos"
+      fechado: "getAbaContatos",
+      corDestaque: "getCorDestaque"
     })
   }
 }
