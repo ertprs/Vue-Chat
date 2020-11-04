@@ -22,7 +22,10 @@
         <span class="check laranja" v-if="status == 'Q'"> <i class="fas fa-check"></i> </span>
       </transition>
       <transition name="fade">
-        <span class="check" v-if="status == 'E'"> <i class="fas fa-check"></i> </span>
+        <span class="check" v-if="status == 'D'"> <i class="fas fa-check"></i> </span>
+      </transition>
+      <transition name="fade">
+        <span class="check" v-if="status == 'E'"> <i class="fas fa-check-double"></i> </span>
       </transition>
       <transition name="fade">
         <span class="check visualizado" v-if="status == 'L'"> <i class="fas fa-check-double"></i> </span>
