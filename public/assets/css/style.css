@@ -9285,7 +9285,8 @@ body {
   flex-wrap: wrap;
   overflow: hidden;
   background-color: #EEE;
-  text-rendering: optimizeLegibility; }
+  text-rendering: optimizeLegibility;
+  font-family: "Open sans", sans-serif; }
 
 #app {
   width: 100%;
@@ -9841,7 +9842,8 @@ body {
   flex-wrap: wrap;
   overflow: hidden;
   background-color: #EEE;
-  text-rendering: optimizeLegibility; }
+  text-rendering: optimizeLegibility;
+  font-family: "Open sans", sans-serif; }
 
 #app {
   width: 100%;
@@ -10879,7 +10881,8 @@ body {
   flex-wrap: wrap;
   overflow: hidden;
   background-color: #EEE;
-  text-rendering: optimizeLegibility; }
+  text-rendering: optimizeLegibility;
+  font-family: "Open sans", sans-serif; }
 
 #app {
   width: 100%;
