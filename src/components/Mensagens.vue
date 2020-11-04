@@ -15,15 +15,38 @@
       <p v-html="msg"></p>
       <span class="horario-envio"> {{ horario }} </span>
       
-      <span class="check visualizado" v-if="status == 'L'"> visualizado <i class="fas fa-check-double"></i> </span>
-      <span class="check" v-if="status == 'Q'"> enviando <i class="fas fa-clock"></i> </span>
-      <span class="check" v-if="status == 'G' || status == 'D'"> enviado <i class="fas fa-check"></i> </span>
-      <span class="check" v-if="status == 'E' || status == 'T'"> falha no envio <i class="fas fa-times-circle"></i> </span>
+      <transition name="fade">
+        <span class="check" v-if="status == 'G'"> <i class="fas fa-clock"></i> </span>
+      </transition>
+      <transition name="fade">
+        <span class="check laranja" v-if="status == 'Q'"> <i class="fas fa-check"></i> </span>
+      </transition>
+      <transition name="fade">
+        <span class="check" v-if="status == 'E'"> <i class="fas fa-check"></i> </span>
+      </transition>
+      <transition name="fade">
+        <span class="check visualizado" v-if="status == 'L'"> <i class="fas fa-check-double"></i> </span>
+      </transition>
+      <transition name="fade">
+        <span class="check vermelho" v-if="status == 'C'"> <i class="fas fa-times-circle"></i> </span>
+      </transition>
+      <transition name="fade">
+        <span class="check vermelho" v-if="status == 'T'"> <i class="fas fa-hourglass"></i> </span>
+      </transition>
 
       <span class="autor-mensagem"> {{ autor }} </span>
     </div>
   </div>
 </template>
+
+<style scoped>
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
+</style>
 
 <script>
 export default {
