@@ -19,14 +19,6 @@
             </div>
             <p> {{ formataTelefone(atendimentoAtivo.id) }} </p>
           </div>
-          <!-- Repre -->
-          <div v-if="atendimentoAtivo.representante" class="informacoes-item">
-            <div class="informacoes-item-titulo">
-              <i class="fas fa-tag"></i>
-              <p> Representante </p>
-            </div>
-            <p> {{ atendimentoAtivo.representante }} </p>
-          </div>
           <!-- Tempo Conectado -->
           <div v-if="atendimentoAtivo.hora_cliente_ini" class="informacoes-item">
             <div class="informacoes-item-titulo">
