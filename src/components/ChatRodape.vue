@@ -304,7 +304,7 @@ export default {
             .then((response) => {
               this.abrirEmojis = false;
               this.abrirOpcoes = false;
-              this.statusEnvio = "D"
+              this.statusEnvio = "G"
             })
             .catch((error) => {
               console.log("erro send-message: ", error);

@@ -10109,8 +10109,8 @@ body {
           color: #AAA; }
         #chat-operador .chat-corpo-mensagens .mensagem .check.visualizado, #chat-operador .chat-corpo-mensagens .mensagem .check.visualizado svg {
           color: #006DAA; }
-        #chat-operador .chat-corpo-mensagens .mensagem .check.laranja, #chat-operador .chat-corpo-mensagens .mensagem .check.laranja svg {
-          color: #f77f00; }
+        #chat-operador .chat-corpo-mensagens .mensagem .check.verde, #chat-operador .chat-corpo-mensagens .mensagem .check.verde svg {
+          color: #4f772d; }
         #chat-operador .chat-corpo-mensagens .mensagem .check.vermelho, #chat-operador .chat-corpo-mensagens .mensagem .check.vermelho svg {
           color: #ba181b; }
       #chat-operador .chat-corpo-mensagens .mensagem .autor-mensagem {

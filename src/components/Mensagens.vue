@@ -19,7 +19,7 @@
         <span class="check" v-if="status == 'G'"> <i class="fas fa-clock"></i> </span>
       </transition>
       <transition name="fade">
-        <span class="check laranja" v-if="status == 'Q'"> <i class="fas fa-check"></i> </span>
+        <span class="check verde" v-if="status == 'Q'"> <i class="fas fa-clock"></i> </span>
       </transition>
       <transition name="fade">
         <span class="check" v-if="status == 'D'"> <i class="fas fa-check"></i> </span>
