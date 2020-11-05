@@ -1,5 +1,5 @@
 <template>
-  <div id="informacoes" class="resizable-content">
+  <div id="informacoes" :class="{'d-none' : semIframe}">
     <!-- Título -->
     <div class="informacoes-titulo tamanho-titulos" v-if="!atendimentoAtivo.informacoes || caso == 206 || caso == 400">
       <i class="fas fa-info-circle"></i>
@@ -97,7 +97,8 @@ import IframeTemplate from './IframeTemplate'
 export default {
   data(){
     return{
-      gif: true
+      gif: true,
+      semIframe: false
     }
   },
   components: {
@@ -133,6 +134,20 @@ export default {
   },
   beforeUpdate(){
     gerenciarCores(this, "informacoes")
+  },
+  watch: {
+    atendimentoAtivo(){
+      if(this.atendimentoAtivo){
+        const chatContainer = document.querySelector("#chat").parentElement
+        if(this.atendimentoAtivo.url.indexOf("im_atd_menu") != -1){
+          this.semIframe = true
+          chatContainer.style.width = "80%"
+        }else{
+          this.semIframe = false
+          chatContainer.style.width = "30%"
+        }
+      }
+    }
   },
   computed: {
     ...mapGetters({
