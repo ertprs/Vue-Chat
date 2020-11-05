@@ -430,7 +430,14 @@ export default {
           anexo = true
           regex = /(\w+)\/(\w+)/g;
           let type = regex.exec(objMsgExterno.anexos.type);
-          switch (type[1]) {
+
+          if(!type){
+            type = objMsgExterno.anexos.type
+          }else{
+            type = type[1]
+          }
+
+          switch (type) {
             case "image": 
               imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
               nomeArquivo = objMsgExterno.anexos.name
