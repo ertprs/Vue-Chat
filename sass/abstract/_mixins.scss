@@ -147,6 +147,12 @@ $cor-textos-secundarios: #AAA;
         @include d-flex-center();
         flex-direction: column;
         overflow: auto;
+        .anexos-links-container{
+          display: flex;
+          a:nth-child(1){
+            margin-right: 15px;
+          }
+        }
         .anexo-container{
           a{
             padding: 10px 15px 15px 15px;
@@ -163,8 +169,10 @@ $cor-textos-secundarios: #AAA;
         }
       }
       img{
+        cursor: pointer;
         margin: 10px 0;
-        max-width: 100%;
+        width: auto;
+        max-height: 80px;
       }
     }
     .seta{

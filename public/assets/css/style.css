@@ -10128,6 +10128,10 @@ body {
         align-items: center;
         flex-direction: column;
         overflow: auto; }
+        #chat-operador .chat-corpo-mensagens .mensagem .mensagem-div-anexo .anexos-links-container {
+          display: flex; }
+          #chat-operador .chat-corpo-mensagens .mensagem .mensagem-div-anexo .anexos-links-container a:nth-child(1) {
+            margin-right: 15px; }
         #chat-operador .chat-corpo-mensagens .mensagem .mensagem-div-anexo .anexo-container a {
           padding: 10px 15px 15px 15px;
           display: flex;
@@ -10140,8 +10144,10 @@ body {
           #chat-operador .chat-corpo-mensagens .mensagem .mensagem-div-anexo .anexo-container a svg {
             font-size: 2rem; }
       #chat-operador .chat-corpo-mensagens .mensagem img {
+        cursor: pointer;
         margin: 10px 0;
-        max-width: 100%; }
+        width: auto;
+        max-height: 80px; }
     #chat-operador .chat-corpo-mensagens .seta {
       position: absolute;
       color: #FFF;
@@ -10814,6 +10820,15 @@ div[blocker] {
   align-items: center; }
   div[blocker].bg-blocker-padrao {
     background-color: rgba(0, 0, 0, 0.1); }
+  div[blocker] .visualizar-imagem-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 90%; }
+    div[blocker] .visualizar-imagem-container img {
+      max-width: 100%;
+      max-height: 100%; }
   div[blocker] .atd-parado-container {
     display: flex;
     justify-content: center;

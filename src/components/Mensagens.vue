@@ -2,8 +2,11 @@
   <div :class="'mensagem-'+origem">
     <div class="mensagem">
       <div v-if="anexo" class="mensagem-div-anexo">
-        <img v-if="imgAnexo" :src="imgAnexo" alt="Imagem Anexada">
-        <a v-if="imgAnexo" :href="imgAnexo" :download="`${nomeArquivo}`" target="_blank"> Baixar Imagem <i class="fas fa-download"></i> </a>
+        <img v-if="imgAnexo" @click="abrirVisualizacaoImg(imgAnexo)" :src="imgAnexo" alt="Imagem Anexada">
+        <div class="anexos-links-container">
+          <a v-if="imgAnexo" :href="imgAnexo" :download="`${nomeArquivo}`" target="_blank"> Baixar Imagem <i class="fas fa-download"></i> </a>
+          <a v-if="imgAnexo" href="#" @click="abrirVisualizacaoImg(imgAnexo)"> Visualizar Imagem <i class="fas fa-search-plus"></i> </a>
+        </div>
         <div v-if="tipoDoc" class="anexo-container">
           <a :href="docAnexo" target="_blank" :title="`${tipoDoc} - ${nomeArquivo}`">
             <i class="fas fa-file-alt"></i>
@@ -53,6 +56,14 @@
 
 <script>
 export default {
-  props: ["autor", "origem", "msg", "anexo", "imgAnexo", "horario", "status", "logo", "tipoDoc", "docAnexo", "nomeArquivo"]
+  props: ["autor", "origem", "msg", "anexo", "imgAnexo", "horario", "status", "logo", "tipoDoc", "docAnexo", "nomeArquivo"],
+  methods: {
+    abrirVisualizacaoImg(imagem){
+      this.$store.dispatch("setLinkImagem", imagem)
+
+      this.$store.dispatch("setBlocker", true)
+      this.$store.dispatch("setOrigemBlocker", "visualizar-imagem")
+    }
+  }
 }
 </script>

@@ -1,3 +1,5 @@
+import { link } from "fs";
+
 export default {
   state: {
     abaContatos: false,
@@ -8,7 +10,8 @@ export default {
     mensagemViaTextarea: false,
     reqRegras: false,
     corDestaque: "",
-    semIframe: false
+    semIframe: false,
+    linkImagem: ""
   },
   mutations: {
     setAbaContatos(state, abaContatos){
@@ -37,6 +40,9 @@ export default {
     },
     setSemIframe(state, semIframe){
       state.semIframe = semIframe
+    },
+    setLinkImagem(state, linkImagem){
+      state.linkImagem = linkImagem
     }
   },
   actions: {
@@ -66,6 +72,9 @@ export default {
     },
     setSemIframe: (context, payload) => {
       context.commit('setSemIframe', payload)
+    },
+    setLinkImagem: (context, payload) => {
+      context.commit('setLinkImagem', payload)
     }
   },
   getters: {
@@ -95,6 +104,9 @@ export default {
     },
     getSemIframe(state){
       return state.semIframe
+    },
+    getLinkImagem(state){
+      return state.linkImagem
     }
   } 
 }

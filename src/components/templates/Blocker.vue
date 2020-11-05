@@ -3,7 +3,7 @@
     :class="{
       'bg-blocker-padrao' : origemBlocker == 'btn-acoes' || 
       origemBlocker == 'msg-formatada' ||
-      origemBlocker == 'atd-parado'
+      origemBlocker == 'atd-parado' || origemBlocker == 'visualizar-imagem'
       }">
         <div v-if="origemBlocker == 'atd-parado'" class="atd-parado-container">
           <h3> Atendimento em pausa </h3>
@@ -11,6 +11,9 @@
             <i class="fas fa-play"></i>
             Clique aqui para voltar
           </h4>
+        </div>
+        <div v-else-if="origemBlocker == 'visualizar-imagem'" class="visualizar-imagem-container">
+          <img :src="linkImagem" alt="Preview imagem">
         </div>
       </div> <!--  || origemBlocker == 'encerramento' -->
 </template>
@@ -36,11 +39,17 @@ export default {
       this.$root.$emit("mudarEstadoAtd")
     }
   },
+  watch: {
+    linkImagem(){
+      console.log("linkImagem: ", this.linkImagem)
+    }
+  },
   computed: {
     ...mapGetters({
       blocker: 'getBlocker',
       origemBlocker: 'getOrigemBlocker',
-      abrirPopup: 'getAbrirPopup'
+      abrirPopup: 'getAbrirPopup',
+      linkImagem: 'getLinkImagem'
     })
   }
 }
