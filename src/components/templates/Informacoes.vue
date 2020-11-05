@@ -3,7 +3,7 @@
     <!-- Título -->
     <div class="informacoes-titulo tamanho-titulos" v-if="!atendimentoAtivo.informacoes || caso == 206 || caso == 400">
       <i class="fas fa-info-circle"></i>
-      <h1 title="Informacoes"> Informa&ccedil;&otilde;es </h1>
+      <h1 title="Informacoes"> {{ `Informa\u00e7\u00f5es` }} </h1>
     </div>
     <!-- Caso haja informacoes -->
     <div class="container-principal-informacoes" v-if="atendimentoAtivo.informacoes && (caso == 200 || caso == '')">
@@ -64,7 +64,7 @@
       <div>
         <i class="far fa-folder-open"></i>
         <p>
-          Sem informa&ccedil;&otilde;es para mostrar
+          {{ `Sem informa\u00e7\u00f5es para mostrar` }}
         </p>
       </div>
     </div>
