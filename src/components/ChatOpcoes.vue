@@ -39,9 +39,22 @@ export default {
       }
     }
   },
+  watch: {
+    semIframe(){
+      const chatContainer = document.querySelector("#chat").parentElement
+      if(chatContainer){
+        if(this.semIframe){
+          chatContainer.style.width = "100%"
+        }else{
+          chatContainer.style.width = "30%"
+        }
+      }
+    }
+  },
   computed: {
     ...mapGetters({
-      atendimentoAtivo: 'getAtendimentoAtivo'
+      atendimentoAtivo: 'getAtendimentoAtivo',
+      semIframe: 'getSemIframe'
     })
   }
 }

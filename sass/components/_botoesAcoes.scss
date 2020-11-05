@@ -19,6 +19,10 @@ $bg-encerrar: #E74C3C;
       color: #FFF;
       margin: 0 5px;
       width: 100%;
+      transition: width 250ms;
+      &.semIframe{
+        width: 20%
+      }
       height: 100%;
       @include d-flex-center();
       padding: 5px;

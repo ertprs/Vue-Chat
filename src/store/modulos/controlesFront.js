@@ -7,7 +7,8 @@ export default {
     caso: '',
     mensagemViaTextarea: false,
     reqRegras: false,
-    corDestaque: ""
+    corDestaque: "",
+    semIframe: false
   },
   mutations: {
     setAbaContatos(state, abaContatos){
@@ -33,6 +34,9 @@ export default {
     },
     setCorDestaque(state, codCor){
       state.corDestaque = codCor
+    },
+    setSemIframe(state, semIframe){
+      state.semIframe = semIframe
     }
   },
   actions: {
@@ -59,6 +63,9 @@ export default {
     },
     setCorDestaque: (context, payload) => {
       context.commit('setCorDestaque', payload)
+    },
+    setSemIframe: (context, payload) => {
+      context.commit('setSemIframe', payload)
     }
   },
   getters: {
@@ -85,6 +92,9 @@ export default {
     },
     getCorDestaque(state){
       return state.corDestaque
+    },
+    getSemIframe(state){
+      return state.semIframe
     }
   } 
 }

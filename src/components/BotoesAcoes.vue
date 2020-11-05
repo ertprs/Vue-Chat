@@ -4,6 +4,7 @@
       <template v-if="tudoPronto">
         <div
           class="rodape-botoes-botao botao-transferencia"
+          :class="{'semIframe' : semIframe}"
           v-if="regrasBotoes.button_transfer.use == 'S'"
           :title="regrasBotoes.button_transfer.name"
           @click="abrirTransferir()">
@@ -13,6 +14,7 @@
         </div>
         <div
           class="rodape-botoes-botao botao-retornar"
+          :class="{'semIframe' : semIframe}"
           v-if="regrasBotoes.button_suspend.use == 'S'"
           :title="regrasBotoes.button_suspend.name"
           @click="retornarForm()">
@@ -22,6 +24,7 @@
         </div>
         <div
           class="rodape-botoes-botao botao-encerrar"
+          :class="{'semIframe' : semIframe}"
           v-if="regrasBotoes.button_end.use == 'S'"
           :title="regrasBotoes.button_end.name"
           @click="popupEncerrar()">
@@ -91,7 +94,8 @@ export default {
       arrGrupos: 'getArrGrupos',
       origemBlocker: 'getOrigemBlocker',
       caso: 'getCaso',
-      reqTeste: 'getReqTeste'
+      reqTeste: 'getReqTeste',
+      semIframe: 'getSemIframe'
     })
   },
   watch: {

@@ -3,7 +3,7 @@
     <!-- Título -->
     <div class="informacoes-titulo tamanho-titulos" v-if="!atendimentoAtivo.informacoes || caso == 206 || caso == 400">
       <i class="fas fa-info-circle"></i>
-      <h1 title="Informacoes"> {{ `Informa\u00e7\u00f5es` }} </h1>
+      <h1 title="Informacoes"> Informa&#231;&#245;es </h1>
     </div>
     <!-- Caso haja informacoes -->
     <div class="container-principal-informacoes" v-if="atendimentoAtivo.informacoes && (caso == 200 || caso == '')">
@@ -60,11 +60,11 @@
       </div>
     </div>
     <!-- Caso não haja informacoes -->
-    <div class="lista-informacoes-container-vazio" v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206"> <!-- !iframeCttAtivo -->
+    <div class="lista-informacoes-container-vazio" v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206">
       <div>
         <i class="far fa-folder-open"></i>
         <p>
-          {{ `Sem informa\u00e7\u00f5es para mostrar` }}
+          Sem informa&#231;&#245;es para mostrar
         </p>
       </div>
     </div>
@@ -97,8 +97,7 @@ import IframeTemplate from './IframeTemplate'
 export default {
   data(){
     return{
-      gif: true,
-      semIframe: false
+      gif: true
     }
   },
   components: {
@@ -138,13 +137,10 @@ export default {
   watch: {
     atendimentoAtivo(){
       if(this.atendimentoAtivo){
-        const chatContainer = document.querySelector("#chat").parentElement
-        if(this.atendimentoAtivo.url.indexOf("im_atd_menu") != -1){
-          this.semIframe = true
-          chatContainer.style.width = "100%"
+        if(!this.atendimentoAtivo.url.indexOf("im_atd_menu") != -1){
+          this.$store.dispatch("setSemIframe", true)
         }else{
-          this.semIframe = false
-          chatContainer.style.width = "30%"
+          this.$store.dispatch("setSemIframe", false)
         }
       }
     }
@@ -160,7 +156,8 @@ export default {
       nroChat: 'getNroChat',
       iframeCttAtivo: 'getIframeCttAtivo',
       dominio: 'getDominio',
-      reqTeste: 'getReqTeste'
+      reqTeste: 'getReqTeste',
+      semIframe: 'getSemIframe'
     })
   },
 }

@@ -10747,6 +10747,7 @@ body {
       color: #FFF;
       margin: 0 5px;
       width: 100%;
+      transition: width 250ms;
       height: 100%;
       display: flex;
       justify-content: center;
@@ -10762,6 +10763,8 @@ body {
         -o-transform: translateY(1px);
         -ms-transform: translateY(1px);
         transform: translateY(1px); }
+      #rodape-botoes-encerramento-container .rodape-botoes-encerramento .rodape-botoes-botao.semIframe {
+        width: 20%; }
       #rodape-botoes-encerramento-container .rodape-botoes-encerramento .rodape-botoes-botao svg {
         margin-right: 5px;
         font-size: 1rem; }
