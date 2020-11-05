@@ -56,7 +56,7 @@
             <div class="circulo-contatos">
               <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
               <p v-if="fechado">{{ formataSigla(atd.nome_usu[1], 'lower') }}</p>
-              <img v-if="atd.sigla" :src="`http://linux03/callcenter/imagens/ext_top_${atd.sigla}.png`">
+              <img v-if="atd.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${atd.sigla}.png`">
             </div>
             <template v-if="!fechado">{{ formataNome(atd.nome_usu) }}</template>
             <span v-if="!fechado && atd.arrMsg[atd.arrMsg.length - 1]" class="ultima-msg" v-html="atd.arrMsg[atd.arrMsg.length - 1].msg || atd.arrMsg[atd.arrMsg.length - 1].anexos.name"></span>

@@ -10,7 +10,7 @@
             <li :title="atendimentoAtivo.desc_grupo">{{ atendimentoAtivo.desc_grupo }}</li>
           </ul>
           <div class="chat-opcoes-titulo-container--logo">
-            <img v-if="atendimentoAtivo.sigla" :src="`http://linux03/callcenter/imagens/ext_top_${atendimentoAtivo.sigla}.png`">
+            <img v-if="atendimentoAtivo.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${atendimentoAtivo.sigla}.png`">
             <i v-else class="fas fa-comments"></i>
           </div>
         </div>
@@ -37,7 +37,7 @@ export default {
       }else if(acao == 'lower'){
         return letra.toLowerCase()
       }
-    }
+    },
   },
   watch: {
     semIframe(){
@@ -54,7 +54,8 @@ export default {
   computed: {
     ...mapGetters({
       atendimentoAtivo: 'getAtendimentoAtivo',
-      semIframe: 'getSemIframe'
+      semIframe: 'getSemIframe',
+      dominio: 'getDominio'
     })
   }
 }
