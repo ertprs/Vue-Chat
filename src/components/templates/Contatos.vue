@@ -59,7 +59,7 @@
               <img v-if="atd.sigla" :src="`http://linux03/callcenter/imagens/ext_top_${atd.sigla}.png`">
             </div>
             <template v-if="!fechado">{{ formataNome(atd.nome_usu) }}</template>
-            <span v-if="!fechado && atd.arrMsg[atd.arrMsg.length - 1]" class="ultima-msg" v-html="atd.arrMsg[atd.arrMsg.length - 1].msg"></span>
+            <span v-if="!fechado && atd.arrMsg[atd.arrMsg.length - 1]" class="ultima-msg" v-html="atd.arrMsg[atd.arrMsg.length - 1].msg || atd.arrMsg[atd.arrMsg.length - 1].anexos.name"></span>
             <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && idAtendimentoAtivo !== atd.id_cli" class="destaque-nova-msg">{{ atd.qtdMsgNova }}</span>
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
           </li>
@@ -539,6 +539,7 @@ export default {
             switch (type[1]) {
               case "image": 
                 imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
+                nomeArquivo = arrMensagens[i].anexos.name
                 break;
               default:
                 tipoDoc = arrMensagens[i].anexos.type

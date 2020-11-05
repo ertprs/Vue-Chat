@@ -402,6 +402,7 @@ export default {
           anexo = true
           if(!this.docPrevia){
             imgAnexo = this.imagemPrevia
+            nomeArquivo = this.arquivo.name
           }else{
             tipoDoc = this.arquivo.type
             let url = window.URL.createObjectURL(this.arquivo)
@@ -432,6 +433,7 @@ export default {
           switch (type[1]) {
             case "image": 
               imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
+              nomeArquivo = objMsgExterno.anexos.name
               break;
             default:
               tipoDoc = objMsgExterno.anexos.type
