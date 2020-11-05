@@ -536,7 +536,14 @@ export default {
 
             var regex = /(\w+)\/(\w+)/g;
             var type = regex.exec(arrMensagens[i].anexos.type);
-            switch (type[1]) {
+            
+            if(!type){
+              type = arrMensagens[i].anexos.type
+            }else{
+              type = type[1]
+            }
+
+            switch (type) {
               case "image": 
                 imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
                 nomeArquivo = arrMensagens[i].anexos.name
@@ -545,6 +552,7 @@ export default {
                 tipoDoc = arrMensagens[i].anexos.type
                 docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
                 nomeArquivo = arrMensagens[i].anexos.name
+                break;
             }
             
           }

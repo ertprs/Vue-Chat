@@ -146,7 +146,7 @@ $cor-textos-secundarios: #AAA;
         width: 100%;
         @include d-flex-center();
         flex-direction: column;
-        overflow: auto;
+        overflow: hidden;
         .anexos-links-container{
           display: flex;
           a:nth-child(1){
@@ -172,7 +172,7 @@ $cor-textos-secundarios: #AAA;
         cursor: pointer;
         margin: 10px 0;
         width: auto;
-        max-height: 80px;
+        max-height: 150px;
       }
     }
     .seta{

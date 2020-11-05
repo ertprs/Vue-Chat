@@ -439,6 +439,7 @@ export default {
               tipoDoc = objMsgExterno.anexos.type
               docAnexo = `${this.dominio}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
               nomeArquivo = objMsgExterno.anexos.name
+              break;
           }
         }
 
