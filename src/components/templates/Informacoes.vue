@@ -141,7 +141,7 @@ export default {
         const chatContainer = document.querySelector("#chat").parentElement
         if(this.atendimentoAtivo.url.indexOf("im_atd_menu") != -1){
           this.semIframe = true
-          chatContainer.style.width = "80%"
+          chatContainer.style.width = "100%"
         }else{
           this.semIframe = false
           chatContainer.style.width = "30%"
