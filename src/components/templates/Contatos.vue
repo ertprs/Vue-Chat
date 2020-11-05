@@ -530,6 +530,7 @@ export default {
           let tipoDoc = ""
           let docAnexo = "";
           let nomeArquivo = ""
+          let audio = false
 
           if(arrMensagens[i].anexos){
             anexo = true
@@ -547,6 +548,12 @@ export default {
               case "image": 
                 imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
                 nomeArquivo = arrMensagens[i].anexos.name
+                break;
+              case "audio/ogg" || "audio/oga":
+                tipoDoc = arrMensagens[i].anexos.type
+                docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
+                nomeArquivo = arrMensagens[i].anexos.name
+                audio = true
                 break;
               default:
                 tipoDoc = arrMensagens[i].anexos.type
@@ -567,7 +574,7 @@ export default {
               break;
           }
 
-          let objMensagem = this.getObjMensagem( autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo );
+          let objMensagem = this.getObjMensagem( autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo, audio );
 
           this.$store.dispatch('setMensagensAtivas', objMensagem)
           this.$root.$emit('rolaChat')
@@ -588,7 +595,8 @@ export default {
       inImgAnexo,
       inTipoDoc,
       inDocAnexo,
-      inNomeArquivo
+      inNomeArquivo,
+      inAudio
     ) {
       let objMensagem = {
         autor: inAutor, // Operador, Cliente
@@ -600,7 +608,8 @@ export default {
         imgAnexo: inImgAnexo,
         tipoDoc: inTipoDoc,
         docAnexo: inDocAnexo,
-        nomeArquivo: inNomeArquivo
+        nomeArquivo: inNomeArquivo,
+        audio: inAudio
       };
       return objMensagem;
     },

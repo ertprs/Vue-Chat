@@ -386,6 +386,7 @@ export default {
       let docAnexo = ""
       let nomeArquivo = ""
       let status = ""
+      let audio = false
 
       let regex = ""
 
@@ -442,6 +443,12 @@ export default {
               imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
               nomeArquivo = objMsgExterno.anexos.name
               break;
+            case "audio/ogg" || "audio/oga":
+              tipoDoc = objMsgExterno.anexos.type
+              docAnexo = `${this.dominio}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
+              nomeArquivo = objMsgExterno.anexos.name
+              audio = true
+              break;
             default:
               tipoDoc = objMsgExterno.anexos.type
               docAnexo = `${this.dominio}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
@@ -468,7 +475,8 @@ export default {
         tipoDoc: tipoDoc,
         docAnexo: docAnexo,
         nomeArquivo: nomeArquivo,
-        status: status
+        status: status,
+        audio: audio
       };
 
       this.$store.dispatch("setMensagensAtivas", objMensagem)

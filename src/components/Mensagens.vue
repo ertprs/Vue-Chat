@@ -8,6 +8,9 @@
           <a v-if="imgAnexo" href="#" @click="abrirVisualizacaoImg(imgAnexo)"> Visualizar Imagem <i class="fas fa-search-plus"></i> </a>
         </div>
         <div v-if="tipoDoc" class="anexo-container">
+          <audio v-if="audio" :src="nomeArquivo" controls>
+            <p> Seu navegador nao suporta o elemento audio </p>
+          </audio>
           <a :href="docAnexo" target="_blank" :title="`${tipoDoc} - ${nomeArquivo}`">
             <i class="fas fa-file-alt"></i>
             <p> {{ nomeArquivo }} </p>
@@ -56,7 +59,7 @@
 
 <script>
 export default {
-  props: ["autor", "origem", "msg", "anexo", "imgAnexo", "horario", "status", "logo", "tipoDoc", "docAnexo", "nomeArquivo"],
+  props: ["autor", "origem", "msg", "anexo", "imgAnexo", "horario", "status", "logo", "tipoDoc", "docAnexo", "nomeArquivo", "audio"],
   methods: {
     abrirVisualizacaoImg(imagem){
       this.$store.dispatch("setLinkImagem", imagem)

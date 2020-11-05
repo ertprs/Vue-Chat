@@ -15,7 +15,8 @@
         :imgAnexo="msg.imgAnexo"
         :tipoDoc="msg.tipoDoc"
         :docAnexo="msg.docAnexo"
-        :nomeArquivo="msg.nomeArquivo"/>
+        :nomeArquivo="msg.nomeArquivo"
+        :audio="msg.audio" />
       </template>
     </div>
     <transition name="fade">
