@@ -64,7 +64,9 @@ export default {
 
     this.atualizarStatusMensagens()
     setInterval(() => {
-      this.atualizarStatusMensagens()
+      if(this.atendimentoAtivo && this.atendimentoAtivo.token_cliente){
+        this.atualizarStatusMensagens()
+      }
     }, 5000)
   },
   methods:{
@@ -107,32 +109,30 @@ export default {
       }
     },
     atualizarStatusMensagens(){
-      if(this.atendimentoAtivo){
-        axios_api.get(`get-status-messages?token_cliente=${this.atendimentoAtivo.token_cliente}${this.tokenStatus}&${this.reqTeste}`)
-          .then(response => {
-            if(response.status === 200){
-              this.tokenStatus = `&token_status${response.data.token_status}`
+      axios_api.get(`get-status-messages?token_cliente=${this.atendimentoAtivo.token_cliente}${this.tokenStatus}&${this.reqTeste}`)
+        .then(response => {
+          if(response.status === 200){
+            this.tokenStatus = `&token_status${response.data.token_status}`
 
-              let arrStatusMsg = response.data.msg_ret
-              for(let msg in this.atendimentoAtivo.arrMsg){
-                if(arrStatusMsg[msg]){
-                  if(arrStatusMsg[msg].status){
-                    if(arrStatusMsg[msg].status !== this.mensagensAtivas[msg].status){
-                      if(arrStatusMsg[msg].seq === this.atendimentoAtivo.arrMsg[msg].seq && this.atendimentoAtivo.arrMsg[msg].resp_msg == "OPE"){
-                        this.mensagensAtivas[msg].status = arrStatusMsg[msg].status
-                      }
+            let arrStatusMsg = response.data.msg_ret
+            for(let msg in this.atendimentoAtivo.arrMsg){
+              if(arrStatusMsg[msg]){
+                if(arrStatusMsg[msg].status){
+                  if(arrStatusMsg[msg].status !== this.mensagensAtivas[msg].status){
+                    if(arrStatusMsg[msg].seq === this.atendimentoAtivo.arrMsg[msg].seq && this.atendimentoAtivo.arrMsg[msg].resp_msg == "OPE"){
+                      this.mensagensAtivas[msg].status = arrStatusMsg[msg].status
                     }
                   }
                 }
               }
             }
-          })
-          .catch(error => {
-            console.log('Erro get status messages: ', error)
-          })
+          }
+        })
+        .catch(error => {
+          console.log('Erro get status messages: ', error)
+        })
 
-          this.primeiraReq = false
-      }
+        this.primeiraReq = false
     }
   },
   computed:{

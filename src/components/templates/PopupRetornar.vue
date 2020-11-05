@@ -97,9 +97,7 @@ export default {
             })
         break;
         case "pessoal":
-          this.$toasted.global.defaultSuccess()
-          return
-
+          
           dados.destino = "dedicado"
 
           axios_api.put(`suspend?${this.reqTeste}`, dados)
