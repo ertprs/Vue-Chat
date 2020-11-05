@@ -1,5 +1,5 @@
 <template>
-  <div class="chat-corpo">
+  <div class="chat-corpo" @click="focaTextarea()">
     <div class="chat-corpo-mensagens" v-on:scroll="verificaPosicaoBarraRolagem()">
       <template>
         <!-- MSG Operador -->
@@ -68,6 +68,12 @@ export default {
     }, 5000)
   },
   methods:{
+    focaTextarea(){
+      const textarea = document.querySelector("#textarea")
+      if(textarea){
+        textarea.focus()
+      }
+    },
     rolaChat(){
       const corpoMensagens = document.querySelector('.chat-corpo-mensagens')
       if(corpoMensagens){

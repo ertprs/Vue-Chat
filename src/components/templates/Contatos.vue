@@ -280,7 +280,7 @@ export default {
   methods: {
     ativarCliente(id, grupo, atd, origem){
       if(!id || !grupo){
-        this.$toasted.global.defaultError({msg: "Nao foi possivel ativar o cliente"})
+        this.$toasted.global.defaultError({msg: "N\u00e3o foi poss\u00edvel ativar o cliente"})
         console.log("parametros da fc ativar cliente nao estao de acordo com o esperado")
         return
       }
@@ -300,7 +300,7 @@ export default {
         .then((response) => {
           this.reqEmAndamento = false
           if(response.data.st_ret == "OK"){
-            this.$toasted.global.defaultSuccess({msg: "Aguarde. Logo o cliente sera ativado"})
+            this.$toasted.global.defaultSuccess({msg: "Aguarde. Logo o cliente ser\u00e1 ativado"})
 
           // Remover do aguardando  
           if(origem == "aguardando"){
@@ -318,12 +318,12 @@ export default {
           }
 
           }else if(response.data.st_ret == "AVISO"){
-            this.$toasted.global.emConstrucao({msg: response.data.msg_ret || "Nao foi possivel ativar o cliente (aviso sem mensagem de retorno)"})
+            this.$toasted.global.emConstrucao({msg: response.data.msg_ret || "N\u00e3o foi poss\u00edvel ativar o cliente (aviso sem mensagem de retorno)"})
           }
         })
         .catch(error => {
           this.reqEmAndamento = false
-          this.$toasted.global.defaultError({msg: "Nao foi possivel ativar o cliente"})
+          this.$toasted.global.defaultError({msg: "N\u00e3o foi poss\u00edvel ativar o cliente"})
         })
     },
     alternarAbaAberta(){

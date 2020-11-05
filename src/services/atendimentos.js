@@ -49,7 +49,7 @@ function verificarAlertaErroRequest() {
     }
 
     if(contador_request_erro > 5) {
-        if(window.confirm('Nao foi possivel estabelecer conexao. \nClique em "OK" se quiser tentar novamente.')){
+        if(window.confirm('N\u00e3o foi poss\u00edvel estabelecer conex\u00e3o. \nClique em "OK" se quiser tentar novamente.')){
             document.location.reload();
         }else{
             parar_request = true
@@ -75,7 +75,7 @@ function tratarResponse(response) {
         axiosTokenJWT(response.headers.authorization)
     } else {
         setTimeout(() => {
-            console.error('Erro na autorizacao')
+            console.error('Erro na autoriza\u00e7\u00e3o')
             adicionaCaso(400)
             getAtendimentos(app)
         }, TEMPO_ATUALIZACAO)
@@ -89,7 +89,7 @@ function tratarResponse(response) {
 
     switch (status) {
         case 200:
-            if (!mainData) { // tratando erro quando os dados não chegaram da api
+            if (!mainData) { // tratando erro quando os dados nao chegaram da api
                 console.error('Negacao do mainData')
                 setTimeout(() => {
                     console.error('Timeout negacao mainData')

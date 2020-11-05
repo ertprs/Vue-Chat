@@ -9433,6 +9433,7 @@ body {
     align-items: center;
     background-color: var(--cor);
     border-bottom: 3px solid var(--cor);
+    transition: background 300ms;
     color: #EEE;
     height: 10%;
     width: 100%;
@@ -10481,6 +10482,7 @@ body {
   height: 10%;
   background-color: var(--cor);
   border-bottom: 3px solid var(--cor);
+  transition: background 300ms;
   color: #FFF;
   width: 100%; }
   .informacoes-titulo h1 {

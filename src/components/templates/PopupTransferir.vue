@@ -94,14 +94,14 @@ export default {
       if(this.arrAgentes.length){
         this.abrirAgentes = true
       }else{
-        this.$toasted.global.emConstrucao({msg: 'Nao existem agentes disponiveis'})
+        this.$toasted.global.emConstrucao({msg: 'N\u00e3o existem agentes dispon\u00edveis'})
       }
     },
     preencherGrupo(){
       if(this.arrGrupos.length){
         this.abrirGrupos = true
       }else{
-        this.$toasted.global.emConstrucao({msg: 'Nao existem grupos disponiveis'})
+        this.$toasted.global.emConstrucao({msg: 'N\u00e3o existem grupos dispon\u00edveis'})
       }
     },
     transferir(tipo, param){
@@ -134,7 +134,6 @@ export default {
       axios_api.put(`transfer?${this.reqTeste}`, dados)
         .then(response => {
           if(response.status == 200){
-            console.log('Sucesso: ', response)
             this.$toasted.global.sucessoTransferencia()
 
             // this.removerCliente()
@@ -142,7 +141,7 @@ export default {
           }
         })
         .catch(error => {
-          this.$toasted.global.defaultError({msg: "Nao foi possivel realizar a transferencia"})
+          this.$toasted.global.defaultError({msg: "N\u00e3o foi poss\u00edvel realizar a transferencia"})
           console.log('Error enviar grupo: ', error)
         })
 

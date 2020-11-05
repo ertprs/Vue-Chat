@@ -57,7 +57,7 @@ export default {
       regrasCor: {},
       tudoPronto: false,
       contadorRequisicoesFalhas: 0,
-      msgErro: "Nao foi possivel carregar esta area"
+      msgErro: "N\u00e3o foi poss\u00edvel carregar esta area"
     }
   },
   mounted(){
@@ -391,7 +391,7 @@ export default {
             liberarEncerrar()
           }, 5000);
           console.log('Error end atd: ', error)
-          this.$toasted.global.defaultError({msg: 'Nao foi possivel encerrar o atendimento. Aguarde um pouco e tente novamente'})
+          this.$toasted.global.defaultError({msg: 'N\u00e3o foi poss\u00edvel encerrar o atendimento'})
         })
     }
   },

@@ -199,7 +199,7 @@ export default {
       aparecerPrevia: false,
       imagemPrevia: "",
       docPrevia: false,
-      txtFormatoInvalido: "Formato Inválido!",
+      txtFormatoInvalido: "Formato Inv\u00e1lido!",
       txtFormatosValidos: "",
       controle: true,
       qtdInicial: 0,
@@ -312,7 +312,7 @@ export default {
               this.statusEnvio = "E"
               if (!document.querySelector(".toasted.toasted-primary.error")) {
                 this.$toasted.global.defaultError({
-                  msg: "Não foi possível enviar a mensagem",
+                  msg: "N\u00e3o foi poss\u00edvel enviar a mensagem",
                 });
               }
             });
@@ -547,7 +547,7 @@ export default {
             // console.log('msgFormatada_03: ', this.mensagensFormatadas_03)
           }else{
             this.mensagensFormatadas_03 = []
-            this.$toasted.global.emConstrucao({msg: 'Sem mensagens para as opcoes selecionadas'})
+            this.$toasted.global.emConstrucao({msg: 'Sem mensagens para as op\u00e7\u00f5es selecionadas'})
             // console.log('Nao ha msgs formatadas: ', objMsgFormatada)
           }
         break;
@@ -666,7 +666,7 @@ export default {
           } else {
             this.imagemPrevia = "";
             this.erroFormatoAnexo = true;
-            this.txtFormatosValidos = `${this.extImgs} sao aceitos`;
+            this.txtFormatosValidos = `${this.extImgs} s\u00e3o aceitos`;
           }
         }else{
           this.imagemPrevia = "";
@@ -674,7 +674,7 @@ export default {
             this.erroFormatoAnexo = false;
           }else{
             this.erroFormatoAnexo = true;
-            this.txtFormatosValidos = `${this.extDocs} sao aceitos`;
+            this.txtFormatosValidos = `${this.extDocs} s\u00e3o aceitos`;
           }
         }
       } else {
@@ -771,7 +771,7 @@ export default {
         }
 
         if(event.data == ''){
-          this.$toasted.global.emConstrucao({msg: 'Sem mensagens para as opcoes selecionadas'})
+          this.$toasted.global.emConstrucao({msg: 'Sem mensagens para as op\u00e7\u00f5es selecionadas'})
         }
 
         this.mensagem = event.data
