@@ -21,10 +21,10 @@
         <div slot="no-options">Nenhuma correspondencia encontrada</div>
       </vSelect>
       <ul
-        class="btns-confirmacao-container"
+        class="btns-confirmacao-container popup-lista"
         :class="{'bg' : bg}">
-        <li class="btn-confirmar" @click="transferir('agente', agente)"> Confirmar </li>
-        <li class="btn-cancelar" @click="fecharPopup()"> Cancelar </li>
+        <li class="btn-confirmacao cancelar" @click="fecharPopup()"> Cancelar </li>
+        <li class="btn-confirmacao confirmar" @click="transferir('agente', agente)"> Confirmar </li>
       </ul>
     </div>
     <div
@@ -40,10 +40,10 @@
         <div slot="no-options">Nenhuma correspondencia encontrada</div>
       </vSelect>
       <ul
-        class="btns-confirmacao-container"
+        class="btns-confirmacao-container popup-lista"
         :class="{'bg' : bg}">
-        <li class="btn-confirmar" @click="transferir('grupo', grupo)"> Confirmar </li>
-        <li class="btn-cancelar" @click="fecharPopup()"> Cancelar </li>
+        <li class="btn-confirmacao cancelar" @click="fecharPopup()"> Cancelar </li>
+        <li class="btn-confirmacao confirmar" @click="transferir('grupo', grupo)"> Confirmar </li>
       </ul>
     </div>
   </div>

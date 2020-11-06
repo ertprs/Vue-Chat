@@ -283,22 +283,20 @@ export default {
           this.reqEmAndamento = false
           if(response.data.st_ret == "OK"){
             this.$toasted.global.defaultSuccess({msg: "Aguarde. Logo o cliente ser\u00e1 ativado"})
-
-          // Remover do aguardando  
-          if(origem == "aguardando"){
-            let aguardandoAux = this.aguardando
-            aguardandoAux = aguardandoAux.filter((atendimento) => {
-              return atendimento.id_cli != atd.id_cli
-            })
-            this.$store.dispatch("setAguardando", aguardandoAux)
-          }else if(origem == "agenda"){
-            let agendaAux = this.minhaAgenda
-            agendaAux = agendaAux.filter((atendimento) => {
-              return atendimento.id_cli != atd.id_cli
-            })
-            this.$store.dispatch("setAgenda", agendaAux)
-          }
-
+            // Remover do aguardando  
+            if(origem == "aguardando"){
+              let aguardandoAux = this.aguardando
+              aguardandoAux = aguardandoAux.filter((atendimento) => {
+                return atendimento.id_cli != atd.id_cli
+              })
+              this.$store.dispatch("setAguardando", aguardandoAux)
+            }else if(origem == "agenda"){
+              let agendaAux = this.minhaAgenda
+              agendaAux = agendaAux.filter((atendimento) => {
+                return atendimento.id_cli != atd.id_cli
+              })
+              this.$store.dispatch("setAgenda", agendaAux)
+            }
           }else if(response.data.st_ret == "AVISO"){
             this.$toasted.global.emConstrucao({msg: response.data.msg_ret || "N\u00e3o foi poss\u00edvel ativar o cliente (aviso sem mensagem de retorno)"})
           }

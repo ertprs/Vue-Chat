@@ -4,13 +4,14 @@
       lista-retornar
       class="popup-lista"
       :class="{'bg' : bg}">
-      <li id="encerrarAtendimento" 
+      <li @click="fecharPopup()" class="btn-confirmacao cancelar"> Cancelar </li>
+      <li id="encerrarAtendimento"
+        class="btn-confirmacao confirmar"
         tabindex="-1"
         @keydown="encerrar(), fecharPopup()"
         @click="encerrar(), fecharPopup()">
         Confirmar
       </li>
-      <li @click="fecharPopup()"> Cancelar </li>
     </ul>
   </div>
 </template>

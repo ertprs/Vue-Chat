@@ -23,10 +23,10 @@
         class="theme-custom"
         type="datetime" />
       <ul 
-        class="btns-confirmacao-container"
+        class="btns-confirmacao-container popup-lista"
         :class="{'bg' : bg}">
-        <li class="btn-confirmar" @click="retornar('pessoal/data')"> Confirmar </li>
-        <li class="btn-cancelar" @click="fecharPopup()"> Cancelar </li>
+        <li class="btn-confirmacao cancelar" @click="fecharPopup()"> Cancelar </li>
+        <li class="btn-confirmacao confirmar" @click="retornar('pessoal/data')"> Confirmar </li>
       </ul>
     </div>
   </div>
