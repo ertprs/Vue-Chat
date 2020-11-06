@@ -8,8 +8,8 @@
       <li id="encerrarAtendimento"
         class="btn-confirmacao confirmar"
         tabindex="-1"
-        @keydown="encerrar(), fecharPopup()"
-        @click="encerrar(), fecharPopup()">
+        @keydown="encerrar()"
+        @click="encerrar()">
         Confirmar
       </li>
     </ul>

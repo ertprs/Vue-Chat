@@ -88,7 +88,6 @@ export default {
                 this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
                 this.removerCliente()
                 this.$root.$emit("reverter-cores")
-                this.fecharPopup()
               }
             })
             .catch(error => {
@@ -109,7 +108,6 @@ export default {
 
                 this.removerCliente()
                 this.$root.$emit("reverter-cores")
-                this.fecharPopup()
               }
             })
             .catch(error => {
@@ -118,6 +116,7 @@ export default {
             })
         break;
         case "pessoal/data":
+
           if(this.dataHora == ""){
             this.$toasted.global.defaultError({msg: "Selecione uma data e hora valida"})
             return
@@ -141,7 +140,6 @@ export default {
                 this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
                 this.removerCliente()
                 this.$root.$emit("reverter-cores")
-                this.fecharPopup()
                 
                 this.reqAgenda()
               }
@@ -154,6 +152,8 @@ export default {
         default:
         break;
       }
+
+      this.fecharPopup()
     },
     reqAgenda(){
       axios_api.get(`get-agenda?${this.reqTeste}`)
@@ -235,7 +235,7 @@ export default {
         return agora
       }
     },
-    fecharPopup(event){
+    fecharPopup(){
       this.$store.dispatch('setBlocker', false)
       this.$store.dispatch('setAbrirPopup', false)
       this.pessoalData = false
