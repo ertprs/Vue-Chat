@@ -164,7 +164,7 @@ export default {
       rotate: false,
       haContatos: true,
       objAtendimentos: [],
-      abaAberta: 'atendimento',
+      abaAberta: 'aguardando',
       totalMsgNovas: '',
       totalClientesNovos: '',
       reqEmAndamento: false
@@ -177,19 +177,8 @@ export default {
 
         this.objAtendimentos = Object.values(this.todosAtendimentos)
 
-        if(this.objAtendimentos.length && !this.aguardando.length){
-          if(this.abaAberta == "aguardando"){
-            this.alternarAbaAberta()
-          }
-        }
-
         if(this.objAtendimentos.length && this.idAtendimentoAtivo == ''){
-          setTimeout(() => {
-            if(this.abaAberta !== 'atendimento'){
-              this.alternarAbaAberta()
-            }
-            this.ativarConversa(this.objAtendimentos[0], 0)
-          }, 200)
+          this.ativarConversa(this.objAtendimentos[0], 0)
         }else if(this.objAtendimentos.length && this.idAtendimentoAtivo){
           let qtdNegativo = 0
           for(let atd in this.objAtendimentos){
@@ -237,13 +226,6 @@ export default {
         if(tituloContatos, tituloAgenda){
           tituloContatos.style.background = ''
           tituloAgenda.style.background = ''
-        }
-      }
-    },
-    aguardando(){
-      if(!this.objAtendimentos.length && this.aguardando.length){
-        if(this.abaAberta == "atendimento"){
-          this.alternarAbaAberta()
         }
       }
     }
@@ -327,20 +309,10 @@ export default {
         })
     },
     alternarAbaAberta(){
-      switch (this.abaAberta){
-        case "atendimento":
-          this.abaAberta = "aguardando"
-        break;
-        case "aguardando":
-          this.abaAberta = "atendimento"
-          this.totalMsgNovas = ''
-          this.totalClientesNovos = ''
-        break;
-        default:
-          this.abaAberta = "atendimento"
-          this.totalMsgNovas = ''
-          this.totalClientesNovos = ''
-        break;
+      if(this.abaAberta == "aguardando"){
+        this.abaAberta = ""
+      }else{
+        this.abaAberta = "aguardando"
       }
     },
     contarMsgClientes() {
