@@ -1,24 +1,27 @@
 <template>
   <div class="chat-corpo" @click="focaTextarea()">
     <div class="chat-corpo-mensagens" v-on:scroll="verificaPosicaoBarraRolagem()">
-      <template>
-        <!-- MSG Operador -->
+      <div v-for="(arrMsg, index) in this.atendimentoAtivo.arrMsg" :key="index">
+        {{ arrMsg.data_ini }}
+        {{ arrMsg.data_fim }}
+        {{ arrMsg.login }}
         <Mensagens
-        v-for="msg in mensagensAtivas" :key="msg.id"
-        :autor="msg.autor"
-        :origem="msg.origem"
-        :msg="msg.msg"
-        :horario="msg.horario"
-        :status="msg.status"
-        :logo="msg.logo"
-        :anexo="msg.anexo"
-        :imgAnexo="msg.imgAnexo"
-        :tipoDoc="msg.tipoDoc"
-        :docAnexo="msg.docAnexo"
-        :nomeArquivo="msg.nomeArquivo"
-        :audio="msg.audio"
-        :video="msg.video" />
-      </template>
+          v-for="(msg, i) in arrMsg.msg" :key="i"
+          :autor="msg.autor"
+          :origem="msg.origem"
+          :msg="msg.msg"
+          :horario="msg.horario"
+          :status="msg.status"
+          :logo="msg.logo"
+          :anexo="msg.anexo"
+          :imgAnexo="msg.imgAnexo"
+          :tipoDoc="msg.tipoDoc"
+          :docAnexo="msg.docAnexo"
+          :nomeArquivo="msg.nomeArquivo"
+          :audio="msg.audio"
+          :video="msg.video" 
+        />
+      </div>
     </div>
     <transition name="fade">
       <div class="btn-rolagem" v-show="habilitaRolagem" v-on:click="rolaChat()">
@@ -66,7 +69,7 @@ export default {
 
     this.atualizarStatusMensagens()
     setInterval(() => {
-      if(this.atendimentoAtivo && this.atendimentoAtivo.token_cliente){
+      if(this.atendimentoAtivo && this.atendimentoAtivo.token_cliente && this.mensagensAtivas.length){
         this.atualizarStatusMensagens()
       }
     }, 5000)
@@ -111,12 +114,14 @@ export default {
       }
     },
     atualizarStatusMensagens(){
+      return
       axios_api.get(`get-status-messages?token_cliente=${this.atendimentoAtivo.token_cliente}${this.tokenStatus}&${this.reqTeste}`)
         .then(response => {
           if(response.status === 200){
             this.tokenStatus = `&token_status${response.data.token_status}`
 
             let arrStatusMsg = response.data.msg_ret
+            console.log(arrStatusMsg)
             for(let msg in this.atendimentoAtivo.arrMsg){
               if(arrStatusMsg[msg]){
                 if(arrStatusMsg[msg].status){
@@ -135,7 +140,7 @@ export default {
         })
 
         this.primeiraReq = false
-    }
+    },
   },
   computed:{
     ...mapGetters({

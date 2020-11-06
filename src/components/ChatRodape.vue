@@ -431,6 +431,8 @@ export default {
         this.$store.dispatch("setMensagemViaTextarea", true)
 
       } else {
+        
+        console.log(objMsgExterno)
 
         msg = objMsgExterno.msg;
 

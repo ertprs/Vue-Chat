@@ -469,7 +469,13 @@ export default {
         atd.alertaMsgNova = false
       }
 
-      this.setMensagensClienteAtivo(atd.id_cli, atd.arrMsg)
+      let objMensagens = Object.values(atd.arrMsg) 
+      let todasMensagens = []
+      for(let objMsg in objMensagens){
+        todasMensagens.push(objMensagens[objMsg].msg)
+      }
+
+      this.setMensagensClienteAtivo(atd.id_cli, todasMensagens)
 
       atd.qtdMsgNova = 0;
       this.$store.dispatch('setIdAtendimentoAtivo', atd.id_cli)
@@ -486,78 +492,79 @@ export default {
     setMensagensClienteAtivo(id, arrMensagens) {
       this.$store.dispatch('limparMensagensAtivas')
       
-      for (let i in arrMensagens) {
-        if(i != 'st_ret') {
-          let mensagem = arrMensagens[i].msg;
-          let status = arrMensagens[i].status
-          let origem;
-          arrMensagens[i].resp_msg == "CLI" ? (origem = "outros") : (origem = "principal");
-          let horario = arrMensagens[i].hora;
-          
-          let anexo = false;
-
-          let imgAnexo = "";
-          let tipoDoc = ""
-          let docAnexo = "";
-          let nomeArquivo = ""
-          let audio = false
-          let video = false
-
-          if(arrMensagens[i].anexos){
-            anexo = true
-
-            var regex = /(\w+)\/(\w+)/g;
-            var type = regex.exec(arrMensagens[i].anexos.type);
+      for(let index in arrMensagens){
+        for (let i in arrMensagens[index]) {
+          if(i != 'st_ret') {
+            let mensagem = arrMensagens[index][i].msg;
+            let status = arrMensagens[index][i].status
+            let origem;
+            arrMensagens[index][i].resp_msg == "CLI" ? (origem = "outros") : (origem = "principal");
+            let horario = arrMensagens[index][i].hora;
             
-            if(!type){
-              type = arrMensagens[i].anexos.type
-            }else{
-              type = type[1]
+            let anexo = false;
+
+            let imgAnexo = "";
+            let tipoDoc = ""
+            let docAnexo = "";
+            let nomeArquivo = ""
+            let audio = false
+            let video = false
+
+            if(arrMensagens[index][i].anexos){
+              anexo = true
+
+              var regex = /(\w+)\/(\w+)/g;
+              var type = regex.exec(arrMensagens[index][i].anexos.type);
+              
+              if(!type){
+                type = arrMensagens[index][i].anexos.type
+              }else{
+                type = type[1]
+              }
+
+              switch (type) {
+                case "image": 
+                  imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[index][i].anexos.mku}`
+                  nomeArquivo = arrMensagens[index][i].anexos.name
+                  break;
+                case "audio/ogg" || "audio/oga" || "audio" || "oga" || "ogg":
+                  tipoDoc = arrMensagens[index][i].anexos.type
+                  docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[index][i].anexos.mku}`
+                  nomeArquivo = arrMensagens[index][i].anexos.name
+                  audio = true
+                  break;
+                case "video/mp4" || "video" || "mp4":
+                  tipoDoc = arrMensagens[index][i].anexos.type
+                  docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[index][i].anexos.mku}`
+                  nomeArquivo = arrMensagens[index][i].anexos.name
+                  video = true
+                  break;
+                default:
+                  tipoDoc = arrMensagens[index][i].anexos.type
+                  docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[index][i].anexos.mku}`
+                  nomeArquivo = arrMensagens[index][i].anexos.name
+                  break;
+              }
+              
             }
 
-            switch (type) {
-              case "image": 
-                imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
-                nomeArquivo = arrMensagens[i].anexos.name
+            let autor = arrMensagens[index][i].resp_msg;
+            switch (autor) {
+              case "CLI":
+                autor = "Cliente";
                 break;
-              case "audio/ogg" || "audio/oga" || "audio" || "oga" || "ogg":
-                tipoDoc = arrMensagens[i].anexos.type
-                docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
-                nomeArquivo = arrMensagens[i].anexos.name
-                audio = true
-                break;
-              case "video/mp4" || "video" || "mp4":
-                tipoDoc = arrMensagens[i].anexos.type
-                docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
-                nomeArquivo = arrMensagens[i].anexos.name
-                video = true
-                break;
-              default:
-                tipoDoc = arrMensagens[i].anexos.type
-                docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
-                nomeArquivo = arrMensagens[i].anexos.name
+              case "OPE":
+                autor = "Operador";
                 break;
             }
-            
-          }
 
-          let autor = arrMensagens[i].resp_msg;
-          switch (autor) {
-            case "CLI":
-              autor = "Cliente";
-              break;
-            case "OPE":
-              autor = "Operador";
-              break;
-          }
+            arrMensagens[index][i] = this.getObjMensagem( autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo, audio, video );
+            this.$store.dispatch('setMensagensAtivas', arrMensagens[index][i])
+            this.$root.$emit('rolaChat')
 
-          let objMensagem = this.getObjMensagem( autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo, audio, video );
-
-          this.$store.dispatch('setMensagensAtivas', objMensagem)
-          this.$root.$emit('rolaChat')
-
-          if(document.querySelector('#textarea')){
-            document.querySelector('#textarea').focus()
+            if(document.querySelector('#textarea')){
+              document.querySelector('#textarea').focus()
+            }
           }
         }
       }

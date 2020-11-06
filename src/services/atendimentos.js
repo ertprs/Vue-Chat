@@ -339,42 +339,45 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
         return
     }
 
-    if (novosAtendimentos[ramal].arrMsg.length > 0) { //verifica se o cliente tem mensagens
-        const seqs = novosAtendimentos[ramal].arrMsg.map(message => (message.seq)); //seq das mensagens antigas
-        if (cliente.arrMsg.length > 0) {
-            cliente.arrMsg.map((message) => { //mensagens novas
-                // console.log(message)
-                if (!seqs.includes(message.seq)) {
-
-                    // Transformando codigo hexadecimal recebido em emoji
-                    let regex = ''
-                    for (let i = 0; i < store.getters.getEmojis.length; i++) {
-                        regex = new RegExp(store.getters.getEmojis[i].hexa, 'gi')
-                        message.msg = message.msg.replace(regex, store.getters.getEmojis[i].emoji)
+    for(let grupo in cliente.arrMsg){
+        if (cliente.arrMsg[grupo].msg.length > 0) { //verifica se o cliente tem mensagens
+            const seqs = cliente.arrMsg[grupo].msg.map(message => (message.seq)); //seq das mensagens antigas
+            console.log(seqs)
+            if(seqs[0]){ // Verifico se o array de seqs nao esta cheio de posiÃÂ§oes undefined
+                cliente.arrMsg[grupo].msg.map(objMsg => {
+                    console.log(objMsg.seq)
+                    if(!seqs.includes(objMsg.seq)){ // Significa que existe mensagem nova
+                        console.log("msg nova?: ", objMsg.msg)
                     }
-                    novosAtendimentos[ramal].arrMsg.push(message)// adiciono as mensagens novas no array global
-                    // console.log('seq: ' + message.seq + ' msg: ' + message.msg + ', tipo: ' + message.resp_msg)
-                    if (store.getters.getIdAtendimentoAtivo !== novosAtendimentos[ramal].id_cli && message.resp_msg == 'CLI') {
-                        novosAtendimentos[ramal].alertaMsgNova = true
-                        if (!novosAtendimentos[ramal].qtdMsgNova) {
-                            novosAtendimentos[ramal].qtdMsgNova = 1;
-                        } else {
-                            novosAtendimentos[ramal].qtdMsgNova += 1;
-                        }
-                    } else if(message.resp_msg == "CLI") {
-                        app.$root.$emit('atualizar_mensagem', message)
-                    } else if(message.resp_msg == "OPE"){
-                        if(store.getters.getMensagemViaTextarea){
-                            return
-                        }else{
-                            app.$root.$emit('atualizar_mensagem', message)
-                        }
-                    }
-                }
-            });
+                })
+            }
+            // if (cliente.arrMsg[grupo].msg.length > 0) {
+            //     cliente.arrMsg[grupo].msg.map((message) => { //mensagens novas
+            //         if (!seqs.includes(message.seq)) {
+                        // novosAtendimentos[ramal].arrMsg[grupo].msg.push(message)// adiciono as mensagens novas no array global
+                        // if (store.getters.getIdAtendimentoAtivo !== novosAtendimentos[ramal].id_cli && message.resp_msg == 'CLI') {
+                        //     novosAtendimentos[ramal].alertaMsgNova = true
+                        //     if (!novosAtendimentos[ramal].qtdMsgNova) {
+                        //         novosAtendimentos[ramal].qtdMsgNova = 1;
+                        //     } else {
+                        //         novosAtendimentos[ramal].qtdMsgNova += 1;
+                        //     }
+                        // } else if(message.resp_msg == "CLI") {
+                        //     app.$root.$emit('atualizar_mensagem', message)
+                        // } else if(message.resp_msg == "OPE"){
+                        //     if(store.getters.getMensagemViaTextarea){
+                        //         return
+                        //     }else{
+                        //         app.$root.$emit('atualizar_mensagem', message)
+                        //     }
+                        // }
+                //     }
+                // });
+            // }
+            // store.dispatch('setAtendimentos', novosAtendimentos)
         }
-        store.dispatch('setAtendimentos', novosAtendimentos)
     }
+
     
 }
 
