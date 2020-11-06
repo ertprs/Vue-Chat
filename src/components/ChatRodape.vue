@@ -625,10 +625,13 @@ export default {
       }
     },
     abrePopupMsgTipo2(arrayMsgFormatada, indice){
-      // console.log('msg: ', arrayMsgFormatada[indice])
       const objMsg = arrayMsgFormatada[indice]
-
       if(objMsg){
+      
+        if(this.semIframe){
+          this.$store.dispatch("setSemIframe", false)
+        }
+
         this.$store.dispatch("setOrigemBlocker", "msg-formatada")
         this.$store.dispatch("setBlocker", true)
         this.$store.dispatch("setAbrirMsgTipo2", true)
@@ -638,8 +641,6 @@ export default {
         this.$store.dispatch("setNroChat", this.atendimentoAtivo.nro_chat)
         this.$store.dispatch("setGrupo", this.atendimentoAtivo.grupo)
       }
-
-      // this.$toasted.global.emConstrucao()
     },
     selecionarEmoji() {
       this.$store.dispatch("setOrigemBlocker", "chat");
@@ -967,7 +968,8 @@ export default {
       dominio: "getDominio",
       reqTeste: "getReqTeste",
       extImgs: "getExtImgs",
-      extDocs: "getExtDocs"
+      extDocs: "getExtDocs",
+      semIframe: "getSemIframe"
     })
   },
   created(){

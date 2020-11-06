@@ -97,7 +97,8 @@ import IframeTemplate from './IframeTemplate'
 export default {
   data(){
     return{
-      gif: true
+      gif: true,
+      controleSemIframeLocal: false
     }
   },
   components: {
@@ -137,10 +138,30 @@ export default {
   watch: {
     atendimentoAtivo(){
       if(this.atendimentoAtivo){
+        if(this.iframeCttAtivo || this.abrirMsgTipo2){
+          return
+        }
+
         if(this.atendimentoAtivo.url.indexOf("im_atd_menu") != -1){
           this.$store.dispatch("setSemIframe", true)
+          this.controleSemIframeLocal = true
         }else{
           this.$store.dispatch("setSemIframe", false)
+          this.controleSemIframeLocal = false
+        }
+      }
+    },
+    iframeCttAtivo(){
+      if(this.controleSemIframeLocal){
+        if(!this.iframeCttAtivo){
+          this.$store.dispatch("setSemIframe", true)
+        }
+      }
+    },
+    abrirMsgTipo2(){
+      if(this.controleSemIframeLocal){
+        if(!this.abrirMsgTipo2){
+          this.$store.dispatch("setSemIframe", true)
         }
       }
     }

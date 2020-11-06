@@ -33,7 +33,8 @@ export default {
       dominio: "getDominio",
       reqTeste: "getReqTeste",
       statusAtd: "getStatusAtd",
-      todosAtendimentos: "getTodosAtendimentos"
+      todosAtendimentos: "getTodosAtendimentos",
+      semIframe: "getSemIframe"
     })
   },
   data(){
@@ -117,6 +118,10 @@ export default {
       if(this.iframeCttAtivo){
         this.$store.dispatch("setIframeCttAtivo", false)
       }else{
+        if(this.semIframe){
+          this.$store.dispatch("setSemIframe", false)
+        }
+
         this.$store.dispatch("setIframeCttAtivo", true)
       }
     },
