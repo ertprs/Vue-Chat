@@ -10143,6 +10143,11 @@ body {
             font-size: .9rem; }
           #chat-operador .chat-corpo-mensagens .mensagem .mensagem-div-anexo .anexo-container a svg {
             font-size: 2rem; }
+        #chat-operador .chat-corpo-mensagens .mensagem .mensagem-div-anexo .anexo-container audio {
+          outline: none; }
+        #chat-operador .chat-corpo-mensagens .mensagem .mensagem-div-anexo .anexo-container video {
+          width: 300px;
+          cursor: pointer; }
       #chat-operador .chat-corpo-mensagens .mensagem img {
         cursor: pointer;
         margin: 10px 0;

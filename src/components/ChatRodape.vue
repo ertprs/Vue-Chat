@@ -387,6 +387,7 @@ export default {
       let nomeArquivo = ""
       let status = ""
       let audio = false
+      let video = false
 
       let regex = ""
 
@@ -406,6 +407,12 @@ export default {
             nomeArquivo = this.arquivo.name
           }else{
             tipoDoc = this.arquivo.type
+            if(tipoDoc == "audio/ogg" || tipoDoc == "audio/oga"){
+              audio = true
+            }else if(tipoDoc == "video/mp4"){
+              video = true
+            }
+
             let url = window.URL.createObjectURL(this.arquivo)
             docAnexo = url
             nomeArquivo = this.arquivo.name
@@ -443,11 +450,17 @@ export default {
               imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
               nomeArquivo = objMsgExterno.anexos.name
               break;
-            case "audio/ogg" || "audio/oga":
+            case "audio/ogg" || "audio/oga" || "audio" || "ogg" || "oga":
               tipoDoc = objMsgExterno.anexos.type
               docAnexo = `${this.dominio}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
               nomeArquivo = objMsgExterno.anexos.name
               audio = true
+              break;
+            case "video/mp4" || "video" || "mp4":
+              tipoDoc = objMsgExterno.anexos.type
+              docAnexo = `${this.dominio}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
+              nomeArquivo = objMsgExterno.anexos.name
+              video = true
               break;
             default:
               tipoDoc = objMsgExterno.anexos.type
@@ -476,7 +489,8 @@ export default {
         docAnexo: docAnexo,
         nomeArquivo: nomeArquivo,
         status: status,
-        audio: audio
+        audio: audio,
+        video: video
       };
 
       this.$store.dispatch("setMensagensAtivas", objMensagem)

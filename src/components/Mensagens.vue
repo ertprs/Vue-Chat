@@ -3,19 +3,23 @@
     <div class="mensagem">
       <div v-if="anexo" class="mensagem-div-anexo">
         <img v-if="imgAnexo" @click="abrirVisualizacaoImg(imgAnexo)" :src="imgAnexo" alt="Imagem Anexada">
-        <div class="anexos-links-container">
-          <a v-if="imgAnexo" :href="imgAnexo" :download="`${nomeArquivo}`" target="_blank"> Baixar Imagem <i class="fas fa-download"></i> </a>
-          <a v-if="imgAnexo" href="#" @click="abrirVisualizacaoImg(imgAnexo)"> Visualizar Imagem <i class="fas fa-search-plus"></i> </a>
+        <div class="anexos-links-container" v-if="imgAnexo">
+          <a :href="imgAnexo" :download="`${nomeArquivo}`" target="_blank"> Baixar Imagem <i class="fas fa-download"></i> </a>
+          <a href="#" @click="abrirVisualizacaoImg(imgAnexo)"> Visualizar Imagem <i class="fas fa-search-plus"></i> </a>
         </div>
-        <div v-if="tipoDoc" class="anexo-container">
-          <audio v-if="audio" :src="nomeArquivo" controls>
-            <p> Seu navegador nao suporta o elemento audio </p>
-          </audio>
-          <a :href="docAnexo" target="_blank" :title="`${tipoDoc} - ${nomeArquivo}`">
+        <div v-else-if="docAnexo" class="anexo-container">
+          <template v-if="audio || video">
+            <audio v-if="audio" :src="docAnexo" controls>
+              <p> Seu navegador nao suporta o elemento audio <a :href="docAnexo" target="_blank">Clique para abrir o audio em outra janela</a> </p>
+            </audio>
+            <video v-if="video" :src="docAnexo" controls>
+              <p> Seu navegador nao suporta o elemento video <a :href="docAnexo" target="_blank">Clique para abrir o video em outra janela</a> </p>
+            </video>
+          </template>
+          <a v-else :href="docAnexo" target="_blank" :title="`${tipoDoc} - ${nomeArquivo}`">
             <i class="fas fa-file-alt"></i>
             <p> {{ nomeArquivo }} </p>
           </a>
-          <!-- <embed :src="docAnexo" :type="tipoDoc"> -->
         </div>
       </div>
       <p v-html="msg"></p>
@@ -59,7 +63,7 @@
 
 <script>
 export default {
-  props: ["autor", "origem", "msg", "anexo", "imgAnexo", "horario", "status", "logo", "tipoDoc", "docAnexo", "nomeArquivo", "audio"],
+  props: ["autor", "origem", "msg", "anexo", "imgAnexo", "horario", "status", "logo", "tipoDoc", "docAnexo", "nomeArquivo", "audio", "video"],
   methods: {
     abrirVisualizacaoImg(imagem){
       this.$store.dispatch("setLinkImagem", imagem)

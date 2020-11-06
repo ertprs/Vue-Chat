@@ -39,11 +39,6 @@ export default {
       this.$root.$emit("mudarEstadoAtd")
     }
   },
-  watch: {
-    linkImagem(){
-      console.log("linkImagem: ", this.linkImagem)
-    }
-  },
   computed: {
     ...mapGetters({
       blocker: 'getBlocker',

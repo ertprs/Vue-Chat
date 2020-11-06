@@ -531,6 +531,7 @@ export default {
           let docAnexo = "";
           let nomeArquivo = ""
           let audio = false
+          let video = false
 
           if(arrMensagens[i].anexos){
             anexo = true
@@ -549,11 +550,17 @@ export default {
                 imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
                 nomeArquivo = arrMensagens[i].anexos.name
                 break;
-              case "audio/ogg" || "audio/oga":
+              case "audio/ogg" || "audio/oga" || "audio" || "oga" || "ogg":
                 tipoDoc = arrMensagens[i].anexos.type
                 docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
                 nomeArquivo = arrMensagens[i].anexos.name
                 audio = true
+                break;
+              case "video/mp4" || "video" || "mp4":
+                tipoDoc = arrMensagens[i].anexos.type
+                docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[i].anexos.mku}`
+                nomeArquivo = arrMensagens[i].anexos.name
+                video = true
                 break;
               default:
                 tipoDoc = arrMensagens[i].anexos.type
@@ -574,7 +581,7 @@ export default {
               break;
           }
 
-          let objMensagem = this.getObjMensagem( autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo, audio );
+          let objMensagem = this.getObjMensagem( autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo, audio, video );
 
           this.$store.dispatch('setMensagensAtivas', objMensagem)
           this.$root.$emit('rolaChat')
@@ -596,7 +603,8 @@ export default {
       inTipoDoc,
       inDocAnexo,
       inNomeArquivo,
-      inAudio
+      inAudio,
+      inVideo
     ) {
       let objMensagem = {
         autor: inAutor, // Operador, Cliente
@@ -609,7 +617,8 @@ export default {
         tipoDoc: inTipoDoc,
         docAnexo: inDocAnexo,
         nomeArquivo: inNomeArquivo,
-        audio: inAudio
+        audio: inAudio,
+        video: inVideo
       };
       return objMensagem;
     },
