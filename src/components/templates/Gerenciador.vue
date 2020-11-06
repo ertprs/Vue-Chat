@@ -34,7 +34,8 @@ export default {
       reqTeste: "getReqTeste",
       statusAtd: "getStatusAtd",
       todosAtendimentos: "getTodosAtendimentos",
-      semIframe: "getSemIframe"
+      semIframe: "getSemIframe",
+      minhaAgenda: "getAgenda"
     })
   },
   data(){
@@ -195,6 +196,9 @@ export default {
     }
   },
   watch: {
+    minhaAgenda(){
+      this.qtdAgenda = this.minhaAgenda.length
+    },
     gerenciador(){
       if(this.gerenciador){
         this.preencherDiv()

@@ -133,6 +133,9 @@ $cor-textos-secundarios: #AAA;
         &.vermelho, &.vermelho svg{
           color: #ba181b
         }
+        &.preto, &.preto svg{
+          color: #666
+        }
       }
       .autor-mensagem{
         position: absolute;

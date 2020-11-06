@@ -10114,6 +10114,8 @@ body {
           color: #4f772d; }
         #chat-operador .chat-corpo-mensagens .mensagem .check.vermelho, #chat-operador .chat-corpo-mensagens .mensagem .check.vermelho svg {
           color: #ba181b; }
+        #chat-operador .chat-corpo-mensagens .mensagem .check.preto, #chat-operador .chat-corpo-mensagens .mensagem .check.preto svg {
+          color: #666; }
       #chat-operador .chat-corpo-mensagens .mensagem .autor-mensagem {
         position: absolute;
         font-size: 0.6rem;

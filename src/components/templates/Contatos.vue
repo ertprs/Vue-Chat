@@ -174,7 +174,7 @@ export default {
     todosAtendimentos() {
       if(this.todosAtendimentos){
         this.contarMsgClientes()
-
+        
         this.objAtendimentos = Object.values(this.todosAtendimentos)
 
         if(this.objAtendimentos.length && this.idAtendimentoAtivo == ''){

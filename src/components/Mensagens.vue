@@ -26,19 +26,19 @@
       <span class="horario-envio"> {{ horario }} </span>
       
       <transition name="fade">
-        <span class="check" v-if="status == 'G'"> <i class="fas fa-clock"></i> </span>
-      </transition>
-      <transition name="fade">
-        <span class="check verde" v-if="status == 'Q'"> <i class="fas fa-clock"></i> </span>
-      </transition>
-      <transition name="fade">
         <span class="check" v-if="status == 'D'"> <i class="fas fa-check"></i> </span>
       </transition>
       <transition name="fade">
-        <span class="check" v-if="status == 'E'"> <i class="fas fa-check-double"></i> </span>
+        <span class="check preto" v-if="status == 'G'"> <i class="fas fa-check"></i> </span>
+      </transition>
+      <transition name="fade">
+        <span class="check preto" v-if="status == 'E'"> <i class="fas fa-check-double"></i> </span>
       </transition>
       <transition name="fade">
         <span class="check visualizado" v-if="status == 'L'"> <i class="fas fa-check-double"></i> </span>
+      </transition>
+      <transition name="fade">
+        <span class="check verde" v-if="status == 'Q'"> <i class="fas fa-clock"></i> </span>
       </transition>
       <transition name="fade">
         <span class="check vermelho" v-if="status == 'C'"> <i class="fas fa-times-circle"></i> </span>
