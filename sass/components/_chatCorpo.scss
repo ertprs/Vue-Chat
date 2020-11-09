@@ -33,3 +33,27 @@
     }
   }
 }
+
+$cor-separador: #555;
+.chat-corpo-container{
+  position: relative;
+  @include d-flex-center();
+  div{
+    background-image: url("../img/messages-wallpaper.png");
+    z-index: 2;
+  }
+  .separador-mensagens{
+    font-size: .8rem;
+    color: $cor-separador;
+    text-align: center;
+    padding: 1.5px;
+    margin: 0;
+  }
+  hr{
+    border: 0;
+    height: 1px;
+    background-color: $cor-separador;
+    width: 100%;
+    position: absolute
+  }
+}

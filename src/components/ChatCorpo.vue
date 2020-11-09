@@ -2,9 +2,16 @@
   <div class="chat-corpo" @click="focaTextarea()">
     <div class="chat-corpo-mensagens" v-on:scroll="verificaPosicaoBarraRolagem()">
       <div v-for="(arrMsg, index) in this.atendimentoAtivo.arrMsg" :key="index">
-        {{ arrMsg.data_ini }}
-        {{ arrMsg.data_fim }}
-        {{ arrMsg.login }}
+        <div class="chat-corpo-container">
+          <hr>
+          <div>
+            <h5 class="separador-mensagens">
+              <template v-if="arrMsg.data_ini !== '1111-11-11 00:00:00'">{{ formataDataHora(arrMsg.data_ini) }}</template>
+              <template v-if="arrMsg.data_fim !== '1111-11-11 00:00:00'">{{ " - " + formataDataHora(arrMsg.data_fim) }}</template>
+              <template v-if="arrMsg.login">{{ " por " + arrMsg.login }}</template>
+            </h5>
+          </div>
+        </div>
         <Mensagens
           v-for="(msg, i) in arrMsg.msg" :key="i"
           :autor="msg.autor"
@@ -54,14 +61,15 @@ export default {
     return{
       limitador: 0,
       tokenStatus: "",
-      primeiraReq: true
+      primeiraReq: true,
+      rolagemAtiva: false
     }
   },
   beforeDestroy(){
     this.$root.$off("rolaChat")
   },
   mounted() {
-    this.$root.$on('rolaChat', () => {
+    this.$root.$on('rola-chat', () => {
       this.rolaChat()
     })
 
@@ -69,10 +77,15 @@ export default {
 
     this.atualizarStatusMensagens()
     setInterval(() => {
-      if(this.atendimentoAtivo && this.atendimentoAtivo.token_cliente && this.mensagensAtivas.length){
+      if(this.atendimentoAtivo && this.atendimentoAtivo.token_cliente){
         this.atualizarStatusMensagens()
       }
     }, 5000)
+  },
+  updated(){
+    if(!this.rolagemAtiva){
+      this.rolaChat()
+    }
   },
   methods:{
     focaTextarea(){
@@ -98,6 +111,12 @@ export default {
       }
     },
     verificaPosicaoBarraRolagem(){
+
+      this.rolagemAtiva = true
+      setTimeout(() => {
+        this.rolagemAtiva = false
+      }, 3000)
+      
       this.$store.dispatch('setHabilitaRolagem', true)
       if(this.habilitaRolagem){
         let containerMensagens = document.querySelector("#chat-operador > div")
@@ -114,22 +133,18 @@ export default {
       }
     },
     atualizarStatusMensagens(){
-      return
       axios_api.get(`get-status-messages?token_cliente=${this.atendimentoAtivo.token_cliente}${this.tokenStatus}&${this.reqTeste}`)
         .then(response => {
           if(response.status === 200){
             this.tokenStatus = `&token_status${response.data.token_status}`
 
+            let indexAuxiliar = 0;
             let arrStatusMsg = response.data.msg_ret
-            console.log(arrStatusMsg)
-            for(let msg in this.atendimentoAtivo.arrMsg){
-              if(arrStatusMsg[msg]){
-                if(arrStatusMsg[msg].status){
-                  if(arrStatusMsg[msg].status !== this.mensagensAtivas[msg].status){
-                    if(arrStatusMsg[msg].seq === this.atendimentoAtivo.arrMsg[msg].seq && this.atendimentoAtivo.arrMsg[msg].resp_msg == "OPE"){
-                      this.mensagensAtivas[msg].status = arrStatusMsg[msg].status
-                    }
-                  }
+
+            for(let ope in this.atendimentoAtivo.arrMsg){
+              for(let index = 0; index < this.atendimentoAtivo.arrMsg[ope].msg.length; index++){
+                if(arrStatusMsg[index] && this.atendimentoAtivo.arrMsg[ope].msg[index]){
+                  this.atendimentoAtivo.arrMsg[ope].msg[index].status = arrStatusMsg[index].status
                 }
               }
             }
@@ -141,11 +156,27 @@ export default {
 
         this.primeiraReq = false
     },
+    formataDataHora(dataHora){
+      let arrDataHora = dataHora.split(" ")
+      if(arrDataHora.length){
+        let data = arrDataHora[0]
+        let hora = arrDataHora[1]
+
+        data = data.split("-")
+        data = data.reverse()
+        data = data.join("/")
+
+        hora = hora.slice(0, 5)
+
+        return `${data} as ${hora}` 
+      }else{
+        return dataHora
+      }
+    }
   },
   computed:{
     ...mapGetters({
       limiteErrosMsg: 'getLimiteErrosMsg',
-      mensagensAtivas: 'getMensagensAtivas',
       habilitaRolagem: 'getHabilitaRolagem',
       atendimentoAtivo: 'getAtendimentoAtivo',
       reqTeste: 'getReqTeste'

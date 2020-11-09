@@ -340,60 +340,37 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
     if(!novosAtendimentos[ramal]){
 			return
     }
-		for(let chave in novosAtendimentos[ramal].arrMsg) {
-			const seqs = novosAtendimentos[ramal].arrMsg[chave].msg.map(({seq}) => (seq))
-			if(cliente.arrMsg[chave]){
-				cliente.arrMsg[chave].msg.map(message => {
-					if(!seqs.includes(message.seq)){
-						novosAtendimentos[ramal].arrMsg[chave].msg.push(message)
-						console.log('mensagem nova')
-					} else {
-						console.log('ele j� encontrou a mensagem')
-					}
-				})
-			} else {
-				console.log('caiu fora de tudo')
-			}
-		}
-		store.dispatch('setAtendimentos', novosAtendimentos)
-    // for(let grupo in cliente.arrMsg){
-    //     if (cliente.arrMsg[grupo].msg.length > 0) { //verifica se o cliente tem mensagens
-    //         const seqs = cliente.arrMsg[grupo].msg.map(message => (message.seq)); //seq das mensagens antigas
-    //         console.log(seqs)
-    //         if(seqs[0]){ // Verifico se o array de seqs nao esta cheio de posiÃÂ§oes undefined
-    //             cliente.arrMsg[grupo].msg.map(objMsg => {
-    //                 console.log(objMsg.seq)
-    //                 if(!seqs.includes(objMsg.seq)){ // Significa que existe mensagem nova
-    //                     console.log("msg nova?: ", objMsg.msg)
-    //                 }
-    //             })
-    //         }
-            // if (cliente.arrMsg[grupo].msg.length > 0) {
-            //     cliente.arrMsg[grupo].msg.map((message) => { //mensagens novas
-            //         if (!seqs.includes(message.seq)) {
-                        // novosAtendimentos[ramal].arrMsg[grupo].msg.push(message)// adiciono as mensagens novas no array global
-                        // if (store.getters.getIdAtendimentoAtivo !== novosAtendimentos[ramal].id_cli && message.resp_msg == 'CLI') {
-                        //     novosAtendimentos[ramal].alertaMsgNova = true
-                        //     if (!novosAtendimentos[ramal].qtdMsgNova) {
-                        //         novosAtendimentos[ramal].qtdMsgNova = 1;
-                        //     } else {
-                        //         novosAtendimentos[ramal].qtdMsgNova += 1;
-                        //     }
-                        // } else if(message.resp_msg == "CLI") {
-                        //     app.$root.$emit('atualizar_mensagem', message)
-                        // } else if(message.resp_msg == "OPE"){
-                        //     if(store.getters.getMensagemViaTextarea){
-                        //         return
-                        //     }else{
-                        //         app.$root.$emit('atualizar_mensagem', message)
-                        //     }
-                        // }
-                //     }
-                // });
-            // }
-            // store.dispatch('setAtendimentos', novosAtendimentos)
-        // }
-    // }
+
+    for(let chave in novosAtendimentos[ramal].arrMsg) {
+        const seqs = novosAtendimentos[ramal].arrMsg[chave].msg.map(({seq}) => (seq))
+        if(cliente.arrMsg[chave]){
+            cliente.arrMsg[chave].msg.map(message => {
+                if(!seqs.includes(message.seq)){
+                    novosAtendimentos[ramal].arrMsg[chave].msg.push(message)
+                    if (store.getters.getIdAtendimentoAtivo !== novosAtendimentos[ramal].id_cli && message.resp_msg == 'CLI') {
+                        novosAtendimentos[ramal].alertaMsgNova = true
+                        if (!novosAtendimentos[ramal].qtdMsgNova) {
+                            novosAtendimentos[ramal].qtdMsgNova = 1;
+                        } else {
+                            novosAtendimentos[ramal].qtdMsgNova += 1;
+                        }
+                    } else if(message.resp_msg == "CLI") {
+                        app.$root.$emit('atualizar_mensagem', message)
+                    } else if(message.resp_msg == "OPE"){
+                        if(store.getters.getMensagemViaTextarea){
+                            return
+                        }else{
+                            app.$root.$emit('atualizar_mensagem', message)
+                        }
+                    }
+                }
+            })
+        } else {
+            // console.log('caiu fora de tudo')
+        }
+    }
+    store.dispatch('setAtendimentos', novosAtendimentos)
+    
 }
 
 var startTime, endTime;

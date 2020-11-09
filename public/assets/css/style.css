@@ -10179,6 +10179,27 @@ body {
     #chat-error-container p.refresh:hover {
       text-decoration: underline; }
 
+.chat-corpo-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .chat-corpo-container div {
+    background-image: url("../img/messages-wallpaper.png");
+    z-index: 2; }
+  .chat-corpo-container .separador-mensagens {
+    font-size: .8rem;
+    color: #555;
+    text-align: center;
+    padding: 1.5px;
+    margin: 0; }
+  .chat-corpo-container hr {
+    border: 0;
+    height: 1px;
+    background-color: #555;
+    width: 100%;
+    position: absolute; }
+
 .chat-rodape {
   background-color: #bbbbbb;
   position: relative;

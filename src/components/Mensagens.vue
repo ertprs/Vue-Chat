@@ -1,5 +1,5 @@
 <template>
-  <div :class="'mensagem-'+origem">
+  <div :class="'mensagem-'+origem" v-if="origem">
     <div class="mensagem">
       <div v-if="anexo" class="mensagem-div-anexo">
         <img v-if="imgAnexo" @click="abrirVisualizacaoImg(imgAnexo)" :src="imgAnexo" alt="Imagem Anexada">

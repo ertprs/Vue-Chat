@@ -201,8 +201,6 @@ export default {
       docPrevia: false,
       txtFormatoInvalido: "Formato Inv\u00e1lido!",
       txtFormatosValidos: "",
-      controle: true,
-      qtdInicial: 0,
       abrirOpcoes: false,
       erroFormatoAnexo: false,
       abrirEmojis: false,
@@ -431,8 +429,6 @@ export default {
         this.$store.dispatch("setMensagemViaTextarea", true)
 
       } else {
-        
-        console.log(objMsgExterno)
 
         msg = objMsgExterno.msg;
 
@@ -495,8 +491,9 @@ export default {
         video: video
       };
 
-      this.$store.dispatch("setMensagensAtivas", objMensagem)
-      this.$root.$emit("rolaChat")
+      let chavesArrMsg = Object.keys(this.atendimentoAtivo.arrMsg)
+      let indexUltimaChave = chavesArrMsg[chavesArrMsg.length - 1]
+      this.atendimentoAtivo.arrMsg[indexUltimaChave].msg[this.atendimentoAtivo.arrMsg[indexUltimaChave].msg.length] = objMensagem
 
       if(this.statusEnvio !== "E" && !objMsgExterno){
         this.resetar()
@@ -931,14 +928,6 @@ export default {
 
       }
     },
-    mensagensAtivas() {
-      if (this.controle == true) {
-        this.qtdInicial = this.mensagensAtivas.length;
-        this.controle = false;
-      } else {
-        this.verificaRolagem();
-      }
-    },
     abrirEmojis() {
       if (this.abrirEmojis) {
         this.abrirOpcoes = false;
@@ -966,7 +955,6 @@ export default {
       blocker: "getBlocker",
       tipoMsg: 'getTipoMsg',
       origemBlocker: 'getOrigemBlocker',
-      mensagensAtivas: "getMensagensAtivas",
       dominio: "getDominio",
       reqTeste: "getReqTeste",
       extImgs: "getExtImgs",

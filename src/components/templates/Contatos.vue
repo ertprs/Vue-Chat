@@ -59,7 +59,7 @@
               <img v-if="atd.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${atd.sigla}.png`">
             </div>
             <template v-if="!fechado">{{ formataNome(atd.nome_usu) }}</template>
-            <span v-if="!fechado && atd.arrMsg[atd.arrMsg.length - 1]" class="ultima-msg" v-html="atd.arrMsg[atd.arrMsg.length - 1].msg || atd.arrMsg[atd.arrMsg.length - 1].anexos.name"></span>
+            <span v-if="!fechado" class="ultima-msg" v-html="atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg[atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg.length - 1].msg || atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg[atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg.length - 1].anexos.name"></span>
             <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && idAtendimentoAtivo !== atd.id_cli" class="destaque-nova-msg">{{ atd.qtdMsgNova }}</span>
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
           </li>
@@ -469,32 +469,41 @@ export default {
         atd.alertaMsgNova = false
       }
 
+      if(atd.qtdMsgNova){
+        atd.qtdMsgNova = 0
+      }
+
       let objMensagens = Object.values(atd.arrMsg) 
       let todasMensagens = []
       for(let objMsg in objMensagens){
         todasMensagens.push(objMensagens[objMsg].msg)
       }
-
+      // Muda a estrutura do arrMsg para o esperado
       this.setMensagensClienteAtivo(atd.id_cli, todasMensagens)
-
-      atd.qtdMsgNova = 0;
-      this.$store.dispatch('setIdAtendimentoAtivo', atd.id_cli)
       
       this.exibirInformacoes(atd, indice)
+
+      this.$store.dispatch('setIdAtendimentoAtivo', atd.id_cli)
+      this.$store.dispatch('setAtendimentoAtivo', atd)
     },
     exibirInformacoes: function(atd, indice) {
       atd.informacoes = {}
       atd.informacoes.nome = atd.nome_usu
       atd.id = atd.login_usu
-      this.$store.dispatch('setAtendimentoAtivo', atd)
+      
       this.$root.$emit('mostrarIframe', atd.id, atd.url)
     },
     setMensagensClienteAtivo(id, arrMensagens) {
-      this.$store.dispatch('limparMensagensAtivas')
       
       for(let index in arrMensagens){
         for (let i in arrMensagens[index]) {
           if(i != 'st_ret') {
+
+            // Se cair nesse if significa que o array de mensagens ja esta na estrutura desejada
+            if(!arrMensagens[index][i].resp_msg){
+              return
+            }
+            
             let mensagem = arrMensagens[index][i].msg;
             let status = arrMensagens[index][i].status
             let origem;
@@ -559,8 +568,8 @@ export default {
             }
 
             arrMensagens[index][i] = this.getObjMensagem( autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo, audio, video );
-            this.$store.dispatch('setMensagensAtivas', arrMensagens[index][i])
-            this.$root.$emit('rolaChat')
+
+            this.$root.$emit("rola-chat")
 
             if(document.querySelector('#textarea')){
               document.querySelector('#textarea').focus()
