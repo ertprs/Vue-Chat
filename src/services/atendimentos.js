@@ -3,7 +3,6 @@ import axios from "axios"
 import axios_api from "./serviceAxios"
 import { axiosTokenJWT } from "./serviceAxios"
 import { carregarIframe } from "./iframe"
-import { converterHexaParaEmojis } from "./emojis"
 
 const TEMPO_ATUALIZACAO = 2000
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
@@ -100,7 +99,7 @@ function tratarResponse(response) {
             } else {
                 if (mainData.atendimentos) { // executando fluxo normal sem erros
                     adicionaCaso(200)
-                    mainData = converterHexaParaEmojis(mainData)
+
                     let regex = /\s|\]|\[/g
                     for(let atd in mainData.atendimentos){
                         if(mainData.atendimentos[atd].login_usu.match(regex)){

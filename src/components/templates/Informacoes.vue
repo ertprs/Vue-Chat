@@ -142,12 +142,14 @@ export default {
           return
         }
 
-        if(this.atendimentoAtivo.url.indexOf("im_atd_menu") != -1){
-          this.$store.dispatch("setSemIframe", true)
-          this.controleSemIframeLocal = true
-        }else{
-          this.$store.dispatch("setSemIframe", false)
-          this.controleSemIframeLocal = false
+        if(this.atendimentoAtivo.url){
+          if(this.atendimentoAtivo.url.indexOf("im_atd_menu") != -1){
+            this.$store.dispatch("setSemIframe", true)
+            this.controleSemIframeLocal = true
+          }else{
+            this.$store.dispatch("setSemIframe", false)
+            this.controleSemIframeLocal = false
+          }
         }
       }
     },

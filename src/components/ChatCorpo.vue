@@ -138,16 +138,27 @@ export default {
           if(response.status === 200){
             this.tokenStatus = `&token_status${response.data.token_status}`
 
-            let indexAuxiliar = 0;
             let arrStatusMsg = response.data.msg_ret
+            let chaveStatusMsg = Object.keys(arrStatusMsg)
+            let j = 0
 
-            for(let ope in this.atendimentoAtivo.arrMsg){
-              for(let index = 0; index < this.atendimentoAtivo.arrMsg[ope].msg.length; index++){
-                if(arrStatusMsg[index] && this.atendimentoAtivo.arrMsg[ope].msg[index]){
-                  this.atendimentoAtivo.arrMsg[ope].msg[index].status = arrStatusMsg[index].status
+            for(let index in this.atendimentoAtivo.arrMsg){
+              if(chaveStatusMsg.includes(index)){
+                for(let i = 0; i < this.atendimentoAtivo.arrMsg[index].msg.length; i++){
+                  if(this.atendimentoAtivo.arrMsg[index].msg[i].autor == "Operador"){
+                    if(arrStatusMsg[index][j]){
+                      this.$set(this.atendimentoAtivo.arrMsg[index].msg[i], "status", arrStatusMsg[index][j].status)
+                      j++
+
+                      this.$forceUpdate()
+                    }else{
+                      j = j <= 0 ? 0 : j--
+                    }
+                  }
                 }
               }
             }
+            
           }
         })
         .catch(error => {
@@ -168,7 +179,7 @@ export default {
 
         hora = hora.slice(0, 5)
 
-        return `${data} as ${hora}` 
+        return `${data} \u00e0s ${hora}` 
       }else{
         return dataHora
       }
