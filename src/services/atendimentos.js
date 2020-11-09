@@ -109,7 +109,7 @@ function tratarResponse(response) {
                     }
 
                     store.dispatch('setAtendimentos', mainData.atendimentos)
-                    
+
                     carregarIframe(mainData.atendimentos)
                     acionaProcessos(mainData)
                     loopAtualizacaoDeAtendimentos()
@@ -145,7 +145,7 @@ function tratarResponse(response) {
 let primeiraRequest = true
 
 function acionaProcessos(mainData){
-    
+
     if(primeiraRequest){
         // Pausa/Em atendimento
         if(mainData.status_operacao){
@@ -163,12 +163,12 @@ function acionaProcessos(mainData){
     if(mainData.ativo){
         store.dispatch("setAtivo", mainData.ativo)
     }
-    
+
     // Gerenciador
     if(mainData.gerenciador){
         store.dispatch("setGerenciador", mainData.gerenciador)
     }
-    
+
     // Agenda
     if(mainData.agenda && mainData.agenda.length){
         store.dispatch("setAgenda", mainData.agenda)
@@ -335,22 +335,39 @@ function atualizarClientes(mainData) {
 }
 
 function atualizarMensagens(cliente, ramal, novosAtendimentos) {
+	//cliente -> novo retorno do back
+	//novosAtendimentos -> mem�ria local
     if(!novosAtendimentos[ramal]){
-        return
+			return
     }
-
-    for(let grupo in cliente.arrMsg){
-        if (cliente.arrMsg[grupo].msg.length > 0) { //verifica se o cliente tem mensagens
-            const seqs = cliente.arrMsg[grupo].msg.map(message => (message.seq)); //seq das mensagens antigas
-            console.log(seqs)
-            if(seqs[0]){ // Verifico se o array de seqs nao esta cheio de posiÃÂ§oes undefined
-                cliente.arrMsg[grupo].msg.map(objMsg => {
-                    console.log(objMsg.seq)
-                    if(!seqs.includes(objMsg.seq)){ // Significa que existe mensagem nova
-                        console.log("msg nova?: ", objMsg.msg)
-                    }
-                })
-            }
+		for(let chave in novosAtendimentos[ramal].arrMsg) {
+			const seqs = novosAtendimentos[ramal].arrMsg[chave].msg.map(({seq}) => (seq))
+			if(cliente.arrMsg[chave]){
+				cliente.arrMsg[chave].msg.map(message => {
+					if(!seqs.includes(message.seq)){
+						novosAtendimentos[ramal].arrMsg[chave].msg.push(message)
+						console.log('mensagem nova')
+					} else {
+						console.log('ele j� encontrou a mensagem')
+					}
+				})
+			} else {
+				console.log('caiu fora de tudo')
+			}
+		}
+		store.dispatch('setAtendimentos', novosAtendimentos)
+    // for(let grupo in cliente.arrMsg){
+    //     if (cliente.arrMsg[grupo].msg.length > 0) { //verifica se o cliente tem mensagens
+    //         const seqs = cliente.arrMsg[grupo].msg.map(message => (message.seq)); //seq das mensagens antigas
+    //         console.log(seqs)
+    //         if(seqs[0]){ // Verifico se o array de seqs nao esta cheio de posiÃÂ§oes undefined
+    //             cliente.arrMsg[grupo].msg.map(objMsg => {
+    //                 console.log(objMsg.seq)
+    //                 if(!seqs.includes(objMsg.seq)){ // Significa que existe mensagem nova
+    //                     console.log("msg nova?: ", objMsg.msg)
+    //                 }
+    //             })
+    //         }
             // if (cliente.arrMsg[grupo].msg.length > 0) {
             //     cliente.arrMsg[grupo].msg.map((message) => { //mensagens novas
             //         if (!seqs.includes(message.seq)) {
@@ -375,10 +392,8 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                 // });
             // }
             // store.dispatch('setAtendimentos', novosAtendimentos)
-        }
-    }
-
-    
+        // }
+    // }
 }
 
 var startTime, endTime;
