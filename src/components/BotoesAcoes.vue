@@ -79,9 +79,9 @@ export default {
     })
   },
   beforeDestroy(){
-    this.$root.$off("reverter-cores")
-    this.$root.$off("encerrarAtendimento")
     this.$root.$off("adicionar-cores")
+    this.$root.$off("reverter-cores")
+    this.$root.$off('encerrarAtendimento')
   },
   computed: {
     ...mapGetters({
@@ -197,7 +197,6 @@ export default {
       if(this.regrasCor){
         this.aplicarCoresNoElemento('.chat-opcoes-titulo', this.regrasCor)
         this.aplicarCoresNoElemento('.titulo-contatos', this.lightenDarkenColor(this.regrasCor, 10))
-        // this.aplicarCoresNoElemento('.lista-agenda--titulo', this.lightenDarkenColor(this.regrasCor, 30))
         this.aplicarCoresNoElemento('#informacoes-titulo', this.lightenDarkenColor(this.regrasCor, -10))
         this.$store.dispatch("setBgPopup", this.lightenDarkenColor(this.regrasCor, 15))
       }
@@ -205,7 +204,6 @@ export default {
     reverterCoresClienteAtivo(){
       this.aplicarCoresNoElemento('.chat-opcoes-titulo', 'reverter')
       this.aplicarCoresNoElemento('.titulo-contatos', 'reverter')
-      // this.aplicarCoresNoElemento('.lista-agenda--titulo', 'reverter')
       this.aplicarCoresNoElemento('#informacoes-titulo', 'reverter')
       this.$store.dispatch("setBgPopup", "")
     },
@@ -218,13 +216,9 @@ export default {
 
       if(cor == "reverter"){
         elemento.style.borderBottom = `unset`
-        // elemento.style.backgroundImage = `unset`
-        // elemento.style.backgroundColor = ""
         return
       }else{
         elemento.style.borderBottom = `3px solid ${cor}`
-        // elemento.style.backgroundImage = `linear-gradient( to left, rgba(0,0,0,0) 75%, ${cor} 5%)` // -30deg // to left
-        // elemento.style.backgroundColor = cor
       }
 
     },
@@ -398,9 +392,6 @@ export default {
           this.$toasted.global.defaultError({msg: 'N\u00e3o foi poss\u00edvel encerrar o atendimento'})
         })
     }
-  },
-  beforeDestroy: function() {
-    this.$root.$off('encerrarAtendimento')
   }
 }
 </script>

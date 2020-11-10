@@ -24,14 +24,4 @@ export function gerenciarCores(app, quem) {
       break;
     }
   }
-  
-  // if(tituloOpcoes && tituloContatos && tituloInformacoes){
-  //   if( (tituloInformacoes.style.cssText || tituloOpcoes.style.cssText) && !tituloContatos.style.cssText){
-  //     app.$root.$emit("adicionar-cores")
-  //   }else if( (tituloContatos.style.cssText || tituloOpcoes.style.cssText) && !tituloInformacoes.style.cssText ){
-  //     app.$root.$emit("adicionar-cores")
-  //   }else if( (tituloContatos.style.cssText || tituloInformacoes.style.cssText) && !tituloOpcoes.style.cssText ){
-  //     app.$root.$emit("adicionar-cores")
-  //   }
-  // }
 }

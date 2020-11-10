@@ -1,5 +1,5 @@
 <template>
-  <div blocker v-if="blocker" v-on:click="fecharBlocker()" 
+  <div blocker v-if="blocker" @click="fecharBlocker()" 
     :class="{
       'bg-blocker-padrao' : origemBlocker == 'btn-acoes' || 
       origemBlocker == 'msg-formatada' ||
@@ -20,7 +20,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { liberarEncerrar } from '../../services/atendimentos'
+import { liberarEncerrar } from '@/services/atendimentos'
 
 export default {
   methods: {

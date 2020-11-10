@@ -1,6 +1,5 @@
 export default {
   state: {
-    mensagensAtivas: [],
     tipoMsg: '',
     abrirMsgTipo2: false,
     grupo: '',
@@ -9,12 +8,6 @@ export default {
     nroChat: '',
   },
   mutations: {
-    setMensagensAtivas(state, novaMensagem){
-      state.mensagensAtivas.push(novaMensagem)
-    },
-    limparMensagensAtivas(state){
-      state.mensagensAtivas = []
-    },
     setTipoMsg(state, tipoMsg){
       state.tipoMsg = tipoMsg
     },
@@ -35,12 +28,6 @@ export default {
     }
   },
   actions: {
-    setMensagensAtivas: (context, payload) => {
-      context.commit('setMensagensAtivas', payload)
-    },
-    limparMensagensAtivas: context => {
-      context.commit('limparMensagensAtivas')
-    },
     setTipoMsg: (context, payload) => {
       context.commit('setTipoMsg', payload)
     },
@@ -61,9 +48,6 @@ export default {
     }
   },
   getters: {
-    getMensagensAtivas(state){
-      return state.mensagensAtivas
-    },
     getTipoMsg(state){
       return state.tipoMsg
     },
