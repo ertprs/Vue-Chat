@@ -22,7 +22,7 @@
 
 <script>
 import { mapGetters } from "vuex"
-import axios_api from '../../services/serviceAxios';
+import axios_api from '@/services/serviceAxios';
 
 export default {
   computed: {

@@ -59,7 +59,7 @@ export default {
   },
   data(){
     return{
-      limitador: 0,
+      qtdErrosStatusMsg: 0,
       tokenStatus: "",
       primeiraReq: true,
       rolagemAtiva: false
@@ -97,17 +97,7 @@ export default {
     rolaChat(){
       const corpoMensagens = document.querySelector('.chat-corpo-mensagens')
       if(corpoMensagens){
-        setTimeout(() => {
-          corpoMensagens.scroll(0, corpoMensagens.scrollHeight)
-        }, 150)
-      }else{
-        this.limitador++
-        if(this.limitador >= 10){
-          return
-        }
-        setTimeout(() => {
-          this.rolaChat
-        }, 300)
+        corpoMensagens.scroll(0, corpoMensagens.scrollHeight)
       }
     },
     verificaPosicaoBarraRolagem(){
@@ -136,6 +126,8 @@ export default {
       axios_api.get(`get-status-messages?token_cliente=${this.atendimentoAtivo.token_cliente}${this.tokenStatus}&${this.reqTeste}`)
         .then(response => {
           if(response.status === 200){
+            this.qtdErrosStatusMsg = 0
+
             this.tokenStatus = `&token_status${response.data.token_status}`
 
             let arrStatusMsg = response.data.msg_ret
@@ -162,7 +154,10 @@ export default {
           }
         })
         .catch(error => {
-          console.log('Erro get status messages: ', error)
+          this.qtdErrosStatusMsg++
+          if(this.qtdErrosStatusMsg == 10){
+            console.log('Erro get status messages: ', error)
+          }
         })
 
         this.primeiraReq = false

@@ -56,7 +56,7 @@ import 'vue-select/dist/vue-select.css'
 
 import { mapGetters } from 'vuex'
 
-import axios_api from "../../services/serviceAxios"
+import axios_api from "@/services/serviceAxios"
 
 export default {
   data(){
@@ -135,9 +135,6 @@ export default {
         .then(response => {
           if(response.status == 200){
             this.$toasted.global.sucessoTransferencia()
-
-            // this.removerCliente()
-            // this.$root.$emit("reverter-cores")
           }
         })
         .catch(error => {

@@ -80,7 +80,7 @@ export default {
       atendimentoAtivo: "getAtendimentoAtivo"
     }),
   },
-  beforeDestroy: function() {
+  beforeDestroy() {
     this.$root.$off('mostrar-iframe')
   }
 };

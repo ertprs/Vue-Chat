@@ -159,7 +159,7 @@
 
 <script>
 import { mapGetters } from "vuex"
-import axios_api from '../../services/serviceAxios';
+import axios_api from '@/services/serviceAxios';
 import { gerenciarCores } from "@/services/gerenciarCores"
 
 export default {
@@ -712,7 +712,7 @@ export default {
     },
     formataNome(nome){
       if(!nome){ return '' }
-      nome = nome.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase() })
+      nome = nome.toLowerCase().replace(/(?:^|\s)\S/g, (capitalize) => { return capitalize.toUpperCase() })
       return nome
     }
   }

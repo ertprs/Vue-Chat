@@ -109,7 +109,7 @@ export default {
     formataNome(nome){
       if(!nome){ return '' }
 
-      nome = nome.toLowerCase().replace(/(?:^|\s)\S/g, function(capitalize) { return capitalize.toUpperCase() })
+      nome = nome.toLowerCase().replace(/(?:^|\s)\S/g, (capitalize) => { return capitalize.toUpperCase() })
       return nome
     },
     formataTelefone(telefone){

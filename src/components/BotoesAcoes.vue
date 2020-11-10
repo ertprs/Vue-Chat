@@ -48,10 +48,10 @@
 </template>
 
 <script>
-import axios_api from '../services/serviceAxios'
+import axios_api from '@/services/serviceAxios'
 
 import { mapGetters } from 'vuex'
-import { executandoEncerrar, liberarEncerrar } from '../services/atendimentos'
+import { executandoEncerrar, liberarEncerrar } from '@/services/atendimentos'
 
 export default {
   data(){

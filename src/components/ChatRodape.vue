@@ -187,8 +187,8 @@
 <script>
 
 import { mapGetters } from "vuex";
-import { obterMsgFormatada } from "../services/msgFormatada";
-import axios_api from "../services/serviceAxios";
+import { obterMsgFormatada } from "@/services/msgFormatada";
+import axios_api from "@/services/serviceAxios";
 
 export default {
   data() {
@@ -236,13 +236,12 @@ export default {
       this.mensagem += value;
     },
     executaTeste(event, previa, cont) {
-      var self = this
-      setTimeout( function () {
+      setTimeout( () => {
           cont = cont + 1
           if(cont < 300) {
-            self.mensagem = 'MSG ' + String(cont)
-            self.enviarMensagem(event, previa)
-            self.executaTeste(event, previa, cont)
+            this.mensagem = 'MSG ' + String(cont)
+            this.enviarMensagem(event, previa)
+            this.executaTeste(event, previa, cont)
           }
         }, 500);
     },

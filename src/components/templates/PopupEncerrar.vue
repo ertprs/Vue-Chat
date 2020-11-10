@@ -20,7 +20,7 @@
 
 import { mapGetters } from "vuex"
 
-import { liberarEncerrar } from '../../services/atendimentos'
+import { liberarEncerrar } from '@/services/atendimentos'
 
 export default {
   computed: {
