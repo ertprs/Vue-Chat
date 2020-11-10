@@ -65,7 +65,7 @@ export default {
   },
   mounted(){
     this.getRegras()
-    this.$root.$on('encerrarAtendimento', () => {
+    this.$root.$on("encerrar-atendimento", () => {
       this.encerrarAtendimento()
       this.reverterCoresClienteAtivo()
     })
@@ -81,7 +81,7 @@ export default {
   beforeDestroy(){
     this.$root.$off("adicionar-cores")
     this.$root.$off("reverter-cores")
-    this.$root.$off('encerrarAtendimento')
+    this.$root.$off("encerrar-atendimento")
   },
   computed: {
     ...mapGetters({

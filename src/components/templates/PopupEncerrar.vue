@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     encerrar(){
-      this.$root.$emit('encerrarAtendimento')
+      this.$root.$emit('encerrar-atendimento')
       // Limpando pilha de eventos afim de evitar que a funcao de encerrar seja chamada mais de uma vez
       this.fecharPopup('encerrarAtendimento')
     },

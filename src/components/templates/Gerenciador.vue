@@ -1,5 +1,5 @@
 <template>
-  <div id="gerenciador-container" :class="{'d-none': !reqTeste, 'aguardando' : reqEmAndamento, 'em-atendimento' : statusAtd == 'em-atendimento', 'parado' : statusAtd == 'parado'}" v-if="gerenciador && gerenciador.length ? true : false">
+  <div id="gerenciador-container" :class="{'d-none': !reqTeste, 'aguardando' : reqEmAndamento, 'em-atendimento' : statusAtd == 'em-atendimento', 'parado' : statusAtd == 'parado'}" v-if="gerenciador && gerenciador.length">
     <div class="gerenciador-btn" @click="mudarEstadoAtendimento()">
       <div v-show="statusAtd == 'em-atendimento'" title="Em atendimento">
         <i class="fas fa-pause"></i>
@@ -49,7 +49,7 @@ export default {
   mounted(){
     window.addEventListener("message", this.listenerPostMessage, false);
 
-    this.$root.$on("mudarEstadoAtd", () => {
+    this.$root.$on("mudar-estado-atd", () => {
       this.mudarEstadoAtendimento()
     })
   },
@@ -209,13 +209,8 @@ export default {
               // Aguardando
               axios_api.get(`get-aguardando?${this.reqTeste}`)
               .then(response => {
-                const arrAguardando = response.data.ret
-                if(arrAguardando && arrAguardando.length){
-                  this.$store.dispatch("setAguardando", arrAguardando)
-                }else{
-                  this.$store.dispatch("setAguardando", [])
-                }
-
+                const arrAguardando = response.data.ret || []
+                this.$store.dispatch("setAguardando", arrAguardando)
                 this.qtdAguardando = i.count
               })
               .catch(error => {
@@ -226,11 +221,10 @@ export default {
 
           if(i.cod == 2){
             if(i.count != this.qtdAgenda){
-              
+              // Agenda
               axios_api.get(`get-agenda?${this.reqTeste}`)
                 .then(response => {
                   const arrAgenda = response.data.ret || []
-
                   this.$store.dispatch("setAgenda", arrAgenda)
                   this.qtdAgenda = i.count
                 })
@@ -245,7 +239,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

@@ -15,7 +15,7 @@
         <div v-else-if="origemBlocker == 'visualizar-imagem'" class="visualizar-imagem-container">
           <img :src="linkImagem" alt="Preview imagem">
         </div>
-      </div> <!--  || origemBlocker == 'encerramento' -->
+      </div>
 </template>
 
 <script>
@@ -36,7 +36,7 @@ export default {
       }
     },
     emitirEventoMudarEstadoAtd(){
-      this.$root.$emit("mudarEstadoAtd")
+      this.$root.$emit("mudar-estado-atd")
     }
   },
   computed: {

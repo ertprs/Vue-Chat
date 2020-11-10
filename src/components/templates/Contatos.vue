@@ -59,7 +59,12 @@
               <img v-if="atd.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${atd.sigla}.png`">
             </div>
             <template v-if="!fechado">{{ formataNome(atd.nome_usu) }}</template>
-            <span v-if="!fechado" class="ultima-msg" v-html="atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg[atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg.length - 1].msg || atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg[atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg.length - 1].anexos.name || ''"></span>
+            <span v-if="!fechado" class="ultima-msg" 
+            v-html="atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg[atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg.length - 1].msg 
+            || 
+            atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg[atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg.length - 1].anexos.name 
+            || 
+            ''"></span>
             <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && idAtendimentoAtivo !== atd.id_cli" class="destaque-nova-msg">{{ atd.qtdMsgNova }}</span>
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
           </li>
@@ -262,11 +267,6 @@ export default {
     this.$root.$on('toggle-contatos', () => {
       this.toggleContatos()
     })
-
-    this.$root.$on('encerrar-atd', atdAtivo => {
-      this.encerrarAtdNaTela(atdAtivo)
-    })
-
   },
   computed: {
     ...mapGetters({
@@ -285,7 +285,7 @@ export default {
     ativarCliente(id, grupo, atd, origem){
       if(!id || !grupo){
         this.$toasted.global.defaultError({msg: "N\u00e3o foi poss\u00edvel ativar o cliente"})
-        console.log("parametros da fc ativar cliente nao estao de acordo com o esperado")
+        console.log("parametros da funcao ativar cliente nao estao de acordo com o esperado")
         return
       }
 
@@ -338,8 +338,8 @@ export default {
     contarMsgClientes() {
       this.totalMsgNovas = ''
       this.totalClientesNovos = ''
-      var auxContMsgNova = 0
-      var auxContNovoContato = 0
+      let auxContMsgNova = 0
+      let auxContNovoContato = 0
       for(let index in this.objAtendimentos) {
         if(this.objAtendimentos[index].qtdMsgNova) {
           auxContMsgNova = auxContMsgNova + this.objAtendimentos[index].qtdMsgNova
@@ -476,9 +476,8 @@ export default {
       }
 
     },
-    ativarConversa: function(atd, indice) {
+    ativarConversa(atd, indice) {
       
-      // Se o id do atendimento for igual ao id do atendimento ativo
       if(atd.id_cli == this.idAtendimentoAtivo){
         return
       }
@@ -508,12 +507,12 @@ export default {
       this.$store.dispatch('setIdAtendimentoAtivo', atd.id_cli)
       this.$store.dispatch('setAtendimentoAtivo', atd)
     },
-    exibirInformacoes: function(atd, indice) {
+    exibirInformacoes(atd, indice) {
       atd.informacoes = {}
       atd.informacoes.nome = atd.nome_usu
       atd.id = atd.login_usu
       
-      this.$root.$emit('mostrarIframe', atd.id, atd.url)
+      this.$root.$emit('mostrar-iframe', atd.id, atd.url)
     },
     setMensagensClienteAtivo(id, arrMensagens) {
       

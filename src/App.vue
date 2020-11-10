@@ -43,7 +43,6 @@ import Contatos from './components/templates/Contatos'
 import Chat from './components/templates/Chat'
 import Informacoes from './components/templates/Informacoes'
 import Gerenciador from './components/templates/Gerenciador'
-import Teste from './components/templates/Teste'
 import axios_api from './services/serviceAxios'
 
 export default {
@@ -53,8 +52,7 @@ export default {
     Contatos,
     Chat,
     Informacoes,
-    Gerenciador,
-    Teste
+    Gerenciador
   },
   data(){
     return{

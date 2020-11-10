@@ -1,5 +1,5 @@
 <template>
-  <div class="container-iframes" style="height: 100%">
+  <div class="container-iframes">
     <div
       class="iframes_disponiveis"
       v-for="(frame, indice) in iframesDisponiveis"
@@ -23,7 +23,7 @@ export default {
     }
   },
   mounted() {
-    this.$root.$on('mostrarIframe', (idCliente, urlFrame) => {
+    this.$root.$on('mostrar-iframe', (idCliente, urlFrame) => {
       this.mostraIframe(idCliente, urlFrame)
     })
     for(let i in this.iframesDisponiveis) {
@@ -33,22 +33,20 @@ export default {
     }
   },
   methods: {
-    mostraIframe: function(idCliente, urlFrame) {
+    mostraIframe(idCliente, urlFrame) {
       if(urlFrame != '') {
-        var objIframe = {id: idCliente, url: urlFrame}
+        let objIframe = {id: idCliente, url: urlFrame}
         if(this.iframesDisponiveis.length > 0) {
           const idsIframe = this.iframesDisponiveis.map(iframe => (iframe.id))
           if(!idsIframe.includes(idCliente)) {
             this.$store.dispatch('setIframesDisponiveis', objIframe)
-          } else {
-            // console.log(this.iframesDisponiveis)
           }
         } else {
           this.$store.dispatch('setIframesDisponiveis', objIframe)
         }
-        this.$nextTick(function () {
+        this.$nextTick(() => {
           if(document.querySelector('.iframes_disponiveis')) {
-            var elementos = document.querySelectorAll('.iframes_disponiveis')
+            let elementos = document.querySelectorAll('.iframes_disponiveis')
             if(!elementos || !elementos[0]){
               return false
             }
@@ -83,7 +81,7 @@ export default {
     }),
   },
   beforeDestroy: function() {
-    this.$root.$off('mostrarIframe')
+    this.$root.$off('mostrar-iframe')
   }
 };
 </script>
