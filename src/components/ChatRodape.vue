@@ -106,8 +106,8 @@
               </div>
             </div>
             <div class="chat-rodape-botoes-container-anexo d-none">
-              <input type="file" id="file" ref="file" accept="image/*" v-on:change="fileUpload()" />
-              <input type="file" id="doc"  ref="doc" accept="application/*" v-on:change="fileUpload(false)" />
+              <input type="file" id="file" accept="image/*" @change="fileUpload(true, $event)" />
+              <input type="file" id="doc" accept="application/*" @change="fileUpload(false, $event)" />
             </div>
           </div>
         </div>
@@ -673,21 +673,30 @@ export default {
       this.abrirOpcoes = !this.abrirOpcoes;
       this.$store.dispatch("setBlocker", this.abrirOpcoes);
     },
-    fileUpload(img = true) {
+    fileUpload(img = true, event) {
       let leitorDeImagem = new FileReader();
+
+      this.arquivo = event.target.files || event.dataTransfer.files
+      if(!this.arquivo.length){
+        this.arquivo = ""
+        return
+      }else{
+        this.arquivo = this.arquivo[0]
+      }
+
       if(img){
-        document.querySelector('#textarea').focus()
-        this.arquivo = this.$refs.file.files[0];
+        document.querySelector("#file").value = ""
         this.aparecerPrevia = true;
         leitorDeImagem.onload = () => {
           this.imagemPrevia = leitorDeImagem.result;
         }
       }else{
-        document.querySelector('#textarea').focus()
-        this.arquivo = this.$refs.doc.files[0];
+        document.querySelector("#doc").value = ""
+
         this.aparecerPrevia = true;
         this.docPrevia = true
       }
+      document.querySelector('#textarea').focus()
 
       if (this.arquivo) {
         if(img){
