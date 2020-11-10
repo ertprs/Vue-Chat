@@ -60,11 +60,7 @@
             </div>
             <template v-if="!fechado">{{ formataNome(atd.nome_usu) }}</template>
             <span v-if="!fechado" class="ultima-msg" 
-            v-html="atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg[atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg.length - 1].msg 
-            || 
-            atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg[atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg.length - 1].anexos.name 
-            || 
-            ''"></span>
+            v-html="''"></span>
             <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && idAtendimentoAtivo !== atd.id_cli" class="destaque-nova-msg">{{ atd.qtdMsgNova }}</span>
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
           </li>
@@ -558,13 +554,23 @@ export default {
                   imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[index][i].anexos.mku}`
                   nomeArquivo = arrMensagens[index][i].anexos.name
                   break;
-                case "audio/ogg" || "audio/oga" || "audio" || "oga" || "ogg":
+                case "audio/ogg":
+                case "audio/oga":
+                case "audio":
+                case "ogg":
+                case "oga":
+                case "mpga":
+                case "audio/mpga":
+                case "mp3":
+                case "audio/mp3":
                   tipoDoc = arrMensagens[index][i].anexos.type
                   docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[index][i].anexos.mku}`
                   nomeArquivo = arrMensagens[index][i].anexos.name
                   audio = true
                   break;
-                case "video/mp4" || "video" || "mp4":
+                case "video/mp4":
+                case "video":
+                case "mp4":
                   tipoDoc = arrMensagens[index][i].anexos.type
                   docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[index][i].anexos.mku}`
                   nomeArquivo = arrMensagens[index][i].anexos.name

@@ -21,6 +21,7 @@
 }
 
 $cor-textos-secundarios: #AAA;
+$tamanho-sinalizador-nova-msg: 12.5px;
 
 @mixin chat-corpo(){
   background-image: url('../../../public/assets/img/messages-wallpaper.png');
@@ -33,6 +34,20 @@ $cor-textos-secundarios: #AAA;
       font-size: 2.4rem;
       color: #757575;
       @include efeito-hover-padrao();
+    }
+
+    .sinalizar-msg-nova{
+      position: absolute;
+      top: -$tamanho-sinalizador-nova-msg;
+      left: -$tamanho-sinalizador-nova-msg;
+      background-color: #4f772d;
+      width: $tamanho-sinalizador-nova-msg;
+      height: $tamanho-sinalizador-nova-msg;
+      border-radius: 50%;
+      animation-name: blink;
+      animation-duration: 1000ms;
+      animation-direction: alternate;
+      animation-iteration-count: infinite;
     }
   }
   .chat-corpo-mensagens{

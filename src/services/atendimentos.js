@@ -358,6 +358,11 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                             novosAtendimentos[ramal].qtdMsgNova += 1;
                         }
                     } else if(message.resp_msg == "CLI") {
+                        // Adicionando posicao para sinalizar caso venha mensagem do cliente ativo e o ope esteja rolando a conversa
+                        if(store.getters.getIdAtendimentoAtivo == novosAtendimentos[ramal].id_cli){
+                            novosAtendimentos[ramal].novaMsgCttAtivo = true
+                        }
+
                         app.$root.$emit('atualizar_mensagem', message)
                     } else if(message.resp_msg == "OPE"){
                         if(store.getters.getMensagemViaTextarea){

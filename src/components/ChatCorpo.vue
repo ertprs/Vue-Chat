@@ -1,6 +1,6 @@
 <template>
   <div class="chat-corpo" @click="focaTextarea()">
-    <div class="chat-corpo-mensagens" v-on:scroll="verificaPosicaoBarraRolagem()">
+    <div class="chat-corpo-mensagens" v-on:scroll.prevent="verificaPosicaoBarraRolagem()">
       <div v-for="(arrMsg, index) in this.atendimentoAtivo.arrMsg" :key="index">
         <div class="chat-corpo-container">
           <hr>
@@ -32,6 +32,7 @@
     </div>
     <transition name="fade">
       <div class="btn-rolagem" v-show="habilitaRolagem" v-on:click="rolaChat()">
+        <div class="sinalizar-msg-nova" title="Existe uma nova mensagem" v-show="atendimentoAtivo.novaMsgCttAtivo"></div>
         <i class="fas fa-arrow-circle-down"></i>
       </div>
     </transition>
@@ -62,7 +63,7 @@ export default {
       qtdErrosStatusMsg: 0,
       tokenStatus: "",
       primeiraReq: true,
-      rolagemAtiva: false
+      novaMsg: false
     }
   },
   beforeDestroy(){
@@ -83,8 +84,14 @@ export default {
     }, 5000)
   },
   updated(){
-    if(!this.rolagemAtiva){
+    if(!this.habilitaRolagem){
       this.rolaChat()
+    }else{
+      if(this.atendimentoAtivo.novaMsgCttAtivo){
+        this.novaMsg = true
+      }else{
+        this.novaMsg = false
+      }
     }
   },
   methods:{
@@ -101,11 +108,6 @@ export default {
       }
     },
     verificaPosicaoBarraRolagem(){
-
-      this.rolagemAtiva = true
-      setTimeout(() => {
-        this.rolagemAtiva = false
-      }, 3000)
       
       this.$store.dispatch('setHabilitaRolagem', true)
       if(this.habilitaRolagem){
@@ -118,6 +120,9 @@ export default {
             this.$store.dispatch('setHabilitaRolagem', false)
           }else if(parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra || parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra + 1 || parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra - 1){
             this.$store.dispatch('setHabilitaRolagem', false)
+            if(this.novaMsg){
+              this.$set(this.atendimentoAtivo, "novaMsgCttAtivo", false)
+            }
           }
         }
       }

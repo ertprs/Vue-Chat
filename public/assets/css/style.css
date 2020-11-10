@@ -10034,6 +10034,18 @@ body {
       cursor: pointer; }
       #chat-operador .btn-rolagem svg:hover {
         opacity: 1; }
+    #chat-operador .btn-rolagem .sinalizar-msg-nova {
+      position: absolute;
+      top: -12.5px;
+      left: -12.5px;
+      background-color: #4f772d;
+      width: 12.5px;
+      height: 12.5px;
+      border-radius: 50%;
+      animation-name: blink;
+      animation-duration: 1000ms;
+      animation-direction: alternate;
+      animation-iteration-count: infinite; }
   #chat-operador .chat-corpo-mensagens {
     width: 100%;
     max-height: 100%;

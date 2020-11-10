@@ -16,10 +16,12 @@
               <p> Seu navegador nao suporta o elemento video <a :href="docAnexo" target="_blank">Clique para abrir o video em outra janela</a> </p>
             </video>
           </template>
-          <a v-else :href="docAnexo" target="_blank" :title="`${tipoDoc} - ${nomeArquivo}`">
-            <i class="fas fa-file-alt"></i>
-            <p> {{ nomeArquivo }} </p>
-          </a>
+          <template v-else>
+            <a :href="hrefAnexo" target="_blank" :title="`${tipoDoc} - ${nomeArquivo}`">
+              <i class="fas fa-file-alt"></i>
+              <p> {{ nomeArquivo }} </p>
+            </a>
+          </template>
         </div>
       </div>
       <p v-html="msg"></p>
@@ -64,6 +66,17 @@
 <script>
 export default {
   props: ["autor", "origem", "msg", "anexo", "imgAnexo", "horario", "status", "logo", "tipoDoc", "docAnexo", "nomeArquivo", "audio", "video"],
+  computed: {
+    hrefAnexo(){
+      if(this.docAnexo){
+        if(this.tipoDoc == "erro"){
+          return this.hrefAnexo = "#"
+        }else{
+          return this.docAnexo
+        }
+      }
+    }
+  },
   methods: {
     abrirVisualizacaoImg(imagem){
       this.$store.dispatch("setLinkImagem", imagem)
