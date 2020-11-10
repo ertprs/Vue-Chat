@@ -6,8 +6,8 @@
           <hr>
           <div>
             <h5 class="separador-mensagens">
-              <template v-if="arrMsg.data_ini !== '1111-11-11 00:00:00'">{{ formataDataHora(arrMsg.data_ini) }}</template>
-              <template v-if="arrMsg.data_fim !== '1111-11-11 00:00:00'">{{ " - " + formataDataHora(arrMsg.data_fim) }}</template>
+              <template v-if="arrMsg.data_ini && arrMsg.data_ini !== '1111-11-11 00:00:00'">{{ formataDataHora(arrMsg.data_ini) }}</template>
+              <template v-if="arrMsg.data_fim && arrMsg.data_fim !== '1111-11-11 00:00:00'">{{ " - " + formataDataHora(arrMsg.data_fim) }}</template>
               <template v-if="arrMsg.login">{{ " por " + arrMsg.login }}</template>
             </h5>
           </div>
@@ -168,10 +168,18 @@ export default {
         this.primeiraReq = false
     },
     formataDataHora(dataHora){
+      if(!dataHora){
+        return ""
+      }
+
       let arrDataHora = dataHora.split(" ")
       if(arrDataHora.length){
         let data = arrDataHora[0]
         let hora = arrDataHora[1]
+
+        if(!data || !hora){
+          return dataHora
+        }
 
         data = data.split("-")
         data = data.reverse()

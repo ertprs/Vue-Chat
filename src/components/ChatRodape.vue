@@ -374,6 +374,8 @@ export default {
     },
     criaObjMensagem(objMsgExterno) {
       let objMensagem = {}
+
+      let seq = ""
       let autor = ""
       let origem = ""
       let hora = this.formataHoraAtual()
@@ -473,12 +475,15 @@ export default {
         autor = objMsgExterno.resp_msg == "CLI" ? "Cliente" : "Operador"
         origem = autor == "Cliente" ? "outros" : "principal"
 
+        seq = objMsgExterno.seq
+
         this.$store.dispatch("setMensagemViaTextarea", false)
       }
 
       objMensagem = {
-        autor: autor, // Operador, Cliente
-        origem: origem, // principal e outros
+        seq: seq,
+        autor: autor, 
+        origem: origem,
         msg: msg,
         horario: hora,
         anexo: anexo,
@@ -566,26 +571,21 @@ export default {
       switch(numReq){
         case 1:
           this.mensagensFormatadas_01 = objMsgFormatada
-          // console.log('msgFormatada_01: ', this.mensagensFormatadas_01)
         break;
         case 2:
           this.mensagensFormatadas_02 = objMsgFormatada
-          // console.log('msgFormatada_02: ', this.mensagensFormatadas_02)
         break;
         case 3:
           if(objMsgFormatada.length){
             this.mensagensFormatadas_03 = objMsgFormatada
-            // console.log('msgFormatada_03: ', this.mensagensFormatadas_03)
           }else{
             this.mensagensFormatadas_03 = []
             this.$toasted.global.emConstrucao({msg: 'Sem mensagens para as op\u00e7\u00f5es selecionadas'})
-            // console.log('Nao ha msgs formatadas: ', objMsgFormatada)
           }
         break;
       }
     },
     recebeValorMSGFormatada(valor, numReq){
-      // console.log('valor: ', valor)
       if(valor.length == 1){
         if(this.mensagensFormatadas_02.length){
           this.mensagensFormatadas_02 = []

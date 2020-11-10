@@ -341,7 +341,11 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
     }
 
     for(let chave in novosAtendimentos[ramal].arrMsg) {
+        if(!novosAtendimentos[ramal].arrMsg[chave].msg.length){
+            return
+        }
         const seqs = novosAtendimentos[ramal].arrMsg[chave].msg.map(({seq}) => (seq))
+
         if(cliente.arrMsg[chave]){
             cliente.arrMsg[chave].msg.map(message => {
                 if(!seqs.includes(message.seq)){
@@ -364,8 +368,6 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                     }
                 }
             })
-        } else {
-            // console.log('caiu fora de tudo')
         }
     }
     store.dispatch('setAtendimentos', novosAtendimentos)

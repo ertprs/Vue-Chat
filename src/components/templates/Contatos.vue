@@ -59,7 +59,7 @@
               <img v-if="atd.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${atd.sigla}.png`">
             </div>
             <template v-if="!fechado">{{ formataNome(atd.nome_usu) }}</template>
-            <span v-if="!fechado" class="ultima-msg" v-html="atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg[atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg.length - 1].msg || atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg[atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg.length - 1].anexos.name"></span>
+            <span v-if="!fechado" class="ultima-msg" v-html="atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg[atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg.length - 1].msg || atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg[atd.arrMsg[Object.keys(atd.arrMsg)[Object.keys(atd.arrMsg).length - 1]].msg.length - 1].anexos.name || ''"></span>
             <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && idAtendimentoAtivo !== atd.id_cli" class="destaque-nova-msg">{{ atd.qtdMsgNova }}</span>
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
           </li>
@@ -540,6 +540,7 @@ export default {
             let nomeArquivo = ""
             let audio = false
             let video = false
+            let seq = arrMensagens[index][i].seq
 
             if(arrMensagens[index][i].anexos){
               anexo = true
@@ -552,7 +553,7 @@ export default {
               }else{
                 type = type[1]
               }
-
+  
               switch (type) {
                 case "image": 
                   imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[index][i].anexos.mku}`
@@ -589,7 +590,7 @@ export default {
                 break;
             }
 
-            arrMensagens[index][i] = this.getObjMensagem( autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo, audio, video );
+            arrMensagens[index][i] = this.getObjMensagem( seq, autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo, audio, video );
 
             this.$root.$emit("rola-chat")
 
@@ -601,6 +602,7 @@ export default {
       }
     },
     getObjMensagem(
+      inSeq,
       inAutor,
       inOrigem,
       inMensagem,
@@ -615,6 +617,7 @@ export default {
       inVideo
     ) {
       let objMensagem = {
+        seq: inSeq,
         autor: inAutor, // Operador, Cliente
         origem: inOrigem, // principal e outros
         msg: inMensagem,
