@@ -167,6 +167,7 @@ export default {
   },
   watch: {
     todosAtendimentos() {
+      console.log("todos atds ctt: ", this.todosAtendimentos)
       if(this.todosAtendimentos){
         this.contarMsgClientes()
         
@@ -485,6 +486,8 @@ export default {
         atd.qtdMsgNova = 0
       }
 
+      this.contarMsgClientes()
+
       let objMensagens = Object.values(atd.arrMsg) 
       let todasMensagens = []
       for(let objMsg in objMensagens){
@@ -510,11 +513,6 @@ export default {
       for(let index in arrMensagens){
         for (let i in arrMensagens[index]) {
           if(i != 'st_ret') {
-
-            // Se cair nesse if significa que o array de mensagens ja esta na estrutura desejada
-            if(!arrMensagens[index][i].resp_msg){
-              return
-            }
             
             let mensagem = arrMensagens[index][i].msg;
             let status = arrMensagens[index][i].status

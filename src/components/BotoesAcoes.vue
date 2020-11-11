@@ -89,6 +89,7 @@ export default {
       todosAtendimentos: 'getTodosAtendimentos',
       idAtendimentoAtivo: 'getIdAtendimentoAtivo',
       blocker: 'getBlocker',
+      arrBot: 'getArrBot',
       arrAgentes: 'getArrAgentes',
       arrGrupos: 'getArrGrupos',
       origemBlocker: 'getOrigemBlocker',
@@ -130,6 +131,11 @@ export default {
         axios_api.get(`get-rules?token_cliente=${tokenCliente}&${this.reqTeste}`)
         .then(response => {
           if (response.data.st_ret == 'OK') {
+            const dicionario = response.data.rules.dicionario
+            if(dicionario){
+              this.$store.dispatch("setDicionario", dicionario)
+            }
+
             this.contadorRequisicoesFalhas = 0
 
             const arrayRegras = response.data.rules
@@ -312,6 +318,23 @@ export default {
                 }
               }else{
                 this.$store.dispatch("setArrGrupos", {label: arrValores[i], cod: arrChaves[i]})
+              }
+            }
+          }
+
+          if(response.data.options.bot.length){
+            response.data.options.bot.map(objBot => {
+              arrChaves = Object.keys(objBot)
+              arrValores = Object.values(objBot)
+            })
+
+            for(let i = 0; i < arrChaves.length; i++){
+              if(this.arrBot.length){
+                if(this.arrBot[i].cod !== arrChaves[i]){
+                  this.$store.dispatch("setArrBot", {label: arrValores[i], cod: arrChaves[i]})
+                }
+              }else{
+                this.$store.dispatch("setArrBot", {label: arrValores[i], cod: arrChaves[i]})
               }
             }
           }

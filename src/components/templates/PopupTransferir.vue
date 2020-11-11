@@ -1,15 +1,14 @@
 <template>
   <div class="popup-container">
     <ul
-      lista-transferir
       class="popup-lista"
       :class="{'bg' : bg}"
       v-if="!abrirAgentes && !abrirGrupos">
-      <li @click="preencherAgente()"> Agente </li>
-      <li @click="preencherGrupo()"> Grupo </li>
+      <li @click="preencherAgente()"> {{ dicionario.btn_agente }} </li>
+      <li @click="preencherGrupo()"> {{ dicionario.btn_grupo }} </li>
+      <li @click="preencherBot()"> Bot </li>
     </ul>
     <div
-      grupos-agentes
       v-if="abrirAgentes"
       class="popup-container-tela-2">
       <vSelect
@@ -18,17 +17,16 @@
       v-model="agente"
       :reduce="arrAgentes => arrAgentes.cod"
       >
-        <div slot="no-options">Nenhuma correspondencia encontrada</div>
+        <div slot="no-options">{{ dicionario.msg_sem_resultados }}</div>
       </vSelect>
       <ul
         class="btns-confirmacao-container popup-lista"
         :class="{'bg' : bg}">
-        <li class="btn-confirmacao cancelar" @click="fecharPopup()"> Cancelar </li>
-        <li class="btn-confirmacao confirmar" @click="transferir('agente', agente)"> Confirmar </li>
+        <li class="btn-confirmacao cancelar" @click="fecharPopup()"> {{ dicionario.btn_cancelar }} </li>
+        <li class="btn-confirmacao confirmar" @click="transferir('agente', agente)"> {{ dicionario.btn_confirmar }} </li>
       </ul>
     </div>
     <div
-      grupos-transferir
       v-if="abrirGrupos"
       class="popup-container-tela-2">
       <vSelect
@@ -37,13 +35,31 @@
         v-model="grupo"
         :reduce="arrGrupos => arrGrupos.cod"
         >
-        <div slot="no-options">Nenhuma correspondencia encontrada</div>
+        <div slot="no-options">{{ dicionario.msg_sem_resultados }}</div>
       </vSelect>
       <ul
         class="btns-confirmacao-container popup-lista"
         :class="{'bg' : bg}">
-        <li class="btn-confirmacao cancelar" @click="fecharPopup()"> Cancelar </li>
-        <li class="btn-confirmacao confirmar" @click="transferir('grupo', grupo)"> Confirmar </li>
+        <li class="btn-confirmacao cancelar" @click="fecharPopup()"> {{ dicionario.btn_cancelar }} </li>
+        <li class="btn-confirmacao confirmar" @click="transferir('grupo', grupo)"> {{ dicionario.btn_confirmar }} </li>
+      </ul>
+    </div>
+    <div
+      v-if="abrirBot"
+      class="popup-container-tela-2">
+      <vSelect
+        :options="arrBot"
+        label="label"
+        v-model="bot"
+        :reduce="arrBot => arrBot.cod"
+        >
+        <div slot="no-options">{{ dicionario.msg_sem_resultados }}</div>
+      </vSelect>
+      <ul
+        class="btns-confirmacao-container popup-lista"
+        :class="{'bg' : bg}">
+        <li class="btn-confirmacao cancelar" @click="fecharPopup()"> {{ dicionario.btn_cancelar }} </li>
+        <li class="btn-confirmacao confirmar" @click="transferir('bot', bot)"> {{ dicionario.btn_confirmar }} </li>
       </ul>
     </div>
   </div>
@@ -63,8 +79,10 @@ export default {
     return{
       abrirAgentes: false,
       abrirGrupos: false,
+      abrirBot: false,
       agente: '',
       grupo: '',
+      bot: '',
       reqEmAndamento: false
     }
   },
@@ -104,6 +122,13 @@ export default {
         this.$toasted.global.emConstrucao({msg: this.dicionario.msg_erro_grupos})
       }
     },
+    preencherBot(){
+      if(this.arrBot.length){
+        this.abrirBot = true
+      }else{
+        this.$toasted.global.emConstrucao({msg: this.dicionario.msg_erro_bot})
+      }
+    },
     transferir(tipo, param){
       if(this.reqEmAndamento){
         return
@@ -127,6 +152,8 @@ export default {
         case 'agente':
           dados.destino = "OPE"
         break;
+        case 'bot':
+          dados.destino = "BOT"
         default:
         break;
       }
@@ -149,14 +176,17 @@ export default {
       this.$store.dispatch('setAbrirPopup', false)
       this.abrirAgentes = false
       this.abrirGrupos = false
+      this.abrirBot = false
       this.grupo = ""
       this.agente = ""
+      this.bot = ""
     },
   },
   computed: {
     ...mapGetters({
       arrGrupos: 'getArrGrupos',
       arrAgentes: 'getArrAgentes',
+      arrBot: 'getArrBot',
       bg: 'getBgPopup',
       atendimentoAtivo: "getAtendimentoAtivo",
       reqTeste: "getReqTeste",

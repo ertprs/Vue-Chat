@@ -350,6 +350,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
             cliente.arrMsg[chave].msg.map(message => {
                 if(!seqs.includes(message.seq)){
                     novosAtendimentos[ramal].arrMsg[chave].msg.push(message)
+
                     if (store.getters.getIdAtendimentoAtivo !== novosAtendimentos[ramal].id_cli && message.resp_msg == 'CLI') {
                         novosAtendimentos[ramal].alertaMsgNova = true
                         if (!novosAtendimentos[ramal].qtdMsgNova) {
@@ -362,7 +363,6 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                         if(store.getters.getIdAtendimentoAtivo == novosAtendimentos[ramal].id_cli){
                             novosAtendimentos[ramal].novaMsgCttAtivo = true
                         }
-
                         app.$root.$emit('atualizar_mensagem', message)
                     } else if(message.resp_msg == "OPE"){
                         if(store.getters.getMensagemViaTextarea){
@@ -371,11 +371,11 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                             app.$root.$emit('atualizar_mensagem', message)
                         }
                     }
+                    store.dispatch('setAtendimentos', novosAtendimentos)
                 }
             })
         }
     }
-    store.dispatch('setAtendimentos', novosAtendimentos)
     
 }
 

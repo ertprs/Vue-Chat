@@ -36,6 +36,7 @@ export default {
       msg_sem_resultados: "Nenhuma correspondencia encontrada",
       btn_agente: "Agente",
       btn_grupo: "Grupo",
+      msg_erro_bot: "Nao existem bots disponiveis",
       msg_erro_agentes: "Nao existem agentes disponiveis",
       msg_erro_grupos: "Nao existem grupos disponiveis",
       msg_erro_transferencia: "Nao foi possivel realizar a transferencia",

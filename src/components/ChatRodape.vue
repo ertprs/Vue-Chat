@@ -498,7 +498,10 @@ export default {
 
       let chavesArrMsg = Object.keys(this.atendimentoAtivo.arrMsg)
       let indexUltimaChave = chavesArrMsg[chavesArrMsg.length - 1]
-      this.atendimentoAtivo.arrMsg[indexUltimaChave].msg[this.atendimentoAtivo.arrMsg[indexUltimaChave].msg.length] = objMensagem
+      let arrMsg = this.atendimentoAtivo.arrMsg[indexUltimaChave].msg
+      arrMsg.push(objMensagem)
+
+      this.$set(this.atendimentoAtivo.arrMsg[indexUltimaChave], msg, arrMsg)
 
       if(this.statusEnvio !== "E" && !objMsgExterno){
         this.resetar()

@@ -3,6 +3,7 @@ export default {
     abrirPopup: false,
     titulo: '',
     origem: '',
+    arrBot: [],
     arrAgentes: [],
     arrGrupos: [],
     bgPopup: ''
@@ -16,6 +17,9 @@ export default {
     },
     setOrigem(state, origem){
       state.origem = origem
+    },
+    setArrBot(state, arrBot){
+      state.arrBot = arrBot
     },
     setArrAgentes(state, arrAgentes){
       state.arrAgentes.push(arrAgentes)
@@ -43,6 +47,9 @@ export default {
     setOrigem: (context, payload) => {
       context.commit("setOrigem", payload)
     },
+    setArrBot: (context, payload) => {
+      context.commit("setArrBot", payload)
+    },
     setArrAgentes: (context, payload) => {
       context.commit("setArrAgentes", payload)
     },
@@ -62,6 +69,9 @@ export default {
     },
     getOrigem(state){
       return state.origem
+    },
+    getArrBot(state){
+      return state.arrBot
     },
     getArrAgentes(state){
       return state.arrAgentes
