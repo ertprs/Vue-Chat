@@ -73,7 +73,8 @@ export default {
     this.$root.$on('rola-chat', () => {
       this.rolaChat()
     })
-
+    
+    this.verificaPosicaoBarraRolagem()
     this.rolaChat()
 
     this.atualizarStatusMensagens()
