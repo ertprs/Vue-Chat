@@ -59,8 +59,7 @@
               <img v-if="atd.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${atd.sigla}.png`">
             </div>
             <template v-if="!fechado">{{ formataNome(atd.nome_usu) }}</template>
-            <span v-if="!fechado" class="ultima-msg" 
-            v-html="''"></span>
+            <ultima-msg v-if="!fechado" :mensagens="atd.arrMsg" />
             <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && idAtendimentoAtivo !== atd.id_cli" class="destaque-nova-msg">{{ atd.qtdMsgNova }}</span>
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
           </li>
@@ -155,8 +154,9 @@
 
 <script>
 import { mapGetters } from "vuex"
-import axios_api from '@/services/serviceAxios';
+import axios_api from '@/services/serviceAxios'
 import { gerenciarCores } from "@/services/gerenciarCores"
+import UltimaMsg from "../UltimaMsg"
 
 export default {
   data() {
@@ -170,6 +170,9 @@ export default {
       totalClientesNovos: '',
       reqEmAndamento: false
     };
+  },
+  components: {
+    "ultima-msg" : UltimaMsg
   },
   watch: {
     todosAtendimentos() {
