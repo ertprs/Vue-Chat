@@ -11,20 +11,20 @@
             {{ this.arquivo.name }}
           </h3>
           <div class="formato-invalido">
-            <h3 v-if="erroFormatoAnexo">{{ txtFormatoInvalido }}</h3>
+            <h3 v-if="erroFormatoAnexo">{{ dicionario.titulo_msg_formato_invalido }}</h3>
             <h4 v-if="erroFormatoAnexo">{{ txtFormatosValidos }}</h4>
           </div>
           <div class="div-previa" v-if="imagemPrevia">
             <img
               :src="imagemPrevia"
-              alt="Previa da Imagem Selecionada"
+              :alt="dicionario.alt_previa_img"
             />
           </div>
         </div>
         <div 
           v-show="aparecerPrevia"
           v-on:click="excluirAnexo()" 
-          title="Cancelar selecao de anexo" 
+          :title="dicionario.msg_cancelar_anexo" 
           class="btn-excluir-anexo"
           :class="{'previa-anexo' : docPrevia, 'previa-anexo-erro' : docPrevia && erroFormatoAnexo}"
           >
@@ -54,7 +54,7 @@
             v-on:keydown.enter="enviarMensagem($event, aparecerPrevia)"
             id="textarea"
             v-model="mensagem"
-            placeholder="Digite sua mensagem"
+            :placeholder="dicionario.placeholder_textarea"
             no-resize
             rows="1"
           ></textarea>
@@ -67,18 +67,17 @@
       <div class="chat-rodape-botoes">
         <div>
           <!-- Btn enviar msg -->
-          <div class="chat-rodape-botoes-botao" title="Enviar" v-on:click="enviarMensagem('', aparecerPrevia)">
+          <div class="chat-rodape-botoes-botao" :title="dicionario.title_enviar_msg" v-on:click="enviarMensagem('', aparecerPrevia)">
             <i class="fas fa-paper-plane"></i>
           </div>
           <!-- Btn abrir msg formatada -->
           <div
             v-if="temMsgFormatada"
             class="chat-rodape-botoes-botao"
-            title="Mensagem Formatada"
+            :title="dicionario.title_msg_formatada"
             v-on:click="selecionarMsgFormatada()"
           >
             <i class="fas fa-comment"></i>
-            <!-- <span> Mensagem Formatada </span> -->
           </div>
           <!-- Btn abrir opcoes -->
           <div
@@ -95,14 +94,12 @@
               :class="{'z-index-2' : abrirOpcoes}"
             >
               <!-- Btn selecionar imagem -->
-              <div class="imagens" v-on:click="selecionarImagem()" title="Imagem">
+              <div class="imagens" v-on:click="selecionarImagem()" :title="dicionario.title_anexo_img">
                 <i class="fas fa-image"></i>
-                <!-- <span> Imagem </span> -->
               </div>
               <!-- Btn selecionar documentos -->
-              <div class="docs" v-on:click="selecionarDoc()" title="Documento">
+              <div class="docs" v-on:click="selecionarDoc()" :title="dicionario.title_anexo_doc">
                 <i class="fas fa-file-alt"></i>
-                <!-- <span> Documento </span> -->
               </div>
             </div>
             <div class="chat-rodape-botoes-container-anexo d-none">
@@ -122,7 +119,7 @@
           class="select-msg-formatada"
           v-model="chaveAtual_01"
           v-on:change="recebeValorMSGFormatada(chaveAtual_01, 2)">
-          <option disabled value="">Selecione</option>
+          <option disabled value=""> {{ dicionario.titulo_select }} </option>
           <option v-for="(valor, chave) in mensagensFormatadas_01" :key="chave+valor"
             :value="chave">
             {{ valor }}
@@ -136,7 +133,7 @@
             class="select-msg-formatada"
             v-model="chaveAtual_02"
             v-on:change="recebeValorMSGFormatada(chaveAtual_01+'/'+chaveAtual_02, 3)">
-            <option disabled value="">Selecione</option>
+            <option disabled value=""> {{ dicionario.titulo_select }} </option>
             <option v-for="(valor, indice) in mensagensFormatadas_02" :key="indice"
               :value="valor.cod">
               {{ valor.value }}
@@ -150,7 +147,7 @@
               name="select-msg-formatada_03"
               class="select-msg-formatada"
               v-model="chaveAtual_03">
-              <option disabled value="">Selecione</option>
+              <option disabled value=""> {{ dicionario.titulo_select }} </option>
               <option v-for="(valor, indice) in mensagensFormatadas_03" :key="indice"
                 :value="indice">
                 {{ valor.value }}
@@ -158,13 +155,13 @@
             </select>
             <div class="btn-select-03"
               v-show="tipoMsg == 1"
-              title="Preencher campo de mensagem"
+              :title="dicionario.title_btn_preencher_msg_formatada"
               @click="insereMsgFormatadaNoTextarea(mensagensFormatadas_03, chaveAtual_03)">
               <i class="fas fa-level-up-alt"></i>
             </div>
             <div class="btn-select-03"
               v-show="tipoMsg == 2"
-              title="Abrir msg tipo 02"
+              :title="dicionario.title_btn_abrir_msg_tipo_2"
               @click="abrePopupMsgTipo2(mensagensFormatadas_03, chaveAtual_03)">
               <i class="far fa-file-alt"></i>
             </div>
@@ -199,7 +196,6 @@ export default {
       aparecerPrevia: false,
       imagemPrevia: "",
       docPrevia: false,
-      txtFormatoInvalido: "Formato Inv\u00e1lido!",
       txtFormatosValidos: "",
       abrirOpcoes: false,
       erroFormatoAnexo: false,
@@ -711,7 +707,7 @@ export default {
           } else {
             this.imagemPrevia = "";
             this.erroFormatoAnexo = true;
-            this.txtFormatosValidos = `${this.extImgs} s\u00e3o aceitos`;
+            this.txtFormatosValidos = `${this.extImgs} ${this.dicionario.msg_extensoes_aceitas}`;
           }
         }else{
           this.imagemPrevia = "";
@@ -719,7 +715,7 @@ export default {
             this.erroFormatoAnexo = false;
           }else{
             this.erroFormatoAnexo = true;
-            this.txtFormatosValidos = `${this.extDocs} s\u00e3o aceitos`;
+            this.txtFormatosValidos = `${this.extDocs} ${this.dicionario.msg_extensoes_aceitas}`;
           }
         }
       } else {
@@ -972,7 +968,8 @@ export default {
       reqTeste: "getReqTeste",
       extImgs: "getExtImgs",
       extDocs: "getExtDocs",
-      semIframe: "getSemIframe"
+      semIframe: "getSemIframe",
+      dicionario: "getDicionario"
     })
   },
   created(){

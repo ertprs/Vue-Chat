@@ -39,7 +39,7 @@
             <i class="fas fa-hourglass-end"></i>
           </div>
           <div class="load" v-else>
-            <p> {{ msgErro }} </p>
+            <p> {{ dicionario.msg_erro_carregamento }} </p>
           </div>
         </div>
       </template>
@@ -59,8 +59,7 @@ export default {
       regrasBotoes: {},
       regrasCor: {},
       tudoPronto: false,
-      contadorRequisicoesFalhas: 0,
-      msgErro: "N\u00e3o foi poss\u00edvel carregar esta area"
+      contadorRequisicoesFalhas: 0
     }
   },
   mounted(){
@@ -95,7 +94,8 @@ export default {
       origemBlocker: 'getOrigemBlocker',
       caso: 'getCaso',
       reqTeste: 'getReqTeste',
-      semIframe: 'getSemIframe'
+      semIframe: 'getSemIframe',
+      dicionario: "getDicionario"
     })
   },
   watch: {

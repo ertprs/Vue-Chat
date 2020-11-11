@@ -94,14 +94,14 @@ export default {
       if(this.arrAgentes.length){
         this.abrirAgentes = true
       }else{
-        this.$toasted.global.emConstrucao({msg: 'N\u00e3o existem agentes dispon\u00edveis'})
+        this.$toasted.global.emConstrucao({msg: this.dicionario.msg_erro_agentes})
       }
     },
     preencherGrupo(){
       if(this.arrGrupos.length){
         this.abrirGrupos = true
       }else{
-        this.$toasted.global.emConstrucao({msg: 'N\u00e3o existem grupos dispon\u00edveis'})
+        this.$toasted.global.emConstrucao({msg: this.dicionario.msg_erro_grupos})
       }
     },
     transferir(tipo, param){
@@ -138,7 +138,7 @@ export default {
           }
         })
         .catch(error => {
-          this.$toasted.global.defaultError({msg: "N\u00e3o foi poss\u00edvel realizar a transferencia"})
+          this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_transferencia})
           console.log('Error enviar grupo: ', error)
         })
 
@@ -160,7 +160,8 @@ export default {
       bg: 'getBgPopup',
       atendimentoAtivo: "getAtendimentoAtivo",
       reqTeste: "getReqTeste",
-      todosAtendimentos: "getTodosAtendimentos"
+      todosAtendimentos: "getTodosAtendimentos",
+      dicionario: "getDicionario"
     })
   }
 

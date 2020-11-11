@@ -32,7 +32,7 @@
     </div>
     <transition name="fade">
       <div class="btn-rolagem" v-show="habilitaRolagem" v-on:click="rolaChat()">
-        <div class="sinalizar-msg-nova" title="Existe uma nova mensagem" v-show="atendimentoAtivo.novaMsgCttAtivo"></div>
+        <div class="sinalizar-msg-nova" :title="dicionario.title_nova_msg" v-show="atendimentoAtivo.novaMsgCttAtivo"></div>
         <i class="fas fa-arrow-circle-down"></i>
       </div>
     </transition>
@@ -198,7 +198,8 @@ export default {
       limiteErrosMsg: 'getLimiteErrosMsg',
       habilitaRolagem: 'getHabilitaRolagem',
       atendimentoAtivo: 'getAtendimentoAtivo',
-      reqTeste: 'getReqTeste'
+      reqTeste: 'getReqTeste',
+      dicionario: 'getDicionario'
     })
   }
 }

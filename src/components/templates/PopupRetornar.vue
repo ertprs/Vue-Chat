@@ -5,9 +5,9 @@
       class="popup-lista" 
       :class="{'tres-mais' : ajustar, 'bg' : bg}"
       v-if="!pessoalData">
-      <li @click="retornar('todos')"> Todos </li>
-      <li @click="retornar('pessoal')"> Pessoal </li>
-      <li @click="pessoalData = true"> Agendar </li>
+      <li @click="retornar('todos')"> {{ dicionario.btn_todos }} </li>
+      <li @click="retornar('pessoal')"> {{ dicionario.btn_pessoal }} </li>
+      <li @click="pessoalData = true"> {{ dicionario.btn_agendar }} </li>
     </ul>
     <div 
       agendar-retorno
@@ -15,18 +15,18 @@
       class="popup-container-tela-2">
       <datetime 
         v-model="dataHora"
-        placeholder="Selecione uma data e hora"
+        :placeholder="dicionario.placeholder_select_data_hora"
         zone="America/Bahia"
         :min-datetime="setData('minimo')"
         :max-datetime="setData('maximo')"
-        :phrases="{ok: 'Continuar', cancel: 'Fechar'}"
+        :phrases="{ok: dicionario.btn_continuar_select_data_hora, cancel: dicionario.btn_fechar_select_data_hora}"
         class="theme-custom"
         type="datetime" />
       <ul 
         class="btns-confirmacao-container popup-lista"
         :class="{'bg' : bg}">
-        <li class="btn-confirmacao cancelar" @click="fecharPopup()"> Cancelar </li>
-        <li class="btn-confirmacao confirmar" @click="retornar('pessoal/data')"> Confirmar </li>
+        <li class="btn-confirmacao cancelar" @click="fecharPopup()"> {{ dicionario.btn_cancelar }} </li>
+        <li class="btn-confirmacao confirmar" @click="retornar('pessoal/data')"> {{ dicionario.btn_confirmar }} </li>
       </ul>
     </div>
   </div>
@@ -57,7 +57,8 @@ export default {
       atendimentoAtivo: "getAtendimentoAtivo",
       abrirPopup: "getAbrirPopup",
       reqTeste: "getReqTeste",
-      todosAtendimentos: "getTodosAtendimentos"
+      todosAtendimentos: "getTodosAtendimentos",
+      dicionario: "getDicionario"
     })
   },
   components: {
@@ -85,14 +86,14 @@ export default {
           axios_api.put(`suspend?${this.reqTeste}`, dados)
             .then(response => {
               if(response.status == 200){
-                this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
+                this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_sucesso_retorno})
                 this.removerCliente()
                 this.$root.$emit("reverter-cores")
               }
             })
             .catch(error => {
               console.log('error suspend todos: ', error)
-              this.$toasted.global.defaultError({msg: "N\u00e3o foi poss\u00edvel realizar o retorno"})
+              this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_retorno})
             })
         break;
         case "pessoal":
@@ -102,7 +103,7 @@ export default {
           axios_api.put(`suspend?${this.reqTeste}`, dados)
             .then(response => {
               if(response.status == 200){
-                this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
+                this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_sucesso_retorno})
 
                 this.$store.commit("adicionarCliAguardando", this.atendimentoAtivo)
 
@@ -112,13 +113,13 @@ export default {
             })
             .catch(error => {
               console.log('error suspend pessoal: ', error)
-              this.$toasted.global.defaultError({msg: "N\u00e3o foi poss\u00edvel realizar o retorno"})
+              this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_retorno})
             })
         break;
         case "pessoal/data":
 
           if(this.dataHora == ""){
-            this.$toasted.global.defaultError({msg: "Selecione uma data e hora valida"})
+            this.$toasted.global.defaultError({msg: this.dicionario.msg_data_incorreta})
             return
           }
 
@@ -137,7 +138,7 @@ export default {
           axios_api.put(`suspend?${this.reqTeste}`, dados)
             .then(response => {
               if(response.status == 200){
-                this.$toasted.global.defaultSuccess({msg: "Retorno realizado"})
+                this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_sucesso_retorno})
                 this.removerCliente()
                 this.$root.$emit("reverter-cores")
                 
@@ -146,7 +147,7 @@ export default {
             })
             .catch(error => {
               console.log('error suspend pessoal/data: ', error)
-              this.$toasted.global.defaultError({msg: "N\u00e3o foi poss\u00edvel realizar o retorno"})
+              this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_retorno})
             })
         break;
         default:

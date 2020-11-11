@@ -1,5 +1,8 @@
 import Vue from "vue";
+import store from "@/store";
 import Toasted from "vue-toasted";
+
+const dicionario = store.getters.getDicionario
 
 Vue.use(Toasted, {
   iconPack: "fontawesome",
@@ -9,36 +12,36 @@ Vue.use(Toasted, {
 // Mensagens Padr�es
 Vue.toasted.register(
   "defaultSuccess",
-  payload => (!payload.msg ? "Opera\u00e7\u00e3o realizada com sucesso!" : payload.msg),
+  payload => (!payload.msg ? dicionario.msg_sucesso : payload.msg),
   { type: "success", icon: "check" }
 );
 
 Vue.toasted.register(
   "sucessoTransferencia",
-  payload => (!payload.msg ? "Transfer\u00eancia realizada" : payload.msg),
+  payload => (!payload.msg ? dicionario.msg_sucesso_transferencia : payload.msg),
   { type: "success", icon: "random" }
 )
 
 Vue.toasted.register(
   "defaultError",
-  payload => (!payload.msg ? "Oops.. Erro inesperado." : payload.msg),
+  payload => (!payload.msg ? dicionario.msg_erro : payload.msg),
   { type: "error", icon: "times" }
 );
 
 Vue.toasted.register(
   "limiteCaracter",
-  payload => (!payload.msg ? " Limite de caracteres excedido" : payload.msg),
+  payload => (!payload.msg ? dicionario.msg_limite_caracter : payload.msg),
   { type: "error", icon: "times" }
 );
 
 Vue.toasted.register(
   "formatoInvalido",
-  payload => (!payload.msg ? "Selecione um formato v\u00e1lido" : payload.msg),
+  payload => (!payload.msg ? dicionario.msg_formato_invalido : payload.msg),
   { type: "error", icon: "times" }
 );
 
 Vue.toasted.register(
   "emConstrucao",
-  payload => (!payload.msg ? "Constru\u00e7\u00e3o em andamento" : payload.msg),
+  payload => (!payload.msg ? dicionario.msg_em_construcao : payload.msg),
   { type: "info", icon: "info" }
 );

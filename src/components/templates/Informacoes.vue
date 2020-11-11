@@ -1,9 +1,9 @@
 <template>
   <div id="informacoes" :class="{'d-none' : semIframe}">
-    <!-- Título -->
+    <!-- Ti�tulo -->
     <div class="informacoes-titulo tamanho-titulos" v-if="!atendimentoAtivo.informacoes || caso == 206 || caso == 400">
       <i class="fas fa-info-circle"></i>
-      <h1 title="Informacoes"> {{ `Informa${decodeURI("\u00e7")}${decodeURI("\u00f5")}es` }} </h1>
+      <h1 :title="dicionario.titulo_informacoes"> {{ dicionario.titulo_informacoes }} </h1>
     </div>
     <!-- Caso haja informacoes -->
     <div class="container-principal-informacoes" v-if="atendimentoAtivo.informacoes && (caso == 200 || caso == '')">
@@ -15,7 +15,7 @@
           <div v-if="atendimentoAtivo.id" class="informacoes-item">
             <div class="informacoes-item-titulo">
               <i class="fas fa-phone-alt"></i>
-              <p> Telefone </p>
+              <p> {{ dicionario.sub_titulo_telefone }} </p>
             </div>
             <p> {{ formataTelefone(atendimentoAtivo.id) }} </p>
           </div>
@@ -23,7 +23,7 @@
           <div v-if="atendimentoAtivo.hora_cliente_ini" class="informacoes-item">
             <div class="informacoes-item-titulo">
               <i class="fas fa-user-clock"></i>
-              <p> Tempo Conectado </p>
+              <p> {{ dicionario.sub_titulo_tempo_conectado }} </p>
             </div>
             <p> {{ formataHorario(atendimentoAtivo.tempo_conectado) }} </p>
           </div>
@@ -31,7 +31,7 @@
           <div v-if="atendimentoAtivo.hora_fila_ini" class="informacoes-item">
             <div class="informacoes-item-titulo">
               <i class="fas fa-clock"></i>
-              <p> Tempo de Fila </p>
+              <p> {{ dicionario.sub_titulo_tempo_fila }} </p>
             </div>
             <p> {{ formataHorario(atendimentoAtivo.fila_diff) }} </p>
           </div>
@@ -49,7 +49,7 @@
         <div class="informacoes-load-container" v-if="gif">
           <div class="load">
             <i class="fas fa-hourglass-end"></i>
-            <p> Carregando </p>
+            <p> {{ dicionario.titulo_carregando }} </p>
           </div>
         </div>
         <iframe 
@@ -59,12 +59,12 @@
           > </iframe> <!-- tipo_popup=AJ2& -->
       </div>
     </div>
-    <!-- Caso não haja informacoes -->
+    <!-- Caso nao haja informacoes -->
     <div class="lista-informacoes-container-vazio" v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206"> <!-- !iframeCttAtivo -->
       <div>
         <i class="far fa-folder-open"></i>
         <p>
-          {{ `Sem informa${decodeURI("\u00e7")}${decodeURI("\u00f5")}es para mostrar` }}
+          {{ dicionario.msg_sem_informacoes }}
         </p>
       </div>
     </div>
@@ -73,7 +73,7 @@
       <div class="informacoes-load-container" v-if="gif">
         <div class="load">
           <i class="fas fa-hourglass-end"></i>
-          <p> Carregando </p>
+          <p> {{ dicionario.titulo_carregando }} </p>
         </div>
       </div>
       <span v-if="!gif" class="btn-fechar-ctt-cliente" @click="fecharIframeCttAtivo()">
@@ -170,17 +170,18 @@ export default {
   },
   computed: {
     ...mapGetters({
-      atendimentoAtivo: 'getAtendimentoAtivo',
-      caso: 'getCaso',
-      abrirMsgTipo2: 'getAbrirMsgTipo2',
-      grupo: 'getGrupo',
-      categoria: 'getCategoria',
-      assunto: 'getAssunto',
-      nroChat: 'getNroChat',
-      iframeCttAtivo: 'getIframeCttAtivo',
-      dominio: 'getDominio',
-      reqTeste: 'getReqTeste',
-      semIframe: 'getSemIframe'
+      atendimentoAtivo: "getAtendimentoAtivo",
+      caso: "getCaso",
+      abrirMsgTipo2: "getAbrirMsgTipo2",
+      grupo: "getGrupo",
+      categoria: "getCategoria",
+      assunto: "getAssunto",
+      nroChat: "getNroChat",
+      iframeCttAtivo: "getIframeCttAtivo",
+      dominio: "getDominio",
+      reqTeste: "getReqTeste",
+      semIframe: "getSemIframe",
+      dicionario: "getDicionario"
     })
   },
 }

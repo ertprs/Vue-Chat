@@ -1,10 +1,10 @@
 <template>
   <div id="gerenciador-container" :class="{'d-none': !reqTeste, 'aguardando' : reqEmAndamento, 'em-atendimento' : statusAtd == 'em-atendimento', 'parado' : statusAtd == 'parado'}" v-if="gerenciador && gerenciador.length">
     <div class="gerenciador-btn" @click="mudarEstadoAtendimento()">
-      <div v-show="statusAtd == 'em-atendimento'" title="Em atendimento">
+      <div v-show="statusAtd == 'em-atendimento'" :title="dicionario.title_status_em_atendimento">
         <i class="fas fa-pause"></i>
       </div>
-      <div v-show="statusAtd == 'parado'" title="Parado">
+      <div v-show="statusAtd == 'parado'" :title="dicionario.title_status_parado">
         <i class="fas fa-play"></i>
       </div>
     </div>
@@ -14,7 +14,7 @@
         <span class="valor">{{ tipo.count }}</span>
       </div>
     </div>
-    <div class="gerenciador-btn" title="Adicionar novo cliente" @click="abrirAtivarCtt()" v-if="ativo">
+    <div class="gerenciador-btn" :title="dicionario.title_btn_adicionar_cliente" @click="abrirAtivarCtt()" v-if="ativo">
         <i class="fas fa-user-plus"></i>
     </div>
   </div>
@@ -35,7 +35,8 @@ export default {
       statusAtd: "getStatusAtd",
       todosAtendimentos: "getTodosAtendimentos",
       semIframe: "getSemIframe",
-      minhaAgenda: "getAgenda"
+      minhaAgenda: "getAgenda",
+      dicionario: "getDicionario"
     })
   },
   data(){

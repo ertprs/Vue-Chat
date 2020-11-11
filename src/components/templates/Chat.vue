@@ -10,13 +10,13 @@
     <template v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206">
       <div class="chat-opcoes tamanho-titulos">
         <div class="chat-opcoes-titulo">
-          <h1> <i class="fas fa-comments"></i> Chat </h1>
+          <h1> <i class="fas fa-comments"></i> {{ dicionario.titulo_chat }} </h1>
         </div>
       </div>
       <div class="lista-chat-container-vazio">
         <div>
           <i class="fas fa-comment-slash"></i>
-          <p> Selecione um contato </p>
+          <p> {{ dicionario.msg_sem_chat }} </p>
         </div>
       </div>
     </template>
@@ -42,11 +42,12 @@ export default {
   },
   computed: {
     ...mapGetters({
-      zonaDeTeste: 'getZonaDeTeste',
-      atendimentoAtivo: 'getAtendimentoAtivo',
-      caso: 'getCaso',
-      blocker: 'getBlocker',
-      origemBlocker: 'getOrigemBlocker'
+      zonaDeTeste: "getZonaDeTeste",
+      atendimentoAtivo: "getAtendimentoAtivo",
+      caso: "getCaso",
+      blocker: "getBlocker",
+      origemBlocker: "getOrigemBlocker",
+      dicionario: "getDicionario"
     })
   },
   mounted(){

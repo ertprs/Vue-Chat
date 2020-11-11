@@ -4,16 +4,11 @@
       <div class="titulo-contatos--icone-container" :class="{'fechado' : fechado}">
         <i class="fas fa-address-book" title="Contatos"></i>
         <transition name="fade">
-          <h1 v-show="!fechado">
-            Atendimentos
-          </h1>
+          <h1 v-show="!fechado"> {{ dicionario.titulo_atendimentos }} </h1>
         </transition>
       </div>
       <div>
       </div>
-      <!-- <div class="container-add-novo-cliente" :class="{'fechado' : fechado}" title="Adicionar novo cliente" v-on:click="abrirAtivarCtt()">
-        <i class="fas fa-user-plus"></i>
-      </div> -->
       <div v-on:click="toggleContatos($event)" class="container-flecha" :class="rotate ? 'rotate' : ''">
         <i class="fas fa-long-arrow-alt-left flecha"></i>
       </div>
@@ -25,8 +20,8 @@
           <i class="fas fa-hourglass-end"></i>
           <transition name="fade">
             <p v-show="!fechado" >
-              <template v-if="caso == 206">Aguardando clientes</template>
-              <template v-else>Carregando clientes</template>
+              <template v-if="caso == 206"> {{ dicionario.msg_aguardando_clientes }} </template>
+              <template v-else> {{ dicionario.msg_carregando_clientes }} </template>
             </p>
           </transition>
         </div>
@@ -34,18 +29,16 @@
       <!-- Caso haja Cliente -->
       <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 400">
         <div class="fieldset-container" v-if="caso !== 400 && caso !== 206" :class="{'fechado' : fechado}">
-          <h4
-            v-if="objAtendimentos.length && caso !== 206"
-            > <!-- :class="{'ativo' : abaAberta == 'atendimento'}" -->
-            Em Atendimento
+          <h4 v-if="objAtendimentos.length && caso !== 206">
+            {{ dicionario.sub_titulo_atendimentos }}
           </h4>
           <div :class="{'fechado' : fechado}">
-            <span v-if="objAtendimentos.length" title="Total de clientes" class="total-clientes">{{ objAtendimentos.length }}</span>
-            <span v-if="totalClientesNovos != ''" title="Total de novos clientes" class="total-clientes-novos">{{ totalClientesNovos }}</span>
-            <span v-if="totalMsgNovas != ''" title="Total de novas mensagens" class="total-msgs-novas">{{ totalMsgNovas }}</span>
+            <span v-if="objAtendimentos.length" :title="dicionario.title_total_clientes" class="total-clientes">{{ objAtendimentos.length }}</span>
+            <span v-if="totalClientesNovos != ''" :title="dicionario.title_total_novos_clientes" class="total-clientes-novos">{{ totalClientesNovos }}</span>
+            <span v-if="totalMsgNovas != ''" :title="dicionario.title_total_msgs_novas" class="total-msgs-novas">{{ totalMsgNovas }}</span>
           </div>
         </div>
-        <ul :class="{'fechado' : fechado}"  id="lista-contatos" v-if="objAtendimentos.length && caso !== 206"> <!-- 'aba-fechada' : abaAberta == 'aguardando' -->
+        <ul :class="{'fechado' : fechado}"  id="lista-contatos" v-if="objAtendimentos.length && caso !== 206">
           <li
             v-for="(atd, indice) in objAtendimentos"
             :key="indice"
@@ -65,10 +58,8 @@
           </li>
         </ul>
         <div class="fieldset-container" :class="{'fechado' : fechado}" v-if="caso !== 400 && aguardando && aguardando.length">
-          <h4
-            v-on:click="alternarAbaAberta()"
-            > <!-- :class="abaAberta == 'aguardando' ? 'ativo' : ''" -->
-            Aguardando
+          <h4 v-on:click="alternarAbaAberta()">
+            {{ dicionario.sub_titulo_aguardando }}
           </h4>
           <div>
             <span class="contador-aguardando" v-show="this.abaAberta == 'atendimento' && aguardando.length">
@@ -96,11 +87,11 @@
         <div class="lista-agenda">
           <div class="lista-agenda--titulo">
             <div :class="{'fechado' : fechado}">
-              <i class="far fa-address-book"  title="Minha Agenda"></i>
+              <i class="far fa-address-book"  :title="dicionario.sub_titulo_agenda"></i>
             </div>
             <transition name="fade">
               <h2 v-show="!fechado" >
-                Minha Agenda
+                {{ dicionario.sub_titulo_agenda }}
               </h2>
             </transition>
           </div>
@@ -124,7 +115,7 @@
             </li>
           </ul>
           <div class="agenda-vazia" v-else>
-            <p> Sem clientes para mostrar </p>
+            <p> {{ dicionario.msg_sem_agenda }} </p>
           </div>
         </div>
       </div>
@@ -135,7 +126,7 @@
         <i class="far fa-folder-open"></i>
         <transition name="fade">
           <p v-show="!fechado" >
-            Sem contatos para mostrar
+            {{ dicionario.msg_sem_contatos }}
           </p>
         </transition>
       </div>
@@ -168,7 +159,7 @@ export default {
       abaAberta: 'aguardando',
       totalMsgNovas: '',
       totalClientesNovos: '',
-      reqEmAndamento: false
+      reqEmAndamento: false,
     };
   },
   components: {
@@ -272,12 +263,13 @@ export default {
       todosAtendimentos: "getTodosAtendimentos",
       minhaAgenda: "getAgenda",
       aguardando: "getAguardando",
-      caso: 'getCaso',
-      iframesDisponiveis: 'getIframesDisponiveis',
-      idAtendimentoAtivo: 'getIdAtendimentoAtivo',
-      reqRegras: 'getReqRegras',
-      dominio: 'getDominio',
-      reqTeste: 'getReqTeste'
+      caso: "getCaso",
+      iframesDisponiveis: "getIframesDisponiveis",
+      idAtendimentoAtivo: "getIdAtendimentoAtivo",
+      reqRegras: "getReqRegras",
+      dominio: "getDominio",
+      reqTeste: "getReqTeste",
+      dicionario: "getDicionario"
     })
   },
   methods: {

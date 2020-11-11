@@ -4,13 +4,13 @@
       lista-retornar
       class="popup-lista"
       :class="{'bg' : bg}">
-      <li @click="fecharPopup()" class="btn-confirmacao cancelar"> Cancelar </li>
+      <li @click="fecharPopup()" class="btn-confirmacao cancelar"> {{ dicionario.btn_cancelar }} </li>
       <li id="encerrarAtendimento"
         class="btn-confirmacao confirmar"
         tabindex="-1"
         @keydown="encerrar()"
         @click="encerrar()">
-        Confirmar
+        {{ dicionario.btn_confirmar }}
       </li>
     </ul>
   </div>
@@ -25,7 +25,8 @@ import { liberarEncerrar } from '@/services/atendimentos'
 export default {
   computed: {
     ...mapGetters({
-      bg: "getBgPopup"
+      bg: "getBgPopup",
+      dicionario: "getDicionario"
     })
   },
   mounted(){

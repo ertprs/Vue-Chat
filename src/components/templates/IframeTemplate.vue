@@ -10,7 +10,7 @@
     </div>
     <div class="load" v-if="gif">
       <i class="fas fa-hourglass-end"></i>
-      <p> Carregando </p>
+      <p> {{ dicionario.titulo_carregando }} </p>
     </div>
   </div>
 </template>
@@ -77,7 +77,8 @@ export default {
   computed: {
     ...mapGetters({
       iframesDisponiveis: "getIframesDisponiveis",
-      atendimentoAtivo: "getAtendimentoAtivo"
+      atendimentoAtivo: "getAtendimentoAtivo",
+      dicionario: "getDicionario"
     }),
   },
   beforeDestroy() {
