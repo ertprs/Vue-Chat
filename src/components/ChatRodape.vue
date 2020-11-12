@@ -292,6 +292,8 @@ export default {
             };
           }
 
+          document.querySelector("#textarea").setAttribute("disabled", "disabled")
+
           axios_api
             .post(`send-message?${this.reqTeste}`, data)
             .then((response) => {
@@ -309,6 +311,11 @@ export default {
                 });
               }
             });
+
+          setTimeout(() => {
+            document.querySelector("#textarea").removeAttribute("disabled")
+            document.querySelector("#textarea").focus()
+          }, 500)
 
           this.criaObjMensagem()
         }
@@ -511,7 +518,6 @@ export default {
       };
       
       arrMsg.push(objMensagem)
-      this.$set(this.atendimentoAtivo.arrMsg[indexUltimaChave], msg, arrMsg)
 
       if(this.statusEnvio !== "E" && !objMsgExterno){
         this.resetar()

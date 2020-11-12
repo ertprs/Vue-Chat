@@ -106,7 +106,6 @@ export default {
         }
       }
     })
-    
   },
   methods:{
     focaTextarea(){
@@ -204,7 +203,7 @@ export default {
       }else{
         return dataHora
       }
-    }
+    },
   },
   computed:{
     ...mapGetters({

@@ -250,6 +250,35 @@ export default {
       })
     })
   },
+  updated(){
+    // Verificando mensagens com o mesmo seq
+    if(this.atendimentoAtivo && this.atendimentoAtivo.arrMsg){
+      const chaves = Object.keys(this.atendimentoAtivo.arrMsg)
+      const arrMsgAtualizado = []
+      if(chaves.length){
+        const chaveFinal = chaves[chaves.length - 1]
+        if(this.atendimentoAtivo.arrMsg[chaveFinal]){
+          for(let msg in this.atendimentoAtivo.arrMsg[chaveFinal].msg){
+            if(msg - 1 >= 0){
+              const ultimoSeq = this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg - 1].seq
+              if(!(ultimoSeq == this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg].seq)){
+                arrMsgAtualizado.push(this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg])
+              }
+            }
+  
+            if(msg == 0){
+              arrMsgAtualizado.push(this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg])
+            }
+          }
+  
+          if(arrMsgAtualizado.length !== this.atendimentoAtivo.arrMsg[chaveFinal].msg.length){
+            arrMsgAtualizado[arrMsgAtualizado.length - 1] = this.atendimentoAtivo.arrMsg[chaveFinal].msg[this.atendimentoAtivo.arrMsg[chaveFinal].msg.length - 1]
+            this.$set(this.atendimentoAtivo.arrMsg[chaveFinal], "msg", arrMsgAtualizado)
+          }
+        }
+      }
+    }
+  },
   created(){
     this.verificaLocalStorage()
   },
@@ -265,6 +294,7 @@ export default {
       aguardando: "getAguardando",
       caso: "getCaso",
       iframesDisponiveis: "getIframesDisponiveis",
+      atendimentoAtivo: "getAtendimentoAtivo",
       idAtendimentoAtivo: "getIdAtendimentoAtivo",
       reqRegras: "getReqRegras",
       dominio: "getDominio",
@@ -487,6 +517,8 @@ export default {
 
       this.contarMsgClientes()
 
+      this.$store.dispatch('setAtendimentoAtivo', atd)
+
       let objMensagens = Object.values(atd.arrMsg) 
       let todasMensagens = []
       for(let objMsg in objMensagens){
@@ -497,9 +529,8 @@ export default {
       this.setMensagensClienteAtivo(atd.id_cli, todasMensagens)
       
       this.exibirInformacoes(atd, indice)
-
+  
       this.$store.dispatch('setIdAtendimentoAtivo', atd.id_cli)
-      this.$store.dispatch('setAtendimentoAtivo', atd)
     },
     exibirInformacoes(atd, indice) {
       atd.informacoes = {}
@@ -513,8 +544,9 @@ export default {
       for(let index in arrMensagens){
         for (let i in arrMensagens[index]) {
           if(i != 'st_ret') {
+
             // Caso nao entre nesse if significa que a mensagem ja esta na estrutura esperada
-            if(!arrMensagens[index][i].origem){
+            if(!(arrMensagens[index][i].origem)){
 
               let mensagem = arrMensagens[index][i].msg;
               let status = arrMensagens[index][i].status

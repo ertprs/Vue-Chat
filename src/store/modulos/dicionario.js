@@ -80,7 +80,7 @@ export default {
       msg_erro_ativar_cliente: "Nao foi possivel ativar o cliente",
       msg_aguarde_ativar_cliente: "Aguarde. Logo o cliente sera ativado",
       msg_divisao_ope: "por",
-      msg_divisao_data_hora: "a",
+      msg_divisao_data_hora: "as",
       msg_sem_conexao: "Nao foi possivel estabelecer conexao. \nClique em 'OK' se quiser tentar novamente.",
       msg_erro_autorizacao: "Erro na autorizacao"
     }
