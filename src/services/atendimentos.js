@@ -105,6 +105,7 @@ function tratarResponse(response) {
                         if(mainData.atendimentos[atd].login_usu.match(regex)){
                             mainData.atendimentos[atd].login_usu = mainData.atendimentos[atd].login_usu.replace(regex, '')
                         }
+                        store.dispatch('setNomeOpe', mainData.atendimentos[atd].login_operador)
                     }
 
                     store.dispatch('setAtendimentos', mainData.atendimentos)

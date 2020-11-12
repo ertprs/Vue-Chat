@@ -35,11 +35,13 @@
 }
 
 $cor-separador: #555;
+
 .chat-corpo-container{
   position: relative;
   @include d-flex-center();
+  margin-bottom: 10px;
   div{
-    background-image: url("../img/messages-wallpaper.png");
+    background: #DDD;
     z-index: 2;
   }
   .separador-mensagens{

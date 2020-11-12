@@ -1,4 +1,5 @@
 import { link } from "fs";
+import { strictEqual } from "assert";
 
 export default {
   state: {
@@ -11,7 +12,8 @@ export default {
     reqRegras: false,
     corDestaque: "",
     semIframe: false,
-    linkImagem: ""
+    linkImagem: "",
+    nomeOpe: ""
   },
   mutations: {
     setAbaContatos(state, abaContatos){
@@ -43,6 +45,9 @@ export default {
     },
     setLinkImagem(state, linkImagem){
       state.linkImagem = linkImagem
+    },
+    setNomeOpe(state, nomeOpe){
+      state.nomeOpe = nomeOpe
     }
   },
   actions: {
@@ -75,6 +80,9 @@ export default {
     },
     setLinkImagem: (context, payload) => {
       context.commit('setLinkImagem', payload)
+    },
+    setNomeOpe: (context, payload) => {
+      context.commit('setNomeOpe', payload)
     }
   },
   getters: {
@@ -107,6 +115,9 @@ export default {
     },
     getLinkImagem(state){
       return state.linkImagem
+    },
+    getNomeOpe(state){
+      return state.nomeOpe
     }
   } 
 }

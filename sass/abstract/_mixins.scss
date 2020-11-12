@@ -24,7 +24,7 @@ $cor-textos-secundarios: #AAA;
 $tamanho-sinalizador-nova-msg: 12.5px;
 
 @mixin chat-corpo(){
-  background-image: url('../../../public/assets/img/messages-wallpaper.png');
+  background: #DDD;
   position: relative;
   .btn-rolagem{
     position: absolute;
@@ -38,8 +38,8 @@ $tamanho-sinalizador-nova-msg: 12.5px;
 
     .sinalizar-msg-nova{
       position: absolute;
-      top: -$tamanho-sinalizador-nova-msg;
-      left: -$tamanho-sinalizador-nova-msg;
+      top: -10px;
+      left: -10px;
       background-color: #4f772d;
       width: $tamanho-sinalizador-nova-msg;
       height: $tamanho-sinalizador-nova-msg;
@@ -147,6 +147,9 @@ $tamanho-sinalizador-nova-msg: 12.5px;
         }
         &.vermelho, &.vermelho svg{
           color: #ba181b
+        }
+        &.cinza, &.cinza svg{
+          color: #999
         }
         &.preto, &.preto svg{
           color: #666

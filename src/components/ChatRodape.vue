@@ -364,10 +364,10 @@ export default {
         }
         return false;
       }
-      // this.mensagem = msg.trim()
       return true;
     },
     criaObjMensagem(objMsgExterno) {
+
       let objMensagem = {}
 
       let seq = ""
@@ -385,6 +385,11 @@ export default {
       let video = false
 
       let regex = ""
+
+
+      let chavesArrMsg = Object.keys(this.atendimentoAtivo.arrMsg)
+      let indexUltimaChave = chavesArrMsg[chavesArrMsg.length - 1]
+      let arrMsg = this.atendimentoAtivo.arrMsg[indexUltimaChave].msg
 
       // Msg sendo disparada pelo textarea
       if (!objMsgExterno) {
@@ -415,8 +420,17 @@ export default {
           status = "D"
         }
 
-        autor = "Operador"
+        autor = this.nomeOpe || "Operador"
         origem = "principal"
+        
+        if(arrMsg[arrMsg.length - 1]){
+          let seqAnterior = arrMsg[arrMsg.length - 1].seq
+          seqAnterior = seqAnterior.split("_")
+          if(seqAnterior.length){
+            seqAnterior[seqAnterior.length - 1] = parseInt(seqAnterior[seqAnterior.length - 1]) + 1
+            seq = seqAnterior.join("_")
+          }
+        }
 
         this.$store.dispatch("setMensagemViaTextarea", true)
 
@@ -472,8 +486,8 @@ export default {
 
         status = objMsgExterno.status
 
-        autor = objMsgExterno.resp_msg == "CLI" ? "Cliente" : "Operador"
-        origem = autor == "Cliente" ? "outros" : "principal"
+        origem = objMsgExterno.resp_msg == "CLI" ? "outros" : "principal" 
+        autor = objMsgExterno.resp_msg == "CLI" ? objMsgExterno.nome : this.nomeOpe
 
         seq = objMsgExterno.seq
 
@@ -495,12 +509,8 @@ export default {
         audio: audio,
         video: video
       };
-
-      let chavesArrMsg = Object.keys(this.atendimentoAtivo.arrMsg)
-      let indexUltimaChave = chavesArrMsg[chavesArrMsg.length - 1]
-      let arrMsg = this.atendimentoAtivo.arrMsg[indexUltimaChave].msg
+      
       arrMsg.push(objMensagem)
-
       this.$set(this.atendimentoAtivo.arrMsg[indexUltimaChave], msg, arrMsg)
 
       if(this.statusEnvio !== "E" && !objMsgExterno){
@@ -972,7 +982,8 @@ export default {
       extImgs: "getExtImgs",
       extDocs: "getExtDocs",
       semIframe: "getSemIframe",
-      dicionario: "getDicionario"
+      dicionario: "getDicionario",
+      nomeOpe: "getNomeOpe"
     })
   },
   created(){

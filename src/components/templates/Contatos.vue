@@ -167,7 +167,6 @@ export default {
   },
   watch: {
     todosAtendimentos() {
-      console.log("todos atds ctt: ", this.todosAtendimentos)
       if(this.todosAtendimentos){
         this.contarMsgClientes()
         
@@ -493,6 +492,7 @@ export default {
       for(let objMsg in objMensagens){
         todasMensagens.push(objMensagens[objMsg].msg)
       }
+
       // Muda a estrutura do arrMsg para o esperado
       this.setMensagensClienteAtivo(atd.id_cli, todasMensagens)
       
@@ -513,87 +513,92 @@ export default {
       for(let index in arrMensagens){
         for (let i in arrMensagens[index]) {
           if(i != 'st_ret') {
-            
-            let mensagem = arrMensagens[index][i].msg;
-            let status = arrMensagens[index][i].status
-            let origem;
-            arrMensagens[index][i].resp_msg == "CLI" ? (origem = "outros") : (origem = "principal");
-            let horario = arrMensagens[index][i].hora;
-            
-            let anexo = false;
+            // Caso nao entre nesse if significa que a mensagem ja esta na estrutura esperada
+            if(!arrMensagens[index][i].origem){
 
-            let imgAnexo = "";
-            let tipoDoc = ""
-            let docAnexo = "";
-            let nomeArquivo = ""
-            let audio = false
-            let video = false
-            let seq = arrMensagens[index][i].seq
+              let mensagem = arrMensagens[index][i].msg;
+              let status = arrMensagens[index][i].status
+              let origem;
+              arrMensagens[index][i].resp_msg == "CLI" ? (origem = "outros") : (origem = "principal");
+              let horario = arrMensagens[index][i].hora;
 
-            if(arrMensagens[index][i].anexos){
-              anexo = true
-
-              var regex = /(\w+)\/(\w+)/g;
-              var type = regex.exec(arrMensagens[index][i].anexos.type);
-              
-              if(!type){
-                type = arrMensagens[index][i].anexos.type
+              let autor = ""
+              if(arrMensagens[index][i].nome){
+                autor = arrMensagens[index][i].nome;
               }else{
-                type = type[1]
-              }
-  
-              switch (type) {
-                case "image": 
-                  imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[index][i].anexos.mku}`
-                  nomeArquivo = arrMensagens[index][i].anexos.name
-                  break;
-                case "audio/ogg":
-                case "audio/oga":
-                case "audio":
-                case "ogg":
-                case "oga":
-                case "mpga":
-                case "audio/mpga":
-                case "mp3":
-                case "audio/mp3":
-                  tipoDoc = arrMensagens[index][i].anexos.type
-                  docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[index][i].anexos.mku}`
-                  nomeArquivo = arrMensagens[index][i].anexos.name
-                  audio = true
-                  break;
-                case "video/mp4":
-                case "video":
-                case "mp4":
-                  tipoDoc = arrMensagens[index][i].anexos.type
-                  docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[index][i].anexos.mku}`
-                  nomeArquivo = arrMensagens[index][i].anexos.name
-                  video = true
-                  break;
-                default:
-                  tipoDoc = arrMensagens[index][i].anexos.type
-                  docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[index][i].anexos.mku}`
-                  nomeArquivo = arrMensagens[index][i].anexos.name
-                  break;
+                autor = arrMensagens[index][i].resp_msg
+                switch (autor) {
+                  case "CLI":
+                    autor = "Cliente";
+                    break;
+                  case "OPE":
+                    autor = "Operador";
+                    break;
+                }
               }
               
-            }
+              let anexo = false;
+  
+              let imgAnexo = "";
+              let tipoDoc = ""
+              let docAnexo = "";
+              let nomeArquivo = ""
+              let audio = false
+              let video = false
+              let seq = arrMensagens[index][i].seq
+  
+              if(arrMensagens[index][i].anexos){
+                anexo = true
+  
+                var regex = /(\w+)\/(\w+)/g;
+                var type = regex.exec(arrMensagens[index][i].anexos.type);
+                
+                if(!type){
+                  type = arrMensagens[index][i].anexos.type
+                }else{
+                  type = type[1]
+                }
+    
+                switch (type) {
+                  case "image": 
+                    imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[index][i].anexos.mku}`
+                    nomeArquivo = arrMensagens[index][i].anexos.name
+                    break;
+                  case "audio/ogg":
+                  case "audio/oga":
+                  case "audio":
+                  case "ogg":
+                  case "oga":
+                  case "mpga":
+                  case "audio/mpga":
+                  case "mp3":
+                  case "audio/mp3":
+                    tipoDoc = arrMensagens[index][i].anexos.type
+                    docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[index][i].anexos.mku}`
+                    nomeArquivo = arrMensagens[index][i].anexos.name
+                    audio = true
+                    break;
+                  case "video/mp4":
+                  case "video":
+                  case "mp4":
+                    tipoDoc = arrMensagens[index][i].anexos.type
+                    docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[index][i].anexos.mku}`
+                    nomeArquivo = arrMensagens[index][i].anexos.name
+                    video = true
+                    break;
+                  default:
+                    tipoDoc = arrMensagens[index][i].anexos.type
+                    docAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[index][i].anexos.mku}`
+                    nomeArquivo = arrMensagens[index][i].anexos.name
+                    break;
+                }
+              }
 
-            let autor = arrMensagens[index][i].resp_msg;
-            switch (autor) {
-              case "CLI":
-                autor = "Cliente";
-                break;
-              case "OPE":
-                autor = "Operador";
-                break;
-            }
-
-            arrMensagens[index][i] = this.getObjMensagem( seq, autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo, audio, video );
-
-            this.$root.$emit("rola-chat")
-
-            if(document.querySelector('#textarea')){
-              document.querySelector('#textarea').focus()
+              arrMensagens[index][i] = this.getObjMensagem( seq, autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo, audio, video );
+  
+              if(document.querySelector('#textarea')){
+                document.querySelector('#textarea').focus()
+              }
             }
           }
         }

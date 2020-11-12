@@ -143,7 +143,7 @@ export default {
             for(let index in this.atendimentoAtivo.arrMsg){
               if(chaveStatusMsg.includes(index)){
                 for(let i = 0; i < this.atendimentoAtivo.arrMsg[index].msg.length; i++){
-                  if(this.atendimentoAtivo.arrMsg[index].msg[i].autor == "Operador"){
+                  if(this.atendimentoAtivo.arrMsg[index].msg[i].origem == "principal"){
                     if(arrStatusMsg[index][j]){
                       this.$set(this.atendimentoAtivo.arrMsg[index].msg[i], "status", arrStatusMsg[index][j].status)
                       j++
