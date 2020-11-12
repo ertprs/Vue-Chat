@@ -305,7 +305,7 @@ export default {
               this.statusEnvio = "E"
               if (!document.querySelector(".toasted.toasted-primary.error")) {
                 this.$toasted.global.defaultError({
-                  msg: "N\u00e3o foi poss\u00edvel enviar a mensagem",
+                  msg: this.dicionario.msg_erro_enviar_msg,
                 });
               }
             });
@@ -593,7 +593,7 @@ export default {
             this.mensagensFormatadas_03 = objMsgFormatada
           }else{
             this.mensagensFormatadas_03 = []
-            this.$toasted.global.emConstrucao({msg: 'Sem mensagens para as op\u00e7\u00f5es selecionadas'})
+            this.$toasted.global.emConstrucao({msg: this.dicionario.msg_erro_sem_msg_formatada})
           }
         break;
       }
@@ -825,7 +825,7 @@ export default {
         }
 
         if(event.data == ''){
-          this.$toasted.global.emConstrucao({msg: 'Sem mensagens para as op\u00e7\u00f5es selecionadas'})
+          this.$toasted.global.emConstrucao({msg: this.dicionario.msg_erro_sem_msg_formatada})
         }
 
         this.mensagem = event.data

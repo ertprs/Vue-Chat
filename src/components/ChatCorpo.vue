@@ -8,7 +8,7 @@
             <h5 class="separador-mensagens">
               <template v-if="arrMsg.data_ini && arrMsg.data_ini !== '1111-11-11 00:00:00'">{{ formataDataHora(arrMsg.data_ini) }}</template>
               <template v-if="arrMsg.data_fim && arrMsg.data_fim !== '1111-11-11 00:00:00'">{{ " - " + formataDataHora(arrMsg.data_fim) }}</template>
-              <template v-if="arrMsg.login">{{ " por " + arrMsg.login }}</template>
+              <template v-if="arrMsg.login">{{ ` ${dicionario.msg_divisao_ope} `  + arrMsg.login }}</template>
             </h5>
           </div>
         </div>
@@ -63,7 +63,8 @@ export default {
       qtdErrosStatusMsg: 0,
       tokenStatus: "",
       primeiraReq: true,
-      novaMsg: false
+      novaMsg: false,
+      idAtendimento: ""
     }
   },
   beforeDestroy(){
@@ -73,6 +74,10 @@ export default {
     this.$root.$on('rola-chat', () => {
       this.rolaChat()
     })
+
+    if(this.atendimentoAtivo){
+      this.idAtendimento = this.atendimentoAtivo.id
+    }
     
     this.verificaPosicaoBarraRolagem()
     this.rolaChat()
@@ -85,15 +90,23 @@ export default {
     }, 5000)
   },
   updated(){
-    if(!this.habilitaRolagem){
-      this.rolaChat()
-    }else{
-      if(this.atendimentoAtivo.novaMsgCttAtivo){
-        this.novaMsg = true
+    this.$nextTick(() => {
+      if(!this.habilitaRolagem){
+        this.rolaChat()
       }else{
-        this.novaMsg = false
+        if(this.idAtendimento !== this.atendimentoAtivo.id){
+          this.rolaChat()
+          this.idAtendimento = this.atendimentoAtivo.id
+        }
+  
+        if(this.atendimentoAtivo.novaMsgCttAtivo){
+          this.novaMsg = true
+        }else{
+          this.novaMsg = false
+        }
       }
-    }
+    })
+    
   },
   methods:{
     focaTextarea(){
@@ -109,7 +122,6 @@ export default {
       }
     },
     verificaPosicaoBarraRolagem(){
-      
       this.$store.dispatch('setHabilitaRolagem', true)
       if(this.habilitaRolagem){
         let containerMensagens = document.querySelector("#chat-operador > div")
@@ -188,7 +200,7 @@ export default {
 
         hora = hora.slice(0, 5)
 
-        return `${data} \u00e0s ${hora}` 
+        return `${data} ${this.dicionario.msg_divisao_data_hora} ${hora}` 
       }else{
         return dataHora
       }

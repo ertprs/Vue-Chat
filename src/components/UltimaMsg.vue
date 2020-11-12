@@ -19,8 +19,12 @@ export default {
           let arrMsg = this.mensagens[ultimaChave].msg
   
           if(arrMsg.length){
-            if(arrMsg[arrMsg.length - 1].anexos){
-              return this.msg = arrMsg[arrMsg.length - 1].anexos.name
+            if(arrMsg[arrMsg.length - 1].anexos || arrMsg[arrMsg.length - 1].nomeArquivo){
+              if(arrMsg[arrMsg.length - 1].nomeArquivo){
+                return this.msg = arrMsg[arrMsg.length - 1].nomeArquivo
+              }else{
+                return this.msg = arrMsg[arrMsg.length - 1].anexos.name
+              }
             }else{
               return this.msg = arrMsg[arrMsg.length - 1].msg
             }

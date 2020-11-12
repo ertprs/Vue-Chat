@@ -372,7 +372,7 @@ export default {
         await this.finalizarAtendimentoNaApi()
         
       } else {
-        this.$toasted.global.defaultError({msg: 'Selecione um cliente antes de tentar finalizar o atendimento'})
+        this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_clique_finalizar})
       }
     },
     async finalizarAtendimentoNaApi() {
@@ -412,7 +412,7 @@ export default {
             liberarEncerrar()
           }, 5000);
           console.log('Error end atd: ', error)
-          this.$toasted.global.defaultError({msg: 'N\u00e3o foi poss\u00edvel encerrar o atendimento'})
+          this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_finalizar})
         })
     }
   }

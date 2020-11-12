@@ -11,6 +11,8 @@ var contador_request_erro = 0
 var parar_request = false
 var app
 
+const dicionario = store.getters.getDicionario
+
 export function getAtendimentos(appVue) {
     if(appVue) {
         app = appVue
@@ -48,7 +50,7 @@ function verificarAlertaErroRequest() {
     }
 
     if(contador_request_erro > 5) {
-        if(window.confirm('N\u00e3o foi poss\u00edvel estabelecer conex\u00e3o. \nClique em "OK" se quiser tentar novamente.')){
+        if(window.confirm(dicionario.msg_sem_conexao)){
             document.location.reload();
         }else{
             parar_request = true
@@ -74,7 +76,7 @@ function tratarResponse(response) {
         axiosTokenJWT(response.headers.authorization)
     } else {
         setTimeout(() => {
-            console.error('Erro na autoriza\u00e7\u00e3o')
+            console.error(dicionario.msg_erro_autorizacao)
             adicionaCaso(400)
             getAtendimentos(app)
         }, TEMPO_ATUALIZACAO)
@@ -89,9 +91,7 @@ function tratarResponse(response) {
     switch (status) {
         case 200:
             if (!mainData) { // tratando erro quando os dados nao chegaram da api
-                console.error('Negacao do mainData')
                 setTimeout(() => {
-                    console.error('Timeout negacao mainData')
                     adicionaCaso(400)
                     getAtendimentos(app)
                 }, TEMPO_ATUALIZACAO)
@@ -118,7 +118,6 @@ function tratarResponse(response) {
                     console.log(mainData)
                     adicionaCaso(400)
                     setTimeout(() => {
-                        console.log('timeout erro obter dados no servidor')
                         getAtendimentos(app)
                     }, TEMPO_ATUALIZACAO)
                     return
@@ -136,7 +135,6 @@ function tratarResponse(response) {
 
         default:
             console.error('ERRO STATUS ' + response.status + ' ' + response.statusText)
-            console.log(response)
             adicionaCaso(400)
             break
     }
@@ -186,22 +184,18 @@ function verificaRequest() {
 }
 
 function bloqueiaRequest() {
-    // console.log('aguardando retorno do request')
     status_gerenciador = 1
 }
 
 function liberaRequest() {
-    // console.log('request liberado')
     status_gerenciador = 0
 }
 
 export function executandoEncerrar() {
-    // console.log('-> pausar para encerrar contato')
     status_encerrando = 1
 }
 
 export function liberarEncerrar() {
-    // console.log('-> voltando ao fluxo normal')
     status_encerrando = 0
     liberaRequest()
 }
@@ -246,11 +240,9 @@ async function atualizarAtendimentos() {
                 atualizarClientes(mainData)
                 acionaProcessosAtualizacao(mainData)
             } else if (mainData.st_ret === 'AVISO') {
-                console.error('Nao existe clientes na fila')
                 adicionaCaso(206)
                 acionaProcessosAtualizacao(mainData)
             } else {
-                console.error('ERRO! Status:', response)
                 if (response.data) {
                     for (let atd in response.data) {
                         if (typeof response.data[atd] == 'object') {
@@ -264,7 +256,6 @@ async function atualizarAtendimentos() {
                     }
                 } else {
                     setTimeout(() => {
-                        console.error('Timeout sem st_ret')
                         getAtendimentos(app)
                     }, TEMPO_ATUALIZACAO)
                     return
@@ -386,10 +377,8 @@ function start() {
 };
 function end() {
   endTime = new Date();
-  var timeDiff = endTime - startTime; //in ms
+  var timeDiff = endTime - startTime;
 
-  // get seconds
   var seconds = Math.round(timeDiff);
   return seconds
-//   console.log(seconds + " miliseconds");
 }

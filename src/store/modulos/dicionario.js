@@ -76,7 +76,13 @@ export default {
       msg_em_construcao: "Construcao em andamento",
       title_status_em_atendimento: "Em atendimento",
       title_status_parado: "Parado",
-      title_btn_adicionar_cliente: "Adicionar novo cliente"
+      title_btn_adicionar_cliente: "Adicionar novo cliente",
+      msg_erro_ativar_cliente: "Nao foi possivel ativar o cliente",
+      msg_aguarde_ativar_cliente: "Aguarde. Logo o cliente sera ativado",
+      msg_divisao_ope: "por",
+      msg_divisao_data_hora: "a",
+      msg_sem_conexao: "Nao foi possivel estabelecer conexao. \nClique em 'OK' se quiser tentar novamente.",
+      msg_erro_autorizacao: "Erro na autorizacao"
     }
   },
   mutations: {

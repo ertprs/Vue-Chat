@@ -275,7 +275,7 @@ export default {
   methods: {
     ativarCliente(id, grupo, atd, origem){
       if(!id || !grupo){
-        this.$toasted.global.defaultError({msg: "N\u00e3o foi poss\u00edvel ativar o cliente"})
+        this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_ativar_cliente})
         console.log("parametros da funcao ativar cliente nao estao de acordo com o esperado")
         return
       }
@@ -295,7 +295,7 @@ export default {
         .then((response) => {
           this.reqEmAndamento = false
           if(response.data.st_ret == "OK"){
-            this.$toasted.global.defaultSuccess({msg: "Aguarde. Logo o cliente ser\u00e1 ativado"})
+            this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_aguarde_ativar_cliente})
             // Remover do aguardando  
             if(origem == "aguardando"){
               let aguardandoAux = this.aguardando
@@ -311,12 +311,12 @@ export default {
               this.$store.dispatch("setAgenda", agendaAux)
             }
           }else if(response.data.st_ret == "AVISO"){
-            this.$toasted.global.emConstrucao({msg: response.data.msg_ret || "N\u00e3o foi poss\u00edvel ativar o cliente (aviso sem mensagem de retorno)"})
+            this.$toasted.global.emConstrucao({msg: response.data.msg_ret || this.dicionario.msg_erro_ativar_cliente})
           }
         })
         .catch(error => {
           this.reqEmAndamento = false
-          this.$toasted.global.defaultError({msg: "N\u00e3o foi poss\u00edvel ativar o cliente"})
+          this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_ativar_cliente})
         })
     },
     alternarAbaAberta(){
