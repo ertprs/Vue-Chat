@@ -67,6 +67,7 @@
     "vue-datetime": "^1.0.0-beta.14",
     "vue-resizable": "^1.2.5",
     "vue-select": "^3.10.8",
+    "vue-simple-context-menu": "^3.3.2",
     "vue-toasted": "^1.1.28",
     "vuex": "^3.5.1",
     "weekstart": "^1.0.1"

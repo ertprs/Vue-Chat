@@ -147,6 +147,8 @@
 import { mapGetters } from "vuex"
 import axios_api from '@/services/serviceAxios'
 import { gerenciarCores } from "@/services/gerenciarCores"
+
+import SimpleContextMenu from 'vue-simple-context-menu'
 import UltimaMsg from "../UltimaMsg"
 
 export default {
@@ -163,6 +165,7 @@ export default {
     };
   },
   components: {
+    "simple-context-menu" : SimpleContextMenu,
     "ultima-msg" : UltimaMsg
   },
   watch: {

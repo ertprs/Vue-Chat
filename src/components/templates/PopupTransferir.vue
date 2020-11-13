@@ -1,66 +1,71 @@
 <template>
   <div class="popup-container">
-    <ul
-      class="popup-lista"
-      :class="{'bg' : bg}"
-      v-if="!abrirAgentes && !abrirGrupos">
-      <li @click="preencherAgente()"> {{ dicionario.btn_agente }} </li>
-      <li @click="preencherGrupo()"> {{ dicionario.btn_grupo }} </li>
-      <li @click="preencherBot()"> Bot </li>
-    </ul>
-    <div
-      v-if="abrirAgentes"
-      class="popup-container-tela-2">
-      <vSelect
-      :options="arrAgentes"
-      label="label"
-      v-model="agente"
-      :reduce="arrAgentes => arrAgentes.cod"
-      >
-        <div slot="no-options">{{ dicionario.msg_sem_resultados }}</div>
-      </vSelect>
+    <template v-if="!erroTransfer">
       <ul
-        class="btns-confirmacao-container popup-lista"
-        :class="{'bg' : bg}">
-        <li class="btn-confirmacao cancelar" @click="fecharPopup()"> {{ dicionario.btn_cancelar }} </li>
-        <li class="btn-confirmacao confirmar" @click="transferir('agente', agente)"> {{ dicionario.btn_confirmar }} </li>
+        class="popup-lista"
+        :class="{'bg' : bg}"
+        v-if="!abrirAgentes && !abrirGrupos">
+        <li @click="preencherAgente()"> {{ dicionario.btn_agente }} </li>
+        <li @click="preencherGrupo()"> {{ dicionario.btn_grupo }} </li>
+        <li @click="preencherBot()"> Bot </li>
       </ul>
-    </div>
-    <div
-      v-if="abrirGrupos"
-      class="popup-container-tela-2">
-      <vSelect
-        :options="arrGrupos"
+      <div
+        v-if="abrirAgentes"
+        class="popup-container-tela-2">
+        <vSelect
+        :options="arrAgentes"
         label="label"
-        v-model="grupo"
-        :reduce="arrGrupos => arrGrupos.cod"
+        v-model="agente"
+        :reduce="arrAgentes => arrAgentes.cod"
         >
-        <div slot="no-options">{{ dicionario.msg_sem_resultados }}</div>
-      </vSelect>
-      <ul
-        class="btns-confirmacao-container popup-lista"
-        :class="{'bg' : bg}">
-        <li class="btn-confirmacao cancelar" @click="fecharPopup()"> {{ dicionario.btn_cancelar }} </li>
-        <li class="btn-confirmacao confirmar" @click="transferir('grupo', grupo)"> {{ dicionario.btn_confirmar }} </li>
-      </ul>
-    </div>
-    <div
-      v-if="abrirBot"
-      class="popup-container-tela-2">
-      <vSelect
-        :options="arrBot"
-        label="label"
-        v-model="bot"
-        :reduce="arrBot => arrBot.cod"
-        >
-        <div slot="no-options">{{ dicionario.msg_sem_resultados }}</div>
-      </vSelect>
-      <ul
-        class="btns-confirmacao-container popup-lista"
-        :class="{'bg' : bg}">
-        <li class="btn-confirmacao cancelar" @click="fecharPopup()"> {{ dicionario.btn_cancelar }} </li>
-        <li class="btn-confirmacao confirmar" @click="transferir('bot', bot)"> {{ dicionario.btn_confirmar }} </li>
-      </ul>
+          <div slot="no-options">{{ dicionario.msg_sem_resultados }}</div>
+        </vSelect>
+        <ul
+          class="btns-confirmacao-container popup-lista"
+          :class="{'bg' : bg}">
+          <li class="btn-confirmacao cancelar" @click="fecharPopup()"> {{ dicionario.btn_cancelar }} </li>
+          <li class="btn-confirmacao confirmar" @click="transferir('agente', agente)"> {{ dicionario.btn_confirmar }} </li>
+        </ul>
+      </div>
+      <div
+        v-if="abrirGrupos"
+        class="popup-container-tela-2">
+        <vSelect
+          :options="arrGrupos"
+          label="label"
+          v-model="grupo"
+          :reduce="arrGrupos => arrGrupos.cod"
+          >
+          <div slot="no-options">{{ dicionario.msg_sem_resultados }}</div>
+        </vSelect>
+        <ul
+          class="btns-confirmacao-container popup-lista"
+          :class="{'bg' : bg}">
+          <li class="btn-confirmacao cancelar" @click="fecharPopup()"> {{ dicionario.btn_cancelar }} </li>
+          <li class="btn-confirmacao confirmar" @click="transferir('grupo', grupo)"> {{ dicionario.btn_confirmar }} </li>
+        </ul>
+      </div>
+      <div
+        v-if="abrirBot"
+        class="popup-container-tela-2">
+        <vSelect
+          :options="arrBot"
+          label="label"
+          v-model="bot"
+          :reduce="arrBot => arrBot.cod"
+          >
+          <div slot="no-options">{{ dicionario.msg_sem_resultados }}</div>
+        </vSelect>
+        <ul
+          class="btns-confirmacao-container popup-lista"
+          :class="{'bg' : bg}">
+          <li class="btn-confirmacao cancelar" @click="fecharPopup()"> {{ dicionario.btn_cancelar }} </li>
+          <li class="btn-confirmacao confirmar" @click="transferir('bot', bot)"> {{ dicionario.btn_confirmar }} </li>
+        </ul>
+      </div>
+    </template>
+    <div v-else>
+      {{ msgErro }}
     </div>
   </div>
 </template>
@@ -191,7 +196,9 @@ export default {
       atendimentoAtivo: "getAtendimentoAtivo",
       reqTeste: "getReqTeste",
       todosAtendimentos: "getTodosAtendimentos",
-      dicionario: "getDicionario"
+      dicionario: "getDicionario",
+      erroTransfer: "getErroTransfer",
+      msgErro: "getMsgErro"
     })
   }
 

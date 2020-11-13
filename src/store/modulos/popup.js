@@ -6,7 +6,9 @@ export default {
     arrBot: [],
     arrAgentes: [],
     arrGrupos: [],
-    bgPopup: ''
+    bgPopup: '',
+    erroTransfer: false,
+    msgErro: ""
   },
   mutations: {
     setAbrirPopup(state, abrirPopup){
@@ -24,17 +26,17 @@ export default {
     setArrAgentes(state, arrAgentes){
       state.arrAgentes.push(arrAgentes)
     },
-    limparArrAgentes(state){
-      state.arrAgentes = []
-    },
     setArrGrupos(state, arrGrupos){
       state.arrGrupos.push(arrGrupos)
     },
-    limparArrGrupos(state){
-      state.arrGrupos = []
-    },
     setBgPopup(state, bgPopup){
       state.bgPopup = bgPopup
+    },
+    setErroTransfer(state, erroTransfer){
+      state.erroTransfer = erroTransfer
+    },
+    setMsgErro(state, msgErro){
+      state.msgErro = msgErro
     }
   },
   actions: {
@@ -58,6 +60,12 @@ export default {
     },
     setBgPopup: (context, payload) => {
       context.commit("setBgPopup", payload)
+    },
+    setErroTransfer: (context, payload) => {
+      context.commit("setErroTransfer", payload)
+    },
+    setMsgErro: (context, payload) => {
+      context.commit("setMsgErro", payload)
     }
   },
   getters: {
@@ -81,6 +89,12 @@ export default {
     },
     getBgPopup(state){
       return state.bgPopup
+    },
+    getErroTransfer(state){
+      return state.erroTransfer
+    },
+    getMsgErro(state){
+      return state.msgErro
     }
   }
 }
