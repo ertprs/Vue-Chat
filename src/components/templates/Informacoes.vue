@@ -40,7 +40,7 @@
       <!-- Corpo informacoes -->
       <div class="lista-informacoes-container">
         <div class="iframe-informacoes">
-          <IframeTemplate v-if="atendimentoAtivo.url && !semIframe" />
+          <IframeTemplate v-if="atendimentoAtivo.url" />
         </div>
       </div>
       <!-- Iframe Msg Tipo 2 -->

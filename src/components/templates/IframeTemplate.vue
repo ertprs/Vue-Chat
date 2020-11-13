@@ -2,6 +2,7 @@
   <div class="container-iframes">
     <div
       class="iframes_disponiveis"
+      :class="{'d-none' : semIframe}"
       v-for="(frame, indice) in iframesDisponiveis"
       :id="'iframe_' + frame.id"
       :key="indice"
@@ -78,7 +79,8 @@ export default {
     ...mapGetters({
       iframesDisponiveis: "getIframesDisponiveis",
       atendimentoAtivo: "getAtendimentoAtivo",
-      dicionario: "getDicionario"
+      dicionario: "getDicionario",
+      semIframe: "getSemIframe"
     }),
   },
   beforeDestroy() {
