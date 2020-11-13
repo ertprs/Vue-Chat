@@ -293,6 +293,7 @@ export default {
           }
 
           document.querySelector("#textarea").setAttribute("disabled", "disabled")
+          document.querySelector("#textarea").setAttribute("placeholder", this.dicionario.placeholder_textarea_disabled)
 
           axios_api
             .post(`send-message?${this.reqTeste}`, data)
@@ -314,6 +315,7 @@ export default {
 
           setTimeout(() => {
             document.querySelector("#textarea").removeAttribute("disabled")
+            document.querySelector("#textarea").setAttribute("placeholder", this.dicionario.placeholder_textarea)
             document.querySelector("#textarea").focus()
           }, 500)
 

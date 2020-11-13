@@ -49,6 +49,7 @@ export default {
       alt_previa_img: "Previa da imagem selecionada",
       msg_cancelar_anexo: "Cancelar selecao de anexo",
       placeholder_textarea: "Digite sua mensagem",
+      placeholder_textarea_disabled: "Enviando..",
       title_enviar_msg: "Enviar",
       title_msg_formatada: "Mensagem formatada",
       title_selecionar_anexo: "Selecionar anexo",

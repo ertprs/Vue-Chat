@@ -286,13 +286,13 @@ export default {
       axios_api.get(`get-transfer?token_cliente=${tokenCliente}&${this.reqTeste}`)
         .then(response => {
           if(response.data.st_ret == "OK"){
-            if(response.data.options.agentes.length){
-              this.$store.dispatch("setErroTransfer", false)
-              this.$store.dispatch("setMsgErro", "")
-            
-              let arrChaves = []
-              let arrValores = []
+            let arrChaves = []
+            let arrValores = []
 
+            this.$store.dispatch("setErroTransfer", false)
+            this.$store.dispatch("setMsgErro", "")
+            
+            if(response.data.options.agentes.length){
               response.data.options.agentes.map(objAgentes => {
                 arrChaves = Object.keys(objAgentes)
                 arrValores = Object.values(objAgentes)

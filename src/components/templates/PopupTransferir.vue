@@ -5,9 +5,9 @@
         class="popup-lista"
         :class="{'bg' : bg}"
         v-if="!abrirAgentes && !abrirGrupos">
-        <li @click="preencherAgente()"> {{ dicionario.btn_agente }} </li>
-        <li @click="preencherGrupo()"> {{ dicionario.btn_grupo }} </li>
-        <li @click="preencherBot()"> Bot </li>
+        <li @click="preencherAgente()" v-if="temBtnAgente"> {{ btnAgente }} </li>
+        <li @click="preencherGrupo()" v-if="temBtnGrupo"> {{ btnGrupo }} </li>
+        <li @click="preencherBot()" v-if="temBtnBot"> {{ btnBot }} </li>
       </ul>
       <div
         v-if="abrirAgentes"
@@ -88,15 +88,53 @@ export default {
       agente: '',
       grupo: '',
       bot: '',
-      reqEmAndamento: false
+      reqEmAndamento: false,
+      btnAgente: "",
+      temBtnAgente: false,
+      btnGrupo: "",
+      temBtnGrupo: false,
+      btnBot: "",
+      temBtnBot: false
     }
+  },
+  mounted(){
+    this.preencherBotoes()
   },
   components: {
     vSelect
   },
   methods: {
+    preencherBotoes(){
+      if(this.regrasDoClienteAtivo){
+        if(this.regrasDoClienteAtivo.regras){
+          const regras = this.regrasDoClienteAtivo.regras
+          if(regras.button_transfer){
+            const objRegrasTransfer = regras.button_transfer
+            if(objRegrasTransfer.transfer_agente){
+              if(objRegrasTransfer.transfer_agente.use == "S"){
+                this.temBtnAgente = true
+              }
+              this.btnAgente = objRegrasTransfer.transfer_agente.name
+            }
+            
+            if(objRegrasTransfer.transfer_grupo){
+              if(objRegrasTransfer.transfer_grupo.use == "S"){
+                this.temBtnGrupo = true
+              }
+              this.btnGrupo = objRegrasTransfer.transfer_grupo.name
+            }
+            
+            if(objRegrasTransfer.transfer_bot){
+              if(objRegrasTransfer.transfer_bot.use == "S"){
+                this.temBtnBot = true
+              }
+              this.btnBot = objRegrasTransfer.transfer_bot.name
+            }
+          }
+        }
+      }
+    },
     removerCliente(){
-      
       let objAtdAux = {}
       for(let ramal in this.todosAtendimentos){
         if(this.todosAtendimentos[ramal].login_usu != this.atendimentoAtivo.login_usu){
@@ -198,7 +236,8 @@ export default {
       todosAtendimentos: "getTodosAtendimentos",
       dicionario: "getDicionario",
       erroTransfer: "getErroTransfer",
-      msgErro: "getMsgErro"
+      msgErro: "getMsgErro",
+      regrasDoClienteAtivo: "getRegrasDoClienteAtivo"
     })
   }
 
