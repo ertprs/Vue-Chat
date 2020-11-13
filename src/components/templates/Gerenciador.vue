@@ -23,6 +23,7 @@
 <script>
 import { mapGetters } from "vuex"
 import axios_api from '@/services/serviceAxios';
+import { getAtendimentos } from "@/services/atendimentos"
 
 export default {
   computed: {
@@ -90,8 +91,12 @@ export default {
 
             }else{
               this.$store.dispatch("setStatusAtd", "em-atendimento")
-
               this.$store.dispatch("setBlocker", false)
+
+              if(this.$store.getters.getOrigemBlocker == "atd-parado"){
+                this.$store.dispatch("setOrigemBlocker", "")
+                getAtendimentos(this)
+              }
             }
 
             this.reqEmAndamento = false

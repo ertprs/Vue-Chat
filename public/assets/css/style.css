@@ -9811,7 +9811,7 @@ body {
   #chat.z-index-superior {
     z-index: 10; }
   #chat .lista-chat-container-vazio {
-    height: 90%;
+    height: calc(100% - 58px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10300,6 +10300,8 @@ body {
         line-height: 15px; }
         .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea textarea:focus, .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea textarea:active {
           outline: 0; }
+        .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea textarea[disabled] {
+          background-color: #DDD; }
       .chat-rodape .chat-rodape-mensagens .chat-rodape-textarea textarea {
         margin-left: 40px;
         height: 50px;
@@ -10595,7 +10597,7 @@ body {
       font-size: .775rem; }
 
 .lista-informacoes-container-vazio {
-  height: 90%;
+  height: calc(100% - 58px);
   display: flex;
   justify-content: center;
   align-items: center;

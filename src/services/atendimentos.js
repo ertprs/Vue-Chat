@@ -59,12 +59,13 @@ function verificarAlertaErroRequest() {
 }
 
 function loopAtualizacaoDeAtendimentos(count = 0) {
-    // console.log(count)
     start()
     setTimeout(async () => {
         if (verificaRequest()) {
             bloqueiaRequest()
-            await atualizarAtendimentos()
+            if(store.getters.getOrigemBlocker !== "atd-parado"){
+                await atualizarAtendimentos()
+            }
         }
         end()
         loopAtualizacaoDeAtendimentos(count = count + 1)
@@ -129,7 +130,9 @@ function tratarResponse(response) {
             setTimeout(() => { // Timeout aguardando cliente
                 adicionaCaso(206)
                 acionaProcessos(mainData)
-                getAtendimentos(app)
+                if(store.getters.getOrigemBlocker !== "atd-parado"){
+                    getAtendimentos(app)
+                }
             }, TEMPO_ATUALIZACAO)
             break;
 
@@ -224,7 +227,6 @@ function acionaProcessosAtualizacao(mainData){
     }
 }
 
-
 async function atualizarAtendimentos() {
     await axios_api({
         method: 'get',
@@ -261,6 +263,7 @@ async function atualizarAtendimentos() {
                     return
                 }
             }
+            
             liberaRequest()
         })
         .catch(

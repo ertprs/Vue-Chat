@@ -8,7 +8,7 @@
   background-color: darken(#eeeeee, 20);
   position: relative;
   .lista-chat-container-vazio{
-    height: 90%;
+    height: calc(100% - 58px);
     @include d-flex-center();
     background-color: #FFF;
     div{

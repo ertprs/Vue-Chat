@@ -86,6 +86,9 @@ $border-radius: 30px;
         &:focus, &:active{
           outline: 0;
         }
+        &[disabled]{
+          background-color: #DDD;
+        }
       }
       textarea{
         margin-left: $tamanhoEmoji;

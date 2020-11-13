@@ -88,7 +88,7 @@
 }
 
 .lista-informacoes-container-vazio{
-  height: 90%;
+  height: calc(100% - 58px);
   @include d-flex-center();
   background-color: whitesmoke;
   div{
