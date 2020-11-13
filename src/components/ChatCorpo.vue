@@ -63,7 +63,6 @@ export default {
       qtdErrosStatusMsg: 0,
       tokenStatus: "",
       primeiraReq: true,
-      novaMsg: false,
       idAtendimento: ""
     }
   },
@@ -98,12 +97,6 @@ export default {
           this.rolaChat()
           this.idAtendimento = this.atendimentoAtivo.id
         }
-  
-        if(this.atendimentoAtivo.novaMsgCttAtivo){
-          this.novaMsg = true
-        }else{
-          this.novaMsg = false
-        }
       }
     })
   },
@@ -115,6 +108,10 @@ export default {
       }
     },
     rolaChat(){
+      if(this.atendimentoAtivo.novaMsgCttAtivo){
+        this.$set(this.atendimentoAtivo, "novaMsgCttAtivo", false)
+      }
+
       const corpoMensagens = document.querySelector('.chat-corpo-mensagens')
       if(corpoMensagens){
         corpoMensagens.scroll(0, corpoMensagens.scrollHeight)
@@ -132,9 +129,6 @@ export default {
             this.$store.dispatch('setHabilitaRolagem', false)
           }else if(parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra || parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra + 1 || parseInt(posicaoDaBarra) + tamanhoContainer == tamanhoBarra - 1){
             this.$store.dispatch('setHabilitaRolagem', false)
-            if(this.novaMsg){
-              this.$set(this.atendimentoAtivo, "novaMsgCttAtivo", false)
-            }
           }
         }
       }
