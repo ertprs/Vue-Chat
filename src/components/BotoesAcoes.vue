@@ -382,6 +382,7 @@ export default {
       await axios_api.delete(`end-atendimento?${this.reqTeste}`, {data: {...data}})
         .then(response => {
           if(response.data.st_ret == 'OK'){
+            this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_sucesso_encerramento})
 
             let objAtdAux = {}
             for(let ramal in this.todosAtendimentos){

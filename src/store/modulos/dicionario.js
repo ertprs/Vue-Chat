@@ -82,7 +82,8 @@ export default {
       msg_divisao_ope: "por",
       msg_divisao_data_hora: "as",
       msg_sem_conexao: "Nao foi possivel estabelecer conexao. \nClique em 'OK' se quiser tentar novamente.",
-      msg_erro_autorizacao: "Erro na autorizacao"
+      msg_erro_autorizacao: "Erro na autorizacao",
+      msg_sucesso_encerramento: "Cliente encerrado com sucesso"
     }
   },
   mutations: {

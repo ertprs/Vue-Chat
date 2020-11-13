@@ -11,6 +11,7 @@
               <template v-if="arrMsg.login">{{ ` ${dicionario.msg_divisao_ope} `  + arrMsg.login }}</template>
             </h5>
           </div>
+          <hr>
         </div>
         <Mensagens
           v-for="(msg, i) in arrMsg.msg" :key="i"

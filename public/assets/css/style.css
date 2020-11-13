@@ -10196,15 +10196,17 @@ body {
 .chat-corpo-container {
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: flex-start;
   margin-bottom: 10px; }
   .chat-corpo-container div {
-    background: #DDD;
-    z-index: 2; }
+    flex: 1; }
   .chat-corpo-container .separador-mensagens {
     font-size: .8rem;
     color: #555;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     text-align: center;
     padding: 1.5px;
     margin: 0; }
@@ -10212,8 +10214,7 @@ body {
     border: 0;
     height: 1px;
     background-color: #555;
-    width: 100%;
-    position: absolute; }
+    width: 25%; }
 
 .chat-rodape {
   background-color: #bbbbbb;

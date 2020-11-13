@@ -16,6 +16,9 @@ export default {
         if(this.mensagens){
           let chaves = Object.keys(this.mensagens)
           let ultimaChave = chaves[chaves.length - 1]
+          if(!this.mensagens[ultimaChave]){
+            return
+          }
           let arrMsg = this.mensagens[ultimaChave].msg
   
           if(arrMsg.length){
