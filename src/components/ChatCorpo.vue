@@ -138,6 +138,8 @@ export default {
       axios_api.get(`get-status-messages?token_cliente=${this.atendimentoAtivo.token_cliente}${this.tokenStatus}&${this.reqTeste}`)
         .then(response => {
           if(response.status === 200){
+            console.log(response.data)
+
             this.qtdErrosStatusMsg = 0
 
             this.tokenStatus = `&token_status${response.data.token_status}`

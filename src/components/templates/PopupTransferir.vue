@@ -3,7 +3,7 @@
     <template v-if="!erroTransfer">
       <ul
         class="popup-lista"
-        :class="{'bg' : bg}"
+        :class="{'tres-mais' : ajustar, 'bg' : bg}"
         v-if="!abrirAgentes && !abrirGrupos">
         <li @click="preencherAgente()" v-if="temBtnAgente"> {{ btnAgente }} </li>
         <li @click="preencherGrupo()" v-if="temBtnGrupo"> {{ btnGrupo }} </li>
@@ -94,16 +94,30 @@ export default {
       btnGrupo: "",
       temBtnGrupo: false,
       btnBot: "",
-      temBtnBot: false
+      temBtnBot: false,
+      ajustar: false
     }
   },
   mounted(){
     this.preencherBotoes()
+    this.tamanhoChat()
   },
   components: {
     vSelect
   },
   methods: {
+    tamanhoChat(){
+      const widthChat = localStorage.getItem('largura-chat')
+      if(widthChat){
+        if(widthChat < '400px'){
+          this.ajustar = true
+        }else{
+          this.ajustar = false
+        }
+      }else{
+        this.ajustar = false
+      }
+    },
     preencherBotoes(){
       if(this.regrasDoClienteAtivo){
         if(this.regrasDoClienteAtivo.regras){

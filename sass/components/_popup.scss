@@ -34,6 +34,9 @@
         list-style-type: none;
         margin: 10px auto;
         padding: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
         &.tres-mais{
           flex-direction: column;
           li{
@@ -87,6 +90,9 @@
         @include d-flex-center();
         flex-direction: column;
         min-width: 200px;
+        ul[role=listbox]{
+          overflow: hidden;
+        }
         > div{
           width: 100%;
           > input{

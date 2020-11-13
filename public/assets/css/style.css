@@ -10679,7 +10679,10 @@ body {
         display: flex;
         list-style-type: none;
         margin: 10px auto;
-        padding: 0; }
+        padding: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; }
         #popup .popup-container-geral .popup-container .popup-lista.tres-mais {
           flex-direction: column; }
           #popup .popup-container-geral .popup-container .popup-lista.tres-mais li:nth-child(2n) {
@@ -10766,6 +10769,8 @@ body {
         align-items: center;
         flex-direction: column;
         min-width: 200px; }
+        #popup .popup-container-geral .popup-container .popup-container-tela-2 ul[role=listbox] {
+          overflow: hidden; }
         #popup .popup-container-geral .popup-container .popup-container-tela-2 > div {
           width: 100%; }
           #popup .popup-container-geral .popup-container .popup-container-tela-2 > div > input {
