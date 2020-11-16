@@ -51,7 +51,7 @@
               <p v-if="fechado">{{ formataSigla(atd.nome_usu[1], 'lower') }}</p>
               <img v-if="atd.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${atd.sigla}.png`">
             </div>
-            <template v-if="!fechado">{{ /* formataNome(atd.nome_usu) */ atd.id_cli }}</template>
+            <template v-if="!fechado">{{ formataNome(atd.nome_usu) }}</template>
             <ultima-msg v-if="!fechado" :mensagens="atd.arrMsg" />
             <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && idAtendimentoAtivo !== atd.id_cli" class="destaque-nova-msg">{{ atd.qtdMsgNova }}</span>
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
@@ -171,9 +171,9 @@ export default {
   watch: {
     todosAtendimentos() {
       if(this.todosAtendimentos){
-        this.contarMsgClientes()
-        
         this.objAtendimentos = Object.values(this.todosAtendimentos)
+        
+        this.contarMsgClientes()
 
         if(this.objAtendimentos.length && this.idAtendimentoAtivo == ''){
           this.ativarConversa(this.objAtendimentos[0], 0)
@@ -369,9 +369,11 @@ export default {
           auxContMsgNova = auxContMsgNova + this.objAtendimentos[index].qtdMsgNova
         }
         if(this.objAtendimentos[index].novoContato) {
-          auxContNovoContato ++
+          auxContNovoContato++
         }
       }
+
+      console.log(auxContNovoContato)
       this.totalMsgNovas = auxContMsgNova
       this.totalClientesNovos = auxContNovoContato
     },
