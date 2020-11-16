@@ -4,7 +4,6 @@
       <ChatOpcoes />
       <ChatCorpo id="chat-operador"/>
       <ChatRodape />
-      <Popup />
       <BotoesAcoes />
     </template>
     <template v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206">
@@ -29,7 +28,6 @@ import { mapGetters } from 'vuex'
 import ChatOpcoes from '../ChatOpcoes'
 import ChatCorpo from '../ChatCorpo'
 import ChatRodape from '../ChatRodape'
-import Popup from '../templates/Popup'
 import BotoesAcoes from '../BotoesAcoes'
 
 export default {
@@ -37,7 +35,6 @@ export default {
     ChatOpcoes,
     ChatCorpo,
     ChatRodape,
-    Popup,
     BotoesAcoes
   },
   computed: {

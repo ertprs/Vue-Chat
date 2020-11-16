@@ -3,7 +3,7 @@
     <ul 
       lista-retornar
       class="popup-lista" 
-      :class="{'tres-mais' : ajustar, 'bg' : bg}"
+      :class="{'bg' : bg}"
       v-if="!pessoalData">
       <li @click="retornar('todos')"> {{ dicionario.btn_todos }} </li>
       <li @click="retornar('pessoal')"> {{ dicionario.btn_pessoal }} </li>
@@ -44,12 +44,8 @@ export default {
     return{
       pessoalData: false,
       dataHora: '',
-      ajustar: false,
       reqEmAndamento: false
     }
-  },
-  mounted(){
-    this.tamanhoChat()
   },
   computed: {
     ...mapGetters({
@@ -185,18 +181,6 @@ export default {
       this.$store.dispatch('limparAtendimentoAtivo')
       this.$store.dispatch('limparIdAtendimentoAtivo')
 
-    },
-    tamanhoChat(){
-      const widthChat = localStorage.getItem('largura-chat')
-      if(widthChat){
-        if(widthChat < '400px'){
-          this.ajustar = true
-        }else{
-          this.ajustar = false
-        }
-      }else{
-        this.ajustar = false
-      }
     },
     setData(opt){
       let data = new Date()

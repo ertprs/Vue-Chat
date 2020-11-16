@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Blocker />
+    <Popup />
     <!-- Contatos -->
     <vue-resizable
       :minWidth="objContatos.min_width"
@@ -38,17 +39,21 @@ import axios from 'axios'
 import { mapGetters } from "vuex"
 
 import VueResizable from 'vue-resizable'
+
 import Blocker from './components/templates/Blocker'
+import Popup from './components/templates/Popup'
 import Contatos from './components/templates/Contatos'
 import Chat from './components/templates/Chat'
 import Informacoes from './components/templates/Informacoes'
 import Gerenciador from './components/templates/Gerenciador'
+
 import axios_api from './services/serviceAxios'
 
 export default {
   components: {
     'vue-resizable' : VueResizable,
     Blocker,
+    Popup,
     Contatos,
     Chat,
     Informacoes,

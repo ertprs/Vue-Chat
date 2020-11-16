@@ -10703,10 +10703,6 @@ body {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis; }
-        #popup .popup-container-geral .popup-container .popup-lista.tres-mais {
-          flex-direction: column; }
-          #popup .popup-container-geral .popup-container .popup-lista.tres-mais li:nth-child(2n) {
-            margin: 10px 0; }
         #popup .popup-container-geral .popup-container .popup-lista li {
           transition-duration: 300ms;
           user-select: none;
@@ -10788,9 +10784,12 @@ body {
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        min-width: 200px; }
+        min-width: 400px; }
         #popup .popup-container-geral .popup-container .popup-container-tela-2 ul[role=listbox] {
+          width: 100%;
           overflow: hidden; }
+          #popup .popup-container-geral .popup-container .popup-container-tela-2 ul[role=listbox] li[role=option] {
+            white-space: wrap; }
         #popup .popup-container-geral .popup-container .popup-container-tela-2 > div {
           width: 100%; }
           #popup .popup-container-geral .popup-container .popup-container-tela-2 > div > input {

@@ -37,14 +37,6 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        &.tres-mais{
-          flex-direction: column;
-          li{
-            &:nth-child(2n){
-              margin: 10px 0;
-            }
-          }
-        }
         li{
           @include estilo-botao(-4px, -2px, 1, var(--cor));
           min-width: 85px;
@@ -89,9 +81,13 @@
       .popup-container-tela-2{
         @include d-flex-center();
         flex-direction: column;
-        min-width: 200px;
+        min-width: 400px;
         ul[role=listbox]{
+          width: 100%;
           overflow: hidden;
+          li[role=option]{
+            white-space: wrap;
+          }
         }
         > div{
           width: 100%;
