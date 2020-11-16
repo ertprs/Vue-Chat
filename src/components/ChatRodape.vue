@@ -112,7 +112,7 @@
     </div>
     <!-- Container mensagens formatadas-->
     <transition name="fade">
-      <div class="chat-rodape-msg-formatada" v-show="msgFormatadaAberto">
+      <div class="chat-rodape-msg-formatada" v-show="verificaMsgFormatadaAberto">
         <!-- Select 01 -->
         <select
           name="select-msg-formatada_01"
@@ -201,7 +201,6 @@ export default {
       erroFormatoAnexo: false,
       abrirEmojis: false,
       temMsgFormatada: false,
-      msgFormatadaAberto: false,
       mensagensFormatadas_01: [],
       chaveAtual_01: '',
       mensagensFormatadas_02: [],
@@ -213,9 +212,15 @@ export default {
       alturaTela: ''
     };
   },
+  destroyed(){
+    this.$root.$off("toggle-msg-formatada")
+  },
   mounted() {
+    this.$root.$on("toggle-msg-formatada", () => {
+      this.abreFechaMsgFormatada()
+    })
 
-    this.$root.$on("atualizar_mensagem", (objMsgExterno) => {
+    this.$root.$on("atualizar-mensagem", (objMsgExterno) => {
         this.criaObjMensagem(objMsgExterno)
     }),(document.querySelector(".btn-emoji").innerText = String.fromCodePoint(0x1f61c));
 
@@ -555,9 +560,9 @@ export default {
         }); 
     },
     abreFechaMsgFormatada(){
-      this.msgFormatadaAberto = !this.msgFormatadaAberto;
+      this.$store.dispatch("setVerificaMsgFormatadaAberto", !this.verificaMsgFormatadaAberto)
 
-      if (this.msgFormatadaAberto == true) {
+      if (this.verificaMsgFormatadaAberto) {
         this.alterarValoresVariaveisCSS("aberto")
       } else {
         // Textarea menor que 3 linhas
@@ -846,8 +851,8 @@ export default {
     },
     resizeEvent(event){
       this.alturaTela = document.querySelector("html").offsetHeight
-      if(this.msgFormatadaAberto){
-        this.msgFormatadaAberto = false
+      if(this.verificaMsgFormatadaAberto){
+        this.$store.dispatch("setVerificaMsgFormatadaAberto", false)
       }
       
       if(this.tamanhoText >= 70){
@@ -947,7 +952,7 @@ export default {
   },
   watch: {
     tamanhoText(){
-      if(!this.msgFormatadaAberto){
+      if(!this.verificaMsgFormatadaAberto){
         // Textarea maior que 70 (tres/quatro linhas)
         if(this.tamanhoText >= 70){
           this.alterarValoresVariaveisCSS("medio")
@@ -991,7 +996,8 @@ export default {
       extDocs: "getExtDocs",
       semIframe: "getSemIframe",
       dicionario: "getDicionario",
-      nomeOpe: "getNomeOpe"
+      nomeOpe: "getNomeOpe",
+      verificaMsgFormatadaAberto: "getVerificaMsgFormatadaAberto"
     })
   },
   created(){
@@ -1000,10 +1006,7 @@ export default {
   destroyed(){
     window.removeEventListener("resize", this.resizeEvent)
 
-    this.$root.$off("atualizar_mensagem")
+    this.$root.$off("atualizar-mensagem")
   }
 };
 </script>
-
-<style>
-</style>

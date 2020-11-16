@@ -520,6 +520,10 @@ export default {
         atd.qtdMsgNova = 0
       }
 
+      if(this.$store.getters.getVerificaMsgFormatadaAberto){
+        this.$root.$emit("toggle-msg-formatada")
+      }
+
       this.contarMsgClientes()
 
       this.$store.dispatch('setAtendimentoAtivo', atd)

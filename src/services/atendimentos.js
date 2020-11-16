@@ -358,12 +358,12 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
                         if(store.getters.getIdAtendimentoAtivo == novosAtendimentos[ramal].id_cli){
                             novosAtendimentos[ramal].novaMsgCttAtivo = true
                         }
-                        app.$root.$emit('atualizar_mensagem', message)
+                        app.$root.$emit('atualizar-mensagem', message)
                     } else if(message.resp_msg == "OPE"){
                         if(store.getters.getMensagemViaTextarea){
                             return
                         }else{
-                            app.$root.$emit('atualizar_mensagem', message)
+                            app.$root.$emit('atualizar-mensagem', message)
                         }
                     }
                     store.dispatch('setAtendimentos', novosAtendimentos)

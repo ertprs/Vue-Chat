@@ -13,7 +13,8 @@ export default {
     corDestaque: "",
     semIframe: false,
     linkImagem: "",
-    nomeOpe: ""
+    nomeOpe: "",
+    verificaMsgFormatadaAberto: false
   },
   mutations: {
     setAbaContatos(state, abaContatos){
@@ -48,6 +49,9 @@ export default {
     },
     setNomeOpe(state, nomeOpe){
       state.nomeOpe = nomeOpe
+    },
+    setVerificaMsgFormatadaAberto(state, verificaMsgFormatadaAberto){
+      state.verificaMsgFormatadaAberto = verificaMsgFormatadaAberto
     }
   },
   actions: {
@@ -83,6 +87,9 @@ export default {
     },
     setNomeOpe: (context, payload) => {
       context.commit('setNomeOpe', payload)
+    },
+    setVerificaMsgFormatadaAberto: (context, payload) => {
+      context.commit('setVerificaMsgFormatadaAberto', payload)
     }
   },
   getters: {
@@ -118,6 +125,9 @@ export default {
     },
     getNomeOpe(state){
       return state.nomeOpe
+    },
+    getVerificaMsgFormatadaAberto(state){
+      return state.verificaMsgFormatadaAberto
     }
   } 
 }
