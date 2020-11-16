@@ -179,7 +179,7 @@ export default {
                       }
                       str += "</ul>"
 
-                      if(!str.endsWith("<ul></ul>")){
+                      if(!str.endsWith('<ul class="tooltip-list"></ul>')){
                         this.$set(this.atendimentoAtivo.arrMsg[index].msg[i], "tooltip", str)
                       }
 
