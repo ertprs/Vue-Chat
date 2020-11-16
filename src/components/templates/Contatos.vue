@@ -373,11 +373,11 @@ export default {
         }
       }
 
-      console.log(auxContNovoContato)
       this.totalMsgNovas = auxContMsgNova
       this.totalClientesNovos = auxContNovoContato
     },
     formataSigla(letra, acao){
+      if(!letra){ return }
       if(acao == 'upper'){
         return letra.toUpperCase()
       }else if(acao == 'lower'){
