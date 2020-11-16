@@ -1,7 +1,8 @@
 import Vue from "vue";
 import "@babel/polyfill"
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import { BootstrapVue } from 'bootstrap-vue'
 import { Datetime } from 'vue-datetime'
+import VueTippy, { TippyComponent } from "vue-tippy";
 import 'vue-datetime/dist/vue-datetime.css'
 import "../public/assets/css/style.css";
 import "./config/msgs";
@@ -14,8 +15,9 @@ import store from "./store"
 import { getAtendimentos } from "./services/atendimentos"
 
 Vue.use(Datetime)
+Vue.use(VueTippy)
+Vue.component("tippy", TippyComponent)
 Vue.use(BootstrapVue)
-Vue.use(IconsPlugin)
 Vue.config.productionTip = false;
 
 var app = new Vue({

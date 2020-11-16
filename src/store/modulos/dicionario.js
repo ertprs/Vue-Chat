@@ -85,7 +85,23 @@ export default {
       msg_divisao_data_hora: "as",
       msg_sem_conexao: "Nao foi possivel estabelecer conexao. \nClique em 'OK' se quiser tentar novamente.",
       msg_erro_autorizacao: "Erro na autorizacao",
-      msg_sucesso_encerramento: "Cliente encerrado com sucesso"
+      msg_sucesso_encerramento: "Cliente encerrado com sucesso",
+      msg_data_hora_entrega: "Entrega",
+      msg_data_hora_envio_cliente: "Envio Cliente",
+      msg_data_hora_envio_fila: "Saida Sistema",
+      msg_data_hora_leitura: "Leitura",
+      msg_data_hora_gravacao: "Gravacao",
+      msg_data_hora_status: "Status",
+      msg_status_C: "Cancelada / Nao enviada",
+      msg_status_D: "Enviado ao usuario",
+      msg_status_E: "Entregue ao usuario",
+      msg_status_F: "Enviado",
+      msg_status_G: "Pendente de envio",
+      msg_status_L: "Lido pelo usuario",
+      msg_status_N: "QRCode nao autenticado - procure o responsavel pela autenticacao",
+      msg_status_Q: "Fila operadora/broker",
+      msg_status_T: "Timeout",
+      msg_status_X: "Reprocessamento"
     }
   },
   mutations: {

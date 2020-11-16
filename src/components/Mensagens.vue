@@ -28,25 +28,25 @@
       <span class="horario-envio"> {{ horario }} </span>
       
       <transition name="fade">
-        <span class="check" v-if="status == 'D'"> <i class="fas fa-check"></i> </span>
+        <span class="check" v-if="status == 'D'" :content="contentTooltip" v-tippy> <i class="fas fa-check"></i> </span>
       </transition>
       <transition name="fade">
-        <span class="check cinza" v-if="status == 'Q'"> <i class="fas fa-check"></i> </span>
+        <span class="check cinza" v-if="status == 'Q'" :content="contentTooltip" v-tippy> <i class="fas fa-check"></i> </span>
       </transition>
       <transition name="fade">
-        <span class="check preto" v-if="status == 'G'"> <i class="fas fa-check"></i> </span>
+        <span class="check preto" v-if="status == 'G'" :content="contentTooltip" v-tippy> <i class="fas fa-check"></i> </span>
       </transition>
       <transition name="fade">
-        <span class="check preto" v-if="status == 'E'"> <i class="fas fa-check-double"></i> </span>
+        <span class="check preto" v-if="status == 'E'" :content="contentTooltip" v-tippy> <i class="fas fa-check-double"></i> </span>
       </transition>
       <transition name="fade">
-        <span class="check visualizado" v-if="status == 'L'"> <i class="fas fa-check-double"></i> </span>
+        <span class="check visualizado" v-if="status == 'L'" :content="contentTooltip" v-tippy> <i class="fas fa-check-double"></i> </span>
       </transition>
       <transition name="fade">
-        <span class="check vermelho" v-if="status == 'C'"> <i class="fas fa-times-circle"></i> </span>
+        <span class="check vermelho" v-if="status == 'C'" :content="contentTooltip" v-tippy> <i class="fas fa-times-circle"></i> </span>
       </transition>
       <transition name="fade">
-        <span class="check vermelho" v-if="status == 'T'"> <i class="fas fa-hourglass"></i> </span>
+        <span class="check vermelho" v-if="status == 'T'" :content="contentTooltip" v-tippy> <i class="fas fa-hourglass"></i> </span>
       </transition>
 
       <span class="autor-mensagem"> {{ autor }} </span>
@@ -67,7 +67,12 @@
 import { mapGetters } from "vuex"
 
 export default {
-  props: ["autor", "origem", "msg", "anexo", "imgAnexo", "horario", "status", "logo", "tipoDoc", "docAnexo", "nomeArquivo", "audio", "video"],
+  props: ["autor", "origem", "msg", "anexo", "imgAnexo", "horario", "status", "logo", "tipoDoc", "docAnexo", "nomeArquivo", "audio", "video", "msgTooltip"],
+  data(){
+    return{
+      strTooltipAux: ""
+    }
+  },
   computed: {
     ...mapGetters({
       dicionario: "getDicionario"
@@ -80,6 +85,19 @@ export default {
           return this.docAnexo
         }
       }
+    },
+    contentTooltip: {
+      get(){
+        if(this.status && !this.msgTooltip){
+          const msgStatus = "msg_status_"+this.status
+          return this.strTooltipAux = this.dicionario[msgStatus]
+        }else if(this.status && this.msgTooltip){
+          return this.strTooltipAux = this.msgTooltip
+        }
+      },
+      set(msg){
+        return this.contentTooltip = msg
+      }
     }
   },
   methods: {
@@ -89,6 +107,6 @@ export default {
       this.$store.dispatch("setBlocker", true)
       this.$store.dispatch("setOrigemBlocker", "visualizar-imagem")
     }
-  }
+  },
 }
 </script>

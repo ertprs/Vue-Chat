@@ -27,7 +27,8 @@
           :docAnexo="msg.docAnexo"
           :nomeArquivo="msg.nomeArquivo"
           :audio="msg.audio"
-          :video="msg.video" 
+          :video="msg.video"
+          :msgTooltip="msg.tooltip"
         />
       </div>
     </div>
@@ -138,7 +139,7 @@ export default {
       axios_api.get(`get-status-messages?token_cliente=${this.atendimentoAtivo.token_cliente}${this.tokenStatus}&${this.reqTeste}`)
         .then(response => {
           if(response.status === 200){
-            console.log(response.data)
+            // console.log(response.data)
 
             this.qtdErrosStatusMsg = 0
 
@@ -154,8 +155,35 @@ export default {
                   if(this.atendimentoAtivo.arrMsg[index].msg[i].origem == "principal"){
                     if(arrStatusMsg[index][j]){
                       this.$set(this.atendimentoAtivo.arrMsg[index].msg[i], "status", arrStatusMsg[index][j].status)
-                      j++
 
+                      let msgStatus = "msg_status_"+arrStatusMsg[index][j].status
+                      let str = `<p>${this.dicionario[msgStatus]}</p>`
+                      str += `<ul class="tooltip-list">`
+                      if(arrStatusMsg[index][j].data_hora_entrega && arrStatusMsg[index][j].data_hora_entrega !== "1111-11-11 00:00:00"){ 
+                        str += `<li>${this.dicionario.msg_data_hora_entrega} - ${arrStatusMsg[index][j].data_hora_entrega}</li>`
+                      }
+                      if(arrStatusMsg[index][j].data_hora_envio_cliente && arrStatusMsg[index][j].data_hora_envio_cliente !== "1111-11-11 00:00:00"){ 
+                        str += `<li>${this.dicionario.msg_data_hora_envio_cliente} - ${arrStatusMsg[index][j].data_hora_envio_cliente}</li>`
+                      }
+                      if(arrStatusMsg[index][j].data_hora_envio_fila && arrStatusMsg[index][j].data_hora_envio_fila !== "1111-11-11 00:00:00"){ 
+                        str += `<li>${this.dicionario.msg_data_hora_envio_fila} - ${arrStatusMsg[index][j].data_hora_envio_fila}</li>`
+                      }
+                      if(arrStatusMsg[index][j].data_hora_leitura && arrStatusMsg[index][j].data_hora_leitura !== "1111-11-11 00:00:00"){
+                        str += `<li>${this.dicionario.msg_data_hora_leitura} - ${arrStatusMsg[index][j].data_hora_leitura}</li>`
+                      }
+                      if(arrStatusMsg[index][j].data_hora_gravacao && arrStatusMsg[index][j].data_hora_gravacao !== "1111-11-11 00:00:00"){
+                        str += `<li>${this.dicionario.msg_data_hora_gravacao} - ${arrStatusMsg[index][j].data_hora_gravacao}</li>`
+                      }
+                      if(arrStatusMsg[index][j].data_hora_status && arrStatusMsg[index][j].data_hora_status !== "1111-11-11 00:00:00"){
+                        str += `<li>${this.dicionario.msg_data_hora_status} - ${arrStatusMsg[index][j].data_hora_status}</li>`
+                      }
+                      str += "</ul>"
+
+                      if(!str.endsWith("<ul></ul>")){
+                        this.$set(this.atendimentoAtivo.arrMsg[index].msg[i], "tooltip", str)
+                      }
+
+                      j++
                       this.$forceUpdate()
                     }else{
                       j = j <= 0 ? 0 : j--
