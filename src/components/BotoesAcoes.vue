@@ -327,6 +327,7 @@ export default {
             }
   
             if(response.data.options.bot.length){
+
               response.data.options.bot.map(objBot => {
                 arrChaves = Object.keys(objBot)
                 arrValores = Object.values(objBot)

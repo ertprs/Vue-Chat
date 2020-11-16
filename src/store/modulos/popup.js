@@ -21,7 +21,7 @@ export default {
       state.origem = origem
     },
     setArrBot(state, arrBot){
-      state.arrBot = arrBot
+      state.arrBot.push(arrBot)
     },
     setArrAgentes(state, arrAgentes){
       state.arrAgentes.push(arrAgentes)

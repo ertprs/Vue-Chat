@@ -4,7 +4,7 @@
       <ul
         class="popup-lista"
         :class="{'tres-mais' : ajustar, 'bg' : bg}"
-        v-if="!abrirAgentes && !abrirGrupos">
+        v-if="!abrirAgentes && !abrirGrupos && !abrirBot">
         <li @click="preencherAgente()" v-if="temBtnAgente"> {{ btnAgente }} </li>
         <li @click="preencherGrupo()" v-if="temBtnGrupo"> {{ btnGrupo }} </li>
         <li @click="preencherBot()" v-if="temBtnBot"> {{ btnBot }} </li>
