@@ -729,6 +729,7 @@ export default {
       }
     },
     formataUltimaMsg(arrMsgs){
+      if(!arrMsgs){ return }
       if(arrMsgs.length > 0) {
         let indexRef = arrMsgs.length - 1
         let msgFormatada = arrMsgs[indexRef].msg
