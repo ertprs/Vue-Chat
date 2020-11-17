@@ -4,7 +4,7 @@ import axios_api from "./serviceAxios"
 import { axiosTokenJWT } from "./serviceAxios"
 import { carregarIframe } from "./iframe"
 
-const TEMPO_ATUALIZACAO = 2000
+const TEMPO_ATUALIZACAO = 3000
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
 var status_encerrando = 0 // 0 = liberado; 1 = em pausa
 var contador_request_erro = 0
