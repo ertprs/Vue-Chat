@@ -157,7 +157,7 @@ export default {
                       this.$set(this.atendimentoAtivo.arrMsg[index].msg[i], "status", arrStatusMsg[index][j].status)
 
                       let msgStatus = "msg_status_"+arrStatusMsg[index][j].status
-                      let str = `<p>${this.dicionario[msgStatus]}</p>`
+                      let str = `<p class="tooltip-titulo-status-message">${this.dicionario[msgStatus]}</p>`
                       if(arrStatusMsg[index][j].data_hora_status && arrStatusMsg[index][j].data_hora_status !== "1111-11-11 00:00:00"){
                         str += `<p>${this.formataDataHora(arrStatusMsg[index][j].data_hora_status, true)}</p>`
                       }

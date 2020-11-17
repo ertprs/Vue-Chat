@@ -10236,6 +10236,9 @@ body {
   margin: 0;
   padding: 0; }
 
+.tooltip-titulo-status-message {
+  margin-bottom: 0; }
+
 .chat-rodape {
   background-color: #bbbbbb;
   position: relative;
