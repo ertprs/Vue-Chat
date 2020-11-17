@@ -10214,7 +10214,8 @@ body {
   justify-content: flex-start;
   margin-bottom: 10px; }
   .chat-corpo-container div {
-    flex: 1; }
+    flex: 1;
+    margin: 0 2.5px; }
   .chat-corpo-container .separador-mensagens {
     font-size: .8rem;
     color: #555;
@@ -10228,7 +10229,7 @@ body {
     border: 0;
     height: 1px;
     background-color: #555;
-    width: 25%; }
+    width: 100%; }
 
 .tooltip-list {
   list-style-type: none;

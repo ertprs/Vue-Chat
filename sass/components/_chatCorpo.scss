@@ -43,6 +43,7 @@ $cor-separador: #555;
   margin-bottom: 10px;
   div{
     flex: 1;
+    margin: 0 2.5px;
   }
   .separador-mensagens{
     font-size: .8rem;
@@ -58,7 +59,7 @@ $cor-separador: #555;
     border: 0;
     height: 1px;
     background-color: $cor-separador;
-    width: 25%;
+    width: 100%;
   }
 }
 
