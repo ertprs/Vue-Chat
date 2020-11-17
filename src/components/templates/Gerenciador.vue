@@ -101,6 +101,7 @@ export default {
 
             this.reqEmAndamento = false
             
+            this.preencherDiv()
           }
         })
         .catch(error => {
@@ -117,10 +118,10 @@ export default {
             this.$store.dispatch("setBlocker", false)
           }
 
+          this.preencherDiv()
           console.log("error start/stop: ", error)
         })
 
-        this.preencherDiv()
     },
     abrirAtivarCtt(){
       if(this.iframeCttAtivo){
