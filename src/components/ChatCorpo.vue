@@ -222,7 +222,11 @@ export default {
         data = data.reverse()
         data = data.join("/")
         
-        hora = hora.slice(0, 8)
+        if(!origem){
+          hora = hora.slice(0, 5)
+        }else{
+          hora = hora.slice(0, 8)
+        }
 
         if(!origem){
           return `${data} ${this.dicionario.msg_divisao_data_hora} ${hora}` 
