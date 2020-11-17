@@ -158,24 +158,24 @@ export default {
 
                       let msgStatus = "msg_status_"+arrStatusMsg[index][j].status
                       let str = `<p>${this.dicionario[msgStatus]}</p>`
+                      if(arrStatusMsg[index][j].data_hora_status && arrStatusMsg[index][j].data_hora_status !== "1111-11-11 00:00:00"){
+                        str += `<p>${this.formataDataHora(arrStatusMsg[index][j].data_hora_status, true)}</p>`
+                      }
                       str += `<ul class="tooltip-list">`
                       if(arrStatusMsg[index][j].data_hora_entrega && arrStatusMsg[index][j].data_hora_entrega !== "1111-11-11 00:00:00"){ 
-                        str += `<li>${this.dicionario.msg_data_hora_entrega} - ${arrStatusMsg[index][j].data_hora_entrega}</li>`
-                      }
-                      if(arrStatusMsg[index][j].data_hora_envio_cliente && arrStatusMsg[index][j].data_hora_envio_cliente !== "1111-11-11 00:00:00"){ 
-                        str += `<li>${this.dicionario.msg_data_hora_envio_cliente} - ${arrStatusMsg[index][j].data_hora_envio_cliente}</li>`
+                        str += `<li>${this.dicionario.msg_data_hora_entrega} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_entrega, true)}</li>`
                       }
                       if(arrStatusMsg[index][j].data_hora_envio_fila && arrStatusMsg[index][j].data_hora_envio_fila !== "1111-11-11 00:00:00"){ 
-                        str += `<li>${this.dicionario.msg_data_hora_envio_fila} - ${arrStatusMsg[index][j].data_hora_envio_fila}</li>`
+                        str += `<li>${this.dicionario.msg_data_hora_envio_fila} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_envio_fila, true)}</li>`
                       }
-                      if(arrStatusMsg[index][j].data_hora_leitura && arrStatusMsg[index][j].data_hora_leitura !== "1111-11-11 00:00:00"){
-                        str += `<li>${this.dicionario.msg_data_hora_leitura} - ${arrStatusMsg[index][j].data_hora_leitura}</li>`
+                      if(arrStatusMsg[index][j].data_hora_envio_cliente && arrStatusMsg[index][j].data_hora_envio_cliente !== "1111-11-11 00:00:00"){ 
+                        str += `<li>${this.dicionario.msg_data_hora_envio_cliente} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_envio_cliente, true)}</li>`
                       }
                       if(arrStatusMsg[index][j].data_hora_gravacao && arrStatusMsg[index][j].data_hora_gravacao !== "1111-11-11 00:00:00"){
-                        str += `<li>${this.dicionario.msg_data_hora_gravacao} - ${arrStatusMsg[index][j].data_hora_gravacao}</li>`
+                        str += `<li>${this.dicionario.msg_data_hora_gravacao} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_gravacao, true)}</li>`
                       }
-                      if(arrStatusMsg[index][j].data_hora_status && arrStatusMsg[index][j].data_hora_status !== "1111-11-11 00:00:00"){
-                        str += `<li>${this.dicionario.msg_data_hora_status} - ${arrStatusMsg[index][j].data_hora_status}</li>`
+                      if(arrStatusMsg[index][j].data_hora_leitura && arrStatusMsg[index][j].data_hora_leitura !== "1111-11-11 00:00:00"){
+                        str += `<li>${this.dicionario.msg_data_hora_leitura} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_leitura, true)}</li>`
                       }
                       str += "</ul>"
 
@@ -204,7 +204,7 @@ export default {
 
         this.primeiraReq = false
     },
-    formataDataHora(dataHora){
+    formataDataHora(dataHora, origem){
       if(!dataHora){
         return ""
       }
@@ -224,7 +224,11 @@ export default {
 
         hora = hora.slice(0, 5)
 
-        return `${data} ${this.dicionario.msg_divisao_data_hora} ${hora}` 
+        if(!origem){
+          return `${data} ${this.dicionario.msg_divisao_data_hora} ${hora}` 
+        }else{
+          return `${data} ${hora}`
+        }
       }else{
         return dataHora
       }
