@@ -53,7 +53,7 @@
           </div>
         </div>
         <iframe 
-          :src="`${this.dominio}/im/atdHumano/view/atd_valida.php?grupo=${grupo}&categoria=${categoria}&assunto=${assunto}&nro_chat=${nroChat}&${this.reqTeste}`" frameborder="0"
+          :src="`${this.dominio}/im/atdHumano/view/atd_valida.php?categoria=${categoria}&assunto=${assunto}&${this.reqTeste}`" frameborder="0"
           @load="gif = false"
           @loadstart="gif = true"
           > </iframe> <!-- tipo_popup=AJ2& -->
