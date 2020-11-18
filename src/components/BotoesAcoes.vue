@@ -402,7 +402,7 @@ export default {
               }
             }
 
-            if(!objAtdAux){
+            if(!objAtdAux || !Object.keys(objAtdAux).length){
               this.$store.dispatch("setCaso", 206)
             }
               
