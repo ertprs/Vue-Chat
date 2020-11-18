@@ -37,6 +37,7 @@ export default {
       todosAtendimentos: "getTodosAtendimentos",
       semIframe: "getSemIframe",
       minhaAgenda: "getAgenda",
+      aguardando: "getAguardando",
       dicionario: "getDicionario"
     })
   },
@@ -201,6 +202,36 @@ export default {
           }
         })
       }
+    },
+    removerClientesDuplicados(origem){
+      let objAtendimentos = Object.values(this.todosAtendimentos)
+      
+      let arrVerificacao = []
+      let auxVerificacao = []
+      if(origem == "agenda"){
+        arrVerificacao = this.minhaAgenda
+        auxVerificacao = this.minhaAgenda
+      }else{
+        arrVerificacao = this.aguardando
+        auxVerificacao = this.aguardando
+      }
+
+      if(!arrVerificacao.length){ return }
+      
+      arrVerificacao.map(aux => {
+        objAtendimentos.map(atd => {
+          if(aux.login_usu == atd.login_usu){
+            auxVerificacao = auxVerificacao.filter(atdAux => {
+              return atdAux.login_usu !== atd.login_usu 
+            })
+            if(origem == "agenda"){
+              this.$store.dispatch("setAgenda", auxVerificacao)
+            }else{
+              this.$store.dispatch("setAguardando", auxVerificacao)
+            }
+          }
+        })
+      })
     }
   },
   watch: {
@@ -219,6 +250,7 @@ export default {
               .then(response => {
                 const arrAguardando = response.data.ret || []
                 this.$store.dispatch("setAguardando", arrAguardando)
+                this.removerClientesDuplicados("aguardando")
                 this.qtdAguardando = i.count
               })
               .catch(error => {
@@ -234,6 +266,7 @@ export default {
                 .then(response => {
                   const arrAgenda = response.data.ret || []
                   this.$store.dispatch("setAgenda", arrAgenda)
+                  this.removerClientesDuplicados("agenda")
                   this.qtdAgenda = i.count
                 })
                 .catch(error => {

@@ -91,13 +91,12 @@ export default {
               }
             }
             
-            // nao tem pessoal/data ainda (quando tiver tem que ajustar)
-            // if(objRegrasSuspend.transfer_bot){
-            //   if(objRegrasSuspend.transfer_bot.use == "S"){
-            //     this.temAgendar = true
-            //     this.btnAgendar = objRegrasSuspend.transfer_bot.name
-            //   }
-            // }
+            if(objRegrasSuspend.agendar){
+              if(objRegrasSuspend.agendar.use == "S"){
+                this.temAgendar = true
+                this.btnAgendar = objRegrasSuspend.agendar.name
+              }
+            }
           }
         }
       }
