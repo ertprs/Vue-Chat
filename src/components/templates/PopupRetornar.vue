@@ -165,7 +165,6 @@ export default {
         })
     },
     removerCliente(){
-      
       let objAtdAux = {}
       for(let ramal in this.todosAtendimentos){
         if(this.todosAtendimentos[ramal].login_usu != this.atendimentoAtivo.login_usu){
@@ -174,7 +173,8 @@ export default {
       }
       
       this.$store.dispatch("setAtendimentos", objAtdAux)
-      if(!objAtdAux){
+
+      if(!objAtdAux || !Object.keys(objAtdAux).length){
         this.$store.dispatch("setCaso", 206)
       }
       

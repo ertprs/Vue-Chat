@@ -134,23 +134,6 @@ export default {
         }
       }
     },
-    removerCliente(){
-      let objAtdAux = {}
-      for(let ramal in this.todosAtendimentos){
-        if(this.todosAtendimentos[ramal].login_usu != this.atendimentoAtivo.login_usu){
-          objAtdAux[ramal] = this.todosAtendimentos[ramal]
-        }
-      }
-      
-      this.$store.dispatch("setAtendimentos", objAtdAux)
-      if(!objAtdAux){
-        this.$store.dispatch("setCaso", 206)
-      }
-      
-      this.$store.dispatch('limparAtendimentoAtivo')
-      this.$store.dispatch('limparIdAtendimentoAtivo')
-
-    },
     preencherAgente(){
       if(this.arrAgentes.length){
         this.abrirAgentes = true
