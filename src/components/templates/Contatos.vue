@@ -253,34 +253,6 @@ export default {
         }
       })
     })
-
-    // Verificando mensagens com o mesmo seq
-    if(this.atendimentoAtivo && this.atendimentoAtivo.arrMsg){
-      const chaves = Object.keys(this.atendimentoAtivo.arrMsg)
-      const arrMsgAtualizado = []
-      if(chaves.length){
-        const chaveFinal = chaves[chaves.length - 1]
-        if(this.atendimentoAtivo.arrMsg[chaveFinal]){
-          for(let msg in this.atendimentoAtivo.arrMsg[chaveFinal].msg){
-            if(msg - 1 >= 0){
-              const ultimoSeq = this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg - 1].seq
-              if(!(ultimoSeq == this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg].seq)){
-                arrMsgAtualizado.push(this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg])
-              }
-            }
-  
-            if(msg == 0){
-              arrMsgAtualizado.push(this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg])
-            }
-          }
-  
-          if(arrMsgAtualizado.length !== this.atendimentoAtivo.arrMsg[chaveFinal].msg.length){
-            arrMsgAtualizado[arrMsgAtualizado.length - 1] = this.atendimentoAtivo.arrMsg[chaveFinal].msg[this.atendimentoAtivo.arrMsg[chaveFinal].msg.length - 1]
-            this.$set(this.atendimentoAtivo.arrMsg[chaveFinal], "msg", arrMsgAtualizado)
-          }
-        }
-      }
-    }
   },
   created(){
     this.verificaLocalStorage()
@@ -288,6 +260,10 @@ export default {
   mounted(){
     this.$root.$on('toggle-contatos', () => {
       this.toggleContatos()
+    })
+
+    this.$root.$on("verificar-seq", () => {
+      this.verificarMsgMesmoSeq()
     })
   },
   computed: {
@@ -306,6 +282,37 @@ export default {
     })
   },
   methods: {
+    verificarMsgMesmoSeq(){
+      // Verificando mensagens com o mesmo seq
+      if(this.atendimentoAtivo && this.atendimentoAtivo.arrMsg){
+        const chaves = Object.keys(this.atendimentoAtivo.arrMsg)
+        const arrMsgAtualizado = []
+        if(chaves.length){
+          const chaveFinal = chaves[chaves.length - 1]
+          if(this.atendimentoAtivo.arrMsg[chaveFinal]){
+            for(let msg in this.atendimentoAtivo.arrMsg[chaveFinal].msg){
+              if(msg - 1 >= 0){
+                const ultimoSeq = this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg - 1].seq
+                if(!(ultimoSeq == this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg].seq)){
+                  arrMsgAtualizado.push(this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg])
+                }
+              }
+    
+              if(msg == 0){
+                arrMsgAtualizado.push(this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg])
+              }
+            }
+    
+            if(arrMsgAtualizado.length !== this.atendimentoAtivo.arrMsg[chaveFinal].msg.length){
+              arrMsgAtualizado[arrMsgAtualizado.length - 1] = this.atendimentoAtivo.arrMsg[chaveFinal].msg[this.atendimentoAtivo.arrMsg[chaveFinal].msg.length - 1]
+
+              this.$set(this.atendimentoAtivo.arrMsg[chaveFinal], "msg", arrMsgAtualizado)
+              this.$forceUpdate()
+            }
+          }
+        }
+      }
+    },
     ativarCliente(id, grupo, atd, origem){
       if(!id || !grupo){
         this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_ativar_cliente})

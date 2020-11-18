@@ -523,8 +523,12 @@ export default {
         audio: audio,
         video: video
       };
-      
+
       arrMsg.push(objMensagem)
+      
+      if(objMsgExterno){
+        this.$root.$emit("verificar-seq")
+      }
 
       if(this.statusEnvio !== "E" && !objMsgExterno){
         this.resetar()
