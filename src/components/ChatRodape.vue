@@ -584,6 +584,10 @@ export default {
     selecionarMsgFormatada() {
       this.abreFechaMsgFormatada()
 
+      if(!this.$store.getters.getVerificaMsgFormatadaAberto){
+        return
+      }
+
       let valor = ''
       let tokenCliente = this.atendimentoAtivo.token_cliente
 

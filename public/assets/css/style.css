@@ -10485,7 +10485,7 @@ body {
       align-items: center;
       width: 100%; }
       .chat-rodape .chat-rodape-msg-formatada .select-03 select {
-        width: 90%; }
+        flex: 1; }
       .chat-rodape .chat-rodape-msg-formatada .select-03 .btn-select-03 {
         transition-duration: 300ms;
         user-select: none;
@@ -10496,6 +10496,7 @@ body {
         justify-content: center;
         align-items: center;
         margin-left: 5px;
+        margin-bottom: 5px;
         background-color: #F7FE72;
         width: 32px;
         height: 32px; }
@@ -10703,7 +10704,7 @@ body {
         display: flex;
         list-style-type: none;
         margin: 10px auto;
-        padding: 0;
+        padding: 7px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis; }

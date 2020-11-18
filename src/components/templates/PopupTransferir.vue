@@ -113,22 +113,22 @@ export default {
             if(objRegrasTransfer.transfer_agente){
               if(objRegrasTransfer.transfer_agente.use == "S"){
                 this.temBtnAgente = true
+                this.btnAgente = objRegrasTransfer.transfer_agente.name
               }
-              this.btnAgente = objRegrasTransfer.transfer_agente.name
             }
             
             if(objRegrasTransfer.transfer_grupo){
               if(objRegrasTransfer.transfer_grupo.use == "S"){
                 this.temBtnGrupo = true
+                this.btnGrupo = objRegrasTransfer.transfer_grupo.name
               }
-              this.btnGrupo = objRegrasTransfer.transfer_grupo.name
             }
             
             if(objRegrasTransfer.transfer_bot){
               if(objRegrasTransfer.transfer_bot.use == "S"){
                 this.temBtnBot = true
+                this.btnBot = objRegrasTransfer.transfer_bot.name
               }
-              this.btnBot = objRegrasTransfer.transfer_bot.name
             }
           }
         }

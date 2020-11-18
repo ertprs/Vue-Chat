@@ -88,7 +88,7 @@ export default {
       if(this.atendimentoAtivo && this.atendimentoAtivo.token_cliente){
         this.atualizarStatusMensagens()
       }
-    }, 5000)
+    }, 10000)
   },
   updated(){
     this.$nextTick(() => {

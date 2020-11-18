@@ -266,12 +266,13 @@ $border-radius: 30px;
       @include d-flex-center('vertical');
       width: 100%;
       select{
-        width: 90%;
+        flex: 1;
       }
       .btn-select-03{
         @include estilo-botao(-3px, -1px);
         @include d-flex-center();
         margin-left: 5px;
+        margin-bottom: 5px;
         background-color: #F7FE72;
         width: 32px;
         height: 32px;
