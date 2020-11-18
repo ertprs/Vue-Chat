@@ -81,14 +81,7 @@
       .popup-container-tela-2{
         @include d-flex-center();
         flex-direction: column;
-        min-width: 400px;
-        ul[role=listbox]{
-          width: 100%;
-          overflow: hidden;
-          li[role=option]{
-            white-space: wrap;
-          }
-        }
+        min-width: 300px;
         > div{
           width: 100%;
           > input{
@@ -100,7 +93,7 @@
         display: flex;
         justify-content: space-between;
         margin: 0;
-        padding: 0;
+        padding: 7px;
         width: 100%;
       }
     }
@@ -121,4 +114,8 @@
 .theme-custom .vdatetime-time-picker__item--selected,
 .theme-custom .vdatetime-popup__actions__button {
   color: var(--bg-calendar);
+}
+
+.vs__dropdown-option{
+  white-space: normal!important
 }
