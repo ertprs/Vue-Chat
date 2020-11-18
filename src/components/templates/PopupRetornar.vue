@@ -5,9 +5,9 @@
       class="popup-lista" 
       :class="{'bg' : bg}"
       v-if="!pessoalData">
-      <li @click="retornar('todos')"> {{ dicionario.btn_todos }} </li>
-      <li @click="retornar('pessoal')"> {{ dicionario.btn_pessoal }} </li>
-      <li @click="pessoalData = true"> {{ dicionario.btn_agendar }} </li>
+      <li @click="retornar('todos')" v-if="temTodos"> {{ btnTodos }} </li>
+      <li @click="retornar('pessoal')" v-if="temPessoal"> {{ btnPessoal }} </li>
+      <li @click="pessoalData = true" v-if="temAgendar"> {{ btnAgendar }} </li>
     </ul>
     <div 
       agendar-retorno
@@ -44,7 +44,13 @@ export default {
     return{
       pessoalData: false,
       dataHora: '',
-      reqEmAndamento: false
+      reqEmAndamento: false,
+      temTodos: false,
+      btnTodos: "",
+      temPessoal: false,
+      btnPessoal: "",
+      temAgendar: false,
+      btnAgendar: ""
     }
   },
   computed: {
@@ -54,13 +60,48 @@ export default {
       abrirPopup: "getAbrirPopup",
       reqTeste: "getReqTeste",
       todosAtendimentos: "getTodosAtendimentos",
-      dicionario: "getDicionario"
+      dicionario: "getDicionario",
+      regrasDoClienteAtivo: "getRegrasDoClienteAtivo"
     })
   },
   components: {
     'datetime' : Datetime
   },
+  mounted(){
+    this.preencherBotoes()
+  },
   methods: {
+    preencherBotoes(){
+      if(this.regrasDoClienteAtivo){
+        if(this.regrasDoClienteAtivo.regras){
+          const regras = this.regrasDoClienteAtivo.regras
+          if(regras.button_suspend){
+            const objRegrasSuspend = regras.button_suspend
+            if(objRegrasSuspend.todos){
+              if(objRegrasSuspend.todos.use == "S"){
+                this.temTodos = true
+                this.btnTodos = objRegrasSuspend.todos.name
+              }
+            }
+            
+            if(objRegrasSuspend.dedicado){
+              if(objRegrasSuspend.dedicado.use == "S"){
+                this.temPessoal = true
+                this.btnPessoal = objRegrasSuspend.dedicado.name
+              }
+            }
+            
+            // nao tem pessoal/data ainda (quando tiver tem que ajustar)
+            // if(objRegrasSuspend.transfer_bot){
+            //   if(objRegrasSuspend.transfer_bot.use == "S"){
+            //     this.temAgendar = true
+            //     this.btnAgendar = objRegrasSuspend.transfer_bot.name
+            //   }
+            // }
+          }
+        }
+      }
+    },
     retornar(tipo){
       if(this.reqEmAndamento){
         return
