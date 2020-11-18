@@ -10,6 +10,8 @@ export function obterMsgFormatada(tipo, tokenCliente) {
             if(response.data.st_ret === 'OK') {
                 store.dispatch('setTipoMsg', response.data.tipo)
                 return response.data.nivel
+            }else if(response.data.st_ret === 'AVISO'){
+                return response.data.msg_ret
             }
         })
         .catch(err => console.log(err))

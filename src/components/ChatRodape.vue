@@ -525,7 +525,7 @@ export default {
       };
 
       arrMsg.push(objMensagem)
-      
+
       if(objMsgExterno){
         this.$root.$emit("verificar-seq")
       }
@@ -620,7 +620,9 @@ export default {
       }
     },
     recebeValorMSGFormatada(valor, numReq){
+
       if(valor.length == 1){
+
         if(this.mensagensFormatadas_02.length){
           this.mensagensFormatadas_02 = []
           this.chaveAtual_02 = ''
@@ -634,7 +636,15 @@ export default {
       let tokenCliente = this.atendimentoAtivo.token_cliente
       obterMsgFormatada(valor, tokenCliente)
         .then((data) => {
-          this.exibirMsgFormatada(data, numReq)
+          if(data){
+            if(typeof(data) == "string"){
+              this.$toasted.global.emConstrucao({msg: data})
+            }else{
+              this.exibirMsgFormatada(data, numReq)
+            }
+          }else{
+            this.$toasted.global.defaultError()
+          }
         })
         .catch((err) => console.log(err));
     },
