@@ -232,6 +232,28 @@ export default {
     gerenciarCores(this, "contatos")
   },
   updated(){
+    // Verificando se o usuario esta em mais de um array e removendo caso sim
+    this.objAtendimentos.map(atd => {
+      this.minhaAgenda.map(atdAgenda => {
+        if(atd.login_usu == atdAgenda.login_usu){
+          let auxAgenda = this.minhaAgenda
+          auxAgenda = auxAgenda.filter(agenda => {
+            return agenda.login_usu !== atd.login_usu
+          })
+          this.$store.dispatch("setAgenda", auxAgenda)
+        }
+      })
+      this.aguardando.map(atdAguardando => {
+        if(atd.login_usu == atdAguardando.login_usu){
+          let auxAguardando = this.aguardando
+          auxAguardando = auxAguardando.filter(aguardando => {
+            return aguardando.login_usu !== atd.login_usu
+          })
+          this.$store.dispatch("setAguardando", auxAguardando)
+        }
+      })
+    })
+
     // Verificando mensagens com o mesmo seq
     if(this.atendimentoAtivo && this.atendimentoAtivo.arrMsg){
       const chaves = Object.keys(this.atendimentoAtivo.arrMsg)
