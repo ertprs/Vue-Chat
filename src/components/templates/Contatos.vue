@@ -45,6 +45,7 @@
             :title="formataNome(atd.nome_usu)"
             :class="{'destaque-novo-contato' : atd.novoContato, 'nova-msg' : atd.alertaMsgNova, 'ativo' : idAtendimentoAtivo == atd.id_cli}"
             @click="ativarConversa( atd, indice )"
+            @contextmenu="abrirMenuBotaoDireito($event)"
           >
             <div class="circulo-contatos">
               <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
@@ -282,6 +283,9 @@ export default {
     })
   },
   methods: {
+    abrirMenuBotaoDireito(ev){
+      this.$root.$emit("abrir-menu", ev)
+    },
     verificarMsgMesmoSeq(){
       // Verificando mensagens com o mesmo seq
       if(this.atendimentoAtivo && this.atendimentoAtivo.arrMsg){

@@ -12,6 +12,8 @@
       @resize:end="resizeContatos">
       <Contatos />
     </vue-resizable>
+    
+    <MenuBotaoDireito />
 
     <!-- Chat -->
     <vue-resizable
@@ -43,6 +45,7 @@ import VueResizable from 'vue-resizable'
 import Blocker from './components/templates/Blocker'
 import Popup from './components/templates/Popup'
 import Contatos from './components/templates/Contatos'
+import MenuBotaoDireito from './components/MenuBotaoDireito'
 import Chat from './components/templates/Chat'
 import Informacoes from './components/templates/Informacoes'
 import Gerenciador from './components/templates/Gerenciador'
@@ -55,6 +58,7 @@ export default {
     Blocker,
     Popup,
     Contatos,
+    MenuBotaoDireito,
     Chat,
     Informacoes,
     Gerenciador

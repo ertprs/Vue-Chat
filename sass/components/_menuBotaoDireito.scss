@@ -1,0 +1,21 @@
+#menu-botao-direito{
+  position: absolute;
+  z-index: 100;
+  background-color: #666;
+  color: #FFF;
+  list-style-type: none;
+  padding: 5px;
+  li{
+    background-color: lighten(#666, 10);
+    padding: 5px;
+    box-sizing: border-box;
+    @include efeito-hover-padrao();
+    margin-bottom: 5px;
+    &:last-child{
+      margin-bottom: 0;
+    }
+    &:hover{
+      text-decoration: underline
+    }
+  } 
+}

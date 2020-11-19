@@ -14,7 +14,8 @@ export default {
     semIframe: false,
     linkImagem: "",
     nomeOpe: "",
-    verificaMsgFormatadaAberto: false
+    verificaMsgFormatadaAberto: false,
+    menuBotaoDireito: false
   },
   mutations: {
     setAbaContatos(state, abaContatos){
@@ -52,6 +53,9 @@ export default {
     },
     setVerificaMsgFormatadaAberto(state, verificaMsgFormatadaAberto){
       state.verificaMsgFormatadaAberto = verificaMsgFormatadaAberto
+    },
+    setMenuBotaoDireito(state, menuBotaoDireito){
+      state.menuBotaoDireito = menuBotaoDireito
     }
   },
   actions: {
@@ -90,6 +94,9 @@ export default {
     },
     setVerificaMsgFormatadaAberto: (context, payload) => {
       context.commit('setVerificaMsgFormatadaAberto', payload)
+    },
+    setMenuBotaoDireito: (context, payload) => {
+      context.commit('setMenuBotaoDireito', payload)
     }
   },
   getters: {
@@ -128,6 +135,9 @@ export default {
     },
     getVerificaMsgFormatadaAberto(state){
       return state.verificaMsgFormatadaAberto
+    },
+    getMenuBotaoDireito(state){
+      return state.menuBotaoDireito
     }
   } 
 }

@@ -10976,6 +10976,29 @@ div[blocker] {
     .gerenciador-lista > div:last-child {
       margin-right: 0; }
 
+#menu-botao-direito {
+  position: absolute;
+  z-index: 100;
+  background-color: #666;
+  color: #FFF;
+  list-style-type: none;
+  padding: 5px; }
+  #menu-botao-direito li {
+    background-color: gray;
+    padding: 5px;
+    box-sizing: border-box;
+    transition-duration: 300ms;
+    transition-property: opacity;
+    opacity: .8;
+    cursor: pointer;
+    margin-bottom: 5px; }
+    #menu-botao-direito li:hover {
+      opacity: 1; }
+    #menu-botao-direito li:last-child {
+      margin-bottom: 0; }
+    #menu-botao-direito li:hover {
+      text-decoration: underline; }
+
 :root {
   --cor: #00005A
 ; }

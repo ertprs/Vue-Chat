@@ -76,6 +76,18 @@ export default {
     this.$root.$on("adicionar-cores", () => {
       this.setCoresClienteAtivo()
     })
+
+    this.$root.$on("abrir-transferir", () => {
+      this.abrirTransferir()
+    })
+
+    this.$root.$on("abrir-retornar", () => {
+      this.retornarForm()
+    })
+
+    this.$root.$on("abrir-encerrar", () => {
+      this.popupEncerrar()
+    })
   },
   beforeDestroy(){
     this.$root.$off("adicionar-cores")
