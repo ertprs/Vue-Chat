@@ -2,7 +2,7 @@
     <ul 
       id="menu-botao-direito"
       v-if="menuBotaoDireito"
-      ref="right"
+      ref="menu"
       @blur="fecharMenu()"
       :style="`top: ${top}; left: ${left}`"
       tabindex="-1">
@@ -69,8 +69,8 @@ export default {
       this.fecharMenu()
     },
     setMenu(top, left){
-      let maiorAltura = window.innerHeight - this.$refs.right.offsetHeight - 25
-      let maiorLargura = window.innerWidth - this.$refs.right.offsetWidth - 25
+      let maiorAltura = window.innerHeight - this.$refs.menu.offsetHeight - 25
+      let maiorLargura = window.innerWidth - this.$refs.menu.offsetWidth - 25
 
       if(top > maiorAltura){
         top = maiorAltura
@@ -90,7 +90,7 @@ export default {
       this.$store.dispatch("setMenuBotaoDireito", true)
 
       this.$nextTick(() => {
-        this.$refs.right.focus()
+        this.$refs.menu.focus()
 
         this.setMenu(ev.y, ev.x)
       })
