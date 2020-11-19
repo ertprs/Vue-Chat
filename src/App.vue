@@ -71,7 +71,7 @@ export default {
         max_width: 275
       },
       objChat: {
-        min_width: 300,
+        min_width: 320,
         width: "30%",
         max_width: 540
       },
