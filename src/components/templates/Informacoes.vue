@@ -39,7 +39,7 @@
       </div>
       <!-- Corpo informacoes -->
       <div class="lista-informacoes-container">
-        <div class="iframe-informacoes">
+        <div class="iframe-informacoes" :class="{'d-none' : controleSemIframeLocal}">
           <IframeTemplate v-if="atendimentoAtivo.url" />
         </div>
       </div>
