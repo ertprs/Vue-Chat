@@ -39,14 +39,14 @@ $cor-separador: #BBB;
 .chat-corpo-container{
   position: relative;
   @include d-flex-center("vertical");
-  justify-content: flex-start; 
-  margin-bottom: 10px;
+  justify-content: flex-start;
+  height: 12px;
+  margin-bottom: 5px;
   div{
     flex: 1;
-    margin: 0 2.5px;
   }
   .separador-mensagens{
-    font-size: .8rem;
+    font-size: .7rem;
     color: $cor-separador;
     overflow: hidden;
     white-space: nowrap;
@@ -67,7 +67,7 @@ $cor-separador: #BBB;
   list-style-type: none;
   text-align: left;
   margin: 0;
-  padding: 0; 
+  padding: 0;
 }
 
 .tooltip-titulo-status-message{

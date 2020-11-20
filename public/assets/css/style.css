@@ -10212,12 +10212,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-bottom: 10px; }
+  height: 12px;
+  margin-bottom: 5px; }
   .chat-corpo-container div {
-    flex: 1;
-    margin: 0 2.5px; }
+    flex: 1; }
   .chat-corpo-container .separador-mensagens {
-    font-size: .8rem;
+    font-size: .7rem;
     color: #BBB;
     overflow: hidden;
     white-space: nowrap;
