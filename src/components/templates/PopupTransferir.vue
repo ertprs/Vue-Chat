@@ -158,11 +158,13 @@ export default {
       }
     },
     transferir(tipo, param){
-      console.log(param)
-      return
 
       if(!param){
         return
+      }
+
+      if(param.cod){
+        param = param.cod
       }
 
       if(this.reqEmAndamento){
