@@ -21,10 +21,10 @@
             />
           </div>
         </div>
-        <div 
+        <div
           v-show="aparecerPrevia"
-          v-on:click="excluirAnexo()" 
-          :title="dicionario.msg_cancelar_anexo" 
+          v-on:click="excluirAnexo()"
+          :title="dicionario.msg_cancelar_anexo"
           class="btn-excluir-anexo"
           :class="{'previa-anexo' : docPrevia, 'previa-anexo-erro' : docPrevia && erroFormatoAnexo}"
           >
@@ -50,7 +50,7 @@
             </div>
           </div>
           <!-- Textarea -->
-          <textarea 
+          <textarea
             v-on:keydown.enter="enviarMensagem($event, aparecerPrevia)"
             id="textarea"
             v-model="mensagem"
@@ -58,7 +58,7 @@
             no-resize
             rows="1"
           ></textarea>
-          <span 
+          <span
             class="caracteres-disponiveis"
           >({{ qtdCaracteresDisponiveis - mensagem.length }})</span>
         </div>
@@ -436,7 +436,7 @@ export default {
 
         autor = this.nomeOpe || "Operador"
         origem = "principal"
-        
+
         if(arrMsg[arrMsg.length - 1]){
           let seqAnterior = arrMsg[arrMsg.length - 1].seq
           seqAnterior = seqAnterior.split("_")
@@ -447,6 +447,10 @@ export default {
         }
 
         this.$store.dispatch("setMensagemViaTextarea", true)
+
+        setTimeout(() => {
+          this.$root.$emit("rola-chat")
+        }, 250)
 
       } else {
 
@@ -464,18 +468,18 @@ export default {
           }
 
           switch (type) {
-            case "image": 
+            case "image":
               imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
               nomeArquivo = objMsgExterno.anexos.name
               break;
             case "audio/ogg":
-            case "audio/oga": 
-            case "audio": 
-            case "ogg": 
-            case "oga": 
-            case "mpga": 
-            case "audio/mpga": 
-            case "mp3": 
+            case "audio/oga":
+            case "audio":
+            case "ogg":
+            case "oga":
+            case "mpga":
+            case "audio/mpga":
+            case "mp3":
             case "audio/mp3":
               tipoDoc = objMsgExterno.anexos.type
               docAnexo = `${this.dominio}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
@@ -483,7 +487,7 @@ export default {
               audio = true
               break;
             case "video/mp4":
-            case "video": 
+            case "video":
             case "mp4":
               tipoDoc = objMsgExterno.anexos.type
               docAnexo = `${this.dominio}/callcenter/docs.php?mku=${objMsgExterno.anexos.mku}`
@@ -500,7 +504,7 @@ export default {
 
         status = objMsgExterno.status
 
-        origem = objMsgExterno.resp_msg == "CLI" ? "outros" : "principal" 
+        origem = objMsgExterno.resp_msg == "CLI" ? "outros" : "principal"
         autor = objMsgExterno.resp_msg == "CLI" ? objMsgExterno.nome : this.nomeOpe
 
         seq = objMsgExterno.seq
@@ -510,7 +514,7 @@ export default {
 
       objMensagem = {
         seq: seq,
-        autor: autor, 
+        autor: autor,
         origem: origem,
         msg: msg,
         horario: hora,
@@ -561,7 +565,7 @@ export default {
         .catch((err) => {
           console.log('Erro msg formatada: ', err)
           this.temMsgFormatada = false
-        }); 
+        });
     },
     abreFechaMsgFormatada(){
       this.$store.dispatch("setVerificaMsgFormatadaAberto", !this.verificaMsgFormatadaAberto)
@@ -576,7 +580,7 @@ export default {
         }else{
           this.alterarValoresVariaveisCSS("medio")
         }
-        
+
         this.mensagensFormatadas_01 = []
         this.chaveAtual_01 = ''
         this.mensagensFormatadas_02 = []
@@ -632,7 +636,7 @@ export default {
           this.chaveAtual_03 = ''
         }
       }
-      
+
       let tokenCliente = this.atendimentoAtivo.token_cliente
       obterMsgFormatada(valor, tokenCliente)
         .then((data) => {
@@ -670,7 +674,7 @@ export default {
     abrePopupMsgTipo2(arrayMsgFormatada, indice){
       const objMsg = arrayMsgFormatada[indice]
       if(objMsg){
-      
+
         if(this.semIframe){
           this.$store.dispatch("setSemIframe", false)
         }
@@ -678,7 +682,7 @@ export default {
         this.$store.dispatch("setOrigemBlocker", "msg-formatada")
         this.$store.dispatch("setBlocker", true)
         this.$store.dispatch("setAbrirMsgTipo2", true)
-        
+
         this.$store.dispatch("setAssunto", objMsg.cod)
         this.$store.dispatch("setCategoria", this.chaveAtual_02)
         this.$store.dispatch("setNroChat", this.atendimentoAtivo.nro_chat)
@@ -772,9 +776,9 @@ export default {
     validaAnexo(arquivo, img = true) {
       let regex = ""
       if (arquivo) {
-        if(img){   
+        if(img){
           regex = new RegExp("\.("+this.extImgs+")", "i")
-          
+
           if (regex.test(arquivo.name)) {
             return true;
           } else {
@@ -872,7 +876,7 @@ export default {
       if(this.verificaMsgFormatadaAberto){
         this.$store.dispatch("setVerificaMsgFormatadaAberto", false)
       }
-      
+
       if(this.tamanhoText >= 70){
         this.alterarValoresVariaveisCSS("medio")
       }else{
@@ -910,7 +914,7 @@ export default {
             root.style.setProperty('--altura-chat-corpo', "64%")
           }
         break;
-        case "medio": 
+        case "medio":
           // Ultimo breakpoint
           if(this.alturaTela >= 900){
             root.style.setProperty('--altura-chat-corpo', "78%")

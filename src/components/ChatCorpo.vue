@@ -90,7 +90,7 @@ export default {
     if(this.atendimentoAtivo){
       this.idAtendimento = this.atendimentoAtivo.id
     }
-    
+
     this.verificaPosicaoBarraRolagem()
     this.rolaChat()
 
@@ -173,13 +173,13 @@ export default {
                         str += `<p>${this.formataDataHora(arrStatusMsg[index][j].data_hora_status, true)}</p>`
                       }
                       str += `<ul class="tooltip-list">`
-                      if(arrStatusMsg[index][j].data_hora_entrega && arrStatusMsg[index][j].data_hora_entrega !== "1111-11-11 00:00:00"){ 
+                      if(arrStatusMsg[index][j].data_hora_entrega && arrStatusMsg[index][j].data_hora_entrega !== "1111-11-11 00:00:00"){
                         str += `<li>${this.dicionario.msg_data_hora_entrega} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_entrega, true)}</li>`
                       }
-                      if(arrStatusMsg[index][j].data_hora_envio_fila && arrStatusMsg[index][j].data_hora_envio_fila !== "1111-11-11 00:00:00"){ 
+                      if(arrStatusMsg[index][j].data_hora_envio_fila && arrStatusMsg[index][j].data_hora_envio_fila !== "1111-11-11 00:00:00"){
                         str += `<li>${this.dicionario.msg_data_hora_envio_fila} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_envio_fila, true)}</li>`
                       }
-                      if(arrStatusMsg[index][j].data_hora_envio_cliente && arrStatusMsg[index][j].data_hora_envio_cliente !== "1111-11-11 00:00:00"){ 
+                      if(arrStatusMsg[index][j].data_hora_envio_cliente && arrStatusMsg[index][j].data_hora_envio_cliente !== "1111-11-11 00:00:00"){
                         str += `<li>${this.dicionario.msg_data_hora_envio_cliente} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_envio_cliente, true)}</li>`
                       }
                       if(arrStatusMsg[index][j].data_hora_gravacao && arrStatusMsg[index][j].data_hora_gravacao !== "1111-11-11 00:00:00"){
@@ -203,7 +203,7 @@ export default {
                 }
               }
             }
-            
+
           }
         })
         .catch(error => {
@@ -232,7 +232,7 @@ export default {
         data = data.split("-")
         data = data.reverse()
         data = data.join("/")
-        
+
         if(!origem){
           hora = hora.slice(0, 5)
         }else{
@@ -240,7 +240,7 @@ export default {
         }
 
         if(!origem){
-          return `${data} ${this.dicionario.msg_divisao_data_hora} ${hora}` 
+          return `${data} ${this.dicionario.msg_divisao_data_hora} ${hora}`
         }else{
           return `${data} ${hora}`
         }
