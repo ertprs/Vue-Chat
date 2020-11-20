@@ -34,7 +34,7 @@
   }
 }
 
-$cor-separador: #555;
+$cor-separador: #BBB;
 
 .chat-corpo-container{
   position: relative;
@@ -57,7 +57,7 @@ $cor-separador: #555;
   }
   hr{
     border: 0;
-    height: 1px;
+    height: 0.5px;
     background-color: $cor-separador;
     width: 100%;
   }

@@ -6,8 +6,7 @@
           <hr>
           <div>
             <h5 class="separador-mensagens">
-              <template v-if="arrMsg.data_ini && arrMsg.data_ini !== '1111-11-11 00:00:00'">{{ formataDataHora(arrMsg.data_ini) }}</template>
-              <template v-if="arrMsg.data_fim && arrMsg.data_fim !== '1111-11-11 00:00:00'">{{ " - " + formataDataHora(arrMsg.data_fim) }}</template>
+              <template v-if="arrMsg.data_ini && arrMsg.data_ini !== '1111-11-11 00:00:00'">{{ dicionario.msg_divisao_ini + " " + formataDataHora(arrMsg.data_ini) }}</template>
               <template v-if="arrMsg.login">{{ ` ${dicionario.msg_divisao_ope} `  + arrMsg.login }}</template>
             </h5>
           </div>
@@ -30,6 +29,18 @@
           :video="msg.video"
           :msgTooltip="msg.tooltip"
         />
+        <div class="chat-corpo-container" v-if="arrMsg.data_fim && arrMsg.login">
+          <template v-if="arrMsg.data_fim !== '1111-11-11 00:00:00'">
+            <hr>
+            <div>
+              <h5 class="separador-mensagens">
+                {{ dicionario.msg_divisao_fim + " " + formataDataHora(arrMsg.data_fim) }}
+                {{ ` ${dicionario.msg_divisao_ope} `  + arrMsg.login }}
+              </h5>
+            </div>
+            <hr>
+          </template>
+        </div>
       </div>
     </div>
     <transition name="fade">

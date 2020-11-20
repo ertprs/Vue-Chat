@@ -9299,7 +9299,7 @@ body {
   overflow: hidden;
   background-color: #EEE;
   text-rendering: optimizeLegibility;
-  font-family: "Open sans", sans-serif; }
+  font-family: "Noto Sans", "Open sans", sans-serif; }
 
 #app {
   width: 100%;
@@ -9857,7 +9857,7 @@ body {
   overflow: hidden;
   background-color: #EEE;
   text-rendering: optimizeLegibility;
-  font-family: "Open sans", sans-serif; }
+  font-family: "Noto Sans", "Open sans", sans-serif; }
 
 #app {
   width: 100%;
@@ -10218,7 +10218,7 @@ body {
     margin: 0 2.5px; }
   .chat-corpo-container .separador-mensagens {
     font-size: .8rem;
-    color: #555;
+    color: #BBB;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -10227,8 +10227,8 @@ body {
     margin: 0; }
   .chat-corpo-container hr {
     border: 0;
-    height: 1px;
-    background-color: #555;
+    height: 0.5px;
+    background-color: #BBB;
     width: 100%; }
 
 .tooltip-list {
@@ -11015,7 +11015,7 @@ body {
   overflow: hidden;
   background-color: #EEE;
   text-rendering: optimizeLegibility;
-  font-family: "Open sans", sans-serif; }
+  font-family: "Noto Sans", "Open sans", sans-serif; }
 
 #app {
   width: 100%;
