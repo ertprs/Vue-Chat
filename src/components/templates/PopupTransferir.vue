@@ -35,6 +35,7 @@
           label="label"
           v-model="grupo"
           :reduce="arrGrupos => arrGrupos.cod"
+          :value="arrGrupos.cod"
           >
           <div slot="no-options">{{ dicionario.msg_sem_resultados }}</div>
         </vSelect>
@@ -99,6 +100,7 @@ export default {
   },
   mounted(){
     this.preencherBotoes()
+    this.setSelected()
   },
   components: {
     vSelect
@@ -156,6 +158,13 @@ export default {
       }
     },
     transferir(tipo, param){
+      console.log(param)
+      return
+
+      if(!param){
+        return
+      }
+
       if(this.reqEmAndamento){
         return
       }else{
@@ -225,6 +234,28 @@ export default {
       this.agente = ""
       this.bot = ""
     },
+    setSelected(){
+      if(this.arrGrupos.length === 1){
+        this.grupo = this.arrGrupos[0]
+      }
+      if(this.arrAgentes.length === 1){
+        this.agente = this.arrAgentes[0]
+      }
+      if(this.arrBot.length === 1){
+        this.bot = this.arrBot[0]
+      }
+    }
+  },
+  watch: {
+    arrGrupos(){
+      this.setSelected()
+    },
+    arrAgentes(){
+      this.setSelected()
+    },
+    arrBot(){
+      this.setSelected()
+    }
   },
   computed: {
     ...mapGetters({
