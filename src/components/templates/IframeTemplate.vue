@@ -40,10 +40,10 @@ export default {
         if(this.iframesDisponiveis.length > 0) {
           const idsIframe = this.iframesDisponiveis.map(iframe => (iframe.id))
           if(!idsIframe.includes(idCliente)) {
-            this.$store.dispatch('setIframesDisponiveis', objIframe)
+            this.$store.commit('pushIframesDisponiveis', objIframe)
           }
         } else {
-          this.$store.dispatch('setIframesDisponiveis', objIframe)
+          this.$store.commit('pushIframesDisponiveis', objIframe)
         }
         this.$nextTick(() => {
           if(document.querySelector('.iframes_disponiveis')) {
@@ -60,7 +60,7 @@ export default {
           }
 
           let regex =  /\s|\]|\[/g
-          
+
           if(idCliente.match(regex)){
               idCliente = idCliente.replace(regex, '')
           }else{

@@ -1,3 +1,5 @@
+import { strictEqual } from "assert";
+
 export default {
     state: {
       iframesDisponiveis: [],
@@ -9,6 +11,9 @@ export default {
       },
       setIframesDisponiveis(state, iframe) {
         state.iframesDisponiveis = iframe
+      },
+      pushIframesDisponiveis(state, iframe){
+        state.iframesDisponiveis.push(iframe)
       }
     },
     actions: {
