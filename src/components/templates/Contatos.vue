@@ -173,7 +173,7 @@ export default {
     todosAtendimentos() {
       if(this.todosAtendimentos){
         this.objAtendimentos = Object.values(this.todosAtendimentos)
-        
+
         this.contarMsgClientes()
 
         if(this.objAtendimentos.length && this.idAtendimentoAtivo == ''){
@@ -190,11 +190,11 @@ export default {
             this.ativarConversa(this.objAtendimentos[0], 0)
           }
         }
-        
+
       } else {
         this.objAtendimentos = []
       }
-      
+
       if(this.minhaAgenda.length){
         this.minhaAgenda.map(cliAgenda => {
           for(let atd in this.todosAtendimentos){
@@ -208,7 +208,7 @@ export default {
                 .catch(error => {
                   console.log("Error get agenda: ", error)
                 })
-              
+
               return
             }
           }
@@ -301,12 +301,12 @@ export default {
                   arrMsgAtualizado.push(this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg])
                 }
               }
-    
+
               if(msg == 0){
                 arrMsgAtualizado.push(this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg])
               }
             }
-    
+
             if(arrMsgAtualizado.length !== this.atendimentoAtivo.arrMsg[chaveFinal].msg.length){
               arrMsgAtualizado[arrMsgAtualizado.length - 1] = this.atendimentoAtivo.arrMsg[chaveFinal].msg[this.atendimentoAtivo.arrMsg[chaveFinal].msg.length - 1]
 
@@ -340,7 +340,7 @@ export default {
           this.reqEmAndamento = false
           if(response.data.st_ret == "OK"){
             this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_aguarde_ativar_cliente})
-            // Remover do aguardando  
+            // Remover do aguardando
             if(origem == "aguardando"){
               let aguardandoAux = this.aguardando
               aguardandoAux = aguardandoAux.filter((atendimento) => {
@@ -418,7 +418,7 @@ export default {
         dataAux = dataAux.split(/\//)
         dataAux = dataAux.reverse()
         dataAux = dataAux.join("/")
-  
+
         horaAux = horaAux.replace(/:/g, "h")
         horaAux = horaAux.slice(0, horaAux.length-3)
 
@@ -438,7 +438,7 @@ export default {
         let dataAux2 = data + " " + hora
         let dataAtual = new Date()
         let dataAgenda = new Date(dataAux2)
-        
+
         let difDatas = Date.UTC(dataAgenda.getYear(), dataAgenda.getMonth(), dataAgenda.getDate(),0,0,0) - Date.UTC(dataAtual.getYear(), dataAtual.getMonth(), dataAtual.getDate(),0,0,0)
         // Retorna o valor em horas
         difDatas = difDatas / 1000 / 60 / 60
@@ -450,7 +450,7 @@ export default {
           // Diferenca entre horarios
           let difHoras = dataAgenda.getHours() - dataAtual.getHours()
           let difMinutos = dataAgenda.getMinutes() - dataAtual.getMinutes()
-          
+
           // Significa que os horarios estao em horas diferentes (ex: 11:00:00 e 10:59:59)
           if(difHoras > 0 || difHoras < 0){
             // Significa que os minutos do horario atual sao maiores do que os minutos do horario agendado
@@ -474,12 +474,12 @@ export default {
               }
             }
           }else{
-            
+
             // Significa que chegou a hora de chamar o ctt
             if(difHoras == 0 && difMinutos == 0){
               spanContador.classList.add("d-none")
 
-              return 
+              return
             }
 
             // Significa que o horario agendado ja passou
@@ -497,7 +497,7 @@ export default {
           // Data atual maior que data agendada
           if(difDatas < 0){
             spanContador.classList.add("d-none")
-            return 
+            return
           }else{
           // Data agendado maior que data atual
             spanContador.classList.remove("d-none")
@@ -514,9 +514,11 @@ export default {
 
     },
     ativarConversa(atd, indice) {
-      
+
       if(atd.id_cli == this.idAtendimentoAtivo){
-        return
+        if(atd.nro_chat == this.atendimentoAtivo.nro_chat){
+          return
+        }
       }
 
       if(atd.novoContato){
@@ -539,7 +541,7 @@ export default {
 
       this.$store.dispatch('setAtendimentoAtivo', atd)
 
-      let objMensagens = Object.values(atd.arrMsg) 
+      let objMensagens = Object.values(atd.arrMsg)
       let todasMensagens = []
       for(let objMsg in objMensagens){
         todasMensagens.push(objMensagens[objMsg].msg)
@@ -547,20 +549,20 @@ export default {
 
       // Muda a estrutura do arrMsg para o esperado
       this.setMensagensClienteAtivo(atd.id_cli, todasMensagens)
-      
+
       this.exibirInformacoes(atd, indice)
-  
+
       this.$store.dispatch('setIdAtendimentoAtivo', atd.id_cli)
     },
     exibirInformacoes(atd, indice) {
       atd.informacoes = {}
       atd.informacoes.nome = atd.nome_usu
       atd.id = atd.login_usu
-      
+
       this.$root.$emit('mostrar-iframe', atd.id, atd.url)
     },
     setMensagensClienteAtivo(id, arrMensagens) {
-      
+
       for(let index in arrMensagens){
         for (let i in arrMensagens[index]) {
           if(i != 'st_ret') {
@@ -588,9 +590,9 @@ export default {
                     break;
                 }
               }
-              
+
               let anexo = false;
-  
+
               let imgAnexo = "";
               let tipoDoc = ""
               let docAnexo = "";
@@ -598,21 +600,21 @@ export default {
               let audio = false
               let video = false
               let seq = arrMensagens[index][i].seq
-  
+
               if(arrMensagens[index][i].anexos){
                 anexo = true
-  
+
                 var regex = /(\w+)\/(\w+)/g;
                 var type = regex.exec(arrMensagens[index][i].anexos.type);
-                
+
                 if(!type){
                   type = arrMensagens[index][i].anexos.type
                 }else{
                   type = type[1]
                 }
-    
+
                 switch (type) {
-                  case "image": 
+                  case "image":
                     imgAnexo = `${this.dominio}/callcenter/docs.php?mku=${arrMensagens[index][i].anexos.mku}`
                     nomeArquivo = arrMensagens[index][i].anexos.name
                     break;
@@ -647,7 +649,7 @@ export default {
               }
 
               arrMensagens[index][i] = this.getObjMensagem( seq, autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo, audio, video );
-  
+
               if(document.querySelector('#textarea')){
                 document.querySelector('#textarea').focus()
               }
