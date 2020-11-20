@@ -1,19 +1,19 @@
 <template>
   <div class="popup-container">
-    <ul 
+    <ul
       lista-retornar
-      class="popup-lista" 
+      class="popup-lista"
       :class="{'bg' : bg}"
       v-if="!pessoalData">
       <li @click="retornar('todos')" v-if="temTodos"> {{ btnTodos }} </li>
       <li @click="retornar('pessoal')" v-if="temPessoal"> {{ btnPessoal }} </li>
       <li @click="pessoalData = true" v-if="temAgendar"> {{ btnAgendar }} </li>
     </ul>
-    <div 
+    <div
       agendar-retorno
       v-if="pessoalData"
       class="popup-container-tela-2">
-      <datetime 
+      <datetime
         v-model="dataHora"
         :placeholder="dicionario.placeholder_select_data_hora"
         zone="America/Bahia"
@@ -22,7 +22,7 @@
         :phrases="{ok: dicionario.btn_continuar_select_data_hora, cancel: dicionario.btn_fechar_select_data_hora}"
         class="theme-custom"
         type="datetime" />
-      <ul 
+      <ul
         class="btns-confirmacao-container popup-lista"
         :class="{'bg' : bg}">
         <li class="btn-confirmacao cancelar" @click="fecharPopup()"> {{ dicionario.btn_cancelar }} </li>
@@ -83,14 +83,14 @@ export default {
                 this.btnTodos = objRegrasSuspend.todos.name
               }
             }
-            
+
             if(objRegrasSuspend.dedicado){
               if(objRegrasSuspend.dedicado.use == "S"){
                 this.temPessoal = true
                 this.btnPessoal = objRegrasSuspend.dedicado.name
               }
             }
-            
+
             if(objRegrasSuspend.agendar){
               if(objRegrasSuspend.agendar.use == "S"){
                 this.temAgendar = true
@@ -133,7 +133,7 @@ export default {
             })
         break;
         case "pessoal":
-          
+
           dados.destino = "dedicado"
 
           axios_api.put(`suspend?${this.reqTeste}`, dados)
@@ -177,7 +177,7 @@ export default {
                 this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_sucesso_retorno})
                 this.removerCliente()
                 this.$root.$emit("reverter-cores")
-                
+
                 this.reqAgenda()
               }
             })
@@ -211,16 +211,15 @@ export default {
           objAtdAux[ramal] = this.todosAtendimentos[ramal]
         }
       }
-      
+
       this.$store.dispatch("setAtendimentos", objAtdAux)
 
       if(!objAtdAux || !Object.keys(objAtdAux).length){
         this.$store.dispatch("setCaso", 206)
       }
-      
+
       this.$store.dispatch('limparAtendimentoAtivo')
       this.$store.dispatch('limparIdAtendimentoAtivo')
-
     },
     setData(opt){
       let data = new Date()

@@ -116,14 +116,14 @@ export default {
                 this.btnAgente = objRegrasTransfer.transfer_agente.name
               }
             }
-            
+
             if(objRegrasTransfer.transfer_grupo){
               if(objRegrasTransfer.transfer_grupo.use == "S"){
                 this.temBtnGrupo = true
                 this.btnGrupo = objRegrasTransfer.transfer_grupo.name
               }
             }
-            
+
             if(objRegrasTransfer.transfer_bot){
               if(objRegrasTransfer.transfer_bot.use == "S"){
                 this.temBtnBot = true
@@ -164,7 +164,7 @@ export default {
 
       setTimeout(() => {
         this.reqEmAndamento = false
-      }, 1000)
+      }, 1500)
 
       let dados = {
         token_cliente: this.atendimentoAtivo.token_cliente,
@@ -188,6 +188,7 @@ export default {
         .then(response => {
           if(response.status == 200){
             this.$toasted.global.sucessoTransferencia()
+            this.removerCliente()
           }
         })
         .catch(error => {
@@ -196,6 +197,23 @@ export default {
         })
 
       this.fecharPopup()
+    },
+    removerCliente(){
+      let objAtdAux = {}
+      for(let ramal in this.todosAtendimentos){
+        if(this.todosAtendimentos[ramal].login_usu != this.atendimentoAtivo.login_usu){
+          objAtdAux[ramal] = this.todosAtendimentos[ramal]
+        }
+      }
+
+      this.$store.dispatch("setAtendimentos", objAtdAux)
+
+      if(!objAtdAux || !Object.keys(objAtdAux).length){
+        this.$store.dispatch("setCaso", 206)
+      }
+
+      this.$store.dispatch('limparAtendimentoAtivo')
+      this.$store.dispatch('limparIdAtendimentoAtivo')
     },
     fecharPopup(event){
       this.$store.dispatch('setBlocker', false)
