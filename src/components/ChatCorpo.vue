@@ -188,6 +188,9 @@ export default {
                       if(arrStatusMsg[index][j].data_hora_leitura && arrStatusMsg[index][j].data_hora_leitura !== "1111-11-11 00:00:00"){
                         str += `<li>${this.dicionario.msg_data_hora_leitura} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_leitura, true)}</li>`
                       }
+                      if(arrStatusMsg[index][j].status_msg){
+                        str += `<li>${arrStatusMsg[index][j].status_msg}</li>`
+                      }
                       str += "</ul>"
 
                       if(!str.endsWith('<ul class="tooltip-list"></ul>')){
