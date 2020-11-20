@@ -186,8 +186,7 @@ export default {
 
       axios_api.put(`transfer?${this.reqTeste}`, dados)
         .then(response => {
-          console.log("response: ", response)
-          if(response.status == 200){
+          if(response.data.st_ret == "OK"){
             this.$toasted.global.sucessoTransferencia()
             this.removerCliente()
           }

@@ -111,7 +111,6 @@ function tratarResponse(response) {
 
                     store.dispatch('setAtendimentos', mainData.atendimentos)
 
-                    carregarIframe(mainData.atendimentos)
                     acionaProcessos(mainData)
                     loopAtualizacaoDeAtendimentos()
                 } else { // tratando erro quando os atendimentos nao chegaram nos dados da api
@@ -159,6 +158,9 @@ function acionaProcessos(mainData){
             }
         }
     }
+
+    // Carregando os iframes
+    carregarIframe(mainData.atendimentos)
 
     // Ativar Cliente
     if(mainData.ativo){
@@ -263,7 +265,7 @@ async function atualizarAtendimentos() {
                     return
                 }
             }
-            
+
             liberaRequest()
         })
         .catch(
@@ -371,7 +373,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
             })
         }
     }
-    
+
 }
 
 var startTime, endTime;
