@@ -8,7 +8,7 @@ export default {
         state.iframeCttAtivo = iframeCttAtivo
       },
       setIframesDisponiveis(state, iframe) {
-        state.iframesDisponiveis.push(iframe)
+        state.iframesDisponiveis = iframe
       }
     },
     actions: {

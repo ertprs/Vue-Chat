@@ -160,7 +160,9 @@ function acionaProcessos(mainData){
     }
 
     // Carregando os iframes
-    carregarIframe(mainData.atendimentos)
+    if(mainData.atendimentos){
+      carregarIframe(mainData.atendimentos)
+    }
 
     // Ativar Cliente
     if(mainData.ativo){
