@@ -24,9 +24,10 @@
           </template>
         </div>
       </div>
-      <p v-html="msg"></p>
+      <a :href="msg" v-if="link" target="_parent">{{ msg }}</a>
+      <p v-if="!link" v-html="msg"></p>
       <span class="horario-envio"> {{ horario }} </span>
-      
+
       <transition name="fade">
         <span class="check" v-if="status == 'D'" :content="contentTooltip" v-tippy> <i class="fas fa-check"></i> </span>
       </transition>
@@ -67,7 +68,7 @@
 import { mapGetters } from "vuex"
 
 export default {
-  props: ["autor", "origem", "msg", "anexo", "imgAnexo", "horario", "status", "logo", "tipoDoc", "docAnexo", "nomeArquivo", "audio", "video", "msgTooltip"],
+  props: ["autor", "origem", "msg", "link", "anexo", "imgAnexo", "horario", "status", "logo", "tipoDoc", "docAnexo", "nomeArquivo", "audio", "video", "msgTooltip"],
   data(){
     return{
       strTooltipAux: ""

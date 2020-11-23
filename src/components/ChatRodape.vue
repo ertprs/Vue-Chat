@@ -392,6 +392,7 @@ export default {
       let origem = ""
       let hora = this.formataHoraAtual()
       let msg = this.mensagem;
+      let link = false
       let anexo = false
       let imgAnexo = ""
       let tipoDoc = ""
@@ -515,12 +516,17 @@ export default {
       }
 
       msg = msg.trim()
+      if(msg.search(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/) !== -1){
+        console.log("msg: ", msg)
+        link = true
+      }
 
       objMensagem = {
         seq: seq,
         autor: autor,
         origem: origem,
         msg: msg,
+        link: link,
         horario: hora,
         anexo: anexo,
         imgAnexo: imgAnexo,

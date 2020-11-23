@@ -9820,7 +9820,7 @@ body {
   #chat.z-index-superior {
     z-index: 10; }
   #chat .lista-chat-container-vazio {
-    height: calc(100% - 58px);
+    height: calc(100% - 50px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10110,9 +10110,8 @@ body {
       color: #AAA; }
     #chat-operador .chat-corpo-mensagens p {
       margin: unset;
-      word-break: break-word;
       margin-bottom: 10px;
-      white-space: pre; }
+      white-space: pre-wrap; }
     #chat-operador .chat-corpo-mensagens .mensagem {
       padding: 15px 15px 5px 15px;
       border-radius: 10px;
@@ -10620,7 +10619,7 @@ body {
       font-size: .775rem; }
 
 .lista-informacoes-container-vazio {
-  height: calc(100% - 58px);
+  height: calc(100% - 50px);
   display: flex;
   justify-content: center;
   align-items: center;

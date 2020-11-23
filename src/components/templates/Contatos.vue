@@ -571,6 +571,7 @@ export default {
             if(!(arrMensagens[index][i].origem)){
 
               let mensagem = arrMensagens[index][i].msg;
+              let link = false
               let status = arrMensagens[index][i].status
               let origem;
               arrMensagens[index][i].resp_msg == "CLI" ? (origem = "outros") : (origem = "principal");
@@ -648,7 +649,12 @@ export default {
                 }
               }
 
-              arrMensagens[index][i] = this.getObjMensagem( seq, autor, origem, mensagem, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo, audio, video );
+              if(mensagem.search(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/) !== -1){
+                console.log('mensagem: ', mensagem)
+                link = true
+              }
+
+              arrMensagens[index][i] = this.getObjMensagem( seq, autor, origem, mensagem, link, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo, audio, video );
 
               if(document.querySelector('#textarea')){
                 document.querySelector('#textarea').focus()
@@ -663,6 +669,7 @@ export default {
       inAutor,
       inOrigem,
       inMensagem,
+      inLink,
       inStatus,
       inHorario,
       inAnexo,
@@ -678,6 +685,7 @@ export default {
         autor: inAutor, // Operador, Cliente
         origem: inOrigem, // principal e outros
         msg: inMensagem,
+        link: inLink,
         status: inStatus,
         horario: inHorario,
         anexo: inAnexo,

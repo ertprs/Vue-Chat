@@ -17,6 +17,7 @@
           :autor="msg.autor"
           :origem="msg.origem"
           :msg="msg.msg"
+          :link="msg.link"
           :horario="msg.horario"
           :status="msg.status"
           :logo="msg.logo"
