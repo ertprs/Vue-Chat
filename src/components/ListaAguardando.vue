@@ -1,23 +1,29 @@
 <template>
-  <div>
-    <div class="lista-aguardando--titulo" :class="{'fechado' : fechado}" v-if="caso !== 400 && aguardando && aguardando.length">
+  <div v-if="caso !== 400 && aguardando && aguardando.length" class="container-listas-aguardando">
+    <!-- <div class="lista-aguardando--titulo" :class="{'fechado' : fechado}" v-if="caso !== 400 && aguardando && aguardando.length">
       <div :class="{'fechado' : fechado}">
-        <i class="far fa-address-book"  :title="dicionario.sub_titulo_aguardando"></i>
+        <i class="far fa-hourglass" :title="dicionario.sub_titulo_aguardando"></i>
       </div>
       <transition name="fade">
         <h2 v-show="!fechado" >
           {{ dicionario.sub_titulo_aguardando }}
         </h2>
       </transition>
-    </div>
+    </div> -->
     <div class="fieldset-container-abas" :class="{'fechado' : fechado}">
-      <div class="fieldset-abas" :class="{'ativo' : abaAberta == 'pessoal'}" v-if="caso !== 400 && aguardando && aguardando.length">
-        <h4 v-on:click="alternarAbaAberta()" :title="dicionario.sub_titulo_pessoal">
+      <div v-on:click="alternarAbaAberta()" class="fieldset-abas" :class="{'ativo' : abaAberta == 'pessoal'}" v-if="aguardando.length">
+        <span v-if="!fechado">
+          <i class="far fa-hourglass" />
+        </span>
+        <h4 :title="dicionario.sub_titulo_pessoal">
           {{ dicionario.sub_titulo_pessoal }}
         </h4>
       </div>
-      <div class="fieldset-abas" :class="{'ativo' : abaAberta == 'todos'}" v-if="caso !== 400 && aguardando && aguardando.length">
-        <h4 v-on:click="alternarAbaAberta()" :title="dicionario.sub_titulo_todos">
+      <div v-on:click="alternarAbaAberta()" class="fieldset-abas" :class="{'ativo' : abaAberta == 'todos'}" v-if="aguardando.length">
+        <span v-if="!fechado">
+          <i class="far fa-hourglass" />
+        </span>
+        <h4 :title="dicionario.sub_titulo_todos">
           {{ dicionario.sub_titulo_todos }}
         </h4>
       </div>

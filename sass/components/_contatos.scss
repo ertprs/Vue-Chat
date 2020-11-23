@@ -139,14 +139,45 @@ $tamanhoBoxShadow: 5px;
     background-color: #FFF;
     max-height: 90%;
 
+    .container-listas-aguardando{
+      border: 1px solid #AAA;
+      border-top: unset;
+      border-bottom: unset;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
     .fieldset-container-abas{
       display: flex;
       width: 100%;
+      border-bottom: 2px solid #FFF;
       .fieldset-abas{
+        cursor: pointer;
+        text-align: center;
+        border: 1px solid #AAA;
+        background-color: #FFF;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
         width: 50%;
+        @include d-flex-center();
+        h4{
+          font-size: .9rem;
+          width: auto;
+        }
+        svg{
+          margin-right: 5px;
+          font-size: .8rem;
+        }
+        &:last-child{
+          border-left: unset;
+          border-right: unset;
+        }
         &.ativo{
           opacity: 1;
-          text-decoration: underline;
+          border-bottom: unset;
+          h4{
+            text-decoration: underline;
+          }
         }
       }
       &.fechado{

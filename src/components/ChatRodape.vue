@@ -629,7 +629,9 @@ export default {
           if(objMsgFormatada.length){
             this.mensagensFormatadas_03 = objMsgFormatada
             if(this.mensagensFormatadas_03.length == 1){
-              this.chaveAtual_03 = this.mensagensFormatadas_03[0]
+              this.chaveAtual_03 = 0
+            }else{
+              this.chaveAtual_03 = ""
             }
           }else{
             this.mensagensFormatadas_03 = []
@@ -688,6 +690,7 @@ export default {
     },
     abrePopupMsgTipo2(arrayMsgFormatada, indice){
       const objMsg = arrayMsgFormatada[indice]
+
       if(objMsg){
 
         if(this.semIframe){
