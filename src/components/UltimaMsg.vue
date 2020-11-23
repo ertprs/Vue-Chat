@@ -15,12 +15,17 @@ export default {
       get(){
         if(this.mensagens){
           let chaves = Object.keys(this.mensagens)
+          if(!chaves.length){
+            return
+          }
           let ultimaChave = chaves[chaves.length - 1]
           if(!this.mensagens[ultimaChave]){
             return
           }
           let arrMsg = this.mensagens[ultimaChave].msg
-  
+          if(!arrMsg){
+            return
+          }
           if(arrMsg.length){
             if(arrMsg[arrMsg.length - 1].anexos || arrMsg[arrMsg.length - 1].nomeArquivo){
               if(arrMsg[arrMsg.length - 1].nomeArquivo){

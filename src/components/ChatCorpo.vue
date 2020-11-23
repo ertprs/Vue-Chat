@@ -2,7 +2,7 @@
   <div class="chat-corpo" @click="focaTextarea()">
     <div class="chat-corpo-mensagens" v-on:scroll.prevent="verificaPosicaoBarraRolagem()">
       <div v-for="(arrMsg, index) in this.atendimentoAtivo.arrMsg" :key="index">
-        <div class="chat-corpo-container">
+        <div class="chat-corpo-container" v-if="arrMsg.data_ini && arrMsg.login">
           <hr>
           <div>
             <h5 class="separador-mensagens">
@@ -11,6 +11,11 @@
             </h5>
           </div>
           <hr>
+        </div>
+        <div v-if="arrMsg.st_ret == 'ERRO'" class="container-msg-erro">
+          <p class="msg-erro">
+            {{ arrMsg.msg_ret }}
+          </p>
         </div>
         <Mensagens
           v-for="(msg, i) in arrMsg.msg" :key="i"

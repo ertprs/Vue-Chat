@@ -350,6 +350,9 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
     }
 
     for(let chave in novosAtendimentos[ramal].arrMsg) {
+        if(!novosAtendimentos[ramal].arrMsg[chave].msg){
+          return
+        }
         if(!novosAtendimentos[ramal].arrMsg[chave].msg.length){
             return
         }

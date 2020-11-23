@@ -139,7 +139,20 @@ $tamanhoBoxShadow: 5px;
     background-color: #FFF;
     max-height: 90%;
 
-    .fieldset-container{
+    .fieldset-container-abas{
+      display: flex;
+      width: 100%;
+      .fieldset-abas{
+        width: 50%;
+      }
+      &.fechado{
+        flex-direction: column;
+        .fieldset-abas{
+          width: 100%;
+        }
+      }
+    }
+    .fieldset-container, .fieldset-abas{
       display: flex;
       border-bottom: 1px solid #CCC;
       position: relative;
@@ -379,24 +392,22 @@ $tamanhoBoxShadow: 5px;
       }
     }
   }
-  .lista-agenda{
-    .lista-agenda--titulo{
-      position: relative;
-      width: 100%;
-      height: 30px;
-      max-height: 30px;
-      @include d-flex-center('vertical');
-      padding: 5px 10px;
-      background-color: #eee;
+  .lista-agenda--titulo, .lista-aguardando--titulo{
+    position: relative;
+    width: 100%;
+    height: 30px;
+    max-height: 30px;
+    @include d-flex-center('vertical');
+    padding: 5px 10px;
+    background-color: #eee;
 
-      svg{
-        margin-right: 5px;
-        font-size: 1.1rem;
-        color: #242423;
-      }
-      > div.fechado{
-        font-size: 1.4rem;
-      }
+    svg{
+      margin-right: 5px;
+      font-size: 1.1rem;
+      color: #242423;
+    }
+    > div.fechado{
+      font-size: 1.4rem;
     }
     h2{
       font-size: 1rem;
@@ -404,6 +415,8 @@ $tamanhoBoxShadow: 5px;
       color: #242423;
       white-space: nowrap;
     }
+  }
+  .lista-agenda{
     ul{
       flex-direction: column
     }

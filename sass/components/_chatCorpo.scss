@@ -73,3 +73,18 @@ $cor-separador: #BBB;
 .tooltip-titulo-status-message{
   margin-bottom: 0;
 }
+
+.container-msg-erro{
+  width:  85%;
+  border-radius: 10px;
+  background-color: lighten($bg-encerrar, 10);
+  margin: 0 auto;
+  padding: 0;
+  .msg-erro{
+    text-align: center;
+    color: #FFF;
+    padding: 10px;
+    margin: 0!important;
+    white-space: normal!important;
+  }
+}

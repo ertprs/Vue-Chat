@@ -58,33 +58,9 @@
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
           </li>
         </ul>
-        <div class="fieldset-container" :class="{'fechado' : fechado}" v-if="caso !== 400 && aguardando && aguardando.length">
-          <h4 v-on:click="alternarAbaAberta()">
-            {{ dicionario.sub_titulo_aguardando }}
-          </h4>
-          <div>
-            <span class="contador-aguardando" v-show="this.abaAberta == 'atendimento' && aguardando.length">
-              {{ aguardando.length }}
-            </span>
-          </div>
-        </div>
-        <div class="lista-aguardando" v-if="aguardando && aguardando.length">
-          <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta !== 'aguardando'}">
-            <li
-              v-for="(atd, indice) in aguardando"
-              :key="'id_'+indice"
-              :id="'li_'+indice"
-              :title="atd.nome_usu"
-              @click="ativarCliente(atd.login_usu, atd.grupo, atd, 'aguardando')"
-            >
-              <div class="circulo-contatos">
-                <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
-                <p v-if="fechado">{{ formataSigla(atd.nome_usu[1], 'lower') }}</p>
-              </div>
-              <template v-if="!fechado">{{ atd.nome_usu }}</template>
-            </li>
-          </ul>
-        </div>
+
+        <lista-aguardando :fechado="fechado" />
+
         <div class="lista-agenda">
           <div class="lista-agenda--titulo">
             <div :class="{'fechado' : fechado}">
@@ -150,6 +126,7 @@ import axios_api from '@/services/serviceAxios'
 import { gerenciarCores } from "@/services/gerenciarCores"
 
 import SimpleContextMenu from 'vue-simple-context-menu'
+import ListaAguardando from "../ListaAguardando"
 import UltimaMsg from "../UltimaMsg"
 
 export default {
@@ -159,7 +136,6 @@ export default {
       rotate: false,
       haContatos: true,
       objAtendimentos: [],
-      abaAberta: 'aguardando',
       totalMsgNovas: '',
       totalClientesNovos: '',
       reqEmAndamento: false,
@@ -167,7 +143,8 @@ export default {
   },
   components: {
     "simple-context-menu" : SimpleContextMenu,
-    "ultima-msg" : UltimaMsg
+    "ultima-msg" : UltimaMsg,
+    "lista-aguardando": ListaAguardando,
   },
   watch: {
     todosAtendimentos() {
@@ -294,6 +271,7 @@ export default {
         if(chaves.length){
           const chaveFinal = chaves[chaves.length - 1]
           if(this.atendimentoAtivo.arrMsg[chaveFinal]){
+
             for(let msg in this.atendimentoAtivo.arrMsg[chaveFinal].msg){
               if(msg - 1 >= 0){
                 const ultimoSeq = this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg - 1].seq
@@ -362,13 +340,6 @@ export default {
           this.reqEmAndamento = false
           this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_ativar_cliente})
         })
-    },
-    alternarAbaAberta(){
-      if(this.abaAberta == "aguardando"){
-        this.abaAberta = ""
-      }else{
-        this.abaAberta = "aguardando"
-      }
     },
     contarMsgClientes() {
       this.totalMsgNovas = ''
@@ -547,8 +518,21 @@ export default {
         todasMensagens.push(objMensagens[objMsg].msg)
       }
 
-      // Muda a estrutura do arrMsg para o esperado
-      this.setMensagensClienteAtivo(atd.id_cli, todasMensagens)
+      if(!todasMensagens[0] || todasMensagens[0] == "ERRO"){
+        todasMensagens = {erro: true, msg: atd.arrMsg.msg_ret}
+      }
+      if(atd.arrMsg[0]){
+        if(atd.arrMsg[0].st_ret == "ERRO"){
+          todasMensagens = {erro: true, msg: atd.arrMsg[0].msg_ret}
+        }
+      }
+
+      if(todasMensagens.erro){
+        // Muda a estrutura do arrMsg para o esperado
+        this.setMensagensClienteAtivo(atd.id_cli, todasMensagens, true)
+      }else{
+        this.setMensagensClienteAtivo(atd.id_cli, todasMensagens, false)
+      }
 
       this.exibirInformacoes(atd, indice)
 
@@ -561,7 +545,11 @@ export default {
 
       this.$root.$emit('mostrar-iframe', atd.id, atd.url)
     },
-    setMensagensClienteAtivo(id, arrMensagens) {
+    setMensagensClienteAtivo(id, arrMensagens, erro) {
+      if(erro){
+        this.atendimentoAtivo.arrMsg = [{st_ret: "ERRO", msg_ret: arrMensagens.msg}]
+        return
+      }
 
       for(let index in arrMensagens){
         for (let i in arrMensagens[index]) {

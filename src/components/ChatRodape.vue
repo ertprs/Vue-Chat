@@ -407,6 +407,9 @@ export default {
       let chavesArrMsg = Object.keys(this.atendimentoAtivo.arrMsg)
       let indexUltimaChave = chavesArrMsg[chavesArrMsg.length - 1]
       let arrMsg = this.atendimentoAtivo.arrMsg[indexUltimaChave].msg
+      if(!arrMsg){
+        return
+      }
 
       // Msg sendo disparada pelo textarea
       if (!objMsgExterno) {
@@ -517,7 +520,6 @@ export default {
 
       msg = msg.trim()
       if(msg.search(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/) !== -1){
-        console.log("msg: ", msg)
         link = true
       }
 

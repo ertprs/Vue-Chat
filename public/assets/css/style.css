@@ -9500,20 +9500,29 @@ body {
     width: 100%;
     background-color: #FFF;
     max-height: 90%; }
-    #todos-contatos .lista-contatos-container .fieldset-container {
+    #todos-contatos .lista-contatos-container .fieldset-container-abas {
+      display: flex;
+      width: 100%; }
+      #todos-contatos .lista-contatos-container .fieldset-container-abas .fieldset-abas {
+        width: 50%; }
+      #todos-contatos .lista-contatos-container .fieldset-container-abas.fechado {
+        flex-direction: column; }
+        #todos-contatos .lista-contatos-container .fieldset-container-abas.fechado .fieldset-abas {
+          width: 100%; }
+    #todos-contatos .lista-contatos-container .fieldset-container, #todos-contatos .lista-contatos-container .fieldset-abas {
       display: flex;
       border-bottom: 1px solid #CCC;
       position: relative;
       transition: 300ms; }
-      #todos-contatos .lista-contatos-container .fieldset-container.fechado {
+      #todos-contatos .lista-contatos-container .fieldset-container.fechado, #todos-contatos .lista-contatos-container .fieldset-abas.fechado {
         flex-direction: column;
         padding-bottom: 5px; }
-        #todos-contatos .lista-contatos-container .fieldset-container.fechado > div {
+        #todos-contatos .lista-contatos-container .fieldset-container.fechado > div, #todos-contatos .lista-contatos-container .fieldset-abas.fechado > div {
           position: relative;
           justify-content: space-around; }
-          #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .contador-aguardando, #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .total-clientes {
+          #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .contador-aguardando, #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .total-clientes, #todos-contatos .lista-contatos-container .fieldset-abas.fechado > div .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-abas.fechado > div .contador-aguardando, #todos-contatos .lista-contatos-container .fieldset-abas.fechado > div .total-clientes {
             margin-right: 0; }
-      #todos-contatos .lista-contatos-container .fieldset-container h4 {
+      #todos-contatos .lista-contatos-container .fieldset-container h4, #todos-contatos .lista-contatos-container .fieldset-abas h4 {
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -9527,25 +9536,25 @@ body {
         transition-property: opacity;
         opacity: .8;
         cursor: pointer; }
-        #todos-contatos .lista-contatos-container .fieldset-container h4:hover {
+        #todos-contatos .lista-contatos-container .fieldset-container h4:hover, #todos-contatos .lista-contatos-container .fieldset-abas h4:hover {
           opacity: 1; }
-        #todos-contatos .lista-contatos-container .fieldset-container h4.ativo {
+        #todos-contatos .lista-contatos-container .fieldset-container h4.ativo, #todos-contatos .lista-contatos-container .fieldset-abas h4.ativo {
           opacity: 1;
           padding: 0;
           padding-left: 10px; }
-      #todos-contatos .lista-contatos-container .fieldset-container > div {
+      #todos-contatos .lista-contatos-container .fieldset-container > div, #todos-contatos .lista-contatos-container .fieldset-abas > div {
         transition: 300ms;
         position: absolute;
         right: 0;
         top: 3px;
         display: flex; }
-      #todos-contatos .lista-contatos-container .fieldset-container .total-clientes, #todos-contatos .lista-contatos-container .fieldset-container .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-container .total-msgs-novas, #todos-contatos .lista-contatos-container .fieldset-container .contador-aguardando {
+      #todos-contatos .lista-contatos-container .fieldset-container .total-clientes, #todos-contatos .lista-contatos-container .fieldset-container .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-container .total-msgs-novas, #todos-contatos .lista-contatos-container .fieldset-container .contador-aguardando, #todos-contatos .lista-contatos-container .fieldset-abas .total-clientes, #todos-contatos .lista-contatos-container .fieldset-abas .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-abas .total-msgs-novas, #todos-contatos .lista-contatos-container .fieldset-abas .contador-aguardando {
         cursor: pointer;
         display: flex;
         justify-content: center;
         align-items: center;
         margin-right: 5px; }
-      #todos-contatos .lista-contatos-container .fieldset-container .total-clientes-novos {
+      #todos-contatos .lista-contatos-container .fieldset-container .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-abas .total-clientes-novos {
         padding: 1.5px 3px;
         width: auto;
         min-width: 1rem;
@@ -9555,7 +9564,7 @@ body {
         font-size: .8rem;
         background-color: #FDC43F;
         color: #FFF; }
-      #todos-contatos .lista-contatos-container .fieldset-container .total-msgs-novas {
+      #todos-contatos .lista-contatos-container .fieldset-container .total-msgs-novas, #todos-contatos .lista-contatos-container .fieldset-abas .total-msgs-novas {
         padding: 1.5px 3px;
         width: auto;
         min-width: 1rem;
@@ -9565,7 +9574,7 @@ body {
         font-size: .8rem;
         background-color: #55a630;
         color: #FFF; }
-      #todos-contatos .lista-contatos-container .fieldset-container .contador-aguardando, #todos-contatos .lista-contatos-container .fieldset-container .total-clientes {
+      #todos-contatos .lista-contatos-container .fieldset-container .contador-aguardando, #todos-contatos .lista-contatos-container .fieldset-container .total-clientes, #todos-contatos .lista-contatos-container .fieldset-abas .contador-aguardando, #todos-contatos .lista-contatos-container .fieldset-abas .total-clientes {
         padding: 1.5px 3px;
         width: auto;
         min-width: 1rem;
@@ -9734,7 +9743,7 @@ body {
           margin-right: 2px; }
         #todos-contatos ul li .retorno-container .data-retorno {
           margin-right: 5px; }
-  #todos-contatos .lista-agenda .lista-agenda--titulo {
+  #todos-contatos .lista-agenda--titulo, #todos-contatos .lista-aguardando--titulo {
     position: relative;
     width: 100%;
     height: 30px;
@@ -9743,17 +9752,17 @@ body {
     align-items: center;
     padding: 5px 10px;
     background-color: #eee; }
-    #todos-contatos .lista-agenda .lista-agenda--titulo svg {
+    #todos-contatos .lista-agenda--titulo svg, #todos-contatos .lista-aguardando--titulo svg {
       margin-right: 5px;
       font-size: 1.1rem;
       color: #242423; }
-    #todos-contatos .lista-agenda .lista-agenda--titulo > div.fechado {
+    #todos-contatos .lista-agenda--titulo > div.fechado, #todos-contatos .lista-aguardando--titulo > div.fechado {
       font-size: 1.4rem; }
-  #todos-contatos .lista-agenda h2 {
-    font-size: 1rem;
-    margin: 0;
-    color: #242423;
-    white-space: nowrap; }
+    #todos-contatos .lista-agenda--titulo h2, #todos-contatos .lista-aguardando--titulo h2 {
+      font-size: 1rem;
+      margin: 0;
+      color: #242423;
+      white-space: nowrap; }
   #todos-contatos .lista-agenda ul {
     flex-direction: column; }
   #todos-contatos .lista-agenda .agenda-vazia {
@@ -10235,6 +10244,19 @@ body {
 
 .tooltip-titulo-status-message {
   margin-bottom: 0; }
+
+.container-msg-erro {
+  width: 85%;
+  border-radius: 10px;
+  background-color: #ed7669;
+  margin: 0 auto;
+  padding: 0; }
+  .container-msg-erro .msg-erro {
+    text-align: center;
+    color: #FFF;
+    padding: 10px;
+    margin: 0 !important;
+    white-space: normal !important; }
 
 .chat-rodape {
   background-color: #bbbbbb;
