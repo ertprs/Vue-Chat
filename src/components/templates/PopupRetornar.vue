@@ -145,6 +145,16 @@ export default {
 
                 this.removerCliente()
                 this.$root.$emit("reverter-cores")
+
+                // Aguardando
+                axios_api.get(`get-aguardando?${this.reqTeste}`)
+                .then(response => {
+                  const arrAguardando = response.data.ret.pessoal || []
+                  this.$store.dispatch("setAguardando", arrAguardando)
+                })
+                .catch(error => {
+                  console.log('error get aguardando: ', error)
+                })
               }
             })
             .catch(error => {

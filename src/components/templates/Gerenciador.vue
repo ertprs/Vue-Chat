@@ -65,7 +65,7 @@ export default {
         if(event.data.toggleAtd){
           this.mudarEstadoAtendimento()
         }
-      }  
+      }
     },
     mudarEstadoAtendimento(){
       if(this.reqEmAndamento){
@@ -80,7 +80,7 @@ export default {
           if(response.data.st_ret == "OK"){
             if(this.statusAtd == "em-atendimento"){
               this.$store.dispatch("setStatusAtd", "parado")
-              
+
               let arrTodosAtds = Object.values(this.todosAtendimentos)
               if(arrTodosAtds.length == 0){
                 this.$store.dispatch("setBlocker", true)
@@ -100,14 +100,14 @@ export default {
             }
 
             this.reqEmAndamento = false
-            
+
             this.preencherDiv()
           }
         })
         .catch(error => {
 
           this.reqEmAndamento = false
-          
+
           this.$store.dispatch("setOrigemBlocker", "atd-parado")
 
           let arrTodosAtds = Object.values(this.todosAtendimentos)
@@ -193,7 +193,7 @@ export default {
             btnChamarCliente.classList.remove("d-none")
           }
         }
-        
+
         this.$nextTick(() => {
           gerenciadorV8.classList.remove('d-none')
           if(gerenciador){
@@ -217,7 +217,7 @@ export default {
               // Aguardando
               axios_api.get(`get-aguardando?${this.reqTeste}`)
               .then(response => {
-                const arrAguardando = response.data.ret || []
+                const arrAguardando = response.data.ret.pessoal || []
                 this.$store.dispatch("setAguardando", arrAguardando)
                 this.qtdAguardando = i.count
               })
