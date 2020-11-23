@@ -6,7 +6,7 @@ $tamanhoBoxShadow: 5px;
 
 :root{
   --height-li: 50px;
-  --height-ul: 200px; // --height-li * 4 
+  --height-ul: 200px; // --height-li * 4
   --circulo-ctt: 35px;
   --top-img: 20px;
   --flex-start: center;
@@ -138,7 +138,7 @@ $tamanhoBoxShadow: 5px;
     width: 100%;
     background-color: #FFF;
     max-height: 90%;
-    
+
     .fieldset-container{
       display: flex;
       border-bottom: 1px solid #CCC;
@@ -196,7 +196,7 @@ $tamanhoBoxShadow: 5px;
         margin-right: 5px;
       }
     }
-    
+
     ul{
       display: flex;
       flex-direction: column-reverse;
@@ -214,7 +214,7 @@ $tamanhoBoxShadow: 5px;
     overflow-x: hidden;
     transition: max-height 400ms ease-out;
     &.aba-fechada{
-      max-height: 0;   
+      max-height: 0;
     }
     &.fechado{
       li{
@@ -383,15 +383,15 @@ $tamanhoBoxShadow: 5px;
     .lista-agenda--titulo{
       position: relative;
       width: 100%;
-      height: 50px;
-      max-height: 50px;
+      height: 30px;
+      max-height: 30px;
       @include d-flex-center('vertical');
       padding: 5px 10px;
       background-color: #eee;
-      
+
       svg{
         margin-right: 5px;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         color: #242423;
       }
       > div.fechado{
@@ -399,9 +399,9 @@ $tamanhoBoxShadow: 5px;
       }
     }
     h2{
+      font-size: 1rem;
       margin: 0;
       color: #242423;
-      font-size: 1.1rem;
       white-space: nowrap;
     }
     ul{
@@ -412,7 +412,7 @@ $tamanhoBoxShadow: 5px;
       height: 100%;
       @include d-flex-center();
       p {
-        font-size: .9rem;
+        font-size: .8rem;
         text-align: center;
         overflow: hidden;
         white-space: nowrap;

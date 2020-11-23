@@ -403,7 +403,6 @@ export default {
 
       let regex = ""
 
-
       let chavesArrMsg = Object.keys(this.atendimentoAtivo.arrMsg)
       let indexUltimaChave = chavesArrMsg[chavesArrMsg.length - 1]
       let arrMsg = this.atendimentoAtivo.arrMsg[indexUltimaChave].msg
@@ -514,6 +513,8 @@ export default {
 
         this.$store.dispatch("setMensagemViaTextarea", false)
       }
+
+      msg = msg.trim()
 
       objMensagem = {
         seq: seq,
