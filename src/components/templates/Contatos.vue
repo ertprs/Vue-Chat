@@ -91,7 +91,7 @@
               </div>
             </li>
           </ul>
-          <div class="agenda-vazia" v-else>
+          <div class="lista-vazia" v-else>
             <p> {{ dicionario.msg_sem_agenda }} </p>
           </div>
         </div>

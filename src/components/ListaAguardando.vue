@@ -11,19 +11,19 @@
       </transition>
     </div>
     <div class="fieldset-container-abas" :class="{'fechado' : fechado}">
-      <div class="fieldset-abas" :class="{'fechado' : fechado}" v-if="caso !== 400 && aguardando && aguardando.length">
-        <h4 v-on:click="alternarAbaAberta()">
+      <div class="fieldset-abas" :class="{'ativo' : abaAberta == 'pessoal'}" v-if="caso !== 400 && aguardando && aguardando.length">
+        <h4 v-on:click="alternarAbaAberta()" :title="dicionario.sub_titulo_pessoal">
           {{ dicionario.sub_titulo_pessoal }}
         </h4>
       </div>
-      <div class="fieldset-abas" :class="{'fechado' : fechado}" v-if="caso !== 400 && aguardando && aguardando.length">
-        <h4 v-on:click="alternarAbaAberta()">
+      <div class="fieldset-abas" :class="{'ativo' : abaAberta == 'todos'}" v-if="caso !== 400 && aguardando && aguardando.length">
+        <h4 v-on:click="alternarAbaAberta()" :title="dicionario.sub_titulo_todos">
           {{ dicionario.sub_titulo_todos }}
         </h4>
       </div>
     </div>
-    <div class="lista-aguardando" v-if="aguardando && aguardando.length">
-      <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta !== 'todos'}">
+    <div class="lista-aguardando" v-if="abaAberta == 'pessoal'">
+      <ul :class="{'fechado' : fechado}" v-if="aguardando.length">
         <li
           v-for="(atd, indice) in aguardando"
           :key="'id_'+indice"
@@ -38,9 +38,12 @@
           <template v-if="!fechado">{{ atd.nome_usu }}</template>
         </li>
       </ul>
+      <div class="lista-vazia" v-else>
+        <p> {{ dicionario.msg_sem_agenda }} </p>
+      </div>
     </div>
-    <div class="lista-aguardando" v-if="aguardando && aguardando.length">
-      <ul :class="{'fechado' : fechado, 'aba-fechada' : abaAberta !== 'pessoal'}">
+    <div class="lista-aguardando" v-if="abaAberta == 'todos'">
+      <ul :class="{'fechado' : fechado}" v-if="aguardando.length">
         <li
           v-for="(atd, indice) in aguardando"
           :key="'id_'+indice"
@@ -55,6 +58,9 @@
           <template v-if="!fechado">{{ atd.nome_usu }}</template>
         </li>
       </ul>
+      <div class="lista-vazia" v-else>
+        <p> {{ dicionario.msg_sem_agenda }} </p>
+      </div>
     </div>
   </div>
 </template>

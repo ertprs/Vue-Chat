@@ -9505,6 +9505,9 @@ body {
       width: 100%; }
       #todos-contatos .lista-contatos-container .fieldset-container-abas .fieldset-abas {
         width: 50%; }
+        #todos-contatos .lista-contatos-container .fieldset-container-abas .fieldset-abas.ativo {
+          opacity: 1;
+          text-decoration: underline; }
       #todos-contatos .lista-contatos-container .fieldset-container-abas.fechado {
         flex-direction: column; }
         #todos-contatos .lista-contatos-container .fieldset-container-abas.fechado .fieldset-abas {
@@ -9765,18 +9768,19 @@ body {
       white-space: nowrap; }
   #todos-contatos .lista-agenda ul {
     flex-direction: column; }
-  #todos-contatos .lista-agenda .agenda-vazia {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center; }
-    #todos-contatos .lista-agenda .agenda-vazia p {
-      font-size: .8rem;
-      text-align: center;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis; }
+
+.lista-vazia {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .lista-vazia p {
+    font-size: .8rem;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; }
 
 .load svg {
   animation: rotate;
