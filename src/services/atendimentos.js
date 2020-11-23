@@ -136,9 +136,15 @@ function tratarResponse(response) {
             break;
 
         default:
-            console.error('ERRO STATUS ' + response.status + ' ' + response.statusText)
-            adicionaCaso(400)
-            break
+          if(mainData){
+            if(mainData.atendimentos){
+              store.dispatch('setAtendimentos', mainData.atendimentos)
+            }
+            acionaProcessos(mainData)
+          }
+          console.error('ERRO STATUS ' + response.status + ' ' + response.statusText)
+          adicionaCaso(400)
+          break
     }
 }
 
@@ -146,40 +152,44 @@ let primeiraRequest = true
 
 function acionaProcessos(mainData){
 
-    if(primeiraRequest){
-        // Pausa/Em atendimento
-        if(mainData.status_operacao){
-            store.dispatch("setStatusAtd", "em-atendimento")
-        }else{
-            store.dispatch("setStatusAtd", "parado")
-            if(!mainData.atendimentos){
-                store.dispatch("setBlocker", true)
-                store.dispatch("setOrigemBlocker", "atd-parado")
-            }
-        }
-    }
+  if(!mainData){
+    return
+  }
 
-    // Carregando os iframes
-    if(mainData.atendimentos){
-      carregarIframe(mainData.atendimentos)
-    }
+  if(primeiraRequest){
+      // Pausa/Em atendimento
+      if(mainData.status_operacao){
+          store.dispatch("setStatusAtd", "em-atendimento")
+      }else{
+          store.dispatch("setStatusAtd", "parado")
+          if(!mainData.atendimentos){
+              store.dispatch("setBlocker", true)
+              store.dispatch("setOrigemBlocker", "atd-parado")
+          }
+      }
+  }
 
-    // Ativar Cliente
-    if(mainData.ativo){
-        store.dispatch("setAtivo", mainData.ativo)
-    }
+  // Carregando os iframes
+  if(mainData.atendimentos){
+    carregarIframe(mainData.atendimentos)
+  }
 
-    // Gerenciador
-    if(mainData.gerenciador){
-        store.dispatch("setGerenciador", mainData.gerenciador)
-    }
+  // Ativar Cliente
+  if(mainData.ativo){
+      store.dispatch("setAtivo", mainData.ativo)
+  }
 
-    // Agenda
-    if(mainData.agenda && mainData.agenda.length){
-        store.dispatch("setAgenda", mainData.agenda)
-    }
+  // Gerenciador
+  if(mainData.gerenciador){
+      store.dispatch("setGerenciador", mainData.gerenciador)
+  }
 
-    primeiraRequest = false
+  // Agenda
+  if(mainData.agenda && mainData.agenda.length){
+      store.dispatch("setAgenda", mainData.agenda)
+  }
+
+  primeiraRequest = false
 }
 
 function verificaRequest() {
