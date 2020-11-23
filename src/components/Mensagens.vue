@@ -24,7 +24,7 @@
           </template>
         </div>
       </div>
-      <a :href="msg" v-if="link" target="_parent">{{ msg }}</a>
+      <a :href="msg" v-if="link" target="_blank">{{ msg }}</a>
       <p v-if="!link" v-html="msg"></p>
       <span class="horario-envio"> {{ horario }} </span>
 

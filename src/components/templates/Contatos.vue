@@ -537,6 +537,12 @@ export default {
       this.exibirInformacoes(atd, indice)
 
       this.$store.dispatch('setIdAtendimentoAtivo', atd.id_cli)
+
+      setTimeout(() => {
+        if(document.querySelector("textarea")){
+          document.querySelector("textarea").focus()
+        }
+      }, 150)
     },
     exibirInformacoes(atd, indice) {
       atd.informacoes = {}

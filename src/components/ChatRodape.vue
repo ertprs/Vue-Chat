@@ -628,6 +628,9 @@ export default {
         case 3:
           if(objMsgFormatada.length){
             this.mensagensFormatadas_03 = objMsgFormatada
+            if(this.mensagensFormatadas_03.length == 1){
+              this.chaveAtual_03 = this.mensagensFormatadas_03[0]
+            }
           }else{
             this.mensagensFormatadas_03 = []
             this.$toasted.global.emConstrucao({msg: this.dicionario.msg_erro_sem_msg_formatada})
