@@ -106,7 +106,7 @@ $tamanho-sinalizador-nova-msg: 12.5px;
         }
       }
     }
-      
+
 
     .horario-envio{
       margin-right: 15px;
@@ -223,7 +223,7 @@ $tamanho-sinalizador-nova-msg: 12.5px;
   }@else if $direcao == 'vertical' {
     align-items: center;
   }
-  
+
 }
 
 @mixin efeito-hover-padrao(){
@@ -248,7 +248,6 @@ $tamanho-sinalizador-nova-msg: 12.5px;
   line-height: 1rem;
   border-radius: 50%;
   font-size: .8rem;
-  font-weight: bold;
   background-color: $bg;
   color: $color;
 }

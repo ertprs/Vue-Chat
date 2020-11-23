@@ -9553,7 +9553,6 @@ body {
         line-height: 1rem;
         border-radius: 50%;
         font-size: .8rem;
-        font-weight: bold;
         background-color: #FDC43F;
         color: #FFF; }
       #todos-contatos .lista-contatos-container .fieldset-container .total-msgs-novas {
@@ -9564,7 +9563,6 @@ body {
         line-height: 1rem;
         border-radius: 50%;
         font-size: .8rem;
-        font-weight: bold;
         background-color: #55a630;
         color: #FFF; }
       #todos-contatos .lista-contatos-container .fieldset-container .contador-aguardando, #todos-contatos .lista-contatos-container .fieldset-container .total-clientes {
@@ -9575,7 +9573,6 @@ body {
         line-height: 1rem;
         border-radius: 50%;
         font-size: .8rem;
-        font-weight: bold;
         background-color: #888;
         color: #FFF;
         display: flex;
@@ -9710,7 +9707,6 @@ body {
         line-height: 1rem;
         border-radius: 50%;
         font-size: .8rem;
-        font-weight: bold;
         background-color: #55a630;
         color: #FFF;
         display: flex;

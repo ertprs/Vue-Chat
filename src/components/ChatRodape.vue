@@ -209,7 +209,8 @@ export default {
       chaveAtual_03: '',
       tamanhoText: '',
       statusEnvio: '',
-      alturaTela: ''
+      alturaTela: '',
+      disabled: false
     };
   },
   destroyed(){
@@ -247,6 +248,15 @@ export default {
         }, 500);
     },
     enviarMensagem(event, previa) {
+
+      if(this.disabled){
+        setTimeout(() => {
+          this.disabled = false
+        }, 500)
+        return
+      }else{
+        this.disabled = true
+      }
 
       if(this.blocker && this.origemBlocker !== 'msg-formatada') {
         this.$store.dispatch('setBlocker', false)
@@ -297,15 +307,14 @@ export default {
             };
           }
 
-          document.querySelector("#textarea").setAttribute("disabled", "disabled")
-          document.querySelector("#textarea").setAttribute("placeholder", this.dicionario.placeholder_textarea_disabled)
-
           axios_api
             .post(`send-message?${this.reqTeste}`, data)
             .then((response) => {
               this.abrirEmojis = false;
               this.abrirOpcoes = false;
               this.statusEnvio = "D"
+
+              this.disabled = false
             })
             .catch((error) => {
               console.log("erro send-message: ", error);
@@ -317,12 +326,6 @@ export default {
                 });
               }
             });
-
-          setTimeout(() => {
-            document.querySelector("#textarea").removeAttribute("disabled")
-            document.querySelector("#textarea").setAttribute("placeholder", this.dicionario.placeholder_textarea)
-            document.querySelector("#textarea").focus()
-          }, 500)
 
           this.criaObjMensagem()
         }

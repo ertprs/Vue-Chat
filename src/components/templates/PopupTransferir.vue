@@ -200,6 +200,16 @@ export default {
           if(response.data.st_ret == "OK"){
             this.$toasted.global.sucessoTransferencia()
             this.removerCliente()
+            // Aguardando
+            axios_api.get(`get-aguardando?${this.reqTeste}`)
+            .then(response => {
+              const arrAguardando = response.data.ret || []
+              this.$store.dispatch("setAguardando", arrAguardando)
+              this.qtdAguardando = i.count
+            })
+            .catch(error => {
+              console.log('error get aguardando: ', error)
+            })
           }
         })
         .catch(error => {
