@@ -24,8 +24,8 @@
           </template>
         </div>
       </div>
-      <a :href="msg" v-if="link" target="_blank">{{ msg }}</a>
-      <p v-if="!link" v-html="msg"></p>
+      <a :href="hrefLink" v-if="link" :title="msg" target="_blank">{{ msg }}</a>
+      <p v-else v-html="msg"></p>
       <span class="horario-envio"> {{ horario }} </span>
 
       <transition name="fade">
@@ -71,7 +71,8 @@ export default {
   props: ["autor", "origem", "msg", "link", "anexo", "imgAnexo", "horario", "status", "logo", "tipoDoc", "docAnexo", "nomeArquivo", "audio", "video", "msgTooltip"],
   data(){
     return{
-      strTooltipAux: ""
+      strTooltipAux: "",
+      linkAux: ""
     }
   },
   computed: {
@@ -98,6 +99,20 @@ export default {
       },
       set(msg){
         return this.contentTooltip = msg
+      }
+    },
+    hrefLink: {
+      get(){
+        if(this.link){
+          if(this.msg.search(/http/g) !== -1){
+            return this.linkAux = this.msg
+          }else{
+            return this.linkAux = "https://"+this.msg
+          }
+        }
+      },
+      set(link){
+        return this.hrefLink = link
       }
     }
   },

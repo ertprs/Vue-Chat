@@ -61,6 +61,7 @@
 
 <script>
 import { mapGetters } from "vuex"
+import axios_api from "@/services/serviceAxios";
 
 export default {
   props: ["fechado"],
@@ -68,6 +69,7 @@ export default {
     ...mapGetters({
       dicionario: "getDicionario",
       aguardando: "getAguardando",
+      reqTeste: "getReqTeste",
       caso: "getCaso"
     })
   },
