@@ -214,8 +214,14 @@ export default {
             const arr = response.data.ret
             if(origem == "pessoal"){
               this.$store.dispatch("setAguardando", arr)
+              if(arr.length > 0){
+                this.$store.dispatch("setContadorAguardando", arr.length)
+              }
             }else{
               this.$store.dispatch("setTodos", arr)
+              if(arr.length > 0){
+                this.$store.dispatch("setContadorTodos", arr.length)
+              }
             }
           }
         }
