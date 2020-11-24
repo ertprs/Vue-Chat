@@ -621,6 +621,14 @@ export default {
       switch(numReq){
         case 1:
           this.mensagensFormatadas_01 = objMsgFormatada
+          if(Object.keys(this.mensagensFormatadas_01)){
+            if(Object.keys(this.mensagensFormatadas_01).length == 1){
+              this.chaveAtual_01 = Object.keys(this.mensagensFormatadas_01)[0]
+              this.recebeValorMSGFormatada(this.chaveAtual_01, 2)
+            }else{
+              this.chaveAtual_01 = ""
+            }
+          }
         break;
         case 2:
           this.mensagensFormatadas_02 = objMsgFormatada

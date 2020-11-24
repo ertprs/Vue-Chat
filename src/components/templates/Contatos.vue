@@ -212,6 +212,9 @@ export default {
   updated(){
     // Verificando se o usuario esta em mais de um array e removendo caso sim
     this.objAtendimentos.map(atd => {
+      if(!this.minhaAgenda.length){
+        return
+      }
       this.minhaAgenda.map(atdAgenda => {
         if(atd.login_usu == atdAgenda.login_usu){
           let auxAgenda = this.minhaAgenda
@@ -221,6 +224,9 @@ export default {
           this.$store.dispatch("setAgenda", auxAgenda)
         }
       })
+      if(!this.aguardando.length){
+        return
+      }
       this.aguardando.map(atdAguardando => {
         if(atd.login_usu == atdAguardando.login_usu){
           let auxAguardando = this.aguardando
