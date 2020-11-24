@@ -1,5 +1,5 @@
 <template>
-  <div v-if="caso !== 400" class="container-listas-aguardando">
+  <div v-if="caso !== 400" class="container-listas-aguardando" :class="{'fechado' : fechado}">
     <div class="fieldset-container-abas" :class="{'fechado' : fechado}">
       <div v-on:click="alternarAbaAberta()" class="fieldset-abas" :class="{'ativo' : abaAberta == 'pessoal'}">
         <span v-if="!fechado">

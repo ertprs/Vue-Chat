@@ -9506,7 +9506,9 @@ body {
       border-bottom: unset;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
-      margin: 0 0  5px 5px; }
+      margin: 5px; }
+      #todos-contatos .lista-contatos-container .container-listas-aguardando.fechado {
+        margin: 5px 0; }
       #todos-contatos .lista-contatos-container .container-listas-aguardando .lista-aguardando ul {
         flex-direction: column;
         max-height: 155px;
@@ -9547,6 +9549,9 @@ body {
         flex-direction: column; }
         #todos-contatos .lista-contatos-container .fieldset-container-abas.fechado .fieldset-abas {
           width: 100%; }
+          #todos-contatos .lista-contatos-container .fieldset-container-abas.fechado .fieldset-abas:first-child {
+            border-right: unset;
+            border-bottom: unset; }
     #todos-contatos .lista-contatos-container .fieldset-container, #todos-contatos .lista-contatos-container .fieldset-abas {
       display: flex;
       border-bottom: 1px solid #CCC;

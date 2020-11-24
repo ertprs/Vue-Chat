@@ -147,7 +147,10 @@ $corBordaListas: #AAA;
       border-bottom: unset;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
-      margin: 0 0  5px 5px;
+      margin: 5px;
+      &.fechado{
+        margin: 5px 0;
+      }
       .lista-aguardando{
         ul{
           flex-direction: column;
@@ -198,6 +201,10 @@ $corBordaListas: #AAA;
         flex-direction: column;
         .fieldset-abas{
           width: 100%;
+          &:first-child{
+            border-right: unset;
+            border-bottom: unset;
+          }
         }
       }
     }
