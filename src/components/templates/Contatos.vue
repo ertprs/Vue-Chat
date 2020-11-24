@@ -212,30 +212,39 @@ export default {
   updated(){
     // Verificando se o usuario esta em mais de um array e removendo caso sim
     this.objAtendimentos.map(atd => {
-      if(!this.minhaAgenda.length){
-        return
+      if(this.minhaAgenda.length){
+        this.minhaAgenda.map(atdAgenda => {
+          if(atd.login_usu == atdAgenda.login_usu){
+            let auxAgenda = this.minhaAgenda
+            auxAgenda = auxAgenda.filter(agenda => {
+              return agenda.login_usu !== atd.login_usu
+            })
+            this.$store.dispatch("setAgenda", auxAgenda)
+          }
+        })
       }
-      this.minhaAgenda.map(atdAgenda => {
-        if(atd.login_usu == atdAgenda.login_usu){
-          let auxAgenda = this.minhaAgenda
-          auxAgenda = auxAgenda.filter(agenda => {
-            return agenda.login_usu !== atd.login_usu
-          })
-          this.$store.dispatch("setAgenda", auxAgenda)
-        }
-      })
-      if(!this.aguardando.length){
-        return
+      if(this.aguardando.length){
+        this.aguardando.map(atdAguardando => {
+          if(atd.login_usu == atdAguardando.login_usu){
+            let auxAguardando = this.aguardando
+            auxAguardando = auxAguardando.filter(aguardando => {
+              return aguardando.login_usu !== atd.login_usu
+            })
+            this.$store.dispatch("setAguardando", auxAguardando)
+          }
+        })
       }
-      this.aguardando.map(atdAguardando => {
-        if(atd.login_usu == atdAguardando.login_usu){
-          let auxAguardando = this.aguardando
-          auxAguardando = auxAguardando.filter(aguardando => {
-            return aguardando.login_usu !== atd.login_usu
-          })
-          this.$store.dispatch("setAguardando", auxAguardando)
-        }
-      })
+      if(this.todos.length){
+        this.todos.map(atdTodos => {
+          if(atd.login_usu == atdTodos.login_usu){
+            let auxTodos = this.todos
+            auxTodos = auxTodos.filter(todosAtd => {
+              return todosAtd.login_usu !== atd.login_usu
+            })
+            this.$store.dispatch("setTodos", auxTodos)
+          }
+        })
+      }
     })
   },
   created(){
@@ -255,6 +264,7 @@ export default {
       todosAtendimentos: "getTodosAtendimentos",
       minhaAgenda: "getAgenda",
       aguardando: "getAguardando",
+      todos: "getTodos",
       caso: "getCaso",
       iframesDisponiveis: "getIframesDisponiveis",
       atendimentoAtivo: "getAtendimentoAtivo",

@@ -1,7 +1,7 @@
 <template>
   <div v-if="caso !== 400" class="container-listas-aguardando" :class="{'fechado' : fechado}">
     <div class="fieldset-container-abas" :class="{'fechado' : fechado}">
-      <div v-on:click="alternarAbaAberta()" class="fieldset-abas" :class="{'ativo' : abaAberta == 'pessoal'}">
+      <div v-on:click="alternarAbaAberta('pessoal')" class="fieldset-abas" :class="{'ativo' : abaAberta == 'pessoal'}">
         <span v-if="!fechado">
           <i class="far fa-hourglass" />
         </span>
@@ -9,7 +9,7 @@
           {{ dicionario.sub_titulo_pessoal }}
         </h4>
       </div>
-      <div v-on:click="alternarAbaAberta()" class="fieldset-abas" :class="{'ativo' : abaAberta == 'todos'}">
+      <div v-on:click="alternarAbaAberta('todos')" class="fieldset-abas" :class="{'ativo' : abaAberta == 'todos'}">
         <span v-if="!fechado">
           <i class="far fa-hourglass" />
         </span>
@@ -82,7 +82,12 @@ export default {
     }
   },
   methods: {
-    alternarAbaAberta(){
+    alternarAbaAberta(origem){
+
+      if(this.abaAberta == origem){
+        return
+      }
+
       if(this.abaAberta == "pessoal"){
         this.abaAberta = "todos"
         this.$store.commit("setAbaSelecionada", "todos")

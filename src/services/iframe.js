@@ -22,12 +22,14 @@ export function carregarIframe(atendimentos) {
 }
 
 export function ClearIFrames(idsFrames){
-  console.log(idsFrames)
   const container = document.querySelector('.container-iframes')
   if(container){
-    container.childNodes.map(el => {
-      console.log(id)
-      if(!idsFrames.includes(el.id)) document.querySelector(`#iframe_${id}`).parentNode().remove()
-    })
+    if(container.childNodes){
+      if(container.childNodes.length){
+        container.childNodes.map(el => {
+          if(!idsFrames.includes(el.id)) document.querySelector(`#iframe_${id}`).parentNode().remove()
+        })
+      }
+    }
   }
 }

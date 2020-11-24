@@ -13,15 +13,23 @@
       agendar-retorno
       v-if="pessoalData"
       class="popup-container-tela-2">
-      <datetime
-        v-model="dataHora"
-        :placeholder="dicionario.placeholder_select_data_hora"
-        zone="America/Bahia"
-        :min-datetime="setData('minimo')"
-        :max-datetime="setData('maximo')"
+        <datetime
+        v-model="data"
+        :placeholder="dicionario.placeholder_select_data"
+        zone="local"
+        value-zone="local"
         :phrases="{ok: dicionario.btn_continuar_select_data_hora, cancel: dicionario.btn_fechar_select_data_hora}"
         class="theme-custom"
-        type="datetime" />
+        input-class="datetime-date"
+        type="date" />
+        <datetime
+        v-model="hora"
+        :placeholder="dicionario.placeholder_select_hora"
+        zone="local"
+        value-zone="local"
+        :phrases="{ok: dicionario.btn_continuar_select_data_hora, cancel: dicionario.btn_fechar_select_data_hora}"
+        class="theme-custom"
+        type="time" />
       <ul
         class="btns-confirmacao-container popup-lista"
         :class="{'bg' : bg}">
@@ -42,8 +50,9 @@ import axios_api from "@/services/serviceAxios"
 export default {
   data(){
     return{
+      hora: "",
+      data: "",
       pessoalData: false,
-      dataHora: '',
       reqEmAndamento: false,
       temTodos: false,
       btnTodos: "",
@@ -70,6 +79,7 @@ export default {
   },
   mounted(){
     this.preencherBotoes()
+    this.setAgora()
   },
   methods: {
     preencherBotoes(){
@@ -103,6 +113,7 @@ export default {
       }
     },
     retornar(tipo){
+
       if(this.reqEmAndamento){
         return
       }else{
@@ -126,6 +137,8 @@ export default {
                 this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_sucesso_retorno})
                 this.removerCliente()
                 this.$root.$emit("reverter-cores")
+
+                this.reqAguardando("todos")
               }
             })
             .catch(error => {
@@ -147,19 +160,7 @@ export default {
                 this.removerCliente()
                 this.$root.$emit("reverter-cores")
 
-                // Aguardando
-                axios_api.get(`get-aguardando?${this.reqTeste}&aba=pessoal`)
-                .then(response => {
-                  if(response.data){
-                    if(response.data.ret){
-                      const arrAguardando = response.data.ret
-                      this.$store.dispatch("setAguardando", arrAguardando)
-                    }
-                  }
-                })
-                .catch(error => {
-                  console.log('error get aguardando: ', error)
-                })
+                this.reqAguardando("pessoal")
               }
             })
             .catch(error => {
@@ -169,18 +170,13 @@ export default {
         break;
         case "pessoal/data":
 
-          if(this.dataHora == ""){
+          if(this.data == "" || this.hora == ""){
             this.$toasted.global.defaultError({msg: this.dicionario.msg_data_incorreta})
             return
           }
 
-          let data = this.dataHora.slice(0, 10)
-          let hora = this.dataHora.slice(11, 19)
-
-          let horaAux = hora[0]+hora[1]
-          horaAux = parseInt(horaAux) - 3
-
-          hora = horaAux + hora.slice(2)
+          let data = this.data.slice(0, 10)
+          let hora = this.hora.slice(11, 19)
 
           dados.destino = "dedicado"
           dados.data = data
@@ -206,6 +202,24 @@ export default {
       }
 
       this.fecharPopup()
+    },
+    reqAguardando(origem){
+      axios_api.get(`get-aguardando?${this.reqTeste}&aba=${origem}`)
+      .then(response => {
+        if(response.data){
+          if(response.data.ret){
+            const arr = response.data.ret
+            if(origem == "pessoal"){
+              this.$store.dispatch("setAguardando", arr)
+            }else{
+              this.$store.dispatch("setTodos", arr)
+            }
+          }
+        }
+      })
+      .catch(error => {
+        console.log('error get aguardando: ', error)
+      })
     },
     reqAgenda(){
       axios_api.get(`get-agenda?${this.reqTeste}`)
@@ -236,49 +250,20 @@ export default {
       this.$store.dispatch('limparAtendimentoAtivo')
       this.$store.dispatch('limparIdAtendimentoAtivo')
     },
-    setData(opt){
-      let data = new Date()
-      let dia = data.getDate()
-      let mes = data.getMonth() + 1
-      let ano = data.getFullYear()
-      let hora = data.getHours()
-      let minutos = data.getMinutes()
-
-      if(dia < 10){
-        dia = '0'+dia
-      }
-      if(mes < 10){
-        mes = '0'+mes
-      }
-      if(hora < 10){
-        hora = '0'+hora
-      }
-      if(minutos < 10){
-        minutos = '0'+minutos
-      }
-
-      if(opt == 'minimo'){
-        let agora = ano + '-' + mes + '-' + dia + 'T' + hora + ':' + minutos + ':00'
-
-        return agora
-      }else{
-        mes = parseInt(mes)
-        mes += 1
-
-        if(mes < 10){
-          mes = '0'+mes
-        }
-
-        let agora = ano + '-' + mes + '-' + dia + 'T' + hora + ':' + minutos + ':00'
-
-        return agora
-      }
-    },
     fecharPopup(){
       this.$store.dispatch('setBlocker', false)
       this.$store.dispatch('setAbrirPopup', false)
       this.pessoalData = false
       this.dataHora = ""
+    },
+    setAgora(){
+      let data = new Date()
+      let ano = data.getFullYear()
+      let dia = data.getDate()
+      let mes = data.getMonth() + 1
+
+      let agora = ano + '-' + mes + '-' + dia
+      this.data = agora
     }
   }
 }
