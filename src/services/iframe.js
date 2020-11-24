@@ -17,23 +17,17 @@ export function carregarIframe(atendimentos) {
       todosIframes.push(objIframe)
     }
   }
-  clearIframes(todosIframes, atendimentos)
-  function clearIframes(iFrames, atendimentos) {
-    var ids = []
-    for (let ramal in atendimentos) {
-      if (atendimentos[ramal].url !== '') {
-        let regex = /\s|\]|\[/g
-        if (atendimentos[ramal].login_usu.match(regex)) {
-          ids.push(atendimentos[ramal].login_usu.replace(regex, ''))
-        } else {
-          ids.push(atendimentos[ramal].login_usu)
-        }
-      }
-    }
-    const clearedIFrames = iFrames.filter((iFrame) => {
-      if(ids.includes(iFrame.id)) return iFrame
-    })
 
-    store.commit('setIframesDisponiveis', clearedIFrames)
+  store.commit('setIframesDisponiveis', todosIframes)
+}
+
+export function ClearIFrames(idsFrames){
+  console.log(idsFrames)
+  const container = document.querySelector('.container-iframes')
+  if(container){
+    container.childNodes.map(el => {
+      console.log(id)
+      if(!idsFrames.includes(el.id)) document.querySelector(`#iframe_${id}`).parentNode().remove()
+    })
   }
 }
