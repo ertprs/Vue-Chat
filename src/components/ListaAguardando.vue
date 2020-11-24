@@ -1,17 +1,7 @@
 <template>
-  <div v-if="caso !== 400 && aguardando && aguardando.length" class="container-listas-aguardando">
-    <!-- <div class="lista-aguardando--titulo" :class="{'fechado' : fechado}" v-if="caso !== 400 && aguardando && aguardando.length">
-      <div :class="{'fechado' : fechado}">
-        <i class="far fa-hourglass" :title="dicionario.sub_titulo_aguardando"></i>
-      </div>
-      <transition name="fade">
-        <h2 v-show="!fechado" >
-          {{ dicionario.sub_titulo_aguardando }}
-        </h2>
-      </transition>
-    </div> -->
+  <div v-if="caso !== 400" class="container-listas-aguardando">
     <div class="fieldset-container-abas" :class="{'fechado' : fechado}">
-      <div v-on:click="alternarAbaAberta()" class="fieldset-abas" :class="{'ativo' : abaAberta == 'pessoal'}" v-if="aguardando.length">
+      <div v-on:click="alternarAbaAberta()" class="fieldset-abas" :class="{'ativo' : abaAberta == 'pessoal'}">
         <span v-if="!fechado">
           <i class="far fa-hourglass" />
         </span>
@@ -19,7 +9,7 @@
           {{ dicionario.sub_titulo_pessoal }}
         </h4>
       </div>
-      <div v-on:click="alternarAbaAberta()" class="fieldset-abas" :class="{'ativo' : abaAberta == 'todos'}" v-if="aguardando.length">
+      <div v-on:click="alternarAbaAberta()" class="fieldset-abas" :class="{'ativo' : abaAberta == 'todos'}">
         <span v-if="!fechado">
           <i class="far fa-hourglass" />
         </span>
@@ -44,14 +34,14 @@
           <template v-if="!fechado">{{ atd.nome_usu }}</template>
         </li>
       </ul>
-      <div class="lista-vazia" v-else>
+      <div class="lista-vazia com-borda" v-else>
         <p> {{ dicionario.msg_sem_agenda }} </p>
       </div>
     </div>
     <div class="lista-aguardando" v-if="abaAberta == 'todos'">
-      <ul :class="{'fechado' : fechado}" v-if="aguardando.length">
+      <ul :class="{'fechado' : fechado}" v-if="todos.length">
         <li
-          v-for="(atd, indice) in aguardando"
+          v-for="(atd, indice) in todos"
           :key="'id_'+indice"
           :id="'li_'+indice"
           :title="atd.nome_usu"
@@ -64,7 +54,7 @@
           <template v-if="!fechado">{{ atd.nome_usu }}</template>
         </li>
       </ul>
-      <div class="lista-vazia" v-else>
+      <div class="lista-vazia com-borda" v-else>
         <p> {{ dicionario.msg_sem_agenda }} </p>
       </div>
     </div>
@@ -81,6 +71,7 @@ export default {
     ...mapGetters({
       dicionario: "getDicionario",
       aguardando: "getAguardando",
+      todos: "getTodos",
       reqTeste: "getReqTeste",
       caso: "getCaso"
     })
@@ -94,9 +85,28 @@ export default {
     alternarAbaAberta(){
       if(this.abaAberta == "pessoal"){
         this.abaAberta = "todos"
+        this.$store.commit("setAbaSelecionada", "todos")
       }else{
         this.abaAberta = "pessoal"
+        this.$store.commit("setAbaSelecionada", "pessoal")
       }
+
+      axios_api.get(`get-aguardando?${this.reqTeste}&aba=${this.abaAberta}`)
+      .then(response => {
+        if(response.data){
+            if(response.data.ret){
+              const arr = response.data.ret
+              if(this.abaAberta == 'todos'){
+                this.$store.dispatch("setTodos", arr)
+              }else{
+                this.$store.dispatch("setAguardando", arr)
+              }
+            }
+          }
+      })
+      .catch(error => {
+        console.log('error get aguardando: ', error)
+      })
     },
     ativarCliente(id, grupo, atd, origem){
       if(!id || !grupo){

@@ -4,6 +4,8 @@ $valorOpacidade: .8;
 $corBoxShadow: rgba(0, 0, 0, 0.5);
 $tamanhoBoxShadow: 5px;
 
+$corBordaListas: #AAA;
+
 :root{
   --height-li: 50px;
   --height-ul: 200px; // --height-li * 4
@@ -140,11 +142,20 @@ $tamanhoBoxShadow: 5px;
     max-height: 90%;
 
     .container-listas-aguardando{
-      border: 1px solid #AAA;
+      border: 1px solid $corBordaListas;
       border-top: unset;
       border-bottom: unset;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
+      margin: 0 0  5px 5px;
+      .lista-aguardando{
+        ul{
+          flex-direction: column;
+          max-height: 155px;
+          overflow-y: auto;
+          border-bottom: 1px solid $corBordaListas;
+        }
+      }
     }
 
     .fieldset-container-abas{
@@ -154,7 +165,7 @@ $tamanhoBoxShadow: 5px;
       .fieldset-abas{
         cursor: pointer;
         text-align: center;
-        border: 1px solid #AAA;
+        border: 1px solid $corBordaListas;
         background-color: #FFF;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
@@ -168,14 +179,17 @@ $tamanhoBoxShadow: 5px;
           margin-right: 5px;
           font-size: .8rem;
         }
+        &:first-child{
+          border-left: unset;
+        }
         &:last-child{
           border-left: unset;
           border-right: unset;
         }
         &.ativo{
-          opacity: 1;
           border-bottom: unset;
           h4{
+            opacity: 1;
             text-decoration: underline;
           }
         }
@@ -257,7 +271,6 @@ $tamanhoBoxShadow: 5px;
 
   ul{
     padding: 0;
-    // max-height: var(--height-ul);
     overflow-y: auto;
     overflow-x: hidden;
     transition: max-height 400ms ease-out;
@@ -294,7 +307,6 @@ $tamanhoBoxShadow: 5px;
       position: relative;
       opacity: $valorOpacidade;
       padding: 0 10px;
-      // transition: 500ms ease-in-out;
       font-size: .9rem;
       @include d-flex-center('vertical');
       align-items: var(--flex-start);
@@ -468,6 +480,9 @@ $tamanhoBoxShadow: 5px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+  &.com-borda{
+    border-bottom: 1px solid $corBordaListas;
   }
 }
 

@@ -61,7 +61,8 @@ export default {
       reqTeste: "getReqTeste",
       todosAtendimentos: "getTodosAtendimentos",
       dicionario: "getDicionario",
-      regrasDoClienteAtivo: "getRegrasDoClienteAtivo"
+      regrasDoClienteAtivo: "getRegrasDoClienteAtivo",
+      abaSelecionada: "getAbaSelecionada"
     })
   },
   components: {
@@ -147,11 +148,11 @@ export default {
                 this.$root.$emit("reverter-cores")
 
                 // Aguardando
-                axios_api.get(`get-aguardando?${this.reqTeste}`)
+                axios_api.get(`get-aguardando?${this.reqTeste}&aba=pessoal`)
                 .then(response => {
                   if(response.data){
                     if(response.data.ret){
-                      const arrAguardando = response.data.ret.pessoal
+                      const arrAguardando = response.data.ret
                       this.$store.dispatch("setAguardando", arrAguardando)
                     }
                   }

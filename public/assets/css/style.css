@@ -9505,7 +9505,13 @@ body {
       border-top: unset;
       border-bottom: unset;
       border-top-left-radius: 10px;
-      border-top-right-radius: 10px; }
+      border-top-right-radius: 10px;
+      margin: 0 0  5px 5px; }
+      #todos-contatos .lista-contatos-container .container-listas-aguardando .lista-aguardando ul {
+        flex-direction: column;
+        max-height: 155px;
+        overflow-y: auto;
+        border-bottom: 1px solid #AAA; }
     #todos-contatos .lista-contatos-container .fieldset-container-abas {
       display: flex;
       width: 100%;
@@ -9527,13 +9533,15 @@ body {
         #todos-contatos .lista-contatos-container .fieldset-container-abas .fieldset-abas svg {
           margin-right: 5px;
           font-size: .8rem; }
+        #todos-contatos .lista-contatos-container .fieldset-container-abas .fieldset-abas:first-child {
+          border-left: unset; }
         #todos-contatos .lista-contatos-container .fieldset-container-abas .fieldset-abas:last-child {
           border-left: unset;
           border-right: unset; }
         #todos-contatos .lista-contatos-container .fieldset-container-abas .fieldset-abas.ativo {
-          opacity: 1;
           border-bottom: unset; }
           #todos-contatos .lista-contatos-container .fieldset-container-abas .fieldset-abas.ativo h4 {
+            opacity: 1;
             text-decoration: underline; }
       #todos-contatos .lista-contatos-container .fieldset-container-abas.fechado {
         flex-direction: column; }
@@ -9808,6 +9816,8 @@ body {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis; }
+  .lista-vazia.com-borda {
+    border-bottom: 1px solid #AAA; }
 
 .load svg {
   animation: rotate;
@@ -10184,6 +10194,9 @@ body {
         position: absolute;
         font-size: 0.6rem;
         white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 90%;
         color: #AAA;
         font-weight: bold;
         top: 2px; }

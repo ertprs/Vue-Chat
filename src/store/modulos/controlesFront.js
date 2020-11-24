@@ -15,7 +15,8 @@ export default {
     linkImagem: "",
     nomeOpe: "",
     verificaMsgFormatadaAberto: false,
-    menuBotaoDireito: false
+    menuBotaoDireito: false,
+    abaSelecionada: ""
   },
   mutations: {
     setAbaContatos(state, abaContatos){
@@ -56,6 +57,9 @@ export default {
     },
     setMenuBotaoDireito(state, menuBotaoDireito){
       state.menuBotaoDireito = menuBotaoDireito
+    },
+    setAbaSelecionada(state, abaSelecionada){
+      state.abaSelecionada = abaSelecionada
     }
   },
   actions: {
@@ -138,6 +142,9 @@ export default {
     },
     getMenuBotaoDireito(state){
       return state.menuBotaoDireito
+    },
+    getAbaSelecionada(state){
+      return state.abaSelecionada
     }
-  } 
+  }
 }

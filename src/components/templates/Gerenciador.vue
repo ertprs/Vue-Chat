@@ -37,7 +37,8 @@ export default {
       todosAtendimentos: "getTodosAtendimentos",
       semIframe: "getSemIframe",
       minhaAgenda: "getAgenda",
-      dicionario: "getDicionario"
+      dicionario: "getDicionario",
+      abaSelecionada: "getAbaSelecionada"
     })
   },
   data(){
@@ -215,14 +216,17 @@ export default {
           if(i.cod == 3){
             if(i.count != this.qtdAguardando){
               // Aguardando
-              axios_api.get(`get-aguardando?${this.reqTeste}`)
+              axios_api.get(`get-aguardando?${this.reqTeste}&aba=${this.abaSelecionada}`)
               .then(response => {
                 if(response.data){
                     if(response.data.ret){
-                      const arrAguardando = response.data.ret.pessoal
-
-                      this.$store.dispatch("setAguardando", arrAguardando)
-                      this.qtdAguardando = i.count
+                      const arrAguardando = response.data.ret
+                      if(this.abaSelecionada == "pessoal"){
+                        this.$store.dispatch("setAguardando", arrAguardando)
+                        this.qtdAguardando = i.count
+                      }else{
+                        this.$store.dispatch("setTodos", arrAguardando)
+                      }
                     }
                   }
               })
