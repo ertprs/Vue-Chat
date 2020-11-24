@@ -79,6 +79,7 @@ import 'vue-select/dist/vue-select.css'
 import { mapGetters } from 'vuex'
 
 import axios_api from "@/services/serviceAxios"
+import { limparIframeUsuarioRemovido } from "@/services/iframe"
 
 export default {
   data(){
@@ -217,6 +218,11 @@ export default {
         }
       }
 
+      const regex = /\s|\]|\[/g
+      const idIframe = this.atendimentoAtivo.login_usu.replace(regex, "")
+      console.log(idIframe)
+
+      limparIframeUsuarioRemovido(`iframe_${idIframe}`)
       this.$store.dispatch("setAtendimentos", objAtdAux)
 
       if(!objAtdAux || !Object.keys(objAtdAux).length){

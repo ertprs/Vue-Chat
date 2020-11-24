@@ -31,6 +31,10 @@ export function getAtendimentos(appVue) {
       contador_request_erro = 0
       tratarResponse(response)
     })
+    .then(() => {
+      app.$root.$emit("req-aguardando", "pessoal", true)
+      app.$root.$emit("req-aguardando", "todos", true)
+    })
     .catch(err => {
       setTimeout(() => {
         contador_request_erro++
@@ -326,14 +330,15 @@ function atualizarClientes(mainData) {
   }
 
   for (var ramal_server in atendimentosServer) {
-    var temClienteNovo = hasDiffInObjectsServer || hasDiffInObjectsLocal
-    // for (var ramal_local in atendimentosLocal) {
-    //   if (atendimentosServer[ramal_server] && atendimentosLocal[ramal_local]) {
-    //     if (atendimentosServer[ramal_server].id_cli === atendimentosLocal[ramal_local].id_cli) {
-    //       temClienteNovo = false
-    //     }
-    //   }
-    // }
+    // var temClienteNovo = hasDiffInObjectsServer || hasDiffInObjectsLocal
+    var temClienteNovo = true
+    for (var ramal_local in atendimentosLocal) {
+      if (atendimentosServer[ramal_server] && atendimentosLocal[ramal_local]) {
+        if (atendimentosServer[ramal_server].id_cli === atendimentosLocal[ramal_local].id_cli) {
+          temClienteNovo = false
+        }
+      }
+    }
 
     if (temClienteNovo && verificaEncerramento()) {
       if (store.getters.getUltimoIdRemovido == atendimentosServer[ramal_server].id_cli) {
@@ -349,9 +354,6 @@ function atualizarClientes(mainData) {
     } else {
       atualizarMensagens(atendimentosServer[ramal_server], ramal_server, novosAtendimentos)
     }
-  }
-  if(hasDiffInObjectsServer || hasDiffInObjectsLocal){
-    ClearIFrames(idsCli)
   }
 }
 

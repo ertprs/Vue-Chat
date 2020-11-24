@@ -26,10 +26,25 @@ export function ClearIFrames(idsFrames){
   if(container){
     if(container.childNodes){
       if(container.childNodes.length){
-        container.childNodes.map(el => {
-          if(!idsFrames.includes(el.id)) document.querySelector(`#iframe_${id}`).parentNode().remove()
+        container.childNodes.forEach(el => {
+          if(el.id){
+            if(!idsFrames.includes(el.id)){
+              let iframe = document.querySelector(`#${el.id}`)
+              if(iframe){
+                console.log("iframes limpos: ", iframe)
+                iframe.remove()
+              }
+            }
+          }
         })
       }
     }
+  }
+}
+
+export function limparIframeUsuarioRemovido(idIframe){
+  const iframe = document.querySelector(`#${idIframe}`)
+  if(iframe){
+    iframe.remove()
   }
 }

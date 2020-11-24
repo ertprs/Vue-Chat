@@ -12,7 +12,7 @@
       @resize:end="resizeContatos">
       <Contatos />
     </vue-resizable>
-    
+
     <MenuBotaoDireito />
 
     <!-- Chat -->
@@ -126,7 +126,7 @@ export default {
 
       let widthChat = localStorage.getItem('largura-chat')
       if(widthChat){
-        this.objChat.width = widthChat 
+        this.objChat.width = widthChat
         this.alteraWidth("chat", widthChat)
       }
     },
@@ -154,7 +154,6 @@ export default {
   },
   mounted(){
     this.setDominio()
-
     this.setHeightMaximo()
   },
   watch: {

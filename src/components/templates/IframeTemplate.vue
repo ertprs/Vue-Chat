@@ -9,7 +9,7 @@
     >
       <iframe :src="frame.url" frameborder="0" @load="gif = false" @loadstart="gif = true"></iframe>
     </div>
-    <div class="load" v-if="gif">
+    <div class="load" v-show="gif">
       <i class="fas fa-hourglass-end"></i>
       <p> {{ dicionario.titulo_carregando }} </p>
     </div>

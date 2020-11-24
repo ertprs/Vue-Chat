@@ -28,11 +28,14 @@
       </div>
       <!-- Caso haja Cliente -->
       <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 400">
-        <div class="fieldset-container" v-if="caso !== 400 && caso !== 206" :class="{'fechado' : fechado}">
-          <h4 v-if="objAtendimentos.length && caso !== 206">
-            {{ dicionario.sub_titulo_atendimentos }}
-          </h4>
+        <div class="lista-atendimento--titulo" v-if="caso !== 400 && caso !== 206" :class="{'fechado' : fechado}">
           <div :class="{'fechado' : fechado}">
+            <i class="fas fa-play" :title="dicionario.sub_titulo_atendimentos"></i>
+          </div>
+          <h2 v-show="!fechado" >
+            {{ dicionario.sub_titulo_atendimentos }}
+          </h2>
+          <div :class="{'fechado' : fechado}" class="container-contadores">
             <span v-if="objAtendimentos.length" :title="dicionario.title_total_clientes" class="total-clientes">{{ objAtendimentos.length }}</span>
             <span v-if="totalClientesNovos != ''" :title="dicionario.title_total_novos_clientes" class="total-clientes-novos">{{ totalClientesNovos }}</span>
             <span v-if="totalMsgNovas != ''" :title="dicionario.title_total_msgs_novas" class="total-msgs-novas">{{ totalMsgNovas }}</span>
@@ -236,22 +239,16 @@ export default {
       if(this.aguardando.length){
         this.aguardando.map(atdAguardando => {
           if(atd.login_usu == atdAguardando.login_usu){
-            let auxAguardando = this.aguardando
-            auxAguardando = auxAguardando.filter(aguardando => {
-              return aguardando.login_usu !== atd.login_usu
-            })
-            this.$store.dispatch("setAguardando", auxAguardando)
+            this.$root.$emit("req-aguardando", "pessoal")
+            console.log("Mudou AGUARDANDO: ", auxAguardando)
           }
         })
       }
       if(this.todos.length){
         this.todos.map(atdTodos => {
           if(atd.login_usu == atdTodos.login_usu){
-            let auxTodos = this.todos
-            auxTodos = auxTodos.filter(todosAtd => {
-              return todosAtd.login_usu !== atd.login_usu
-            })
-            this.$store.dispatch("setTodos", auxTodos)
+            this.$root.$emit("req-aguardando", "todos")
+            console.log("Mudou TODOS: ", auxTodos)
           }
         })
       }

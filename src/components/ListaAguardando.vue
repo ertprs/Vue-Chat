@@ -5,16 +5,16 @@
         <h4 :title="dicionario.sub_titulo_pessoal">
           {{ dicionario.sub_titulo_pessoal }}
         </h4>
-        <div v-if="!fechado" class="container-contador">
-          <span v-if="contadorAguardando" :title="dicionario.title_total_clientes" class="total-clientes">{{ contadorAguardando }}</span>
+        <div v-if="!fechado && contadorAguardando" class="container-contador">
+          <span :title="dicionario.title_total_clientes" class="total-clientes">{{ contadorAguardando }}</span>
         </div>
       </div>
       <div v-on:click="alternarAbaAberta('todos')" class="fieldset-abas" :class="{'ativo' : abaAberta == 'todos'}">
         <h4 :title="dicionario.sub_titulo_todos">
           {{ dicionario.sub_titulo_todos }}
         </h4>
-        <div v-if="!fechado" class="container-contador">
-          <span v-if="contadorTodos" :title="dicionario.title_total_clientes" class="total-clientes">{{ contadorTodos }}</span>
+        <div v-if="!fechado && contadorTodos" class="container-contador">
+          <span :title="dicionario.title_total_clientes" class="total-clientes">{{ contadorTodos }}</span>
         </div>
       </div>
     </div>
@@ -45,7 +45,7 @@
           :key="'id_'+indice"
           :id="'li_'+indice"
           :title="atd.nome_usu"
-          @click="ativarCliente(atd.login_usu, atd.grupo, atd, 'aguardando')"
+          @click="ativarCliente(atd.login_usu, atd.grupo, atd, 'aguardando-todos')"
         >
           <div class="circulo-contatos">
             <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
@@ -80,8 +80,14 @@ export default {
   },
   data(){
     return{
-      abaAberta: "pessoal"
+      abaAberta: "pessoal",
+      limitadorRequisicoes: 0
     }
+  },
+  mounted(){
+    this.$root.$on("req-aguardando", origem => {
+      this.reqAguardando(origem)
+    })
   },
   methods: {
     alternarAbaAberta(origem){
@@ -98,21 +104,40 @@ export default {
         this.$store.commit("setAbaSelecionada", "pessoal")
       }
 
-      axios_api.get(`get-aguardando?${this.reqTeste}&aba=${this.abaAberta}`)
+      this.reqAguardando(this.abaAberta)
+    },
+    reqAguardando(origem, persistir){
+
+      axios_api.get(`get-aguardando?${this.reqTeste}&aba=${origem}`)
       .then(response => {
         if(response.data){
-            if(response.data.ret){
-              const arr = response.data.ret
-              if(this.abaAberta == 'todos'){
-                this.$store.dispatch("setTodos", arr)
-              }else{
-                this.$store.dispatch("setAguardando", arr)
-              }
+          if(response.data.ret){
+            const arr = response.data.ret
+            if(origem == "pessoal"){
+              this.$store.dispatch("setAguardando", arr)
+              this.$store.dispatch("setContadorAguardando", arr.length)
+            }else{
+              this.$store.dispatch("setTodos", arr)
+              this.$store.dispatch("setContadorTodos", arr.length)
             }
+
+            this.limitadorRequisicoes = 0
           }
+        }
       })
       .catch(error => {
-        console.log('error get aguardando: ', error)
+        if(persistir){
+          this.limitadorRequisicoes++
+          if(this.limitadorRequisicoes < 10){
+            setTimeout(() => {
+              this.reqAguardando(origem, persistir)
+            }, 1000)
+          }else{
+            console.log('error get aguardando: ', error)
+          }
+        }else{
+          console.log('error get aguardando: ', error)
+        }
       })
     },
     ativarCliente(id, grupo, atd, origem){
@@ -145,6 +170,14 @@ export default {
                 return atendimento.id_cli != atd.id_cli
               })
               this.$store.dispatch("setAguardando", aguardandoAux)
+              this.$store.dispatch("setContadorAguardando", aguardandoAux.length)
+            }else if(origem == "aguardando-todos"){
+              let todosAux = this.todos
+              todosAux = todosAux.filter((atendimento) => {
+                return atendimento.id_cli != atd.id_cli
+              })
+              this.$store.dispatch("setTodos", todosAux)
+              this.$store.dispatch("setContadorTodos", todosAux.length)
             }else if(origem == "agenda"){
               let agendaAux = this.minhaAgenda
               agendaAux = agendaAux.filter((atendimento) => {

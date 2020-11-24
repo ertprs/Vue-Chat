@@ -43,8 +43,8 @@ export default {
   },
   data(){
     return{
-      qtdAgenda: 0,
       qtdAguardando: 0,
+      qtdTodos: 0,
       reqEmAndamento: false,
       contador: 0
     }
@@ -205,26 +205,9 @@ export default {
     }
   },
   watch: {
-    minhaAgenda(){
-      this.qtdAgenda = this.minhaAgenda.length
-    },
     gerenciador(){
       if(this.gerenciador){
-
         this.preencherDiv()
-
-        this.gerenciador.map((i) => {
-          if(i.cod == 3){
-            if(i.count > 0){
-              this.$store.dispatch("setContadorTodos", i.count)
-            }
-          }
-          if(i.cod == 4){
-            if(i.count > 0){
-              this.$store.dispatch("setContadorAguardando", i.count)
-            }
-          }
-        })
       }
     }
   }

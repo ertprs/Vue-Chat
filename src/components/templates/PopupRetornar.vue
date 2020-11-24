@@ -49,6 +49,7 @@ import { Datetime } from 'vue-datetime';
 import { mapGetters } from "vuex"
 
 import axios_api from "@/services/serviceAxios"
+import { limparIframeUsuarioRemovido } from "@/services/iframe"
 
 export default {
   data(){
@@ -214,14 +215,10 @@ export default {
             const arr = response.data.ret
             if(origem == "pessoal"){
               this.$store.dispatch("setAguardando", arr)
-              if(arr.length > 0){
-                this.$store.dispatch("setContadorAguardando", arr.length)
-              }
+              this.$store.dispatch("setContadorAguardando", arr.length)
             }else{
               this.$store.dispatch("setTodos", arr)
-              if(arr.length > 0){
-                this.$store.dispatch("setContadorTodos", arr.length)
-              }
+              this.$store.dispatch("setContadorTodos", arr.length)
             }
           }
         }
@@ -250,6 +247,11 @@ export default {
         }
       }
 
+      const regex = /\s|\]|\[/g
+      const idIframe = this.atendimentoAtivo.login_usu.replace(regex, "")
+      console.log(idIframe)
+
+      limparIframeUsuarioRemovido(`iframe_${idIframe}`)
       this.$store.dispatch("setAtendimentos", objAtdAux)
 
       if(!objAtdAux || !Object.keys(objAtdAux).length){

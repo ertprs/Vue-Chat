@@ -9403,7 +9403,10 @@ body {
   :root {
     --height-li: 45px;
     --height-ul: 180px;
-    --circulo-ctt: 35px; } }
+    --circulo-ctt: 35px; }
+  .lista-contatos-container {
+    overflow-y: auto;
+    overflow-x: hidden; } }
 
 @media (min-height: 516px) and (max-height: 559px) {
   :root {
@@ -9414,8 +9417,7 @@ body {
     --flex-start: flex-start; }
   .lista-contatos-container {
     overflow-y: auto;
-    overflow-x: hidden;
-    padding-right: 5px; } }
+    overflow-x: hidden; } }
 
 @media (min-height: 470px) and (max-height: 515px) {
   :root {
@@ -9426,8 +9428,7 @@ body {
     --flex-start: flex-start; }
   .lista-contatos-container {
     overflow-y: auto;
-    overflow-x: hidden;
-    padding-right: 5px; } }
+    overflow-x: hidden; } }
 
 #todos-contatos {
   transition-duration: 2s;
@@ -9556,20 +9557,20 @@ body {
             border-bottom: unset; }
           #todos-contatos .lista-contatos-container .fieldset-container-abas.fechado .fieldset-abas h4 {
             margin-left: 0; }
-    #todos-contatos .lista-contatos-container .fieldset-container, #todos-contatos .lista-contatos-container .fieldset-abas {
+    #todos-contatos .lista-contatos-container .fieldset-abas {
       display: flex;
       border-bottom: 1px solid #CCC;
       position: relative;
       transition: 300ms; }
-      #todos-contatos .lista-contatos-container .fieldset-container.fechado, #todos-contatos .lista-contatos-container .fieldset-abas.fechado {
+      #todos-contatos .lista-contatos-container .fieldset-abas.fechado {
         flex-direction: column;
         padding-bottom: 5px; }
-        #todos-contatos .lista-contatos-container .fieldset-container.fechado > div, #todos-contatos .lista-contatos-container .fieldset-abas.fechado > div {
+        #todos-contatos .lista-contatos-container .fieldset-abas.fechado > div {
           position: relative;
           justify-content: space-around; }
-          #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .contador-aguardando, #todos-contatos .lista-contatos-container .fieldset-container.fechado > div .total-clientes, #todos-contatos .lista-contatos-container .fieldset-abas.fechado > div .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-abas.fechado > div .contador-aguardando, #todos-contatos .lista-contatos-container .fieldset-abas.fechado > div .total-clientes {
+          #todos-contatos .lista-contatos-container .fieldset-abas.fechado > div .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-abas.fechado > div .contador-aguardando, #todos-contatos .lista-contatos-container .fieldset-abas.fechado > div .total-clientes {
             margin-right: 0; }
-      #todos-contatos .lista-contatos-container .fieldset-container h4, #todos-contatos .lista-contatos-container .fieldset-abas h4 {
+      #todos-contatos .lista-contatos-container .fieldset-abas h4 {
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -9583,58 +9584,18 @@ body {
         transition-property: opacity;
         opacity: .8;
         cursor: pointer; }
-        #todos-contatos .lista-contatos-container .fieldset-container h4:hover, #todos-contatos .lista-contatos-container .fieldset-abas h4:hover {
+        #todos-contatos .lista-contatos-container .fieldset-abas h4:hover {
           opacity: 1; }
-        #todos-contatos .lista-contatos-container .fieldset-container h4.ativo, #todos-contatos .lista-contatos-container .fieldset-abas h4.ativo {
+        #todos-contatos .lista-contatos-container .fieldset-abas h4.ativo {
           opacity: 1;
           padding: 0;
           padding-left: 10px; }
-      #todos-contatos .lista-contatos-container .fieldset-container > div, #todos-contatos .lista-contatos-container .fieldset-abas > div {
+      #todos-contatos .lista-contatos-container .fieldset-abas > div {
         transition: 300ms;
         position: absolute;
         right: 0;
         top: 3px;
         display: flex; }
-      #todos-contatos .lista-contatos-container .fieldset-container .total-clientes, #todos-contatos .lista-contatos-container .fieldset-container .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-container .total-msgs-novas, #todos-contatos .lista-contatos-container .fieldset-container .contador-aguardando, #todos-contatos .lista-contatos-container .fieldset-abas .total-clientes, #todos-contatos .lista-contatos-container .fieldset-abas .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-abas .total-msgs-novas, #todos-contatos .lista-contatos-container .fieldset-abas .contador-aguardando {
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-right: 5px; }
-      #todos-contatos .lista-contatos-container .fieldset-container .total-clientes-novos, #todos-contatos .lista-contatos-container .fieldset-abas .total-clientes-novos {
-        padding: 1.5px 3px;
-        width: auto;
-        min-width: 1rem;
-        height: 1.2rem;
-        line-height: 1rem;
-        border-radius: 50%;
-        font-size: .8rem;
-        background-color: #FDC43F;
-        color: #FFF; }
-      #todos-contatos .lista-contatos-container .fieldset-container .total-msgs-novas, #todos-contatos .lista-contatos-container .fieldset-abas .total-msgs-novas {
-        padding: 1.5px 3px;
-        width: auto;
-        min-width: 1rem;
-        height: 1.2rem;
-        line-height: 1rem;
-        border-radius: 50%;
-        font-size: .8rem;
-        background-color: #55a630;
-        color: #FFF; }
-      #todos-contatos .lista-contatos-container .fieldset-container .contador-aguardando, #todos-contatos .lista-contatos-container .fieldset-container .total-clientes, #todos-contatos .lista-contatos-container .fieldset-abas .contador-aguardando, #todos-contatos .lista-contatos-container .fieldset-abas .total-clientes {
-        padding: 1.5px 3px;
-        width: auto;
-        min-width: 1rem;
-        height: 1.2rem;
-        line-height: 1rem;
-        border-radius: 50%;
-        font-size: .8rem;
-        background-color: #888;
-        color: #FFF;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-right: 5px; }
     #todos-contatos .lista-contatos-container ul {
       display: flex;
       flex-direction: column-reverse; }
@@ -9790,7 +9751,7 @@ body {
           margin-right: 2px; }
         #todos-contatos ul li .retorno-container .data-retorno {
           margin-right: 5px; }
-  #todos-contatos .lista-agenda--titulo, #todos-contatos .lista-aguardando--titulo {
+  #todos-contatos .lista-agenda--titulo, #todos-contatos .lista-aguardando--titulo, #todos-contatos .lista-atendimento--titulo {
     position: relative;
     width: 100%;
     height: 30px;
@@ -9799,21 +9760,83 @@ body {
     align-items: center;
     padding: 5px 10px;
     background-color: #eee; }
-    #todos-contatos .lista-agenda--titulo svg, #todos-contatos .lista-aguardando--titulo svg {
+    #todos-contatos .lista-agenda--titulo svg, #todos-contatos .lista-aguardando--titulo svg, #todos-contatos .lista-atendimento--titulo svg {
       margin-right: 5px;
       font-size: 1.1rem;
       color: #242423; }
-    #todos-contatos .lista-agenda--titulo > div.fechado, #todos-contatos .lista-aguardando--titulo > div.fechado {
+    #todos-contatos .lista-agenda--titulo > div.fechado, #todos-contatos .lista-aguardando--titulo > div.fechado, #todos-contatos .lista-atendimento--titulo > div.fechado {
       font-size: 1.4rem; }
-    #todos-contatos .lista-agenda--titulo h2, #todos-contatos .lista-aguardando--titulo h2 {
+    #todos-contatos .lista-agenda--titulo h2, #todos-contatos .lista-aguardando--titulo h2, #todos-contatos .lista-atendimento--titulo h2 {
       font-size: 1rem;
       margin: 0;
       color: #242423;
       white-space: nowrap; }
-  #todos-contatos .lista-aguardando--titulo svg {
+  #todos-contatos .lista-aguardando--titulo svg, #todos-contatos .lista-atendimento--titulo svg {
     font-size: 1rem; }
   #todos-contatos .lista-agenda ul {
     flex-direction: column; }
+  #todos-contatos .lista-atendimento--titulo svg {
+    color: #3a5a40; }
+  #todos-contatos .lista-atendimento--titulo .container-contadores {
+    position: absolute;
+    right: 5px;
+    display: flex; }
+  #todos-contatos .lista-atendimento--titulo.fechado {
+    max-height: unset;
+    height: auto;
+    flex-direction: column; }
+    #todos-contatos .lista-atendimento--titulo.fechado .container-contadores {
+      position: unset;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column; }
+      #todos-contatos .lista-atendimento--titulo.fechado .container-contadores span {
+        margin: 3px 0; }
+
+.total-clientes, .total-clientes-novos, .total-msgs-novas, .contador-aguardando {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 2.5px; }
+
+.total-clientes-novos {
+  padding: 1.5px 3px;
+  width: auto;
+  min-width: 1rem;
+  height: 1.2rem;
+  line-height: 1rem;
+  border-radius: 50%;
+  font-size: .8rem;
+  background-color: #FDC43F;
+  color: #FFF; }
+
+.total-msgs-novas {
+  padding: 1.5px 3px;
+  width: auto;
+  min-width: 1rem;
+  height: 1.2rem;
+  line-height: 1rem;
+  border-radius: 50%;
+  font-size: .8rem;
+  background-color: #55a630;
+  color: #FFF; }
+
+.contador-aguardando, .total-clientes {
+  padding: 1.5px 3px;
+  width: auto;
+  min-width: 1rem;
+  height: 1.2rem;
+  line-height: 1rem;
+  border-radius: 50%;
+  font-size: .8rem;
+  background-color: #888;
+  color: #FFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 5px; }
 
 .lista-vazia {
   width: 100%;
