@@ -590,6 +590,7 @@ export default {
               let mensagem = arrMensagens[index][i].msg;
               let link = false
               let status = arrMensagens[index][i].status
+              let tooltip = ""
               let origem;
               arrMensagens[index][i].resp_msg == "CLI" ? (origem = "outros") : (origem = "principal");
               let horario = arrMensagens[index][i].hora;
@@ -670,7 +671,37 @@ export default {
                 link = true
               }
 
-              arrMensagens[index][i] = this.getObjMensagem( seq, autor, origem, mensagem, link, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo, audio, video );
+              let msgStatus = "msg_status_"+arrMensagens[index][i].status
+              let str = `<p class="tooltip-titulo-status-message">${this.dicionario[msgStatus]}</p>`
+              if(arrMensagens[index][i].data_hora_status && arrMensagens[index][i].data_hora_status !== "1111-11-11 00:00:00"){
+                str += `<p>${this.formataDataHora(arrMensagens[index][i].data_hora_status, true)}</p>`
+              }
+              str += `<ul class="tooltip-list">`
+              if(arrMensagens[index][i].data_hora_gravacao && arrMensagens[index][i].data_hora_gravacao !== "1111-11-11 00:00:00"){
+                str += `<li>${this.dicionario.msg_data_hora_gravacao} - ${this.formataDataHora(arrMensagens[index][i].data_hora_gravacao, true)}</li>`
+              }
+              if(arrMensagens[index][i].data_hora_envio_fila && arrMensagens[index][i].data_hora_envio_fila !== "1111-11-11 00:00:00"){
+                str += `<li>${this.dicionario.msg_data_hora_envio_fila} - ${this.formataDataHora(arrMensagens[index][i].data_hora_envio_fila, true)}</li>`
+              }
+              if(arrMensagens[index][i].data_hora_envio_cliente && arrMensagens[index][i].data_hora_envio_cliente !== "1111-11-11 00:00:00"){
+                str += `<li>${this.dicionario.msg_data_hora_envio_cliente} - ${this.formataDataHora(arrMensagens[index][i].data_hora_envio_cliente, true)}</li>`
+              }
+              if(arrMensagens[index][i].data_hora_entrega && arrMensagens[index][i].data_hora_entrega !== "1111-11-11 00:00:00"){
+                str += `<li>${this.dicionario.msg_data_hora_entrega} - ${this.formataDataHora(arrMensagens[index][i].data_hora_entrega, true)}</li>`
+              }
+              if(arrMensagens[index][i].data_hora_leitura && arrMensagens[index][i].data_hora_leitura !== "1111-11-11 00:00:00"){
+                str += `<li>${this.dicionario.msg_data_hora_leitura} - ${this.formataDataHora(arrMensagens[index][i].data_hora_leitura, true)}</li>`
+              }
+              if(arrMensagens[index][i].status_msg){
+                str += `<li>${arrMensagens[index][i].status_msg}</li>`
+              }
+              str += "</ul>"
+
+              if(!str.endsWith('<ul class="tooltip-list"></ul>')){
+                tooltip = str
+              }
+
+              arrMensagens[index][i] = this.getObjMensagem( seq, autor, origem, mensagem, link, status, horario, anexo, imgAnexo, tipoDoc, docAnexo, nomeArquivo, audio, video, tooltip );
 
               if(document.querySelector('#textarea')){
                 document.querySelector('#textarea').focus()
@@ -694,7 +725,8 @@ export default {
       inDocAnexo,
       inNomeArquivo,
       inAudio,
-      inVideo
+      inVideo,
+      inTooltip
     ) {
       let objMensagem = {
         seq: inSeq,
@@ -710,9 +742,43 @@ export default {
         docAnexo: inDocAnexo,
         nomeArquivo: inNomeArquivo,
         audio: inAudio,
-        video: inVideo
+        video: inVideo,
+        tooltip: inTooltip
       };
       return objMensagem;
+    },
+    formataDataHora(dataHora, origem){
+      if(!dataHora){
+        return ""
+      }
+
+      let arrDataHora = dataHora.split(" ")
+      if(arrDataHora.length){
+        let data = arrDataHora[0]
+        let hora = arrDataHora[1]
+
+        if(!data || !hora){
+          return dataHora
+        }
+
+        data = data.split("-")
+        data = data.reverse()
+        data = data.join("/")
+
+        if(!origem){
+          hora = hora.slice(0, 5)
+        }else{
+          hora = hora.slice(0, 8)
+        }
+
+        if(!origem){
+          return `${data} ${this.dicionario.msg_divisao_data_hora} ${hora}`
+        }else{
+          return `${data} ${hora}`
+        }
+      }else{
+        return dataHora
+      }
     },
     formataHoraAtual() {
       let data = new Date();
