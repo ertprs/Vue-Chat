@@ -1,7 +1,9 @@
 export default {
   state: {
     aguardando: [],
-    todos: []
+    todos: [],
+    contadorAguardando: 0,
+    contadorTodos: 0,
   },
   mutations: {
     setAguardando(state, aguardando) {
@@ -12,6 +14,12 @@ export default {
     },
     setTodos(state, todos){
       state.todos = todos
+    },
+    setContadorAguardando(state, contadorAguardando){
+      state.contadorAguardando = contadorAguardando
+    },
+    setContadorTodos(state, contadorTodos){
+      state.contadorTodos = contadorTodos
     }
   },
   actions: {
@@ -20,6 +28,12 @@ export default {
     },
     setTodos: (context, payload) => {
       context.commit('setTodos', payload)
+    },
+    setContadorAguardando: (context, payload) => {
+      context.commit("setContadorAguardando", payload)
+    },
+    setContadorTodos: (context, payload) => {
+      context.commit("setContadorTodos", payload)
     }
   },
   getters: {
@@ -28,6 +42,12 @@ export default {
     },
     getTodos(state){
       return state.todos
+    },
+    getContadorAguardando(state){
+      return state.contadorAguardando
+    },
+    getContadorTodos(state){
+      return state.contadorTodos
     }
   }
 }

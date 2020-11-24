@@ -6,7 +6,7 @@
           {{ dicionario.sub_titulo_pessoal }}
         </h4>
         <div v-if="!fechado" class="container-contador">
-          <span v-if="aguardando.length" :title="dicionario.title_total_clientes" class="total-clientes">{{ aguardando.length }}</span>
+          <span v-if="contadorAguardando" :title="dicionario.title_total_clientes" class="total-clientes">{{ contadorAguardando }}</span>
         </div>
       </div>
       <div v-on:click="alternarAbaAberta('todos')" class="fieldset-abas" :class="{'ativo' : abaAberta == 'todos'}">
@@ -14,7 +14,7 @@
           {{ dicionario.sub_titulo_todos }}
         </h4>
         <div v-if="!fechado" class="container-contador">
-          <span v-if="todos.length" :title="dicionario.title_total_clientes" class="total-clientes">{{ todos.length }}</span>
+          <span v-if="contadorTodos" :title="dicionario.title_total_clientes" class="total-clientes">{{ contadorTodos }}</span>
         </div>
       </div>
     </div>
@@ -73,7 +73,9 @@ export default {
       aguardando: "getAguardando",
       todos: "getTodos",
       reqTeste: "getReqTeste",
-      caso: "getCaso"
+      caso: "getCaso",
+      contadorAguardando: "getContadorAguardando",
+      contadorTodos: "getContadorTodos"
     })
   },
   data(){

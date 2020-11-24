@@ -210,44 +210,18 @@ export default {
     },
     gerenciador(){
       if(this.gerenciador){
+
         this.preencherDiv()
 
         this.gerenciador.map((i) => {
           if(i.cod == 3){
-            if(i.count != this.qtdAguardando){
-              // Aguardando
-              axios_api.get(`get-aguardando?${this.reqTeste}&aba=${this.abaSelecionada}`)
-              .then(response => {
-                if(response.data){
-                    if(response.data.ret){
-                      const arrAguardando = response.data.ret
-                      if(this.abaSelecionada == "pessoal"){
-                        this.$store.dispatch("setAguardando", arrAguardando)
-                        this.qtdAguardando = i.count
-                      }else{
-                        this.$store.dispatch("setTodos", arrAguardando)
-                      }
-                    }
-                  }
-              })
-              .catch(error => {
-                console.log('error get aguardando: ', error)
-              })
+            if(i.count > 0){
+              this.$store.dispatch("setContadorTodos", i.count)
             }
           }
-
-          if(i.cod == 2){
-            if(i.count != this.qtdAgenda){
-              // Agenda
-              axios_api.get(`get-agenda?${this.reqTeste}`)
-                .then(response => {
-                  const arrAgenda = response.data.ret || []
-                  this.$store.dispatch("setAgenda", arrAgenda)
-                  this.qtdAgenda = i.count
-                })
-                .catch(error => {
-                  console.log("Error get agenda: ", error)
-                })
+          if(i.cod == 4){
+            if(i.count > 0){
+              this.$store.dispatch("setContadorAguardando", i.count)
             }
           }
         })
