@@ -121,5 +121,20 @@
 }
 
 .datetime-date{
-  margin-bottom: 5px;
+  margin-right: 5px;
+}
+
+.datetime-date, .datetime-hour{
+  width: 150px;
+}
+
+.datetime-date, .datetime-hour{
+  &[placeholder]{
+    font-size: .9rem;
+  }
+}
+
+.container-datetimes{
+  width: 100%;
+  @include d-flex-center();
 }

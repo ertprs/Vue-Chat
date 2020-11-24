@@ -9519,6 +9519,7 @@ body {
       width: 100%;
       border-bottom: 2px solid #FFF; }
       #todos-contatos .lista-contatos-container .fieldset-container-abas .fieldset-abas {
+        height: 25px;
         cursor: pointer;
         text-align: center;
         border: 1px solid #AAA;
@@ -9527,14 +9528,15 @@ body {
         border-top-right-radius: 10px;
         width: 50%;
         display: flex;
-        justify-content: center;
+        justify-content: space-around;
         align-items: center; }
+        #todos-contatos .lista-contatos-container .fieldset-container-abas .fieldset-abas .container-contador {
+          position: unset; }
         #todos-contatos .lista-contatos-container .fieldset-container-abas .fieldset-abas h4 {
+          margin-left: 5px;
           font-size: .9rem;
-          width: auto; }
-        #todos-contatos .lista-contatos-container .fieldset-container-abas .fieldset-abas svg {
-          margin-right: 5px;
-          font-size: .8rem; }
+          width: auto;
+          padding: 2.5px; }
         #todos-contatos .lista-contatos-container .fieldset-container-abas .fieldset-abas:first-child {
           border-left: unset; }
         #todos-contatos .lista-contatos-container .fieldset-container-abas .fieldset-abas:last-child {
@@ -9552,6 +9554,8 @@ body {
           #todos-contatos .lista-contatos-container .fieldset-container-abas.fechado .fieldset-abas:first-child {
             border-right: unset;
             border-bottom: unset; }
+          #todos-contatos .lista-contatos-container .fieldset-container-abas.fechado .fieldset-abas h4 {
+            margin-left: 0; }
     #todos-contatos .lista-contatos-container .fieldset-container, #todos-contatos .lista-contatos-container .fieldset-abas {
       display: flex;
       border-bottom: 1px solid #CCC;
@@ -9806,6 +9810,8 @@ body {
       margin: 0;
       color: #242423;
       white-space: nowrap; }
+  #todos-contatos .lista-aguardando--titulo svg {
+    font-size: 1rem; }
   #todos-contatos .lista-agenda ul {
     flex-direction: column; }
 
@@ -10885,7 +10891,19 @@ body {
   white-space: normal !important; }
 
 .datetime-date {
-  margin-bottom: 5px; }
+  margin-right: 5px; }
+
+.datetime-date, .datetime-hour {
+  width: 150px; }
+
+.datetime-date[placeholder], .datetime-hour[placeholder] {
+  font-size: .9rem; }
+
+.container-datetimes {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
 
 #rodape-botoes-encerramento-container {
   width: 100%;

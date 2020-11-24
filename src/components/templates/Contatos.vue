@@ -59,6 +59,16 @@
           </li>
         </ul>
 
+        <div class="lista-aguardando--titulo">
+          <div :class="{'fechado' : fechado}">
+            <i class="far fa-hourglass" :title="dicionario.sub_titulo_aguardando"></i>
+          </div>
+          <transition name="fade">
+            <h2 v-show="!fechado" >
+              {{ dicionario.sub_titulo_aguardando }}
+            </h2>
+          </transition>
+        </div>
         <lista-aguardando :fechado="fechado" />
 
         <div class="lista-agenda">

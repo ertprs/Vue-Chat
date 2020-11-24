@@ -2,20 +2,20 @@
   <div v-if="caso !== 400" class="container-listas-aguardando" :class="{'fechado' : fechado}">
     <div class="fieldset-container-abas" :class="{'fechado' : fechado}">
       <div v-on:click="alternarAbaAberta('pessoal')" class="fieldset-abas" :class="{'ativo' : abaAberta == 'pessoal'}">
-        <span v-if="!fechado">
-          <i class="far fa-hourglass" />
-        </span>
         <h4 :title="dicionario.sub_titulo_pessoal">
           {{ dicionario.sub_titulo_pessoal }}
         </h4>
+        <div v-if="!fechado" class="container-contador">
+          <span v-if="aguardando.length" :title="dicionario.title_total_clientes" class="total-clientes">{{ aguardando.length }}</span>
+        </div>
       </div>
       <div v-on:click="alternarAbaAberta('todos')" class="fieldset-abas" :class="{'ativo' : abaAberta == 'todos'}">
-        <span v-if="!fechado">
-          <i class="far fa-hourglass" />
-        </span>
         <h4 :title="dicionario.sub_titulo_todos">
           {{ dicionario.sub_titulo_todos }}
         </h4>
+        <div v-if="!fechado" class="container-contador">
+          <span v-if="todos.length" :title="dicionario.title_total_clientes" class="total-clientes">{{ todos.length }}</span>
+        </div>
       </div>
     </div>
     <div class="lista-aguardando" v-if="abaAberta == 'pessoal'">

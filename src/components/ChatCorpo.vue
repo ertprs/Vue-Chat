@@ -179,8 +179,8 @@ export default {
                         str += `<p>${this.formataDataHora(arrStatusMsg[index][j].data_hora_status, true)}</p>`
                       }
                       str += `<ul class="tooltip-list">`
-                      if(arrStatusMsg[index][j].data_hora_entrega && arrStatusMsg[index][j].data_hora_entrega !== "1111-11-11 00:00:00"){
-                        str += `<li>${this.dicionario.msg_data_hora_entrega} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_entrega, true)}</li>`
+                      if(arrStatusMsg[index][j].data_hora_gravacao && arrStatusMsg[index][j].data_hora_gravacao !== "1111-11-11 00:00:00"){
+                        str += `<li>${this.dicionario.msg_data_hora_gravacao} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_gravacao, true)}</li>`
                       }
                       if(arrStatusMsg[index][j].data_hora_envio_fila && arrStatusMsg[index][j].data_hora_envio_fila !== "1111-11-11 00:00:00"){
                         str += `<li>${this.dicionario.msg_data_hora_envio_fila} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_envio_fila, true)}</li>`
@@ -188,8 +188,8 @@ export default {
                       if(arrStatusMsg[index][j].data_hora_envio_cliente && arrStatusMsg[index][j].data_hora_envio_cliente !== "1111-11-11 00:00:00"){
                         str += `<li>${this.dicionario.msg_data_hora_envio_cliente} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_envio_cliente, true)}</li>`
                       }
-                      if(arrStatusMsg[index][j].data_hora_gravacao && arrStatusMsg[index][j].data_hora_gravacao !== "1111-11-11 00:00:00"){
-                        str += `<li>${this.dicionario.msg_data_hora_gravacao} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_gravacao, true)}</li>`
+                      if(arrStatusMsg[index][j].data_hora_entrega && arrStatusMsg[index][j].data_hora_entrega !== "1111-11-11 00:00:00"){
+                        str += `<li>${this.dicionario.msg_data_hora_entrega} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_entrega, true)}</li>`
                       }
                       if(arrStatusMsg[index][j].data_hora_leitura && arrStatusMsg[index][j].data_hora_leitura !== "1111-11-11 00:00:00"){
                         str += `<li>${this.dicionario.msg_data_hora_leitura} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_leitura, true)}</li>`

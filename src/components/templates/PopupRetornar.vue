@@ -13,6 +13,7 @@
       agendar-retorno
       v-if="pessoalData"
       class="popup-container-tela-2">
+      <div class="container-datetimes">
         <datetime
         v-model="data"
         :placeholder="dicionario.placeholder_select_data"
@@ -29,7 +30,9 @@
         value-zone="local"
         :phrases="{ok: dicionario.btn_continuar_select_data_hora, cancel: dicionario.btn_fechar_select_data_hora}"
         class="theme-custom"
+        input-class="datetime-hour"
         type="time" />
+      </div>
       <ul
         class="btns-confirmacao-container popup-lista"
         :class="{'bg' : bg}">
