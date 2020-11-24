@@ -523,6 +523,53 @@ export default {
         link = true
       }
 
+      // Tratativa de *negrito* _italico_ e ~cortado~
+      const regexNegrito = /\*[A-Za-z0-9]+\*/g
+      const regexItalico = /\_[A-Za-z0-9]+\_/g
+      const regexLinha = /\~[A-Za-z0-9]+\~/g
+
+      if(msg.search(regexNegrito) !== -1){
+        let arrAux = msg.split(" ")
+        let msgFinal = []
+        arrAux.map(msg => {
+          if(msg.match(regexNegrito)){
+            msg = msg.replace(/\*/g, "")
+            msg = `<b>${msg}</b>`
+          }
+          msgFinal.push(msg)
+        })
+        msgFinal = msgFinal.join(" ")
+        msg = msgFinal
+      }
+
+      if(msg.search(regexItalico) !== -1){
+        let arrAux = msg.split(" ")
+        let msgFinal = []
+        arrAux.map(msg => {
+          if(msg.match(regexItalico)){
+            msg = msg.replace(/\_/g, "")
+            msg = `<i>${msg}</i>`
+          }
+          msgFinal.push(msg)
+        })
+        msgFinal = msgFinal.join(" ")
+        msg = msgFinal
+      }
+
+      if(msg.search(regexLinha) !== -1){
+        let arrAux = msg.split(" ")
+        let msgFinal = []
+        arrAux.map(msg => {
+          if(msg.match(regexLinha)){
+            msg = msg.replace(/\~/g, "")
+            msg = `<del>${msg}</del>`
+          }
+          msgFinal.push(msg)
+        })
+        msgFinal = msgFinal.join(" ")
+        msg = msgFinal
+      }
+
       objMensagem = {
         seq: seq,
         autor: autor,

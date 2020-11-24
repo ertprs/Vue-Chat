@@ -671,6 +671,53 @@ export default {
                 link = true
               }
 
+              // Tratativa de *negrito* _italico_ e ~cortado~
+              const regexNegrito = /\*[A-Za-z0-9]+\*/g
+              const regexItalico = /\_[A-Za-z0-9]+\_/g
+              const regexLinha = /\~[A-Za-z0-9]+\~/g
+
+              if(mensagem.search(regexNegrito) !== -1){
+                let arrAux = mensagem.split(" ")
+                let msgFinal = []
+                arrAux.map(msg => {
+                  if(msg.match(regexNegrito)){
+                    msg = msg.replace(/\*/g, "")
+                    msg = `<b>${msg}</b>`
+                  }
+                  msgFinal.push(msg)
+                })
+                msgFinal = msgFinal.join(" ")
+                mensagem = msgFinal
+              }
+
+              if(mensagem.search(regexItalico) !== -1){
+                let arrAux = mensagem.split(" ")
+                let msgFinal = []
+                arrAux.map(msg => {
+                  if(msg.match(regexItalico)){
+                    msg = msg.replace(/\_/g, "")
+                    msg = `<i>${msg}</i>`
+                  }
+                  msgFinal.push(msg)
+                })
+                msgFinal = msgFinal.join(" ")
+                mensagem = msgFinal
+              }
+
+              if(mensagem.search(regexLinha) !== -1){
+                let arrAux = mensagem.split(" ")
+                let msgFinal = []
+                arrAux.map(msg => {
+                  if(msg.match(regexLinha)){
+                    msg = msg.replace(/\~/g, "")
+                    msg = `<del>${msg}</del>`
+                  }
+                  msgFinal.push(msg)
+                })
+                msgFinal = msgFinal.join(" ")
+                mensagem = msgFinal
+              }
+
               let msgStatus = "msg_status_"+arrMensagens[index][i].status
               let str = `<p class="tooltip-titulo-status-message">${this.dicionario[msgStatus]}</p>`
               if(arrMensagens[index][i].data_hora_status && arrMensagens[index][i].data_hora_status !== "1111-11-11 00:00:00"){
