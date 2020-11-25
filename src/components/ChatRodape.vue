@@ -184,7 +184,9 @@
 <script>
 
 import { mapGetters } from "vuex";
+
 import { obterMsgFormatada } from "@/services/msgFormatada";
+
 import axios_api from "@/services/serviceAxios";
 
 export default {
@@ -524,52 +526,107 @@ export default {
       }
 
       // Tratativa de *negrito* _italico_ e ~cortado~
-      const regexNegrito = /\*[\sA-Za-z0-9]+\*/g // /\*([\w\W\s]+)\*/g
+      const regexNegrito = /\*[\sA-Za-z0-9]+\*/g
       const regexItalico = /\_[\sA-Za-z0-9]+\_/g
       const regexLinha = /\~[\sA-Za-z0-9]+\~/g
 
       if(msg.search(regexNegrito) !== -1){
+        let arrTexto = msg.split(" ")
 
-        let arrAux = msg.split(" ")
-        console.log(arrAux)
-        let msgFinal = []
-        arrAux.map(msg => {
-          if(msg.match(regexNegrito)){
-            msg = msg.replace(/\*/g, "")
-            msg = `<b>${msg}</b>`
-          }
-          msgFinal.push(msg)
+        let abrirTag = true
+        arrTexto = arrTexto.map((msg) => {
+          if(msg.search(/\*/) !== -1){
+              if(msg.length > 1){
+                if(msg.match(/\*/g).length > 1){
+                  msg = msg.replace(/\*/g, "")
+                  msg = `<b>${msg}</b>`
+                }else{
+                  msg = msg.replace(/\*/, "")
+                  if(abrirTag){
+                    msg = `<b>${msg}`
+                    abrirTag = false
+                  }else{
+                    msg += "</b>"
+                  }
+                }
+              }else{
+                if(abrirTag){
+                  msg = msg.replace(/\*/, "<b>")
+                  abrirTag = false
+                }else{
+                  msg = msg.replace(/\*/, "</b>")
+                }
+              }
+            }
+            return msg
         })
-        msgFinal = msgFinal.join(" ")
-        msg = msgFinal
+        msg = arrTexto.join(" ")
       }
 
       if(msg.search(regexItalico) !== -1){
-        let arrAux = msg.split(" ")
-        let msgFinal = []
-        arrAux.map(msg => {
-          if(msg.match(regexItalico)){
-            msg = msg.replace(/\_/g, "")
-            msg = `<i>${msg}</i>`
-          }
-          msgFinal.push(msg)
+        let arrTexto = msg.split(" ")
+
+        let abrirTag = true
+        arrTexto = arrTexto.map((msg) => {
+          if(msg.search(/\_/) !== -1){
+              if(msg.length > 1){
+                if(msg.match(/\_/g).length > 1){
+                  msg = msg.replace(/\_/g, "")
+                  msg = `<i>${msg}</i>`
+                }else{
+                  msg = msg.replace(/\_/, "")
+                  if(abrirTag){
+                    msg = `<i>${msg}`
+                    abrirTag = false
+                  }else{
+                    msg += "</i>"
+                  }
+                }
+              }else{
+                if(abrirTag){
+                  msg = msg.replace(/\_/, "<i>")
+                  abrirTag = false
+                }else{
+                  msg = msg.replace(/\_/, "</i>")
+                }
+              }
+            }
+            return msg
         })
-        msgFinal = msgFinal.join(" ")
-        msg = msgFinal
+        msg = arrTexto.join(" ")
       }
 
       if(msg.search(regexLinha) !== -1){
-        let arrAux = msg.split(" ")
-        let msgFinal = []
-        arrAux.map(msg => {
-          if(msg.match(regexLinha)){
-            msg = msg.replace(/\~/g, "")
-            msg = `<del>${msg}</del>`
-          }
-          msgFinal.push(msg)
+        let arrTexto = msg.split(" ")
+
+        let abrirTag = true
+        arrTexto = arrTexto.map((msg) => {
+          if(msg.search(/\~/) !== -1){
+              if(msg.length > 1){
+                if(msg.match(/\~/g).length > 1){
+                  msg = msg.replace(/\~/g, "")
+                  msg = `<del>${msg}</del>`
+                }else{
+                  msg = msg.replace(/\~/, "")
+                  if(abrirTag){
+                    msg = `<del>${msg}`
+                    abrirTag = false
+                  }else{
+                    msg += "</del>"
+                  }
+                }
+              }else{
+                if(abrirTag){
+                  msg = msg.replace(/\~/, "<del>")
+                  abrirTag = false
+                }else{
+                  msg = msg.replace(/\~/, "</del>")
+                }
+              }
+            }
+            return msg
         })
-        msgFinal = msgFinal.join(" ")
-        msg = msgFinal
+        msg = arrTexto.join(" ")
       }
 
       objMensagem = {

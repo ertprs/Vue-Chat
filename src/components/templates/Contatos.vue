@@ -488,45 +488,102 @@ export default {
               const regexLinha = /\~[\sA-Za-z0-9]+\~/g
 
               if(mensagem.search(regexNegrito) !== -1){
-                let arrAux = mensagem.split(" ")
-                let msgFinal = []
-                arrAux.map(msg => {
-                  if(msg.match(regexNegrito)){
-                    msg = msg.replace(/\*/g, "")
-                    msg = `<b>${msg}</b>`
-                  }
-                  msgFinal.push(msg)
+                let arrTexto = mensagem.split(" ")
+
+                let abrirTag = true
+                arrTexto = arrTexto.map((mensagem) => {
+                  if(mensagem.search(/\*/) !== -1){
+                      if(mensagem.length > 1){
+                        if(mensagem.match(/\*/g).length > 1){
+                          mensagem = mensagem.replace(/\*/g, "")
+                          mensagem = `<b>${mensagem}</b>`
+                        }else{
+                          mensagem = mensagem.replace(/\*/, "")
+                          if(abrirTag){
+                            mensagem = `<b>${mensagem}`
+                            abrirTag = false
+                          }else{
+                            mensagem += "</b>"
+                          }
+                        }
+                      }else{
+                        if(abrirTag){
+                          mensagem = mensagem.replace(/\*/, "<b>")
+                          abrirTag = false
+                        }else{
+                          mensagem = mensagem.replace(/\*/, "</b>")
+                        }
+                      }
+                    }
+                    return mensagem
                 })
-                msgFinal = msgFinal.join(" ")
-                mensagem = msgFinal
+                mensagem = arrTexto.join(" ")
               }
 
               if(mensagem.search(regexItalico) !== -1){
-                let arrAux = mensagem.split(" ")
-                let msgFinal = []
-                arrAux.map(msg => {
-                  if(msg.match(regexItalico)){
-                    msg = msg.replace(/\_/g, "")
-                    msg = `<i>${msg}</i>`
-                  }
-                  msgFinal.push(msg)
+                let arrTexto = mensagem.split(" ")
+
+                let abrirTag = true
+                arrTexto = arrTexto.map((mensagem) => {
+                  if(mensagem.search(/\_/) !== -1){
+                      if(mensagem.length > 1){
+                        if(mensagem.match(/\_/g).length > 1){
+                          mensagem = mensagem.replace(/\_/g, "")
+                          mensagem = `<i>${mensagem}</i>`
+                        }else{
+                          mensagem = mensagem.replace(/\_/, "")
+                          if(abrirTag){
+                            mensagem = `<i>${mensagem}`
+                            abrirTag = false
+                          }else{
+                            mensagem += "</i>"
+                          }
+                        }
+                      }else{
+                        if(abrirTag){
+                          mensagem = mensagem.replace(/\_/, "<i>")
+                          abrirTag = false
+                        }else{
+                          mensagem = mensagem.replace(/\_/, "</i>")
+                        }
+                      }
+                    }
+                    return mensagem
                 })
-                msgFinal = msgFinal.join(" ")
-                mensagem = msgFinal
+                mensagem = arrTexto.join(" ")
               }
 
               if(mensagem.search(regexLinha) !== -1){
-                let arrAux = mensagem.split(" ")
-                let msgFinal = []
-                arrAux.map(msg => {
-                  if(msg.match(regexLinha)){
-                    msg = msg.replace(/\~/g, "")
-                    msg = `<del>${msg}</del>`
-                  }
-                  msgFinal.push(msg)
+                let arrTexto = mensagem.split(" ")
+
+                let abrirTag = true
+                arrTexto = arrTexto.map((mensagem) => {
+                  if(mensagem.search(/\~/) !== -1){
+                      if(mensagem.length > 1){
+                        if(mensagem.match(/\~/g).length > 1){
+                          mensagem = mensagem.replace(/\~/g, "")
+                          mensagem = `<del>${mensagem}</del>`
+                        }else{
+                          mensagem = mensagem.replace(/\~/, "")
+                          if(abrirTag){
+                            mensagem = `<del>${mensagem}`
+                            abrirTag = false
+                          }else{
+                            mensagem += "</del>"
+                          }
+                        }
+                      }else{
+                        if(abrirTag){
+                          mensagem = mensagem.replace(/\~/, "<del>")
+                          abrirTag = false
+                        }else{
+                          mensagem = mensagem.replace(/\~/, "</del>")
+                        }
+                      }
+                    }
+                    return mensagem
                 })
-                msgFinal = msgFinal.join(" ")
-                mensagem = msgFinal
+                mensagem = arrTexto.join(" ")
               }
 
               let msgStatus = "msg_status_"+arrMensagens[index][i].status
