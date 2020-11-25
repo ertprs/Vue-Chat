@@ -249,7 +249,6 @@ export default {
 
       const regex = /\s|\]|\[/g
       const idIframe = this.atendimentoAtivo.login_usu.replace(regex, "")
-      console.log(idIframe)
 
       limparIframeUsuarioRemovido(`iframe_${idIframe}`)
       this.$store.dispatch("setAtendimentos", objAtdAux)

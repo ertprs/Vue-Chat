@@ -13,6 +13,9 @@ var app
 
 const dicionario = store.getters.getDicionario
 
+let primeiraRequest = true
+let segundaRequest = true
+
 export function getAtendimentos(appVue) {
   if (appVue) {
     app = appVue
@@ -32,8 +35,12 @@ export function getAtendimentos(appVue) {
       tratarResponse(response)
     })
     .then(() => {
-      app.$root.$emit("req-aguardando", "pessoal", true)
-      app.$root.$emit("req-aguardando", "todos", true)
+      if(segundaRequest){
+        app.$root.$emit("req-aguardando", "pessoal", true)
+        app.$root.$emit("req-aguardando", "todos", true)
+
+        segundaRequest = false
+      }
     })
     .catch(err => {
       setTimeout(() => {
@@ -151,8 +158,6 @@ function tratarResponse(response) {
       break
   }
 }
-
-let primeiraRequest = true
 
 function acionaProcessos(mainData) {
 
@@ -308,52 +313,41 @@ function atualizarClientes(mainData) {
   var atendimentosServer = mainData.atendimentos
   var atendimentosLocal = store.getters.getTodosAtendimentos
   var novosAtendimentos = {}
-  var idsCli = []
-  const regex = /\s|\]|\[/g
-  const matchAtendimento = (local, server) => (Object.keys(server).every(ramal => local.hasOwnProperty(ramal) && local[ramal].id_cli === server[ramal].id_cli))
 
-  const hasDiffInObjectsServer = !matchAtendimento(atendimentosLocal, atendimentosServer) //se os atendimentos forem diferentes existe diferença no atendimento
-  const hasDiffInObjectsLocal = !matchAtendimento(atendimentosServer, atendimentosLocal) //se os atendimentos forem diferentes existe diferença no atendimento
-
-  if(hasDiffInObjectsServer || hasDiffInObjectsLocal){
-    for (var ramal_server in atendimentosServer) {
-      // console.log(atendimentosServer[ramal_server])
-      idsCli.push(atendimentosServer[ramal_server].login_usu.replace(regex, ''))
-      novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
-    }
+  if(Object.keys(atendimentosServer).length < Object.keys(atendimentosLocal).length) {
+      for (var ramal_server in atendimentosServer) {
+          novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
+      }
   } else {
-    for (var ramal_local in atendimentosLocal) {
-      // console.log(atendimentosLocal[ramal_local]):
-      idsCli.push(atendimentosLocal[ramal_local].login_usu.replace(regex, ''))
-      novosAtendimentos[ramal_local] = atendimentosLocal[ramal_local]
-    }
+      for (var ramal_local in atendimentosLocal) {
+          novosAtendimentos[ramal_local] = atendimentosLocal[ramal_local]
+      }
   }
 
   for (var ramal_server in atendimentosServer) {
-    // var temClienteNovo = hasDiffInObjectsServer || hasDiffInObjectsLocal
-    var temClienteNovo = true
-    for (var ramal_local in atendimentosLocal) {
-      if (atendimentosServer[ramal_server] && atendimentosLocal[ramal_local]) {
-        if (atendimentosServer[ramal_server].id_cli === atendimentosLocal[ramal_local].id_cli) {
+      var temClienteNovo = true
+      for (var ramal_local in atendimentosLocal) {
+          if (atendimentosServer[ramal_server] && atendimentosLocal[ramal_local]) {
+              if (atendimentosServer[ramal_server].id_cli === atendimentosLocal[ramal_local].id_cli) {
+                  temClienteNovo = false
+              }
+          }
+      }
+
+      if (temClienteNovo && verificaEncerramento()) {
+          if(store.getters.getUltimoIdRemovido == atendimentosServer[ramal_server].id_cli){
+              store.dispatch('setUltimoIdRemovido', '')
+              return
+          }
+
+          novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
+          novosAtendimentos[ramal_server].novoContato = true
+
+          store.dispatch('setAtendimentos', novosAtendimentos)
           temClienteNovo = false
-        }
+      } else {
+          atualizarMensagens(atendimentosServer[ramal_server], ramal_server, novosAtendimentos)
       }
-    }
-
-    if (temClienteNovo && verificaEncerramento()) {
-      if (store.getters.getUltimoIdRemovido == atendimentosServer[ramal_server].id_cli) {
-        store.dispatch('setUltimoIdRemovido', '')
-        return
-      }
-
-      novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
-      novosAtendimentos[ramal_server].novoContato = true
-
-      store.dispatch('setAtendimentos', novosAtendimentos)
-      temClienteNovo = false
-    } else {
-      atualizarMensagens(atendimentosServer[ramal_server], ramal_server, novosAtendimentos)
-    }
   }
 }
 

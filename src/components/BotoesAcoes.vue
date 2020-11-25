@@ -52,6 +52,7 @@ import axios_api from '@/services/serviceAxios'
 
 import { mapGetters } from 'vuex'
 import { executandoEncerrar, liberarEncerrar } from '@/services/atendimentos'
+import { limparIframeUsuarioRemovido } from "@/services/iframe"
 
 export default {
   data(){
@@ -154,7 +155,7 @@ export default {
             let auxAtdAtivo = this.atendimentoAtivo
             auxAtdAtivo.rules = arrayRegras
             this.$store.commit("setAtendimentoAtivo", auxAtdAtivo)
-            
+
             if(arrayRegras.accept_document){
               const todasExts = arrayRegras.accept_document
 
@@ -303,13 +304,13 @@ export default {
 
             this.$store.dispatch("setErroTransfer", false)
             this.$store.dispatch("setMsgErro", "")
-            
+
             if(response.data.options.agentes.length){
               response.data.options.agentes.map(objAgentes => {
                 arrChaves = Object.keys(objAgentes)
                 arrValores = Object.values(objAgentes)
               })
-  
+
               for(let i = 0; i < arrChaves.length; i++){
                 if(this.arrAgentes.length){
                   if(this.arrAgentes[i].cod !== arrChaves[i]){
@@ -320,13 +321,13 @@ export default {
                 }
               }
             }
-  
+
             if(response.data.options.grupos.length){
               response.data.options.grupos.map(objGrupos => {
                 arrChaves = Object.keys(objGrupos)
                 arrValores = Object.values(objGrupos)
               })
-  
+
               for(let i = 0; i < arrChaves.length; i++){
                 if(this.arrGrupos.length){
                   if(this.arrGrupos[i].cod !== arrChaves[i]){
@@ -337,14 +338,14 @@ export default {
                 }
               }
             }
-  
+
             if(response.data.options.bot.length){
 
               response.data.options.bot.map(objBot => {
                 arrChaves = Object.keys(objBot)
                 arrValores = Object.values(objBot)
               })
-  
+
               for(let i = 0; i < arrChaves.length; i++){
                 if(this.arrBot.length){
                   if(this.arrBot[i].cod !== arrChaves[i]){
@@ -369,7 +370,7 @@ export default {
     },
     retornarForm(){
       this.checaBlocker()
-      
+
       this.$store.dispatch("setOrigem", "Retornar")
       if(this.tudoPronto){
         this.$store.dispatch("setTitulo", this.regrasBotoes.button_suspend.name)
@@ -393,7 +394,7 @@ export default {
     async encerrarAtendimento() {
       if( this.atendimentoAtivo.informacoes.nome != null ) {
         await this.finalizarAtendimentoNaApi()
-        
+
       } else {
         this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_clique_finalizar})
       }
@@ -407,25 +408,10 @@ export default {
           if(response.data.st_ret == 'OK'){
             this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_sucesso_encerramento})
 
-            let objAtdAux = {}
-            for(let ramal in this.todosAtendimentos){
-              if(this.todosAtendimentos[ramal].token_cliente != this.atendimentoAtivo.token_cliente){
-                objAtdAux[ramal] = this.todosAtendimentos[ramal]
-              }
-            }
+            this.removerCliente()
 
-            if(!objAtdAux || !Object.keys(objAtdAux).length){
-              this.$store.dispatch("setCaso", 206)
-            }
-              
-            this.$store.dispatch('setAtendimentos', objAtdAux)
-
-            this.tudoPronto = false
-            
-            this.$store.dispatch('limparAtendimentoAtivo')
-            this.$store.dispatch('limparIdAtendimentoAtivo')
             this.$root.$off('atualizar-mensagem')
-            
+
           }
           setTimeout(() => {
             liberarEncerrar()
@@ -438,6 +424,27 @@ export default {
           console.log('Error end atd: ', error)
           this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_finalizar})
         })
+    },
+    removerCliente(){
+      let objAtdAux = {}
+      for(let ramal in this.todosAtendimentos){
+        if(this.todosAtendimentos[ramal].login_usu != this.atendimentoAtivo.login_usu){
+          objAtdAux[ramal] = this.todosAtendimentos[ramal]
+        }
+      }
+
+      const regex = /\s|\]|\[/g
+      const idIframe = this.atendimentoAtivo.login_usu.replace(regex, "")
+
+      limparIframeUsuarioRemovido(`iframe_${idIframe}`)
+      this.$store.dispatch("setAtendimentos", objAtdAux)
+
+      if(!objAtdAux || !Object.keys(objAtdAux).length){
+        this.$store.dispatch("setCaso", 206)
+      }
+
+      this.$store.dispatch('limparAtendimentoAtivo')
+      this.$store.dispatch('limparIdAtendimentoAtivo')
     }
   }
 }

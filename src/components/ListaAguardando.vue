@@ -85,8 +85,8 @@ export default {
     }
   },
   mounted(){
-    this.$root.$on("req-aguardando", origem => {
-      this.reqAguardando(origem)
+    this.$root.$on("req-aguardando", (origem, persistir) => {
+      this.reqAguardando(origem, persistir)
     })
   },
   methods: {
@@ -178,12 +178,6 @@ export default {
               })
               this.$store.dispatch("setTodos", todosAux)
               this.$store.dispatch("setContadorTodos", todosAux.length)
-            }else if(origem == "agenda"){
-              let agendaAux = this.minhaAgenda
-              agendaAux = agendaAux.filter((atendimento) => {
-                return atendimento.id_cli != atd.id_cli
-              })
-              this.$store.dispatch("setAgenda", agendaAux)
             }
           }else if(response.data.st_ret == "AVISO"){
             this.$toasted.global.emConstrucao({msg: response.data.msg_ret || this.dicionario.msg_erro_ativar_cliente})
@@ -202,6 +196,9 @@ export default {
         return letra.toLowerCase()
       }
     }
+  },
+  beforeDestroy(){
+    this.$root.$off("req-aguardando")
   }
 }
 </script>

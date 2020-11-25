@@ -39,7 +39,7 @@
           :msgTooltip="msg.tooltip"
         />
         <div class="chat-corpo-container" v-if="arrMsg.data_fim && arrMsg.login">
-          <template v-if="arrMsg.data_fim !== '1111-11-11 00:00:00'">
+          <template v-if="arrMsg.data_fim !== '1111-11-11 00:00:00' && arrMsg.data_fim !== '1111-11-11 1111-11-11'">
             <hr>
             <div>
               <h5 class="separador-mensagens">
@@ -89,7 +89,7 @@ export default {
     }
   },
   beforeDestroy(){
-    this.$root.$off("rolaChat")
+    this.$root.$off("rola-chat")
   },
   mounted() {
     this.$root.$on('rola-chat', () => {

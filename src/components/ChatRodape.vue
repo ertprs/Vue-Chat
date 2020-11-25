@@ -524,12 +524,14 @@ export default {
       }
 
       // Tratativa de *negrito* _italico_ e ~cortado~
-      const regexNegrito = /\*[A-Za-z0-9]+\*/g
-      const regexItalico = /\_[A-Za-z0-9]+\_/g
-      const regexLinha = /\~[A-Za-z0-9]+\~/g
+      const regexNegrito = /\*[\sA-Za-z0-9]+\*/g // /\*([\w\W\s]+)\*/g
+      const regexItalico = /\_[\sA-Za-z0-9]+\_/g
+      const regexLinha = /\~[\sA-Za-z0-9]+\~/g
 
       if(msg.search(regexNegrito) !== -1){
+
         let arrAux = msg.split(" ")
+        console.log(arrAux)
         let msgFinal = []
         arrAux.map(msg => {
           if(msg.match(regexNegrito)){
