@@ -23,7 +23,7 @@
         </div>
         <div
           v-show="aparecerPrevia"
-          v-on:click="excluirAnexo()"
+          @click="excluirAnexo()"
           :title="dicionario.msg_cancelar_anexo"
           class="btn-excluir-anexo"
           :class="{'previa-anexo' : docPrevia, 'previa-anexo-erro' : docPrevia && erroFormatoAnexo}"

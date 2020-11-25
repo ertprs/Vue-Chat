@@ -25,9 +25,9 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import ChatOpcoes from '../ChatOpcoes'
-import ChatCorpo from '../ChatCorpo'
-import ChatRodape from '../ChatRodape'
+import ChatOpcoes from './ChatOpcoes'
+import ChatCorpo from './ChatCorpo'
+import ChatRodape from './ChatRodape'
 import BotoesAcoes from '../BotoesAcoes'
 
 export default {

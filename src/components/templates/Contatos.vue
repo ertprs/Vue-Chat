@@ -190,7 +190,6 @@ export default {
                 .catch(error => {
                   console.log("Error get agenda: ", error)
                 })
-              console.log("Mudou AGENDA")
             }
           })
         }
@@ -198,7 +197,6 @@ export default {
           this.aguardando.map(atdAguardando => {
             if(atd.login_usu == atdAguardando.login_usu){
               this.$root.$emit("req-aguardando", "pessoal")
-              console.log("Mudou AGUARDANDO")
             }
           })
         }
@@ -206,7 +204,6 @@ export default {
           this.todos.map(atdTodos => {
             if(atd.login_usu == atdTodos.login_usu){
               this.$root.$emit("req-aguardando", "todos")
-              console.log("Mudou TODOS")
             }
           })
         }

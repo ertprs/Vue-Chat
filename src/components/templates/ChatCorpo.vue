@@ -71,7 +71,7 @@
 </style>
 
 <script>
-import Mensagens from './Mensagens'
+import Mensagens from '../Mensagens'
 import { mapGetters } from 'vuex'
 
 import { formataDataHora } from "@/services/formatacaoDeTextos"

@@ -36,9 +36,11 @@ export default {
       statusAtd: "getStatusAtd",
       todosAtendimentos: "getTodosAtendimentos",
       semIframe: "getSemIframe",
-      minhaAgenda: "getAgenda",
       dicionario: "getDicionario",
-      abaSelecionada: "getAbaSelecionada"
+      abaSelecionada: "getAbaSelecionada",
+      minhaAgenda: "getAgenda",
+      todos: "getTodos",
+      aguardando: "getAguardando"
     })
   },
   data(){
@@ -208,6 +210,23 @@ export default {
     gerenciador(){
       if(this.gerenciador){
         this.preencherDiv()
+
+        if(this.gerenciador.length){
+          this.gerenciador.map(i => {
+            // Todos
+            if(i.cod == 3){
+              if(i.count != this.todos.length){
+                this.$root.$emit("req-aguardando", "todos")
+              }
+            }
+            // Pessoal
+            if(i.cod == 4){
+              if(i.count != this.aguardando.length){
+                this.$root.$emit("req-aguardando", "pessoal")
+              }
+            }
+          })
+        }
       }
     }
   }

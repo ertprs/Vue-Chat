@@ -165,11 +165,25 @@ export default {
       //   hexa: "&#x",
       //   emoji: String.fromCodePoint(0x)
       // }
-    ]
+    ],
+    abrirEmojis: false
+  },
+  mutations: {
+    setAbrirEmojis(state, abrirEmojis){
+      state.abrirEmojis = abrirEmojis
+    }
+  },
+  actions: {
+    setAbrirEmojis: (context, payload) => {
+      context.commit("setAbrirEmojis", payload)
+    }
   },
   getters: {
     getEmojis(state){
       return state.emojis
+    },
+    getAbrirEmojis(state){
+      return state.abrirEmojis
     }
   }
 }

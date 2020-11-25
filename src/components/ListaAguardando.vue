@@ -109,7 +109,6 @@ export default {
       this.reqAguardando(this.abaAberta)
     },
     reqAguardando(origem, persistir){
-
       axios_api.get(`get-aguardando?${this.reqTeste}&aba=${origem}`)
       .then(response => {
         if(response.data){
