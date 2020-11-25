@@ -3,7 +3,7 @@
       <div class="chat-opcoes-titulo" :class="{'cliente-ativo' : atendimentoAtivo}">
         <div class="chat-opcoes-titulo-container">
           <div class="circulo-contatos">
-            <p>{{ formataSigla(atendimentoAtivo.nome_usu[0], 'upper') }}</p>
+            <p>{{ acionaFormataSigla(atendimentoAtivo.nome_usu[0], 'upper') }}</p>
           </div>
           <ul class="chat-opcoes-titulo-container--lista">
             <li :title="atendimentoAtivo.nome_usu + ' ' + atendimentoAtivo.login_usu">{{ atendimentoAtivo.nome_usu }} ({{ atendimentoAtivo.login_usu }})</li>
@@ -18,7 +18,10 @@
     </div>
 </template>
 <script>
+
+import { formataSigla } from "@/services/formatacaoDeTextos"
 import { gerenciarCores } from "@/services/gerenciarCores"
+
 import { mapGetters } from 'vuex'
 
 export default {
@@ -31,12 +34,8 @@ export default {
     gerenciarCores(this, "chat")
   },
   methods: {
-    formataSigla(letra, acao){
-      if(acao == 'upper'){
-        return letra.toUpperCase()
-      }else if(acao == 'lower'){
-        return letra.toLowerCase()
-      }
+    acionaFormataSigla(letra, acao){
+      return formataSigla(letra, acao)
     },
   },
   watch: {

@@ -28,8 +28,8 @@
           @click="ativarCliente(atd.login_usu, atd.grupo, atd, 'aguardando')"
         >
           <div class="circulo-contatos">
-            <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
-            <p v-if="fechado">{{ formataSigla(atd.nome_usu[1], 'lower') }}</p>
+            <p>{{ acionaFormataSigla(atd.nome_usu[0], 'upper') }}</p>
+            <p v-if="fechado">{{ acionaFormataSigla(atd.nome_usu[1], 'lower') }}</p>
           </div>
           <template v-if="!fechado">{{ atd.nome_usu }}</template>
         </li>
@@ -48,8 +48,8 @@
           @click="ativarCliente(atd.login_usu, atd.grupo, atd, 'aguardando-todos')"
         >
           <div class="circulo-contatos">
-            <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
-            <p v-if="fechado">{{ formataSigla(atd.nome_usu[1], 'lower') }}</p>
+            <p>{{ acionaFormataSigla(atd.nome_usu[0], 'upper') }}</p>
+            <p v-if="fechado">{{ acionaFormataSigla(atd.nome_usu[1], 'lower') }}</p>
           </div>
           <template v-if="!fechado">{{ atd.nome_usu }}</template>
         </li>
@@ -63,6 +63,8 @@
 
 <script>
 import { mapGetters } from "vuex"
+
+import { formataSigla } from "@/services/formatacaoDeTextos"
 import axios_api from "@/services/serviceAxios";
 
 export default {
@@ -188,13 +190,8 @@ export default {
           this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_ativar_cliente})
         })
     },
-    formataSigla(letra, acao){
-      if(!letra){ return }
-      if(acao == 'upper'){
-        return letra.toUpperCase()
-      }else if(acao == 'lower'){
-        return letra.toLowerCase()
-      }
+    acionaFormataSigla(letra, acao){
+      return formataSigla(letra, acao)
     }
   },
   beforeDestroy(){

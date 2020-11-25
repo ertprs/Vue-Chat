@@ -9,7 +9,7 @@
       </div>
       <div>
       </div>
-      <div v-on:click="toggleContatos($event)" class="container-flecha" :class="rotate ? 'rotate' : ''">
+      <div @click="toggleContatos($event)" class="container-flecha" :class="rotate ? 'rotate' : ''">
         <i class="fas fa-long-arrow-alt-left flecha"></i>
       </div>
     </div>
@@ -45,17 +45,17 @@
           <li
             v-for="(atd, indice) in objAtendimentos"
             :key="indice"
-            :title="formataNome(atd.nome_usu)"
+            :title="acionaFormataNome(atd.nome_usu)"
             :class="{'destaque-novo-contato' : atd.novoContato, 'nova-msg' : atd.alertaMsgNova, 'ativo' : idAtendimentoAtivo == atd.id_cli}"
             @click="ativarConversa( atd, indice )"
             @contextmenu="abrirMenuBotaoDireito($event)"
           >
             <div class="circulo-contatos">
-              <p>{{ formataSigla(atd.nome_usu[0], 'upper') }}</p>
-              <p v-if="fechado">{{ formataSigla(atd.nome_usu[1], 'lower') }}</p>
+              <p>{{ acionaFormataSigla(atd.nome_usu[0], 'upper') }}</p>
+              <p v-if="fechado">{{ acionaFormataSigla(atd.nome_usu[1], 'lower') }}</p>
               <img v-if="atd.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${atd.sigla}.png`">
             </div>
-            <template v-if="!fechado">{{ formataNome(atd.nome_usu) }}</template>
+            <template v-if="!fechado">{{ acionaFormataNome(atd.nome_usu) }}</template>
             <ultima-msg v-if="!fechado" :mensagens="atd.arrMsg" />
             <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && idAtendimentoAtivo !== atd.id_cli" class="destaque-nova-msg">{{ atd.qtdMsgNova }}</span>
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
@@ -103,6 +103,8 @@
 <script>
 import { mapGetters } from "vuex"
 import axios_api from '@/services/serviceAxios'
+
+import { formataNome, formataSigla, formataDataHora } from "@/services/formatacaoDeTextos"
 import { gerenciarCores } from "@/services/gerenciarCores"
 
 import SimpleContextMenu from 'vue-simple-context-menu'
@@ -153,26 +155,6 @@ export default {
       } else {
         this.objAtendimentos = []
       }
-
-      if(this.minhaAgenda.length){
-        this.minhaAgenda.map(cliAgenda => {
-          for(let atd in this.todosAtendimentos){
-            if(cliAgenda.id_cli == this.todosAtendimentos[atd].id){
-              axios_api.get(`get-agenda?${this.reqTeste}`)
-                .then(response => {
-                  const arrAgenda = response.data.ret || []
-
-                  this.$store.dispatch("setAgenda", arrAgenda)
-                })
-                .catch(error => {
-                  console.log("Error get agenda: ", error)
-                })
-
-              return
-            }
-          }
-        })
-      }
     },
     caso(){
       if(this.caso == 206 || this.caso == 400){
@@ -192,17 +174,22 @@ export default {
     gerenciarCores(this, "contatos")
   },
   updated(){
-    // Verificando se o usuario esta em mais de um array e removendo caso sim
+    // Verificando se o usuario esta em mais de um array e fazendo novas requisicoes para correcao
     if(this.objAtendimentos.length && this.caso !== 400){
       this.objAtendimentos.map(atd => {
         if(this.minhaAgenda.length){
           this.minhaAgenda.map(atdAgenda => {
             if(atd.login_usu == atdAgenda.login_usu){
-              let auxAgenda = this.minhaAgenda
-              auxAgenda = auxAgenda.filter(agenda => {
-                return agenda.login_usu !== atd.login_usu
-              })
-              this.$store.dispatch("setAgenda", auxAgenda)
+              axios_api.get(`get-agenda?${this.reqTeste}`)
+                .then(response => {
+                  const arrAgenda = response.data.ret
+                  if(arrAgenda.length){
+                    this.$store.dispatch("setAgenda", arrAgenda)
+                  }
+                })
+                .catch(error => {
+                  console.log("Error get agenda: ", error)
+                })
               console.log("Mudou AGENDA")
             }
           })
@@ -230,6 +217,7 @@ export default {
     this.verificaLocalStorage()
   },
   mounted(){
+
     this.$root.$on('toggle-contatos', () => {
       this.toggleContatos()
     })
@@ -306,14 +294,6 @@ export default {
 
       this.totalMsgNovas = auxContMsgNova
       this.totalClientesNovos = auxContNovoContato
-    },
-    formataSigla(letra, acao){
-      if(!letra){ return }
-      if(acao == 'upper'){
-        return letra.toUpperCase()
-      }else if(acao == 'lower'){
-        return letra.toLowerCase()
-      }
     },
     adicionaCaso(caso){
       this.$store.dispatch('setCaso', caso)
@@ -589,23 +569,23 @@ export default {
               let msgStatus = "msg_status_"+arrMensagens[index][i].status
               let str = `<p class="tooltip-titulo-status-message">${this.dicionario[msgStatus]}</p>`
               if(arrMensagens[index][i].data_hora_status && arrMensagens[index][i].data_hora_status !== "1111-11-11 00:00:00"){
-                str += `<p>${this.formataDataHora(arrMensagens[index][i].data_hora_status, true)}</p>`
+                str += `<p>${this.acionaFormataDataHora(arrMensagens[index][i].data_hora_status, true)}</p>`
               }
               str += `<ul class="tooltip-list">`
               if(arrMensagens[index][i].data_hora_gravacao && arrMensagens[index][i].data_hora_gravacao !== "1111-11-11 00:00:00"){
-                str += `<li>${this.dicionario.msg_data_hora_gravacao} - ${this.formataDataHora(arrMensagens[index][i].data_hora_gravacao, true)}</li>`
+                str += `<li>${this.dicionario.msg_data_hora_gravacao} - ${this.acionaFormataDataHora(arrMensagens[index][i].data_hora_gravacao, true)}</li>`
               }
               if(arrMensagens[index][i].data_hora_envio_fila && arrMensagens[index][i].data_hora_envio_fila !== "1111-11-11 00:00:00"){
-                str += `<li>${this.dicionario.msg_data_hora_envio_fila} - ${this.formataDataHora(arrMensagens[index][i].data_hora_envio_fila, true)}</li>`
+                str += `<li>${this.dicionario.msg_data_hora_envio_fila} - ${this.acionaFormataDataHora(arrMensagens[index][i].data_hora_envio_fila, true)}</li>`
               }
               if(arrMensagens[index][i].data_hora_envio_cliente && arrMensagens[index][i].data_hora_envio_cliente !== "1111-11-11 00:00:00"){
-                str += `<li>${this.dicionario.msg_data_hora_envio_cliente} - ${this.formataDataHora(arrMensagens[index][i].data_hora_envio_cliente, true)}</li>`
+                str += `<li>${this.dicionario.msg_data_hora_envio_cliente} - ${this.acionaFormataDataHora(arrMensagens[index][i].data_hora_envio_cliente, true)}</li>`
               }
               if(arrMensagens[index][i].data_hora_entrega && arrMensagens[index][i].data_hora_entrega !== "1111-11-11 00:00:00"){
-                str += `<li>${this.dicionario.msg_data_hora_entrega} - ${this.formataDataHora(arrMensagens[index][i].data_hora_entrega, true)}</li>`
+                str += `<li>${this.dicionario.msg_data_hora_entrega} - ${this.acionaFormataDataHora(arrMensagens[index][i].data_hora_entrega, true)}</li>`
               }
               if(arrMensagens[index][i].data_hora_leitura && arrMensagens[index][i].data_hora_leitura !== "1111-11-11 00:00:00"){
-                str += `<li>${this.dicionario.msg_data_hora_leitura} - ${this.formataDataHora(arrMensagens[index][i].data_hora_leitura, true)}</li>`
+                str += `<li>${this.dicionario.msg_data_hora_leitura} - ${this.acionaFormataDataHora(arrMensagens[index][i].data_hora_leitura, true)}</li>`
               }
               if(arrMensagens[index][i].status_msg){
                 str += `<li>${arrMensagens[index][i].status_msg}</li>`
@@ -662,48 +642,6 @@ export default {
       };
       return objMensagem;
     },
-    formataDataHora(dataHora, origem){
-      if(!dataHora){
-        return ""
-      }
-
-      let arrDataHora = dataHora.split(" ")
-      if(arrDataHora.length){
-        let data = arrDataHora[0]
-        let hora = arrDataHora[1]
-
-        if(!data || !hora){
-          return dataHora
-        }
-
-        data = data.split("-")
-        data = data.reverse()
-        data = data.join("/")
-
-        if(!origem){
-          hora = hora.slice(0, 5)
-        }else{
-          hora = hora.slice(0, 8)
-        }
-
-        if(!origem){
-          return `${data} ${this.dicionario.msg_divisao_data_hora} ${hora}`
-        }else{
-          return `${data} ${hora}`
-        }
-      }else{
-        return dataHora
-      }
-    },
-    formataHoraAtual() {
-      let data = new Date();
-      let hora = data.getHours();
-      hora = hora < 10 ? "0" + hora : hora;
-      let minutos = data.getMinutes();
-      minutos = minutos < 10 ? "0" + minutos : minutos;
-      const horaFormatada = hora + "h" + minutos;
-      return horaFormatada;
-    },
     toggleContatos(event) {
       this.rotate = !this.rotate
       this.fechado = !this.fechado;
@@ -750,35 +688,15 @@ export default {
         }
       }
     },
-    formataUltimaMsg(arrMsgs){
-      if(!arrMsgs){ return }
-      if(arrMsgs.length > 0) {
-        let indexRef = arrMsgs.length - 1
-        let msgFormatada = arrMsgs[indexRef].msg
-
-        if(arrMsgs[indexRef].msg.length > 30 && !arrMsgs[indexRef].anexos){
-          msgFormatada = arrMsgs[indexRef].msg.slice(0, 30) + '...'
-          return msgFormatada
-        }else if(arrMsgs[indexRef].anexos){
-          if(arrMsgs[indexRef].msg){
-            msgFormatada = arrMsgs[indexRef].anexos.name + " " + arrMsgs[indexRef].msg
-          }else{
-            msgFormatada = arrMsgs[indexRef].anexos.name
-          }
-          if(msgFormatada.length > 30){
-            msgFormatada = msgFormatada.slice(0, 30) + '...'
-          }
-          return msgFormatada
-        }else{
-          return msgFormatada
-        }
-      }
+    acionaFormataDataHora(dataHora, origem){
+      return formataDataHora(dataHora, origem)
     },
-    formataNome(nome){
-      if(!nome){ return '' }
-      nome = nome.toLowerCase().replace(/(?:^|\s)\S/g, (capitalize) => { return capitalize.toUpperCase() })
-      return nome
-    }
+    acionaFormataNome(nome){
+      return formataNome(nome)
+    },
+    acionaFormataSigla(letra, acao){
+      return formataSigla(letra, acao)
+    },
   }
 };
 </script>

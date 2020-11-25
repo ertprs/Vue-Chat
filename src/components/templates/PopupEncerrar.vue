@@ -1,6 +1,6 @@
 <template>
   <div class="popup-container">
-    <ul 
+    <ul
       lista-retornar
       class="popup-lista"
       :class="{'bg' : bg}">
@@ -35,7 +35,6 @@ export default {
   methods: {
     encerrar(){
       this.$root.$emit('encerrar-atendimento')
-      // Limpando pilha de eventos afim de evitar que a funcao de encerrar seja chamada mais de uma vez
       this.fecharPopup('encerrarAtendimento')
     },
     fecharPopup(encerramento){

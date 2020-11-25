@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     fecharPopup(event){
-      if(event.target === document.querySelector('#popup')){       
+      if(event.target === document.querySelector('#popup')){
         this.$store.dispatch('setBlocker', false)
         this.$store.dispatch('setAbrirPopup', false)
         this.$store.dispatch('setOrigem', "")
@@ -61,7 +61,6 @@ export default {
     alterarCoresLi(){
       const root = document.documentElement
       root.style.setProperty('--bg-alternativo', this.bg)
-      // root.style.setProperty('--bg-calendar', this.bg)
     }
   }
 }

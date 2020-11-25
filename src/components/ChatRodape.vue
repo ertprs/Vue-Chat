@@ -186,6 +186,7 @@
 import { mapGetters } from "vuex";
 
 import { obterMsgFormatada } from "@/services/msgFormatada";
+import { formataHoraAtual } from "@/services/formatacaoDeTextos"
 
 import axios_api from "@/services/serviceAxios";
 
@@ -353,15 +354,6 @@ export default {
       this.arquivo = ""
       this.imagemPrevia = ""
     },
-    verificaRolagem() {
-      let corpoMensagens = document.querySelector("#chat-operador > div");
-      let tamanhoCorpoMensagem = corpoMensagens.offsetHeight;
-      let tamanhoScroll = corpoMensagens.scrollHeight;
-
-      if (tamanhoScroll > tamanhoCorpoMensagem) {
-        this.$store.dispatch("setHabilitaRolagem", true);
-      }
-    },
     validaMensagem(previa) {
       if(previa){
         let anexoValidado = this.validaAnexo(this.arquivo, !this.docPrevia)
@@ -392,7 +384,7 @@ export default {
       let seq = ""
       let autor = ""
       let origem = ""
-      let hora = this.formataHoraAtual()
+      let hora = this.acionaFormataHoraAtual()
       let msg = this.mensagem;
       let link = false
       let anexo = false
@@ -657,16 +649,8 @@ export default {
       }
 
     },
-    formataHoraAtual() {
-      let data = new Date();
-      let hora = data.getHours();
-      hora = hora < 10 ? "0" + hora : hora;
-      let minutos = data.getMinutes();
-      minutos = minutos < 10 ? "0" + minutos : minutos;
-      let segundos = data.getSeconds()
-      segundos = segundos < 10 ? "0" + segundos : segundos;
-      const horaFormatada = hora + ":" + minutos + ":" + segundos;
-      return horaFormatada;
+    acionaFormataHoraAtual() {
+      return formataHoraAtual()
     },
     verificaTemMsgFormatada(){
       let valor = ''

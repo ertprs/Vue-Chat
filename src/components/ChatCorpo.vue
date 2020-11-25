@@ -6,7 +6,7 @@
           <hr>
           <div>
             <h5 class="separador-mensagens">
-              <template v-if="arrMsg.data_ini && arrMsg.data_ini !== '1111-11-11 00:00:00'">{{ dicionario.msg_divisao_ini + " " + formataDataHora(arrMsg.data_ini) }}</template>
+              <template v-if="arrMsg.data_ini && arrMsg.data_ini !== '1111-11-11 00:00:00'">{{ dicionario.msg_divisao_ini + " " + acionaFormataDataHora(arrMsg.data_ini) }}</template>
               <template v-if="arrMsg.login">{{ ` ${dicionario.msg_divisao_ope} `  + arrMsg.login }}</template>
             </h5>
           </div>
@@ -43,7 +43,7 @@
             <hr>
             <div>
               <h5 class="separador-mensagens">
-                {{ dicionario.msg_divisao_fim + " " + formataDataHora(arrMsg.data_fim) }}
+                {{ dicionario.msg_divisao_fim + " " + acionaFormataDataHora(arrMsg.data_fim) }}
                 {{ ` ${dicionario.msg_divisao_ope} `  + arrMsg.login }}
               </h5>
             </div>
@@ -74,7 +74,8 @@
 import Mensagens from './Mensagens'
 import { mapGetters } from 'vuex'
 
-import axios_api from '@/services/serviceAxios';
+import { formataDataHora } from "@/services/formatacaoDeTextos"
+import axios_api from '@/services/serviceAxios'
 
 export default {
   components: {
@@ -179,23 +180,23 @@ export default {
                       let msgStatus = "msg_status_"+arrStatusMsg[index][j].status
                       let str = `<p class="tooltip-titulo-status-message">${this.dicionario[msgStatus]}</p>`
                       if(arrStatusMsg[index][j].data_hora_status && arrStatusMsg[index][j].data_hora_status !== "1111-11-11 00:00:00"){
-                        str += `<p>${this.formataDataHora(arrStatusMsg[index][j].data_hora_status, true)}</p>`
+                        str += `<p>${this.acionaFormataDataHora(arrStatusMsg[index][j].data_hora_status, true)}</p>`
                       }
                       str += `<ul class="tooltip-list">`
                       if(arrStatusMsg[index][j].data_hora_gravacao && arrStatusMsg[index][j].data_hora_gravacao !== "1111-11-11 00:00:00"){
-                        str += `<li>${this.dicionario.msg_data_hora_gravacao} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_gravacao, true)}</li>`
+                        str += `<li>${this.dicionario.msg_data_hora_gravacao} - ${this.acionaFormataDataHora(arrStatusMsg[index][j].data_hora_gravacao, true)}</li>`
                       }
                       if(arrStatusMsg[index][j].data_hora_envio_fila && arrStatusMsg[index][j].data_hora_envio_fila !== "1111-11-11 00:00:00"){
-                        str += `<li>${this.dicionario.msg_data_hora_envio_fila} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_envio_fila, true)}</li>`
+                        str += `<li>${this.dicionario.msg_data_hora_envio_fila} - ${this.acionaFormataDataHora(arrStatusMsg[index][j].data_hora_envio_fila, true)}</li>`
                       }
                       if(arrStatusMsg[index][j].data_hora_envio_cliente && arrStatusMsg[index][j].data_hora_envio_cliente !== "1111-11-11 00:00:00"){
-                        str += `<li>${this.dicionario.msg_data_hora_envio_cliente} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_envio_cliente, true)}</li>`
+                        str += `<li>${this.dicionario.msg_data_hora_envio_cliente} - ${this.acionaFormataDataHora(arrStatusMsg[index][j].data_hora_envio_cliente, true)}</li>`
                       }
                       if(arrStatusMsg[index][j].data_hora_entrega && arrStatusMsg[index][j].data_hora_entrega !== "1111-11-11 00:00:00"){
-                        str += `<li>${this.dicionario.msg_data_hora_entrega} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_entrega, true)}</li>`
+                        str += `<li>${this.dicionario.msg_data_hora_entrega} - ${this.acionaFormataDataHora(arrStatusMsg[index][j].data_hora_entrega, true)}</li>`
                       }
                       if(arrStatusMsg[index][j].data_hora_leitura && arrStatusMsg[index][j].data_hora_leitura !== "1111-11-11 00:00:00"){
-                        str += `<li>${this.dicionario.msg_data_hora_leitura} - ${this.formataDataHora(arrStatusMsg[index][j].data_hora_leitura, true)}</li>`
+                        str += `<li>${this.dicionario.msg_data_hora_leitura} - ${this.acionaFormataDataHora(arrStatusMsg[index][j].data_hora_leitura, true)}</li>`
                       }
                       if(arrStatusMsg[index][j].status_msg){
                         str += `<li>${arrStatusMsg[index][j].status_msg}</li>`
@@ -227,38 +228,8 @@ export default {
 
         this.primeiraReq = false
     },
-    formataDataHora(dataHora, origem){
-      if(!dataHora){
-        return ""
-      }
-
-      let arrDataHora = dataHora.split(" ")
-      if(arrDataHora.length){
-        let data = arrDataHora[0]
-        let hora = arrDataHora[1]
-
-        if(!data || !hora){
-          return dataHora
-        }
-
-        data = data.split("-")
-        data = data.reverse()
-        data = data.join("/")
-
-        if(!origem){
-          hora = hora.slice(0, 5)
-        }else{
-          hora = hora.slice(0, 8)
-        }
-
-        if(!origem){
-          return `${data} ${this.dicionario.msg_divisao_data_hora} ${hora}`
-        }else{
-          return `${data} ${hora}`
-        }
-      }else{
-        return dataHora
-      }
+    acionaFormataDataHora(dataHora, origem){
+      return formataDataHora(dataHora, origem)
     },
   },
   computed:{

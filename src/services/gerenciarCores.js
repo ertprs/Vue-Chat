@@ -1,5 +1,3 @@
-import store from "../store"
-
 export function gerenciarCores(app, quem) {
   const tituloContatos = document.querySelector(".titulo-contatos")
   const tituloOpcoes = document.querySelector(".chat-opcoes-titulo")
