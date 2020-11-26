@@ -24,7 +24,7 @@
           </template>
         </div>
       </div>
-      <p v-else v-html="msg"></p>
+      <p v-html="msg"></p>
       <span class="horario-envio"> {{ horario }} </span>
 
       <transition name="fade">
