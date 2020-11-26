@@ -32,23 +32,7 @@
         </div>
         <div class="chat-rodape-textarea">
           <!-- Emoji -->
-          <div id="emoji-container">
-            <div class="lista-emoji" v-if="abrirEmojis" :class="{'z-index-2' : abrirEmojis}">
-              <ul>
-                <li
-                  v-for="(objEmoji, indice) in emojis"
-                  :key="indice"
-                  v-on:click="adicionarEmoji(objEmoji.emoji)"
-                >{{ objEmoji.emoji }}</li>
-              </ul>
-            </div>
-            <div
-              class="btn-emoji"
-              v-on:click="selecionarEmoji()"
-              :class="{'z-index-2' : abrirEmojis}"
-            >
-            </div>
-          </div>
+          <emojis />
           <!-- Textarea -->
           <textarea
             v-on:keydown.enter="enviarMensagem($event, aparecerPrevia)"
@@ -190,6 +174,8 @@ import { formataHoraAtual } from "@/services/formatacaoDeTextos"
 
 import axios_api from "@/services/serviceAxios";
 
+import Emojis from "../Emojis"
+
 export default {
   data() {
     return {
@@ -202,7 +188,6 @@ export default {
       txtFormatosValidos: "",
       abrirOpcoes: false,
       erroFormatoAnexo: false,
-      abrirEmojis: false,
       temMsgFormatada: false,
       mensagensFormatadas_01: [],
       chaveAtual_01: '',
@@ -216,12 +201,19 @@ export default {
       disabled: false
     };
   },
+  components: {
+    "emojis" : Emojis
+  },
   destroyed(){
     this.$root.$off("toggle-msg-formatada")
   },
   mounted() {
     this.$root.$on("toggle-msg-formatada", () => {
       this.abreFechaMsgFormatada()
+    })
+
+    this.$root.$on("adicionar-emoji", value => {
+      this.adicionarEmoji(value)
     })
 
     this.$root.$on("atualizar-mensagem", (objMsgExterno) => {
@@ -313,7 +305,7 @@ export default {
           axios_api
             .post(`send-message?${this.reqTeste}`, data)
             .then((response) => {
-              this.abrirEmojis = false;
+              this.$store.dispatch("setAbrirEmojis", false)
               this.abrirOpcoes = false;
               this.statusEnvio = "D"
 
@@ -805,11 +797,6 @@ export default {
         this.$store.dispatch("setGrupo", this.atendimentoAtivo.grupo)
       }
     },
-    selecionarEmoji() {
-      this.$store.dispatch("setOrigemBlocker", "chat");
-      this.abrirEmojis = !this.abrirEmojis;
-      this.$store.dispatch("setBlocker", this.abrirEmojis);
-    },
     selecionarAnexo(previa) {
       if(previa){
         if(!this.docPrevia){
@@ -1108,13 +1095,13 @@ export default {
     },
     abrirOpcoes() {
       if (this.abrirOpcoes) {
-        this.abrirEmojis = false;
+        this.$store.dispatch("setAbrirEmojis", false)
       }
     },
     blocker() {
       if (!this.blocker) {
         this.abrirOpcoes = false;
-        this.abrirEmojis = false;
+        this.$store.dispatch("setAbrirEmojis", false)
         this.$store.dispatch("setAbrirMsgTipo2", false)
       }
     }
@@ -1135,7 +1122,8 @@ export default {
       semIframe: "getSemIframe",
       dicionario: "getDicionario",
       nomeOpe: "getNomeOpe",
-      verificaMsgFormatadaAberto: "getVerificaMsgFormatadaAberto"
+      verificaMsgFormatadaAberto: "getVerificaMsgFormatadaAberto",
+      abrirEmojis: "getAbrirEmojis"
     })
   },
   created(){
