@@ -231,9 +231,7 @@ export default {
       axios_api.get(`get-agenda?${this.reqTeste}`)
         .then(response => {
           const arrAgenda = response.data.ret
-          if(arrAgenda.length){
-            this.$store.dispatch("setAgenda", arrAgenda)
-          }
+          this.$store.dispatch("setAgenda", arrAgenda)
         })
         .catch(error => {
           console.log("error get agenda: ", error)
