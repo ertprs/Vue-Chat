@@ -453,8 +453,25 @@ export default {
                 }
               }
 
-              if(mensagem.search(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/) !== -1){
+              const regexLink = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g
+              if(mensagem.search(regexLink) !== -1){
                 link = true
+                let arrLinks = mensagem.split(" ")
+                arrLinks = arrLinks.map((link) => {
+                  if(link.search(regexLink) !== -1){
+                    let href = ""
+                    if(link.search(/http/g) !== -1){
+                      href = link
+                    }else{
+                      href = "https://"+link
+                    }
+
+                    link = `<a href="${href}" target="_blank" title="${link} ${this.dicionario.msg_link}">${link}</a>`
+                  }
+                  return link
+                })
+
+                mensagem = arrLinks.join(" ")
               }
 
               // Tratativa de *negrito* _italico_ e ~cortado~

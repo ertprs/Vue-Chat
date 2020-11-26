@@ -106,7 +106,8 @@ export default {
       msg_status_N: "QRCode nao autenticado - procure o responsavel pela autenticacao",
       msg_status_Q: "Fila operadora/broker",
       msg_status_T: "Timeout",
-      msg_status_X: "Reprocessamento"
+      msg_status_X: "Reprocessamento",
+      msg_link: "sera aberto em uma nova guia"
     }
   },
   mutations: {

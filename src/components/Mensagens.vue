@@ -24,7 +24,6 @@
           </template>
         </div>
       </div>
-      <a :href="hrefLink" v-if="link" :title="msg" target="_blank">{{ msg }}</a>
       <p v-else v-html="msg"></p>
       <span class="horario-envio"> {{ horario }} </span>
 
@@ -99,20 +98,6 @@ export default {
       },
       set(msg){
         return this.contentTooltip = msg
-      }
-    },
-    hrefLink: {
-      get(){
-        if(this.link){
-          if(this.msg.search(/http/g) !== -1){
-            return this.linkAux = this.msg
-          }else{
-            return this.linkAux = "https://"+this.msg
-          }
-        }
-      },
-      set(link){
-        return this.hrefLink = link
       }
     }
   },
