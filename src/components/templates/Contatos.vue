@@ -183,7 +183,20 @@ export default {
               axios_api.get(`get-agenda?${this.reqTeste}`)
                 .then(response => {
                   const arrAgenda = response.data.ret
-                  this.$store.dispatch("setAgenda", arrAgenda)
+
+                  if(arrAgenda == this.minhaAgenda){
+                    let objAtdAux = {}
+                    for(let ramal in this.todosAtendimentos){
+                      if(this.todosAtendimentos[ramal].login_usu != atdAgenda.login_usu){
+                        objAtdAux[ramal] = this.todosAtendimentos[ramal]
+                      }
+                    }
+                    console.log("mudou atendimentos: ", objAtdAux)
+                    this.$store.dispatch("setAtendimentos", objAtdAux)
+
+                  }else{
+                    this.$store.dispatch("setAgenda", arrAgenda)
+                  }
                 })
                 .catch(error => {
                   console.log("Error get agenda: ", error)

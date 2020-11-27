@@ -9,10 +9,10 @@
         </div>
         <div v-else-if="docAnexo" class="anexo-container">
           <template v-if="audio || video">
-            <audio v-if="audio" :src="docAnexo" controls>
+            <audio v-if="audio" :src="docAnexo" controls :title="`${tipoDoc} - ${nomeArquivo}`">
               <p> {{ dicionario.msg_erro_audio }} <a :href="docAnexo" target="_blank"> {{ dicionario.msg_abrir_audio }} </a> </p>
             </audio>
-            <video v-if="video" :src="docAnexo" controls>
+            <video v-if="video" :src="docAnexo" controls :title="`${tipoDoc} - ${nomeArquivo}`">
               <p> {{ dicionario.msg_erro_video }} <a :href="docAnexo" target="_blank"> {{ dicionario.msg_abrir_video }} </a> </p>
             </video>
           </template>

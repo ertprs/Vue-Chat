@@ -257,6 +257,8 @@ export default {
 
       this.$store.dispatch('limparAtendimentoAtivo')
       this.$store.dispatch('limparIdAtendimentoAtivo')
+
+      this.$forceUpdate()
     },
     fecharPopup(){
       this.$store.dispatch('setBlocker', false)
