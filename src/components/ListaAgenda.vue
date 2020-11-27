@@ -88,14 +88,11 @@ export default {
           if(response.data.st_ret == "OK"){
             this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_aguarde_ativar_cliente})
 
-            axios_api.get(`get-agenda?${this.reqTeste}`)
-              .then(response => {
-                const arrAgenda = response.data.ret
-                this.$store.dispatch("setAgenda", arrAgenda)
-              })
-              .catch(error => {
-                console.log("Error get agenda: ", error)
-              })
+            let agendaAux = this.minhaAgenda
+            agendaAux = agendaAux.filter(atd => {
+              return atd.login_usu != id
+            })
+            this.$store.dispatch("setAgenda", agendaAux)
 
           }else if(response.data.st_ret == "AVISO"){
             this.$toasted.global.emConstrucao({msg: response.data.msg_ret || this.dicionario.msg_erro_ativar_cliente})

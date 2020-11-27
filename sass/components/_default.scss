@@ -74,6 +74,10 @@ body{
   }
 }
 
+.resizable-r{
+  z-index: 2!important
+}
+
 @media (min-width: 1441px) and (min-height: 850px){
   body:after{
     content: "";

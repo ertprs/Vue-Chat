@@ -173,51 +173,6 @@ export default {
   beforeUpdate(){
     gerenciarCores(this, "contatos")
   },
-  updated(){
-    // Verificando se o usuario esta em mais de um array e fazendo novas requisicoes para correcao
-    if(this.objAtendimentos.length && this.caso !== 400){
-      this.objAtendimentos.map(atd => {
-        if(this.minhaAgenda.length){
-          this.minhaAgenda.map(atdAgenda => {
-            if(atd.login_usu == atdAgenda.login_usu){
-              axios_api.get(`get-agenda?${this.reqTeste}`)
-                .then(response => {
-                  const arrAgenda = response.data.ret
-
-                  // let objAtdAux = {}
-                  // for(let ramal in this.todosAtendimentos){
-                  //   if(this.todosAtendimentos[ramal].login_usu != atdAgenda.login_usu){
-                  //     objAtdAux[ramal] = this.todosAtendimentos[ramal]
-                  //   }
-                  // }
-                  // console.log("mudou atendimentos: ", objAtdAux)
-                  // this.$store.dispatch("setAtendimentos", objAtdAux)
-
-                  this.$store.dispatch("setAgenda", arrAgenda)
-                })
-                .catch(error => {
-                  console.log("Error get agenda: ", error)
-                })
-            }
-          })
-        }
-        if(this.aguardando.length){
-          this.aguardando.map(atdAguardando => {
-            if(atd.login_usu == atdAguardando.login_usu){
-              this.$root.$emit("req-aguardando", "pessoal")
-            }
-          })
-        }
-        if(this.todos.length){
-          this.todos.map(atdTodos => {
-            if(atd.login_usu == atdTodos.login_usu){
-              this.$root.$emit("req-aguardando", "todos")
-            }
-          })
-        }
-      })
-    }
-  },
   created(){
     this.verificaLocalStorage()
   },
