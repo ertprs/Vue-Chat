@@ -127,6 +127,7 @@ export function formataDataAgenda(data, hora, atd, retorno, id){
 
     // Mesmo dia
     if(difDatas == 0){
+
       // Diferenca entre horarios
       let difHoras = dataAgenda.getHours() - dataAtual.getHours()
       let difMinutos = dataAgenda.getMinutes() - dataAtual.getMinutes()
@@ -171,8 +172,10 @@ export function formataDataAgenda(data, hora, atd, retorno, id){
         }
 
         // Significa que o horario ainda nao chegou
-        spanContador.classList.remove("d-none")
-        return `${difMinutos}min`
+        if(difMinutos > 0){
+          spanContador.classList.remove("d-none")
+          return `${difMinutos}min`
+        }
       }
     }else{
       // Dias diferentes
