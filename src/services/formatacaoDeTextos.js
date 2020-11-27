@@ -109,6 +109,7 @@ export function formataDataAgenda(data, hora, atd, retorno, id){
   }else{
 
     const spanContador = document.querySelector(`${id} span.contador-data-retorno`)
+
     if(!spanContador){
       return
     }
@@ -132,32 +133,34 @@ export function formataDataAgenda(data, hora, atd, retorno, id){
 
       // Significa que os horarios estao em horas diferentes (ex: 11:00:00 e 10:59:59)
       if(difHoras > 0 || difHoras < 0){
+        // Significa que o horário já passou
+        if(difHoras < 0){
+          return
+        }
+
         // Significa que os minutos do horario atual sao maiores do que os minutos do horario agendado
         if(difMinutos < 0){
           difMinutos = 60 - Math.abs(difMinutos)
           difHoras = difHoras - 1
         }
+
+        spanContador.classList.remove("d-none")
+        if(difMinutos > 0){
+          return `${difHoras}h e ${difMinutos}min`
+        }else{
+          return `${difHoras}h`
+        }
+      }else{
+
+        // Significa que o horario esta a minutos do retorno
         if(difHoras == 0){
           spanContador.classList.remove("d-none")
           return `${difMinutos}min`
-        }else{
-          // Significa que o horário já passou
-          if(difHoras < 0){
-            return
-          }
-          spanContador.classList.remove("d-none")
-          if(difMinutos > 0){
-            return `${difHoras}h e ${difMinutos}min`
-          }else{
-            return `${difHoras}h`
-          }
         }
-      }else{
 
         // Significa que chegou a hora de chamar o ctt
         if(difHoras == 0 && difMinutos == 0){
           spanContador.classList.add("d-none")
-
           return
         }
 
