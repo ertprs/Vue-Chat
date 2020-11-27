@@ -453,7 +453,7 @@ export default {
                 }
               }
 
-              const regexLink = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/g
+              const regexLink = /((http|ftp|https):\/\/)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig
               if(mensagem.search(regexLink) !== -1){
                 link = true
                 let arrLinks = mensagem.split(" ")
@@ -475,9 +475,9 @@ export default {
               }
 
               // Tratativa de *negrito* _italico_ e ~cortado~
-              const regexNegrito = /\*[\sA-Za-z0-9]+\*/g
-              const regexItalico = /\_[\sA-Za-z0-9]+\_/g
-              const regexLinha = /\~[\sA-Za-z0-9]+\~/g
+              const regexNegrito = /\*[\sA-Za-z0-9\u00C0-\u00FF]+\*/g
+              const regexItalico = /\_[\sA-Za-z0-9\u00C0-\u00FF]+\_/g
+              const regexLinha = /\~[\sA-Za-z0-9\u00C0-\u00FF]+\~/g
 
               if(mensagem.search(regexNegrito) !== -1){
                 let arrTexto = mensagem.split(" ")

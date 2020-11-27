@@ -181,7 +181,7 @@ export function formataDataAgenda(data, hora, atd, retorno, id){
         spanContador.classList.add("d-none")
         return
       }else{
-      // Data agendado maior que data atual
+        // Data agendado maior que data atual
         spanContador.classList.remove("d-none")
 
         if(difDatas == 1){
