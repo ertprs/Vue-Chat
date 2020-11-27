@@ -117,44 +117,37 @@ export default {
             const arr = response.data.ret
             if(origem == "pessoal"){
 
-              if(arr == this.aguardando){
-                let novosAtds = []
-                this.aguardando.map(atd => {
-                  for(let ramal in this.todosAtendimentos){
-                    if(this.todosAtendimentos[ramal].login_usu != atd.login_usu){
-                      novosAtds[ramal] = this.todosAtendimentos[ramal]
-                    }
+              let novosAtds = {}
+              this.aguardando.map(atd => {
+                for(let ramal in this.todosAtendimentos){
+                  if(this.todosAtendimentos[ramal].login_usu != atd.login_usu){
+                    novosAtds[ramal] = this.todosAtendimentos[ramal]
                   }
-                })
-                console.log('novosAtds: ', novosAtds)
-                if(novosAtds.length){
-                  this.$store.dispatch("setTodosAtendimentos", novosAtds)
                 }
-              }else{
-                this.$store.dispatch("setAguardando", arr)
-                this.$store.dispatch("setContadorAguardando", arr.length)
+              })
+
+              if(novosAtds.length){
+                this.$store.dispatch("setTodosAtendimentos", novosAtds)
               }
 
+              this.$store.dispatch("setAguardando", arr)
+              this.$store.dispatch("setContadorAguardando", arr.length)
             }else{
-
-              if(arr == this.todos){
-                let novosAtds = []
-                this.todos.map(atd => {
-                  for(let ramal in this.todosAtendimentos){
-                    if(this.todosAtendimentos[ramal].login_usu != atd.login_usu){
-                      novosAtds[ramal] = this.todosAtendimentos[ramal]
-                    }
+              let novosAtds = {}
+              this.todos.map(atd => {
+                for(let ramal in this.todosAtendimentos){
+                  if(this.todosAtendimentos[ramal].login_usu != atd.login_usu){
+                    novosAtds[ramal] = this.todosAtendimentos[ramal]
                   }
-                })
-                console.log('novosAtds: ', novosAtds)
-                if(novosAtds.length){
-                  this.$store.dispatch("setTodosAtendimentos", novosAtds)
                 }
-              }else{
-                this.$store.dispatch("setTodos", arr)
-                this.$store.dispatch("setContadorTodos", arr.length)
+              })
+
+              if(novosAtds.length){
+                this.$store.dispatch("setTodosAtendimentos", novosAtds)
               }
 
+              this.$store.dispatch("setTodos", arr)
+              this.$store.dispatch("setContadorTodos", arr.length)
             }
 
             this.limitadorRequisicoes = 0
