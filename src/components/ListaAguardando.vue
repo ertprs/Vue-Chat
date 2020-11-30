@@ -77,8 +77,7 @@ export default {
       reqTeste: "getReqTeste",
       caso: "getCaso",
       contadorAguardando: "getContadorAguardando",
-      contadorTodos: "getContadorTodos",
-      atendimentoAtivo: "getAtendimentoAtivo"
+      contadorTodos: "getContadorTodos"
     })
   },
   data(){
@@ -141,7 +140,6 @@ export default {
       const idIframe = loginUsuComparativo.replace(regex, "")
 
       limparIframeUsuarioRemovido(`iframe_${idIframe}`)
-      console.log("objAtdAux lista aguardando: ", objAtdAux)
       this.$store.dispatch("setAtendimentos", objAtdAux)
 
       if(!objAtdAux || !Object.keys(objAtdAux).length){

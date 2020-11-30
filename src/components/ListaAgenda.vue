@@ -56,7 +56,7 @@ export default {
       dicionario: "getDicionario",
       reqTeste: "getReqTeste",
       minhaAgenda: "getAgenda",
-      atendimentoAtivo: "getAtendimentoAtivo"
+      todosAtendimentos: "getTodosAtendimentos"
     })
   },
   data(){
@@ -93,7 +93,6 @@ export default {
       const idIframe = loginUsuComparativo.replace(regex, "")
 
       limparIframeUsuarioRemovido(`iframe_${idIframe}`)
-      console.log("objAtdAux lista agenda: ", objAtdAux)
       this.$store.dispatch("setAtendimentos", objAtdAux)
 
       if(!objAtdAux || !Object.keys(objAtdAux).length){
