@@ -207,21 +207,31 @@ export default {
     verificarDuplicataEmAtendimento(){
       if(this.objAtendimentos.length){
         let auxAtendimento = []
+        let duplicouAgenda = false
+        let duplicouAguardando = false
+        let duplicouTodos = false
+
         this.objAtendimentos.map(atd => {
           this.minhaAgenda.map(atdAgenda => {
             if(atdAgenda.login_usu != atd.login_usu){
               auxAtendimento.push(atd)
+            }else{
+              duplicouAgenda = true
             }
 
             this.aguardando.map(atdAguardando => {
               if(atdAguardando.login_usu != atd.login_usu){
                 auxAtendimento.push(atd)
+              }else{
+                duplicouAguardando = true
               }
             })
 
             this.todos.map(atdTodos => {
               if(atdTodos.login_usu != atd.login_usu){
                 auxAtendimento.push(atd)
+              }else{
+                duplicouTodos = true
               }
             })
           })
@@ -231,7 +241,7 @@ export default {
           return auxAtendimento.indexOf(atual) === i
         })
 
-        if(auxAtendimento.length){
+        if(duplicouAgenda || duplicouAguardando || duplicouTodos){
           this.objAtendimentos = auxAtendimento
         }
       }
