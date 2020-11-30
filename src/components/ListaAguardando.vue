@@ -83,7 +83,8 @@ export default {
   data(){
     return{
       abaAberta: "pessoal",
-      limitadorRequisicoes: 0
+      limitadorRequisicoes: 0,
+      reqEmAndamento: false
     }
   },
   mounted(){
