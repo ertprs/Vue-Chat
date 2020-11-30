@@ -147,6 +147,7 @@ export default {
         }
 
         this.verificarDuplicataMinhaAgenda()
+        this.verificarDuplicataEmAtendimento()
       } else {
         this.objAtendimentos = []
       }
@@ -163,8 +164,10 @@ export default {
           tituloAgenda.style.background = ''
         }
 
-        this.objAtendimentos = []
-        this.$store.dispatch("setAtendimentos", {})
+        if(this.objAtendimentos.length || this.todosAtendimentos){
+          this.objAtendimentos = []
+          this.$store.dispatch("setAtendimentos", {})
+        }
       }
     }
   },
@@ -201,6 +204,38 @@ export default {
     })
   },
   methods: {
+    verificarDuplicataEmAtendimento(){
+      if(this.objAtendimentos.length){
+        let auxAtendimento = []
+        this.objAtendimentos.map(atd => {
+          this.minhaAgenda.map(atdAgenda => {
+            if(atdAgenda.login_usu != atd.login_usu){
+              auxAtendimento.push(atd)
+            }
+
+            this.aguardando.map(atdAguardando => {
+              if(atdAguardando.login_usu != atd.login_usu){
+                auxAtendimento.push(atd)
+              }
+            })
+
+            this.todos.map(atdTodos => {
+              if(atdTodos.login_usu != atd.login_usu){
+                auxAtendimento.push(atd)
+              }
+            })
+          })
+        })
+
+        auxAtendimento = auxAtendimento.filter((atual, i) => {
+          return auxAtendimento.indexOf(atual) === i
+        })
+
+        if(auxAtendimento.length){
+          this.objAtendimentos = auxAtendimento
+        }
+      }
+    },
     verificarDuplicataMinhaAgenda(){
       if(this.minhaAgenda.length && this.objAtendimentos.length){
         let fazerRequisicao = false
@@ -268,6 +303,10 @@ export default {
 
       this.totalMsgNovas = auxContMsgNova
       this.totalClientesNovos = auxContNovoContato
+
+      if(this.totalClientesNovos == 1 && this.objAtendimentos.length == 1){
+        this.ativarConversa(this.objAtendimentos[0], 0)
+      }
     },
     ativarConversa(atd, indice) {
 
