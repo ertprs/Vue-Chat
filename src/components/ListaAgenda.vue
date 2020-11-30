@@ -74,33 +74,31 @@ export default {
       this.minhaAgenda.map(atd => {
         for(let ramal in this.todosAtendimentos){
           if(this.todosAtendimentos[ramal].login_usu == atd.login_usu){
-            this.removerCliente()
+            this.removerCliente(atd.login_usu)
           }
         }
       })
     }
   },
   methods: {
-    removerCliente(){
+    removerCliente(loginUsuComparativo){
       let objAtdAux = {}
       for(let ramal in this.todosAtendimentos){
-        if(this.todosAtendimentos[ramal].login_usu != this.atendimentoAtivo.login_usu){
+        if(this.todosAtendimentos[ramal].login_usu != loginUsuComparativo){
           objAtdAux[ramal] = this.todosAtendimentos[ramal]
         }
       }
 
       const regex = /\s|\]|\[/g
-      const idIframe = this.atendimentoAtivo.login_usu.replace(regex, "")
+      const idIframe = loginUsuComparativo.replace(regex, "")
 
       limparIframeUsuarioRemovido(`iframe_${idIframe}`)
+      console.log("objAtdAux lista agenda: ", objAtdAux)
       this.$store.dispatch("setAtendimentos", objAtdAux)
 
       if(!objAtdAux || !Object.keys(objAtdAux).length){
         this.$store.dispatch("setCaso", 206)
       }
-
-      this.$store.dispatch('limparAtendimentoAtivo')
-      this.$store.dispatch('limparIdAtendimentoAtivo')
 
       this.$forceUpdate()
     },
@@ -116,7 +114,7 @@ export default {
           this.minhaAgenda.map(atd => {
             for(let ramal in this.todosAtendimentos){
               if(this.todosAtendimentos[ramal].login_usu == atd.login_usu){
-                this.removerCliente()
+                this.removerCliente(atd.login_usu)
               }
             }
           })

@@ -129,26 +129,24 @@ export default {
 
       this.reqAguardando(this.abaAberta)
     },
-    removerCliente(){
+    removerCliente(loginUsuComparativo){
       let objAtdAux = {}
       for(let ramal in this.todosAtendimentos){
-        if(this.todosAtendimentos[ramal].login_usu != this.atendimentoAtivo.login_usu){
+        if(this.todosAtendimentos[ramal].login_usu != loginUsuComparativo){
           objAtdAux[ramal] = this.todosAtendimentos[ramal]
         }
       }
 
       const regex = /\s|\]|\[/g
-      const idIframe = this.atendimentoAtivo.login_usu.replace(regex, "")
+      const idIframe = loginUsuComparativo.replace(regex, "")
 
       limparIframeUsuarioRemovido(`iframe_${idIframe}`)
+      console.log("objAtdAux lista aguardando: ", objAtdAux)
       this.$store.dispatch("setAtendimentos", objAtdAux)
 
       if(!objAtdAux || !Object.keys(objAtdAux).length){
         this.$store.dispatch("setCaso", 206)
       }
-
-      this.$store.dispatch('limparAtendimentoAtivo')
-      this.$store.dispatch('limparIdAtendimentoAtivo')
 
       this.$forceUpdate()
     },
@@ -165,27 +163,22 @@ export default {
               this.aguardando.map(atd => {
                 for(let ramal in this.todosAtendimentos){
                   if(this.todosAtendimentos[ramal].login_usu == atd.login_usu){
-                    this.removerCliente()
+                    this.removerCliente(atd.login_usu)
                   }
                 }
               })
 
             }else{
-              let novosAtds = {}
+              this.$store.dispatch("setTodos", arr)
+              this.$store.dispatch("setContadorTodos", arr.length)
+
               this.todos.map(atd => {
                 for(let ramal in this.todosAtendimentos){
                   if(this.todosAtendimentos[ramal].login_usu != atd.login_usu){
-                    novosAtds[ramal] = this.todosAtendimentos[ramal]
+                    this.removerCliente(atd.login_usu)
                   }
                 }
               })
-
-              if(novosAtds.length){
-                this.$store.dispatch("setTodosAtendimentos", novosAtds)
-              }
-
-              this.$store.dispatch("setTodos", arr)
-              this.$store.dispatch("setContadorTodos", arr.length)
             }
 
             this.limitadorRequisicoes = 0
