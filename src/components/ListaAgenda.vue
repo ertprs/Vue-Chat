@@ -63,7 +63,22 @@ export default {
       reqEmAndamento: false
     }
   },
+  mounted(){
+    this.$root.$on("req-agenda", () => {
+      this.reqAgenda()
+    })
+  },
   methods: {
+    reqAgenda(){
+      axios_api.get(`get-agenda?${this.reqTeste}`)
+        .then(response => {
+          const arrAgenda = response.data.ret
+          this.$store.dispatch("setAgenda", arrAgenda)
+        })
+        .catch(error => {
+          console.log("error get agenda: ", error)
+        })
+    },
     ativarCliente(id, grupo, atd){
       if(!id || !grupo){
         this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_ativar_cliente})

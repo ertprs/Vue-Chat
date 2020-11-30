@@ -152,6 +152,7 @@ export default {
           }
         }
 
+        this.verificarDuplicataMinhaAgenda()
       } else {
         this.objAtendimentos = []
       }
@@ -203,6 +204,22 @@ export default {
     })
   },
   methods: {
+    verificarDuplicataMinhaAgenda(){
+      if(this.minhaAgenda.length && this.objAtendimentos.length){
+        let fazerRequisicao = false
+        this.objAtendimentos.map(atd => {
+          this.minhaAgenda.map(atdAgenda => {
+            if(atd.login_usu === atdAgenda.login_usu){
+              fazerRequisicao = true
+            }
+          })
+        })
+
+        if(fazerRequisicao){
+          this.$root.$emit("req-agenda")
+        }
+      }
+    },
     abrirMenuBotaoDireito(ev){
       this.$root.$emit("abrir-menu", ev)
     },

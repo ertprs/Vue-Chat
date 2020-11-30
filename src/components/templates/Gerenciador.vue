@@ -38,7 +38,6 @@ export default {
       semIframe: "getSemIframe",
       dicionario: "getDicionario",
       abaSelecionada: "getAbaSelecionada",
-      minhaAgenda: "getAgenda",
       todos: "getTodos",
       aguardando: "getAguardando"
     })
