@@ -413,17 +413,13 @@ export default {
             this.$root.$off('atualizar-mensagem')
 
           }
-          setTimeout(() => {
-            liberarEncerrar()
-          }, 5000);
         })
         .catch(error => {
-          setTimeout(() => {
-            liberarEncerrar()
-          }, 5000);
           console.log('Error end atd: ', error)
           this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_finalizar})
         })
+
+        liberarEncerrar()
     },
     removerCliente(){
       let objAtdAux = {}

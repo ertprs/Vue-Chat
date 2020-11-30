@@ -209,9 +209,7 @@ export default {
           console.log('Error enviar grupo: ', error)
         })
 
-      setTimeout(() => {
-        liberarEncerrar()
-      }, 2000);
+      liberarEncerrar()
 
       this.fecharPopup()
     },

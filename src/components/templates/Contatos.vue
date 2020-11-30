@@ -39,7 +39,7 @@
             <span v-if="totalMsgNovas != ''" :title="dicionario.title_total_msgs_novas" class="total-msgs-novas" v-text="totalMsgNovas"></span>
           </div>
         </div>
-        <ul :class="{'fechado' : fechado}"  id="lista-contatos" v-if="objAtendimentos.length && caso !== 206">
+        <ul :class="{'fechado' : fechado}"  id="lista-contatos">
           <li
             v-for="(atd, indice) in objAtendimentos"
             :key="indice"
@@ -265,9 +265,6 @@ export default {
 
       this.totalMsgNovas = auxContMsgNova
       this.totalClientesNovos = auxContNovoContato
-    },
-    adicionaCaso(caso){
-      this.$store.dispatch('setCaso', caso)
     },
     ativarConversa(atd, indice) {
 
