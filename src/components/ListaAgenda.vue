@@ -46,6 +46,7 @@ import axios_api from '@/services/serviceAxios'
 import { mapGetters } from "vuex"
 
 import { formataSigla, formataDataAgenda } from "@/services/formatacaoDeTextos"
+import { executandoEncerrar, liberarEncerrar } from '@/services/atendimentos'
 
 export default {
   props: ["fechado"],
@@ -67,8 +68,11 @@ export default {
     })
   },
   methods: {
-    reqAgenda(){
-      axios_api.get(`get-agenda?${this.reqTeste}`)
+    async reqAgenda(){
+
+      executandoEncerrar()
+
+      await axios_api.get(`get-agenda?${this.reqTeste}`)
         .then(response => {
           const arrAgenda = response.data.ret
           this.$store.dispatch("setAgenda", arrAgenda)
@@ -76,6 +80,8 @@ export default {
         .catch(error => {
           console.log("error get agenda: ", error)
         })
+
+      liberarEncerrar()
     },
     ativarCliente(id, grupo, atd){
       if(!id || !grupo){
