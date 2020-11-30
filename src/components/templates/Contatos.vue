@@ -244,6 +244,11 @@ export default {
 
       limparIframeUsuarioRemovido(`iframe_${idIframe}`)
       this.$store.dispatch("setAtendimentos", objAtdAux)
+      if(Object.values(objAtdAux)){
+        this.objAtendimentos = Object.values(objAtdAux)
+      }else{
+        this.objAtendimentos = []
+      }
 
       if(!objAtdAux || !Object.keys(objAtdAux).length){
         this.$store.dispatch("setCaso", 206)
