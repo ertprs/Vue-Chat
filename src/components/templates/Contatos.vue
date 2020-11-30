@@ -162,6 +162,9 @@ export default {
           tituloContatos.style.background = ''
           tituloAgenda.style.background = ''
         }
+
+        this.objAtendimentos = []
+        this.$store.dispatch("setAtendimentos", {})
       }
     }
   },
