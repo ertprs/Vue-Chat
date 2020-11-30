@@ -173,6 +173,19 @@ export default {
   beforeUpdate(){
     gerenciarCores(this, "contatos")
   },
+  updated() {
+    if(this.objAtendimentos.length){
+      if(this.minhaAgenda.length){
+        this.verificarDuplicataEmAtendimento("agenda")
+      }
+      if(this.aguardando.length){
+        this.verificarDuplicataEmAtendimento("aguardando")
+      }
+      if(this.todos.length){
+        this.verificarDuplicataEmAtendimento("todos")
+      }
+    }
+  },
   created(){
     this.verificaLocalStorage()
   },
@@ -203,6 +216,48 @@ export default {
     })
   },
   methods: {
+    verificarDuplicataEmAtendimento(onde){
+      let novosAtds = []
+      let entrou = false
+
+      switch (onde){
+        case "agenda":
+          this.objAtendimentos.map(atd => {
+            this.minhaAgenda.map(atdAgenda => {
+              if(atdAgenda.login_usu != atd.login_usu){
+                novosAtds.push(atd)
+                entrou = true
+              }
+            })
+          })
+        break;
+        case "aguardando":
+          this.objAtendimentos.map(atd => {
+            this.aguardando.map(atdAguardando => {
+              if(atdAguardando.login_usu != atd.login_usu){
+                novosAtds.push(atd)
+                entrou = true
+              }
+            })
+          })
+        break;
+        case "todos":
+          this.objAtendimentos.map(atd => {
+            this.todos.map(atdTodos => {
+              if(atdTodos.login_usu != atd.login_usu){
+                novosAtds.push(atd)
+                entrou = true
+              }
+            })
+          })
+        break;
+      }
+
+      if(entrou){
+        console.log("Entrou: ", novosAtds)
+        this.objAtendimentos = novosAtds
+      }
+    },
     verificarDuplicataMinhaAgenda(){
       if(this.minhaAgenda.length && this.objAtendimentos.length){
         let fazerRequisicao = false
