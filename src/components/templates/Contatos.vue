@@ -173,19 +173,6 @@ export default {
   beforeUpdate(){
     gerenciarCores(this, "contatos")
   },
-  updated() {
-    if(this.objAtendimentos.length){
-      if(this.minhaAgenda.length){
-        this.verificarDuplicataEmAtendimento("agenda")
-      }
-      if(this.aguardando.length){
-        this.verificarDuplicataEmAtendimento("aguardando")
-      }
-      if(this.todos.length){
-        this.verificarDuplicataEmAtendimento("todos")
-      }
-    }
-  },
   created(){
     this.verificaLocalStorage()
   },
