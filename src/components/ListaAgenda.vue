@@ -69,6 +69,17 @@ export default {
       this.reqAgenda()
     })
   },
+  watch: {
+    minhaAgenda(){
+      this.minhaAgenda.map(atd => {
+        for(let ramal in this.todosAtendimentos){
+          if(this.todosAtendimentos[ramal].login_usu == atd.login_usu){
+            this.removerCliente()
+          }
+        }
+      })
+    }
+  },
   methods: {
     removerCliente(){
       let objAtdAux = {}

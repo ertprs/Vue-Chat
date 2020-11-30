@@ -92,6 +92,26 @@ export default {
       this.reqAguardando(origem, persistir)
     })
   },
+  watch: {
+    aguardando(){
+      this.aguardando.map(atd => {
+        for(let ramal in this.todosAtendimentos){
+          if(this.todosAtendimentos[ramal].login_usu == atd.login_usu){
+            this.removerCliente()
+          }
+        }
+      })
+    },
+    todos(){
+      this.todos.map(atd => {
+        for(let ramal in this.todosAtendimentos){
+          if(this.todosAtendimentos[ramal].login_usu == atd.login_usu){
+            this.removerCliente()
+          }
+        }
+      })
+    }
+  },
   methods: {
     alternarAbaAberta(origem){
 
