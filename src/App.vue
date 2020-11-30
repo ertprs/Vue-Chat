@@ -83,7 +83,7 @@ export default {
       let baseUrl = ''
       if(window.location.hostname == 'localhost'){
         baseUrl = 'http://linux03'
-        this.$store.dispatch("setReqTeste", "teste=rmix0101") // teste
+        this.$store.dispatch("setReqTeste", "teste=teste") // rmix0101
       }else{
         baseUrl = 'https://'+window.location.hostname
       }
