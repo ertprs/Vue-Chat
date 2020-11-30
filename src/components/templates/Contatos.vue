@@ -99,6 +99,7 @@ import { mapGetters } from "vuex"
 import axios_api from '@/services/serviceAxios'
 
 import { formataNome, formataSigla, formataDataHora } from "@/services/formatacaoDeTextos"
+import { limparIframeUsuarioRemovido } from "@/services/iframe"
 import { gerenciarCores } from "@/services/gerenciarCores"
 
 import SimpleContextMenu from 'vue-simple-context-menu'
