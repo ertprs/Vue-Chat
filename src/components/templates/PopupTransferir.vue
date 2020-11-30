@@ -213,7 +213,7 @@ export default {
 
       setTimeout(() => {
         liberarEncerrar()
-      }, 5000);
+      }, 2000);
 
       this.fecharPopup()
     },
