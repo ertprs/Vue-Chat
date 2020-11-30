@@ -174,7 +174,7 @@ export default {
 
               this.todos.map(atd => {
                 for(let ramal in this.todosAtendimentos){
-                  if(this.todosAtendimentos[ramal].login_usu != atd.login_usu){
+                  if(this.todosAtendimentos[ramal].login_usu == atd.login_usu){
                     this.removerCliente(atd.login_usu)
                   }
                 }
