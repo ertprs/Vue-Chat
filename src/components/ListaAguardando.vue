@@ -97,7 +97,7 @@ export default {
       this.aguardando.map(atd => {
         for(let ramal in this.todosAtendimentos){
           if(this.todosAtendimentos[ramal].login_usu == atd.login_usu){
-            this.removerCliente()
+            this.removerCliente(atd.login_usu)
           }
         }
       })
@@ -106,7 +106,7 @@ export default {
       this.todos.map(atd => {
         for(let ramal in this.todosAtendimentos){
           if(this.todosAtendimentos[ramal].login_usu == atd.login_usu){
-            this.removerCliente()
+            this.removerCliente(atd.login_usu)
           }
         }
       })
