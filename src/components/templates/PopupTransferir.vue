@@ -80,6 +80,7 @@ import { mapGetters } from 'vuex'
 
 import axios_api from "@/services/serviceAxios"
 import { limparIframeUsuarioRemovido } from "@/services/iframe"
+import { executandoEncerrar, liberarEncerrar } from "@/services/atendimentos"
 
 export default {
   data(){
@@ -158,7 +159,7 @@ export default {
         this.$toasted.global.emConstrucao({msg: this.dicionario.msg_erro_bot})
       }
     },
-    transferir(tipo, param){
+    async transferir(tipo, param){
 
       if(!param){
         return
@@ -178,6 +179,8 @@ export default {
         this.reqEmAndamento = false
       }, 1500)
 
+      executandoEncerrar()
+
       let dados = {
         token_cliente: this.atendimentoAtivo.token_cliente,
         transfer_to: param
@@ -196,7 +199,7 @@ export default {
         break;
       }
 
-      axios_api.put(`transfer?${this.reqTeste}`, dados)
+      await axios_api.put(`transfer?${this.reqTeste}`, dados)
         .then(response => {
           if(response.data.st_ret == "OK"){
             this.$toasted.global.sucessoTransferencia()
@@ -207,6 +210,10 @@ export default {
           this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_transferencia})
           console.log('Error enviar grupo: ', error)
         })
+
+      setTimeout(() => {
+        liberarEncerrar()
+      }, 5000);
 
       this.fecharPopup()
     },

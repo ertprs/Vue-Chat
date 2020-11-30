@@ -50,6 +50,7 @@ import { mapGetters } from "vuex"
 
 import axios_api from "@/services/serviceAxios"
 import { limparIframeUsuarioRemovido } from "@/services/iframe"
+import { executandoEncerrar, liberarEncerrar } from "@/services/atendimentos"
 
 export default {
   data(){
@@ -116,13 +117,15 @@ export default {
         }
       }
     },
-    retornar(tipo){
+    async retornar(tipo){
 
       if(this.reqEmAndamento){
         return
       }else{
         this.reqEmAndamento = true
       }
+
+      executandoEncerrar()
 
       setTimeout(() => {
         this.reqEmAndamento = false
@@ -135,7 +138,7 @@ export default {
       switch(tipo){
         case "todos":
           dados.destino = "universal"
-          axios_api.put(`suspend?${this.reqTeste}`, dados)
+          await axios_api.put(`suspend?${this.reqTeste}`, dados)
             .then(response => {
               if(response.status == 200){
                 this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_sucesso_retorno})
@@ -154,7 +157,7 @@ export default {
 
           dados.destino = "dedicado"
 
-          axios_api.put(`suspend?${this.reqTeste}`, dados)
+          await axios_api.put(`suspend?${this.reqTeste}`, dados)
             .then(response => {
               if(response.status == 200){
                 this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_sucesso_retorno})
@@ -186,7 +189,7 @@ export default {
           dados.data = data
           dados.hora = hora
 
-          axios_api.put(`suspend?${this.reqTeste}`, dados)
+          await axios_api.put(`suspend?${this.reqTeste}`, dados)
             .then(response => {
               if(response.status == 200){
                 this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_sucesso_retorno})
@@ -204,6 +207,10 @@ export default {
         default:
         break;
       }
+
+      setTimeout(() => {
+        liberarEncerrar()
+      }, 5000);
 
       this.fecharPopup()
     },
