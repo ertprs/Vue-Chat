@@ -138,6 +138,7 @@ function tratarResponse(response) {
 
     case 206:
       setTimeout(() => { // Timeout aguardando cliente
+        store.dispatch('setAtendimentos', {})
         adicionaCaso(206)
         acionaProcessos(mainData)
         if (store.getters.getOrigemBlocker !== "atd-parado") {
@@ -150,6 +151,8 @@ function tratarResponse(response) {
       if (mainData) {
         if (mainData.atendimentos) {
           store.dispatch('setAtendimentos', mainData.atendimentos)
+        }else{
+          store.dispatch('setAtendimentos', {})
         }
         acionaProcessos(mainData)
       }
