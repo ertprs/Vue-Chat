@@ -5,9 +5,9 @@
         class="popup-lista"
         :class="{'bg' : bg}"
         v-if="!abrirAgentes && !abrirGrupos && !abrirBot">
-        <li @click="preencherAgente()" v-if="temBtnAgente"> {{ btnAgente }} </li>
-        <li @click="preencherGrupo()" v-if="temBtnGrupo"> {{ btnGrupo }} </li>
-        <li @click="preencherBot()" v-if="temBtnBot"> {{ btnBot }} </li>
+        <li @click="preencherAgente()" v-if="temBtnAgente" v-text="btnAgente"></li>
+        <li @click="preencherGrupo()" v-if="temBtnGrupo" v-text="btnGrupo"></li>
+        <li @click="preencherBot()" v-if="temBtnBot" v-text="btnBot"></li>
       </ul>
       <div
         v-if="abrirAgentes"
@@ -18,13 +18,13 @@
         v-model="agente"
         :reduce="arrAgentes => arrAgentes.cod"
         >
-          <div slot="no-options">{{ dicionario.msg_sem_resultados }}</div>
+          <div slot="no-options" v-text="dicionario.msg_sem_resultados"></div>
         </vSelect>
         <ul
           class="btns-confirmacao-container popup-lista"
           :class="{'bg' : bg}">
-          <li class="btn-confirmacao cancelar" @click="fecharPopup()"> {{ dicionario.btn_cancelar }} </li>
-          <li class="btn-confirmacao confirmar" @click="transferir('agente', agente)"> {{ dicionario.btn_confirmar }} </li>
+          <li class="btn-confirmacao cancelar" @click="fecharPopup()" v-text="dicionario.btn_cancelar"></li>
+          <li class="btn-confirmacao confirmar" @click="transferir('agente', agente)" v-text="dicionario.btn_confirmar"></li>
         </ul>
       </div>
       <div
@@ -37,13 +37,13 @@
           :reduce="arrGrupos => arrGrupos.cod"
           :value="arrGrupos.cod"
           >
-          <div slot="no-options">{{ dicionario.msg_sem_resultados }}</div>
+          <div slot="no-options" v-text="dicionario.msg_sem_resultados"></div>
         </vSelect>
         <ul
           class="btns-confirmacao-container popup-lista"
           :class="{'bg' : bg}">
-          <li class="btn-confirmacao cancelar" @click="fecharPopup()"> {{ dicionario.btn_cancelar }} </li>
-          <li class="btn-confirmacao confirmar" @click="transferir('grupo', grupo)"> {{ dicionario.btn_confirmar }} </li>
+          <li class="btn-confirmacao cancelar" @click="fecharPopup()" v-text="dicionario.btn_cancelar"></li>
+          <li class="btn-confirmacao confirmar" @click="transferir('grupo', grupo)" v-text="dicionario.btn_confirmar"></li>
         </ul>
       </div>
       <div
@@ -55,19 +55,17 @@
           v-model="bot"
           :reduce="arrBot => arrBot.cod"
           >
-          <div slot="no-options">{{ dicionario.msg_sem_resultados }}</div>
+          <div slot="no-options" v-text="dicionario.msg_sem_resultados"></div>
         </vSelect>
         <ul
           class="btns-confirmacao-container popup-lista"
           :class="{'bg' : bg}">
-          <li class="btn-confirmacao cancelar" @click="fecharPopup()"> {{ dicionario.btn_cancelar }} </li>
-          <li class="btn-confirmacao confirmar" @click="transferir('bot', bot)"> {{ dicionario.btn_confirmar }} </li>
+          <li class="btn-confirmacao cancelar" @click="fecharPopup()" v-text="dicionario.btn_cancelar"></li>
+          <li class="btn-confirmacao confirmar" @click="transferir('bot', bot)" v-text="dicionario.btn_confirmar"></li>
         </ul>
       </div>
     </template>
-    <div v-else>
-      {{ msgErro }}
-    </div>
+    <div v-else v-text="msgErro"></div>
   </div>
 </template>
 

@@ -5,9 +5,7 @@
         <i class="far fa-address-book"  :title="dicionario.sub_titulo_agenda"></i>
       </div>
       <transition name="fade">
-        <h2 v-show="!fechado" >
-          {{ dicionario.sub_titulo_agenda }}
-        </h2>
+        <h2 v-show="!fechado" v-text="dicionario.sub_titulo_agenda"></h2>
       </transition>
     </div>
     <ul :class="{'fechado' : fechado}" v-if="minhaAgenda && minhaAgenda.length">
@@ -19,18 +17,18 @@
         @click="ativarCliente(atd.login_usu, atd.grupo, atd)"
       >
         <div class="circulo-contatos">
-          <p>{{ acionaFormataSigla(atd.nome_usu[0], 'upper') }}</p>
-          <p v-if="fechado">{{ acionaFormataSigla(atd.nome_usu[1], 'lower') }}</p>
+          <p v-text="acionaFormataSigla(atd.nome_usu[0], 'upper')"></p>
+          <p v-if="fechado" v-text="acionaFormataSigla(atd.nome_usu[1], 'lower')"></p>
         </div>
         <template v-if="!fechado">{{ atd.nome_usu }}</template>
         <div class="retorno-container" :id="'retorno_'+indice" v-if="!fechado">
-          <span class="data-retorno">{{ atd.data_agenda_formatada || acionaFormataDataAgenda(atd.data_agenda, atd.hora_agenda, atd) }}</span>
+          <span class="data-retorno" v-text="atd.data_agenda_formatada || acionaFormataDataAgenda(atd.data_agenda, atd.hora_agenda, atd)"></span>
           <span class="contador-data-retorno d-none"><i class="fas fa-stopwatch"></i>{{ acionaFormataDataAgenda(atd.data_agenda, atd.hora_agenda, atd, "retorno", `#retorno_${indice}`) }}</span>
         </div>
       </li>
     </ul>
     <div class="lista-vazia" v-else>
-      <p> {{ dicionario.msg_sem_agenda }} </p>
+      <p v-text="dicionario.msg_sem_agenda"></p>
     </div>
   </div>
 </template>

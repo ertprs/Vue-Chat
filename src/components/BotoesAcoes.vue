@@ -10,7 +10,7 @@
           @click="abrirTransferir()">
 
           <i class="fas fa-random"></i>
-          <span>{{ regrasBotoes.button_transfer.name }}</span>
+          <span v-text="regrasBotoes.button_transfer.name"></span>
         </div>
         <div
           class="rodape-botoes-botao botao-retornar"
@@ -20,7 +20,7 @@
           @click="retornarForm()">
 
           <i class="fas fa-undo"></i>
-          <span>{{ regrasBotoes.button_suspend.name }}</span>
+          <span v-text="regrasBotoes.button_suspend.name"></span>
         </div>
         <div
           class="rodape-botoes-botao botao-encerrar"
@@ -30,7 +30,7 @@
           @click="popupEncerrar()">
 
           <i class="fas fa-sign-out-alt"></i>
-          <span>{{ regrasBotoes.button_end.name }}</span>
+          <span v-text="regrasBotoes.button_end.name"></span>
         </div>
       </template>
       <template v-else>
@@ -39,7 +39,7 @@
             <i class="fas fa-hourglass-end"></i>
           </div>
           <div class="load" v-else>
-            <p> {{ dicionario.msg_erro_carregamento }} </p>
+            <p v-text="dicionario.msg_erro_carregamento"></p>
           </div>
         </div>
       </template>

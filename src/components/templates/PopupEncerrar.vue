@@ -4,13 +4,13 @@
       lista-retornar
       class="popup-lista"
       :class="{'bg' : bg}">
-      <li @click="fecharPopup()" class="btn-confirmacao cancelar"> {{ dicionario.btn_cancelar }} </li>
+      <li @click="fecharPopup()" class="btn-confirmacao cancelar" v-text="dicionario.btn_cancelar"></li>
       <li id="encerrarAtendimento"
         class="btn-confirmacao confirmar"
         tabindex="-1"
         @keydown="encerrar()"
-        @click="encerrar()">
-        {{ dicionario.btn_confirmar }}
+        @click="encerrar()"
+        v-text="dicionario.btn_confirmar">
       </li>
     </ul>
   </div>

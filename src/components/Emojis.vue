@@ -6,7 +6,8 @@
           v-for="(objEmoji, indice) in emojis"
           :key="indice"
           v-on:click="adicionarEmoji(objEmoji.emoji)"
-        >{{ objEmoji.emoji }}</li>
+          v-text="objEmoji.emoji"
+        ></li>
       </ul>
     </div>
     <div

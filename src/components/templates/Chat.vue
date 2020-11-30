@@ -15,7 +15,7 @@
       <div class="lista-chat-container-vazio">
         <div>
           <i class="fas fa-comment-slash"></i>
-          <p> {{ dicionario.msg_sem_chat }} </p>
+          <p v-text="dicionario.msg_sem_chat"></p>
         </div>
       </div>
     </template>

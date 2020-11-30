@@ -3,7 +3,7 @@
     <!-- Ti­tulo -->
     <div class="informacoes-titulo tamanho-titulos" v-if="!atendimentoAtivo.informacoes || caso == 206 || caso == 400">
       <i class="fas fa-info-circle"></i>
-      <h1 :title="dicionario.titulo_informacoes"> {{ dicionario.titulo_informacoes }} </h1>
+      <h1 :title="dicionario.titulo_informacoes" v-text="dicionario.titulo_informacoes"></h1>
     </div>
     <!-- Caso haja informacoes -->
     <div class="container-principal-informacoes" v-if="atendimentoAtivo.informacoes && (caso == 200 || caso == '')">
@@ -15,25 +15,25 @@
           <div v-if="atendimentoAtivo.id" class="informacoes-item">
             <div class="informacoes-item-titulo">
               <i class="fas fa-phone-alt"></i>
-              <p> {{ dicionario.sub_titulo_telefone }} </p>
+              <p v-text="dicionario.sub_titulo_telefone"></p>
             </div>
-            <p> {{ acionaFormataTelefone(atendimentoAtivo.id) }} </p>
+            <p v-text="acionaFormataTelefone(atendimentoAtivo.id)"></p>
           </div>
           <!-- Tempo Conectado -->
           <div v-if="atendimentoAtivo.hora_cliente_ini" class="informacoes-item">
             <div class="informacoes-item-titulo">
               <i class="fas fa-user-clock"></i>
-              <p> {{ dicionario.sub_titulo_tempo_conectado }} </p>
+              <p v-text="dicionario.sub_titulo_tempo_conectado"></p>
             </div>
-            <p> {{ acionaFormataHorario(atendimentoAtivo.tempo_conectado) }} </p>
+            <p v-text="acionaFormataHorario(atendimentoAtivo.tempo_conectado)"></p>
           </div>
           <!-- Tempo de Fila -->
           <div v-if="atendimentoAtivo.hora_fila_ini" class="informacoes-item">
             <div class="informacoes-item-titulo">
               <i class="fas fa-clock"></i>
-              <p> {{ dicionario.sub_titulo_tempo_fila }} </p>
+              <p v-text="dicionario.sub_titulo_tempo_fila"></p>
             </div>
-            <p> {{ acionaFormataHorario(atendimentoAtivo.fila_diff) }} </p>
+            <p v-text="acionaFormataHorario(atendimentoAtivo.fila_diff)"></p>
           </div>
         </div>
       </div>
@@ -49,7 +49,7 @@
         <div class="informacoes-load-container" v-if="gif">
           <div class="load">
             <i class="fas fa-hourglass-end"></i>
-            <p> {{ dicionario.titulo_carregando }} </p>
+            <p v-text="dicionario.titulo_carregando"></p>
           </div>
         </div>
         <iframe
@@ -63,9 +63,7 @@
     <div class="lista-informacoes-container-vazio" v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206"> <!-- !iframeCttAtivo -->
       <div>
         <i class="far fa-folder-open"></i>
-        <p>
-          {{ dicionario.msg_sem_informacoes }}
-        </p>
+        <p v-text="dicionario.msg_sem_informacoes"></p>
       </div>
     </div>
     <!-- Iframe Chamar Cliente -->
@@ -73,7 +71,7 @@
       <div class="informacoes-load-container" v-if="gif">
         <div class="load">
           <i class="fas fa-hourglass-end"></i>
-          <p> {{ dicionario.titulo_carregando }} </p>
+          <p v-text="dicionario.titulo_carregando"></p>
         </div>
       </div>
       <span v-if="!gif" class="btn-fechar-ctt-cliente" @click="fecharIframeCttAtivo()">

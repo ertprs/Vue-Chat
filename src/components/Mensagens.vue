@@ -19,13 +19,13 @@
           <template v-else>
             <a :href="hrefAnexo" target="_blank" :title="`${tipoDoc} - ${nomeArquivo}`">
               <i class="fas fa-file-alt"></i>
-              <p> {{ nomeArquivo }} </p>
+              <p v-text="nomeArquivo"></p>
             </a>
           </template>
         </div>
       </div>
       <p v-html="msg"></p>
-      <span class="horario-envio"> {{ horario }} </span>
+      <span class="horario-envio" v-text="horario"></span>
 
       <transition name="fade">
         <span class="check" v-if="status == 'D'" :content="contentTooltip" v-tippy> <i class="fas fa-check"></i> </span>
@@ -49,7 +49,7 @@
         <span class="check vermelho" v-if="status == 'T'" :content="contentTooltip" v-tippy> <i class="fas fa-hourglass"></i> </span>
       </transition>
 
-      <span class="autor-mensagem"> {{ autor }} </span>
+      <span class="autor-mensagem" v-text="autor"></span>
     </div>
   </div>
 </template>

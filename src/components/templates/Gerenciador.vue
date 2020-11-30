@@ -10,8 +10,8 @@
     </div>
     <div class="gerenciador-lista" ref="gerenciador-lista" :class="{'existe-ativo' : ativo == true}">
       <div v-for="(tipo, index) in gerenciador" :key="index">
-        <span class="titulo">{{ tipo.texto }}</span>
-        <span class="valor">{{ tipo.count }}</span>
+        <span class="titulo" v-text="tipo.texto"></span>
+        <span class="valor" v-text="tipo.count"></span>
       </div>
     </div>
     <div class="gerenciador-btn" :title="dicionario.title_btn_adicionar_cliente" @click="abrirAtivarCtt()" v-if="ativo">

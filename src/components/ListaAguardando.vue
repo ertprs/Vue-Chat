@@ -6,15 +6,13 @@
           {{ dicionario.sub_titulo_pessoal }}
         </h4>
         <div v-if="!fechado && contadorAguardando" class="container-contador">
-          <span :title="dicionario.title_total_clientes" class="total-clientes">{{ contadorAguardando }}</span>
+          <span :title="dicionario.title_total_clientes" class="total-clientes" v-text="contadorAguardando"></span>
         </div>
       </div>
       <div v-on:click="alternarAbaAberta('todos')" class="fieldset-abas" :class="{'ativo' : abaAberta == 'todos'}">
-        <h4 :title="dicionario.sub_titulo_todos">
-          {{ dicionario.sub_titulo_todos }}
-        </h4>
+        <h4 :title="dicionario.sub_titulo_todos" v-text="dicionario.sub_titulo_todos"></h4>
         <div v-if="!fechado && contadorTodos" class="container-contador">
-          <span :title="dicionario.title_total_clientes" class="total-clientes">{{ contadorTodos }}</span>
+          <span :title="dicionario.title_total_clientes" class="total-clientes" v-text="contadorTodos"></span>
         </div>
       </div>
     </div>
@@ -28,14 +26,14 @@
           @click="ativarCliente(atd.login_usu, atd.grupo, atd, 'aguardando')"
         >
           <div class="circulo-contatos">
-            <p>{{ acionaFormataSigla(atd.nome_usu[0], 'upper') }}</p>
-            <p v-if="fechado">{{ acionaFormataSigla(atd.nome_usu[1], 'lower') }}</p>
+            <p v-text="acionaFormataSigla(atd.nome_usu[0], 'upper')"></p>
+            <p v-if="fechado" v-text="acionaFormataSigla(atd.nome_usu[1], 'lower')"></p>
           </div>
           <template v-if="!fechado">{{ atd.nome_usu }}</template>
         </li>
       </ul>
       <div class="lista-vazia com-borda" v-else>
-        <p> {{ dicionario.msg_sem_agenda }} </p>
+        <p v-text="dicionario.msg_sem_agenda"></p>
       </div>
     </div>
     <div class="lista-aguardando" v-if="abaAberta == 'todos'">
@@ -48,14 +46,14 @@
           @click="ativarCliente(atd.login_usu, atd.grupo, atd, 'aguardando-todos')"
         >
           <div class="circulo-contatos">
-            <p>{{ acionaFormataSigla(atd.nome_usu[0], 'upper') }}</p>
-            <p v-if="fechado">{{ acionaFormataSigla(atd.nome_usu[1], 'lower') }}</p>
+            <p v-text="acionaFormataSigla(atd.nome_usu[0], 'upper')"></p>
+            <p v-if="fechado" v-text="acionaFormataSigla(atd.nome_usu[1], 'lower')"></p>
           </div>
           <template v-if="!fechado">{{ atd.nome_usu }}</template>
         </li>
       </ul>
       <div class="lista-vazia com-borda" v-else>
-        <p> {{ dicionario.msg_sem_agenda }} </p>
+        <p v-text="dicionario.msg_sem_agenda"></p>
       </div>
     </div>
   </div>

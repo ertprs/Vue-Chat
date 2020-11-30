@@ -1,5 +1,5 @@
 <template>
-    <ul 
+    <ul
       id="menu-botao-direito"
       v-if="menuBotaoDireito"
       ref="menu"
@@ -7,13 +7,13 @@
       :style="`top: ${top}; left: ${left}`"
       tabindex="-1">
       <template v-if="regras.button_transfer">
-        <li v-if="regras.button_transfer.use == 'S'" :title="regras.button_transfer.name" @click="abrirPopup('Transferir')"> {{ regras.button_transfer.name }} </li>
+        <li v-if="regras.button_transfer.use == 'S'" :title="regras.button_transfer.name" @click="abrirPopup('Transferir')" v-text="regras.button_transfer.name"></li>
       </template>
       <template v-if="regras.button_suspend">
-        <li v-if="regras.button_suspend.use == 'S'" :title="regras.button_suspend.name" @click="abrirPopup('Retornar')"> {{ regras.button_suspend.name }} </li>
+        <li v-if="regras.button_suspend.use == 'S'" :title="regras.button_suspend.name" @click="abrirPopup('Retornar')" v-text="regras.button_suspend.name"></li>
       </template>
       <template v-if="regras.button_end">
-        <li v-if="regras.button_end.use == 'S'" :title="regras.button_end.name" @click="abrirPopup('Encerrar')"> {{ regras.button_end.name }} </li>
+        <li v-if="regras.button_end.use == 'S'" :title="regras.button_end.name" @click="abrirPopup('Encerrar')" v-text="regras.button_end.name"></li>
       </template>
     </ul>
 </template>

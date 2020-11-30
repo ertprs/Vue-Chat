@@ -2,7 +2,7 @@
   <div id="popup" popup @click="fecharPopup($event)" v-show="abrirPopup && blocker">
     <transition name="fade">
       <div class="popup-container-geral" v-show="abrirPopup && blocker">
-        <h2 class="popup-titulo" :style="`border-bottom: 3px solid ${bg}`">{{ titulo }}</h2>
+        <h2 class="popup-titulo" :style="`border-bottom: 3px solid ${bg}`" v-text="titulo"></h2>
         <popup-transferir v-if="origem == 'Transferir'" />
         <popup-retornar v-else-if="origem == 'Retornar'" />
         <popup-encerrar v-else-if="origem == 'Encerrar'" />

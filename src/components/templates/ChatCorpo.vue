@@ -13,12 +13,8 @@
           <hr>
         </div>
         <div v-if="arrMsg.st_ret == 'ERRO'" class="container-msg-erro">
-          <p class="msg-erro" v-if="arrMsg.msg_ret">
-            {{ arrMsg.msg_ret }}
-          </p>
-          <p class="msg-erro" v-else>
-            {{ dicionario.msg_erro }}
-          </p>
+          <p class="msg-erro" v-if="arrMsg.msg_ret" v-text="arrMsg.msg_ret"></p>
+          <p class="msg-erro" v-else v-text="dicionario.msg_erro"></p>
         </div>
         <Mensagens
           v-for="(msg, i) in arrMsg.msg" :key="i"

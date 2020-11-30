@@ -5,9 +5,9 @@
       class="popup-lista"
       :class="{'bg' : bg}"
       v-if="!pessoalData">
-      <li @click="retornar('todos')" v-if="temTodos"> {{ btnTodos }} </li>
-      <li @click="retornar('pessoal')" v-if="temPessoal"> {{ btnPessoal }} </li>
-      <li @click="pessoalData = true" v-if="temAgendar"> {{ btnAgendar }} </li>
+      <li @click="retornar('todos')" v-if="temTodos" v-text="btnTodos"></li>
+      <li @click="retornar('pessoal')" v-if="temPessoal" v-text="btnPessoal"></li>
+      <li @click="pessoalData = true" v-if="temAgendar" v-text="btnAgendar"></li>
     </ul>
     <div
       agendar-retorno
@@ -36,8 +36,8 @@
       <ul
         class="btns-confirmacao-container popup-lista"
         :class="{'bg' : bg}">
-        <li class="btn-confirmacao cancelar" @click="fecharPopup()"> {{ dicionario.btn_cancelar }} </li>
-        <li class="btn-confirmacao confirmar" @click="retornar('pessoal/data')"> {{ dicionario.btn_confirmar }} </li>
+        <li class="btn-confirmacao cancelar" @click="fecharPopup()" v-text="dicionario.btn_cancelar"></li>
+        <li class="btn-confirmacao confirmar" @click="retornar('pessoal/data')" v-text="dicionario.btn_confirmar"></li>
       </ul>
     </div>
   </div>

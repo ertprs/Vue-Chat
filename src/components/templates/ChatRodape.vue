@@ -44,7 +44,7 @@
           ></textarea>
           <span
             class="caracteres-disponiveis"
-          >({{ qtdCaracteresDisponiveis - mensagem.length }})</span>
+            v-text="`(${qtdCaracteresDisponiveis - mensagem.length})`"></span>
         </div>
       </div>
       <!-- Outros Botoes -->

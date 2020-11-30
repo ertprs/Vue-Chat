@@ -3,7 +3,7 @@
       <div class="chat-opcoes-titulo" :class="{'cliente-ativo' : atendimentoAtivo}">
         <div class="chat-opcoes-titulo-container">
           <div class="circulo-contatos">
-            <p>{{ acionaFormataSigla(atendimentoAtivo.nome_usu[0], 'upper') }}</p>
+            <p v-text="acionaFormataSigla(atendimentoAtivo.nome_usu[0], 'upper')"></p>
           </div>
           <ul class="chat-opcoes-titulo-container--lista">
             <li :title="atendimentoAtivo.nome_usu + ' ' + atendimentoAtivo.login_usu">{{ atendimentoAtivo.nome_usu }} ({{ atendimentoAtivo.login_usu }})</li>

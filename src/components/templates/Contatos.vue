@@ -4,7 +4,7 @@
       <div class="titulo-contatos--icone-container" :class="{'fechado' : fechado}">
         <i class="fas fa-address-book" title="Contatos"></i>
         <transition name="fade">
-          <h1 v-show="!fechado"> {{ dicionario.titulo_atendimentos }} </h1>
+          <h1 v-show="!fechado" v-text="dicionario.titulo_atendimentos"></h1>
         </transition>
       </div>
       <div>
@@ -32,13 +32,11 @@
           <div :class="{'fechado' : fechado}">
             <i class="fas fa-play" :title="dicionario.sub_titulo_atendimentos"></i>
           </div>
-          <h2 v-show="!fechado" >
-            {{ dicionario.sub_titulo_atendimentos }}
-          </h2>
+          <h2 v-show="!fechado" v-text="dicionario.sub_titulo_atendimentos"></h2>
           <div :class="{'fechado' : fechado}" class="container-contadores">
-            <span v-if="objAtendimentos.length" :title="dicionario.title_total_clientes" class="total-clientes">{{ objAtendimentos.length }}</span>
-            <span v-if="totalClientesNovos != ''" :title="dicionario.title_total_novos_clientes" class="total-clientes-novos">{{ totalClientesNovos }}</span>
-            <span v-if="totalMsgNovas != ''" :title="dicionario.title_total_msgs_novas" class="total-msgs-novas">{{ totalMsgNovas }}</span>
+            <span v-if="objAtendimentos.length" :title="dicionario.title_total_clientes" class="total-clientes" v-text="objAtendimentos.length"></span>
+            <span v-if="totalClientesNovos != ''" :title="dicionario.title_total_novos_clientes" class="total-clientes-novos" v-text="totalClientesNovos"></span>
+            <span v-if="totalMsgNovas != ''" :title="dicionario.title_total_msgs_novas" class="total-msgs-novas" v-text="totalMsgNovas"></span>
           </div>
         </div>
         <ul :class="{'fechado' : fechado}"  id="lista-contatos" v-if="objAtendimentos.length && caso !== 206">
@@ -51,13 +49,13 @@
             @contextmenu="abrirMenuBotaoDireito($event)"
           >
             <div class="circulo-contatos">
-              <p>{{ acionaFormataSigla(atd.nome_usu[0], 'upper') }}</p>
-              <p v-if="fechado">{{ acionaFormataSigla(atd.nome_usu[1], 'lower') }}</p>
+              <p v-text="acionaFormataSigla(atd.nome_usu[0], 'upper')"></p>
+              <p v-if="fechado" v-text="acionaFormataSigla(atd.nome_usu[1], 'lower')"></p>
               <img v-if="atd.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${atd.sigla}.png`">
             </div>
             <template v-if="!fechado">{{ acionaFormataNome(atd.nome_usu) }}</template>
             <ultima-msg v-if="!fechado" :mensagens="atd.arrMsg" />
-            <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && idAtendimentoAtivo !== atd.id_cli" class="destaque-nova-msg">{{ atd.qtdMsgNova }}</span>
+            <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && idAtendimentoAtivo !== atd.id_cli" class="destaque-nova-msg" v-text="atd.qtdMsgNova"></span>
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
           </li>
         </ul>
@@ -67,9 +65,7 @@
             <i class="far fa-hourglass" :title="dicionario.sub_titulo_aguardando"></i>
           </div>
           <transition name="fade">
-            <h2 v-show="!fechado" >
-              {{ dicionario.sub_titulo_aguardando }}
-            </h2>
+            <h2 v-show="!fechado" v-text="dicionario.sub_titulo_aguardando"></h2>
           </transition>
         </div>
         <lista-aguardando :fechado="fechado" />
@@ -82,9 +78,7 @@
       <div>
         <i class="far fa-folder-open"></i>
         <transition name="fade">
-          <p v-show="!fechado" >
-            {{ dicionario.msg_sem_contatos }}
-          </p>
+          <p v-show="!fechado" v-text="dicionario.msg_sem_contatos"></p>
         </transition>
       </div>
     </div>

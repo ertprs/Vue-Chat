@@ -1,12 +1,12 @@
 <template>
-  <div blocker v-if="blocker" @click="fecharBlocker()" 
+  <div blocker v-if="blocker" @click="fecharBlocker()"
     :class="{
-      'bg-blocker-padrao' : origemBlocker == 'btn-acoes' || 
+      'bg-blocker-padrao' : origemBlocker == 'btn-acoes' ||
       origemBlocker == 'msg-formatada' ||
       origemBlocker == 'atd-parado' || origemBlocker == 'visualizar-imagem'
       }">
         <div v-if="origemBlocker == 'atd-parado'" class="atd-parado-container">
-          <h3> {{ dicionario.titulo_pausa }} </h3>
+          <h3 v-text="dicionario.titulo_pausa"></h3>
           <h4 @click="emitirEventoMudarEstadoAtd()">
             <i class="fas fa-play"></i>
             {{ dicionario.titulo_retornar_pausa }}

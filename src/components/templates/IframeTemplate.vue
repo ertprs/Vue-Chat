@@ -11,7 +11,7 @@
     </div>
     <div class="load" v-show="gif">
       <i class="fas fa-hourglass-end"></i>
-      <p> {{ dicionario.titulo_carregando }} </p>
+      <p v-text="dicionario.titulo_carregando"></p>
     </div>
   </div>
 </template>
