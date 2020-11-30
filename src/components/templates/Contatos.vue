@@ -147,7 +147,6 @@ export default {
         }
 
         this.verificarDuplicataMinhaAgenda()
-        this.verificarDuplicataEmAtendimento()
       } else {
         this.objAtendimentos = []
       }
@@ -204,48 +203,6 @@ export default {
     })
   },
   methods: {
-    verificarDuplicataEmAtendimento(){
-      if(this.objAtendimentos.length){
-        let auxAtendimento = []
-        let duplicouAgenda = false
-        let duplicouAguardando = false
-        let duplicouTodos = false
-
-        this.objAtendimentos.map(atd => {
-          this.minhaAgenda.map(atdAgenda => {
-            if(atdAgenda.login_usu != atd.login_usu){
-              auxAtendimento.push(atd)
-            }else{
-              duplicouAgenda = true
-            }
-
-            this.aguardando.map(atdAguardando => {
-              if(atdAguardando.login_usu != atd.login_usu){
-                auxAtendimento.push(atd)
-              }else{
-                duplicouAguardando = true
-              }
-            })
-
-            this.todos.map(atdTodos => {
-              if(atdTodos.login_usu != atd.login_usu){
-                auxAtendimento.push(atd)
-              }else{
-                duplicouTodos = true
-              }
-            })
-          })
-        })
-
-        auxAtendimento = auxAtendimento.filter((atual, i) => {
-          return auxAtendimento.indexOf(atual) === i
-        })
-
-        if(duplicouAgenda || duplicouAguardando || duplicouTodos){
-          this.objAtendimentos = auxAtendimento
-        }
-      }
-    },
     verificarDuplicataMinhaAgenda(){
       if(this.minhaAgenda.length && this.objAtendimentos.length){
         let fazerRequisicao = false

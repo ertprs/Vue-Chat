@@ -47,6 +47,7 @@ import { mapGetters } from "vuex"
 
 import { formataSigla, formataDataAgenda } from "@/services/formatacaoDeTextos"
 import { executandoEncerrar, liberarEncerrar } from '@/services/atendimentos'
+import { limparIframeUsuarioRemovido } from "@/services/iframe"
 
 export default {
   props: ["fechado"],
@@ -54,7 +55,8 @@ export default {
     ...mapGetters({
       dicionario: "getDicionario",
       reqTeste: "getReqTeste",
-      minhaAgenda: "getAgenda"
+      minhaAgenda: "getAgenda",
+      atendimentoAtivo: "getAtendimentoAtivo"
     })
   },
   data(){
@@ -68,6 +70,29 @@ export default {
     })
   },
   methods: {
+    removerCliente(){
+      let objAtdAux = {}
+      for(let ramal in this.todosAtendimentos){
+        if(this.todosAtendimentos[ramal].login_usu != this.atendimentoAtivo.login_usu){
+          objAtdAux[ramal] = this.todosAtendimentos[ramal]
+        }
+      }
+
+      const regex = /\s|\]|\[/g
+      const idIframe = this.atendimentoAtivo.login_usu.replace(regex, "")
+
+      limparIframeUsuarioRemovido(`iframe_${idIframe}`)
+      this.$store.dispatch("setAtendimentos", objAtdAux)
+
+      if(!objAtdAux || !Object.keys(objAtdAux).length){
+        this.$store.dispatch("setCaso", 206)
+      }
+
+      this.$store.dispatch('limparAtendimentoAtivo')
+      this.$store.dispatch('limparIdAtendimentoAtivo')
+
+      this.$forceUpdate()
+    },
     async reqAgenda(){
 
       executandoEncerrar()
@@ -76,6 +101,14 @@ export default {
         .then(response => {
           const arrAgenda = response.data.ret
           this.$store.dispatch("setAgenda", arrAgenda)
+
+          this.minhaAgenda.map(atd => {
+            for(let ramal in this.todosAtendimentos){
+              if(this.todosAtendimentos[ramal].login_usu == atd.login_usu){
+                this.removerCliente()
+              }
+            }
+          })
         })
         .catch(error => {
           console.log("error get agenda: ", error)

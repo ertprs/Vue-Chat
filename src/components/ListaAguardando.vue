@@ -63,6 +63,7 @@
 import { mapGetters } from "vuex"
 
 import { formataSigla } from "@/services/formatacaoDeTextos"
+import { limparIframeUsuarioRemovido } from "@/services/iframe"
 import axios_api from "@/services/serviceAxios";
 
 export default {
@@ -76,7 +77,8 @@ export default {
       reqTeste: "getReqTeste",
       caso: "getCaso",
       contadorAguardando: "getContadorAguardando",
-      contadorTodos: "getContadorTodos"
+      contadorTodos: "getContadorTodos",
+      atendimentoAtivo: "getAtendimentoAtivo"
     })
   },
   data(){
@@ -107,6 +109,29 @@ export default {
 
       this.reqAguardando(this.abaAberta)
     },
+    removerCliente(){
+      let objAtdAux = {}
+      for(let ramal in this.todosAtendimentos){
+        if(this.todosAtendimentos[ramal].login_usu != this.atendimentoAtivo.login_usu){
+          objAtdAux[ramal] = this.todosAtendimentos[ramal]
+        }
+      }
+
+      const regex = /\s|\]|\[/g
+      const idIframe = this.atendimentoAtivo.login_usu.replace(regex, "")
+
+      limparIframeUsuarioRemovido(`iframe_${idIframe}`)
+      this.$store.dispatch("setAtendimentos", objAtdAux)
+
+      if(!objAtdAux || !Object.keys(objAtdAux).length){
+        this.$store.dispatch("setCaso", 206)
+      }
+
+      this.$store.dispatch('limparAtendimentoAtivo')
+      this.$store.dispatch('limparIdAtendimentoAtivo')
+
+      this.$forceUpdate()
+    },
     reqAguardando(origem, persistir){
       axios_api.get(`get-aguardando?${this.reqTeste}&aba=${origem}`)
       .then(response => {
@@ -114,22 +139,17 @@ export default {
           if(response.data.ret){
             const arr = response.data.ret
             if(origem == "pessoal"){
+              this.$store.dispatch("setAguardando", arr)
+              this.$store.dispatch("setContadorAguardando", arr.length)
 
-              let novosAtds = {}
               this.aguardando.map(atd => {
                 for(let ramal in this.todosAtendimentos){
-                  if(this.todosAtendimentos[ramal].login_usu != atd.login_usu){
-                    novosAtds[ramal] = this.todosAtendimentos[ramal]
+                  if(this.todosAtendimentos[ramal].login_usu == atd.login_usu){
+                    this.removerCliente()
                   }
                 }
               })
 
-              if(novosAtds.length){
-                this.$store.dispatch("setTodosAtendimentos", novosAtds)
-              }
-
-              this.$store.dispatch("setAguardando", arr)
-              this.$store.dispatch("setContadorAguardando", arr.length)
             }else{
               let novosAtds = {}
               this.todos.map(atd => {
