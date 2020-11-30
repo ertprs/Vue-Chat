@@ -191,6 +191,7 @@ export default {
       todosAtendimentos: "getTodosAtendimentos",
       minhaAgenda: "getAgenda",
       aguardando: "getAguardando",
+      todos: "getTodos",
       caso: "getCaso",
       iframesDisponiveis: "getIframesDisponiveis",
       atendimentoAtivo: "getAtendimentoAtivo",
@@ -201,7 +202,54 @@ export default {
       dicionario: "getDicionario"
     })
   },
+  updated(){
+    if(this.todosAtendimentos){
+      for(let ramal in this.todosAtendimentos){
+        if(this.minhaAgenda.length){
+          this.minhaAgenda.map(atdAgenda => {
+            if(atdAgenda.login_usu == this.todosAtendimentos[ramal].login_usu){
+              this.verificarDuplicataEmAtendimento(atdAgenda.login_usu)
+            }
+          })
+        }
+        if(this.aguardando.length){
+          this.aguardando.map(atdAguardando => {
+            if(atdAguardando.login_usu == this.todosAtendimentos[ramal].login_usu){
+              this.verificarDuplicataEmAtendimento(atdAguardando.login_usu)
+            }
+          })
+        }
+        if(this.todos.length){
+          this.todos.map(atdTodos => {
+            if(atdTodos.login_usu == this.todosAtendimentos[ramal].login_usu){
+              this.verificarDuplicataEmAtendimento(atdTodos.login_usu)
+            }
+          })
+        }
+      }
+    }
+  },
   methods: {
+    verificarDuplicataEmAtendimento(loginUsuComparativo){
+      let objAtdAux = {}
+      for(let ramal in this.todosAtendimentos){
+        if(this.todosAtendimentos[ramal].login_usu != loginUsuComparativo){
+          objAtdAux[ramal] = this.todosAtendimentos[ramal]
+        }
+      }
+
+      const regex = /\s|\]|\[/g
+      const idIframe = loginUsuComparativo.replace(regex, "")
+
+      limparIframeUsuarioRemovido(`iframe_${idIframe}`)
+      this.$store.dispatch("setAtendimentos", objAtdAux)
+
+      if(!objAtdAux || !Object.keys(objAtdAux).length){
+        this.$store.dispatch("setCaso", 206)
+      }
+
+      this.$forceUpdate()
+    },
     verificarDuplicataMinhaAgenda(){
       if(this.minhaAgenda.length && this.objAtendimentos.length){
         let fazerRequisicao = false
