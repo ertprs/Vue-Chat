@@ -127,10 +127,6 @@ export default {
 
       executandoEncerrar()
 
-      setTimeout(() => {
-        this.reqEmAndamento = false
-      }, 1000)
-
       let dados = {
         token_cliente: this.atendimentoAtivo.token_cliente
       }
@@ -209,6 +205,8 @@ export default {
       }
 
       liberarEncerrar()
+
+      this.reqEmAndamento = false
 
       this.fecharPopup()
     },

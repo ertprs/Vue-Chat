@@ -173,10 +173,6 @@ export default {
         this.reqEmAndamento = true
       }
 
-      setTimeout(() => {
-        this.reqEmAndamento = false
-      }, 1500)
-
       executandoEncerrar()
 
       let dados = {
@@ -210,6 +206,8 @@ export default {
         })
 
       liberarEncerrar()
+
+      this.reqEmAndamento = false
 
       this.fecharPopup()
     },
