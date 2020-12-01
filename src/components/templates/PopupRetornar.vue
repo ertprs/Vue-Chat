@@ -285,8 +285,6 @@ export default {
 
       let agora = ano + '-' + mes + '-' + dia
       this.data = agora
-
-      console.log("agora: ", agora)
     }
   }
 }
