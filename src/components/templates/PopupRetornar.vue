@@ -267,13 +267,21 @@ export default {
       this.$store.dispatch('setBlocker', false)
       this.$store.dispatch('setAbrirPopup', false)
       this.pessoalData = false
-      this.dataHora = ""
+      this.hora = ""
     },
     setAgora(){
       let data = new Date()
       let ano = data.getFullYear()
       let dia = data.getDate()
-      let mes = data.getMonth() + 1
+      let mes = data.getMonth()
+
+      if(dia < 10){
+        dia = "0"+dia
+      }
+
+      if(mes < 10){
+        mes = "0"+mes
+      }
 
       let agora = ano + '-' + mes + '-' + dia
       this.data = agora

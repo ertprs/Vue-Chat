@@ -217,7 +217,7 @@ export default {
     })
 
     this.$root.$on("atualizar-mensagem", (objMsgExterno) => {
-        this.criaObjMensagem(objMsgExterno)
+      this.criaObjMensagem(objMsgExterno)
     }),(document.querySelector(".btn-emoji").innerText = String.fromCodePoint(0x1f61c));
 
     window.addEventListener("message", this.listenerPostMessage, false);

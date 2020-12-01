@@ -410,8 +410,6 @@ export default {
 
             this.removerCliente()
 
-            this.$root.$off('atualizar-mensagem')
-
           }
         })
         .catch(error => {
