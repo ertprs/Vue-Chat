@@ -317,6 +317,10 @@ function atualizarClientes(mainData) {
   var atendimentosLocal = store.getters.getTodosAtendimentos
   var novosAtendimentos = {}
 
+  const agenda = store.getters.getAgenda
+  const aguardando = store.getters.getAguardando
+  const todos = store.getters.getTodos
+
   if(Object.keys(atendimentosServer).length < Object.keys(atendimentosLocal).length) {
       for (var ramal_server in atendimentosServer) {
           novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
@@ -341,6 +345,33 @@ function atualizarClientes(mainData) {
           if(store.getters.getUltimoIdRemovido == atendimentosServer[ramal_server].id_cli){
               store.dispatch('setUltimoIdRemovido', '')
               return
+          }
+
+          if(aguardando.length){
+            let aguardandoAux = aguardando
+            aguardandoAux = aguardando.filter(atdAguardando => {
+              return atdAguardando.login_usu != atendimentosServer[ramal_server].login_usu
+            })
+
+            store.dispatch('setAguardando', aguardandoAux)
+          }
+
+          if(todos.length){
+            let todosAux = todos
+            todosAux = todos.filter(atdTodos => {
+              return atdTodos.login_usu != atendimentosServer[ramal_server].login_usu
+            })
+
+            store.dispatch('setTodos', todosAux)
+          }
+
+          if(agenda.length){
+            let agendaAux = agenda
+            agendaAux = agenda.filter(atdAgenda => {
+              return atdAgenda.login_usu != atendimentosServer[ramal_server].login_usu
+            })
+
+            store.dispatch('setAgenda', agendaAux)
           }
 
           novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]

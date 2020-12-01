@@ -232,6 +232,7 @@ export default {
   },
   methods: {
     verificarDuplicataEmAtendimento(loginUsuComparativo){
+
       let objAtdAux = {}
       for(let ramal in this.todosAtendimentos){
         if(this.todosAtendimentos[ramal].login_usu != loginUsuComparativo){
@@ -325,7 +326,8 @@ export default {
       this.totalClientesNovos = auxContNovoContato
 
       if(this.totalClientesNovos == 1 && this.objAtendimentos.length == 1){
-        this.ativarConversa(this.objAtendimentos[0], 0)
+        this.objAtendimentos[0].novoContato = false
+        this.totalClientesNovos = 0
       }
     },
     ativarConversa(atd, indice) {
