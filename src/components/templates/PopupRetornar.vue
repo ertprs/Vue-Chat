@@ -273,7 +273,7 @@ export default {
       let data = new Date()
       let ano = data.getFullYear()
       let dia = data.getDate()
-      let mes = data.getMonth()
+      let mes = data.getMonth() + 1
 
       if(dia < 10){
         dia = "0"+dia
@@ -285,6 +285,8 @@ export default {
 
       let agora = ano + '-' + mes + '-' + dia
       this.data = agora
+
+      console.log("agora: ", agora)
     }
   }
 }
