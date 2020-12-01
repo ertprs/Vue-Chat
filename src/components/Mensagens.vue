@@ -27,26 +27,14 @@
       <p v-html="msg"></p>
       <span class="horario-envio" v-text="horario"></span>
 
-      <transition name="fade">
-        <span class="check" v-if="status == 'D'" :content="contentTooltip" v-tippy> <font-awesome-icon :icon="['fas', 'check']" /> </span>
-      </transition>
-      <transition name="fade">
-        <span class="check cinza" v-if="status == 'Q'" :content="contentTooltip" v-tippy> <font-awesome-icon :icon="['fas', 'check']" /> </span>
-      </transition>
-      <transition name="fade">
-        <span class="check preto" v-if="status == 'G'" :content="contentTooltip" v-tippy> <font-awesome-icon :icon="['fas', 'check']" /> </span>
-      </transition>
-      <transition name="fade">
-        <span class="check preto" v-if="status == 'E'" :content="contentTooltip" v-tippy> <font-awesome-icon :icon="['fas', 'check-double']" /> </span>
-      </transition>
-      <transition name="fade">
-        <span class="check visualizado" v-if="status == 'L'" :content="contentTooltip" v-tippy> <font-awesome-icon :icon="['fas', 'check-double']" /> </span>
-      </transition>
-      <transition name="fade">
-        <span class="check vermelho" v-if="status == 'C'" :content="contentTooltip" v-tippy> <font-awesome-icon :icon="['fas', 'times-circle']" /> </span>
-      </transition>
-      <transition name="fade">
-        <span class="check vermelho" v-if="status == 'T'" :content="contentTooltip" v-tippy> <font-awesome-icon :icon="['fas', 'hourglass']" /> </span>
+      <transition name="fade" mode="out-in">
+        <span class="check" v-if="status == 'D'" :content="contentTooltip" v-tippy key="check-padrao"> <font-awesome-icon :icon="['fas', 'check']" /> </span>
+        <span class="check cinza" v-else-if="status == 'Q'" :content="contentTooltip" v-tippy key="check-cinza"> <font-awesome-icon :icon="['fas', 'check']" /> </span>
+        <span class="check preto" v-else-if="status == 'G'" :content="contentTooltip" v-tippy key="check-preto"> <font-awesome-icon :icon="['fas', 'check']" /> </span>
+        <span class="check preto" v-else-if="status == 'E'" :content="contentTooltip" v-tippy key="double-check-preto"> <font-awesome-icon :icon="['fas', 'check-double']" /> </span>
+        <span class="check visualizado" v-else-if="status == 'L'" :content="contentTooltip" v-tippy key="double-check-visualizado"> <font-awesome-icon :icon="['fas', 'check-double']" /> </span>
+        <span class="check vermelho" v-else-if="status == 'C'" :content="contentTooltip" v-tippy key="times-circle"> <font-awesome-icon :icon="['fas', 'times-circle']" /> </span>
+        <span class="check vermelho" v-else-if="status == 'T'" :content="contentTooltip" v-tippy key="hourglass"> <font-awesome-icon :icon="['fas', 'hourglass']" /> </span>
       </transition>
 
       <span class="autor-mensagem" v-text="autor"></span>
