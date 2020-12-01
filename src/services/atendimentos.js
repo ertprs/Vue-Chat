@@ -354,6 +354,7 @@ function atualizarClientes(mainData) {
             })
 
             store.dispatch('setAguardando', aguardandoAux)
+            store.dispatch("setContadorAguardando", aguardandoAux.length)
           }
 
           if(todos.length){
@@ -363,6 +364,7 @@ function atualizarClientes(mainData) {
             })
 
             store.dispatch('setTodos', todosAux)
+            store.dispatch("setContadorTodos", todosAux.length)
           }
 
           if(agenda.length){
