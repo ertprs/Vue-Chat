@@ -317,10 +317,6 @@ function atualizarClientes(mainData) {
   var atendimentosLocal = store.getters.getTodosAtendimentos
   var novosAtendimentos = {}
 
-  const agenda = store.getters.getAgenda
-  const aguardando = store.getters.getAguardando
-  const todos = store.getters.getTodos
-
   if(Object.keys(atendimentosServer).length < Object.keys(atendimentosLocal).length) {
       for (var ramal_server in atendimentosServer) {
           novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
@@ -347,34 +343,9 @@ function atualizarClientes(mainData) {
               return
           }
 
-          if(aguardando.length){
-            let aguardandoAux = aguardando
-            aguardandoAux = aguardando.filter(atdAguardando => {
-              return atdAguardando.login_usu != atendimentosServer[ramal_server].login_usu
-            })
-
-            store.dispatch('setAguardando', aguardandoAux)
-            store.dispatch("setContadorAguardando", aguardandoAux.length)
-          }
-
-          if(todos.length){
-            let todosAux = todos
-            todosAux = todos.filter(atdTodos => {
-              return atdTodos.login_usu != atendimentosServer[ramal_server].login_usu
-            })
-
-            store.dispatch('setTodos', todosAux)
-            store.dispatch("setContadorTodos", todosAux.length)
-          }
-
-          if(agenda.length){
-            let agendaAux = agenda
-            agendaAux = agenda.filter(atdAgenda => {
-              return atdAgenda.login_usu != atendimentosServer[ramal_server].login_usu
-            })
-
-            store.dispatch('setAgenda', agendaAux)
-          }
+          removerDuplicidadeParaInserirEmAtendimento("aguardando", atendimentosServer[ramal_server].login_usu)
+          removerDuplicidadeParaInserirEmAtendimento("todos", atendimentosServer[ramal_server].login_usu)
+          removerDuplicidadeParaInserirEmAtendimento("agenda", atendimentosServer[ramal_server].login_usu)
 
           novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
           novosAtendimentos[ramal_server].novoContato = true
@@ -385,6 +356,50 @@ function atualizarClientes(mainData) {
           atualizarMensagens(atendimentosServer[ramal_server], ramal_server, novosAtendimentos)
       }
   }
+}
+
+function removerDuplicidadeParaInserirEmAtendimento(tipo, loginUsuComparativo){
+  const agenda = store.getters.getAgenda
+  const aguardando = store.getters.getAguardando
+  const todos = store.getters.getTodos
+  let temAlgoNosArrays = false
+
+  if(agenda.length || aguardando.length || todos.length){
+    temAlgoNosArrays = true
+  }
+
+  if(!temAlgoNosArrays) return
+
+  let arrAux = []
+  let setter1 = ""
+  let setter2 = ""
+
+  switch (tipo){
+    case "aguardando":
+      arrAux = aguardando
+      setter1 = "setAguardando"
+      setter2 = "setContadorAguardando"
+    break;
+    case "todos":
+      arrAux = todos
+      setter1 = "setTodos"
+      setter2 = "setContadorTodos"
+    break;
+    case "agenda":
+      arrAux = agenda
+      setter1 = "setAgenda"
+    break;
+  }
+
+  arrAux = arrAux.filter(atd => {
+    return atd.login_usu != loginUsuComparativo
+  })
+
+  store.dispatch(setter1, arrAux)
+  if(setter2){
+    store.dispatch(setter2, arrAux.length)
+  }
+
 }
 
 function atualizarMensagens(cliente, ramal, novosAtendimentos) {
