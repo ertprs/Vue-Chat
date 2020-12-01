@@ -51,7 +51,7 @@
     <transition name="fade">
       <div class="btn-rolagem" v-show="habilitaRolagem" v-on:click="rolaChat()">
         <div class="sinalizar-msg-nova" :title="dicionario.title_nova_msg" v-show="atendimentoAtivo.novaMsgCttAtivo"></div>
-        <i class="fas fa-arrow-circle-down"></i>
+        <font-awesome-icon :icon="['fas', 'arrow-circle-down']" />
       </div>
     </transition>
   </div>

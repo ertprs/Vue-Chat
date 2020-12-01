@@ -8,7 +8,7 @@
         <div v-if="origemBlocker == 'atd-parado'" class="atd-parado-container">
           <h3 v-text="dicionario.titulo_pausa"></h3>
           <h4 @click="emitirEventoMudarEstadoAtd()">
-            <i class="fas fa-play"></i>
+            <font-awesome-icon :icon="['fas', 'play']" />
             {{ dicionario.titulo_retornar_pausa }}
           </h4>
         </div>

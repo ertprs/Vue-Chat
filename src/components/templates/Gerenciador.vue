@@ -2,10 +2,10 @@
   <div id="gerenciador-container" :class="{'d-none': !reqTeste, 'aguardando' : reqEmAndamento, 'em-atendimento' : statusAtd == 'em-atendimento', 'parado' : statusAtd == 'parado'}" v-if="gerenciador && gerenciador.length">
     <div class="gerenciador-btn" @click="mudarEstadoAtendimento()">
       <div v-show="statusAtd == 'em-atendimento'" :title="dicionario.title_status_em_atendimento">
-        <i class="fas fa-pause"></i>
+        <font-awesome-icon :icon="['fas', 'pause']" />
       </div>
       <div v-show="statusAtd == 'parado'" :title="dicionario.title_status_parado">
-        <i class="fas fa-play"></i>
+        <font-awesome-icon :icon="['fas', 'play']" />
       </div>
     </div>
     <div class="gerenciador-lista" ref="gerenciador-lista" :class="{'existe-ativo' : ativo == true}">
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="gerenciador-btn" :title="dicionario.title_btn_adicionar_cliente" @click="abrirAtivarCtt()" v-if="ativo">
-        <i class="fas fa-user-plus"></i>
+      <font-awesome-icon :icon="['fas', 'user-plus']" />
     </div>
   </div>
 </template>

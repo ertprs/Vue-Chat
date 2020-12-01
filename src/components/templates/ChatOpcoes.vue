@@ -11,7 +11,7 @@
           </ul>
           <div class="chat-opcoes-titulo-container--logo">
             <img v-if="atendimentoAtivo.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${atendimentoAtivo.sigla}.png`">
-            <i v-else class="fas fa-comments"></i>
+            <font-awesome-icon v-else :icon="['fas', 'fa-comments']" />
           </div>
         </div>
       </div>

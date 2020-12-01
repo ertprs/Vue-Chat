@@ -2,19 +2,19 @@
   <div id="informacoes" :class="{'d-none' : semIframe}">
     <!-- Ti­tulo -->
     <div class="informacoes-titulo tamanho-titulos" v-if="!atendimentoAtivo.informacoes || caso == 206 || caso == 400">
-      <i class="fas fa-info-circle"></i>
+      <font-awesome-icon :icon="['fas', 'info-circle']" />
       <h1 :title="dicionario.titulo_informacoes" v-text="dicionario.titulo_informacoes"></h1>
     </div>
     <!-- Caso haja informacoes -->
     <div class="container-principal-informacoes" v-if="atendimentoAtivo.informacoes && (caso == 200 || caso == '')">
       <div class="informacoes-titulo tamanho-titulos" id="informacoes-titulo">
-        <i class="fas fa-info-circle"></i>
+        <font-awesome-icon :icon="['fas', 'info-circle']" />
         <!-- Lista de Informacoes Superiores -->
         <div class="informacoes-superiores-container">
           <!-- ID -->
           <div v-if="atendimentoAtivo.id" class="informacoes-item">
             <div class="informacoes-item-titulo">
-              <i class="fas fa-phone-alt"></i>
+              <font-awesome-icon :icon="['fas', 'phone-alt']" />
               <p v-text="dicionario.sub_titulo_telefone"></p>
             </div>
             <p v-text="acionaFormataTelefone(atendimentoAtivo.id)"></p>
@@ -22,7 +22,7 @@
           <!-- Tempo Conectado -->
           <div v-if="atendimentoAtivo.hora_cliente_ini" class="informacoes-item">
             <div class="informacoes-item-titulo">
-              <i class="fas fa-user-clock"></i>
+              <font-awesome-icon :icon="['fas', 'user-clock']" />
               <p v-text="dicionario.sub_titulo_tempo_conectado"></p>
             </div>
             <p v-text="acionaFormataHorario(atendimentoAtivo.tempo_conectado)"></p>
@@ -30,7 +30,7 @@
           <!-- Tempo de Fila -->
           <div v-if="atendimentoAtivo.hora_fila_ini" class="informacoes-item">
             <div class="informacoes-item-titulo">
-              <i class="fas fa-clock"></i>
+              <font-awesome-icon :icon="['fas', 'clock']" />
               <p v-text="dicionario.sub_titulo_tempo_fila"></p>
             </div>
             <p v-text="acionaFormataHorario(atendimentoAtivo.fila_diff)"></p>
@@ -48,7 +48,7 @@
         <!-- Iframe do Caio -->
         <div class="informacoes-load-container" v-if="gif">
           <div class="load">
-            <i class="fas fa-hourglass-end"></i>
+            <font-awesome-icon :icon="['fas', 'hourglass-end']" />
             <p v-text="dicionario.titulo_carregando"></p>
           </div>
         </div>
@@ -62,7 +62,7 @@
     <!-- Caso nao haja informacoes -->
     <div class="lista-informacoes-container-vazio" v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206"> <!-- !iframeCttAtivo -->
       <div>
-        <i class="far fa-folder-open"></i>
+        <font-awesome-icon :icon="['fas', 'folder-open']" />
         <p v-text="dicionario.msg_sem_informacoes"></p>
       </div>
     </div>
@@ -70,12 +70,12 @@
     <div class="iframe-msg-container" v-if="iframeCttAtivo">
       <div class="informacoes-load-container" v-if="gif">
         <div class="load">
-          <i class="fas fa-hourglass-end"></i>
+          <font-awesome-icon :icon="['fas', 'hourglass-end']" />
           <p v-text="dicionario.titulo_carregando"></p>
         </div>
       </div>
       <span v-if="!gif" class="btn-fechar-ctt-cliente" @click="fecharIframeCttAtivo()">
-        <i class="fas fa-times-circle"></i>
+        <font-awesome-icon :icon="['fas', 'times-circle']" />
       </span>
       <iframe
         :src="`${this.dominio}/im/atdHumano/view/atd_contato_atv.php`" frameborder="0"

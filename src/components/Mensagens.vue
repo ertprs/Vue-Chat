@@ -4,8 +4,8 @@
       <div v-if="anexo" class="mensagem-div-anexo">
         <img v-if="imgAnexo" @click="abrirVisualizacaoImg(imgAnexo)" :src="imgAnexo" :alt="dicionario.alt_msg_img">
         <div class="anexos-links-container" v-if="imgAnexo">
-          <a :href="imgAnexo" :download="`${nomeArquivo}`" target="_blank"> {{ dicionario.titulo_baixar_img }} <i class="fas fa-download"></i> </a>
-          <a href="#" @click="abrirVisualizacaoImg(imgAnexo)"> {{ dicionario.titulo_visualizar_img }} <i class="fas fa-search-plus"></i> </a>
+          <a :href="imgAnexo" :download="`${nomeArquivo}`" target="_blank"> {{ dicionario.titulo_baixar_img }} <font-awesome-icon :icon="['fas', 'download']" /> </a>
+          <a href="#" @click="abrirVisualizacaoImg(imgAnexo)"> {{ dicionario.titulo_visualizar_img }} <font-awesome-icon :icon="['fas', 'search-plus']" /> </a>
         </div>
         <div v-else-if="docAnexo" class="anexo-container">
           <template v-if="audio || video">
@@ -18,7 +18,7 @@
           </template>
           <template v-else>
             <a :href="hrefAnexo" target="_blank" :title="`${tipoDoc} - ${nomeArquivo}`">
-              <i class="fas fa-file-alt"></i>
+              <font-awesome-icon :icon="['fas', 'file-alt']" />
               <p v-text="nomeArquivo"></p>
             </a>
           </template>
@@ -28,25 +28,25 @@
       <span class="horario-envio" v-text="horario"></span>
 
       <transition name="fade">
-        <span class="check" v-if="status == 'D'" :content="contentTooltip" v-tippy> <i class="fas fa-check"></i> </span>
+        <span class="check" v-if="status == 'D'" :content="contentTooltip" v-tippy> <font-awesome-icon :icon="['fas', 'check']" /> </span>
       </transition>
       <transition name="fade">
-        <span class="check cinza" v-if="status == 'Q'" :content="contentTooltip" v-tippy> <i class="fas fa-check"></i> </span>
+        <span class="check cinza" v-if="status == 'Q'" :content="contentTooltip" v-tippy> <font-awesome-icon :icon="['fas', 'check']" /> </span>
       </transition>
       <transition name="fade">
-        <span class="check preto" v-if="status == 'G'" :content="contentTooltip" v-tippy> <i class="fas fa-check"></i> </span>
+        <span class="check preto" v-if="status == 'G'" :content="contentTooltip" v-tippy> <font-awesome-icon :icon="['fas', 'check']" /> </span>
       </transition>
       <transition name="fade">
-        <span class="check preto" v-if="status == 'E'" :content="contentTooltip" v-tippy> <i class="fas fa-check-double"></i> </span>
+        <span class="check preto" v-if="status == 'E'" :content="contentTooltip" v-tippy> <font-awesome-icon :icon="['fas', 'check-double']" /> </span>
       </transition>
       <transition name="fade">
-        <span class="check visualizado" v-if="status == 'L'" :content="contentTooltip" v-tippy> <i class="fas fa-check-double"></i> </span>
+        <span class="check visualizado" v-if="status == 'L'" :content="contentTooltip" v-tippy> <font-awesome-icon :icon="['fas', 'check-double']" /> </span>
       </transition>
       <transition name="fade">
-        <span class="check vermelho" v-if="status == 'C'" :content="contentTooltip" v-tippy> <i class="fas fa-times-circle"></i> </span>
+        <span class="check vermelho" v-if="status == 'C'" :content="contentTooltip" v-tippy> <font-awesome-icon :icon="['fas', 'times-circle']" /> </span>
       </transition>
       <transition name="fade">
-        <span class="check vermelho" v-if="status == 'T'" :content="contentTooltip" v-tippy> <i class="fas fa-hourglass"></i> </span>
+        <span class="check vermelho" v-if="status == 'T'" :content="contentTooltip" v-tippy> <font-awesome-icon :icon="['fas', 'hourglass']" /> </span>
       </transition>
 
       <span class="autor-mensagem" v-text="autor"></span>

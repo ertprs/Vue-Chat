@@ -6,8 +6,8 @@
         <!-- Previa imagem -->
         <div class="container-previa-img" v-show="aparecerPrevia" :class="{'previa-anexo' : docPrevia, 'previa-anexo-erro' : docPrevia && erroFormatoAnexo}">
           <h3 v-if="arquivo.name">
-            <i class="fas fa-image" v-if="!docPrevia"></i>
-            <i class="fas fa-file-alt" v-else></i>
+            <font-awesome-icon :icon="['fas', 'image']" v-if="!docPrevia" />
+            <font-awesome-icon :icon="['fas', 'file-alt']" v-else />
             {{ this.arquivo.name }}
           </h3>
           <div class="formato-invalido">
@@ -28,7 +28,7 @@
           class="btn-excluir-anexo"
           :class="{'previa-anexo' : docPrevia, 'previa-anexo-erro' : docPrevia && erroFormatoAnexo}"
           >
-          <i class="fas fa-times-circle"></i>
+          <font-awesome-icon :icon="['fas', 'times-circle']" />
         </div>
         <div class="chat-rodape-textarea">
           <!-- Emoji -->
@@ -52,7 +52,7 @@
         <div>
           <!-- Btn enviar msg -->
           <div class="chat-rodape-botoes-botao" :title="dicionario.title_enviar_msg" v-on:click="enviarMensagem('', aparecerPrevia)">
-            <i class="fas fa-paper-plane"></i>
+            <font-awesome-icon :icon="['fas', 'paper-plane']" />
           </div>
           <!-- Btn abrir msg formatada -->
           <div
@@ -61,7 +61,7 @@
             :title="dicionario.title_msg_formatada"
             v-on:click="selecionarMsgFormatada()"
           >
-            <i class="fas fa-comment"></i>
+            <font-awesome-icon :icon="['fas', 'comment']" />
           </div>
           <!-- Btn abrir opcoes -->
           <div
@@ -70,7 +70,7 @@
             title="Selecionar Anexo"
             v-on:click="selecionarAnexo(aparecerPrevia)"
           >
-            <i class="fas fa-paperclip"></i>
+            <font-awesome-icon :icon="['fas', 'paperclip']" />
             <!-- Modal Opcoes -->
             <div
               class="chat-rodape-anexo-opcoes"
@@ -79,11 +79,11 @@
             >
               <!-- Btn selecionar imagem -->
               <div class="imagens" v-on:click="selecionarImagem()" :title="dicionario.title_anexo_img">
-                <i class="fas fa-image"></i>
+                <font-awesome-icon :icon="['fas', 'image']" />
               </div>
               <!-- Btn selecionar documentos -->
               <div class="docs" v-on:click="selecionarDoc()" :title="dicionario.title_anexo_doc">
-                <i class="fas fa-file-alt"></i>
+                <font-awesome-icon :icon="['fas', 'file-alt']" />
               </div>
             </div>
             <div class="chat-rodape-botoes-container-anexo d-none">
@@ -141,13 +141,13 @@
               v-show="tipoMsg == 1"
               :title="dicionario.title_btn_preencher_msg_formatada"
               @click="insereMsgFormatadaNoTextarea(mensagensFormatadas_03, chaveAtual_03)">
-              <i class="fas fa-level-up-alt"></i>
+              <font-awesome-icon :icon="['fas', 'level-up-alt']" />
             </div>
             <div class="btn-select-03"
               v-show="tipoMsg == 2"
               :title="dicionario.title_btn_abrir_msg_tipo_2"
               @click="abrePopupMsgTipo2(mensagensFormatadas_03, chaveAtual_03)">
-              <i class="far fa-file-alt"></i>
+              <font-awesome-icon :icon="['fas', 'file-alt']" />
             </div>
           </div>
         </transition>

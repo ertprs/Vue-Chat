@@ -9,7 +9,7 @@
           :title="regrasBotoes.button_transfer.name"
           @click="abrirTransferir()">
 
-          <i class="fas fa-random"></i>
+          <font-awesome-icon :icon="['fas', 'random']" />
           <span v-text="regrasBotoes.button_transfer.name"></span>
         </div>
         <div
@@ -19,7 +19,7 @@
           :title="regrasBotoes.button_suspend.name"
           @click="retornarForm()">
 
-          <i class="fas fa-undo"></i>
+          <font-awesome-icon :icon="['fas', 'undo']" />
           <span v-text="regrasBotoes.button_suspend.name"></span>
         </div>
         <div
@@ -29,14 +29,14 @@
           :title="regrasBotoes.button_end.name"
           @click="popupEncerrar()">
 
-          <i class="fas fa-sign-out-alt"></i>
+          <font-awesome-icon :icon="['fas', 'sign-out-alt']" />
           <span v-text="regrasBotoes.button_end.name"></span>
         </div>
       </template>
       <template v-else>
         <div>
           <div class="load" v-if="contadorRequisicoesFalhas < 10">
-            <i class="fas fa-hourglass-end"></i>
+            <font-awesome-icon :icon="['fas', 'hourglass-end']" />
           </div>
           <div class="load" v-else>
             <p v-text="dicionario.msg_erro_carregamento"></p>

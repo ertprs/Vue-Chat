@@ -10,7 +10,7 @@
       <iframe :src="frame.url" frameborder="0" @load="gif = false" @loadstart="gif = true"></iframe>
     </div>
     <div class="load" v-show="gif">
-      <i class="fas fa-hourglass-end"></i>
+      <font-awesome-icon :icon="['fas', 'hourglass-end']" />
       <p v-text="dicionario.titulo_carregando"></p>
     </div>
   </div>

@@ -2,7 +2,7 @@
   <div class="lista-agenda">
     <div class="lista-agenda--titulo">
       <div :class="{'fechado' : fechado}">
-        <i class="far fa-address-book"  :title="dicionario.sub_titulo_agenda"></i>
+        <font-awesome-icon :icon="['fas', 'address-book']" :title="dicionario.sub_titulo_agenda" />
       </div>
       <transition name="fade">
         <h2 v-show="!fechado" v-text="dicionario.sub_titulo_agenda"></h2>
@@ -23,7 +23,10 @@
         <template v-if="!fechado">{{ atd.nome_usu }}</template>
         <div class="retorno-container" :id="'retorno_'+indice" v-if="!fechado">
           <span class="data-retorno" v-text="atd.data_agenda_formatada || acionaFormataDataAgenda(atd.data_agenda, atd.hora_agenda, atd)"></span>
-          <span class="contador-data-retorno d-none"><i class="fas fa-stopwatch"></i>{{ acionaFormataDataAgenda(atd.data_agenda, atd.hora_agenda, atd, "retorno", `#retorno_${indice}`) }}</span>
+          <span class="contador-data-retorno d-none">
+            <font-awesome-icon :icon="['fas', 'stopwatch']" />
+            {{ acionaFormataDataAgenda(atd.data_agenda, atd.hora_agenda, atd, "retorno", `#retorno_${indice}`) }}
+          </span>
         </div>
       </li>
     </ul>

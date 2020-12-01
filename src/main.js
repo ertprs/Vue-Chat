@@ -5,17 +5,28 @@ import VueTippy, { TippyComponent } from "vue-tippy";
 import 'vue-datetime/dist/vue-datetime.css'
 import "../public/assets/css/style.css";
 import "./config/msgs";
-import '@fortawesome/fontawesome-free/css/all.css'
-import '@fortawesome/fontawesome-free/js/all.js'
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faRandom, faUndo, faSignOutAlt, faAddressBook, faHourglassEnd, faFileAlt, faCheck, faCheckDouble, faTimesCircle, faHourglass, faPause, faPlay, faComment, faComments, faCommentSlash, faArrowAltCircleDown, faImage, faPaperPlane, faPaperclip, faLevelUpAlt, faLongArrowAltLeft, faFolder, faUserPlus, faInfoCircle, faPhoneAlt, faUserClock, faClock, faFolderOpen, faArrowCircleDown, faDownload, faSearchPlus } from '@fortawesome/free-solid-svg-icons'
+
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { dom } from '@fortawesome/fontawesome-svg-core'
+
 import App from "./App.vue";
 import router from "./router";
 import Chat from './components/templates/Chat'
 import store from "./store"
 import { getAtendimentos } from "./services/atendimentos"
 
+library.add(faRandom, faUndo, faSignOutAlt, faAddressBook, faHourglassEnd, faFileAlt, faCheck, faCheckDouble, faTimesCircle, faHourglass, faPause, faPlay, faComment, faComments, faCommentSlash, faArrowAltCircleDown, faImage, faPaperPlane, faPaperclip, faLevelUpAlt, faLongArrowAltLeft, faFolder, faUserPlus, faInfoCircle, faPhoneAlt, faUserClock, faClock, faFolderOpen, faArrowCircleDown, faDownload, faSearchPlus)
+dom.watch()
+
 Vue.use(Datetime)
 Vue.use(VueTippy)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component("tippy", TippyComponent)
+
 Vue.config.productionTip = false;
 
 var app = new Vue({

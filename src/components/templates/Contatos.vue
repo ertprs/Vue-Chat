@@ -2,7 +2,7 @@
   <div id="todos-contatos" :class="{'fechado' : fechado}" class="resizable-content">
     <div class="titulo-contatos tamanho-titulos">
       <div class="titulo-contatos--icone-container" :class="{'fechado' : fechado}">
-        <i class="fas fa-address-book" title="Contatos"></i>
+        <font-awesome-icon :icon="['fas', 'address-book']" :title="dicionario.titulo_atendimentos" />
         <transition name="fade">
           <h1 v-show="!fechado" v-text="dicionario.titulo_atendimentos"></h1>
         </transition>
@@ -10,14 +10,14 @@
       <div>
       </div>
       <div @click="toggleContatos($event)" class="container-flecha" :class="rotate ? 'rotate' : ''">
-        <i class="fas fa-long-arrow-alt-left flecha"></i>
+        <font-awesome-icon :icon="['fas', 'long-arrow-alt-left']" class="flecha" />
       </div>
     </div>
     <template v-if="objAtendimentos">
       <!-- Caso Aguardando Cliente ou esperando a primeira requisicao ao buscaAtendimentos -->
       <div class="lista-contatos-container-vazio" :class="{'existe-agenda' : minhaAgenda.length || aguardando.length || caso !== 400}" v-if="caso == 206 || caso == 'aguardando'">
         <div class="load">
-          <i class="fas fa-hourglass-end"></i>
+          <font-awesome-icon :icon="['fas', 'hourglass-end']" />
           <transition name="fade">
             <p v-show="!fechado" >
               <template v-if="caso == 206"> {{ dicionario.msg_aguardando_clientes }} </template>
@@ -30,7 +30,7 @@
       <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 400">
         <div class="lista-atendimento--titulo" v-if="caso !== 400 && caso !== 206" :class="{'fechado' : fechado}">
           <div :class="{'fechado' : fechado}">
-            <i class="fas fa-play" :title="dicionario.sub_titulo_atendimentos"></i>
+            <font-awesome-icon :icon="['fas', 'play']" :title="dicionario.sub_titulo_atendimentos" />
           </div>
           <h2 v-show="!fechado" v-text="dicionario.sub_titulo_atendimentos"></h2>
           <div :class="{'fechado' : fechado}" class="container-contadores">
@@ -62,7 +62,7 @@
 
         <div class="lista-aguardando--titulo">
           <div :class="{'fechado' : fechado}">
-            <i class="far fa-hourglass" :title="dicionario.sub_titulo_aguardando"></i>
+            <font-awesome-icon :icon="['fas', 'hourglass-end']" :title="dicionario.sub_titulo_aguardando" />
           </div>
           <transition name="fade">
             <h2 v-show="!fechado" v-text="dicionario.sub_titulo_aguardando"></h2>
@@ -76,7 +76,7 @@
     <!-- Caso nao haja atendimentos -->
     <div  class="lista-contatos-container-vazio" :class="{'fechado' : fechado}" v-if="caso == 400 && !todosAtendimentos.length">
       <div>
-        <i class="far fa-folder-open"></i>
+        <font-awesome-icon :icon="['fas', 'folder-open']" />
         <transition name="fade">
           <p v-show="!fechado" v-text="dicionario.msg_sem_contatos"></p>
         </transition>
