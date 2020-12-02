@@ -51,7 +51,7 @@ export function formataDataHora(dataHora, origem){
   }
 }
 
-export function formataHoraAtual() {
+export function formataHoraMensagem() {
   let data = new Date();
   let hora = data.getHours();
   hora = hora < 10 ? "0" + hora : hora;
