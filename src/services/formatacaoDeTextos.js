@@ -51,19 +51,14 @@ export function formataDataHora(dataHora, origem){
   }
 }
 
-export function formataHoraMensagem(hora) {
-  if(hora){
-    return hora.slice(0, 5)
-  }else{
-    let data = new Date();
-    let hora = data.getHours();
-    hora = hora < 10 ? "0" + hora : hora;
-    let minutos = data.getMinutes();
-    minutos = minutos < 10 ? "0" + minutos : minutos;
-    const horaFormatada = `${hora}:${minutos}`;
-    return horaFormatada;
-  }
-
+export function formataHoraAtual() {
+  let data = new Date();
+  let hora = data.getHours();
+  hora = hora < 10 ? "0" + hora : hora;
+  let minutos = data.getMinutes();
+  minutos = minutos < 10 ? "0" + minutos : minutos;
+  const horaFormatada = `${hora}:${minutos}`;
+  return horaFormatada;
 }
 
 export function formataTelefone(telefone){
@@ -76,6 +71,7 @@ export function formataHorario(horas){
   if(!horas){ return '' }
   let date = new Date(0);
   date.setMinutes(horas.i)
+  date.setSeconds(horas.s)
   let timeString = date.toISOString().substr(11, 8);
   timeString = timeString.replace(/\d+:/, horas.h.toString().padStart(2, 0) + ':')
   return timeString
