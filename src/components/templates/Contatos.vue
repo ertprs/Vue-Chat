@@ -632,8 +632,10 @@ export default {
                 str += `<li>${this.dicionario.msg_data_hora_leitura} - ${this.acionaFormataDataHora(arrMensagens[index][i].data_hora_leitura, true)}</li>`
               }
               if(arrMensagens[index][i].status_msg){
-                if(arrMensagens[index][i].status_msg[0]){
-                  str += `<li>${arrMensagens[index][i].status_msg[0].code} - ${arrMensagens[index][i].status_msg[0].title}</li>`
+                if(arrMensagens[index][i].status_msg){
+                  let statusMsg = JSON.parse(arrMensagens[index][i].status_msg)
+
+                  str += `<li>${statusMsg[0].code} - ${statusMsg[0].title}</li>`
                 }else{
                   str += `<li>${arrMensagens[index][i].status_msg}</li>`
                 }
