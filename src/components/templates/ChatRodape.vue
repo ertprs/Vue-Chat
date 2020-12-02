@@ -307,7 +307,9 @@ export default {
             .post(`send-message?${this.reqTeste}`, data)
             .then((response) => {
 
-              this.seqNovo = response.data.seq_message
+              if(response.data){
+                this.seqNovo = response.data.seq_message
+              }
 
               this.$store.dispatch("setAbrirEmojis", false)
               this.abrirOpcoes = false;
@@ -433,14 +435,6 @@ export default {
         autor = this.nomeOpe || "Operador"
         origem = "principal"
 
-        // if(arrMsg[arrMsg.length - 1]){
-        //   let seqAnterior = arrMsg[arrMsg.length - 1].seq
-        //   seqAnterior = seqAnterior.split("_")
-        //   if(seqAnterior.length){
-        //     seqAnterior[seqAnterior.length - 1] = parseInt(seqAnterior[seqAnterior.length - 1]) + 1
-        //     seq = seqAnterior.join("_")
-        //   }
-        // }
         seq = this.seqNovo
 
         this.$store.dispatch("setMensagemViaTextarea", true)
