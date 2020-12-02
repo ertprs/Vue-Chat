@@ -98,7 +98,7 @@
 import { mapGetters } from "vuex"
 import axios_api from '@/services/serviceAxios'
 
-import { formataNome, formataSigla, formataDataHora } from "@/services/formatacaoDeTextos"
+import { formataNome, formataSigla, formataDataHora, formataHoraMensagem } from "@/services/formatacaoDeTextos"
 import { limparIframeUsuarioRemovido } from "@/services/iframe"
 import { gerenciarCores } from "@/services/gerenciarCores"
 
@@ -301,10 +301,6 @@ export default {
             if(arrMsgAtualizado.length !== this.atendimentoAtivo.arrMsg[chaveFinal].msg.length){
               arrMsgAtualizado[arrMsgAtualizado.length - 1] = this.atendimentoAtivo.arrMsg[chaveFinal].msg[this.atendimentoAtivo.arrMsg[chaveFinal].msg.length - 1]
 
-              console.log("---------------------------")
-              console.log("mensagem com mesmo seq")
-              console.log("---------------------------")
-
               this.$set(this.atendimentoAtivo.arrMsg[chaveFinal], "msg", arrMsgAtualizado)
               this.$forceUpdate()
             }
@@ -342,17 +338,9 @@ export default {
         }
       }
 
-      if(atd.novoContato){
-        atd.novoContato = false
-      }
-
-      if(atd.alertaMsgNova){
-        atd.alertaMsgNova = false
-      }
-
-      if(atd.qtdMsgNova){
-        atd.qtdMsgNova = 0
-      }
+      atd.novoContato = false
+      atd.alertaMsgNova = false
+      atd.qtdMsgNova = 0
 
       if(this.$store.getters.getVerificaMsgFormatadaAberto){
         this.$root.$emit("toggle-msg-formatada")
@@ -378,7 +366,6 @@ export default {
       }
 
       if(todasMensagens.erro){
-        // Muda a estrutura do arrMsg para o esperado
         this.setMensagensClienteAtivo(atd.id_cli, todasMensagens, true)
       }else{
         this.setMensagensClienteAtivo(atd.id_cli, todasMensagens, false)
@@ -420,7 +407,7 @@ export default {
               let tooltip = ""
               let origem;
               arrMensagens[index][i].resp_msg == "CLI" ? (origem = "outros") : (origem = "principal");
-              let horario = arrMensagens[index][i].hora;
+              let horario = formataHoraMensagem(arrMensagens[index][i].hora)
 
               let autor = ""
               if(arrMensagens[index][i].nome){

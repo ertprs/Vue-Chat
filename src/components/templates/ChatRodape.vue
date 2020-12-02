@@ -170,7 +170,7 @@
 import { mapGetters } from "vuex";
 
 import { obterMsgFormatada } from "@/services/msgFormatada";
-import { formataHoraAtual } from "@/services/formatacaoDeTextos"
+import { formataHoraMensagem } from "@/services/formatacaoDeTextos"
 
 import axios_api from "@/services/serviceAxios";
 
@@ -382,7 +382,7 @@ export default {
       let seq = ""
       let autor = ""
       let origem = ""
-      let hora = this.acionaFormataHoraAtual()
+      let hora = this.acionaFormataHoraMensagem()
       let msg = this.mensagem;
       let link = false
       let anexo = false
@@ -658,8 +658,8 @@ export default {
       }
 
     },
-    acionaFormataHoraAtual() {
-      return formataHoraAtual()
+    acionaFormataHoraMensagem() {
+      return formataHoraMensagem()
     },
     verificaTemMsgFormatada(){
       let valor = ''
