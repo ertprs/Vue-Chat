@@ -13,14 +13,18 @@
               <p> {{ dicionario.msg_erro_audio }} <a :href="docAnexo" target="_blank"> {{ dicionario.msg_abrir_audio }} </a> </p>
             </audio>
             <video v-if="video" :src="docAnexo" controls :title="`${tipoDoc} - ${nomeArquivo}`">
-              <p> {{ dicionario.msg_erro_video }} <a :href="docAnexo" target="_blank"> {{ dicionario.msg_abrir_video }} </a> </p>
+              <p> {{ dicionario.msg_erro_video }} <a v-if="tipoDoc != 'erro'" :href="docAnexo" target="_blank"> {{ dicionario.msg_abrir_video }} </a> </p>
             </video>
           </template>
           <template v-else>
-            <a :href="hrefAnexo" target="_blank" :title="`${tipoDoc} - ${nomeArquivo}`">
+            <a v-if="tipoDoc != 'erro'" :href="hrefAnexo" target="_blank" :title="`${tipoDoc} - ${nomeArquivo}`">
               <font-awesome-icon :icon="['fas', 'file-alt']" />
               <p v-text="nomeArquivo"></p>
             </a>
+            <p v-else :title="`${tipoDoc} - ${nomeArquivo}`">
+              <font-awesome-icon :icon="['fas', 'file-alt']" />
+              {{ nomeArquivo }}
+            </p>
           </template>
         </div>
       </div>

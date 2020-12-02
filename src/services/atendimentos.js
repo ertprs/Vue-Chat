@@ -3,6 +3,7 @@ import axios from "axios"
 import axios_api from "./serviceAxios"
 import { axiosTokenJWT } from "./serviceAxios"
 import { carregarIframe, ClearIFrames } from "./iframe"
+import { connectableObservableDescriptor } from "rxjs/internal/observable/ConnectableObservable";
 
 const TEMPO_ATUALIZACAO = 2000
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
@@ -32,7 +33,7 @@ export function getAtendimentos(appVue) {
   })
     .then(response => {
       contador_request_erro = 0
-      tratarResponse(response)
+      tratarResponse(response, app)
     })
     .then(() => {
       if(segundaRequest){
@@ -69,21 +70,21 @@ function verificarAlertaErroRequest() {
   }
 }
 
-function loopAtualizacaoDeAtendimentos(count = 0) {
+function loopAtualizacaoDeAtendimentos(count = 0, app) {
   start()
   setTimeout(async () => {
     if (verificaRequest()) {
       bloqueiaRequest()
       if (store.getters.getOrigemBlocker !== "atd-parado") {
-        await atualizarAtendimentos()
+        await atualizarAtendimentos(app)
       }
     }
     end()
-    loopAtualizacaoDeAtendimentos(count = count + 1)
+    loopAtualizacaoDeAtendimentos(count = count + 1, app)
   }, TEMPO_ATUALIZACAO);
 }
 
-function tratarResponse(response) {
+function tratarResponse(response, app) {
   if (response.headers.authorization) {
     axiosTokenJWT(response.headers.authorization)
   } else {
@@ -123,7 +124,7 @@ function tratarResponse(response) {
           store.dispatch('setAtendimentos', mainData.atendimentos)
 
           acionaProcessos(mainData)
-          loopAtualizacaoDeAtendimentos()
+          loopAtualizacaoDeAtendimentos(app)
         } else { // tratando erro quando os atendimentos nao chegaram nos dados da api
           console.log('Erro ao tentar obter dados no servidor')
           console.log(mainData)
@@ -253,7 +254,7 @@ function acionaProcessosAtualizacao(mainData) {
   }
 }
 
-async function atualizarAtendimentos() {
+async function atualizarAtendimentos(app) {
   await axios_api({
     method: 'get',
     url: store.getters.getURL + 'get-atendimento?' + store.getters.getReqTeste
@@ -265,7 +266,7 @@ async function atualizarAtendimentos() {
       let mainData = response.data
       if (mainData.st_ret === 'OK' || mainData.atendimentos) {
         adicionaCaso(200)
-        atualizarClientes(mainData)
+        atualizarClientes(mainData, app)
         acionaProcessosAtualizacao(mainData)
       } else if (mainData.st_ret === 'AVISO') {
         adicionaCaso(206)
@@ -312,7 +313,7 @@ function setCorDestaque(mainData) {
   }
 }
 
-function atualizarClientes(mainData) {
+function atualizarClientes(mainData, app) {
   var atendimentosServer = mainData.atendimentos
   var atendimentosLocal = store.getters.getTodosAtendimentos
   var novosAtendimentos = {}
@@ -339,13 +340,13 @@ function atualizarClientes(mainData) {
 
       if (temClienteNovo && verificaEncerramento()) {
           if(store.getters.getUltimoIdRemovido == atendimentosServer[ramal_server].login_usu){
-              store.dispatch('setUltimoIdRemovido', '')
-              return
+            store.dispatch('setUltimoIdRemovido', '')
+            return
           }
 
           removerDuplicidadeParaInserirEmAtendimento("aguardando", atendimentosServer[ramal_server].login_usu)
           removerDuplicidadeParaInserirEmAtendimento("todos", atendimentosServer[ramal_server].login_usu)
-          removerDuplicidadeParaInserirEmAtendimento("agenda", atendimentosServer[ramal_server].login_usu)
+          removerDuplicidadeParaInserirEmAtendimento("agenda", atendimentosServer[ramal_server].login_usu, app)
 
           novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
           novosAtendimentos[ramal_server].novoContato = true
@@ -358,7 +359,7 @@ function atualizarClientes(mainData) {
   }
 }
 
-function removerDuplicidadeParaInserirEmAtendimento(tipo, loginUsuComparativo){
+function removerDuplicidadeParaInserirEmAtendimento(tipo, loginUsuComparativo, app){
   const agenda = store.getters.getAgenda
   const aguardando = store.getters.getAguardando
   const todos = store.getters.getTodos
@@ -389,6 +390,10 @@ function removerDuplicidadeParaInserirEmAtendimento(tipo, loginUsuComparativo){
       arrAux = agenda
       setter1 = "setAgenda"
     break;
+  }
+
+  if(app){
+    app.$root.$emit("req-agenda")
   }
 
   arrAux = arrAux.filter(atd => {

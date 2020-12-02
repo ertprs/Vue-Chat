@@ -130,6 +130,19 @@ export default {
       if(this.todosAtendimentos){
         this.objAtendimentos = Object.values(this.todosAtendimentos)
 
+        for(let ramal in this.todosAtendimentos){
+          this.objAtendimentos.map(atd => {
+            if(atd.id_cli == this.todosAtendimentos[ramal].id_cli){
+              if(atd.nro_chat != this.todosAtendimentos[ramal].nro_chat){
+                console.log("atd nro_chat: ", atd.nro_chat)
+                console.log("todos atds nro_chat: ", this.todosAtendimentos[ramal].nro_chat)
+                console.log("Ajustou nro_chat")
+                atd.nro_chat = this.todosAtendimentos[ramal].nro_chat
+              }
+            }
+          })
+        }
+
         this.contarMsgClientes()
 
         if(this.objAtendimentos.length && this.idAtendimentoAtivo == ''){
