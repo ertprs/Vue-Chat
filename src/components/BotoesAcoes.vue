@@ -155,6 +155,7 @@ export default {
             let auxAtdAtivo = this.atendimentoAtivo
             auxAtdAtivo.rules = arrayRegras
             this.$store.commit("setAtendimentoAtivo", auxAtdAtivo)
+            this.$store.dispatch("setIdAtendimentoAtivo", auxAtdAtivo.id_cli)
 
             if(!arrayRegras.usa_anexo){
               this.$store.dispatch("setTemAnexo", false)
@@ -384,7 +385,7 @@ export default {
     },
     popupEncerrar(){
       this.checaBlocker()
-      this.$store.dispatch('setUltimoIdRemovido', this.atendimentoAtivo.id_cli)
+      this.$store.dispatch('setUltimoIdRemovido', this.atendimentoAtivo.login_usu)
 
       executandoEncerrar()
 

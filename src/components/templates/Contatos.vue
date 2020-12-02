@@ -116,8 +116,7 @@ export default {
       objAtendimentos: [],
       totalMsgNovas: '',
       totalClientesNovos: '',
-      reqEmAndamento: false,
-      persistir: false
+      reqEmAndamento: false
     };
   },
   components: {
@@ -168,6 +167,8 @@ export default {
         if(this.objAtendimentos.length || this.todosAtendimentos){
           this.objAtendimentos = []
           this.$store.dispatch("setAtendimentos", {})
+          this.$store.dispatch("limparAtendimentoAtivo")
+          this.$store.dispatch("limparIdAtendimentoAtivo")
         }
       }
     }
@@ -336,6 +337,8 @@ export default {
       if(atd.id_cli == this.idAtendimentoAtivo){
         if(atd.nro_chat == this.atendimentoAtivo.nro_chat){
           return
+        }else{
+          console.log("nro chat diferentes")
         }
       }
 
@@ -367,13 +370,7 @@ export default {
       }
 
       if(todasMensagens.erro){
-        if(!this.persistir){
-          this.persistir = true
-          this.ativarConversa(atd, indice)
-        }else{
-          this.persistir = false
-          this.setMensagensClienteAtivo(atd.id_cli, todasMensagens, true)
-        }
+        this.setMensagensClienteAtivo(atd.id_cli, todasMensagens, true)
       }else{
         this.setMensagensClienteAtivo(atd.id_cli, todasMensagens, false)
       }

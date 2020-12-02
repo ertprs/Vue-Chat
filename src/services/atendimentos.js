@@ -338,7 +338,7 @@ function atualizarClientes(mainData) {
       }
 
       if (temClienteNovo && verificaEncerramento()) {
-          if(store.getters.getUltimoIdRemovido == atendimentosServer[ramal_server].id_cli){
+          if(store.getters.getUltimoIdRemovido == atendimentosServer[ramal_server].login_usu){
               store.dispatch('setUltimoIdRemovido', '')
               return
           }

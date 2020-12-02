@@ -7,7 +7,7 @@ import "../public/assets/css/style.css";
 import "./config/msgs";
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faRandom, faUndo, faSignOutAlt, faAddressBook, faHourglassEnd, faFileAlt, faCheck, faCheckDouble, faTimesCircle, faHourglass, faPause, faPlay, faComment, faComments, faCommentSlash, faArrowAltCircleDown, faImage, faPaperPlane, faPaperclip, faLevelUpAlt, faLongArrowAltLeft, faFolder, faUserPlus, faInfoCircle, faPhoneAlt, faUserClock, faClock, faFolderOpen, faArrowCircleDown, faDownload, faSearchPlus } from '@fortawesome/free-solid-svg-icons'
+import { faRandom, faUndo, faSignOutAlt, faAddressBook, faHourglassEnd, faFileAlt, faCheck, faCheckDouble, faTimes, faTimesCircle, faHourglass, faPause, faPlay, faComment, faComments, faCommentSlash, faArrowAltCircleDown, faImage, faPaperPlane, faPaperclip, faLevelUpAlt, faLongArrowAltLeft, faFolder, faUserPlus, faInfoCircle, faPhoneAlt, faUserClock, faClock, faFolderOpen, faArrowCircleDown, faDownload, faSearchPlus } from '@fortawesome/free-solid-svg-icons'
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { dom } from '@fortawesome/fontawesome-svg-core'
@@ -18,7 +18,7 @@ import Chat from './components/templates/Chat'
 import store from "./store"
 import { getAtendimentos } from "./services/atendimentos"
 
-library.add(faRandom, faUndo, faSignOutAlt, faAddressBook, faHourglassEnd, faFileAlt, faCheck, faCheckDouble, faTimesCircle, faHourglass, faPause, faPlay, faComment, faComments, faCommentSlash, faArrowAltCircleDown, faImage, faPaperPlane, faPaperclip, faLevelUpAlt, faLongArrowAltLeft, faFolder, faUserPlus, faInfoCircle, faPhoneAlt, faUserClock, faClock, faFolderOpen, faArrowCircleDown, faDownload, faSearchPlus)
+library.add(faRandom, faUndo, faSignOutAlt, faAddressBook, faHourglassEnd, faFileAlt, faCheck, faCheckDouble, faTimes, faTimesCircle, faHourglass, faPause, faPlay, faComment, faComments, faCommentSlash, faArrowAltCircleDown, faImage, faPaperPlane, faPaperclip, faLevelUpAlt, faLongArrowAltLeft, faFolder, faUserPlus, faInfoCircle, faPhoneAlt, faUserClock, faClock, faFolderOpen, faArrowCircleDown, faDownload, faSearchPlus)
 dom.watch()
 
 Vue.use(Datetime)
