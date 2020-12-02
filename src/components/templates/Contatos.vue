@@ -117,6 +117,7 @@ export default {
       totalMsgNovas: '',
       totalClientesNovos: '',
       reqEmAndamento: false,
+      persistir: false
     };
   },
   components: {
@@ -366,7 +367,13 @@ export default {
       }
 
       if(todasMensagens.erro){
-        this.setMensagensClienteAtivo(atd.id_cli, todasMensagens, true)
+        if(!this.persistir){
+          this.persistir = true
+          this.ativarConversa(atd, indice)
+        }else{
+          this.persistir = false
+          this.setMensagensClienteAtivo(atd.id_cli, todasMensagens, true)
+        }
       }else{
         this.setMensagensClienteAtivo(atd.id_cli, todasMensagens, false)
       }
