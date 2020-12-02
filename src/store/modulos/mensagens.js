@@ -6,6 +6,8 @@ export default {
     categoria: '',
     assunto: '',
     nroChat: '',
+    temMensagemFormatada: false,
+    temAnexo: true
   },
   mutations: {
     setTipoMsg(state, tipoMsg){
@@ -25,6 +27,12 @@ export default {
     },
     setNroChat(state, nroChat){
       state.nroChat = nroChat
+    },
+    setTemMensagemFormatada(state, temMensagemFormatada){
+      state.temMensagemFormatada = temMensagemFormatada
+    },
+    setTemAnexo(state, temAnexo){
+      state.temAnexo = temAnexo
     }
   },
   actions: {
@@ -45,6 +53,12 @@ export default {
     },
     setNroChat: (context, payload) => {
       context.commit('setNroChat', payload)
+    },
+    setTemMensagemFormatada: (context, payload) => {
+      context.commit('setTemMensagemFormatada', payload)
+    },
+    setTemAnexo: (context, payload) => {
+      context.commit('setTemAnexo', payload)
     }
   },
   getters: {
@@ -65,6 +79,12 @@ export default {
     },
     getNroChat(state){
       return state.nroChat
+    },
+    getTemMensagemFormatada(state){
+      return state.temMensagemFormatada
+    },
+    getTemAnexo(state){
+      return state.temAnexo
     }
   }
 }

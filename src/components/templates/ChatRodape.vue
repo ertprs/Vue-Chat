@@ -55,42 +55,47 @@
             <font-awesome-icon :icon="['fas', 'paper-plane']" />
           </div>
           <!-- Btn abrir msg formatada -->
-          <div
-            v-if="temMsgFormatada"
-            class="chat-rodape-botoes-botao"
-            :title="dicionario.title_msg_formatada"
-            v-on:click="selecionarMsgFormatada()"
-          >
-            <font-awesome-icon :icon="['fas', 'comment']" />
-          </div>
-          <!-- Btn abrir opcoes -->
-          <div
-            class="chat-rodape-botoes-botao botao-enviar-anexo"
-            :class="abrirOpcoes ? 'btn-ativo z-index-2': ''"
-            title="Selecionar Anexo"
-            v-on:click="selecionarAnexo(aparecerPrevia)"
-          >
-            <font-awesome-icon :icon="['fas', 'paperclip']" />
-            <!-- Modal Opcoes -->
+          <transition name="fade">
             <div
-              class="chat-rodape-anexo-opcoes"
-              v-if="abrirOpcoes"
-              :class="{'z-index-2' : abrirOpcoes}"
+              v-if="temMensagemFormatada"
+              class="chat-rodape-botoes-botao"
+              :title="dicionario.title_msg_formatada"
+              v-on:click="selecionarMsgFormatada()"
             >
-              <!-- Btn selecionar imagem -->
-              <div class="imagens" v-on:click="selecionarImagem()" :title="dicionario.title_anexo_img">
-                <font-awesome-icon :icon="['fas', 'image']" />
+              <font-awesome-icon :icon="['fas', 'comment']" />
+            </div>
+          </transition>
+          <!-- Btn abrir opcoes -->
+          <transition name="fade">
+            <div
+              v-if="temAnexo"
+              class="chat-rodape-botoes-botao botao-enviar-anexo"
+              :class="abrirOpcoes ? 'btn-ativo z-index-2': ''"
+              title="Selecionar Anexo"
+              v-on:click="selecionarAnexo(aparecerPrevia)"
+            >
+              <font-awesome-icon :icon="['fas', 'paperclip']" />
+              <!-- Modal Opcoes -->
+              <div
+                class="chat-rodape-anexo-opcoes"
+                v-if="abrirOpcoes"
+                :class="{'z-index-2' : abrirOpcoes}"
+              >
+                <!-- Btn selecionar imagem -->
+                <div class="imagens" v-on:click="selecionarImagem()" :title="dicionario.title_anexo_img">
+                  <font-awesome-icon :icon="['fas', 'image']" />
+                </div>
+                <!-- Btn selecionar documentos -->
+                <div class="docs" v-on:click="selecionarDoc()" :title="dicionario.title_anexo_doc">
+                  <font-awesome-icon :icon="['fas', 'file-alt']" />
+                </div>
               </div>
-              <!-- Btn selecionar documentos -->
-              <div class="docs" v-on:click="selecionarDoc()" :title="dicionario.title_anexo_doc">
-                <font-awesome-icon :icon="['fas', 'file-alt']" />
+              <div class="chat-rodape-botoes-container-anexo d-none">
+                <input type="file" id="file" accept="image/*" @change="fileUpload(true, $event)" />
+                <input type="file" id="doc" accept="application/*" @change="fileUpload(false, $event)" />
               </div>
             </div>
-            <div class="chat-rodape-botoes-container-anexo d-none">
-              <input type="file" id="file" accept="image/*" @change="fileUpload(true, $event)" />
-              <input type="file" id="doc" accept="application/*" @change="fileUpload(false, $event)" />
-            </div>
-          </div>
+          </transition>
         </div>
       </div>
     </div>
@@ -188,7 +193,6 @@ export default {
       txtFormatosValidos: "",
       abrirOpcoes: false,
       erroFormatoAnexo: false,
-      temMsgFormatada: false,
       mensagensFormatadas_01: [],
       chaveAtual_01: '',
       mensagensFormatadas_02: [],
@@ -226,7 +230,7 @@ export default {
     this.alturaTela = document.querySelector("html").offsetHeight
 
     this.initResize();
-    this.verificaTemMsgFormatada()
+    this.verificaTemMensagemFormatada()
   },
   methods: {
     adicionarEmoji(value) {
@@ -661,16 +665,14 @@ export default {
     acionaFormataHoraMensagem() {
       return formataHoraMensagem()
     },
-    verificaTemMsgFormatada(){
+    verificaTemMensagemFormatada(){
       let valor = ''
       let tokenCliente = this.atendimentoAtivo.token_cliente
 
       obterMsgFormatada(valor, tokenCliente)
         .then((data) => {
-          if(!data){
-            this.temMsgFormatada = false
-          }else{
-            this.temMsgFormatada = true
+          if(data){
+            this.$store.dispatch("setTemMensagemFormatada", true)
           }
         })
         .catch((err) => {
@@ -1140,7 +1142,9 @@ export default {
       dicionario: "getDicionario",
       nomeOpe: "getNomeOpe",
       verificaMsgFormatadaAberto: "getVerificaMsgFormatadaAberto",
-      abrirEmojis: "getAbrirEmojis"
+      abrirEmojis: "getAbrirEmojis",
+      temMensagemFormatada: "getTemMensagemFormatada",
+      temAnexo: "getTemAnexo"
     })
   },
   created(){

@@ -156,6 +156,10 @@ export default {
             auxAtdAtivo.rules = arrayRegras
             this.$store.commit("setAtendimentoAtivo", auxAtdAtivo)
 
+            if(!arrayRegras.usa_anexo){
+              this.$store.dispatch("setTemAnexo", false)
+            }
+
             if(arrayRegras.accept_document){
               const todasExts = arrayRegras.accept_document
 
