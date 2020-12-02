@@ -301,6 +301,10 @@ export default {
             if(arrMsgAtualizado.length !== this.atendimentoAtivo.arrMsg[chaveFinal].msg.length){
               arrMsgAtualizado[arrMsgAtualizado.length - 1] = this.atendimentoAtivo.arrMsg[chaveFinal].msg[this.atendimentoAtivo.arrMsg[chaveFinal].msg.length - 1]
 
+              console.log("---------------------------")
+              console.log("mensagem com mesmo seq")
+              console.log("---------------------------")
+
               this.$set(this.atendimentoAtivo.arrMsg[chaveFinal], "msg", arrMsgAtualizado)
               this.$forceUpdate()
             }

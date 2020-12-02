@@ -405,6 +405,7 @@ function removerDuplicidadeParaInserirEmAtendimento(tipo, loginUsuComparativo){
 function atualizarMensagens(cliente, ramal, novosAtendimentos) {
   //cliente -> novo retorno do back
   //novosAtendimentos -> mem�ria local
+
   if (!novosAtendimentos[ramal]) {
     return
   }
@@ -421,6 +422,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
     if (cliente.arrMsg[chave]) {
       cliente.arrMsg[chave].msg.map(message => {
         if (!seqs.includes(message.seq)) {
+
           novosAtendimentos[ramal].arrMsg[chave].msg.push(message)
 
           if (store.getters.getIdAtendimentoAtivo !== novosAtendimentos[ramal].id_cli && message.resp_msg == 'CLI') {
@@ -448,7 +450,6 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
       })
     }
   }
-
 }
 
 var startTime, endTime;
