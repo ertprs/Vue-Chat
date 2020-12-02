@@ -195,7 +195,11 @@ export default {
                         str += `<li>${this.dicionario.msg_data_hora_leitura} - ${this.acionaFormataDataHora(arrStatusMsg[index][j].data_hora_leitura, true)}</li>`
                       }
                       if(arrStatusMsg[index][j].status_msg){
-                        str += `<li>${arrStatusMsg[index][j].status_msg}</li>`
+                        if(arrStatusMsg[index][j].status_msg[0]){
+                          str += `<li>${arrStatusMsg[index][j].status_msg[0].code} - ${arrStatusMsg[index][j].status_msg[0].title}</li>`
+                        }else{
+                          str += `<li>${arrStatusMsg[index][j].status_msg}</li>`
+                        }
                       }
                       str += "</ul>"
 
