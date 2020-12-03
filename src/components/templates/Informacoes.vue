@@ -1,7 +1,7 @@
 <template>
   <div id="informacoes" :class="{'d-none' : semIframe}">
     <!-- Ti­tulo -->
-    <div class="informacoes-titulo tamanho-titulos" v-if="!atendimentoAtivo.informacoes || caso == 206 || caso == 400">
+    <div class="informacoes-titulo tamanho-titulos" id="titulo-informacoes" v-if="!atendimentoAtivo.informacoes || caso == 206 || caso == 400">
       <font-awesome-icon :icon="['fas', 'info-circle']" />
       <h1 :title="dicionario.titulo_informacoes" v-text="dicionario.titulo_informacoes"></h1>
     </div>
@@ -89,7 +89,6 @@
 <script>
 
 import { formataTelefone, formataHorario } from "@/services/formatacaoDeTextos"
-import { gerenciarCores } from "@/services/gerenciarCores"
 
 import { mapGetters } from 'vuex'
 import BotoesAcoes from '../BotoesAcoes'
@@ -116,9 +115,6 @@ export default {
     fecharIframeCttAtivo(){
       this.$store.dispatch('setIframeCttAtivo', false)
     }
-  },
-  beforeUpdate(){
-    gerenciarCores(this, "informacoes")
   },
   watch: {
     atendimentoAtivo(){

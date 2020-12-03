@@ -1,0 +1,44 @@
+.ligacao-container{
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+.btn-ligacao{
+  color: #FFF!important;
+  height: 35px;
+}
+.botoes-ligacao-container{
+  @include d-flex-center("vertical");
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 90%;
+  margin: 0 auto;
+  .btn-ligacao-superior{
+    // Pausar - rosa
+    &:nth-child(1){
+      flex: 1;
+      margin-right: 2.5%;
+      @include estilo-botao(-4px, -2px, 1, #db00b6);
+      background-color: lighten(#db00b6, 10);
+    }
+    // Desligar - azul
+    &:nth-child(2){
+      flex: 2;
+      @include estilo-botao(-4px, -2px, 1, #3f37c9);
+      background-color: lighten(#3f37c9, 10);
+    }
+  }
+}
+.btn-ligacao-encerrar{
+  width: 90%;
+  margin: 0 auto;
+  position: absolute;
+  bottom: 20px;
+  // Encerrar
+  .btn-ligacao-inferior{
+    @include estilo-botao(-4px, -2px, 1, #E74C3C);
+    background-color: lighten(#E74C3C, 10);
+    margin-top: 10px;
+    width: 100%;
+  }
+}

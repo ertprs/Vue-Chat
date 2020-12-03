@@ -4,7 +4,7 @@
       <div class="titulo-contatos--icone-container" :class="{'fechado' : fechado}">
         <font-awesome-icon :icon="['fas', 'comment']" :title="dicionario.titulo_atendimentos" />
         <transition name="fade">
-          <h1 v-show="!fechado"> Smart<span class="destaque-letra">CHAT</span> </h1> <!-- dicionario.titulo_atendimentos -->
+          <h1 v-show="!fechado"> Smart<span class="destaque-letra">CHANNEL</span> </h1> <!-- dicionario.titulo_atendimentos -->
         </transition>
       </div>
       <div>
@@ -48,7 +48,7 @@
             @click="ativarConversa( atd, indice )"
             @contextmenu="abrirMenuBotaoDireito($event)"
           >
-            <div class="circulo-contatos">
+            <div class="circulo-contatos" v-if="atd.nome_usu">
               <p v-text="acionaFormataSigla(atd.nome_usu[0], 'upper')"></p>
               <p v-if="fechado" v-text="acionaFormataSigla(atd.nome_usu[1], 'lower')"></p>
               <img v-if="atd.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${atd.sigla}.png`">
@@ -100,7 +100,6 @@ import axios_api from '@/services/serviceAxios'
 
 import { formataNome, formataSigla, formataDataHora, formataHoraMensagem } from "@/services/formatacaoDeTextos"
 import { limparIframeUsuarioRemovido } from "@/services/iframe"
-import { gerenciarCores } from "@/services/gerenciarCores"
 
 import SimpleContextMenu from 'vue-simple-context-menu'
 import ListaAguardando from "../ListaAguardando"
@@ -185,9 +184,6 @@ export default {
         }
       }
     }
-  },
-  beforeUpdate(){
-    gerenciarCores(this, "contatos")
   },
   created(){
     this.verificaLocalStorage()
@@ -351,6 +347,12 @@ export default {
       }
     },
     ativarConversa(atd, indice) {
+
+      if(atd.tipo == 'ligacao'){
+        this.$store.dispatch('setAtendimentoAtivo', atd)
+        this.$store.dispatch('setIdAtendimentoAtivo', atd.id_cli)
+        return
+      }
 
       if(atd.id_cli == this.idAtendimentoAtivo){
         if(atd.nro_chat == this.atendimentoAtivo.nro_chat){

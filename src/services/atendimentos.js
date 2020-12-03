@@ -114,10 +114,12 @@ function tratarResponse(response, app) {
 
           let regex = /\s|\]|\[/g
           for (let atd in mainData.atendimentos) {
-            if (mainData.atendimentos[atd].login_usu.match(regex)) {
-              mainData.atendimentos[atd].login_usu = mainData.atendimentos[atd].login_usu.replace(regex, '')
+            if(mainData.atendimentos[atd].tipo !== "ligacao"){
+              if (mainData.atendimentos[atd].login_usu.match(regex)) {
+                mainData.atendimentos[atd].login_usu = mainData.atendimentos[atd].login_usu.replace(regex, '')
+              }
+              store.dispatch('setNomeOpe', mainData.atendimentos[atd].login_operador)
             }
-            store.dispatch('setNomeOpe', mainData.atendimentos[atd].login_operador)
           }
 
           store.dispatch('setAtendimentos', mainData.atendimentos)

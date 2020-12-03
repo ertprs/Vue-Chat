@@ -20,7 +20,6 @@
 <script>
 
 import { formataSigla } from "@/services/formatacaoDeTextos"
-import { gerenciarCores } from "@/services/gerenciarCores"
 
 import { mapGetters } from 'vuex'
 
@@ -29,9 +28,6 @@ export default {
     return{
       chatTitulo: 'Chat'
     }
-  },
-  beforeUpdate(){
-    gerenciarCores(this, "chat")
   },
   methods: {
     acionaFormataSigla(letra, acao){

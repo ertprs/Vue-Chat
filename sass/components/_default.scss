@@ -1,5 +1,6 @@
 :root{
-  --cor: #CCC
+  --cor: #CCC;
+  --tamanho-titulos: 33px;
 }
 
 $bg-transferencia: #512da8;
@@ -28,7 +29,7 @@ body{
 }
 
 .tamanho-titulos{
-  max-height: 33px;
+  max-height: var(--tamanho-titulos);
 }
 
 .resizable-content{
