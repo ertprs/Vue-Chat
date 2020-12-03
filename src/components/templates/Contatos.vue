@@ -209,7 +209,6 @@ export default {
       aguardando: "getAguardando",
       todos: "getTodos",
       caso: "getCaso",
-      iframesDisponiveis: "getIframesDisponiveis",
       atendimentoAtivo: "getAtendimentoAtivo",
       idAtendimentoAtivo: "getIdAtendimentoAtivo",
       reqRegras: "getReqRegras",

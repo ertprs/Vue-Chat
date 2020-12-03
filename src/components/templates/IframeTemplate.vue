@@ -83,7 +83,7 @@ export default {
       semIframe: "getSemIframe"
     }),
   },
-  beforeDestroy() {
+  destroyed() {
     this.$root.$off('mostrar-iframe')
   }
 };

@@ -1,5 +1,3 @@
-import { strictEqual } from "assert";
-
 export default {
     state: {
       iframesDisponiveis: [],

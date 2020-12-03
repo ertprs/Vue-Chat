@@ -21,25 +21,14 @@ export function carregarIframe(atendimentos) {
   store.commit('setIframesDisponiveis', todosIframes)
 }
 
-export function ClearIFrames(idsFrames){
-  const container = document.querySelector('.container-iframes')
-  if(container){
-    if(container.childNodes){
-      if(container.childNodes.length){
-        container.childNodes.forEach(el => {
-          if(el.id){
-            if(!idsFrames.includes(el.id)){
-              let iframe = document.querySelector(`#${el.id}`)
-              if(iframe){
-                console.log("iframes limpos: ", iframe)
-                iframe.remove()
-              }
-            }
-          }
-        })
-      }
-    }
+export function adicionarIframeNovoUsu(id, url){
+  const regex = /\s|\]|\[/g
+  if (id.match(regex)) {
+    id = id.replace(regex, '')
   }
+
+  let objIframe = { id: id, url: url }
+  store.commit('pushIframesDisponiveis', objIframe)
 }
 
 export function limparIframeUsuarioRemovido(idIframe){

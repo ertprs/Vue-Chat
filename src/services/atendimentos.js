@@ -2,8 +2,7 @@ import store from "../store"
 import axios from "axios"
 import axios_api from "./serviceAxios"
 import { axiosTokenJWT } from "./serviceAxios"
-import { carregarIframe, ClearIFrames } from "./iframe"
-import { connectableObservableDescriptor } from "rxjs/internal/observable/ConnectableObservable";
+import { carregarIframe, adicionarIframeNovoUsu } from "./iframe"
 
 const TEMPO_ATUALIZACAO = 2000
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
@@ -350,6 +349,8 @@ function atualizarClientes(mainData, app) {
 
           novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
           novosAtendimentos[ramal_server].novoContato = true
+
+          adicionarIframeNovoUsu(novosAtendimentos[ramal_server].login_usu, novosAtendimentos[ramal_server].url)
 
           store.dispatch('setAtendimentos', novosAtendimentos)
           temClienteNovo = false
