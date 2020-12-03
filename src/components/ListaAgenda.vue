@@ -127,7 +127,7 @@ export default {
 
       liberarEncerrar()
     },
-    ativarCliente(id, grupo, atd){
+    async ativarCliente(id, grupo, atd){
       if(!id || !grupo){
         this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_ativar_cliente})
         console.log("parametros da funcao ativar cliente nao estao de acordo com o esperado")
@@ -145,9 +145,8 @@ export default {
         grupo: grupo
       }
 
-      axios_api.post(`start-contato?${this.reqTeste}`, data)
+      await axios_api.post(`start-contato?${this.reqTeste}`, data)
         .then((response) => {
-          this.reqEmAndamento = false
           if(response.data.st_ret == "OK"){
             this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_aguarde_ativar_cliente})
 
@@ -162,9 +161,10 @@ export default {
           }
         })
         .catch(error => {
-          this.reqEmAndamento = false
           this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_ativar_cliente})
         })
+
+      this.reqEmAndamento = false
     },
     acionaFormataDataAgenda(data, hora, atd, retorno, id){
       return formataDataAgenda(data, hora, atd, retorno, id)

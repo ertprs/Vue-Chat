@@ -475,6 +475,12 @@ export function removerCliente(){
   const todosAtendimentos = store.getters.getTodosAtendimentos
   const atendimentoAtivo = store.getters.getAtendimentoAtivo
 
+  if(!todosAtendimentos || !atendimentoAtivo){
+    console.log("todosAtds: ", todosAtendimentos)
+    console.log("atdAtivo: ", atendimentoAtivo)
+    return
+  }
+
   let objAtdAux = {}
   for(let ramal in todosAtendimentos){
     if(todosAtendimentos[ramal].login_usu != atendimentoAtivo.login_usu){

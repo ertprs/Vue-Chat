@@ -28,7 +28,7 @@
       </div>
       <!-- Caso haja Cliente -->
       <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 400">
-        <div class="lista-atendimento--titulo" v-if="caso !== 400 && caso !== 206" :class="{'fechado' : fechado}">
+        <div class="lista-atendimento--titulo" v-if="caso != 400 && caso != 206" :class="{'fechado' : fechado}">
           <div :class="{'fechado' : fechado}">
             <font-awesome-icon :icon="['fas', 'play']" :title="dicionario.sub_titulo_atendimentos" />
           </div>
