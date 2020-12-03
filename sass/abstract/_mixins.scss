@@ -179,10 +179,10 @@ $tamanho-sinalizador-nova-msg: 12.5px;
           }
         }
         .anexo-container{
-          a{
+          a, .arquivo-erro{
             padding: 10px 15px 15px 15px;
             @include d-flex-center();
-            p{
+            p, &.arquivo-erro{
               margin: 0;
               margin-left: 15px;
               font-size: .9rem

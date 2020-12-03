@@ -21,7 +21,7 @@
               <font-awesome-icon :icon="['fas', 'file-alt']" />
               <p v-text="nomeArquivo"></p>
             </a>
-            <p v-else :title="`${tipoDoc} - ${nomeArquivo}`">
+            <p v-else :title="`${tipoDoc} - ${nomeArquivo}`" class="arquivo-erro">
               <font-awesome-icon :icon="['fas', 'file-alt']" />
               {{ nomeArquivo }}
             </p>
