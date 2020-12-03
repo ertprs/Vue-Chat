@@ -58,6 +58,7 @@ import { executandoEncerrar, liberarEncerrar } from "@/services/atendimentos"
 export default {
   data(){
     return{
+      agora: "",
       hora: "",
       data: "",
       minData: "",
@@ -283,26 +284,11 @@ export default {
       this.hora = ""
     },
     verificarDataHora(data, hora){
-      let date = new Date()
-      let ano = date.getFullYear()
-      let dia = date.getDate()
-      let mes = date.getMonth() + 1
-
-      if(dia < 10){
-        dia = "0"+dia
-      }
-
-      if(mes < 10){
-        mes = "0"+mes
-      }
-
-      let agora = ano + '-' + mes + '-' + dia
-
       let arrHora = hora.split(':')
-      let horaAtual = date.getHours()
-      let minutosAtual = date.getMinutes()
+      let horaAtual = new Date().getHours()
+      let minutosAtual = new Date().getMinutes()
       // Data agendada igual a data de hoje
-      if(data == agora){
+      if(data == this.agora){
         // Hora atual maior que hora agendada
         if(horaAtual > parseInt(arrHora[0])){
           return false
@@ -336,8 +322,8 @@ export default {
         mes = "0"+mes
       }
 
-      let agora = ano + '-' + mes + '-' + dia
-      this.data = agora
+      this.agora = ano + '-' + mes + '-' + dia
+      this.data = this.agora
       this.minData = this.data
 
       mes = parseInt(mes) + 1
