@@ -53,7 +53,7 @@ import { mapGetters } from "vuex"
 
 import axios_api from "@/services/serviceAxios"
 import { limparIframeUsuarioRemovido } from "@/services/iframe"
-import { executandoEncerrar, liberarEncerrar } from "@/services/atendimentos"
+import { executandoEncerrar, liberarEncerrar, removerCliente } from "@/services/atendimentos"
 
 export default {
   data(){
@@ -145,7 +145,7 @@ export default {
             .then(response => {
               if(response.status == 200){
                 this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_sucesso_retorno})
-                this.removerCliente()
+                this.ativarRemoverCliente()
                 this.$root.$emit("reverter-cores")
 
                 this.reqAguardando("todos")
@@ -167,7 +167,7 @@ export default {
 
                 this.$store.commit("adicionarCliAguardando", this.atendimentoAtivo)
 
-                this.removerCliente()
+                this.ativarRemoverCliente()
                 this.$root.$emit("reverter-cores")
 
                 this.reqAguardando("pessoal")
@@ -203,7 +203,7 @@ export default {
             .then(response => {
               if(response.status == 200){
                 this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_sucesso_retorno})
-                this.removerCliente()
+                this.ativarRemoverCliente()
                 this.$root.$emit("reverter-cores")
 
                 this.reqAgenda()
@@ -254,28 +254,8 @@ export default {
           console.log("error get agenda: ", error)
         })
     },
-    removerCliente(){
-      let objAtdAux = {}
-      for(let ramal in this.todosAtendimentos){
-        if(this.todosAtendimentos[ramal].login_usu != this.atendimentoAtivo.login_usu){
-          objAtdAux[ramal] = this.todosAtendimentos[ramal]
-        }
-      }
-
-      const regex = /\s|\]|\[/g
-      const idIframe = this.atendimentoAtivo.login_usu.replace(regex, "")
-
-      limparIframeUsuarioRemovido(`iframe_${idIframe}`)
-      this.$store.dispatch("setAtendimentos", objAtdAux)
-
-      if(!objAtdAux || !Object.keys(objAtdAux).length){
-        this.$store.dispatch("setCaso", 206)
-      }
-
-      this.$store.dispatch('limparAtendimentoAtivo')
-      this.$store.dispatch('limparIdAtendimentoAtivo')
-
-      this.$forceUpdate()
+    ativarRemoverCliente(){
+      removerCliente()
     },
     fecharPopup(){
       this.$store.dispatch('setBlocker', false)

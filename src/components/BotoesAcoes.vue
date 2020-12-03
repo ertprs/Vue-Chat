@@ -51,7 +51,7 @@
 import axios_api from '@/services/serviceAxios'
 
 import { mapGetters } from 'vuex'
-import { executandoEncerrar, liberarEncerrar } from '@/services/atendimentos'
+import { executandoEncerrar, liberarEncerrar, removerCliente } from '@/services/atendimentos'
 import { limparIframeUsuarioRemovido } from "@/services/iframe"
 
 export default {
@@ -385,7 +385,6 @@ export default {
     },
     popupEncerrar(){
       this.checaBlocker()
-      this.$store.dispatch('setUltimoIdRemovido', this.atendimentoAtivo.login_usu)
 
       executandoEncerrar()
 
@@ -413,7 +412,7 @@ export default {
           if(response.data.st_ret == 'OK'){
             this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_sucesso_encerramento})
 
-            this.removerCliente()
+            this.ativarRemoverCliente()
 
           }
         })
@@ -424,28 +423,8 @@ export default {
 
         liberarEncerrar()
     },
-    removerCliente(){
-      let objAtdAux = {}
-      for(let ramal in this.todosAtendimentos){
-        if(this.todosAtendimentos[ramal].login_usu != this.atendimentoAtivo.login_usu){
-          objAtdAux[ramal] = this.todosAtendimentos[ramal]
-        }
-      }
-
-      const regex = /\s|\]|\[/g
-      const idIframe = this.atendimentoAtivo.login_usu.replace(regex, "")
-
-      limparIframeUsuarioRemovido(`iframe_${idIframe}`)
-      this.$store.dispatch("setAtendimentos", objAtdAux)
-
-      if(!objAtdAux || !Object.keys(objAtdAux).length){
-        this.$store.dispatch("setCaso", 206)
-      }
-
-      this.$store.dispatch('limparAtendimentoAtivo')
-      this.$store.dispatch('limparIdAtendimentoAtivo')
-
-      this.$forceUpdate()
+    ativarRemoverCliente(){
+      removerCliente()
     }
   }
 }

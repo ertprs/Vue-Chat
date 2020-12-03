@@ -78,7 +78,7 @@ import { mapGetters } from 'vuex'
 
 import axios_api from "@/services/serviceAxios"
 import { limparIframeUsuarioRemovido } from "@/services/iframe"
-import { executandoEncerrar, liberarEncerrar } from "@/services/atendimentos"
+import { executandoEncerrar, liberarEncerrar, removerCliente } from "@/services/atendimentos"
 
 export default {
   data(){
@@ -197,7 +197,7 @@ export default {
         .then(response => {
           if(response.data.st_ret == "OK"){
             this.$toasted.global.sucessoTransferencia()
-            this.removerCliente()
+            this.ativarRemoverCliente()
           }
         })
         .catch(error => {
@@ -211,28 +211,8 @@ export default {
 
       this.fecharPopup()
     },
-    removerCliente(){
-      let objAtdAux = {}
-      for(let ramal in this.todosAtendimentos){
-        if(this.todosAtendimentos[ramal].login_usu != this.atendimentoAtivo.login_usu){
-          objAtdAux[ramal] = this.todosAtendimentos[ramal]
-        }
-      }
-
-      const regex = /\s|\]|\[/g
-      const idIframe = this.atendimentoAtivo.login_usu.replace(regex, "")
-
-      limparIframeUsuarioRemovido(`iframe_${idIframe}`)
-      this.$store.dispatch("setAtendimentos", objAtdAux)
-
-      if(!objAtdAux || !Object.keys(objAtdAux).length){
-        this.$store.dispatch("setCaso", 206)
-      }
-
-      this.$store.dispatch('limparAtendimentoAtivo')
-      this.$store.dispatch('limparIdAtendimentoAtivo')
-
-      this.$forceUpdate()
+    ativarRemoverCliente(){
+      removerCliente()
     },
     fecharPopup(event){
       this.$store.dispatch('setBlocker', false)

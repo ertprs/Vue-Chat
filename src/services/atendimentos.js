@@ -2,7 +2,7 @@ import store from "../store"
 import axios from "axios"
 import axios_api from "./serviceAxios"
 import { axiosTokenJWT } from "./serviceAxios"
-import { carregarIframe, adicionarIframeNovoUsu } from "./iframe"
+import { carregarIframe, adicionarIframeNovoUsu, limparIframeUsuarioRemovido } from "./iframe"
 
 const TEMPO_ATUALIZACAO = 2000
 var status_gerenciador = 0 // 0 = Liberado; 1 = bloqueado
@@ -340,6 +340,7 @@ function atualizarClientes(mainData, app) {
       if (temClienteNovo && verificaEncerramento()) {
           if(store.getters.getUltimoIdRemovido == atendimentosServer[ramal_server].login_usu){
             store.dispatch('setUltimoIdRemovido', '')
+            console.log("Entrou")
             return
           }
 
@@ -468,4 +469,34 @@ function end() {
 
   var seconds = Math.round(timeDiff);
   return seconds
+}
+
+export function removerCliente(){
+  const todosAtendimentos = store.getters.getTodosAtendimentos
+  const atendimentoAtivo = store.getters.getAtendimentoAtivo
+
+  let objAtdAux = {}
+  for(let ramal in todosAtendimentos){
+    if(todosAtendimentos[ramal].login_usu != atendimentoAtivo.login_usu){
+      objAtdAux[ramal] = todosAtendimentos[ramal]
+    }
+  }
+
+  const regex = /\s|\]|\[/g
+  const idIframe = atendimentoAtivo.login_usu.replace(regex, "")
+  limparIframeUsuarioRemovido(`iframe_${idIframe}`)
+
+  store.dispatch('setUltimoIdRemovido', atendimentoAtivo.login_usu)
+  setTimeout(() => {
+    store.dispatch('setUltimoIdRemovido', '')
+  }, 1000)
+
+  store.dispatch("setAtendimentos", objAtdAux)
+
+  if(!objAtdAux || !Object.keys(objAtdAux).length){
+    store.dispatch("setCaso", 206)
+  }
+
+  store.dispatch('limparAtendimentoAtivo')
+  store.dispatch('limparIdAtendimentoAtivo')
 }
