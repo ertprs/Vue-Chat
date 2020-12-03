@@ -220,11 +220,9 @@ export default {
     setCoresClienteAtivo(){
       this.regrasCor = this.regrasDoClienteAtivo.regras.primary_color
       if(this.regrasCor){
-        this.aplicarCoresNoElemento("#titulo-ligacao", this.regrasCor)
         this.aplicarCoresNoElemento('.chat-opcoes-titulo', this.regrasCor)
         this.aplicarCoresNoElemento('.titulo-contatos', this.lightenDarkenColor(this.regrasCor, 10))
         this.aplicarCoresNoElemento('#informacoes-titulo', this.lightenDarkenColor(this.regrasCor, -10))
-        this.aplicarCoresNoElemento('#titulo-informacoes', this.lightenDarkenColor(this.regrasCor, -10))
         this.$store.dispatch("setBgPopup", this.lightenDarkenColor(this.regrasCor, 15))
       }
     },

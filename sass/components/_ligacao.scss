@@ -2,11 +2,17 @@
   position: relative;
   height: 100%;
   width: 100%;
+  background-color: #b7e4c7;
 }
 .btn-ligacao{
   color: #FFF!important;
   height: 35px;
 }
+
+$cor-pausar: #db00b6;
+$cor-desligar: #3f37c9;
+$cor-encerrar: #E74C3C;
+
 .botoes-ligacao-container{
   @include d-flex-center("vertical");
   justify-content: space-between;
@@ -18,14 +24,14 @@
     &:nth-child(1){
       flex: 1;
       margin-right: 2.5%;
-      @include estilo-botao(-4px, -2px, 1, #db00b6);
-      background-color: lighten(#db00b6, 10);
+      @include estilo-botao(-4px, -2px, 1, $cor-pausar);
+      background-color: lighten($cor-pausar, 10);
     }
     // Desligar - azul
     &:nth-child(2){
       flex: 2;
-      @include estilo-botao(-4px, -2px, 1, #3f37c9);
-      background-color: lighten(#3f37c9, 10);
+      @include estilo-botao(-4px, -2px, 1, $cor-desligar);
+      background-color: lighten($cor-desligar, 10);
     }
   }
 }
@@ -36,8 +42,8 @@
   bottom: 20px;
   // Encerrar
   .btn-ligacao-inferior{
-    @include estilo-botao(-4px, -2px, 1, #E74C3C);
-    background-color: lighten(#E74C3C, 10);
+    @include estilo-botao(-4px, -2px, 1, $cor-encerrar);
+    background-color: lighten($cor-encerrar, 10);
     margin-top: 10px;
     width: 100%;
   }

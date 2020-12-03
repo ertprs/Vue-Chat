@@ -350,6 +350,7 @@ export default {
 
       if(atd.tipo == 'ligacao'){
         this.$store.dispatch('setAtendimentoAtivo', atd)
+        this.exibirInformacoes(atd, indice)
         this.$store.dispatch('setIdAtendimentoAtivo', atd.id_cli)
         return
       }

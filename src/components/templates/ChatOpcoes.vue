@@ -2,7 +2,7 @@
   <div class="chat-opcoes tamanho-titulos">
       <div class="chat-opcoes-titulo" :class="{'cliente-ativo' : atendimentoAtivo}">
         <div class="chat-opcoes-titulo-container">
-          <div class="circulo-contatos">
+          <div class="circulo-contatos" v-if="atendimentoAtivo.nome_usu">
             <p v-text="acionaFormataSigla(atendimentoAtivo.nome_usu[0], 'upper')"></p>
           </div>
           <ul class="chat-opcoes-titulo-container--lista">
