@@ -9,6 +9,7 @@
     @include d-flex-center('vertical');
     flex-wrap: wrap;
     width: 100%;
+    // background-color: var(--cor);
     background-color: #EEE;
     border-bottom: 3px solid #EEE;
     &.cliente-ativo{
@@ -22,13 +23,10 @@
       color: #555;
     }
     h1{
-      color: #333;
-      font-size: 1.2rem;
+      color: #666;
+      font-size: .9rem;
       margin: 0;
       margin-left: 15px;
-      svg{
-        font-size: 1.3rem;
-      }
     }
     .chat-opcoes-titulo-container{
       @include d-flex-center('vertical');
@@ -38,12 +36,12 @@
       overflow: hidden;
       .circulo-contatos{
         border-radius: 50%;
-        width: 35px;
-        height: 35px;
-        min-width: 35px;
-        min-height: 35px;
+        width: 1.7rem;
+        height: 1.7rem;
+        min-width: 1.7rem;
+        min-height: 1.7rem;
         @include d-flex-center();
-        margin: 0 10px;
+        margin: 0 5px;
         background-color: #FFF;
         p{
           color: #000;
@@ -64,13 +62,16 @@
           white-space: nowrap;
           text-overflow: ellipsis;
           overflow: hidden;
-          font-size: .8rem;
+          font-size: .675rem;
           margin: 0;
           padding: 0;
-          color: #555;
+          color: #666;
           &:nth-child(1){
-            font-size: 1rem;
-            font-weight: bold
+            font-weight: bold;
+            font-size: .775rem;
+          }
+          &:nth-child(2){
+            margin-top: -2px;
           }
         }
       }
@@ -78,7 +79,7 @@
         position: absolute;
         right: 10px;
         img{
-          height: 1.8rem;
+          height: 1.5rem;
         }
         svg{
           font-size: 1.4rem;

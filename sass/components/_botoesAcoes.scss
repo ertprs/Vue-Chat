@@ -29,22 +29,25 @@
         font-size: .9rem;
       }
       &.botao-transferencia{
-        background-color: $bg-transferencia;
+        background-color: lighten($bg-transferencia, 10);
         svg{
-          color: darken($bg-transferencia, 30);
+          // color: darken($bg-transferencia, 10);
+          color: #FFF
         }
       }
       &.botao-retornar{
         margin: 0;
-        background-color: $bg-retornar;
+        background-color: lighten($bg-retornar, 10);
         svg{
-          color: darken($bg-retornar, 20)
+          // color: darken($bg-retornar, 10)
+          color: #FFF
         }
       }
       &.botao-encerrar{
         background-color: $bg-encerrar;
         svg{
-          color: darken($bg-encerrar, 30);
+          // color: darken($bg-encerrar, 10);
+          color: #FFF
         }
       }
     }

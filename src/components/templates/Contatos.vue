@@ -2,9 +2,9 @@
   <div id="todos-contatos" :class="{'fechado' : fechado}" class="resizable-content">
     <div class="titulo-contatos tamanho-titulos">
       <div class="titulo-contatos--icone-container" :class="{'fechado' : fechado}">
-        <font-awesome-icon :icon="['fas', 'address-book']" :title="dicionario.titulo_atendimentos" />
+        <font-awesome-icon :icon="['fas', 'comment']" :title="dicionario.titulo_atendimentos" />
         <transition name="fade">
-          <h1 v-show="!fechado" v-text="dicionario.titulo_atendimentos"></h1>
+          <h1 v-show="!fechado"> Smart<span class="destaque-letra">CHAT</span> </h1> <!-- dicionario.titulo_atendimentos -->
         </transition>
       </div>
       <div>
@@ -33,7 +33,7 @@
             <font-awesome-icon :icon="['fas', 'play']" :title="dicionario.sub_titulo_atendimentos" />
           </div>
           <h2 v-show="!fechado" v-text="dicionario.sub_titulo_atendimentos"></h2>
-          <div :class="{'fechado' : fechado}" class="container-contadores">
+          <div v-if="!fechado" class="container-contadores">
             <span v-if="objAtendimentos.length" :title="dicionario.title_total_clientes" class="total-clientes" v-text="objAtendimentos.length"></span>
             <span v-if="totalClientesNovos != ''" :title="dicionario.title_total_novos_clientes" class="total-clientes-novos" v-text="totalClientesNovos"></span>
             <span v-if="totalMsgNovas != ''" :title="dicionario.title_total_msgs_novas" class="total-msgs-novas" v-text="totalMsgNovas"></span>

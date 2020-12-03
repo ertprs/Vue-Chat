@@ -15,18 +15,19 @@
 .informacoes-titulo{
   @include d-flex-center('vertical');
   height: 10%;
-  background-color: var(--cor);
-  border-bottom: 3px solid var(--cor);
+  background-color: #eee;
+  border-bottom: 3px solid #eee;
+
   transition: background 300ms;
-  color: #FFF;
+  color: #666;
   width: 100%;
   h1{
-    font-size: 1.2rem;
+    font-size: .9rem;
     margin: 0;
     margin-left: 5px;
   }
   svg{
-    margin-left: 15px;
+    margin-left: 5px;
   }
 }
 
@@ -35,7 +36,6 @@
   .iframe-informacoes{
     width: 100%;
     height: 100%;
-    padding: 5px;
     iframe{
       width: 100%;
       height: 100%;
@@ -60,20 +60,20 @@
 .informacoes-superiores-container{
   @include d-flex-center('vertical');
   justify-content: space-between;
-  height: 10%;
   width: 90%;
   font-size: .8375rem;
   margin-right: 15px;
   .informacoes-item{
     @include d-flex-center('horizontal');
     flex-direction: column;
+    padding: 2px 5px 0 5px;
     .informacoes-item-titulo{
       @include d-flex-center("vertical");
       p{
         font-weight: bold;
         margin: 0;
         margin-left: 5px;
-        font-size: .875rem;
+        font-size: .65rem;
       }
     }
     p{
@@ -81,8 +81,8 @@
       overflow: hidden;
       text-overflow: ellipsis;
       margin: 0;
-      margin-left: 15px;
-      font-size: .775rem;
+      margin-left: 5px;
+      font-size: .6rem;
     }
   }
 }
@@ -92,7 +92,6 @@
   @include d-flex-center();
   background-color: whitesmoke;
   div{
-    font-size: 1.1rem;
     color: lighten(#222, 10);
     @include d-flex-center();
     flex-wrap: wrap;

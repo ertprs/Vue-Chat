@@ -79,10 +79,13 @@ $corBordaListas: #AAA;
   .titulo-contatos{
     position: relative;
     @include d-flex-center('vertical');
-    background-color: var(--cor);
-    border-bottom: 3px solid var(--cor);
+    // background-color: var(--cor);
+    // border-bottom: 3px solid var(--cor);
+    // background-color: darken(#eeeeee, 20);
+    background-color: #333;
+    border-bottom: 3px solid #333;
     transition: background 300ms;
-    color: #EEE;
+    color: #333;
     height: 10%;
     width: 100%;
     // border-bottom: 1px solid #CCC;
@@ -109,7 +112,7 @@ $corBordaListas: #AAA;
         transform: rotate(-180deg);
       }
       svg.flecha{
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         cursor: pointer;
         color: #FFF;
       }
@@ -121,14 +124,17 @@ $corBordaListas: #AAA;
       transition: 500ms ease-in-out;
       svg{
         color: #FFF;
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         margin-right: 5px;
       }
       h1 {
         margin: 0;
         padding: 0;
         color: #FFF;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+        .destaque-letra{
+          color: $bg-encerrar
+        }
       }
       &.fechado{
         position: absolute;
@@ -481,19 +487,6 @@ $corBordaListas: #AAA;
       position: absolute;
       right: 5px;
       display: flex;
-    }
-    &.fechado{
-      max-height: unset;
-      height: auto;
-      flex-direction: column;
-      .container-contadores{
-        position: unset;
-        @include d-flex-center();
-        flex-direction: column;
-        span{
-          margin: 3px 0;
-        }
-      }
     }
   }
 }
