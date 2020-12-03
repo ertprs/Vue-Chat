@@ -264,7 +264,6 @@ async function atualizarAtendimentos(app) {
       }
       let mainData = response.data
       if (mainData.st_ret === 'OK' || mainData.atendimentos) {
-        adicionaCaso(200)
         atualizarClientes(mainData, app)
         acionaProcessosAtualizacao(mainData)
       } else if (mainData.st_ret === 'AVISO') {
@@ -327,6 +326,8 @@ function atualizarClientes(mainData, app) {
       }
   }
 
+  let setouAtendimentos = false
+
   for (var ramal_server in atendimentosServer) {
       var temClienteNovo = true
       for (var ramal_local in atendimentosLocal) {
@@ -353,11 +354,16 @@ function atualizarClientes(mainData, app) {
 
           adicionarIframeNovoUsu(novosAtendimentos[ramal_server].login_usu, novosAtendimentos[ramal_server].url)
 
+          setouAtendimentos = true
           store.dispatch('setAtendimentos', novosAtendimentos)
           temClienteNovo = false
       } else {
           atualizarMensagens(atendimentosServer[ramal_server], ramal_server, novosAtendimentos)
       }
+  }
+
+  if(setouAtendimentos){
+    adicionaCaso(200)
   }
 }
 
