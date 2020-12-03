@@ -22,7 +22,9 @@
         :phrases="{ok: dicionario.btn_continuar_select_data_hora, cancel: dicionario.btn_fechar_select_data_hora}"
         class="theme-custom"
         input-class="datetime-date"
-        type="date" />
+        type="date"
+        :min-datetime="minData"
+        :max-datetime="maxData" />
         <datetime
         v-model="hora"
         :placeholder="dicionario.placeholder_select_hora"
@@ -31,7 +33,8 @@
         :phrases="{ok: dicionario.btn_continuar_select_data_hora, cancel: dicionario.btn_fechar_select_data_hora}"
         class="theme-custom"
         input-class="datetime-hour"
-        type="time" />
+        type="time"
+        :min-date="'2020-12-03T08:41:15.534Z'" />
       </div>
       <ul
         class="btns-confirmacao-container popup-lista"
@@ -57,6 +60,9 @@ export default {
     return{
       hora: "",
       data: "",
+      minData: "",
+      maxData: "",
+      minHora: "",
       pessoalData: false,
       reqEmAndamento: false,
       temTodos: false,
@@ -64,7 +70,7 @@ export default {
       temPessoal: false,
       btnPessoal: "",
       temAgendar: false,
-      btnAgendar: ""
+      btnAgendar: "",
     }
   },
   computed: {
@@ -175,11 +181,18 @@ export default {
 
           if(this.data == "" || this.hora == ""){
             this.$toasted.global.defaultError({msg: this.dicionario.msg_data_incorreta})
+            this.reqEmAndamento = false
             return
           }
 
           let data = this.data.slice(0, 10)
           let hora = this.hora.slice(11, 19)
+
+          if(!this.verificarDataHora(data, hora)){
+            this.$toasted.global.defaultError({msg: this.dicionario.msg_data_incorreta})
+            this.reqEmAndamento = false
+            return
+          }
 
           dados.destino = "dedicado"
           dados.data = data
@@ -269,6 +282,46 @@ export default {
       this.pessoalData = false
       this.hora = ""
     },
+    verificarDataHora(data, hora){
+      let date = new Date()
+      let ano = date.getFullYear()
+      let dia = date.getDate()
+      let mes = date.getMonth() + 1
+
+      if(dia < 10){
+        dia = "0"+dia
+      }
+
+      if(mes < 10){
+        mes = "0"+mes
+      }
+
+      let agora = ano + '-' + mes + '-' + dia
+
+      let arrHora = hora.split(':')
+      let horaAtual = date.getHours()
+      let minutosAtual = date.getMinutes()
+      // Data agendada igual a data de hoje
+      if(data == agora){
+        // Hora atual maior que hora agendada
+        if(horaAtual > parseInt(arrHora[0])){
+          return false
+        // Horas iguais, comparar minutos
+        }else if(horaAtual == parseInt(arrHora[0])){
+          if(minutosAtual > parseInt(arrHora[1])){
+            return false
+          }else{
+            return true
+          }
+        // Hora recebida maior que hora atual
+        }else{
+          return true
+        }
+      // necessariamente a data sera maior que agora pois ja existe validacao antes disso, logo tudo que entrar aqui eh uma data valida
+      }else{
+        return true
+      }
+    },
     setAgora(){
       let data = new Date()
       let ano = data.getFullYear()
@@ -285,6 +338,17 @@ export default {
 
       let agora = ano + '-' + mes + '-' + dia
       this.data = agora
+      this.minData = this.data
+
+      mes = parseInt(mes) + 1
+      if(mes == 13){
+        mes = 1
+        ano += 1
+      }
+      mes = mes < 10 ? `0${mes}` : mes
+
+      let maiorData = ano + '-' + mes + '-' + dia
+      this.maxData = maiorData
     }
   }
 }

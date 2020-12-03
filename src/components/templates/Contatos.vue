@@ -223,22 +223,28 @@ export default {
       for(let ramal in this.todosAtendimentos){
         if(this.minhaAgenda.length){
           this.minhaAgenda.map(atdAgenda => {
-            if(atdAgenda.login_usu == this.todosAtendimentos[ramal].login_usu){
-              this.verificarDuplicataEmAtendimento(atdAgenda.login_usu)
+            if(this.todosAtendimentos[ramal] && atdAgenda){
+              if(atdAgenda.login_usu == this.todosAtendimentos[ramal].login_usu){
+                this.verificarDuplicataEmAtendimento(atdAgenda.login_usu)
+              }
             }
           })
         }
         if(this.aguardando.length){
           this.aguardando.map(atdAguardando => {
-            if(atdAguardando.login_usu == this.todosAtendimentos[ramal].login_usu){
-              this.verificarDuplicataEmAtendimento(atdAguardando.login_usu)
+            if(this.todosAtendimentos[ramal] && atdAguardando){
+              if(atdAguardando.login_usu == this.todosAtendimentos[ramal].login_usu){
+                this.verificarDuplicataEmAtendimento(atdAguardando.login_usu)
+              }
             }
           })
         }
         if(this.todos.length){
           this.todos.map(atdTodos => {
-            if(atdTodos.login_usu == this.todosAtendimentos[ramal].login_usu){
-              this.verificarDuplicataEmAtendimento(atdTodos.login_usu)
+            if(this.todosAtendimentos[ramal] && atdTodos){
+              if(atdTodos.login_usu == this.todosAtendimentos[ramal].login_usu){
+                this.verificarDuplicataEmAtendimento(atdTodos.login_usu)
+              }
             }
           })
         }
