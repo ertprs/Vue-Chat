@@ -341,7 +341,7 @@ function atualizarClientes(mainData, app) {
       if (temClienteNovo && verificaEncerramento()) {
           if(store.getters.getUltimoIdRemovido == atendimentosServer[ramal_server].login_usu){
             store.dispatch('setUltimoIdRemovido', '')
-            console.log("Entrou")
+            console.log("Tentativa de adicionar um cliente que foi removido em menos de um segundo")
             return
           }
 
