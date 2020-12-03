@@ -245,9 +245,18 @@ export default {
             this.enviarMensagem(event, previa)
             this.executaTeste(event, previa, cont)
           }
-        }, 500);
+        }, 700);
     },
     async enviarMensagem(event, previa) {
+
+      if(event){
+        if(event.keyCode == 13 && !event.shiftKey){
+          event.preventDefault()
+        }
+        if(event.shiftKey){
+          return
+        }
+      }
 
       if(this.disabled){
         setTimeout(() => {
@@ -262,16 +271,10 @@ export default {
         this.$store.dispatch('setBlocker', false)
       }
 
-      if(event){
-        if(event.keyCode == 13 && !event.shiftKey){
-          event.preventDefault()
-        }
-        if(event.shiftKey){
-          return
-        }
-      }
-
       this.mensagem = this.mensagem.replace(/\n$/, "", this.mensagem);
+      if(!this.mensagem){
+        return
+      }
 
       if(this.mensagem === 'executaTeste') {
         this.executaTeste(event, previa, 0)
