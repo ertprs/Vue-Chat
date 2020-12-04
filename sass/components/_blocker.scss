@@ -7,7 +7,7 @@ div[blocker]{
   z-index: 2;
   @include d-flex-center();
   &.bg-blocker-padrao{
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.3);
   }
   .container-visualizacao{
     @include d-flex-center();
@@ -44,7 +44,7 @@ div[blocker]{
         position: absolute;
         top: -10px;
         right: -10px;
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         color: $bg-encerrar
       }
       iframe{

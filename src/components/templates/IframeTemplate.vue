@@ -33,6 +33,15 @@ export default {
       }
     }
   },
+  watch: {
+    iframesDisponiveis(){
+      for(let i in this.iframesDisponiveis) {
+        if(this.iframesDisponiveis[i].id === this.atendimentoAtivo.id) {
+          this.mostraIframe(this.iframesDisponiveis[i].id, this.iframesDisponiveis[i].url)
+        }
+      }
+    }
+  },
   methods: {
     mostraIframe(idCliente, urlFrame) {
       if(urlFrame != '') {
