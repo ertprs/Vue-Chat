@@ -35,8 +35,14 @@ export default {
   },
   watch: {
     iframesDisponiveis(){
+      let loginUsuAux = this.atendimentoAtivo.login_usu
+      let regex =  /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+/g
+      if(loginUsuAux.match(regex)){
+        loginUsuAux = loginUsuAux.replace(regex, '')
+      }
+
       for(let i in this.iframesDisponiveis) {
-        if(this.iframesDisponiveis[i].id === this.atendimentoAtivo.id) {
+        if(this.iframesDisponiveis[i].id === loginUsuAux) {
           this.mostraIframe(this.iframesDisponiveis[i].id, this.iframesDisponiveis[i].url)
         }
       }
@@ -71,9 +77,9 @@ export default {
           let regex =  /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+/g
 
           if(idCliente.match(regex)){
-              idCliente = idCliente.replace(regex, '')
+            idCliente = idCliente.replace(regex, '')
           }else{
-              idCliente = idCliente
+            idCliente = idCliente
           }
 
           const iframeCliente = document.querySelector("#iframe_" + idCliente)
