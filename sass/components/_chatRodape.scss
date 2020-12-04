@@ -7,7 +7,7 @@ $border-radius: 30px;
 .chat-rodape{
   background-color: darken(#eeeeee, 20);
   position: relative;
-  transition-duration: 300ms;
+  transition-duration: 1s;
   .chat-rodape-container{
     @include d-flex-center('vertical');
     justify-content: space-between;
@@ -45,7 +45,7 @@ $border-radius: 30px;
         .btn-emoji{
           margin-left: 5px;
           font-size: 1.2rem;
-          
+
           @include efeito-hover-padrao();
         }
         .lista-emoji{
@@ -70,7 +70,7 @@ $border-radius: 30px;
               padding: 0;
               margin: 2px;
               font-size: 1.125rem;
-              
+
               @include efeito-hover-padrao();
             }
           }
@@ -98,7 +98,7 @@ $border-radius: 30px;
         border-right: 0;
         flex: 1;
       }
-      
+
       .caracteres-disponiveis{
         font-size: .575rem;
         z-index: 1;
@@ -269,7 +269,7 @@ $border-radius: 30px;
         flex: 1;
       }
       .btn-select-03{
-        @include estilo-botao(-3px, -1px);
+        @include estilo-botao(-3px, -1px, .9, rgba(0, 0, 0, 0.2), "nao");
         @include d-flex-center();
         margin-left: 5px;
         margin-bottom: 5px;
@@ -318,4 +318,54 @@ $border-radius: 30px;
 
 .z-index-2{
   z-index: 2
+}
+
+.pequena-mudanca-tamanho{
+  animation-name: pequenaMudancaTamanho;
+  animation-duration: 1s;
+  animation-fill-mode: forwards
+}
+
+.remover-pequena-mudanca{
+  animation-name: pequenaMudancaTamanho;
+  animation-duration: 1s;
+  animation-fill-mode: backwards
+}
+
+@keyframes pequenaMudancaTamanho{
+  from {
+    height: auto;
+    padding-top: 0;
+    transform: translateY(0)
+  }
+  to{
+    height: inherit;
+    padding-top: 3px;
+    transform: translateY(-25px)
+  }
+}
+
+.maior-mudanca-tamanho{
+  animation-name: maiorMudancaTamanho;
+  animation-duration: 1s;
+  animation-fill-mode: forwards
+}
+
+.remover-maior-mudanca{
+  animation-name: maiorMudancaTamanho;
+  animation-duration: 1s;
+  animation-fill-mode: backwards
+}
+
+@keyframes maiorMudancaTamanho{
+  from {
+    height: auto;
+    padding-top: 0;
+    transform: translateY(0)
+  }
+  to{
+    height: inherit;
+    padding-top: 3px;
+    transform: translateY(-150px)
+  }
 }

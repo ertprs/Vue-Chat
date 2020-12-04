@@ -687,14 +687,14 @@ export default {
       this.$store.dispatch("setVerificaMsgFormatadaAberto", !this.verificaMsgFormatadaAberto)
 
       if (this.verificaMsgFormatadaAberto) {
-        this.alterarValoresVariaveisCSS("aberto")
+        this.adicionaAnimacaoChatRodape("mudanca-maior")
       } else {
         // Textarea menor que 3 linhas
         if(this.tamanhoText < 70){
-          this.alterarValoresVariaveisCSS("padrao")
+          this.adicionaAnimacaoChatRodape("remover-maior")
         // Textarea maior/igual a 3 linhas
         }else{
-          this.alterarValoresVariaveisCSS("medio")
+          this.adicionaAnimacaoChatRodape("mudanca-pequena")
         }
 
         this.mensagensFormatadas_01 = []
@@ -1002,112 +1002,61 @@ export default {
         this.$store.dispatch("setVerificaMsgFormatadaAberto", false)
       }
 
-      if(this.tamanhoText >= 70){
-        this.alterarValoresVariaveisCSS("medio")
+      if(this.tamanhoText >= 68){
+        this.adicionaAnimacaoChatRodape("mudanca-pequena")
       }else{
-        this.alterarValoresVariaveisCSS("padrao")
+        this.adicionaAnimacaoChatRodape("remover")
       }
     },
-    alterarValoresVariaveisCSS(tipo){
-      const root = document.documentElement
+    adicionaAnimacaoChatRodape(tipo){
+      const chatRodape = document.querySelector(".chat-rodape")
 
-      switch(tipo){
-        case "padrao":
-          // Ultimo breakpoint
-          if(this.alturaTela >= 900){
-            root.style.setProperty('--altura-chat-corpo', "79%")
-          // Setimo breakpoint
-          }else if(this.alturaTela >= 800){
-            root.style.setProperty('--altura-chat-corpo', "78%")
-          // Sexto breakpoint
-          }else if(this.alturaTela >= 750){
-            root.style.setProperty('--altura-chat-corpo', "76.5%")
-          // Quinto breakpoint
-          } else if(this.alturaTela >= 700){
-            root.style.setProperty('--altura-chat-corpo', "75%")
-          // Quarto breakpoint
-          }else if(this.alturaTela >= 637){
-            root.style.setProperty('--altura-chat-corpo', "73%")
-          // Terceiro breakpoint
-          }else if(this.alturaTela >= 550){
-            root.style.setProperty('--altura-chat-corpo', "68%")
-          // Segundo breakpoint
-          }else if(this.alturaTela >= 500){
-            root.style.setProperty('--altura-chat-corpo', "66%")
-          // Primeiro breakpoint
-          }else{
-            root.style.setProperty('--altura-chat-corpo', "64%")
+      if(!chatRodape) return
+
+      switch (tipo){
+        case "mudanca-pequena":
+          if(chatRodape.classList.contains("remover-pequena-mudanca")){
+            chatRodape.classList.remove("remover-pequena-mudanca")
+          }
+          chatRodape.classList.add("pequena-mudanca-tamanho")
+        break;
+        case "remover-pequena":
+          if(chatRodape.classList.contains("pequena-mudanca-tamanho")){
+            chatRodape.classList.remove("pequena-mudanca-tamanho")
+            chatRodape.classList.add("remover-pequena-mudanca")
+            setTimeout(() => {
+              chatRodape.classList.remove("remover-pequena-mudanca")
+            }, 500)
           }
         break;
-        case "medio":
-          // Ultimo breakpoint
-          if(this.alturaTela >= 900){
-            root.style.setProperty('--altura-chat-corpo', "78%")
-          // Setimo breakpoint
-          }else if(this.alturaTela >= 800){
-            root.style.setProperty('--altura-chat-corpo', "75%")
-          // Sexto breakpoint
-          }else if(this.alturaTela >= 750){
-            root.style.setProperty('--altura-chat-corpo', "74%")
-          // Quinto breakpoint
-          } else if(this.alturaTela >= 700){
-            root.style.setProperty('--altura-chat-corpo', "72%")
-          // Quarto breakpoint
-          }else if(this.alturaTela >= 637){
-            root.style.setProperty('--altura-chat-corpo', "70%")
-          // Terceiro breakpoint
-          }else if(this.alturaTela >= 550){
-            root.style.setProperty('--altura-chat-corpo', "65%")
-          // Segundo breakpoint
-          }else if(this.alturaTela >= 500){
-            root.style.setProperty('--altura-chat-corpo', "63%")
-          // Primeiro breakpoint
-          }else{
-            root.style.setProperty('--altura-chat-corpo', "62%")
+        case "mudanca-maior":
+          if(chatRodape.classList.contains("remover-maior-mudanca")){
+            chatRodape.classList.remove("remover-maior-mudanca")
           }
+          chatRodape.classList.add("maior-mudanca-tamanho")
         break;
-        case "aberto":
-          // Ultimo breakpoint
-          if(this.alturaTela >= 900){
-            root.style.setProperty('--altura-chat-corpo', "63%")
-          // Setimo breakpoint
-          }else if(this.alturaTela >= 800){
-            root.style.setProperty('--altura-chat-corpo', "60%")
-          // Sexto breakpoint
-          }else if(this.alturaTela >= 750){
-            root.style.setProperty('--altura-chat-corpo', "58.5%")
-          // Quinto breakpoint
-          } else if(this.alturaTela >= 700){
-            root.style.setProperty('--altura-chat-corpo', "55%")
-          // Quarto breakpoint
-          }else if(this.alturaTela >= 637){
-            root.style.setProperty('--altura-chat-corpo', "50%")
-          // Terceiro breakpoint
-          }else if(this.alturaTela >= 550){
-            root.style.setProperty('--altura-chat-corpo', "43%")
-          // Segundo breakpoint
-          }else if(this.alturaTela >= 500){
-            root.style.setProperty('--altura-chat-corpo', "38%")
-          // Primeiro breakpoint
-          }else{
-            root.style.setProperty('--altura-chat-corpo', '35%')
+        case "remover-maior":
+          if(chatRodape.classList.contains("maior-mudanca-tamanho")){
+            chatRodape.classList.remove("maior-mudanca-tamanho")
+            chatRodape.classList.add("remover-maior-mudanca")
+            setTimeout(() => {
+              chatRodape.classList.remove("remover-maior-mudanca")
+            }, 500)
           }
         break;
       }
-
     }
   },
   watch: {
     tamanhoText(){
       if(!this.verificaMsgFormatadaAberto){
-        // Textarea maior que 70 (tres/quatro linhas)
-        if(this.tamanhoText >= 70){
-          this.alterarValoresVariaveisCSS("medio")
-        // Textarea menor que 70 (uma/duas linha)
+        // Textarea maior que 68 (tres/quatro linhas)
+        if(this.tamanhoText >= 68){
+          this.adicionaAnimacaoChatRodape("mudanca-pequena")
+        // Textarea menor que 68 (uma/duas linha)
         }else{
-          this.alterarValoresVariaveisCSS("padrao")
+          this.adicionaAnimacaoChatRodape("remover-pequena")
         }
-
       }
     },
     abrirEmojis() {

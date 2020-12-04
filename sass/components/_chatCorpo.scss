@@ -1,11 +1,7 @@
-:root{
-  --altura-chat-corpo: 68%;
-}
-
 #chat-operador{
   padding: unset!important;
   @include chat-corpo;
-  height: var(--altura-chat-corpo);
+  height: calc(100% - (var(--tamanho-titulos) + 50px + 40px + 30px)); // 50 - tamanho do textarea | 40 - tamanho dos botoes | 30 - espaco adicional
   transition-duration: 300ms;
   box-shadow: inset 5px 0px 15px -5px rgba(0,0,0,0.5);
 }
