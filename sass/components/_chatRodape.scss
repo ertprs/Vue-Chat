@@ -322,13 +322,13 @@ $border-radius: 30px;
 
 .pequena-mudanca-tamanho{
   animation-name: pequenaMudancaTamanho;
-  animation-duration: 1s;
+  animation-duration: 500ms;
   animation-fill-mode: forwards
 }
 
 .remover-pequena-mudanca{
   animation-name: pequenaMudancaTamanho;
-  animation-duration: 1s;
+  animation-duration: 500ms;
   animation-fill-mode: forwards;
   animation-direction: reverse
 }
@@ -348,13 +348,13 @@ $border-radius: 30px;
 
 .maior-mudanca-tamanho{
   animation-name: maiorMudancaTamanho;
-  animation-duration: 1s;
+  animation-duration: 500ms;
   animation-fill-mode: forwards
 }
 
 .remover-maior-mudanca{
   animation-name: maiorMudancaTamanho;
-  animation-duration: 2s;
+  animation-duration: 500ms;
   animation-fill-mode: forwards;
   animation-direction: reverse
 }

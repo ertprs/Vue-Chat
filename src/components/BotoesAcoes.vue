@@ -406,7 +406,7 @@ export default {
     },
     async finalizarAtendimentoNaApi() {
 
-      let data = { "token_cliente": this.atendimentoAtivo.token_cliente }
+      let data = { "token_cliente": this.atendimentoAtivo.token_cliente, "tipo": this.atendimentoAtivo.tipo }
 
       await axios_api.delete(`end-atendimento?${this.reqTeste}`, {data: {...data}})
         .then(response => {
