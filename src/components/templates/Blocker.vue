@@ -5,7 +5,7 @@
       'bg-blocker-padrao' : origemBlocker == 'msg-formatada',
       'bg-blocker-padrao' : origemBlocker == 'atd-parado',
       'bg-blocker-padrao' : origemBlocker == 'visualizar-imagem',
-      'bg-blocker-padrao' : origemBlocker == 'visualizar-iframe'
+      'bg-blocker-padrao' : origemBlocker == 'visualizar-historico'
       }">
         <div v-if="origemBlocker == 'atd-parado'" class="atd-parado-container">
           <h3 v-text="dicionario.titulo_pausa"></h3>
@@ -18,7 +18,14 @@
           <img :src="linkImagem" :alt="dicionario.alt_msg_img">
         </div>
         <div v-else-if="origemBlocker == 'visualizar-historico'" class="container-visualizacao visualizar-iframe-container">
-          <iframe :src="linkIframe"></iframe>
+          <font-awesome-icon :icon="['fas', 'times-circle']" class="icone-fechar" @click="fecharBlocker" />
+          <iframe :src="linkIframe" @loadstart="gif = true" @load="gif = false"></iframe>
+          <div v-if="gif" class="load-container">
+            <div class="load">
+              <font-awesome-icon :icon="['fas', 'hourglass-end']" />
+              <p v-text="dicionario.titulo_carregando"></p>
+            </div>
+          </div>
         </div>
       </div>
 </template>
@@ -30,7 +37,8 @@ import { liberarEncerrar } from '@/services/atendimentos'
 export default {
   data(){
     return{
-      linkIframe: ""
+      linkIframe: "",
+      gif: true
     }
   },
   mounted(){

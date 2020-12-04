@@ -86,8 +86,9 @@
           font-size: 1.1rem;
           color: #FFF;
           &.lupa{
+            font-size: .9rem;
             @include efeito-hover-padrao;
-            margin-right: 5px;
+            margin-right: 10px;
             color: #777;
           }
         }
