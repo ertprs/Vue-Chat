@@ -67,7 +67,7 @@ export default {
     return{
       objContatos: {
         min_width: 60,
-        width: "20%",
+        width: 275,
         max_width: 275
       },
       objChat: {
