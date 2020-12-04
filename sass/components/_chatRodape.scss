@@ -329,7 +329,8 @@ $border-radius: 30px;
 .remover-pequena-mudanca{
   animation-name: pequenaMudancaTamanho;
   animation-duration: 1s;
-  animation-fill-mode: backwards
+  animation-fill-mode: forwards;
+  animation-direction: reverse
 }
 
 @keyframes pequenaMudancaTamanho{
@@ -353,8 +354,9 @@ $border-radius: 30px;
 
 .remover-maior-mudanca{
   animation-name: maiorMudancaTamanho;
-  animation-duration: 1s;
-  animation-fill-mode: backwards
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+  animation-direction: reverse
 }
 
 @keyframes maiorMudancaTamanho{

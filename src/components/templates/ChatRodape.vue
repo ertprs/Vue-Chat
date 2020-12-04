@@ -1015,6 +1015,9 @@ export default {
 
       switch (tipo){
         case "mudanca-pequena":
+          if(chatRodape.classList.contains("maior-mudanca-tamanho")){
+            chatRodape.classList.remove("maior-mudanca-tamanho")
+          }
           if(chatRodape.classList.contains("remover-pequena-mudanca")){
             chatRodape.classList.remove("remover-pequena-mudanca")
           }
@@ -1026,10 +1029,13 @@ export default {
             chatRodape.classList.add("remover-pequena-mudanca")
             setTimeout(() => {
               chatRodape.classList.remove("remover-pequena-mudanca")
-            }, 500)
+            }, 1000)
           }
         break;
         case "mudanca-maior":
+          if(chatRodape.classList.contains("pequena-mudanca-tamanho")){
+            chatRodape.classList.remove("pequena-mudanca-tamanho")
+          }
           if(chatRodape.classList.contains("remover-maior-mudanca")){
             chatRodape.classList.remove("remover-maior-mudanca")
           }
@@ -1041,7 +1047,7 @@ export default {
             chatRodape.classList.add("remover-maior-mudanca")
             setTimeout(() => {
               chatRodape.classList.remove("remover-maior-mudanca")
-            }, 500)
+            }, 1000)
           }
         break;
       }

@@ -1,5 +1,5 @@
 :root{
-  --bg-alternativo: #00005A;
+  --bg-alternativo: #DDD;
 }
 
 #popup{
@@ -12,13 +12,14 @@
   @include d-flex-center();
   padding: 10px;
   .popup-container-geral{
-    border-radius: 15px;
+    border-radius: 10px;
     background-color: lighten(#FFF, 15);
     @include d-flex-center('vertical');
     flex-wrap: wrap;
+    box-shadow:  0px 5px 15px -5px rgba(0,0,0,0.5);
     .popup-titulo{
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
       margin: 0;
       font-size: 1.5rem;
       font-weight: 100;
