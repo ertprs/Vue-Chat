@@ -256,7 +256,7 @@ export default {
         }
       }
 
-      const regex = /\s|\]|\[/g
+      const regex = /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+/g
       const idIframe = loginUsuComparativo.replace(regex, "")
 
       limparIframeUsuarioRemovido(`iframe_${idIframe}`)

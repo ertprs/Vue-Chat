@@ -4,7 +4,7 @@ export function carregarIframe(atendimentos) {
   let todosIframes = []
   for (let ramal in atendimentos) {
     if (atendimentos[ramal].url !== '') {
-      let regex = /\s|\]|\[/g
+      let regex = /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+/g
       let id = ""
 
       if (atendimentos[ramal].login_usu.match(regex)) {
@@ -22,7 +22,7 @@ export function carregarIframe(atendimentos) {
 }
 
 export function adicionarIframeNovoUsu(id, url){
-  const regex = /\s|\]|\[/g
+  const regex = /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+/g
   if (id.match(regex)) {
     id = id.replace(regex, '')
   }

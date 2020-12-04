@@ -112,7 +112,7 @@ function tratarResponse(response, app) {
         if (mainData.atendimentos) { // executando fluxo normal sem erros
           adicionaCaso(200)
 
-          let regex = /\s|\]|\[/g
+          let regex = /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+/g
           for (let atd in mainData.atendimentos) {
             if(mainData.atendimentos[atd].tipo !== "ligacao"){
               if (mainData.atendimentos[atd].login_usu.match(regex)) {
@@ -496,7 +496,7 @@ export function removerCliente(){
     }
   }
 
-  const regex = /\s|\]|\[/g
+  const regex = /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+/g
   const idIframe = atendimentoAtivo.login_usu.replace(regex, "")
   limparIframeUsuarioRemovido(`iframe_${idIframe}`)
 
