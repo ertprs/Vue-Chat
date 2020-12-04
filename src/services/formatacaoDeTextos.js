@@ -63,8 +63,12 @@ export function formataHoraMensagem() {
 
 export function formataTelefone(telefone){
   if(!telefone){ return '' }
-  telefone = "+"+telefone.slice(0,2)+" ("+telefone.slice(2,4)+") "+telefone.slice(4, 9)+"-"+telefone.slice(9, telefone.length)
-  return telefone
+  if(telefone[0] == 5 && telefone[1] == 5){
+    telefone = "+"+telefone.slice(0,2)+" ("+telefone.slice(2,4)+") "+telefone.slice(4, 9)+"-"+telefone.slice(9, telefone.length)
+    return telefone
+  }else{
+    return telefone
+  }
 }
 
 export function formataHorario(horas){
