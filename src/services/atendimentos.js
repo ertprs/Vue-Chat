@@ -112,12 +112,8 @@ function tratarResponse(response, app) {
         if (mainData.atendimentos) { // executando fluxo normal sem erros
           adicionaCaso(200)
 
-          let regex = /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+/g
           for (let atd in mainData.atendimentos) {
             if(mainData.atendimentos[atd].tipo !== "ligacao"){
-              if (mainData.atendimentos[atd].login_usu.match(regex)) {
-                mainData.atendimentos[atd].login_usu = mainData.atendimentos[atd].login_usu.replace(regex, '')
-              }
               store.dispatch('setNomeOpe', mainData.atendimentos[atd].login_operador)
             }
           }
