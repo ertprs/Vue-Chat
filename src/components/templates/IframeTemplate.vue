@@ -29,7 +29,7 @@ export default {
     })
 
     let loginUsuAux = this.atendimentoAtivo.login_usu
-    let regex =  /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+/g
+    let regex =  /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\./g
     if(loginUsuAux.match(regex)){
       loginUsuAux = loginUsuAux.replace(regex, '')
     }
@@ -42,7 +42,7 @@ export default {
   watch: {
     iframesDisponiveis(){
       let loginUsuAux = this.atendimentoAtivo.login_usu
-      let regex =  /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+/g
+      let regex =  /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\./g
       if(loginUsuAux.match(regex)){
         loginUsuAux = loginUsuAux.replace(regex, '')
       }
@@ -80,7 +80,7 @@ export default {
             }
           }
 
-          let regex =  /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+/g
+          let regex =  /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\./g
 
           if(idCliente.match(regex)){
             idCliente = idCliente.replace(regex, '')

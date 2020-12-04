@@ -492,7 +492,7 @@ export function removerCliente(){
     }
   }
 
-  const regex = /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+/g
+  const regex = /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\./g
   const idIframe = atendimentoAtivo.login_usu.replace(regex, "")
   limparIframeUsuarioRemovido(`iframe_${idIframe}`)
 
