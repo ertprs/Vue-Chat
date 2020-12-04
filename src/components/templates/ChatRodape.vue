@@ -809,14 +809,11 @@ export default {
           this.$store.dispatch("setSemIframe", false)
         }
 
-        this.$store.dispatch("setOrigemBlocker", "msg-formatada")
         this.$store.dispatch("setBlocker", true)
-        this.$store.dispatch("setAbrirMsgTipo2", true)
+        this.$store.dispatch("setOrigemBlocker", "visualizar-iframe")
 
         this.$store.dispatch("setAssunto", objMsg.cod)
         this.$store.dispatch("setCategoria", this.chaveAtual_02)
-        this.$store.dispatch("setNroChat", this.atendimentoAtivo.nro_chat)
-        this.$store.dispatch("setGrupo", this.atendimentoAtivo.grupo)
       }
     },
     selecionarAnexo(previa) {

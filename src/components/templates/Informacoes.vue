@@ -43,21 +43,6 @@
           <IframeTemplate v-if="atendimentoAtivo.url" />
         </div>
       </div>
-      <!-- Iframe Msg Tipo 2 -->
-      <div class="iframe-msg-container" v-if="abrirMsgTipo2">
-        <!-- Iframe do Caio -->
-        <div class="informacoes-load-container" v-if="gif">
-          <div class="load">
-            <font-awesome-icon :icon="['fas', 'hourglass-end']" />
-            <p v-text="dicionario.titulo_carregando"></p>
-          </div>
-        </div>
-        <iframe
-          :src="`${this.dominio}/im/atdHumano/view/atd_valida.php?&token_cliente=${atendimentoAtivo.token_cliente}&categoria=${categoria}&assunto=${assunto}&${this.reqTeste}`" frameborder="0"
-          @load="gif = false"
-          @loadstart="gif = true"
-          > </iframe> <!-- tipo_popup=AJ2& -->
-      </div>
     </div>
     <!-- Caso nao haja informacoes -->
     <div class="lista-informacoes-container-vazio" v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206"> <!-- !iframeCttAtivo -->
@@ -119,7 +104,7 @@ export default {
   watch: {
     atendimentoAtivo(){
       if(this.atendimentoAtivo){
-        if(this.iframeCttAtivo || this.abrirMsgTipo2){
+        if(this.iframeCttAtivo){
           return
         }
 
@@ -140,27 +125,14 @@ export default {
           this.$store.dispatch("setSemIframe", true)
         }
       }
-    },
-    abrirMsgTipo2(){
-      if(this.controleSemIframeLocal){
-        if(!this.abrirMsgTipo2){
-          this.$store.dispatch("setSemIframe", true)
-        }
-      }
     }
   },
   computed: {
     ...mapGetters({
       atendimentoAtivo: "getAtendimentoAtivo",
       caso: "getCaso",
-      abrirMsgTipo2: "getAbrirMsgTipo2",
-      grupo: "getGrupo",
-      categoria: "getCategoria",
-      assunto: "getAssunto",
-      nroChat: "getNroChat",
       iframeCttAtivo: "getIframeCttAtivo",
       dominio: "getDominio",
-      reqTeste: "getReqTeste",
       semIframe: "getSemIframe",
       dicionario: "getDicionario"
     })

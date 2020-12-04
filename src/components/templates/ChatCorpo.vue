@@ -153,7 +153,7 @@ export default {
       }
     },
     atualizarStatusMensagens(){
-      axios_api.get(`get-status-messages?token_cliente=${this.atendimentoAtivo.token_cliente}${this.tokenStatus}&${this.reqTeste}`)
+      axios_api.get(`get-status-messages?token_cliente=${this.atendimentoAtivo.token_cliente}&token_status=${this.tokenStatus}&${this.reqTeste}`)
         .then(response => {
           if(response.status === 200){
             // console.log(response.data)

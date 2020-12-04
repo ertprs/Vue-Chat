@@ -5,7 +5,7 @@
       'bg-blocker-padrao' : origemBlocker == 'msg-formatada',
       'bg-blocker-padrao' : origemBlocker == 'atd-parado',
       'bg-blocker-padrao' : origemBlocker == 'visualizar-imagem',
-      'bg-blocker-padrao' : origemBlocker == 'visualizar-historico'
+      'bg-blocker-padrao' : origemBlocker == 'visualizar-iframe'
       }">
         <div v-if="origemBlocker == 'atd-parado'" class="atd-parado-container">
           <h3 v-text="dicionario.titulo_pausa"></h3>
@@ -17,9 +17,16 @@
         <div v-else-if="origemBlocker == 'visualizar-imagem'" class="container-visualizacao visualizar-imagem-container">
           <img :src="linkImagem" :alt="dicionario.alt_msg_img">
         </div>
-        <div v-else-if="origemBlocker == 'visualizar-historico'" class="container-visualizacao visualizar-iframe-container">
+        <div v-else-if="origemBlocker == 'visualizar-iframe'" class="container-visualizacao visualizar-iframe-container">
           <font-awesome-icon :icon="['fas', 'times-circle']" class="icone-fechar" @click="fecharBlocker" />
-          <iframe :src="linkIframe" @loadstart="gif = true" @load="gif = false"></iframe>
+
+          <iframe
+            v-if="!linkIframe"
+            :src="`${this.dominio}/im/atdHumano/view/atd_valida.php?&token_cliente=${this.atendimentoAtivo.token_cliente}&categoria=${this.categoria}&assunto=${this.assunto}&${this.reqTeste}`" frameborder="0"
+            @load="gif = false"
+            @loadstart="gif = true"></iframe>
+          <iframe v-else :src="linkIframe" @loadstart="gif = true" @load="gif = false"></iframe>
+
           <div v-if="gif" class="load-container">
             <div class="load">
               <font-awesome-icon :icon="['fas', 'hourglass-end']" />
@@ -55,8 +62,17 @@ export default {
         return
       }
 
+      if(this.linkIframe){
+        this.linkIframe = ""
+      }
+
+      if(this.verificaMsgFormatadaAberto){
+        this.$root.$emit("toggle-msg-formatada")
+      }
+
       liberarEncerrar()
       this.$store.dispatch('setBlocker', false)
+      this.$store.dispatch('setOrigemBlocker', "")
       if(this.abrirPopup){
         this.$store.dispatch('setAbrirPopup', false)
       }
@@ -71,7 +87,13 @@ export default {
       origemBlocker: "getOrigemBlocker",
       abrirPopup: "getAbrirPopup",
       linkImagem: "getLinkImagem",
-      dicionario: "getDicionario"
+      dicionario: "getDicionario",
+      dominio: "getDominio",
+      categoria: "getCategoria",
+      assunto: "getAssunto",
+      reqTeste: "getReqTeste",
+      atendimentoAtivo: "getAtendimentoAtivo",
+      verificaMsgFormatadaAberto: "getVerificaMsgFormatadaAberto"
     })
   }
 }

@@ -38,7 +38,7 @@ export default {
     chamarIframe(){
       this.$root.$emit("abrir-iframe", this.atendimentoAtivo.hist)
       this.$store.dispatch("setBlocker", true)
-      this.$store.dispatch("setOrigemBlocker", "visualizar-historico")
+      this.$store.dispatch("setOrigemBlocker", "visualizar-iframe")
     }
   },
   watch: {
