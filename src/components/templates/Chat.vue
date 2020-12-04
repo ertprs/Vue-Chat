@@ -1,17 +1,17 @@
 <template>
   <div id="chat" class="resizable-content" :class="{'z-index-superior' : blocker && origemBlocker == 'msg-formatada'}">
     <template v-if="atendimentoAtivo && (caso == '' || caso == 200)">
-      <template v-if="atendimentoAtivo.tipo == 'chat'">
-        <ChatOpcoes />
-        <ChatCorpo id="chat-operador"/>
-        <ChatRodape />
-        <BotoesAcoes />
-      </template>
-      <template v-else>
+      <template v-if="atendimentoAtivo.tipo == 'ligacao'">
         <ChatOpcoes />
         <div class="lista-chat-container-vazio">
           <Ligacao />
         </div>
+      </template>
+      <template v-else-if="atendimentoAtivo.informacoes && (!atendimentoAtivo.tipo || atendimentoAtivo.tipo == 'chat')">
+        <ChatOpcoes />
+        <ChatCorpo id="chat-operador"/>
+        <ChatRodape />
+        <BotoesAcoes />
       </template>
     </template>
     <template v-else-if="!atendimentoAtivo || caso == 400 || caso == 206">
