@@ -11,8 +11,8 @@
           </ul>
           <div class="chat-opcoes-titulo-container--logo">
             <!-- Lupa com url PHP -->
-            <font-awesome-icon :icon="['fas', 'search']" class="lupa" />
-            <img v-if="atendimentoAtivo.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${atendimentoAtivo.sigla}.png`">
+            <font-awesome-icon :icon="['fas', 'search']" class="lupa"  @click="chamarIframe" />
+            <img v-if="atendimentoAtivo.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${atendimentoAtivo.sigla}.png`" @click="chamarIframe">
             <font-awesome-icon v-else :icon="['fas', 'comments']" />
           </div>
         </div>
@@ -35,6 +35,11 @@ export default {
     acionaFormataSigla(letra, acao){
       return formataSigla(letra, acao)
     },
+    chamarIframe(){
+      this.$root.$emit("abrir-iframe", this.atendimentoAtivo.hist)
+      this.$store.dispatch("setBlocker", true)
+      this.$store.dispatch("setOrigemBlocker", "visualizar-historico")
+    }
   },
   watch: {
     semIframe(){

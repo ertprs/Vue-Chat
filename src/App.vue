@@ -128,6 +128,11 @@ export default {
       if(widthChat){
         this.objChat.width = widthChat
         this.alteraWidth("chat", widthChat)
+        setTimeout( () => {
+          if(document.querySelector('#chat')){
+            document.querySelector('#chat').parentElement.style.width = widthChat
+          }
+        }, 100)
       }
     },
     alteraWidth(id, widthNovo){

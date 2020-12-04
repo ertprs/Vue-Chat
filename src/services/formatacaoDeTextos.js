@@ -79,6 +79,10 @@ export function formataHorario(horas){
 
 export function formataDataAgenda(data, hora, atd, retorno, id){
 
+  if(data == "1111-11-11" || hora == "00:00:00"){
+    return
+  }
+
   if(!data || !hora){
     return
   }
