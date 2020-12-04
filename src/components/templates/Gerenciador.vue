@@ -1,4 +1,5 @@
 <template>
+    <!-- class="d-none" -->
   <div id="gerenciador-container" :class="{'d-none': !reqTeste, 'aguardando' : reqEmAndamento, 'em-atendimento' : statusAtd == 'em-atendimento', 'parado' : statusAtd == 'parado'}" v-if="gerenciador && gerenciador.length">
     <div class="gerenciador-btn" @click="mudarEstadoAtendimento()">
       <div v-show="statusAtd == 'em-atendimento'" :title="dicionario.title_status_em_atendimento">

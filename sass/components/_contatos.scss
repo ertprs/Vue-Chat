@@ -79,16 +79,12 @@ $corBordaListas: #AAA;
   .titulo-contatos{
     position: relative;
     @include d-flex-center('vertical');
-    // background-color: var(--cor);
-    // border-bottom: 3px solid var(--cor);
-    // background-color: darken(#eeeeee, 20);
     background-color: #333;
     border-bottom: 3px solid #333;
     transition: background 300ms;
     color: #333;
     height: 10%;
     width: 100%;
-    // border-bottom: 1px solid #CCC;
     padding-left: 10px;
     div.container-add-novo-cliente{
       position: absolute;
@@ -128,6 +124,7 @@ $corBordaListas: #AAA;
         margin-right: 5px;
       }
       h1 {
+        font-weight: bold;
         margin: 0;
         padding: 0;
         color: #FFF;

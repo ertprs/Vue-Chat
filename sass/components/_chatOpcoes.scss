@@ -79,11 +79,17 @@
         position: absolute;
         right: 10px;
         img{
+          @include efeito-hover-padrao;
           height: 1.2rem;
         }
         svg{
-          font-size: 1.2rem;
+          font-size: 1.1rem;
           color: #FFF;
+          &.lupa{
+            @include efeito-hover-padrao;
+            margin-right: 5px;
+            color: #777;
+          }
         }
       }
     }

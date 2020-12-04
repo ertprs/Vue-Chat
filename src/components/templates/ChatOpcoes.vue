@@ -10,8 +10,10 @@
             <li :title="atendimentoAtivo.desc_grupo">{{ atendimentoAtivo.desc_grupo }}</li>
           </ul>
           <div class="chat-opcoes-titulo-container--logo">
+            <!-- Lupa com url PHP -->
+            <font-awesome-icon :icon="['fas', 'search']" class="lupa" />
             <img v-if="atendimentoAtivo.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${atendimentoAtivo.sigla}.png`">
-            <font-awesome-icon v-else :icon="['fas', 'fa-comments']" />
+            <font-awesome-icon v-else :icon="['fas', 'comments']" />
           </div>
         </div>
       </div>

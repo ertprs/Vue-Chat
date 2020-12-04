@@ -49,13 +49,13 @@ $border-radius: 30px;
           @include efeito-hover-padrao();
         }
         .lista-emoji{
-          $alturaUl: 70px;
+          $alturaUl: 140px;
           position: absolute;
           top: -($alturaUl);
           left: 30px;
-          width: 170px;
+          width: 250px;
           border-radius: 10px;
-          background-color: rgba(0, 0, 0, 0.4);
+          background-color: rgba(0, 0, 0, 0.7);
           padding: 5px;
           ul{
             padding: 0;
@@ -69,7 +69,7 @@ $border-radius: 30px;
             li{
               padding: 0;
               margin: 2px;
-              font-size: 1.125rem;
+              font-size: 1.3rem;
 
               @include efeito-hover-padrao();
             }
