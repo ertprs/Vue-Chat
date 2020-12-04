@@ -27,8 +27,14 @@ export default {
     this.$root.$on('mostrar-iframe', (idCliente, urlFrame) => {
       this.mostraIframe(idCliente, urlFrame)
     })
+
+    let loginUsuAux = this.atendimentoAtivo.login_usu
+    let regex =  /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+/g
+    if(loginUsuAux.match(regex)){
+      loginUsuAux = loginUsuAux.replace(regex, '')
+    }
     for(let i in this.iframesDisponiveis) {
-      if(this.iframesDisponiveis[i].id === this.atendimentoAtivo.id) {
+      if(this.iframesDisponiveis[i].id === loginUsuAux) {
         this.mostraIframe(this.iframesDisponiveis[i].id, this.iframesDisponiveis[i].url)
       }
     }
