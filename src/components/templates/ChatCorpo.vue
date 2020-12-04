@@ -153,14 +153,14 @@ export default {
       }
     },
     atualizarStatusMensagens(){
-      axios_api.get(`get-status-messages?token_cliente=${this.atendimentoAtivo.token_cliente}&token_status=${this.tokenStatus}&${this.reqTeste}`)
+      axios_api.get(`get-status-messages?token_cliente=${this.atendimentoAtivo.token_cliente}${this.tokenStatus}&${this.reqTeste}`)
         .then(response => {
           if(response.status === 200){
             // console.log(response.data)
 
             this.qtdErrosStatusMsg = 0
 
-            this.tokenStatus = `&token_status${response.data.token_status}`
+            this.tokenStatus = `&token_status=${response.data.token_status}`
 
             let arrStatusMsg = response.data.msg_ret
             let chaveStatusMsg = Object.keys(arrStatusMsg)
