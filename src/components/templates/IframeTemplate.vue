@@ -84,7 +84,7 @@ export default {
             idCliente = idCliente
           }
 
-          const iframeCliente = document.querySelector("#iframe_" + idCliente)
+          const iframeCliente = document.querySelector(`#iframe_${idCliente}`)
           if(iframeCliente){
             iframeCliente.classList.remove('d-none')
           }
