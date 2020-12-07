@@ -272,7 +272,7 @@ export default {
       }
 
       this.mensagem = this.mensagem.replace(/\n$/, "", this.mensagem);
-      if(!this.mensagem){
+      if(!this.mensagem && !previa){
         return
       }
 

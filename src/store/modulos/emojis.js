@@ -156,6 +156,10 @@ export default {
       {
         hexa: "&#x1F4E7;",
         emoji: String.fromCodePoint(0x1F4E7)
+      },
+      {
+        hexa: "&#x1F499;",
+        emoji: String.fromCodePoint(0x1F499)
       }
       // {
       //   hexa: "&#x",

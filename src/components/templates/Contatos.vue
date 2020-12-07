@@ -14,6 +14,8 @@
       </div>
     </div>
     <template v-if="objAtendimentos">
+      <!-- Gerenciador -->
+      <!-- <badges-gerenciador /> -->
       <!-- Caso Aguardando Cliente ou esperando a primeira requisicao ao buscaAtendimentos -->
       <div class="lista-contatos-container-vazio" :class="{'existe-agenda' : minhaAgenda.length || aguardando.length || caso !== 400}" v-if="caso == 206 || caso == 'aguardando'">
         <div class="load">
@@ -105,6 +107,7 @@ import SimpleContextMenu from 'vue-simple-context-menu'
 import ListaAguardando from "../ListaAguardando"
 import ListaAgenda from "../ListaAgenda"
 import UltimaMsg from "../UltimaMsg"
+import BadgesGerenciador from "../BadgesGerenciador"
 
 export default {
   data() {
@@ -122,7 +125,8 @@ export default {
     "simple-context-menu" : SimpleContextMenu,
     "ultima-msg" : UltimaMsg,
     "lista-aguardando": ListaAguardando,
-    "lista-agenda": ListaAgenda
+    "lista-agenda": ListaAgenda,
+    "badges-gerenciador": BadgesGerenciador
   },
   watch: {
     todosAtendimentos() {
