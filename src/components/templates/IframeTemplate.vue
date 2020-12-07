@@ -29,9 +29,8 @@ export default {
     })
 
     let loginUsuAux = this.atendimentoAtivo.login_usu
-    let regex =  /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\./g
-    if(loginUsuAux.match(regex)){
-      loginUsuAux = loginUsuAux.replace(regex, '')
+    if(loginUsuAux.match(this.regexIframe)){
+      loginUsuAux = loginUsuAux.replace(this.regexIframe, '')
     }
     for(let i in this.iframesDisponiveis) {
       if(this.iframesDisponiveis[i].id === loginUsuAux) {
@@ -42,9 +41,8 @@ export default {
   watch: {
     iframesDisponiveis(){
       let loginUsuAux = this.atendimentoAtivo.login_usu
-      let regex =  /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\./g
-      if(loginUsuAux.match(regex)){
-        loginUsuAux = loginUsuAux.replace(regex, '')
+      if(loginUsuAux.match(this.regexIframe)){
+        loginUsuAux = loginUsuAux.replace(this.regexIframe, '')
       }
 
       for(let i in this.iframesDisponiveis) {
@@ -80,10 +78,8 @@ export default {
             }
           }
 
-          let regex =  /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\./g
-
-          if(idCliente.match(regex)){
-            idCliente = idCliente.replace(regex, '')
+          if(idCliente.match(this.regexIframe)){
+            idCliente = idCliente.replace(this.regexIframe, '')
           }else{
             idCliente = idCliente
           }
@@ -101,7 +97,8 @@ export default {
       iframesDisponiveis: "getIframesDisponiveis",
       atendimentoAtivo: "getAtendimentoAtivo",
       dicionario: "getDicionario",
-      semIframe: "getSemIframe"
+      semIframe: "getSemIframe",
+      regexIframe: "getRegexIframe"
     }),
   },
   destroyed() {

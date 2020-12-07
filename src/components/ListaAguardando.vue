@@ -77,7 +77,8 @@ export default {
       reqTeste: "getReqTeste",
       caso: "getCaso",
       contadorAguardando: "getContadorAguardando",
-      contadorTodos: "getContadorTodos"
+      contadorTodos: "getContadorTodos",
+      regexIframe: "getRegexIframe"
     })
   },
   data(){
@@ -137,8 +138,7 @@ export default {
         }
       }
 
-      const regex = /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\./g
-      const idIframe = loginUsuComparativo.replace(regex, "")
+      const idIframe = loginUsuComparativo.replace(this.regexIframe, "")
 
       limparIframeUsuarioRemovido(`iframe_${idIframe}`)
       this.$store.dispatch("setAtendimentos", objAtdAux)

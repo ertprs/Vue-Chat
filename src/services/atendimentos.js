@@ -476,6 +476,7 @@ function end() {
 }
 
 export function removerCliente(){
+  const regexIframe = store.getters.getRegexIframe
   const todosAtendimentos = store.getters.getTodosAtendimentos
   const atendimentoAtivo = store.getters.getAtendimentoAtivo
 
@@ -492,8 +493,7 @@ export function removerCliente(){
     }
   }
 
-  const regex = /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\./g
-  const idIframe = atendimentoAtivo.login_usu.replace(regex, "")
+  const idIframe = atendimentoAtivo.login_usu.replace(regexIframe, "")
   limparIframeUsuarioRemovido(`iframe_${idIframe}`)
 
   store.dispatch('setUltimoIdRemovido', atendimentoAtivo.login_usu)

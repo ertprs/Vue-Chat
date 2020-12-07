@@ -1,14 +1,15 @@
 import store from "../store"
 
+const regexIframe = store.getters.getRegexIframe
+
 export function carregarIframe(atendimentos) {
   let todosIframes = []
   for (let ramal in atendimentos) {
     if (atendimentos[ramal].url !== '') {
-      let regex = /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\./g
       let id = ""
 
-      if (atendimentos[ramal].login_usu.match(regex)) {
-        id = atendimentos[ramal].login_usu.replace(regex, '')
+      if (atendimentos[ramal].login_usu.match(regexIframe)) {
+        id = atendimentos[ramal].login_usu.replace(regexIframe, '')
       } else {
         id = atendimentos[ramal].login_usu
       }
@@ -22,9 +23,8 @@ export function carregarIframe(atendimentos) {
 }
 
 export function adicionarIframeNovoUsu(id, url){
-  const regex = /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\./g
-  if (id.match(regex)) {
-    id = id.replace(regex, '')
+  if (id.match(regexIframe)) {
+    id = id.replace(regexIframe, '')
   }
 
   let objIframe = { id: id, url: url }

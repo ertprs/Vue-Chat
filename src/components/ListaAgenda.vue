@@ -59,7 +59,8 @@ export default {
       dicionario: "getDicionario",
       reqTeste: "getReqTeste",
       minhaAgenda: "getAgenda",
-      todosAtendimentos: "getTodosAtendimentos"
+      todosAtendimentos: "getTodosAtendimentos",
+      regexIframe: "getRegexIframe"
     })
   },
   data(){
@@ -92,8 +93,7 @@ export default {
         }
       }
 
-      const regex = /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\./g
-      const idIframe = loginUsuComparativo.replace(regex, "")
+      const idIframe = loginUsuComparativo.replace(this.regexIframe, "")
 
       limparIframeUsuarioRemovido(`iframe_${idIframe}`)
       this.$store.dispatch("setAtendimentos", objAtdAux)

@@ -13,7 +13,8 @@ export default {
     nomeOpe: "",
     verificaMsgFormatadaAberto: false,
     menuBotaoDireito: false,
-    abaSelecionada: ""
+    abaSelecionada: "",
+    regexIframe: /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\./g
   },
   mutations: {
     setAbaContatos(state, abaContatos){
@@ -142,6 +143,9 @@ export default {
     },
     getAbaSelecionada(state){
       return state.abaSelecionada
+    },
+    getRegexIframe(state){
+      return state.regexIframe
     }
   }
 }
