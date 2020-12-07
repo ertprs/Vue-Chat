@@ -28,7 +28,7 @@
         </div>
         <a :href="imgAnexo" :download="`${nomeArquivo}`" target="_blank"> {{ dicionario.titulo_baixar_img }} <font-awesome-icon :icon="['fas', 'download']" /> </a>
       </div>
-      <p v-text="msg"></p>
+      <p v-html="msg"></p>
       <span class="horario-envio" v-text="horario"></span>
 
       <transition name="fade" mode="out-in">

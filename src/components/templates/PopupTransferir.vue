@@ -220,9 +220,6 @@ export default {
       this.abrirAgentes = false
       this.abrirGrupos = false
       this.abrirBot = false
-      this.grupo = ""
-      this.agente = ""
-      this.bot = ""
     },
     setSelected(){
       if(this.arrGrupos.length === 1){

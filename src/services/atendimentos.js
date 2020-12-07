@@ -121,7 +121,7 @@ function tratarResponse(response, app) {
           store.dispatch('setAtendimentos', mainData.atendimentos)
 
           acionaProcessos(mainData)
-          loopAtualizacaoDeAtendimentos(app)
+          loopAtualizacaoDeAtendimentos("", app)
         } else { // tratando erro quando os atendimentos nao chegaram nos dados da api
           console.log('Erro ao tentar obter dados no servidor')
           console.log(mainData)
@@ -332,6 +332,11 @@ function atualizarClientes(mainData, app) {
           if (atendimentosServer[ramal_server] && atendimentosLocal[ramal_local]) {
               if (atendimentosServer[ramal_server].id_cli === atendimentosLocal[ramal_local].id_cli) {
                   temClienteNovo = false
+              }
+              if(store.getters.getIdAtendimentoAtivo == atendimentosServer[ramal_server].id_cli){
+                if(store.getters.getAtendimentoAtivo.tempo_conectado){
+                  store.getters.getAtendimentoAtivo.tempo_conectado = atendimentosServer[ramal_server].tempo_conectado
+                }
               }
           }
       }

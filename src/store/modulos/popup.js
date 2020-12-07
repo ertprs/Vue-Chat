@@ -14,20 +14,20 @@ export default {
     setAbrirPopup(state, abrirPopup){
       state.abrirPopup = abrirPopup
     },
-    setTitulo(state, titulo) { 
+    setTitulo(state, titulo) {
       state.titulo = titulo
     },
     setOrigem(state, origem){
       state.origem = origem
     },
     setArrBot(state, arrBot){
-      state.arrBot.push(arrBot)
+      state.arrBot = arrBot
     },
     setArrAgentes(state, arrAgentes){
-      state.arrAgentes.push(arrAgentes)
+      state.arrAgentes = arrAgentes
     },
     setArrGrupos(state, arrGrupos){
-      state.arrGrupos.push(arrGrupos)
+      state.arrGrupos = arrGrupos
     },
     setBgPopup(state, bgPopup){
       state.bgPopup = bgPopup

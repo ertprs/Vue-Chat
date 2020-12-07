@@ -107,7 +107,7 @@
           name="select-msg-formatada_01"
           class="select-msg-formatada"
           v-model="chaveAtual_01"
-          v-on:change="recebeValorMSGFormatada(chaveAtual_01, 2)">
+          v-on:change="recebeValorMSGFormatada('T', 2)">
           <option disabled value=""> {{ dicionario.titulo_select }} </option>
           <option v-for="(valor, chave) in mensagensFormatadas_01" :key="chave+valor"
             :value="chave">
@@ -193,8 +193,8 @@ export default {
       txtFormatosValidos: "",
       abrirOpcoes: false,
       erroFormatoAnexo: false,
-      mensagensFormatadas_01: [],
-      chaveAtual_01: '',
+      mensagensFormatadas_01: [{T: "Todos"}],
+      chaveAtual_01: 'T',
       mensagensFormatadas_02: [],
       chaveAtual_02: '',
       mensagensFormatadas_03: [],
@@ -280,9 +280,9 @@ export default {
         this.executaTeste(event, previa, 0)
       }
 
-      const msgAux = this.mensagem
+      let msgAux = this.mensagem
 
-      if (this.validaMensagem(previa)) {
+      if (this.validaMensagem(previa, msgAux)) {
         if (this.atendimentoAtivo.token_cliente != "") {
 
           let data = ""
@@ -296,17 +296,17 @@ export default {
 
             data = form
           }else{
-            this.mensagem = this.mensagem.replace(/<\/?[\d\w\s=\-:\.\/\'\";]+>/gi, ' ')
+            msgAux = this.mensagem.replace(/<\/?[\d\w\s=\-:\.\/\'\";]+>/gi, ' ')
 
             let regex = ""
             for (let j = 0; j < this.emojis.length; j++) {
               regex = new RegExp(this.emojis[j].emoji, "gi");
-              this.mensagem = this.mensagem.replace(regex, this.emojis[j].hexa);
+              msgAux = this.mensagem.replace(regex, this.emojis[j].hexa);
             }
 
             data = {
               token_cliente: this.atendimentoAtivo.token_cliente,
-              message: this.mensagem,
+              message: msgAux,
             };
           }
 
@@ -359,7 +359,7 @@ export default {
       this.arquivo = ""
       this.imagemPrevia = ""
     },
-    validaMensagem(previa) {
+    validaMensagem(previa, msg) {
       if(previa){
         let anexoValidado = this.validaAnexo(this.arquivo, !this.docPrevia)
         if(anexoValidado){
@@ -368,8 +368,6 @@ export default {
           return false
         }
       }
-
-      let msg = this.mensagem;
 
       if (msg.length === 0 || !msg.trim()) {
         this.mensagem = "";
@@ -697,8 +695,6 @@ export default {
           this.adicionaAnimacaoChatRodape("mudanca-pequena")
         }
 
-        this.mensagensFormatadas_01 = []
-        this.chaveAtual_01 = ''
         this.mensagensFormatadas_02 = []
         this.chaveAtual_02 = ''
         this.mensagensFormatadas_03 = []
@@ -712,28 +708,17 @@ export default {
         return
       }
 
-      let valor = ''
+      let valor = 'T'
       let tokenCliente = this.atendimentoAtivo.token_cliente
 
       obterMsgFormatada(valor, tokenCliente)
         .then((data) => {
-          this.exibirMsgFormatada(data, 1)
+          this.exibirMsgFormatada(data, 2)
         })
         .catch((err) => console.log(err));
     },
     exibirMsgFormatada(objMsgFormatada, numReq) {
       switch(numReq){
-        case 1:
-          this.mensagensFormatadas_01 = objMsgFormatada
-          if(Object.keys(this.mensagensFormatadas_01)){
-            if(Object.keys(this.mensagensFormatadas_01).length == 1){
-              this.chaveAtual_01 = Object.keys(this.mensagensFormatadas_01)[0]
-              this.recebeValorMSGFormatada(this.chaveAtual_01, 2)
-            }else{
-              this.chaveAtual_01 = ""
-            }
-          }
-        break;
         case 2:
           this.mensagensFormatadas_02 = objMsgFormatada
         break;
@@ -825,11 +810,10 @@ export default {
         }
         return
       }
-      this.selecionarImagem()
-
-      // this.$store.dispatch("setOrigemBlocker", "chat");
-      // this.abrirOpcoes = !this.abrirOpcoes;
-      // this.$store.dispatch("setBlocker", this.abrirOpcoes);
+      // this.selecionarImagem()
+      this.$store.dispatch("setOrigemBlocker", "chat");
+      this.abrirOpcoes = !this.abrirOpcoes;
+      this.$store.dispatch("setBlocker", this.abrirOpcoes);
     },
     selecionarImagem() {
       let inputFile = document.querySelector("#file");

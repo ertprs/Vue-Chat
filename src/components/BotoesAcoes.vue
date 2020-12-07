@@ -308,60 +308,77 @@ export default {
           if(response.data.st_ret == "OK"){
             let arrChaves = []
             let arrValores = []
+            let arrAux = []
 
             this.$store.dispatch("setErroTransfer", false)
             this.$store.dispatch("setMsgErro", "")
 
             if(response.data.options.agentes.length){
-              response.data.options.agentes.map(objAgentes => {
-                arrChaves = Object.keys(objAgentes)
-                arrValores = Object.values(objAgentes)
+              response.data.options.agentes.map((objAgentes, index) => {
+                arrChaves[index] = Object.keys(objAgentes)[0]
+                arrValores[index] = Object.values(objAgentes)[0]
               })
+
+
 
               for(let i = 0; i < arrChaves.length; i++){
                 if(this.arrAgentes.length){
-                  if(this.arrAgentes[i].cod !== arrChaves[i]){
-                    this.$store.dispatch("setArrAgentes", {label: arrValores[i], cod: arrChaves[i]})
+                  if(this.arrAgentes[i]){
+                    if(this.arrAgentes[i].cod !== arrChaves[i]){
+                      arrAux.push({label: arrValores[i], cod: arrChaves[i]})
+                    }
                   }
                 }else{
-                  this.$store.dispatch("setArrAgentes", {label: arrValores[i], cod: arrChaves[i]})
+                  arrAux.push({label: arrValores[i], cod: arrChaves[i]})
                 }
               }
             }
 
+            this.$store.dispatch("setArrAgentes", arrAux)
+
             if(response.data.options.grupos.length){
-              response.data.options.grupos.map(objGrupos => {
-                arrChaves = Object.keys(objGrupos)
-                arrValores = Object.values(objGrupos)
+              response.data.options.grupos.map((objGrupos, index) => {
+                arrChaves[index] = Object.keys(objGrupos)[0]
+                arrValores[index] = Object.values(objGrupos)[0]
               })
 
               for(let i = 0; i < arrChaves.length; i++){
                 if(this.arrGrupos.length){
-                  if(this.arrGrupos[i].cod !== arrChaves[i]){
-                    this.$store.dispatch("setArrGrupos", {label: arrValores[i], cod: arrChaves[i]})
+                  if(this.arrGrupos[i]){
+                    if(this.arrGrupos[i].cod !== arrChaves[i]){
+                      arrAux.push({label: arrValores[i], cod: arrChaves[i]})
+                    }
                   }
                 }else{
-                  this.$store.dispatch("setArrGrupos", {label: arrValores[i], cod: arrChaves[i]})
+                  arrAux.push({label: arrValores[i], cod: arrChaves[i]})
                 }
               }
+
+              this.$store.dispatch("setArrGrupos", arrAux)
+
             }
 
             if(response.data.options.bot.length){
 
-              response.data.options.bot.map(objBot => {
-                arrChaves = Object.keys(objBot)
-                arrValores = Object.values(objBot)
+              response.data.options.bot.map((objBot, index) => {
+                arrChaves[index] = Object.keys(objBot)[0]
+                arrValores[index] = Object.values(objBot)[0]
               })
 
               for(let i = 0; i < arrChaves.length; i++){
                 if(this.arrBot.length){
-                  if(this.arrBot[i].cod !== arrChaves[i]){
-                    this.$store.dispatch("setArrBot", {label: arrValores[i], cod: arrChaves[i]})
+                  if(this.arrBot[i]){
+                    if(this.arrBot[i].cod !== arrChaves[i]){
+                      arrAux.push({label: arrValores[i], cod: arrChaves[i]})
+                    }
                   }
                 }else{
-                  this.$store.dispatch("setArrBot", {label: arrValores[i], cod: arrChaves[i]})
+                  arrAux.push({label: arrValores[i], cod: arrChaves[i]})
                 }
               }
+
+              this.$store.dispatch("setArrBot", arrAux)
+
             }
           }else{
             this.$store.dispatch("setErroTransfer", true)
