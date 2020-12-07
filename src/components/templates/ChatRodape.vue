@@ -825,9 +825,11 @@ export default {
         }
         return
       }
-      this.$store.dispatch("setOrigemBlocker", "chat");
-      this.abrirOpcoes = !this.abrirOpcoes;
-      this.$store.dispatch("setBlocker", this.abrirOpcoes);
+      this.selecionarImagem()
+
+      // this.$store.dispatch("setOrigemBlocker", "chat");
+      // this.abrirOpcoes = !this.abrirOpcoes;
+      // this.$store.dispatch("setBlocker", this.abrirOpcoes);
     },
     selecionarImagem() {
       let inputFile = document.querySelector("#file");

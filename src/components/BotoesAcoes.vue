@@ -1,5 +1,5 @@
 <template>
-  <div id="rodape-botoes-encerramento-container" v-if="temBtn1 && temBtn2 && temBtn3">
+  <div id="rodape-botoes-encerramento-container">
     <div class="rodape-botoes-encerramento">
       <template v-if="tudoPronto">
         <div
@@ -60,10 +60,7 @@ export default {
       regrasBotoes: {},
       regrasCor: {},
       tudoPronto: false,
-      contadorRequisicoesFalhas: 0,
-      temBtn1: true,
-      temBtn2: true,
-      temBtn3: true
+      contadorRequisicoesFalhas: 0
     }
   },
   mounted(){
@@ -216,18 +213,6 @@ export default {
     preencherRegrasDoClienteAtivo(){
       if(this.regrasDoClienteAtivo.regras){
         this.regrasBotoes = this.regrasDoClienteAtivo.regras
-
-        if(this.regrasBotoes.button_transfer.use == "N"){
-          this.temBtn1 = false
-        }
-
-        if(this.regrasBotoes.button_suspend.use == "N"){
-          this.temBtn2 = false
-        }
-
-        if(this.regrasBotoes.button_end.use == "N"){
-          this.temBtn3 = false
-        }
 
         this.setCoresClienteAtivo()
         this.tudoPronto = true

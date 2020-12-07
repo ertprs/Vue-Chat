@@ -4,7 +4,6 @@
       <div v-if="anexo" class="mensagem-div-anexo">
         <img v-if="imgAnexo" @click="abrirVisualizacaoImg(imgAnexo)" :src="imgAnexo" :alt="dicionario.alt_msg_img">
         <div class="anexos-links-container" v-if="imgAnexo">
-          <a :href="imgAnexo" :download="`${nomeArquivo}`" target="_blank"> {{ dicionario.titulo_baixar_img }} <font-awesome-icon :icon="['fas', 'download']" /> </a>
           <a href="#" @click="abrirVisualizacaoImg(imgAnexo)"> {{ dicionario.titulo_visualizar_img }} <font-awesome-icon :icon="['fas', 'search-plus']" /> </a>
         </div>
         <div v-else-if="docAnexo" class="anexo-container">
@@ -27,8 +26,9 @@
             </p>
           </template>
         </div>
+        <a :href="imgAnexo" :download="`${nomeArquivo}`" target="_blank"> {{ dicionario.titulo_baixar_img }} <font-awesome-icon :icon="['fas', 'download']" /> </a>
       </div>
-      <p v-html="msg"></p>
+      <p v-text="msg"></p>
       <span class="horario-envio" v-text="horario"></span>
 
       <transition name="fade" mode="out-in">
