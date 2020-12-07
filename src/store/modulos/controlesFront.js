@@ -14,7 +14,7 @@ export default {
     verificaMsgFormatadaAberto: false,
     menuBotaoDireito: false,
     abaSelecionada: "",
-    regexIframe: /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\./g
+    regexIframe: /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\.|\:|\;|\,|\|/g
   },
   mutations: {
     setAbaContatos(state, abaContatos){
