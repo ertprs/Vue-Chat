@@ -1,9 +1,9 @@
 <template>
   <div class="ligacao-container">
-    <div class="botoes-ligacao-container">
+    <!-- <div class="botoes-ligacao-container">
       <div class="btn-ligacao-superior btn-ligacao" v-text="dicionario.btn_ligacao_pausar"></div>
       <div class="btn-ligacao-superior btn-ligacao" v-text="dicionario.btn_ligacao_desligar"></div>
-    </div>
+    </div> -->
     <div class="btn-ligacao-encerrar">
       <div class="btn-ligacao-inferior btn-ligacao" @click="finalizarAtendimentoNaApi" v-text="dicionario.btn_ligacao_encerrar"></div>
     </div>

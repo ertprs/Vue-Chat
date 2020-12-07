@@ -532,107 +532,109 @@ export default {
               }
 
               // Tratativa de *negrito* _italico_ e ~cortado~
-              const regexNegrito = /\*[\sA-Za-z0-9\u00C0-\u00FF]+\*/g
-              const regexItalico = /\_[\sA-Za-z0-9\u00C0-\u00FF]+\_/g
-              const regexLinha = /\~[\sA-Za-z0-9\u00C0-\u00FF]+\~/g
+              if(!link){
+                const regexNegrito = /\*[\sA-Za-z0-9\u00C0-\u00FF]+\*/g
+                const regexItalico = /\_[\sA-Za-z0-9\u00C0-\u00FF]+\_/g
+                const regexLinha = /\~[\sA-Za-z0-9\u00C0-\u00FF]+\~/g
 
-              if(mensagem.search(regexNegrito) !== -1){
-                let arrTexto = mensagem.split(" ")
+                if(mensagem.search(regexNegrito) !== -1){
+                  let arrTexto = mensagem.split(" ")
 
-                let abrirTag = true
-                arrTexto = arrTexto.map((mensagem) => {
-                  if(mensagem.search(/\*/) !== -1){
-                      if(mensagem.length > 1){
-                        if(mensagem.match(/\*/g).length > 1){
-                          mensagem = mensagem.replace(/\*/g, "")
-                          mensagem = `<b>${mensagem}</b>`
+                  let abrirTag = true
+                  arrTexto = arrTexto.map((mensagem) => {
+                    if(mensagem.search(/\*/) !== -1){
+                        if(mensagem.length > 1){
+                          if(mensagem.match(/\*/g).length > 1){
+                            mensagem = mensagem.replace(/\*/g, "")
+                            mensagem = `<b>${mensagem}</b>`
+                          }else{
+                            mensagem = mensagem.replace(/\*/, "")
+                            if(abrirTag){
+                              mensagem = `<b>${mensagem}`
+                              abrirTag = false
+                            }else{
+                              mensagem += "</b>"
+                            }
+                          }
                         }else{
-                          mensagem = mensagem.replace(/\*/, "")
                           if(abrirTag){
-                            mensagem = `<b>${mensagem}`
+                            mensagem = mensagem.replace(/\*/, "<b>")
                             abrirTag = false
                           }else{
-                            mensagem += "</b>"
+                            mensagem = mensagem.replace(/\*/, "</b>")
                           }
                         }
-                      }else{
-                        if(abrirTag){
-                          mensagem = mensagem.replace(/\*/, "<b>")
-                          abrirTag = false
-                        }else{
-                          mensagem = mensagem.replace(/\*/, "</b>")
-                        }
                       }
-                    }
-                    return mensagem
-                })
-                mensagem = arrTexto.join(" ")
-              }
+                      return mensagem
+                  })
+                  mensagem = arrTexto.join(" ")
+                }
 
-              if(mensagem.search(regexItalico) !== -1){
-                let arrTexto = mensagem.split(" ")
+                if(mensagem.search(regexItalico) !== -1){
+                  let arrTexto = mensagem.split(" ")
 
-                let abrirTag = true
-                arrTexto = arrTexto.map((mensagem) => {
-                  if(mensagem.search(/\_/) !== -1){
-                      if(mensagem.length > 1){
-                        if(mensagem.match(/\_/g).length > 1){
-                          mensagem = mensagem.replace(/\_/g, "")
-                          mensagem = `<i>${mensagem}</i>`
+                  let abrirTag = true
+                  arrTexto = arrTexto.map((mensagem) => {
+                    if(mensagem.search(/\_/) !== -1){
+                        if(mensagem.length > 1){
+                          if(mensagem.match(/\_/g).length > 1){
+                            mensagem = mensagem.replace(/\_/g, "")
+                            mensagem = `<i>${mensagem}</i>`
+                          }else{
+                            mensagem = mensagem.replace(/\_/, "")
+                            if(abrirTag){
+                              mensagem = `<i>${mensagem}`
+                              abrirTag = false
+                            }else{
+                              mensagem += "</i>"
+                            }
+                          }
                         }else{
-                          mensagem = mensagem.replace(/\_/, "")
                           if(abrirTag){
-                            mensagem = `<i>${mensagem}`
+                            mensagem = mensagem.replace(/\_/, "<i>")
                             abrirTag = false
                           }else{
-                            mensagem += "</i>"
+                            mensagem = mensagem.replace(/\_/, "</i>")
                           }
                         }
-                      }else{
-                        if(abrirTag){
-                          mensagem = mensagem.replace(/\_/, "<i>")
-                          abrirTag = false
-                        }else{
-                          mensagem = mensagem.replace(/\_/, "</i>")
-                        }
                       }
-                    }
-                    return mensagem
-                })
-                mensagem = arrTexto.join(" ")
-              }
+                      return mensagem
+                  })
+                  mensagem = arrTexto.join(" ")
+                }
 
-              if(mensagem.search(regexLinha) !== -1){
-                let arrTexto = mensagem.split(" ")
+                if(mensagem.search(regexLinha) !== -1){
+                  let arrTexto = mensagem.split(" ")
 
-                let abrirTag = true
-                arrTexto = arrTexto.map((mensagem) => {
-                  if(mensagem.search(/\~/) !== -1){
-                      if(mensagem.length > 1){
-                        if(mensagem.match(/\~/g).length > 1){
-                          mensagem = mensagem.replace(/\~/g, "")
-                          mensagem = `<del>${mensagem}</del>`
+                  let abrirTag = true
+                  arrTexto = arrTexto.map((mensagem) => {
+                    if(mensagem.search(/\~/) !== -1){
+                        if(mensagem.length > 1){
+                          if(mensagem.match(/\~/g).length > 1){
+                            mensagem = mensagem.replace(/\~/g, "")
+                            mensagem = `<del>${mensagem}</del>`
+                          }else{
+                            mensagem = mensagem.replace(/\~/, "")
+                            if(abrirTag){
+                              mensagem = `<del>${mensagem}`
+                              abrirTag = false
+                            }else{
+                              mensagem += "</del>"
+                            }
+                          }
                         }else{
-                          mensagem = mensagem.replace(/\~/, "")
                           if(abrirTag){
-                            mensagem = `<del>${mensagem}`
+                            mensagem = mensagem.replace(/\~/, "<del>")
                             abrirTag = false
                           }else{
-                            mensagem += "</del>"
+                            mensagem = mensagem.replace(/\~/, "</del>")
                           }
                         }
-                      }else{
-                        if(abrirTag){
-                          mensagem = mensagem.replace(/\~/, "<del>")
-                          abrirTag = false
-                        }else{
-                          mensagem = mensagem.replace(/\~/, "</del>")
-                        }
                       }
-                    }
-                    return mensagem
-                })
-                mensagem = arrTexto.join(" ")
+                      return mensagem
+                  })
+                  mensagem = arrTexto.join(" ")
+                }
               }
 
               let msgStatus = "msg_status_"+arrMensagens[index][i].status

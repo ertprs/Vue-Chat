@@ -36,6 +36,8 @@
           <!-- Textarea -->
           <textarea
             v-on:keydown.enter="enviarMensagem($event, aparecerPrevia)"
+            v-on:keydown.down="selecionarMsgFormatada(true)"
+            v-on:keydown.up="selecionarMsgFormatada(true)"
             id="textarea"
             v-model="mensagem"
             :placeholder="dicionario.placeholder_textarea"
@@ -111,7 +113,7 @@
           <option disabled value=""> {{ dicionario.titulo_select }} </option>
           <option v-for="(valor, chave) in mensagensFormatadas_01" :key="chave+valor"
             :value="chave">
-            {{ valor }}
+            {{ valor.T }}
           </option>
         </select>
         <!-- Select 02 -->
@@ -247,7 +249,7 @@ export default {
           }
         }, 700);
     },
-    async enviarMensagem(event, previa) {
+    enviarMensagem(event, previa) {
 
       if(event){
         if(event.keyCode == 13 && !event.shiftKey){
@@ -280,7 +282,10 @@ export default {
         this.executaTeste(event, previa, 0)
       }
 
+      const msgCasoErro = this.mensagem
       let msgAux = this.mensagem
+
+      this.mensagem = ""
 
       if (this.validaMensagem(previa, msgAux)) {
         if (this.atendimentoAtivo.token_cliente != "") {
@@ -290,18 +295,29 @@ export default {
             const form = new FormData()
             form.append("token_cliente", this.atendimentoAtivo.token_cliente)
             form.append("file", this.arquivo)
-            if(this.mensagem){
-              form.append("message", this.mensagem)
+
+            if(msgAux){
+              form.append("message", msgAux)
             }
 
             data = form
           }else{
-            msgAux = this.mensagem.replace(/<\/?[\d\w\s=\-:\.\/\'\";]+>/gi, ' ')
+            const regexTags = /<.+?>/gi
 
-            let regex = ""
+            if(msgAux.match(regexTags)){
+              msgAux = msgAux.replace(regexTags, '')
+            }
+
+            let regexEmojis = ""
             for (let j = 0; j < this.emojis.length; j++) {
-              regex = new RegExp(this.emojis[j].emoji, "gi");
-              msgAux = this.mensagem.replace(regex, this.emojis[j].hexa);
+              regexEmojis = new RegExp(this.emojis[j].emoji, "gi");
+              if(msgAux.match(regexEmojis)){
+                msgAux = msgAux.replace(regexEmojis, this.emojis[j].hexa);
+              }
+            }
+
+            if(!msgAux){
+              return
             }
 
             data = {
@@ -310,7 +326,7 @@ export default {
             };
           }
 
-          await axios_api
+          axios_api
             .post(`send-message?${this.reqTeste}`, data)
             .then((response) => {
 
@@ -326,7 +342,7 @@ export default {
             })
             .catch((error) => {
               console.log("erro send-message: ", error);
-              this.mensagem = msgAux
+              this.mensagem = msgCasoErro
               this.statusEnvio = "E"
               if (!document.querySelector(".toasted.toasted-primary.error")) {
                 this.$toasted.global.defaultError({
@@ -335,7 +351,7 @@ export default {
               }
             });
 
-          this.criaObjMensagem()
+          this.criaObjMensagem("", msgAux)
         }
       }
     },
@@ -380,7 +396,7 @@ export default {
       }
       return true;
     },
-    criaObjMensagem(objMsgExterno) {
+    criaObjMensagem(objMsgExterno, msgAux) {
 
       let objMensagem = {}
 
@@ -388,7 +404,7 @@ export default {
       let autor = ""
       let origem = ""
       let hora = this.acionaFormataHoraMensagem()
-      let msg = this.mensagem;
+      let msg = msgAux;
       let link = false
       let anexo = false
       let imgAnexo = ""
@@ -412,10 +428,12 @@ export default {
       if (!objMsgExterno) {
         for (let j = 0; j < this.emojis.length; j++) {
           regex = new RegExp(this.emojis[j].emoji, "gi");
-          this.mensagem = this.mensagem.replace(regex, this.emojis[j].hexa);
+          if(msg.match(regex)){
+            msg = msg.replace(regex, this.emojis[j].hexa);
+          }
         }
 
-        msg = this.mensagem.replace(/<\/?[\d\w\s=\-:\.\/\'\";]+>/gi, ' ')
+        msg = msg.replace(/<\/?[\d\w\s=\-:\.\/\'\";]+>/gi, ' ')
 
         if(this.arquivo){
           anexo = true
@@ -429,6 +447,8 @@ export default {
             docAnexo = url
             nomeArquivo = this.arquivo.name
           }
+
+          this.arquivo = ""
         }
 
         if(this.statusEnvio){
@@ -532,107 +552,109 @@ export default {
       }
 
       // Tratativa de *negrito* _italico_ e ~cortado~
-      const regexNegrito = /\*[\sA-Za-z0-9\u00C0-\u00FF]+\*/g
-      const regexItalico = /\_[\sA-Za-z0-9\u00C0-\u00FF]+\_/g
-      const regexLinha = /\~[\sA-Za-z0-9\u00C0-\u00FF]+\~/g
+      if(!link){
+        const regexNegrito = /\*[\sA-Za-z0-9\u00C0-\u00FF]+\*/g
+        const regexItalico = /\_[\sA-Za-z0-9\u00C0-\u00FF]+\_/g
+        const regexLinha = /\~[\sA-Za-z0-9\u00C0-\u00FF]+\~/g
 
-      if(msg.search(regexNegrito) !== -1){
-        let arrTexto = msg.split(" ")
+        if(msg.search(regexNegrito) !== -1){
+          let arrTexto = msg.split(" ")
 
-        let abrirTag = true
-        arrTexto = arrTexto.map((msg) => {
-          if(msg.search(/\*/) !== -1){
-              if(msg.length > 1){
-                if(msg.match(/\*/g).length > 1){
-                  msg = msg.replace(/\*/g, "")
-                  msg = `<b>${msg}</b>`
+          let abrirTag = true
+          arrTexto = arrTexto.map((msg) => {
+            if(msg.search(/\*/) !== -1){
+                if(msg.length > 1){
+                  if(msg.match(/\*/g).length > 1){
+                    msg = msg.replace(/\*/g, "")
+                    msg = `<b>${msg}</b>`
+                  }else{
+                    msg = msg.replace(/\*/, "")
+                    if(abrirTag){
+                      msg = `<b>${msg}`
+                      abrirTag = false
+                    }else{
+                      msg += "</b>"
+                    }
+                  }
                 }else{
-                  msg = msg.replace(/\*/, "")
                   if(abrirTag){
-                    msg = `<b>${msg}`
+                    msg = msg.replace(/\*/, "<b>")
                     abrirTag = false
                   }else{
-                    msg += "</b>"
+                    msg = msg.replace(/\*/, "</b>")
                   }
                 }
-              }else{
-                if(abrirTag){
-                  msg = msg.replace(/\*/, "<b>")
-                  abrirTag = false
-                }else{
-                  msg = msg.replace(/\*/, "</b>")
-                }
               }
-            }
-            return msg
-        })
-        msg = arrTexto.join(" ")
-      }
+              return msg
+          })
+          msg = arrTexto.join(" ")
+        }
 
-      if(msg.search(regexItalico) !== -1){
-        let arrTexto = msg.split(" ")
+        if(msg.search(regexItalico) !== -1){
+          let arrTexto = msg.split(" ")
 
-        let abrirTag = true
-        arrTexto = arrTexto.map((msg) => {
-          if(msg.search(/\_/) !== -1){
-              if(msg.length > 1){
-                if(msg.match(/\_/g).length > 1){
-                  msg = msg.replace(/\_/g, "")
-                  msg = `<i>${msg}</i>`
+          let abrirTag = true
+          arrTexto = arrTexto.map((msg) => {
+            if(msg.search(/\_/) !== -1){
+                if(msg.length > 1){
+                  if(msg.match(/\_/g).length > 1){
+                    msg = msg.replace(/\_/g, "")
+                    msg = `<i>${msg}</i>`
+                  }else{
+                    msg = msg.replace(/\_/, "")
+                    if(abrirTag){
+                      msg = `<i>${msg}`
+                      abrirTag = false
+                    }else{
+                      msg += "</i>"
+                    }
+                  }
                 }else{
-                  msg = msg.replace(/\_/, "")
                   if(abrirTag){
-                    msg = `<i>${msg}`
+                    msg = msg.replace(/\_/, "<i>")
                     abrirTag = false
                   }else{
-                    msg += "</i>"
+                    msg = msg.replace(/\_/, "</i>")
                   }
                 }
-              }else{
-                if(abrirTag){
-                  msg = msg.replace(/\_/, "<i>")
-                  abrirTag = false
-                }else{
-                  msg = msg.replace(/\_/, "</i>")
-                }
               }
-            }
-            return msg
-        })
-        msg = arrTexto.join(" ")
-      }
+              return msg
+          })
+          msg = arrTexto.join(" ")
+        }
 
-      if(msg.search(regexLinha) !== -1){
-        let arrTexto = msg.split(" ")
+        if(msg.search(regexLinha) !== -1){
+          let arrTexto = msg.split(" ")
 
-        let abrirTag = true
-        arrTexto = arrTexto.map((msg) => {
-          if(msg.search(/\~/) !== -1){
-              if(msg.length > 1){
-                if(msg.match(/\~/g).length > 1){
-                  msg = msg.replace(/\~/g, "")
-                  msg = `<del>${msg}</del>`
+          let abrirTag = true
+          arrTexto = arrTexto.map((msg) => {
+            if(msg.search(/\~/) !== -1){
+                if(msg.length > 1){
+                  if(msg.match(/\~/g).length > 1){
+                    msg = msg.replace(/\~/g, "")
+                    msg = `<del>${msg}</del>`
+                  }else{
+                    msg = msg.replace(/\~/, "")
+                    if(abrirTag){
+                      msg = `<del>${msg}`
+                      abrirTag = false
+                    }else{
+                      msg += "</del>"
+                    }
+                  }
                 }else{
-                  msg = msg.replace(/\~/, "")
                   if(abrirTag){
-                    msg = `<del>${msg}`
+                    msg = msg.replace(/\~/, "<del>")
                     abrirTag = false
                   }else{
-                    msg += "</del>"
+                    msg = msg.replace(/\~/, "</del>")
                   }
                 }
-              }else{
-                if(abrirTag){
-                  msg = msg.replace(/\~/, "<del>")
-                  abrirTag = false
-                }else{
-                  msg = msg.replace(/\~/, "</del>")
-                }
               }
-            }
-            return msg
-        })
-        msg = arrTexto.join(" ")
+              return msg
+          })
+          msg = arrTexto.join(" ")
+        }
       }
 
       objMensagem = {
@@ -701,12 +723,21 @@ export default {
         this.chaveAtual_03 = ''
       }
     },
-    selecionarMsgFormatada() {
+    selecionarMsgFormatada(chamouPeloTextarea) {
+
+      if(chamouPeloTextarea){
+        if(this.mensagem){
+          return
+        }
+      }
+
       this.abreFechaMsgFormatada()
 
       if(!this.$store.getters.getVerificaMsgFormatadaAberto){
         return
       }
+
+      this.chaveAtual_01 = Object.keys(this.mensagensFormatadas_01)[0]
 
       let valor = 'T'
       let tokenCliente = this.atendimentoAtivo.token_cliente
@@ -720,7 +751,19 @@ export default {
     exibirMsgFormatada(objMsgFormatada, numReq) {
       switch(numReq){
         case 2:
+          const select = document.querySelector("select[name=select-msg-formatada_02]")
+          if(select){
+            setTimeout(() => {
+              select.focus()
+            }, 500)
+          }
+
           this.mensagensFormatadas_02 = objMsgFormatada
+          if(this.mensagensFormatadas_02.length == 1){
+            this.chaveAtual_02 = 0
+          }else{
+            this.chaveAtual_02 = ""
+          }
         break;
         case 3:
           if(objMsgFormatada.length){
@@ -732,7 +775,9 @@ export default {
             }
           }else{
             this.mensagensFormatadas_03 = []
-            this.$toasted.global.emConstrucao({msg: this.dicionario.msg_erro_sem_msg_formatada})
+            if(!document.querySelector(".toasted.toasted-primary.info")){
+              this.$toasted.global.emConstrucao({msg: this.dicionario.msg_erro_sem_msg_formatada})
+            }
           }
         break;
       }

@@ -306,7 +306,6 @@ $border-radius: 30px;
 
       &:focus,
       &:hover{
-        outline: none;
         @include border(1px, #999);
       }
       option{
