@@ -79,11 +79,33 @@ export default {
     }
   },
   methods: {
+    habilitarNotificacoes(){
+      // Caso o navegador nao suporte notificacoes
+      if(!("Notification" in window)){
+        alert("Este browser nao suporta notificacoes de Desktop")
+      }
+
+      Notification.requestPermission(permission => {
+        if(permission === "granted"){
+          this.criarNotificacao("Voce sera notificado quando houverem novas mensagens e novos clientes", "", "Sobre as notificacoes")
+        }else if(permission === "denied"){
+          alert("Voce nao sera notificado caso houverem novas mensagens e novos clientes")
+        }
+      })
+    },
+    criarNotificacao(corpo, icone, titulo){
+      const opcoes = {
+        body: corpo,
+        icon: icone
+      }
+
+      const notification = new Notification(titulo, opcoes)
+    },
     setDominio(){
       let baseUrl = ''
       if(window.location.hostname == 'localhost'){
         baseUrl = 'http://linux03'
-        this.$store.dispatch("setReqTeste", "teste=rmix0101") // rmix0101
+        this.$store.dispatch("setReqTeste", "teste=teste") // rmix0101
       }else{
         baseUrl = 'https://'+window.location.hostname
       }
@@ -158,8 +180,13 @@ export default {
     this.verificaLocalStorage()
   },
   mounted(){
+    this.habilitarNotificacoes()
     this.setDominio()
     this.setHeightMaximo()
+
+    this.$root.$on("criar-notificacao", (corpo, icone, titulo) => {
+      this.criarNotificacao(corpo, icone, titulo)
+    })
   },
   watch: {
     corDestaque(){

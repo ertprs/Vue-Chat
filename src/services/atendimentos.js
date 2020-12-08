@@ -355,18 +355,37 @@ function atualizarClientes(mainData, app) {
           novosAtendimentos[ramal_server] = atendimentosServer[ramal_server]
           novosAtendimentos[ramal_server].novoContato = true
 
+          // Notificando cliente novo
+          emitirNotificacao(app, novosAtendimentos[ramal_server].nome_usu, "", "Novo cliente")
+
           adicionarIframeNovoUsu(novosAtendimentos[ramal_server].login_usu, novosAtendimentos[ramal_server].url)
 
           setouAtendimentos = true
           store.dispatch('setAtendimentos', novosAtendimentos)
           temClienteNovo = false
       } else {
-          atualizarMensagens(atendimentosServer[ramal_server], ramal_server, novosAtendimentos)
+          atualizarMensagens(atendimentosServer[ramal_server], ramal_server, novosAtendimentos, app)
       }
   }
 
   if(setouAtendimentos){
     adicionaCaso(200)
+  }
+}
+
+function emitirNotificacao(app, corpo, icone, titulo){
+  console.log("document.visibilityState: ", document.visibilityState)
+  console.log("Notification.permission: ", Notification.permission)
+  if(parent.document.querySelector("#container-toggle-im")){
+    const btnToggleIMContainer = parent.document.querySelector("#container-toggle-im")
+    const estado = btnToggleIMContainer.getAttribute("estado")
+
+    console.log("estado: ", estado)
+  }
+
+  if(document.visibilityState === "hidden" && Notification.permission === "granted"){
+    console.log("Emitiu notificacao")
+    app.$emit("criar-notificacao", corpo, icone, titulo)
   }
 }
 
@@ -418,7 +437,7 @@ function removerDuplicidadeParaInserirEmAtendimento(tipo, loginUsuComparativo, a
 
 }
 
-function atualizarMensagens(cliente, ramal, novosAtendimentos) {
+function atualizarMensagens(cliente, ramal, novosAtendimentos, app) {
   //cliente -> novo retorno do back
   //novosAtendimentos -> mem�ria local
 
@@ -448,6 +467,10 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos) {
             } else {
               novosAtendimentos[ramal].qtdMsgNova += 1;
             }
+
+            // Notificando mensagem nova
+            emitirNotificacao(app, message.msg, "", `Nova mensagem ${novosAtendimentos[ramal].nome_usu}`)
+
           } else if (message.resp_msg == "CLI") {
             // Adicionando posicao para sinalizar caso venha mensagem do cliente ativo e o ope esteja rolando a conversa
             if (store.getters.getIdAtendimentoAtivo == novosAtendimentos[ramal].id_cli) {
