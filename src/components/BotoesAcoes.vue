@@ -158,6 +158,24 @@ export default {
             this.$store.commit("setAtendimentoAtivo", auxAtdAtivo)
             this.$store.dispatch("setIdAtendimentoAtivo", auxAtdAtivo.id_cli)
 
+            if(arrayRegras.notification){
+              const objNotificacao = arrayRegras.notification
+              if(objNotificacao.force == "S"){
+                // Forcar uso de notificacao
+                this.$store.dispatch("setForcarNotificacoes", true)
+              }
+              if(objNotificacao.notify_cli.use == "S"){
+                this.$store.dispatch("setUsaNotificacaoCli", true)
+                this.$store.dispatch("setTituloCli", objNotificacao.notify_cli.message)
+                this.$store.dispatch("setTimeCli", objNotificacao.notify_cli.time)
+              }
+              if(objNotificacao.notify_msg.use == "S"){
+                this.$store.dispatch("setUsaNotificacaoMsg", true)
+                this.$store.dispatch("setTituloMsg", objNotificacao.notify_msg.message)
+                this.$store.dispatch("setTimeMsg", objNotificacao.notify_msg.time)
+              }
+            }
+
             if(!arrayRegras.usa_anexo){
               this.$store.dispatch("setTemAnexo", false)
             }

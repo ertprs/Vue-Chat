@@ -14,9 +14,10 @@ import popup from './modulos/popup'
 import aguardando from './modulos/aguardando'
 import gerenciador from './modulos/gerenciador'
 import dicionario from './modulos/dicionario'
+import notificacoes from './modulos/notificacoes'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules: { atendimentos, controlesFront, emojis, iframeModulo, regras, mensagens, agenda, url, popup, aguardando, gerenciador, dicionario }
+  modules: { atendimentos, controlesFront, emojis, iframeModulo, regras, mensagens, agenda, url, popup, aguardando, gerenciador, dicionario, notificacoes }
 });

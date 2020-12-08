@@ -356,7 +356,11 @@ function atualizarClientes(mainData, app) {
         novosAtendimentos[ramal_server].novoContato = true
 
         // Notificando cliente novo
-        emitirNotificacao(app, novosAtendimentos[ramal_server].nome_usu, "", "Novo cliente")
+        if(store.getters.getUsaNotificacaoCli){
+          let tituloCli = store.getters.getTituloCli
+          let tempo = store.getters.getTempoCli
+          emitirNotificacao(app, novosAtendimentos[ramal_server].nome_usu, "", tituloCli, tempo)
+        }
 
         adicionarIframeNovoUsu(novosAtendimentos[ramal_server].login_usu, novosAtendimentos[ramal_server].url)
 
@@ -373,8 +377,9 @@ function atualizarClientes(mainData, app) {
   }
 }
 
-function emitirNotificacao(app, corpo, icone, titulo){
+function emitirNotificacao(app, corpo, icone, titulo, tempo){
   let chatFechado = false
+  let notificou = false
 
   if(location.host != "localhost:8085"){
     if(parent.document.querySelector("#container-toggle-im")){
@@ -390,9 +395,20 @@ function emitirNotificacao(app, corpo, icone, titulo){
   if(Notification.permission === "granted"){
     if(document.visibilityState === "hidden"){
       app.$emit("criar-notificacao", corpo, icone, titulo)
+      notificou = true
     }else if(document.visibilityState === "visible" && chatFechado){
       app.$emit("criar-notificacao", corpo, icone, titulo)
+      notificou = true
     }
+  }
+
+  if(notificou){
+    if(!tempo){
+      tempo = 0
+    }
+    setTimeout(() => {
+      Notification.close()
+    }, tempo)
   }
 }
 
@@ -490,7 +506,13 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos, app) {
           }
 
           // Notificando mensagem nova
-          emitirNotificacao(app, message.msg, "", `Nova mensagem ${novosAtendimentos[ramal].nome_usu}`)
+          if(store.getters.getUsaNotificacaoMsg){
+            let titulo = store.getters.getTituloMsg
+            let tempo  = store.getters.getTempoMsg
+            console.log(titulo)
+            console.log(tempo)
+            emitirNotificacao(app, message.msg, "", `${titulo} - ${novosAtendimentos[ramal].nome_usu}`, tempo)
+          }
 
           store.dispatch('setAtendimentos', novosAtendimentos)
         }
