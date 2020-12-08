@@ -376,16 +376,31 @@ function atualizarClientes(mainData, app) {
 function emitirNotificacao(app, corpo, icone, titulo){
   console.log("document.visibilityState: ", document.visibilityState)
   console.log("Notification.permission: ", Notification.permission)
-  if(parent.document.querySelector("#container-toggle-im")){
-    const btnToggleIMContainer = parent.document.querySelector("#container-toggle-im")
-    const estado = btnToggleIMContainer.getAttribute("estado")
+  let producao = false
+  let chatFechado = false
 
-    console.log("estado: ", estado)
+  if(location.host != "localhost:8085"){
+    producao = true
+    if(parent.document.querySelector("#container-toggle-im")){
+      const btnToggleIMContainer = parent.document.querySelector("#container-toggle-im")
+      const estado = btnToggleIMContainer.getAttribute("estado")
+
+      console.log("estado: ", estado)
+      if(estado == "fechado"){
+        chatFechado = true
+      }
+    }
   }
 
   if(document.visibilityState === "hidden" && Notification.permission === "granted"){
+    if(!producao){
+      app.$emit("criar-notificacao", corpo, icone, titulo)
+    }else{
+      if(chatFechado){
+        app.$emit("criar-notificacao", corpo, icone, titulo)
+      }
+    }
     console.log("Emitiu notificacao")
-    app.$emit("criar-notificacao", corpo, icone, titulo)
   }
 }
 
