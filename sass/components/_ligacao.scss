@@ -38,9 +38,10 @@ $cor-encerrar: #E74C3C;
 .btn-ligacao-encerrar{
   width: 90%;
   margin: 0 auto;
-  position: absolute;
-  bottom: 20px;
+  // position: absolute;
+  // bottom: 20px;
   // Encerrar
+  @include d-flex-center();
   .btn-ligacao-inferior{
     @include estilo-botao(-4px, -2px, 1, $cor-encerrar);
     background-color: lighten($cor-encerrar, 10);

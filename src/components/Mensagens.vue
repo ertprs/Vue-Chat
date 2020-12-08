@@ -26,7 +26,8 @@
             </p>
           </template>
         </div>
-        <a :href="imgAnexo" :download="`${nomeArquivo}`" target="_blank"> {{ dicionario.titulo_baixar_img }} <font-awesome-icon :icon="['fas', 'download']" /> </a>
+        <a v-if="imgAnexo" :href="imgAnexo" :download="`${nomeArquivo}`" target="_blank"> {{ dicionario.titulo_baixar_img }} <font-awesome-icon :icon="['fas', 'download']" /> </a>
+        <a v-if="docAnexo" :href="docAnexo" :download="`${nomeArquivo}`" target="_blank"> {{ dicionario.titulo_baixar_doc }} <font-awesome-icon :icon="['fas', 'download']" /> </a>
       </div>
       <p v-html="msg"></p>
       <span class="horario-envio" v-text="horario"></span>
@@ -100,6 +101,6 @@ export default {
       this.$store.dispatch("setBlocker", true)
       this.$store.dispatch("setOrigemBlocker", "visualizar-imagem")
     }
-  },
+  }
 }
 </script>

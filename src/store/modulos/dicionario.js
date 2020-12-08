@@ -67,6 +67,7 @@ export default {
       msg_erro_msg_vazia: "Mensagem vazia",
       msg_extensoes_aceitas: "sao aceitos",
       titulo_baixar_img: "Baixar imagem",
+      titulo_baixar_doc: "Baixar documento",
       titulo_visualizar_img: "Visualizar imagem",
       alt_msg_img: "Imagem anexada",
       msg_erro_audio: "Seu navegador nao suporta o elemento audio",

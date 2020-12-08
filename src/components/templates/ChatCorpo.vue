@@ -1,5 +1,5 @@
 <template>
-  <div class="chat-corpo" @click="focaTextarea()">
+  <div class="chat-corpo" @click="focaTextarea($event)">
     <div class="chat-corpo-mensagens" v-on:scroll.prevent="verificaPosicaoBarraRolagem()">
       <div v-for="(arrMsg, index) in this.atendimentoAtivo.arrMsg" :key="index">
         <div class="chat-corpo-container" v-if="arrMsg.data_ini && arrMsg.login">
@@ -120,10 +120,14 @@ export default {
     })
   },
   methods:{
-    focaTextarea(){
-      const textarea = document.querySelector("#textarea")
-      if(textarea){
-        textarea.focus()
+    focaTextarea(event){
+      if(window.getSelection().toString()){
+        return
+      }else{
+        const textarea = document.querySelector("#textarea")
+        if(textarea){
+          textarea.focus()
+        }
       }
     },
     rolaChat(){

@@ -541,7 +541,7 @@ $corBordaListas: #AAA;
 
 .lista-contatos-container-vazio{
   width: 100%;
-  height: 90%;
+  height: calc(100% - var(--tamanho-titulos));
   @include d-flex-center();
   background-color: whitesmoke;
   &.existe-agenda{
