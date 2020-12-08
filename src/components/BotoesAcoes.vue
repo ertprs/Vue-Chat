@@ -60,7 +60,8 @@ export default {
       regrasBotoes: {},
       regrasCor: {},
       tudoPronto: false,
-      contadorRequisicoesFalhas: 0
+      contadorRequisicoesFalhas: 0,
+      notificou: false
     }
   },
   mounted(){
@@ -174,6 +175,11 @@ export default {
                 this.$store.dispatch("setTituloMsg", objNotificacao.notify_msg.message)
                 this.$store.dispatch("setTimeMsg", objNotificacao.notify_msg.time)
               }
+            }
+
+            if(!this.notificou){
+              this.$root.$emit("habilitar-notificacoes")
+              this.notificou = true
             }
 
             if(!arrayRegras.usa_anexo){

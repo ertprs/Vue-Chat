@@ -75,31 +75,45 @@ export default {
         width: 540,
         max_width: 540
       },
-      handlers: ['r']
+      handlers: ['r'],
+      tentouHabilitarNotificacao: false
     }
   },
   methods: {
     habilitarNotificacoes(){
+      if(this.tentouHabilitarNotificacao){ return }
+
       // Caso o navegador nao suporte notificacoes
       if(!("Notification" in window)){
-        alert("Este browser nao suporta notificacoes de Desktop")
+        alert(this.dicionario.sem_suporte_notificacao)
       }
 
       Notification.requestPermission(permission => {
-        if(permission === "granted"){
-          this.criarNotificacao("Voce sera notificado quando houverem novas mensagens e novos clientes", "", "Sobre as notificacoes")
-        }else if(permission === "denied"){
-          alert("Voce nao sera notificado caso houverem novas mensagens e novos clientes")
+        if(permission === "denied"){
+          if(this.forcarNotificacoes){
+            // parar get-atendimentos
+            this.$store.dispatch("setBlocker", true)
+            this.$store.dispatch("setOrigemBlocker", "atd-bloqueado")
+          }
         }
       })
+
+      this.tentouHabilitarNotificacao = true
     },
-    criarNotificacao(corpo, icone, titulo){
+    criarNotificacao(corpo, icone, titulo, tempo){
       const opcoes = {
         body: corpo,
         icon: icone
       }
 
       const notification = new Notification(titulo, opcoes)
+      if(tempo){
+        tempo = `${tempo}000`
+
+        setTimeout(() => {
+          notification.close()
+        }, tempo)
+      }
     },
     setDominio(){
       let baseUrl = ''
@@ -180,12 +194,15 @@ export default {
     this.verificaLocalStorage()
   },
   mounted(){
-    this.habilitarNotificacoes()
     this.setDominio()
     this.setHeightMaximo()
 
-    this.$root.$on("criar-notificacao", (corpo, icone, titulo) => {
-      this.criarNotificacao(corpo, icone, titulo)
+    this.$root.$on("habilitar-notificacoes", () => {
+      this.habilitarNotificacoes()
+    })
+
+    this.$root.$on("criar-notificacao", (corpo, icone, titulo, tempo) => {
+      this.criarNotificacao(corpo, icone, titulo, tempo)
     })
   },
   watch: {
@@ -199,7 +216,8 @@ export default {
   computed: {
     ...mapGetters({
       fechado: "getAbaContatos",
-      corDestaque: "getCorDestaque"
+      corDestaque: "getCorDestaque",
+      forcarNotificacoes: "getForcarNotificacoes"
     })
   }
 }

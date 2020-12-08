@@ -74,7 +74,7 @@ function loopAtualizacaoDeAtendimentos(count = 0, app) {
   setTimeout(async () => {
     if (verificaRequest()) {
       bloqueiaRequest()
-      if (store.getters.getOrigemBlocker !== "atd-parado") {
+      if (store.getters.getOrigemBlocker !== "atd-parado" && store.getters.getOrigemBlocker !== "atd-bloqueado") {
         await atualizarAtendimentos(app)
       }
     }
@@ -358,7 +358,7 @@ function atualizarClientes(mainData, app) {
         // Notificando cliente novo
         if(store.getters.getUsaNotificacaoCli){
           let tituloCli = store.getters.getTituloCli
-          let tempo = store.getters.getTempoCli
+          let tempo = store.getters.getTimeCli
           emitirNotificacao(app, novosAtendimentos[ramal_server].nome_usu, "", tituloCli, tempo)
         }
 
@@ -379,7 +379,6 @@ function atualizarClientes(mainData, app) {
 
 function emitirNotificacao(app, corpo, icone, titulo, tempo){
   let chatFechado = false
-  let notificou = false
 
   if(location.host != "localhost:8085"){
     if(parent.document.querySelector("#container-toggle-im")){
@@ -394,21 +393,10 @@ function emitirNotificacao(app, corpo, icone, titulo, tempo){
 
   if(Notification.permission === "granted"){
     if(document.visibilityState === "hidden"){
-      app.$emit("criar-notificacao", corpo, icone, titulo)
-      notificou = true
+      app.$emit("criar-notificacao", corpo, icone, titulo, tempo)
     }else if(document.visibilityState === "visible" && chatFechado){
-      app.$emit("criar-notificacao", corpo, icone, titulo)
-      notificou = true
+      app.$emit("criar-notificacao", corpo, icone, titulo, tempo)
     }
-  }
-
-  if(notificou){
-    if(!tempo){
-      tempo = 0
-    }
-    setTimeout(() => {
-      Notification.close()
-    }, tempo)
   }
 }
 
@@ -508,9 +496,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos, app) {
           // Notificando mensagem nova
           if(store.getters.getUsaNotificacaoMsg){
             let titulo = store.getters.getTituloMsg
-            let tempo  = store.getters.getTempoMsg
-            console.log(titulo)
-            console.log(tempo)
+            let tempo  = store.getters.getTimeMsg
             emitirNotificacao(app, message.msg, "", `${titulo} - ${novosAtendimentos[ramal].nome_usu}`, tempo)
           }
 

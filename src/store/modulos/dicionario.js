@@ -111,7 +111,9 @@ export default {
       msg_link: "sera aberto em uma nova guia",
       btn_ligacao_pausar: "Pausar",
       btn_ligacao_desligar: "Desligar Ligacao",
-      btn_ligacao_encerrar: "Encerrar"
+      btn_ligacao_encerrar: "Encerrar",
+      bloqueio_notificacoes: "Voce deve permitir as notificacoes para continuar",
+      sem_suporte_notificacao: "Este browser nao suporta notificacoes de Desktop"
     }
   },
   mutations: {

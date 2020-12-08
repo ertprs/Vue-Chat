@@ -64,5 +64,12 @@ div[blocker]{
     h4{
       @include efeito-hover-padrao();
     }
+    &.bloqueado{
+      padding: 15px;
+      h3{
+        margin: 0;
+        padding: 0;
+      }
+    }
   }
 }

@@ -4,6 +4,7 @@
       'bg-blocker-padrao' : origemBlocker == 'btn-acoes',
       'bg-blocker-padrao' : origemBlocker == 'msg-formatada',
       'bg-blocker-padrao' : origemBlocker == 'atd-parado',
+      'bg-blocker-padrao' : origemBlocker == 'atd-bloqueado',
       'bg-blocker-padrao' : origemBlocker == 'visualizar-imagem',
       'bg-blocker-padrao' : origemBlocker == 'visualizar-iframe'
       }">
@@ -13,6 +14,9 @@
             <font-awesome-icon :icon="['fas', 'play']" />
             {{ dicionario.titulo_retornar_pausa }}
           </h4>
+        </div>
+        <div v-else-if="origemBlocker == 'atd-bloqueado'" class="atd-parado-container bloqueado">
+          <h3 v-text="dicionario.bloqueio_notificacoes"></h3>
         </div>
         <div v-else-if="origemBlocker == 'visualizar-imagem'" class="container-visualizacao visualizar-imagem-container">
           <img :src="linkImagem" :alt="dicionario.alt_msg_img">
@@ -58,7 +62,7 @@ export default {
       this.linkIframe = link
     },
     fecharBlocker(){
-      if(this.origemBlocker == "atd-parado"){
+      if(this.origemBlocker == "atd-parado" || this.origemBlocker == "atd-bloqueado"){
         return
       }
 
