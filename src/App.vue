@@ -72,8 +72,8 @@ export default {
       },
       objChat: {
         min_width: 320,
-        width: 540,
-        max_width: 540
+        width: 700,
+        max_width: 700
       },
       handlers: ['r'],
       tentouHabilitarNotificacao: false

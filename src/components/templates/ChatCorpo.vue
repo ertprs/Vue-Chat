@@ -98,7 +98,9 @@ export default {
     }
 
     this.verificaPosicaoBarraRolagem()
-    this.rolaChat()
+    setTimeout(() => {
+      this.rolaChat()
+    }, 500)
 
     this.atualizarStatusMensagens()
     setInterval(() => {
