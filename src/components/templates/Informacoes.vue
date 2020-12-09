@@ -45,7 +45,7 @@
       </div>
     </div>
     <!-- Caso nao haja informacoes -->
-    <div class="lista-informacoes-container-vazio" v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206"> <!-- !iframeCttAtivo -->
+    <div class="lista-informacoes-container-vazio" v-else-if="!atendimentoAtivo.informacoes || caso == 400 || caso == 206">
       <div>
         <font-awesome-icon :icon="['fas', 'folder-open']" />
         <p v-text="dicionario.msg_sem_informacoes"></p>
@@ -119,13 +119,6 @@ export default {
         }
       }
     },
-    iframeCttAtivo(){
-      if(this.controleSemIframeLocal){
-        if(!this.iframeCttAtivo){
-          this.$store.dispatch("setSemIframe", true)
-        }
-      }
-    }
   },
   computed: {
     ...mapGetters({

@@ -754,6 +754,7 @@ export default {
           this.mensagensFormatadas_02 = objMsgFormatada
           if(this.mensagensFormatadas_02.length == 1){
             this.chaveAtual_02 = this.mensagensFormatadas_02[0]
+            this.recebeValorMSGFormatada(this.chaveAtual_02, 3)
           }else{
             this.chaveAtual_02 = ""
           }
