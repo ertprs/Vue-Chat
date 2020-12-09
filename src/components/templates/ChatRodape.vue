@@ -802,7 +802,7 @@ export default {
         this.$toasted.global.defaultError({msg: 'Selecione uma mensagem'})
         return
       }
-      console.log("chave no inserir no textarea: ", chave)
+
       if(!chave.cod){ return }
 
       const cod = chave.cod
@@ -818,16 +818,13 @@ export default {
       }
     },
     abrePopupMsgTipo2(chave){
-      console.log("chave no tipo 2: ", chave)
+
       if(!chave){ return }
 
       this.$store.dispatch("setBlocker", true)
       this.$store.dispatch("setOrigemBlocker", "visualizar-iframe")
 
       if(chave.cod){ chave = chave.cod }
-
-      console.log("assunto: ", chave)
-      console.log("categoria: ", this.chaveAtual_02)
 
       this.$store.dispatch("setAssunto", chave)
       this.$store.dispatch("setCategoria", this.chaveAtual_02)
