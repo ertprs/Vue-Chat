@@ -754,7 +754,7 @@ export default {
           this.mensagensFormatadas_02 = objMsgFormatada
           if(this.mensagensFormatadas_02.length == 1){
             this.chaveAtual_02 = this.mensagensFormatadas_02[0]
-            this.recebeValorMSGFormatada(this.chaveAtual_02, 3)
+            this.recebeValorMSGFormatada(this.chaveAtual_02.cod, 3)
           }else{
             this.chaveAtual_02 = ""
           }
@@ -768,7 +768,7 @@ export default {
           if(objMsgFormatada.length){
             this.mensagensFormatadas_03 = objMsgFormatada
             if(this.mensagensFormatadas_03.length == 1){
-              this.chaveAtual_03 = this.mensagensFormatadas_03[0]
+              this.chaveAtual_03 = this.mensagensFormatadas_03[0].cod
             }else{
               this.chaveAtual_03 = ""
             }
