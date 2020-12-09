@@ -249,7 +249,7 @@ export default {
           }
         }, 700);
     },
-    enviarMensagem(event, previa) {
+    async enviarMensagem(event, previa) {
 
       if(event){
         if(event.keyCode == 13 && !event.shiftKey){
@@ -326,7 +326,7 @@ export default {
             };
           }
 
-          axios_api
+          await axios_api
             .post(`send-message?${this.reqTeste}`, data)
             .then((response) => {
 
