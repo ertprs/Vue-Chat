@@ -828,9 +828,8 @@ export default {
       this.$store.dispatch("setOrigemBlocker", "visualizar-iframe")
 
       if(chave.cod){ chave = chave.cod }
-
       this.$store.dispatch("setAssunto", chave)
-      if(this.chaveAtual_02.cod){ this.chaveAtual_02 = this.chaveAtual_02 }
+      if(this.chaveAtual_02.cod){ this.chaveAtual_02 = this.chaveAtual_02.cod }
       this.$store.dispatch("setCategoria", this.chaveAtual_02)
 
     },

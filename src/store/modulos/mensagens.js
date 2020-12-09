@@ -37,10 +37,18 @@ export default {
       context.commit('setAbrirMsgTipo2', payload)
     },
     setCategoria: (context, payload) => {
-      context.commit('setCategoria', payload)
+      if(payload.cod){
+        context.commit('setCategoria', payload.cod)
+      }else{
+        context.commit('setCategoria', payload)
+      }
     },
     setAssunto: (context, payload) => {
-      context.commit('setAssunto', payload)
+      if(payload.cod){
+        context.commit('setAssunto', payload.cod)
+      }else{
+        context.commit('setAssunto', payload)
+      }
     },
     setTemMensagemFormatada: (context, payload) => {
       context.commit('setTemMensagemFormatada', payload)
