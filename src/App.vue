@@ -72,48 +72,64 @@ export default {
       },
       objChat: {
         min_width: 320,
-        width: 700,
-        max_width: 700
+        width: 540,
+        max_width: 540
       },
       handlers: ['r'],
-      tentouHabilitarNotificacao: false
+      indice: 0
     }
   },
   methods: {
     habilitarNotificacoes(){
-      if(this.tentouHabilitarNotificacao){ return }
-
       // Caso o navegador nao suporte notificacoes
       if(!("Notification" in window)){
         alert(this.dicionario.sem_suporte_notificacao)
       }
-
-      Notification.requestPermission(permission => {
+      // limitar tamanho da msg
+      Notification.requestPermission().then(permission => {
         if(permission === "denied"){
           if(this.forcarNotificacoes){
-            // parar get-atendimentos
             this.$store.dispatch("setBlocker", true)
             this.$store.dispatch("setOrigemBlocker", "atd-bloqueado")
           }
+        }else if(permission === "granted"){
+          this.$store.dispatch("setBlocker", false)
+          this.$store.dispatch("setOrigemBlocker", "")
         }
       })
-
-      this.tentouHabilitarNotificacao = true
     },
     criarNotificacao(corpo, icone, titulo, tempo){
+      icone = `${this.dominio}/callcenter/imagens/ext_top_${icone}.png`
+
+      const lengthLimite = 197
+
+      if(corpo.length > lengthLimite){
+        corpo = corpo.substring(0, lengthLimite) + "..."
+      }
+
       const opcoes = {
         body: corpo,
-        icon: icone
+        icon: icone,
+        tag: this.indice
       }
 
       const notification = new Notification(titulo, opcoes)
+
+      this.indice++
+
+      if(document.visibilityState === "visible"){
+        notification.close()
+        return
+      }
+
       if(tempo){
-        tempo = `${tempo}000`
+        tempo = parseInt(tempo)*1000
 
         setTimeout(() => {
           notification.close()
         }, tempo)
       }
+
     },
     setDominio(){
       let baseUrl = ''
@@ -217,7 +233,8 @@ export default {
     ...mapGetters({
       fechado: "getAbaContatos",
       corDestaque: "getCorDestaque",
-      forcarNotificacoes: "getForcarNotificacoes"
+      forcarNotificacoes: "getForcarNotificacoes",
+      dominio: "getDominio"
     })
   }
 }

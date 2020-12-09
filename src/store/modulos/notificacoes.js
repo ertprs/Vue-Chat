@@ -6,7 +6,8 @@ export default {
     tituloCli: "",
     timeCli: "",
     tituloMsg: "",
-    timeMsg: ""
+    timeMsg: "",
+    iconeNotificacao: ""
   },
   mutations: {
     setForcarNotificacoes(state, forcarNotificacoes){
@@ -29,6 +30,9 @@ export default {
     },
     setTimeMsg(state, timeMsg){
       state.timeMsg = timeMsg
+    },
+    setIconeNotificacao(state, iconeNotificacao){
+      state.iconeNotificacao = iconeNotificacao
     }
   },
   actions: {
@@ -52,6 +56,9 @@ export default {
     },
     setTimeMsg: (context, payload) => {
       context.commit("setTimeMsg", payload)
+    },
+    setIconeNotificacao: (context, payload) => {
+      context.commit("setIconeNotificacao", payload)
     }
   },
   getters: {
@@ -75,6 +82,9 @@ export default {
     },
     getTimeMsg(state){
       return state.timeMsg
+    },
+    getIconeNotificacao(state){
+      return state.iconeNotificacao
     }
   }
 }

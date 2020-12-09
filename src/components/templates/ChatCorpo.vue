@@ -105,7 +105,9 @@ export default {
     this.atualizarStatusMensagens()
     setInterval(() => {
       if(this.atendimentoAtivo && this.atendimentoAtivo.token_cliente){
-        this.atualizarStatusMensagens()
+        if(this.origemBlocker != "atd-parado" && this.origemBlocker != "atd-bloqueado"){
+          this.atualizarStatusMensagens()
+        }
       }
     }, 10000)
   },
@@ -240,7 +242,8 @@ export default {
       habilitaRolagem: 'getHabilitaRolagem',
       atendimentoAtivo: 'getAtendimentoAtivo',
       reqTeste: 'getReqTeste',
-      dicionario: 'getDicionario'
+      dicionario: 'getDicionario',
+      origemBlocker: 'getOrigemBlocker'
     })
   }
 }

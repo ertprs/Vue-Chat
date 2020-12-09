@@ -161,6 +161,7 @@ export default {
 
             if(arrayRegras.notification){
               const objNotificacao = arrayRegras.notification
+
               if(objNotificacao.force == "S"){
                 // Forcar uso de notificacao
                 this.$store.dispatch("setForcarNotificacoes", true)

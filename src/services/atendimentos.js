@@ -359,7 +359,9 @@ function atualizarClientes(mainData, app) {
         if(store.getters.getUsaNotificacaoCli){
           let tituloCli = store.getters.getTituloCli
           let tempo = store.getters.getTimeCli
-          emitirNotificacao(app, novosAtendimentos[ramal_server].nome_usu, "", tituloCli, tempo)
+          store.dispatch("setIconeNotificacao", novosAtendimentos[ramal_server].sigla)
+          let icone = store.getters.getIconeNotificacao
+          emitirNotificacao(app, novosAtendimentos[ramal_server].nome_usu, icone, tituloCli, tempo)
         }
 
         adicionarIframeNovoUsu(novosAtendimentos[ramal_server].login_usu, novosAtendimentos[ramal_server].url)
@@ -497,7 +499,9 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos, app) {
           if(store.getters.getUsaNotificacaoMsg){
             let titulo = store.getters.getTituloMsg
             let tempo  = store.getters.getTimeMsg
-            emitirNotificacao(app, message.msg, "", `${titulo} - ${novosAtendimentos[ramal].nome_usu}`, tempo)
+            store.dispatch("setIconeNotificacao", novosAtendimentos[ramal].sigla)
+            let icone = store.getters.getIconeNotificacao
+            emitirNotificacao(app, message.msg, icone, `${titulo} - ${novosAtendimentos[ramal].nome_usu}`, tempo)
           }
 
           store.dispatch('setAtendimentos', novosAtendimentos)
