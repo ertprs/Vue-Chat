@@ -1,12 +1,8 @@
 export default {
     state: {
-      iframesDisponiveis: [],
-      iframeCttAtivo: false
+      iframesDisponiveis: []
     },
     mutations: {
-      setIframeCttAtivo(state, iframeCttAtivo){
-        state.iframeCttAtivo = iframeCttAtivo
-      },
       setIframesDisponiveis(state, iframe) {
         state.iframesDisponiveis = iframe
       },
@@ -17,17 +13,11 @@ export default {
     actions: {
       setIframesDisponiveis: (context, payload) => {
         context.commit('setIframesDisponiveis', payload)
-      },
-      setIframeCttAtivo: (context, payload) => {
-        context.commit("setIframeCttAtivo", payload)
       }
     },
     getters: {
       getIframesDisponiveis(state) {
         return state.iframesDisponiveis
-      },
-      getIframeCttAtivo(state){
-        return state.iframeCttAtivo
       }
     }
   }

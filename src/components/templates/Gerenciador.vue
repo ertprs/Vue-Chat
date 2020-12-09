@@ -30,7 +30,6 @@ export default {
   computed: {
     ...mapGetters({
       gerenciador: "getGerenciador",
-      iframeCttAtivo: "getIframeCttAtivo",
       ativo: "getAtivo",
       dominio: "getDominio",
       reqTeste: "getReqTeste",
@@ -127,14 +126,14 @@ export default {
 
     },
     abrirAtivarCtt(){
-      if(this.iframeCttAtivo){
-        this.$store.dispatch("setIframeCttAtivo", false)
+      if(this.$store.getters.getBlocker){
+        this.$store.dispatch("setBlocker", false)
+        this.$store.dispatch("setOrigemBlocker", "")
+        this.$root.$emit("abrir-iframe", "")
       }else{
-        if(this.semIframe){
-          this.$store.dispatch("setSemIframe", false)
-        }
-
-        this.$store.dispatch("setIframeCttAtivo", true)
+        this.$store.dispatch("setBlocker", true)
+        this.$store.dispatch("setOrigemBlocker", "visualizar-iframe")
+        this.$root.$emit("abrir-iframe", `${this.dominio}/im/atdHumano/view/atd_contato_atv.php`)
       }
     },
     preencherDiv(){

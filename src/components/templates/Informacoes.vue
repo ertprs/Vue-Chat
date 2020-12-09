@@ -51,23 +51,6 @@
         <p v-text="dicionario.msg_sem_informacoes"></p>
       </div>
     </div>
-    <!-- Iframe Chamar Cliente -->
-    <div class="iframe-msg-container" v-if="iframeCttAtivo">
-      <div class="informacoes-load-container" v-if="gif">
-        <div class="load">
-          <font-awesome-icon :icon="['fas', 'hourglass-end']" />
-          <p v-text="dicionario.titulo_carregando"></p>
-        </div>
-      </div>
-      <span v-if="!gif" class="btn-fechar-ctt-cliente" @click="fecharIframeCttAtivo()">
-        <font-awesome-icon :icon="['fas', 'times-circle']" />
-      </span>
-      <iframe
-        :src="`${this.dominio}/im/atdHumano/view/atd_contato_atv.php`" frameborder="0"
-        @load="gif = false"
-        @loadstart="gif = true"
-        > </iframe>
-    </div>
   </div>
 </template>
 
@@ -96,17 +79,11 @@ export default {
     },
     acionaFormataHorario(horas){
       return formataHorario(horas)
-    },
-    fecharIframeCttAtivo(){
-      this.$store.dispatch('setIframeCttAtivo', false)
     }
   },
   watch: {
     atendimentoAtivo(){
       if(this.atendimentoAtivo){
-        if(this.iframeCttAtivo){
-          return
-        }
 
         if(this.atendimentoAtivo.url){
           if(this.atendimentoAtivo.url.indexOf("im_atd_menu") != -1){
@@ -124,7 +101,6 @@ export default {
     ...mapGetters({
       atendimentoAtivo: "getAtendimentoAtivo",
       caso: "getCaso",
-      iframeCttAtivo: "getIframeCttAtivo",
       dominio: "getDominio",
       semIframe: "getSemIframe",
       dicionario: "getDicionario"
