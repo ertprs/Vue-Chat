@@ -780,6 +780,8 @@ export default {
       }
     },
     recebeValorMSGFormatada(codReq, numReq){
+      if(codReq.cod){ codReq = codReq.cod }
+
       codReq = `${this.chaveAtual_01.cod}/${codReq}`
 
       let tokenCliente = this.atendimentoAtivo.token_cliente
@@ -828,6 +830,7 @@ export default {
       if(chave.cod){ chave = chave.cod }
 
       this.$store.dispatch("setAssunto", chave)
+      if(this.chaveAtual_02.cod){ this.chaveAtual_02 = this.chaveAtual_02 }
       this.$store.dispatch("setCategoria", this.chaveAtual_02)
 
     },
