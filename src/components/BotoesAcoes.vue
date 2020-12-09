@@ -344,8 +344,6 @@ export default {
                 arrValores[index] = Object.values(objAgentes)[0]
               })
 
-
-
               for(let i = 0; i < arrChaves.length; i++){
                 if(this.arrAgentes.length){
                   if(this.arrAgentes[i]){

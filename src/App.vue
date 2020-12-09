@@ -134,8 +134,8 @@ export default {
     setDominio(){
       let baseUrl = ''
       if(window.location.hostname == 'localhost'){
-        baseUrl = 'http://linux03'
-        this.$store.dispatch("setReqTeste", "teste=teste") // rmix0101
+        baseUrl = 'https://linux03'
+        this.$store.dispatch("setReqTeste", "teste=rmix0101") // teste
       }else{
         baseUrl = 'https://'+window.location.hostname
       }

@@ -7,12 +7,14 @@ export function obterMsgFormatada(tipo, tokenCliente) {
             url: `${store.getters.getURL}get-messages/${tipo}?token_cliente=${tokenCliente}&${store.getters.getReqTeste}`
         })
         .then(response => {
-            if(response.data.st_ret === 'OK') {
-                store.dispatch('setTipoMsg', response.data.tipo)
-                return response.data.nivel
-            }else if(response.data.st_ret === 'AVISO'){
-                return response.data.msg_ret
+          if(response.data.st_ret === 'OK') {
+            if(response.data.tipo){
+              store.dispatch('setTipoMsg', response.data.tipo)
             }
+            return response.data.nivel
+          }else if(response.data.st_ret === 'AVISO'){
+            return response.data.msg_ret
+          }
         })
         .catch(err => console.log(err))
 }

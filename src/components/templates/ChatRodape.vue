@@ -105,55 +105,53 @@
     <transition name="fade">
       <div class="chat-rodape-msg-formatada" v-show="verificaMsgFormatadaAberto">
         <!-- Select 01 -->
-        <select
-          name="select-msg-formatada_01"
+        <vue-select
+          appendToBody
           class="select-msg-formatada"
+          :options="mensagensFormatadas_01"
+          label="value"
           v-model="chaveAtual_01"
-          v-on:change="recebeValorMSGFormatada('T', 2)">
-          <option disabled value=""> {{ dicionario.titulo_select }} </option>
-          <option v-for="(valor, chave) in mensagensFormatadas_01" :key="chave+valor"
-            :value="chave">
-            {{ valor.T }}
-          </option>
-        </select>
+          :reduce="mensagensFormatadas_01 => mensagensFormatadas_01.cod"
+          >
+          <div slot="no-options" v-text="dicionario.msg_sem_resultados"></div>
+        </vue-select>
         <!-- Select 02 -->
         <transition name="fade">
-          <select
-            v-show="mensagensFormatadas_02.length"
-            name="select-msg-formatada_02"
+          <vue-select
+            appendToBody
             class="select-msg-formatada"
+            :options="mensagensFormatadas_02"
+            label="value"
             v-model="chaveAtual_02"
-            v-on:change="recebeValorMSGFormatada(chaveAtual_01+'/'+chaveAtual_02, 3)">
-            <option disabled value=""> {{ dicionario.titulo_select }} </option>
-            <option v-for="(valor, indice) in mensagensFormatadas_02" :key="indice"
-              :value="valor.cod">
-              {{ valor.value }}
-            </option>
-          </select>
+            :reduce="mensagensFormatadas_02 => mensagensFormatadas_02.cod"
+            @input="recebeValorMSGFormatada(chaveAtual_02, 3)"
+            >
+            <div slot="no-options" v-text="dicionario.msg_sem_resultados"></div>
+          </vue-select>
         </transition>
         <!-- Select 03 -->
         <transition name="fade">
           <div class="select-03" v-show="mensagensFormatadas_03.length" >
-            <select
-              name="select-msg-formatada_03"
+            <vue-select
+              appendToBody
               class="select-msg-formatada"
-              v-model="chaveAtual_03">
-              <option disabled value=""> {{ dicionario.titulo_select }} </option>
-              <option v-for="(valor, indice) in mensagensFormatadas_03" :key="indice"
-                :value="indice">
-                {{ valor.value }}
-              </option>
-            </select>
+              :options="mensagensFormatadas_03"
+              label="value"
+              v-model="chaveAtual_03"
+              :reduce="mensagensFormatadas_03 => mensagensFormatadas_03.cod"
+              >
+              <div slot="no-options" v-text="dicionario.msg_sem_resultados"></div>
+            </vue-select>
             <div class="btn-select-03"
               v-show="tipoMsg == 1"
               :title="dicionario.title_btn_preencher_msg_formatada"
-              @click="insereMsgFormatadaNoTextarea(mensagensFormatadas_03, chaveAtual_03)">
+              @click="insereMsgFormatadaNoTextarea(chaveAtual_03)">
               <font-awesome-icon :icon="['fas', 'level-up-alt']" />
             </div>
             <div class="btn-select-03"
               v-show="tipoMsg == 2"
               :title="dicionario.title_btn_abrir_msg_tipo_2"
-              @click="abrePopupMsgTipo2(mensagensFormatadas_03, chaveAtual_03)">
+              @click="abrePopupMsgTipo2(chaveAtual_03)">
               <font-awesome-icon :icon="['fas', 'file-alt']" />
             </div>
           </div>
@@ -182,6 +180,7 @@ import { formataHoraMensagem } from "@/services/formatacaoDeTextos"
 import axios_api from "@/services/serviceAxios";
 
 import Emojis from "../Emojis"
+import vSelect from 'vue-select'
 
 export default {
   data() {
@@ -195,7 +194,7 @@ export default {
       txtFormatosValidos: "",
       abrirOpcoes: false,
       erroFormatoAnexo: false,
-      mensagensFormatadas_01: [{T: "Todos"}],
+      mensagensFormatadas_01: [{cod: "T", value: "Todos"}],
       chaveAtual_01: 'T',
       mensagensFormatadas_02: [],
       chaveAtual_02: '',
@@ -209,7 +208,8 @@ export default {
     };
   },
   components: {
-    "emojis" : Emojis
+    "emojis" : Emojis,
+    "vue-select" : vSelect
   },
   destroyed(){
     this.$root.$off("toggle-msg-formatada")
@@ -689,7 +689,7 @@ export default {
       return formataHoraMensagem()
     },
     verificaTemMensagemFormatada(){
-      let valor = ''
+      let valor = 'T'
       let tokenCliente = this.atendimentoAtivo.token_cliente
 
       obterMsgFormatada(valor, tokenCliente)
@@ -737,7 +737,7 @@ export default {
         return
       }
 
-      this.chaveAtual_01 = Object.keys(this.mensagensFormatadas_01)[0]
+      this.chaveAtual_01 = this.mensagensFormatadas_01[0]
 
       let valor = 'T'
       let tokenCliente = this.atendimentoAtivo.token_cliente
@@ -751,53 +751,38 @@ export default {
     exibirMsgFormatada(objMsgFormatada, numReq) {
       switch(numReq){
         case 2:
-          const select = document.querySelector("select[name=select-msg-formatada_02]")
-          if(select){
-            setTimeout(() => {
-              select.focus()
-            }, 500)
-          }
-
           this.mensagensFormatadas_02 = objMsgFormatada
           if(this.mensagensFormatadas_02.length == 1){
-            this.chaveAtual_02 = 0
+            this.chaveAtual_02 = this.mensagensFormatadas_02[0]
           }else{
             this.chaveAtual_02 = ""
+          }
+
+          const select = document.querySelectorAll(".select-msg-formatada")[1]
+          if(select){
+            select.focus()
           }
         break;
         case 3:
           if(objMsgFormatada.length){
             this.mensagensFormatadas_03 = objMsgFormatada
             if(this.mensagensFormatadas_03.length == 1){
-              this.chaveAtual_03 = 0
+              this.chaveAtual_03 = this.mensagensFormatadas_03[0]
             }else{
               this.chaveAtual_03 = ""
             }
           }else{
             this.mensagensFormatadas_03 = []
-            if(!document.querySelector(".toasted.toasted-primary.info")){
-              this.$toasted.global.emConstrucao({msg: this.dicionario.msg_erro_sem_msg_formatada})
-            }
+            this.$toasted.global.emConstrucao({msg: this.dicionario.msg_erro_sem_msg_formatada})
           }
         break;
       }
     },
-    recebeValorMSGFormatada(valor, numReq){
-
-      if(valor.length == 1){
-
-        if(this.mensagensFormatadas_02.length){
-          this.mensagensFormatadas_02 = []
-          this.chaveAtual_02 = ''
-        }
-        if(this.mensagensFormatadas_03.length){
-          this.mensagensFormatadas_03 = []
-          this.chaveAtual_03 = ''
-        }
-      }
+    recebeValorMSGFormatada(codReq, numReq){
+      codReq = `${this.chaveAtual_01.cod}/${codReq}`
 
       let tokenCliente = this.atendimentoAtivo.token_cliente
-      obterMsgFormatada(valor, tokenCliente)
+      obterMsgFormatada(codReq, tokenCliente)
         .then((data) => {
           if(data){
             if(typeof(data) == "string"){
@@ -811,15 +796,17 @@ export default {
         })
         .catch((err) => console.log(err));
     },
-    insereMsgFormatadaNoTextarea(arrayMsgFormatada, indice){
+    insereMsgFormatadaNoTextarea(chave){
 
-      if(typeof indice !== 'number'){
+      if(!chave){
         this.$toasted.global.defaultError({msg: 'Selecione uma mensagem'})
         return
       }
+      console.log("chave no inserir no textarea: ", chave)
+      if(!chave.cod){ return }
 
-      const cod = arrayMsgFormatada[indice].cod
-      const msg = arrayMsgFormatada[indice].value
+      const cod = chave.cod
+      const msg = chave.value
       if(msg){
         if(this.mensagem == msg){
           return
@@ -830,21 +817,21 @@ export default {
         this.$toasted.global.emConstrucao({msg: 'Mensagem vazia'})
       }
     },
-    abrePopupMsgTipo2(arrayMsgFormatada, indice){
-      const objMsg = arrayMsgFormatada[indice]
+    abrePopupMsgTipo2(chave){
+      console.log("chave no tipo 2: ", chave)
+      if(!chave){ return }
 
-      if(objMsg){
+      this.$store.dispatch("setBlocker", true)
+      this.$store.dispatch("setOrigemBlocker", "visualizar-iframe")
 
-        if(this.semIframe){
-          this.$store.dispatch("setSemIframe", false)
-        }
+      if(chave.cod){ chave = chave.cod }
 
-        this.$store.dispatch("setBlocker", true)
-        this.$store.dispatch("setOrigemBlocker", "visualizar-iframe")
+      console.log("assunto: ", chave)
+      console.log("categoria: ", this.chaveAtual_02)
 
-        this.$store.dispatch("setAssunto", objMsg.cod)
-        this.$store.dispatch("setCategoria", this.chaveAtual_02)
-      }
+      this.$store.dispatch("setAssunto", chave)
+      this.$store.dispatch("setCategoria", this.chaveAtual_02)
+
     },
     selecionarAnexo(previa) {
       if(previa){
@@ -1124,7 +1111,6 @@ export default {
       reqTeste: "getReqTeste",
       extImgs: "getExtImgs",
       extDocs: "getExtDocs",
-      semIframe: "getSemIframe",
       dicionario: "getDicionario",
       nomeOpe: "getNomeOpe",
       verificaMsgFormatadaAberto: "getVerificaMsgFormatadaAberto",
