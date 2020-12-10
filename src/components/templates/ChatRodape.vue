@@ -225,7 +225,7 @@ export default {
 
     this.$root.$on("atualizar-mensagem", (objMsgExterno) => {
       this.criaObjMensagem(objMsgExterno)
-    }),(document.querySelector(".btn-emoji").innerText = String.fromCodePoint(0x1f61c));
+    })
 
     window.addEventListener("message", this.listenerPostMessage, false);
 
@@ -235,9 +235,14 @@ export default {
     this.verificaTemMensagemFormatada()
   },
   methods: {
-    adicionarEmoji(value) {
-      document.querySelector('#textarea').focus()
-      this.mensagem += value;
+    adicionarEmoji(objEmoji) {
+      const textarea = document.querySelector('#textarea')
+      textarea.focus()
+      const inicioCursor = textarea.selectionStart
+      const fimCursor = textarea.selectionEnd
+
+      // Verificar se o codepoint eh valido
+      this.mensagem = this.mensagem.slice(0, inicioCursor) + String.fromCodePoint(`0x${objEmoji.unified}`) + this.mensagem.slice(fimCursor)
     },
     executaTeste(event, previa, cont) {
       setTimeout( () => {
@@ -404,7 +409,7 @@ export default {
       let autor = ""
       let origem = ""
       let hora = this.acionaFormataHoraMensagem()
-      let msg = msgAux;
+      let msg = msgAux
       let link = false
       let anexo = false
       let imgAnexo = ""
@@ -421,6 +426,9 @@ export default {
       let indexUltimaChave = chavesArrMsg[chavesArrMsg.length - 1]
       let arrMsg = this.atendimentoAtivo.arrMsg[indexUltimaChave].msg
       if(!arrMsg){
+        console.log("todas chaves: ", chavesArrMsg)
+        console.log("ultimaChave: ", indexUltimaChave)
+        console.log("array: ", this.atendimentoAtivo.arrMsg)
         return
       }
 
@@ -470,12 +478,12 @@ export default {
 
       } else {
 
-        msg = objMsgExterno.msg;
+        msg = objMsgExterno.msg
 
         if(objMsgExterno.anexos){
           anexo = true
-          regex = /(\w+)\/(\w+)/g;
-          let type = regex.exec(objMsgExterno.anexos.type);
+          regex = /(\w+)\/(\w+)/g
+          let type = regex.exec(objMsgExterno.anexos.type)
 
           if(!type){
             type = objMsgExterno.anexos.type
@@ -674,7 +682,8 @@ export default {
         video: video
       };
 
-      arrMsg.push(objMensagem)
+      this.atendimentoAtivo.arrMsg[indexUltimaChave].msg.push(objMensagem)
+      this.$forceUpdate()
 
       if(objMsgExterno){
         this.$root.$emit("verificar-seq")
@@ -1101,7 +1110,6 @@ export default {
   computed: {
     ...mapGetters({
       atendimentoAtivo: "getAtendimentoAtivo",
-      informacoesAberto: "getInformacoesAberto",
       url: "getURL",
       emojis: "getEmojis",
       blocker: "getBlocker",

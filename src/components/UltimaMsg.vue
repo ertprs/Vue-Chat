@@ -3,6 +3,9 @@
 </template>
 
 <script>
+
+import { mapGetters } from "vuex"
+
 export default {
   props: ["mensagens"],
   data(){
@@ -11,6 +14,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      atendimentoAtivo: "getAtendimentoAtivo"
+    }),
     ultimaMsg: {
       get(){
         if(this.mensagens){
@@ -27,6 +33,7 @@ export default {
             return
           }
           if(arrMsg.length){
+            this.verificarSeAUltimaMensagemEstaNoArrayDeMensagens(arrMsg[arrMsg.length - 1])
             if(arrMsg[arrMsg.length - 1].anexos || arrMsg[arrMsg.length - 1].nomeArquivo){
               if(arrMsg[arrMsg.length - 1].nomeArquivo){
                 return this.msg = arrMsg[arrMsg.length - 1].nomeArquivo
@@ -42,6 +49,32 @@ export default {
       set(msg){
         this.ultimaMsg = msg
       }
+    }
+  },
+  methods: {
+    verificarSeAUltimaMensagemEstaNoArrayDeMensagens(objUltimaMsg){
+
+      const chavesArrMsg = Object.keys(this.atendimentoAtivo.arrMsg)
+      const indexUltimaChave = chavesArrMsg[chavesArrMsg.length - 1]
+      let arrMsg = this.atendimentoAtivo.arrMsg[indexUltimaChave].msg
+      if(!arrMsg){
+        return
+      }
+
+      let mensagemJaExiste = false
+
+      arrMsg.map(objMsg => {
+        if(objMsg.seq == objUltimaMsg.seq){
+          mensagemJaExiste = true
+        }
+      })
+
+      console.log(mensagemJaExiste)
+      if(!mensagemJaExiste){
+        console.log("Mensagem nao estava inserida no array")
+        this.$root.$emit('atualizar-mensagem', objUltimaMsg)
+      }
+
     }
   }
 }

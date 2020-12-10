@@ -1,36 +1,64 @@
 <template>
   <div id="emoji-container">
-    <div class="lista-emoji" v-if="abrirEmojis" :class="{'z-index-2' : abrirEmojis}">
-      <ul>
-        <li
-          v-for="(objEmoji, indice) in emojis"
-          :key="indice"
-          v-on:click="adicionarEmoji(objEmoji.emoji)"
-          v-text="objEmoji.emoji"
-        ></li>
-      </ul>
-    </div>
     <div
       class="btn-emoji"
       v-on:click="selecionarEmoji()"
+      v-text="String.fromCodePoint(0x1f61c)"
       :class="{'z-index-2' : abrirEmojis}"
     >
     </div>
+    <picker
+      v-if="abrirEmojis"
+      :showPreview="false"
+      :skin="1"
+      :native="true"
+      :style="{ position: 'absolute', top: '-330px', left: '0', height: '325px', zIndex: '90' }"
+      :i18n="textosEmojis"
+      :perLine="7"
+      :title="'Smart Channel Emojis'"
+      @select="adicionarEmoji" />
   </div>
 </template>
 
 <script>
+
+// npm install emoji-mart-vue
+import { Picker } from 'emoji-mart-vue'
+
 import { mapGetters } from "vuex"
 
 export default {
+  components: {
+    "picker" : Picker
+  },
   computed: {
     ...mapGetters({
-      emojis: "getEmojis",
       abrirEmojis: "getAbrirEmojis"
     })
   },
+  data(){
+    return{
+      textosEmojis: {
+        search: "Pesquisar",
+        notfound: "Nenhum emoji encontrado",
+        categories: {
+          search: "Resultados da pesquisa",
+          recent: "Recentes",
+          people: "Pessoas & Expressoes",
+          nature: "Animais & Natureza",
+          foods: "Comidas & Bebibas",
+          places: "Viagens & Lugares",
+          objects: "Objetos",
+          symbols: "Simbolos",
+          flags: "Bandeiras",
+          custom: "Outros"
+        }
+      }
+    }
+  },
   methods: {
     adicionarEmoji(emoji){
+      console.log(emoji.unified)
       this.$root.$emit("adicionar-emoji", emoji)
     },
     selecionarEmoji() {

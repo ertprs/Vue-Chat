@@ -74,6 +74,10 @@ export default {
         this.$root.$emit("toggle-msg-formatada")
       }
 
+      if(this.$store.getters.getAbrirEmojis){
+        this.$store.dispatch("setAbrirEmojis", false)
+      }
+
       liberarEncerrar()
       this.$store.dispatch('setBlocker', false)
       this.$store.dispatch('setOrigemBlocker', "")
