@@ -454,22 +454,38 @@ function removerDuplicidadeParaInserirEmAtendimento(tipo, loginUsuComparativo, a
 function atualizarMensagens(cliente, ramal, novosAtendimentos, app) {
   //cliente -> novo retorno do back
   //novosAtendimentos -> mem�ria local
+  if (!novosAtendimentos[ramal]) { return }
 
-  if (!novosAtendimentos[ramal]) {
-    return
+
+  let chaveCliente = `${cliente.grupo}_${cliente.nro_chat}`
+  // verificar se o cliente que recebeu a mensagem possue a chave correta
+  const chavesAtuais = Object.keys(novosAtendimentos[ramal].arrMsg)
+  const ultimaChave = chavesAtuais[chavesAtuais.length - 1]
+  if(ultimaChave != chaveCliente){
+    app.$set(novosAtendimentos[ramal].arrMsg, chaveCliente, {
+      data_ini: `${cliente.data_ligacao_ini} ${cliente.hora_ligacao_ini}`,
+      login: cliente.login_operador,
+      msg: []
+    })
+
+    app.$forceUpdate()
   }
 
   for (let chave in novosAtendimentos[ramal].arrMsg) {
+
+    if(chave != chaveCliente){
+      continue
+     }
+
     if (!novosAtendimentos[ramal].arrMsg[chave].msg) {
-      return
+      continue
     }
-    if (!novosAtendimentos[ramal].arrMsg[chave].msg.length) {
-      return
-    }
+
     const seqs = novosAtendimentos[ramal].arrMsg[chave].msg.map(({ seq }) => (seq))
 
-    if (cliente.arrMsg[chave]) {
-      cliente.arrMsg[chave].msg.map(message => {
+    if (cliente.arrMsg[chaveCliente]) {
+      cliente.arrMsg[chaveCliente].msg.map(message => {
+
         if (!seqs.includes(message.seq)) {
           novosAtendimentos[ramal].arrMsg[chave].msg.push(message)
 
@@ -488,9 +504,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos, app) {
             }
             app.$root.$emit('atualizar-mensagem', message)
           } else if (message.resp_msg == "OPE") {
-            if (store.getters.getMensagemViaTextarea) {
-              return
-            } else {
+            if (!store.getters.getMensagemViaTextarea) {
               app.$root.$emit('atualizar-mensagem', message)
             }
           }

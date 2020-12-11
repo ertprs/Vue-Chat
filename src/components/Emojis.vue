@@ -58,7 +58,6 @@ export default {
   },
   methods: {
     adicionarEmoji(emoji){
-      console.log(emoji.unified)
       this.$root.$emit("adicionar-emoji", emoji)
     },
     selecionarEmoji() {

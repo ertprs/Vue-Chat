@@ -119,6 +119,7 @@
         <transition name="fade">
           <vue-select
             appendToBody
+            :calculatePosition="calcularPosicao"
             class="select-msg-formatada"
             :options="mensagensFormatadas_02"
             label="value"
@@ -134,6 +135,7 @@
           <div class="select-03" v-show="mensagensFormatadas_03.length" >
             <vue-select
               appendToBody
+              :calculatePosition="calcularPosicao"
               class="select-msg-formatada"
               :options="mensagensFormatadas_03"
               label="value"
@@ -179,8 +181,11 @@ import { formataHoraMensagem } from "@/services/formatacaoDeTextos"
 
 import axios_api from "@/services/serviceAxios";
 
+import { getCodigoEmojis } from "@/services/emojis"
+
 import Emojis from "../Emojis"
 import vSelect from 'vue-select'
+import { createPopper } from "@popperjs/core"
 
 export default {
   data() {
@@ -204,7 +209,9 @@ export default {
       statusEnvio: '',
       alturaTela: '',
       disabled: false,
-      seqNovo: ""
+      seqNovo: "",
+      placement: "top",
+      todosEmojis: []
     };
   },
   components: {
@@ -215,6 +222,8 @@ export default {
     this.$root.$off("toggle-msg-formatada")
   },
   mounted() {
+    this.todosEmojis = getCodigoEmojis()
+
     this.$root.$on("toggle-msg-formatada", () => {
       this.abreFechaMsgFormatada()
     })
@@ -235,14 +244,22 @@ export default {
     this.verificaTemMensagemFormatada()
   },
   methods: {
+    calcularPosicao(dropdownList, component, sizes){
+      dropdownList.style.width = sizes.width
+
+      const popper = createPopper(component.$refs.toggle, dropdownList, {
+        placement: this.placement
+      })
+
+      return () => popper.destroy()
+    },
     adicionarEmoji(objEmoji) {
       const textarea = document.querySelector('#textarea')
       textarea.focus()
       const inicioCursor = textarea.selectionStart
       const fimCursor = textarea.selectionEnd
 
-      // Verificar se o codepoint eh valido
-      this.mensagem = this.mensagem.slice(0, inicioCursor) + String.fromCodePoint(`0x${objEmoji.unified}`) + this.mensagem.slice(fimCursor)
+      this.mensagem = this.mensagem.slice(0, inicioCursor) + objEmoji.native + this.mensagem.slice(fimCursor)
     },
     executaTeste(event, previa, cont) {
       setTimeout( () => {
@@ -314,10 +331,10 @@ export default {
             }
 
             let regexEmojis = ""
-            for (let j = 0; j < this.emojis.length; j++) {
-              regexEmojis = new RegExp(this.emojis[j].emoji, "gi");
+            for (let j = 0; j < this.todosEmojis.length; j++) {
+              regexEmojis = new RegExp(this.todosEmojis[j].emoji, "gi");
               if(msgAux.match(regexEmojis)){
-                msgAux = msgAux.replace(regexEmojis, this.emojis[j].hexa);
+                msgAux = msgAux.replace(regexEmojis, this.todosEmojis[j].hexa);
               }
             }
 
@@ -434,10 +451,10 @@ export default {
 
       // Msg sendo disparada pelo textarea
       if (!objMsgExterno) {
-        for (let j = 0; j < this.emojis.length; j++) {
-          regex = new RegExp(this.emojis[j].emoji, "gi");
+        for (let j = 0; j < this.todosEmojis.length; j++) {
+          regex = new RegExp(this.todosEmojis[j].emoji, "gi");
           if(msg.match(regex)){
-            msg = msg.replace(regex, this.emojis[j].hexa);
+            msg = msg.replace(regex, this.todosEmojis[j].hexa);
           }
         }
 
@@ -685,9 +702,9 @@ export default {
       this.atendimentoAtivo.arrMsg[indexUltimaChave].msg.push(objMensagem)
       this.$forceUpdate()
 
-      if(objMsgExterno){
-        this.$root.$emit("verificar-seq")
-      }
+      // if(objMsgExterno){
+        // this.$root.$emit("verificar-seq")
+      // }
 
       if(this.statusEnvio !== "E" && !objMsgExterno){
         this.resetar()
@@ -1111,7 +1128,6 @@ export default {
     ...mapGetters({
       atendimentoAtivo: "getAtendimentoAtivo",
       url: "getURL",
-      emojis: "getEmojis",
       blocker: "getBlocker",
       tipoMsg: 'getTipoMsg',
       origemBlocker: 'getOrigemBlocker',
