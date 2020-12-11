@@ -463,6 +463,9 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos, app) {
   const chavesAtuais = Object.keys(novosAtendimentos[ramal].arrMsg)
   const ultimaChave = chavesAtuais[chavesAtuais.length - 1]
   if(ultimaChave != chaveCliente){
+    if(!ultimaChave){
+      novosAtendimentos[ramal].arrMsg = {}
+    }
     app.$set(novosAtendimentos[ramal].arrMsg, chaveCliente, {
       data_ini: `${cliente.data_ligacao_ini} ${cliente.hora_ligacao_ini}`,
       login: cliente.login_operador,

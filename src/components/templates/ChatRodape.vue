@@ -211,7 +211,8 @@ export default {
       disabled: false,
       seqNovo: "",
       placement: "top",
-      todosEmojis: []
+      todosEmojis: [],
+      tentouCriarMensagemNovamente: false
     };
   },
   components: {
@@ -442,9 +443,20 @@ export default {
       let chavesArrMsg = Object.keys(this.atendimentoAtivo.arrMsg)
       let indexUltimaChave = chavesArrMsg[chavesArrMsg.length - 1]
       if(!this.atendimentoAtivo.arrMsg[indexUltimaChave]){
-        console.log("atendimento ativo nao tem mensagens: ", this.atendimentoAtivo.arrMsg)
+        console.log(`atendimento ativo nao tem mensagens na chave ${indexUltimaChave}: `, this.atendimentoAtivo.arrMsg)
+        if(!this.tentouCriarMensagemNovamente){
+          setTimeout(() => {
+            console.log("Tentou de novo")
+            this.tentouCriarMensagemNovamente = true
+            this.criaObjMensagem(objMsgExterno, msgAux)
+          }, 500)
+        }
         return
       }
+      if(this.tentouCriarMensagemNovamente){
+        this.tentouCriarMensagemNovamente = false
+      }
+
       let arrMsg = this.atendimentoAtivo.arrMsg[indexUltimaChave].msg
       if(!arrMsg){
         console.log("todas chaves: ", chavesArrMsg)
@@ -702,10 +714,7 @@ export default {
         video: video
       };
 
-      console.log("passou ------------------------------")
       arrMsg.push(objMensagem)
-      console.log("arrMsg: ", arrMsg)
-      console.log("fim ---------------------------------")
 
       if(this.statusEnvio !== "E" && !objMsgExterno){
         this.resetar()
@@ -1123,11 +1132,18 @@ export default {
         this.$store.dispatch("setAbrirEmojis", false)
         this.$store.dispatch("setAbrirMsgTipo2", false)
       }
+    },
+    idAtendimentoAtivo(){
+      this.disabled = true
+      setTimeout(() => {
+        this.disabled = false
+      }, 500)
     }
   },
   computed: {
     ...mapGetters({
       atendimentoAtivo: "getAtendimentoAtivo",
+      idAtendimentoAtivo: "getIdAtendimentoAtivo",
       url: "getURL",
       blocker: "getBlocker",
       tipoMsg: 'getTipoMsg',

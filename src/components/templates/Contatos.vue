@@ -348,25 +348,7 @@ export default {
         todasMensagens.push(objMensagens[objMsg].msg)
       }
 
-      // Essas duas tratativas acabam "ferrando" o array de mensagens do cliente em questao, para que o mesmo volte a funcionar sera necessario um recarregamento da tela
-      // if(!todasMensagens[0] || todasMensagens[0] == "ERRO"){
-      //   console.log("atd: ", atd)
-      //   console.log("todas mensagens falhou: ", todasMensagens)
-      //   todasMensagens = {erro: true, msg: atd.arrMsg.msg_ret}
-      // }
-
-      // if(atd.arrMsg[0]){
-      //   if(atd.arrMsg[0].st_ret == "ERRO"){
-      //     console.log("st ret erro nas mensagens: ", atd.arrMsg)
-      //     todasMensagens = {erro: true, msg: atd.arrMsg[0].msg_ret}
-      //   }
-      // }
-
-      if(todasMensagens.erro){
-        this.setMensagensClienteAtivo(atd.id_cli, todasMensagens, true)
-      }else{
-        this.setMensagensClienteAtivo(atd.id_cli, todasMensagens, false)
-      }
+      this.setMensagensClienteAtivo(atd.id_cli, todasMensagens)
 
       this.exibirInformacoes(atd, indice)
 
@@ -385,11 +367,7 @@ export default {
 
       this.$root.$emit('mostrar-iframe', atd.id, atd.url)
     },
-    setMensagensClienteAtivo(id, arrMensagens, erro) {
-      if(erro){
-        this.atendimentoAtivo.arrMsg = [{st_ret: "ERRO", msg_ret: arrMensagens.msg}]
-        return
-      }
+    setMensagensClienteAtivo(id, arrMensagens) {
 
       for(let index in arrMensagens){
         for (let i in arrMensagens[index]) {
