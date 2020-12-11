@@ -210,7 +210,8 @@ export default {
       dominio: "getDominio",
       reqTeste: "getReqTeste",
       dicionario: "getDicionario",
-      regexIframe: "getRegexIframe"
+      regexIframe: "getRegexIframe",
+      regexLinks: "getRegexLinks"
     })
   },
   updated(){
@@ -456,17 +457,16 @@ export default {
                 }
               }
 
-              const regexLink = /((http|ftp|https):\/\/)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig
-              if(mensagem.search(regexLink) !== -1){
+              if(mensagem.search(this.regexLinks) !== -1){
                 link = true
                 let arrLinks = mensagem.split(" ")
                 arrLinks = arrLinks.map((link) => {
-                  if(link.search(regexLink) !== -1){
+                  if(link.search(this.regexLinks) !== -1){
                     let href = ""
-                    if(link.search(/http/g) !== -1){
-                      href = link
+                    if(!link.startsWith("http")){
+                      href = `https://${link}`
                     }else{
-                      href = "https://"+link
+                      href = link
                     }
 
                     link = `<a href="${href}" target="_blank" title="${link} ${this.dicionario.msg_link}">${link}</a>`

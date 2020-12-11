@@ -570,17 +570,16 @@ export default {
 
       msg = msg.trim()
 
-      const regexLink = /((http|ftp|https):\/\/)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/ig
-      if(msg.search(regexLink) !== -1){
+      if(msg.search(this.regexLinks) !== -1){
         link = true
         let arrLinks = msg.split(" ")
         arrLinks = arrLinks.map((link) => {
-          if(link.search(regexLink) !== -1){
+          if(link.search(this.regexLinks) !== -1){
             let href = ""
-            if(link.search(/http/g) !== -1){
-              href = link
+            if(!link.startsWith("http")){
+              href = `https://${link}`
             }else{
-              href = "https://"+link
+              href = link
             }
 
             link = `<a href="${href}" target="_blank" title="${link} ${this.dicionario.msg_link}">${link}</a>`
@@ -1157,7 +1156,8 @@ export default {
       verificaMsgFormatadaAberto: "getVerificaMsgFormatadaAberto",
       abrirEmojis: "getAbrirEmojis",
       temMensagemFormatada: "getTemMensagemFormatada",
-      temAnexo: "getTemAnexo"
+      temAnexo: "getTemAnexo",
+      regexLinks: "getRegexLinks"
     })
   },
   created(){

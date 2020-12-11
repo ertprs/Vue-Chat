@@ -14,7 +14,8 @@ export default {
     verificaMsgFormatadaAberto: false,
     menuBotaoDireito: false,
     abaSelecionada: "",
-    regexIframe: /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\.|\:|\;|\,|\|/g
+    regexIframe: /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\.|\:|\;|\,|\|/g,
+    regexLinks: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi
   },
   mutations: {
     setAbaContatos(state, abaContatos){
@@ -146,6 +147,9 @@ export default {
     },
     getRegexIframe(state){
       return state.regexIframe
+    },
+    getRegexLinks(state){
+      return state.regexLinks
     }
   }
 }
