@@ -8,7 +8,7 @@
     >
     </div>
     <picker
-      v-if="abrirEmojis"
+      v-show="abrirEmojis"
       :showPreview="false"
       :skin="1"
       :native="true"
@@ -46,6 +46,7 @@ export default {
           people: "Pessoas & Expressoes",
           nature: "Animais & Natureza",
           foods: "Comidas & Bebibas",
+          activity: "Atividades",
           places: "Viagens & Lugares",
           objects: "Objetos",
           symbols: "Simbolos",
