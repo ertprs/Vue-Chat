@@ -76,6 +76,9 @@ export default {
 
       if(this.$store.getters.getAbrirEmojis){
         this.$store.dispatch("setAbrirEmojis", false)
+        if(document.querySelector("#textarea")){
+          document.querySelector("#textarea").focus()
+        }
       }
 
       liberarEncerrar()

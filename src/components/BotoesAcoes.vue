@@ -331,78 +331,21 @@ export default {
       axios_api.get(`get-transfer?token_cliente=${tokenCliente}&${this.reqTeste}`)
         .then(response => {
           if(response.data.st_ret == "OK"){
-            let arrChaves = []
-            let arrValores = []
-            let arrAux = []
-
             this.$store.dispatch("setErroTransfer", false)
             this.$store.dispatch("setMsgErro", "")
 
             if(response.data.options.agentes.length){
-              response.data.options.agentes.map((objAgentes, index) => {
-                arrChaves[index] = Object.keys(objAgentes)[0]
-                arrValores[index] = Object.values(objAgentes)[0]
-              })
-
-              for(let i = 0; i < arrChaves.length; i++){
-                if(this.arrAgentes.length){
-                  if(this.arrAgentes[i]){
-                    if(this.arrAgentes[i].cod !== arrChaves[i]){
-                      arrAux.push({label: arrValores[i], cod: arrChaves[i]})
-                    }
-                  }
-                }else{
-                  arrAux.push({label: arrValores[i], cod: arrChaves[i]})
-                }
-              }
+              this.preencherArraysTransfer("agente", response.data.agentes.agentes)
             }
 
-            this.$store.dispatch("setArrAgentes", arrAux)
-
             if(response.data.options.grupos.length){
-              response.data.options.grupos.map((objGrupos, index) => {
-                arrChaves[index] = Object.keys(objGrupos)[0]
-                arrValores[index] = Object.values(objGrupos)[0]
-              })
-
-              for(let i = 0; i < arrChaves.length; i++){
-                if(this.arrGrupos.length){
-                  if(this.arrGrupos[i]){
-                    if(this.arrGrupos[i].cod !== arrChaves[i]){
-                      arrAux.push({label: arrValores[i], cod: arrChaves[i]})
-                    }
-                  }
-                }else{
-                  arrAux.push({label: arrValores[i], cod: arrChaves[i]})
-                }
-              }
-
-              this.$store.dispatch("setArrGrupos", arrAux)
-
+              this.preencherArraysTransfer("grupo", response.data.options.grupos)
             }
 
             if(response.data.options.bot.length){
-
-              response.data.options.bot.map((objBot, index) => {
-                arrChaves[index] = Object.keys(objBot)[0]
-                arrValores[index] = Object.values(objBot)[0]
-              })
-
-              for(let i = 0; i < arrChaves.length; i++){
-                if(this.arrBot.length){
-                  if(this.arrBot[i]){
-                    if(this.arrBot[i].cod !== arrChaves[i]){
-                      arrAux.push({label: arrValores[i], cod: arrChaves[i]})
-                    }
-                  }
-                }else{
-                  arrAux.push({label: arrValores[i], cod: arrChaves[i]})
-                }
-              }
-
-              this.$store.dispatch("setArrBot", arrAux)
-
+              this.preencherArraysTransfer("bot", response.data.options.bot)
             }
+
           }else{
             this.$store.dispatch("setErroTransfer", true)
             this.$store.dispatch("setMsgErro", this.dicionario.msg_erro)
@@ -414,6 +357,38 @@ export default {
           console.log('Erro transferir: ', error)
         })
 
+    },
+    preencherArraysTransfer(tipo, arr){
+      let arrChaves = []
+      let arrValores = []
+      let arrAux = []
+
+      let setter = ""
+
+      switch (tipo){
+        case "agente":
+          setter = "setArrAgentes"
+        break;
+        case "grupo":
+          setter = "setArrGrupos"
+        break;
+        case "bot":
+          setter = "setArrBot"
+        break;
+      }
+
+      arr.map(obj => {
+        for(let chave in obj){
+          arrChaves.push(chave)
+          arrValores.push(obj[chave])
+        }
+      })
+
+      for(let i = 0; i < arrChaves.length; i++){
+        arrAux.push({ cod: arrChaves[i], label: arrValores[i] })
+      }
+
+      this.$store.dispatch(setter, arrAux)
     },
     retornarForm(){
       this.checaBlocker()

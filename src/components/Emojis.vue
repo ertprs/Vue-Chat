@@ -22,7 +22,6 @@
 
 <script>
 
-// npm install emoji-mart-vue
 import { Picker } from 'emoji-mart-vue'
 
 import { mapGetters } from "vuex"
@@ -58,6 +57,7 @@ export default {
   },
   methods: {
     adicionarEmoji(emoji){
+      console.log(emoji.unified)
       this.$root.$emit("adicionar-emoji", emoji)
     },
     selecionarEmoji() {
