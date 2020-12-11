@@ -55,7 +55,7 @@
               <p v-if="fechado" v-text="acionaFormataSigla(atd.nome_usu[1], 'lower')"></p>
               <img v-if="atd.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${atd.sigla}.png`">
             </div>
-            <template v-if="!fechado">{{ acionaFormataNome(atd.nome_usu) + " " + atd.nro_chat}}</template>
+            <template v-if="!fechado">{{ acionaFormataNome(atd.nome_usu) }}</template>
             <ultima-msg v-if="!fechado" :mensagens="atd.arrMsg" />
             <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && idAtendimentoAtivo !== atd.id_cli" class="destaque-nova-msg" v-text="atd.qtdMsgNova"></span>
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
