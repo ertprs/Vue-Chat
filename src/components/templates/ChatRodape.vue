@@ -441,6 +441,10 @@ export default {
 
       let chavesArrMsg = Object.keys(this.atendimentoAtivo.arrMsg)
       let indexUltimaChave = chavesArrMsg[chavesArrMsg.length - 1]
+      if(!this.atendimentoAtivo.arrMsg[indexUltimaChave]){
+        console.log("atendimento ativo nao tem mensagens: ", this.atendimentoAtivo.arrMsg)
+        return
+      }
       let arrMsg = this.atendimentoAtivo.arrMsg[indexUltimaChave].msg
       if(!arrMsg){
         console.log("todas chaves: ", chavesArrMsg)
@@ -494,7 +498,6 @@ export default {
         }, 250)
 
       } else {
-
         msg = objMsgExterno.msg
 
         if(objMsgExterno.anexos){
@@ -699,12 +702,10 @@ export default {
         video: video
       };
 
-      this.atendimentoAtivo.arrMsg[indexUltimaChave].msg.push(objMensagem)
-      this.$forceUpdate()
-
-      // if(objMsgExterno){
-        // this.$root.$emit("verificar-seq")
-      // }
+      console.log("passou ------------------------------")
+      arrMsg.push(objMensagem)
+      console.log("arrMsg: ", arrMsg)
+      console.log("fim ---------------------------------")
 
       if(this.statusEnvio !== "E" && !objMsgExterno){
         this.resetar()

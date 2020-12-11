@@ -55,7 +55,7 @@
               <p v-if="fechado" v-text="acionaFormataSigla(atd.nome_usu[1], 'lower')"></p>
               <img v-if="atd.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${atd.sigla}.png`">
             </div>
-            <template v-if="!fechado">{{ acionaFormataNome(atd.nome_usu)}}</template>
+            <template v-if="!fechado">{{ acionaFormataNome(atd.nome_usu) + " " + atd.nro_chat}}</template>
             <ultima-msg v-if="!fechado" :mensagens="atd.arrMsg" />
             <span v-if="atd.alertaMsgNova && atd.qtdMsgNova > 0 && idAtendimentoAtivo !== atd.id_cli" class="destaque-nova-msg" v-text="atd.qtdMsgNova"></span>
             <span v-if="idAtendimentoAtivo == atd.id_cli" class="ctt-ativo"></span>
@@ -193,13 +193,8 @@ export default {
     this.verificaLocalStorage()
   },
   mounted(){
-
     this.$root.$on('toggle-contatos', () => {
       this.toggleContatos()
-    })
-
-    this.$root.$on("verificar-seq", () => {
-      this.verificarMsgMesmoSeq()
     })
   },
   computed: {
@@ -296,38 +291,6 @@ export default {
     abrirMenuBotaoDireito(ev){
       this.$root.$emit("abrir-menu", ev)
     },
-    verificarMsgMesmoSeq(){
-      // Verificando mensagens com o mesmo seq
-      if(this.atendimentoAtivo && this.atendimentoAtivo.arrMsg){
-        const chaves = Object.keys(this.atendimentoAtivo.arrMsg)
-        const arrMsgAtualizado = []
-        if(chaves.length){
-          const chaveFinal = chaves[chaves.length - 1]
-          if(this.atendimentoAtivo.arrMsg[chaveFinal]){
-
-            for(let msg in this.atendimentoAtivo.arrMsg[chaveFinal].msg){
-              if(msg - 1 >= 0){
-                const ultimoSeq = this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg - 1].seq
-                if(!(ultimoSeq == this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg].seq)){
-                  arrMsgAtualizado.push(this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg])
-                }
-              }
-
-              if(msg == 0){
-                arrMsgAtualizado.push(this.atendimentoAtivo.arrMsg[chaveFinal].msg[msg])
-              }
-            }
-
-            if(arrMsgAtualizado.length !== this.atendimentoAtivo.arrMsg[chaveFinal].msg.length){
-              arrMsgAtualizado[arrMsgAtualizado.length - 1] = this.atendimentoAtivo.arrMsg[chaveFinal].msg[this.atendimentoAtivo.arrMsg[chaveFinal].msg.length - 1]
-
-              this.$set(this.atendimentoAtivo.arrMsg[chaveFinal], "msg", arrMsgAtualizado)
-              this.$forceUpdate()
-            }
-          }
-        }
-      }
-    },
     contarMsgClientes() {
       this.totalMsgNovas = ''
       this.totalClientesNovos = ''
@@ -385,16 +348,19 @@ export default {
         todasMensagens.push(objMensagens[objMsg].msg)
       }
 
-      if(!todasMensagens[0] || todasMensagens[0] == "ERRO"){
-        console.log("todas mensagens falhou: ", todasMensagens)
-        todasMensagens = {erro: true, msg: atd.arrMsg.msg_ret}
-      }
-      if(atd.arrMsg[0]){
-        if(atd.arrMsg[0].st_ret == "ERRO"){
-          console.log("st ret erro nas mensagens: ", atd.arrMsg)
-          todasMensagens = {erro: true, msg: atd.arrMsg[0].msg_ret}
-        }
-      }
+      // Essas duas tratativas acabam "ferrando" o array de mensagens do cliente em questao, para que o mesmo volte a funcionar sera necessario um recarregamento da tela
+      // if(!todasMensagens[0] || todasMensagens[0] == "ERRO"){
+      //   console.log("atd: ", atd)
+      //   console.log("todas mensagens falhou: ", todasMensagens)
+      //   todasMensagens = {erro: true, msg: atd.arrMsg.msg_ret}
+      // }
+
+      // if(atd.arrMsg[0]){
+      //   if(atd.arrMsg[0].st_ret == "ERRO"){
+      //     console.log("st ret erro nas mensagens: ", atd.arrMsg)
+      //     todasMensagens = {erro: true, msg: atd.arrMsg[0].msg_ret}
+      //   }
+      // }
 
       if(todasMensagens.erro){
         this.setMensagensClienteAtivo(atd.id_cli, todasMensagens, true)

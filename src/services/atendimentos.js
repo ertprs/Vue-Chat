@@ -368,7 +368,8 @@ function atualizarClientes(mainData, app) {
         adicionarIframeNovoUsu(novosAtendimentos[ramal_server].login_usu, novosAtendimentos[ramal_server].url)
 
         setouAtendimentos = true
-        store.dispatch('setAtendimentos', novosAtendimentos)
+        app.$set(atendimentosLocal, ramal_server, novosAtendimentos[ramal_server])
+        // store.dispatch('setAtendimentos', novosAtendimentos)
         temClienteNovo = false
       } else {
         atualizarMensagens(atendimentosServer[ramal_server], ramal_server, novosAtendimentos, app)
@@ -475,11 +476,9 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos, app) {
 
     if(chave != chaveCliente){
       continue
-     }
-
-    if (!novosAtendimentos[ramal].arrMsg[chave].msg) {
-      continue
     }
+
+    if (!novosAtendimentos[ramal].arrMsg[chave].msg) { continue }
 
     const seqs = novosAtendimentos[ramal].arrMsg[chave].msg.map(({ seq }) => (seq))
 
@@ -502,7 +501,10 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos, app) {
             if (store.getters.getIdAtendimentoAtivo == novosAtendimentos[ramal].id_cli) {
               novosAtendimentos[ramal].novaMsgCttAtivo = true
             }
+            // Removendo a ultima msg do array para nao ter duas mensagens iguais no array do atendimento ativo
+            novosAtendimentos[ramal].arrMsg[chave].msg.pop()
             app.$root.$emit('atualizar-mensagem', message)
+
           } else if (message.resp_msg == "OPE") {
             if (!store.getters.getMensagemViaTextarea) {
               app.$root.$emit('atualizar-mensagem', message)
