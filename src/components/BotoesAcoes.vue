@@ -52,7 +52,6 @@ import axios_api from '@/services/serviceAxios'
 
 import { mapGetters } from 'vuex'
 import { executandoEncerrar, liberarEncerrar, removerCliente } from '@/services/atendimentos'
-import { limparIframeUsuarioRemovido } from "@/services/iframe"
 
 export default {
   data(){

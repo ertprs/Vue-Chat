@@ -33,6 +33,16 @@ export function adicionarIframeNovoUsu(id, url){
 
 export function limparIframeUsuarioRemovido(idIframe){
   const iframe = document.querySelector(`#${idIframe}`)
+
+  const id = idIframe.replace("iframe_", "")
+  const todosIframes = store.getters.getIframesDisponiveis
+
+  const array = todosIframes.filter(iframe => {
+    return iframe.id != id
+  })
+
+  store.commit("setIframesDisponiveis", array)
+
   if(iframe){
     iframe.remove()
   }

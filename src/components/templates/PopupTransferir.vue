@@ -77,7 +77,6 @@ import 'vue-select/dist/vue-select.css'
 import { mapGetters } from 'vuex'
 
 import axios_api from "@/services/serviceAxios"
-import { limparIframeUsuarioRemovido } from "@/services/iframe"
 import { executandoEncerrar, liberarEncerrar, removerCliente } from "@/services/atendimentos"
 
 export default {
