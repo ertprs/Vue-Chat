@@ -1,10 +1,13 @@
 $divider-size: 4px;
-$divider-color: #333;
+$divider-color: #666;
 
 .resizable{
   width: $divider-size!important;
   height: 100%;
-  background-color: $divider-color;
+  background-color: transparent;
+  &.bg{
+    background-color: $divider-color;
+  }
   cursor: w-resize;
   position: absolute;
   top: 0;

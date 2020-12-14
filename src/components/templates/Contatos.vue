@@ -196,6 +196,11 @@ export default {
       this.fechado = true
       this.rotate = true
     })
+
+    this.$root.$on('remover-fechado', () => {
+      this.fechado = false
+      this.rotate = false
+    })
   },
   computed: {
     ...mapGetters({
@@ -663,7 +668,11 @@ export default {
       this.rotate = !this.rotate
       this.fechado = !this.fechado;
 
+      this.$root.$emit("toggle-contatos", this.fechado)
+
       localStorage.setItem("contatos-fechado", this.fechado)
+
+      console.log("toggleContatos: ", this.fechado)
     },
     obterMensagensDoContatoAtivoPeloId( id ) {
       for( let ramal in this.todosAtendimentos ) {
