@@ -83,6 +83,14 @@ export default {
       }
     },
     verificarLocalStorage(){
+      if(localStorage.getItem("largura-contatos")){
+        localStorage.removeItem("largura-contatos")
+      }
+
+      if(localStorage.getItem("largura-chat")){
+        localStorage.removeItem("largura-chat")
+      }
+
       const statusFechado = localStorage.getItem("contatos-fechado")
       if(statusFechado === "true"){
         this.$root.$emit("adicionar-fechado")
