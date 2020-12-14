@@ -54,7 +54,7 @@ export default {
       }
     },
     calcMinMax(){
-      let maxDocumentWidth = document.firstElementChild.offsetWidth
+      let maxDocumentWidth = parent.document.firstElementChild.offsetWidth
 
       let min = ""
       let max = ""

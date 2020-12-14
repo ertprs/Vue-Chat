@@ -671,8 +671,6 @@ export default {
       this.$root.$emit("toggle-contatos", this.fechado)
 
       localStorage.setItem("contatos-fechado", this.fechado)
-
-      console.log("toggleContatos: ", this.fechado)
     },
     obterMensagensDoContatoAtivoPeloId( id ) {
       for( let ramal in this.todosAtendimentos ) {
