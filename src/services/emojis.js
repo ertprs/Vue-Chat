@@ -3724,5 +3724,93 @@ export function getCodigoEmojis(){
       hexa: "&#x25fd;",
       emoji: String.fromCodePoint(0x25fd)
     },
+    {
+      hexa: "&#x25fe;",
+      emoji: String.fromCodePoint(0x25fe)
+    },
+    {
+      hexa: "&#x2b1b;",
+      emoji: String.fromCodePoint(0x2b1b)
+    },
+    {
+      hexa: "&#x2b1c;",
+      emoji: String.fromCodePoint(0x2b1c)
+    },
+    {
+      hexa: "&#x1f536;",
+      emoji: String.fromCodePoint(0x1f536)
+    },
+    {
+      hexa: "&#x1f537;",
+      emoji: String.fromCodePoint(0x1f537)
+    },
+    {
+      hexa: "&#x1f539;",
+      emoji: String.fromCodePoint(0x1f539)
+    },
+    {
+      hexa: "&#x1f53a;",
+      emoji: String.fromCodePoint(0x1f53a)
+    },
+    {
+      hexa: "&#x1f53b;",
+      emoji: String.fromCodePoint(0x1f53b)
+    },
+    {
+      hexa: "&#x1f4a0;",
+      emoji: String.fromCodePoint(0x1f4a0)
+    },
+    {
+      hexa: "&#x1f518;",
+      emoji: String.fromCodePoint(0x1f518)
+    },
+    {
+      hexa: "&#x1f532;",
+      emoji: String.fromCodePoint(0x1f532)
+    },
+    {
+      hexa: "&#x1f533;",
+      emoji: String.fromCodePoint(0x1f533)
+    },
+    {
+      hexa: "&#x26aa;",
+      emoji: String.fromCodePoint(0x26aa)
+    },
+    {
+      hexa: "&#x26ab;",
+      emoji: String.fromCodePoint(0x26ab)
+    },
+    {
+      hexa: "&#x1f534;",
+      emoji: String.fromCodePoint(0x1f534)
+    },
+    {
+      hexa: "&#x1f535;",
+      emoji: String.fromCodePoint(0x1f535)
+    },
+    {
+      hexa: "&#x1f3c1;",
+      emoji: String.fromCodePoint(0x1f3c1)
+    },
+    {
+      hexa: "&#x1f38c;",
+      emoji: String.fromCodePoint(0x1f38c)
+    },
+    {
+      hexa: "&#x1f6a9;",
+      emoji: String.fromCodePoint(0x1f6a9)
+    },
+    {
+      hexa: "&#x1f3f4;",
+      emoji: String.fromCodePoint(0x1f3f4)
+    },
+    {
+      hexa: "&#x2764;&#xfe0f;",
+      emoji: String.fromCodePoint(0x2764, 0xfe0f)
+    },
+    {
+      hexa: "&#x263a;&#xfe0f;",
+      emoji: String.fromCodePoint(0x263a, 0xfe0f)
+    },
   ]
 }

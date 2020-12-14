@@ -388,7 +388,6 @@ export default {
 
       rodapeMsg.style.height = '50px'
       containerText.style.height = '50px'
-      text.style.height = '50px'
       emojisContainer.style.height = '50px'
       rodapeBotoes.style.height = '50px'
       text.value = text.value.trim('')
@@ -1009,13 +1008,10 @@ export default {
           }
         }
 
-        text.style.height = "auto";
-        text.style.height = text.scrollHeight + "px";
         rodapeMsg.style.height = text.scrollHeight + "px";
         containerText.style.height = text.scrollHeight + "px";
         emojisContainer.style.height = text.scrollHeight + "px";
         rodapeBotoes.style.height = text.scrollHeight + "px";
-
       }
       /* Timeout para garantir que estamos pegando o texto atualizado */
       function delayedResize() {

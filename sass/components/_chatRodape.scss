@@ -7,7 +7,6 @@ $border-radius: 30px;
 .chat-rodape{
   background-color: darken(#eeeeee, 20);
   position: relative;
-  transition-duration: 1s;
   .chat-rodape-container{
     @include d-flex-center('vertical');
     justify-content: space-between;
@@ -32,12 +31,12 @@ $border-radius: 30px;
         @include d-flex-center();
         width: $tamanhoEmoji;
         max-height: $maxAltura;
+        height: $altura;
         min-height: $altura;
         background-color: #FFF;
         position: absolute;
         left: 0;
         border-radius: $border-radius;
-        height: $altura;
         @include border();
         border-right: 0;
         border-top-right-radius: 0;
@@ -78,8 +77,8 @@ $border-radius: 30px;
       }
       textarea{
         resize: none;
-        min-height: $altura;
-        max-height: $maxAltura;
+        width: 100%;
+        height: 100%;
         font-size: .775rem;
         padding: 5px;
         line-height: 15px;
@@ -89,14 +88,10 @@ $border-radius: 30px;
         &[disabled]{
           background-color: #DDD;
         }
-      }
-      textarea{
-        margin-left: $tamanhoEmoji;
-        height: $altura;
         @include border();
         border-left: 0;
         border-right: 0;
-        flex: 1;
+        margin-left: $tamanhoEmoji;
       }
 
       .caracteres-disponiveis{
@@ -358,4 +353,8 @@ $border-radius: 30px;
 
 .emoji-mart{
   z-index: 90!important
+}
+
+.emoji-mart-scroll{
+  overflow-x: hidden
 }
