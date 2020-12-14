@@ -1,5 +1,5 @@
 <template>
-  <div id="todos-contatos" :class="{'fechado' : fechado}" class="resizable-content">
+  <div id="todos-contatos" :class="{'fechado' : fechado}"> <!-- class="resizable-content" -->
     <div class="titulo-contatos tamanho-titulos">
       <div class="titulo-contatos--icone-container" :class="{'fechado' : fechado}">
         <font-awesome-icon :icon="['fas', 'comment']" :title="dicionario.titulo_atendimentos" />
@@ -84,6 +84,8 @@
         </transition>
       </div>
     </div>
+
+    <resize :origem="'todos-contatos'" />
   </div>
 </template>
 
@@ -189,12 +191,10 @@ export default {
       }
     }
   },
-  created(){
-    this.verificaLocalStorage()
-  },
   mounted(){
-    this.$root.$on('toggle-contatos', () => {
-      this.toggleContatos()
+    this.$root.$on('adicionar-fechado', () => {
+      this.fechado = true
+      this.rotate = true
     })
   },
   computed: {
@@ -663,40 +663,7 @@ export default {
       this.rotate = !this.rotate
       this.fechado = !this.fechado;
 
-      let widthCtt = localStorage.getItem('largura-contatos')
-
-      if(event){
-        if(widthCtt == '60px' && !this.fechado){
-          localStorage.setItem('largura-contatos', '275px')
-        }
-      }
-
-      const todosContatos = document.querySelector('#todos-contatos')
-      if(todosContatos){
-        const containerTodosContatos = todosContatos.parentElement
-        containerTodosContatos.style.transitionDuration = '300ms'
-        setTimeout(() => {
-          containerTodosContatos.style.transitionDuration = ''
-        }, 300)
-        if(!this.fechado){
-          if(widthCtt && widthCtt !== '60px'){
-            containerTodosContatos.style.width = widthCtt
-          }else{
-            containerTodosContatos.style.width = '20%'
-          }
-        }else{
-          containerTodosContatos.style.width = '60px'
-        }
-      }
-
-      this.$store.dispatch('setAbaContatos', this.fechado)
-      localStorage.setItem('status-contatos', this.fechado)
-    },
-    verificaLocalStorage(){
-      let fechado = localStorage.getItem('status-contatos')
-      if(fechado == "true"){
-        this.toggleContatos()
-      }
+      localStorage.setItem("contatos-fechado", this.fechado)
     },
     obterMensagensDoContatoAtivoPeloId( id ) {
       for( let ramal in this.todosAtendimentos ) {

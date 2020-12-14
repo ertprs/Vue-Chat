@@ -18,12 +18,15 @@ import Chat from './components/templates/Chat'
 import store from "./store"
 import { getAtendimentos } from "./services/atendimentos"
 
+import Resize from "./components/Resize"
+
 library.add(faRandom, faUndo, faSignOutAlt, faAddressBook, faHourglassEnd, faFileAlt, faCheck, faCheckDouble, faTimes, faTimesCircle, faHourglass, faPause, faPlay, faComment, faComments, faCommentSlash, faArrowAltCircleDown, faImage, faPaperPlane, faPaperclip, faLevelUpAlt, faLongArrowAltLeft, faFolder, faUserPlus, faInfoCircle, faPhoneAlt, faUserClock, faClock, faFolderOpen, faArrowCircleDown, faDownload, faSearchPlus, faStopwatch, faInfo, faSearch)
 dom.watch()
 
 Vue.use(Datetime)
 Vue.use(VueTippy)
 
+Vue.component("resize", Resize)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component("tippy", TippyComponent)
 

@@ -1,6 +1,9 @@
 :root{
   --cor: #CCC;
   --tamanho-titulos: 33px;
+
+  --width-padrao-contatos: 25%;
+  --width-padrao-chat: 40%;
 }
 
 $bg-transferencia: #512da8;
@@ -49,11 +52,11 @@ body{
 
 *{
   scrollbar-color: #888 rgba(0, 0, 0, 0.2);
-  scrollbar-width: thin;
+  scrollbar-width: auto;
 }
 
 ::-webkit-scrollbar{
-  width: 7px;
+  width: 12px;
 }
 
 ::-webkit-scrollbar-track{

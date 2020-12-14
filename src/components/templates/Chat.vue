@@ -1,5 +1,5 @@
 <template>
-  <div id="chat" class="resizable-content" :class="{'z-index-superior' : blocker && origemBlocker == 'msg-formatada'}">
+  <div id="chat" :class="{'z-index-superior' : blocker && origemBlocker == 'msg-formatada'}"> <!-- class="resizable-content" -->
     <template v-if="atendimentoAtivo && (caso == '' || caso == 200)">
       <template v-if="atendimentoAtivo.tipo == 'ligacao'">
         <ChatOpcoes />
@@ -27,6 +27,8 @@
         </div>
       </div>
     </template>
+
+    <resize :origem="'chat'" />
   </div>
 </template>
 
