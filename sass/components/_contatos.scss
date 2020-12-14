@@ -66,6 +66,7 @@ $corBordaListas: #AAA;
   position: relative;
   width: var(--width-padrao-contatos);
   height: 100%;
+  box-sizing: border-box;
   background-color: #CCC;
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   &.fechado{

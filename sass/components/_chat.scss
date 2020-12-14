@@ -3,6 +3,7 @@
     z-index: 10
   }
   width: var(--width-padrao-chat);
+  box-sizing: border-box;
   height: 100%;
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   background-color: darken(#eeeeee, 20);

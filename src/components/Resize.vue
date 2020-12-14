@@ -14,7 +14,7 @@ export default {
       maxContatos: "",
       bg: false,
       widthAtual: "",
-      widthContatosLimite: 100
+      widthContatosLimite: 100,
     }
   },
   methods: {
@@ -36,17 +36,27 @@ export default {
               localStorage.setItem("contatos-fechado", false)
             }
           }
+
           if(widthNovo < this.widthContatosLimite){
             if(localStorage.getItem("contatos-fechado") !== "true"){
               this.$root.$emit("adicionar-fechado")
               localStorage.setItem("contatos-fechado", true)
             }
           }
-          div.style.width = widthNovo + "px"
 
+          div.style.width = widthNovo + "px"
           this.widthAtual = Math.round(widthNovo)
+
+          this.setWidthInformacoes()
         }
       }
+    },
+    setWidthInformacoes(){
+      const widthContatosAtual = document.querySelector("#todos-contatos").offsetWidth
+      const widthChatAtual = document.querySelector("#chat").offsetWidth + 3
+      const widthRestante = (widthContatosAtual + widthChatAtual)  + "px"
+
+      document.querySelector("#informacoes").style.width  = `calc(100% - ${widthRestante})`
     },
     setBlocker(condicao){
       this.$store.dispatch("setBlocker", condicao)
@@ -69,7 +79,7 @@ export default {
 
       if(this.origem === "chat"){
         min = maxDocumentWidth * .3
-        max = maxDocumentWidth * .4
+        max = maxDocumentWidth * .55
 
         this.sizes.min = min
         this.sizes.max = max
@@ -112,6 +122,8 @@ export default {
     alterarWidth(id, widthNovo){
       const elem = document.querySelector(`#${id}`)
       elem.style.width = widthNovo
+
+      this.setWidthInformacoes()
     },
     toggleContatos(fechado){
       if(this.origem !== "todos-contatos") { return }
