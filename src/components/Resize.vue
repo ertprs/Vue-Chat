@@ -12,7 +12,9 @@ export default {
         max: ""
       },
       maxContatos: "",
-      bg: false
+      bg: false,
+      widthAtual: "",
+      widthContatosLimite: 100
     }
   },
   methods: {
@@ -23,25 +25,26 @@ export default {
       const div = document.querySelector(`#${id}`)
       const resizer = document.querySelector(`#${id} > .resizable`)
 
-      const setter = id == "chat" ? "width-chat" : "width-contatos"
-
       if(e.pageX != 0){
         let widthNovo = e.pageX - div.getBoundingClientRect().left
         widthNovo = widthNovo.toFixed(2)
 
         if(widthNovo >= this.sizes.min && widthNovo <= this.sizes.max){
           if(localStorage.getItem("contatos-fechado") === "true"){
-            this.$root.$emit("remover-fechado")
-            localStorage.setItem("contatos-fechado", false)
+            if(widthNovo > this.widthContatosLimite){
+              this.$root.$emit("remover-fechado")
+              localStorage.setItem("contatos-fechado", false)
+            }
           }
-          if(widthNovo == 60){
-            this.$root.$emit("adicionar-fechado")
-            localStorage.setItem("contatos-fechado", true)
+          if(widthNovo < this.widthContatosLimite){
+            if(localStorage.getItem("contatos-fechado") !== "true"){
+              this.$root.$emit("adicionar-fechado")
+              localStorage.setItem("contatos-fechado", true)
+            }
           }
           div.style.width = widthNovo + "px"
-          if(Math.round(widthNovo) >= 100){
-            localStorage.setItem(setter, `${widthNovo}px`)
-          }
+
+          this.widthAtual = Math.round(widthNovo)
         }
       }
     },
@@ -51,6 +54,11 @@ export default {
         this.bg = true
       }else{
         this.bg = false
+
+        const setter = this.origem == "chat" ? "width-chat" : "width-contatos"
+        if(this.widthAtual >= this.widthContatosLimite){
+          localStorage.setItem(setter, `${this.widthAtual}px`)
+        }
       }
     },
     calcMinMax(){
@@ -88,7 +96,7 @@ export default {
 
       const widthContatos = localStorage.getItem("width-contatos")
       if(widthContatos){
-        if(statusFechado !== "true" && widthContatos !== "60px"){
+        if(statusFechado !== "true"){
           this.alterarWidth("todos-contatos", widthContatos)
         }
       }
