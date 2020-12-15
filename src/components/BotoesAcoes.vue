@@ -383,9 +383,9 @@ export default {
         }
       })
 
-      for(let i = 0; i < arrChaves.length; i++){
-        arrAux.push({ cod: arrChaves[i], label: arrValores[i] })
-      }
+      arrAux = arrChaves.map((chave, index) => {
+        return { cod: chave, label: arrValores[index] }
+      })
 
       this.$store.dispatch(setter, arrAux)
     },

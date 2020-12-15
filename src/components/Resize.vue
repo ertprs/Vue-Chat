@@ -1,10 +1,25 @@
 <template>
-  <div class="resizable" :class="{bg}" draggable="true" @mousedown="setBlocker(true)" @dragstart="dragStart" @drag="resize(origem, $event)" @dragend="setBlocker(false)"> </div>
+  <div
+    class="resizable"
+    :class="{bg}"
+    draggable="true"
+    @mousedown="setBlocker(true)"
+    @dragstart="dragStart"
+    @drag="resize(origem, $event)"
+    @dragend="setBlocker(false)">
+    </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex"
+
 export default {
   props: ["origem"],
+  computed: {
+    ...mapGetters({
+      semIframe: "getSemIframe"
+     })
+  },
   data(){
     return {
       sizes: {
@@ -22,6 +37,10 @@ export default {
       e.dataTransfer.setDragImage(new Image, 0, 0)
     },
     resize(id, e){
+      if(this.origem == "chat" && this.semIframe){
+        return
+      }
+
       const div = document.querySelector(`#${id}`)
       const resizer = document.querySelector(`#${id} > .resizable`)
 

@@ -1,5 +1,5 @@
 <template>
-  <div id="chat" :class="{'z-index-superior' : blocker && origemBlocker == 'msg-formatada'}"> <!-- class="resizable-content" -->
+  <div id="chat" :class="{'z-index-superior' : blocker && origemBlocker == 'msg-formatada', 'chat-sem-iframe' : semIframe}" ref="chat-container"> <!-- class="resizable-content" -->
     <template v-if="atendimentoAtivo && (caso == '' || caso == 200)">
       <template v-if="atendimentoAtivo.tipo == 'ligacao'">
         <ChatOpcoes />
@@ -56,23 +56,9 @@ export default {
       caso: "getCaso",
       blocker: "getBlocker",
       origemBlocker: "getOrigemBlocker",
-      dicionario: "getDicionario"
+      dicionario: "getDicionario",
+      semIframe: "getSemIframe"
     })
-  },
-  mounted(){
-    this.diminuirWidthResize()
-  },
-  methods: {
-    diminuirWidthResize(){
-      const todosResizes = document.querySelectorAll("#app > .resizable-component > div.resizable-r")
-      if(!todosResizes){
-        return
-      }
-      if(todosResizes[1]){
-        let resizeChat = todosResizes[1]
-        resizeChat.style.width = "6px"
-      }
-    }
   }
 }
 </script>

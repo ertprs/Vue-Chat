@@ -1,4 +1,7 @@
 #chat{
+  &.chat-sem-iframe{
+    flex: 1
+  }
   &.z-index-superior{
     z-index: 10
   }

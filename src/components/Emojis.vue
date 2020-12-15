@@ -14,8 +14,10 @@
       :native="true"
       :style="{ position: 'absolute', top: '-330px', left: '0', height: '325px', zIndex: '90' }"
       :i18n="textosEmojis"
+      :include="['recent', 'people', 'nature', 'foods', 'activity', 'places', 'objects']"
       :perLine="7"
       :title="'Smart Channel Emojis'"
+      :emojiTooltip="true"
       @select="adicionarEmoji" />
   </div>
 </template>
@@ -48,10 +50,7 @@ export default {
           foods: "Comidas & Bebibas",
           activity: "Atividades",
           places: "Viagens & Lugares",
-          objects: "Objetos",
-          symbols: "Simbolos",
-          flags: "Bandeiras",
-          custom: "Outros"
+          objects: "Objetos"
         }
       }
     }

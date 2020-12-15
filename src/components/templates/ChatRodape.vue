@@ -335,7 +335,7 @@ export default {
             for (let j = 0; j < this.todosEmojis.length; j++) {
               regexEmojis = new RegExp(this.todosEmojis[j].emoji, "gi");
               if(msgAux.match(regexEmojis)){
-                msgAux = msgAux.replace(regexEmojis, this.todosEmojis[j].hexa);
+                msgAux = msgAux.replaceAll(regexEmojis, this.todosEmojis[j].hexa);
               }
             }
 
@@ -876,7 +876,6 @@ export default {
         }
         return
       }
-      // this.selecionarImagem()
       this.$store.dispatch("setOrigemBlocker", "chat");
       this.abrirOpcoes = !this.abrirOpcoes;
       this.$store.dispatch("setBlocker", this.abrirOpcoes);

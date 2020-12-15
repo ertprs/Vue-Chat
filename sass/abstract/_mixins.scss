@@ -190,6 +190,7 @@ $tamanho-sinalizador-nova-msg: 12.5px;
           }
         }
         .anexo-container{
+          margin-top: 5px;
           a, .arquivo-erro{
             padding: 10px 15px 15px 15px;
             @include d-flex-center();
@@ -206,7 +207,8 @@ $tamanho-sinalizador-nova-msg: 12.5px;
             outline: none;
           }
           video{
-            width: 300px;
+            width: 100%;
+            max-width: 350px;
             cursor: pointer;
           }
         }

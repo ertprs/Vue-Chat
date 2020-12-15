@@ -1,10 +1,28 @@
 .badges-container{
   display: flex;
-  margin-bottom: 1rem!important;
+  margin: .5rem 0!important;
   @include d-flex-center();
   > div {
-    span{
-      font-size: .8rem
+    margin-right: 3px;
+    &:last-child{
+      margin-right: 0;
+    }
+    div{
+      @include d-flex-center();
+      padding: 0 2px;
+      &.fila, &.respondeu, &.todos, &.pessoal{
+        $degs: 10deg;
+        transform: skew($degs);
+        span{
+          transform: skew(-$degs);
+        }
+      }
+      span{
+        font-size: .7rem;
+        &:first-child{
+          margin-right: 2px;
+        }
+      }
     }
   }
 }
