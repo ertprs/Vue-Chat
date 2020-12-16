@@ -1,9 +1,16 @@
 <template>
   <div class="badges-container">
-    <div v-for="(tipo, index) in gerenciador" :key="index">
-      <div v-if="true" :style="`background: ${tipo.cor}`" :class="{'fila' : tipo.cod == 1, 'respondeu' : tipo.cod == 2, 'todos' : tipo.cod == 3, 'pessoal' : tipo.cod == 4}">
-        <span v-text="tipo.texto"></span>
-        <span v-text="tipo.count"></span>
+    <div class="lista-badges"  v-if="gerenciador.length">
+      <div v-for="(tipo, index) in gerenciador" :key="index">
+        <div
+          v-if="tipo.cod != 3 && tipo.cod != 4"
+          :style="`background: ${tipo.cor}`"
+          :class="{'fila' : tipo.cod == 1,
+          'respondeu' : tipo.cod == 2}"
+          :title="`${tipo.texto} - ${tipo.count}`">
+          <span v-text="tipo.texto" v-if="!estado"></span>
+          <span v-text="tipo.count"></span>
+        </div>
       </div>
     </div>
   </div>
@@ -13,9 +20,16 @@
 import { mapGetters } from "vuex"
 
 export default {
+  props: {
+    estado: {
+      required: true
+    }
+  },
   computed: {
     ...mapGetters({
-      gerenciador: "getGerenciador"
+      gerenciador: "getGerenciador",
+      ativo: "getAtivo",
+      dicionario: "getDicionario"
     })
   }
 }

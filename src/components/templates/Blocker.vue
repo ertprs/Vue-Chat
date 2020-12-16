@@ -81,6 +81,10 @@ export default {
         }
       }
 
+      if(!this.gif){
+        this.gif = true
+      }
+
       liberarEncerrar()
       this.$store.dispatch('setBlocker', false)
       this.$store.dispatch('setOrigemBlocker', "")

@@ -4,6 +4,7 @@
     :class="{bg}"
     draggable="true"
     @mousedown="setBlocker(true)"
+    @mouseup="setBlocker(false, 'verificando')"
     @dragstart="dragStart"
     @drag="resize(origem, $event)"
     @dragend="setBlocker(false)">
@@ -67,7 +68,12 @@ export default {
         }
       }
     },
-    setBlocker(condicao){
+    setBlocker(condicao, verificacao){
+      if(verificacao){
+        this.bg = false
+        return
+      }
+
       this.$store.dispatch("setBlocker", condicao)
       if(condicao == true){
         this.bg = true

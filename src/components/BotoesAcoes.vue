@@ -334,7 +334,7 @@ export default {
             this.$store.dispatch("setMsgErro", "")
 
             if(response.data.options.agentes.length){
-              this.preencherArraysTransfer("agente", response.data.agentes.agentes)
+              this.preencherArraysTransfer("agente", response.data.options.agentes)
             }
 
             if(response.data.options.grupos.length){

@@ -1050,7 +1050,7 @@ export default {
       if(this.tamanhoText >= 68){
         this.adicionaAnimacaoChatRodape("mudanca-pequena")
       }else{
-        this.adicionaAnimacaoChatRodape("remover")
+        this.adicionaAnimacaoChatRodape("remover-pequena")
       }
     },
     adicionaAnimacaoChatRodape(tipo){

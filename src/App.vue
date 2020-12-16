@@ -79,15 +79,15 @@ export default {
         corpo = corpo.substring(0, lengthLimite) + "..."
       }
 
-      const opcoes = {
+      const notification = new Notification(titulo, {
         body: corpo,
         icon: icone,
-        tag: this.indice
+        tag: new Date().getMilliseconds()
+      })
+
+      notification.onclick = (e) => {
+        console.log("e: ", e)
       }
-
-      const notification = new Notification(titulo, opcoes)
-
-      this.indice++
 
       if(document.visibilityState === "visible"){
         notification.close()

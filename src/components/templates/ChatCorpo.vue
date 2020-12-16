@@ -1,50 +1,51 @@
 <template>
   <div class="chat-corpo" @click="focaTextarea($event)">
     <div class="chat-corpo-mensagens" v-on:scroll.prevent="verificaPosicaoBarraRolagem()">
-      <div v-for="(arrMsg, index) in this.atendimentoAtivo.arrMsg" :key="index">
-        <div class="chat-corpo-container" v-if="arrMsg.data_ini && arrMsg.login">
-          <hr>
-          <div>
-            <h5 class="separador-mensagens">
-              <template v-if="arrMsg.data_ini && arrMsg.data_ini !== '1111-11-11 00:00:00'">{{ dicionario.msg_divisao_ini + " " + acionaFormataDataHora(arrMsg.data_ini) }}</template>
-              <template v-if="arrMsg.login">{{ ` ${dicionario.msg_divisao_ope} `  + arrMsg.login }}</template>
-            </h5>
-          </div>
-          <hr>
-        </div>
-        <div v-if="arrMsg.st_ret == 'ERRO'" class="container-msg-erro">
-          <p class="msg-erro" v-if="arrMsg.msg_ret" v-text="arrMsg.msg_ret"></p>
-          <p class="msg-erro" v-else v-text="dicionario.msg_erro"></p>
-        </div>
-        <Mensagens
-          v-for="(msg, i) in arrMsg.msg" :key="i"
-          :autor="msg.autor"
-          :origem="msg.origem"
-          :msg="msg.msg"
-          :link="msg.link"
-          :horario="msg.horario"
-          :status="msg.status"
-          :logo="msg.logo"
-          :anexo="msg.anexo"
-          :imgAnexo="msg.imgAnexo"
-          :tipoDoc="msg.tipoDoc"
-          :docAnexo="msg.docAnexo"
-          :nomeArquivo="msg.nomeArquivo"
-          :audio="msg.audio"
-          :video="msg.video"
-          :msgTooltip="msg.tooltip"
-        />
-        <div class="chat-corpo-container" v-if="arrMsg.data_fim && arrMsg.login">
-          <template v-if="arrMsg.data_fim !== '1111-11-11 00:00:00' && arrMsg.data_fim !== '1111-11-11 1111-11-11'">
+      <div v-if="atendimentoAtivo.arrMsg.st_ret == 'ERRO'" class="container-msg-erro">
+        <p class="msg-erro" v-text="dicionario.msg_erro"></p>
+      </div>
+      <div v-else>
+        <div v-for="(arrMsg, index) in atendimentoAtivo.arrMsg" :key="index">
+          <div class="chat-corpo-container" v-if="arrMsg.data_ini && arrMsg.login">
             <hr>
             <div>
               <h5 class="separador-mensagens">
-                {{ dicionario.msg_divisao_fim + " " + acionaFormataDataHora(arrMsg.data_fim) }}
-                {{ ` ${dicionario.msg_divisao_ope} `  + arrMsg.login }}
+                <template v-if="arrMsg.data_ini && arrMsg.data_ini !== '1111-11-11 00:00:00'">{{ dicionario.msg_divisao_ini + " " + acionaFormataDataHora(arrMsg.data_ini) }}</template>
+                <template v-if="arrMsg.login">{{ ` ${dicionario.msg_divisao_ope} `  + arrMsg.login }}</template>
               </h5>
             </div>
             <hr>
-          </template>
+          </div>
+          <Mensagens
+            v-for="(msg, i) in arrMsg.msg" :key="i"
+            :autor="msg.autor"
+            :origem="msg.origem"
+            :msg="msg.msg"
+            :link="msg.link"
+            :horario="msg.horario"
+            :status="msg.status"
+            :logo="msg.logo"
+            :anexo="msg.anexo"
+            :imgAnexo="msg.imgAnexo"
+            :tipoDoc="msg.tipoDoc"
+            :docAnexo="msg.docAnexo"
+            :nomeArquivo="msg.nomeArquivo"
+            :audio="msg.audio"
+            :video="msg.video"
+            :msgTooltip="msg.tooltip"
+          />
+          <div class="chat-corpo-container" v-if="arrMsg.data_fim && arrMsg.login">
+            <template v-if="arrMsg.data_fim !== '1111-11-11 00:00:00' && arrMsg.data_fim !== '1111-11-11 1111-11-11'">
+              <hr>
+              <div>
+                <h5 class="separador-mensagens">
+                  {{ dicionario.msg_divisao_fim + " " + acionaFormataDataHora(arrMsg.data_fim) }}
+                  {{ ` ${dicionario.msg_divisao_ope} `  + arrMsg.login }}
+                </h5>
+              </div>
+              <hr>
+            </template>
+          </div>
         </div>
       </div>
     </div>

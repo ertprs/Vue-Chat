@@ -470,7 +470,7 @@ $corBordaListas: #AAA;
   }
   .lista-aguardando--titulo, .lista-atendimento--titulo{
     svg{
-      font-size: 1rem;
+      font-size: .9rem;
     }
   }
   .lista-agenda{
@@ -479,8 +479,37 @@ $corBordaListas: #AAA;
     }
   }
   .lista-atendimento--titulo{
-    svg{
-      color: #3a5a40;
+    &.fechado{
+      flex-direction: column;
+      max-height: unset;
+      height: auto;
+      .lista-badges{
+        margin-left: 10px;
+      }
+    }
+    .start-stop-contatos{
+      > div{
+        @include efeito-hover-padrao;
+        @include d-flex-center();
+        background-color: #FFF;
+        border-radius: 50%;
+        $tamanhoCirculo: 1.5rem;
+        width: $tamanhoCirculo;
+        height: $tamanhoCirculo;
+        svg{
+          margin: 0;
+        }
+      }
+      div.bg-parado{
+        svg{
+          color: #bf211e
+        }
+      }
+      div.bg-em-atendimento{
+        svg{
+          color: #3a5a40;
+        }
+      }
     }
     .container-contadores{
       position: absolute;
@@ -526,7 +555,7 @@ $corBordaListas: #AAA;
 .load{
   svg{
     animation: rotate;
-    animation-duration: 2s;
+    animation-duration: 3.5s;
     animation-iteration-count: infinite;
   }
 }

@@ -14,8 +14,13 @@
       </div>
     </div>
     <template v-if="objAtendimentos">
-      <!-- Gerenciador -->
-      <!-- <badges-gerenciador /> -->
+      <!-- Busca Cliente -->
+      <!-- <div class="container-ativar-contato" v-if="ativo && !fechado">
+        <input type="text" placeholder="Buscar cliente" @input="onInput">
+        <div class="gerenciador-btn" :title="dicionario.title_btn_adicionar_cliente" @click="abrirAtivarCtt()">
+          <font-awesome-icon :icon="['fas', 'user-plus']" />
+        </div>
+      </div> -->
       <!-- Caso Aguardando Cliente ou esperando a primeira requisicao ao buscaAtendimentos -->
       <div class="lista-contatos-container-vazio" :class="{'existe-agenda' : minhaAgenda.length || aguardando.length || caso !== 400}" v-if="caso == 206 || caso == 'aguardando'">
         <div class="load">
@@ -31,16 +36,23 @@
       <!-- Caso haja Cliente -->
       <div class="lista-contatos-container" v-if="objAtendimentos && caso !== 400">
         <div class="lista-atendimento--titulo" v-if="caso != 400 && caso != 206" :class="{'fechado' : fechado}">
-          <div :class="{'fechado' : fechado}">
-            <font-awesome-icon :icon="['fas', 'play']" :title="dicionario.sub_titulo_atendimentos" />
+          <div :class="{'fechado' : fechado}" class="start-stop-contatos" @click="$root.$emit('mudar-estado-atd')">
+            <div v-show="statusAtd == 'em-atendimento'" class="bg-em-atendimento" :title="dicionario.title_status_em_atendimento">
+              <font-awesome-icon :icon="['fas', 'pause']" />
+            </div>
+            <div v-show="statusAtd == 'parado'" class="bg-parado" :title="dicionario.title_status_parado">
+              <font-awesome-icon :icon="['fas', 'play']" />
+            </div>
           </div>
-          <h2 v-show="!fechado" v-text="dicionario.sub_titulo_atendimentos"></h2>
+          <!-- <h2 v-show="!fechado" v-text="dicionario.sub_titulo_atendimentos"></h2> -->
+          <badges-gerenciador :estado="fechado" />
           <div v-if="!fechado" class="container-contadores">
             <span v-if="objAtendimentos.length" :title="dicionario.title_total_clientes" class="total-clientes" v-text="objAtendimentos.length"></span>
             <span v-if="totalClientesNovos != ''" :title="dicionario.title_total_novos_clientes" class="total-clientes-novos" v-text="totalClientesNovos"></span>
             <span v-if="totalMsgNovas != ''" :title="dicionario.title_total_msgs_novas" class="total-msgs-novas" v-text="totalMsgNovas"></span>
           </div>
         </div>
+
         <ul :class="{'fechado' : fechado}"  id="lista-contatos">
           <li
             v-for="(atd, indice) in objAtendimentos"
@@ -216,7 +228,9 @@ export default {
       reqTeste: "getReqTeste",
       dicionario: "getDicionario",
       regexIframe: "getRegexIframe",
-      regexLinks: "getRegexLinks"
+      regexLinks: "getRegexLinks",
+      statusAtd: "getStatusAtd",
+      ativo: "getAtivo"
     })
   },
   updated(){
@@ -253,6 +267,12 @@ export default {
     }
   },
   methods: {
+    onInput(){
+      axios_api(`/get-client?${this.reqTeste}`)
+        .then(response => {
+          console.log(response)
+        })
+    },
     verificarDuplicataEmAtendimento(loginUsuComparativo){
 
       let objAtdAux = {}
