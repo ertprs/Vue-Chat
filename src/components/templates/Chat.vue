@@ -19,6 +19,11 @@
         <HistoricoRodape />
       </template>
     </template>
+    <template v-else-if="abrirPreviaCliente && caso == 206">
+      <ChatOpcoes :dados="objPreviaCli" />
+      <HistoricoCorpo />
+      <HistoricoRodape />
+    </template>
     <template v-else-if="!atendimentoAtivo || caso == 400 || caso == 206">
       <div class="chat-opcoes tamanho-titulos" id="titulo-ligacao">
         <div class="chat-opcoes-titulo">

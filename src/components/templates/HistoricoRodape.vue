@@ -20,11 +20,12 @@
           v-model="mensagem"
           :placeholder="dicionario.placeholder_textarea"
           ref="historico-textarea"
+          @keydown.enter="enviarMsgEAtivarCliente($event)"
           rows="1">
         </textarea>
       </div>
       <div class="container-historico-botoes">
-        <div class="historico-botao" :title="dicionario.title_enviar_msg">
+        <div class="historico-botao" :title="dicionario.title_enviar_msg" @click="enviarMsgEAtivarCliente">
           <font-awesome-icon :icon="['fas', 'paper-plane']" />
         </div>
       </div>
@@ -34,6 +35,7 @@
 
 <script>
 
+import axios_api from '@/services/serviceAxios'
 import { mapGetters } from "vuex"
 
 import Emojis from "../Emojis"
@@ -55,7 +57,8 @@ export default {
   computed: {
     ...mapGetters({
       objPreviaCli: "getObjPreviaCli",
-      dicionario: "getDicionario"
+      dicionario: "getDicionario",
+      reqTeste: "getReqTeste"
     })
   },
   mounted() {
@@ -66,6 +69,46 @@ export default {
     })
   },
   methods: {
+    enviarMsgEAtivarCliente(event){
+      if(event){
+        if(event.keyCode == 13 && !event.shiftKey){
+          event.preventDefault()
+        }
+        if(event.shiftKey){
+          return
+        }
+      }
+
+      if(!this.objGrupo){
+        this.$toasted.global.emConstrucao({msg: "Selecione um grupo"})
+        return
+      }
+
+      this.mensagem = this.mensagem.trim()
+
+      if(!this.mensagem){
+        this.$toasted.global.emConstrucao({msg: "Digite uma mensagem"})
+        return
+      }
+
+      const data = {
+        login_usu: this.objPreviaCli.login_usu,
+        grupo: this.objGrupo.grupo
+      }
+
+      axios_api.post(`start-contato?${this.reqTeste}`, data)
+        .then((response) => {
+          if(response.data.st_ret == "OK"){
+            this.$toasted.global.defaultSuccess({msg: this.dicionario.msg_aguarde_ativar_cliente})
+          }else if(response.data.st_ret == "AVISO"){
+            this.$toasted.global.emConstrucao({msg: response.data.msg_ret || this.dicionario.msg_erro_ativar_cliente})
+          }
+        })
+        .catch(error => {
+          this.$toasted.global.defaultError({msg: this.dicionario.msg_erro_ativar_cliente})
+        })
+
+    },
     calcularPosicao(dropdownList, component, sizes){
       dropdownList.style.width = sizes.width
 

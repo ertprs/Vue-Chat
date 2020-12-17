@@ -93,6 +93,16 @@
           }
         }
       }
+      .chat-opcoes-informacoes{
+        @include d-flex-center;
+        .fechar-historico{
+          margin-left: 5px;
+          @include efeito-hover-padrao;
+          svg {
+            color: $bg-encerrar
+          }
+        }
+      }
     }
   }
   .chat-opcoes-infos{

@@ -9,10 +9,21 @@
             <li :title="dados.nome_usu + ' ' + dados.login_usu">{{ dados.nome_usu }} ({{ dados.login_usu }})</li>
             <li :title="dados.desc_grupo">{{ dados.desc_grupo }}</li>
           </ul>
-          <div class="chat-opcoes-titulo-container--logo" v-if="dados.token_cliente">
-            <font-awesome-icon :icon="['fas', 'search']" class="lupa"  @click="chamarIframe" />
-            <img v-if="dados.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${dados.sigla}.png`" @click="chamarIframe">
-            <font-awesome-icon v-else :icon="['fas', 'comments']" />
+          <div class="chat-opcoes-titulo-container--logo">
+            <template v-if="dados.token_cliente">
+              <font-awesome-icon :icon="['fas', 'search']" class="lupa"  @click="chamarIframe" />
+              <img v-if="dados.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${dados.sigla}.png`" @click="chamarIframe">
+              <font-awesome-icon v-else :icon="['fas', 'comments']" />
+            </template>
+            <div class="chat-opcoes-informacoes" v-else>
+              <template v-if="dados.siglas">
+                <img v-for="(sigla, index) in dados.siglas" :key="index"
+                  :src="`${dominio}/callcenter/imagens/ext_top_${sigla.toLowerCase()}.png`" :alt="sigla">
+              </template>
+              <div @click="fecharCliHist" class="fechar-historico">
+                <font-awesome-icon :icon="['fas', 'times-circle']" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -37,6 +48,10 @@ export default {
     }
   },
   methods: {
+    fecharCliHist(){
+      this.$store.dispatch("setAbrirPreviaCliente", false)
+      this.$store.dispatch("setObjPreviaCli", {})
+    },
     acionaFormataSigla(letra, acao){
       return formataSigla(letra, acao)
     },
