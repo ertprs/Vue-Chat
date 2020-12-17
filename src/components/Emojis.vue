@@ -29,6 +29,7 @@ import { Picker } from 'emoji-mart-vue'
 import { mapGetters } from "vuex"
 
 export default {
+  props: ["historico"],
   components: {
     "picker" : Picker
   },
@@ -57,7 +58,11 @@ export default {
   },
   methods: {
     adicionarEmoji(emoji){
-      this.$root.$emit("adicionar-emoji", emoji)
+      if(this.historico){
+        this.$root.$emit("adicionar-emoji-historico", emoji)
+      }else{
+        this.$root.$emit("adicionar-emoji", emoji)
+      }
     },
     selecionarEmoji() {
       this.$store.dispatch("setOrigemBlocker", "chat");

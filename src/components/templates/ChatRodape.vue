@@ -35,9 +35,9 @@
           <emojis />
           <!-- Textarea -->
           <textarea
-            v-on:keydown.enter="enviarMensagem($event, aparecerPrevia)"
-            v-on:keydown.down="selecionarMsgFormatada(true)"
-            v-on:keydown.up="selecionarMsgFormatada(true)"
+            @keydown.enter="enviarMensagem($event, aparecerPrevia)"
+            @keydown.down="selecionarMsgFormatada(true)"
+            @keydown.up="selecionarMsgFormatada(true)"
             id="textarea"
             v-model="mensagem"
             :placeholder="dicionario.placeholder_textarea"
@@ -53,7 +53,7 @@
       <div class="chat-rodape-botoes">
         <div>
           <!-- Btn enviar msg -->
-          <div class="chat-rodape-botoes-botao" :title="dicionario.title_enviar_msg" v-on:click="enviarMensagem('', aparecerPrevia)">
+          <div class="chat-rodape-botoes-botao" :title="dicionario.title_enviar_msg" @click="enviarMensagem('', aparecerPrevia)">
             <font-awesome-icon :icon="['fas', 'paper-plane']" />
           </div>
           <!-- Btn abrir msg formatada -->

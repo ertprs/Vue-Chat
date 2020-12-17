@@ -1,0 +1,61 @@
+.container-historico-corpo {
+  height: 70%;
+  background-color: #c6c5b9;
+  padding: 10px;
+}
+
+$fontSize: .775rem;
+.container-historico-rodape {
+  height: 20%;
+  padding: 5px;
+  .historico-grupos {
+    background-color: #FFF;
+    border-radius: 5px;
+    font-size: $fontSize;
+  }
+  .historico-mensagens{
+    margin-top: 10px;
+    position: relative;
+    @include d-flex-center("vertical");
+    justify-content: space-around;
+    .btn-emoji{
+      font-size: 1.3rem;
+      @include efeito-hover-padrao;
+    }
+    .container-historico-textarea{
+      flex: 1;
+      @include d-flex-center;
+      background-color: #FFF;
+      border-radius: 15px;
+      margin: 0 5px;
+      padding: 5px;
+      textarea{
+        width: 100%;
+        border: unset;
+        padding: 5px 10px;
+        font-size: $fontSize;
+        line-height: 13px;
+        min-height: 35px;
+        max-height: 60px;
+        resize: none;
+        &:focus, &:active{
+          outline: 0;
+        }
+      }
+    }
+  }
+  .container-historico-botoes{
+    .historico-botao{
+      color: #666;
+      transition-duration: 500ms;
+      border-radius: 50%;
+      font-size: 1rem;
+      padding: 10px;
+      cursor: pointer;
+      @include d-flex-center();
+      &:hover{
+        background-color: rgba(0, 0, 0, 0.1)
+      }
+    }
+  }
+}

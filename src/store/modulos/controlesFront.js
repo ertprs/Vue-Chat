@@ -15,7 +15,9 @@ export default {
     menuBotaoDireito: false,
     abaSelecionada: "",
     regexIframe: /\s|\]|\[|\!|\@|\$|\%|\&|\*|\(|\)|\-|\_|\=|\+|\.|\:|\;|\,|\|/g,
-    regexLinks: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi
+    regexLinks: /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi,
+    abrirPreviaCliente: false,
+    objPreviaCli: {}
   },
   mutations: {
     setAbaContatos(state, abaContatos){
@@ -59,6 +61,12 @@ export default {
     },
     setAbaSelecionada(state, abaSelecionada){
       state.abaSelecionada = abaSelecionada
+    },
+    setAbrirPreviaCliente(state, abrirPreviaCliente){
+      state.abrirPreviaCliente = abrirPreviaCliente
+    },
+    setObjPreviaCli(state, objPreviaCli){
+      state.objPreviaCli = objPreviaCli
     }
   },
   actions: {
@@ -100,6 +108,12 @@ export default {
     },
     setMenuBotaoDireito: (context, payload) => {
       context.commit('setMenuBotaoDireito', payload)
+    },
+    setAbrirPreviaCliente: (context, payload) => {
+      context.commit('setAbrirPreviaCliente', payload)
+    },
+    setObjPreviaCli: (context, payload) => {
+      context.commit('setObjPreviaCli', payload)
     }
   },
   getters: {
@@ -150,6 +164,12 @@ export default {
     },
     getRegexLinks(state){
       return state.regexLinks
+    },
+    getAbrirPreviaCliente(state){
+      return state.abrirPreviaCliente
+    },
+    getObjPreviaCli(state){
+      return state.objPreviaCli
     }
   }
 }

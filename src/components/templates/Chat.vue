@@ -2,16 +2,21 @@
   <div id="chat" :class="{'z-index-superior' : blocker && origemBlocker == 'msg-formatada', 'chat-sem-iframe' : semIframe}" ref="chat-container"> <!-- class="resizable-content" -->
     <template v-if="atendimentoAtivo && (caso == '' || caso == 200)">
       <template v-if="atendimentoAtivo.tipo == 'ligacao'">
-        <ChatOpcoes />
+        <ChatOpcoes :dados="atendimentoAtivo" />
         <div class="lista-chat-container-vazio">
           <Ligacao />
         </div>
       </template>
       <template v-else-if="atendimentoAtivo.informacoes && (!atendimentoAtivo.tipo || atendimentoAtivo.tipo == 'chat')">
-        <ChatOpcoes />
+        <ChatOpcoes :dados="atendimentoAtivo" />
         <ChatCorpo id="chat-operador"/>
         <ChatRodape />
         <BotoesAcoes />
+      </template>
+      <template v-else-if="abrirPreviaCliente">
+        <ChatOpcoes :dados="objPreviaCli" />
+        <HistoricoCorpo />
+        <HistoricoRodape />
       </template>
     </template>
     <template v-else-if="!atendimentoAtivo || caso == 400 || caso == 206">
@@ -40,6 +45,8 @@ import ChatCorpo from './ChatCorpo'
 import ChatRodape from './ChatRodape'
 import BotoesAcoes from '../BotoesAcoes'
 import Ligacao from '../Ligacao'
+import HistoricoCorpo from "./HistoricoCorpo"
+import HistoricoRodape from "./HistoricoRodape"
 
 export default {
   components: {
@@ -47,7 +54,9 @@ export default {
     ChatCorpo,
     ChatRodape,
     BotoesAcoes,
-    Ligacao
+    Ligacao,
+    HistoricoCorpo,
+    HistoricoRodape
   },
   computed: {
     ...mapGetters({
@@ -57,7 +66,9 @@ export default {
       blocker: "getBlocker",
       origemBlocker: "getOrigemBlocker",
       dicionario: "getDicionario",
-      semIframe: "getSemIframe"
+      semIframe: "getSemIframe",
+      abrirPreviaCliente: "getAbrirPreviaCliente",
+      objPreviaCli: "getObjPreviaCli"
     })
   }
 }

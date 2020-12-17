@@ -1,6 +1,6 @@
 <template>
   <div class="container-ativar-contato" v-if="ativo && !estado">
-    <input type="text" placeholder="Buscar cliente" @input="pesquisando" v-model="textoPesquisa"> <!--  @focus="abrirLista = true" @blur="abrirLista = false" -->
+    <input type="text" :placeholder="dicionario.placeholder_busca_cliente" @input="pesquisando" v-model="textoPesquisa" @focus="abrirLista = true" @blur="fecharLista">
     <div class="gerenciador-btn" :title="dicionario.title_btn_adicionar_cliente" @click="abrirAtivarCtt()">
       <font-awesome-icon :icon="['fas', 'user-plus']" />
     </div>
@@ -53,7 +53,7 @@ export default {
     return {
       listaClientes: [],
       textoPesquisa: "",
-      abrirLista: true, // false
+      abrirLista: false,
       interval: ""
     }
   },
@@ -66,6 +66,11 @@ export default {
     })
   },
   methods: {
+    fecharLista(){
+      setTimeout(() => {
+        this.abrirLista = false
+      }, 200)
+    },
     pesquisando(){
       this.listaClientes = []
       if(this.textoPesquisa.length < 3){
@@ -96,6 +101,12 @@ export default {
       if(cli.msg_ret){
         return
       }
+
+      this.$store.dispatch("setAtendimentoAtivo", {})
+      this.$store.dispatch("setIdAtendimentoAtivo", "")
+
+      this.$store.dispatch("setAbrirPreviaCliente", true)
+      this.$store.dispatch("setObjPreviaCli", cli)
 
     }
   }

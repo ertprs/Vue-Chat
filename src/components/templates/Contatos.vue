@@ -337,6 +337,10 @@ export default {
     ativarConversa(atd, indice) {
 
       if(atd.tipo == 'ligacao'){
+        if(this.$store.getters.getAbrirPreviaCliente){
+          this.$store.dispatch("setAbrirPreviaCliente", false)
+          this.$store.dispatch("setObjPreviaCli", {})
+        }
         this.$store.dispatch('setAtendimentoAtivo', atd)
         this.exibirInformacoes(atd, indice)
         this.$store.dispatch('setIdAtendimentoAtivo', atd.id_cli)
@@ -361,6 +365,10 @@ export default {
 
       this.contarMsgClientes()
 
+      if(this.$store.getters.getAbrirPreviaCliente){
+        this.$store.dispatch("setAbrirPreviaCliente", false)
+        this.$store.dispatch("setObjPreviaCli", {})
+      }
       this.$store.dispatch('setAtendimentoAtivo', atd)
 
       let objMensagens = Object.values(atd.arrMsg)

@@ -113,7 +113,8 @@ export default {
       btn_ligacao_desligar: "Desligar Ligacao",
       btn_ligacao_encerrar: "Encerrar",
       bloqueio_notificacoes: "Voce deve permitir as notificacoes para continuar",
-      sem_suporte_notificacao: "Este browser nao suporta notificacoes de Desktop"
+      sem_suporte_notificacao: "Este browser nao suporta notificacoes de Desktop",
+      placeholder_busca_cliente: "Buscar cliente"
     }
   },
   mutations: {

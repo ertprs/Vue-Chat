@@ -1,18 +1,17 @@
 <template>
   <div class="chat-opcoes tamanho-titulos">
-      <div class="chat-opcoes-titulo" :class="{'cliente-ativo' : atendimentoAtivo}">
+      <div class="chat-opcoes-titulo" :class="{'cliente-ativo' : dados}">
         <div class="chat-opcoes-titulo-container">
-          <div class="circulo-contatos" v-if="atendimentoAtivo.nome_usu">
-            <p v-text="acionaFormataSigla(atendimentoAtivo.nome_usu[0], 'upper')"></p>
+          <div class="circulo-contatos" v-if="dados.nome_usu">
+            <p v-text="acionaFormataSigla(dados.nome_usu[0], 'upper')"></p>
           </div>
           <ul class="chat-opcoes-titulo-container--lista">
-            <li :title="atendimentoAtivo.nome_usu + ' ' + atendimentoAtivo.login_usu">{{ atendimentoAtivo.nome_usu }} ({{ atendimentoAtivo.login_usu }})</li>
-            <li :title="atendimentoAtivo.desc_grupo">{{ atendimentoAtivo.desc_grupo }}</li>
+            <li :title="dados.nome_usu + ' ' + dados.login_usu">{{ dados.nome_usu }} ({{ dados.login_usu }})</li>
+            <li :title="dados.desc_grupo">{{ dados.desc_grupo }}</li>
           </ul>
-          <div class="chat-opcoes-titulo-container--logo">
-            <!-- Lupa com url PHP -->
+          <div class="chat-opcoes-titulo-container--logo" v-if="dados.token_cliente">
             <font-awesome-icon :icon="['fas', 'search']" class="lupa"  @click="chamarIframe" />
-            <img v-if="atendimentoAtivo.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${atendimentoAtivo.sigla}.png`" @click="chamarIframe">
+            <img v-if="dados.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${dados.sigla}.png`" @click="chamarIframe">
             <font-awesome-icon v-else :icon="['fas', 'comments']" />
           </div>
         </div>
@@ -26,6 +25,12 @@ import { formataSigla } from "@/services/formatacaoDeTextos"
 import { mapGetters } from 'vuex'
 
 export default {
+  props: {
+    dados: {
+      required: true,
+      type: Object
+    }
+  },
   data(){
     return{
       chatTitulo: 'Chat'

@@ -155,6 +155,11 @@ export default {
             const arrayRegras = response.data.rules
             let auxAtdAtivo = this.atendimentoAtivo
             auxAtdAtivo.rules = arrayRegras
+
+            if(this.$store.getters.getAbrirPreviaCliente){
+              this.$store.dispatch("setAbrirPreviaCliente", false)
+              this.$store.dispatch("setObjPreviaCli", {})
+            }
             this.$store.commit("setAtendimentoAtivo", auxAtdAtivo)
             this.$store.dispatch("setIdAtendimentoAtivo", auxAtdAtivo.id_cli)
 
