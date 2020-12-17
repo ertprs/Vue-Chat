@@ -10,16 +10,14 @@
             <li :title="dados.desc_grupo">{{ dados.desc_grupo }}</li>
           </ul>
           <div class="chat-opcoes-titulo-container--logo">
-            <template v-if="dados.token_cliente">
+            <template v-if="!dados.siglas">
               <font-awesome-icon :icon="['fas', 'search']" class="lupa"  @click="chamarIframe" />
               <img v-if="dados.sigla" :src="`${dominio}/callcenter/imagens/ext_top_${dados.sigla}.png`" @click="chamarIframe">
               <font-awesome-icon v-else :icon="['fas', 'comments']" />
             </template>
             <div class="chat-opcoes-informacoes" v-else>
-              <template v-if="dados.siglas">
-                <img v-for="(sigla, index) in dados.siglas" :key="index"
-                  :src="`${dominio}/callcenter/imagens/ext_top_${sigla.toLowerCase()}.png`" :alt="sigla">
-              </template>
+              <img v-for="(sigla, index) in dados.siglas" :key="index"
+                :src="`${dominio}/callcenter/imagens/ext_top_${sigla.toLowerCase()}.png`" :alt="sigla" />
               <div @click="fecharCliHist" class="fechar-historico">
                 <font-awesome-icon :icon="['fas', 'times-circle']" />
               </div>
