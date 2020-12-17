@@ -362,7 +362,7 @@ function atualizarClientes(mainData, app) {
           let tempo = store.getters.getTimeCli
           store.dispatch("setIconeNotificacao", novosAtendimentos[ramal_server].sigla)
           let icone = store.getters.getIconeNotificacao
-          emitirNotificacao(app, novosAtendimentos[ramal_server].nome_usu, icone, tituloCli, tempo)
+          emitirNotificacao(app, novosAtendimentos[ramal_server].nome_usu, icone, tituloCli, tempo, novosAtendimentos[ramal_server])
         }
 
         adicionarIframeNovoUsu(novosAtendimentos[ramal_server].login_usu, novosAtendimentos[ramal_server].url)
@@ -381,7 +381,7 @@ function atualizarClientes(mainData, app) {
   }
 }
 
-function emitirNotificacao(app, corpo, icone, titulo, tempo){
+function emitirNotificacao(app, corpo, icone, titulo, tempo, atd){
   let chatFechado = false
 
   if(location.host != "localhost:8085"){
@@ -397,9 +397,9 @@ function emitirNotificacao(app, corpo, icone, titulo, tempo){
 
   if(Notification.permission === "granted"){
     if(document.visibilityState === "hidden"){
-      app.$emit("criar-notificacao", corpo, icone, titulo, tempo)
+      app.$emit("criar-notificacao", corpo, icone, titulo, tempo, atd)
     }else if(document.visibilityState === "visible" && chatFechado){
-      app.$emit("criar-notificacao", corpo, icone, titulo, tempo)
+      app.$emit("criar-notificacao", corpo, icone, titulo, tempo, atd)
     }
   }
 }
@@ -520,7 +520,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos, app) {
             let tempo  = store.getters.getTimeMsg
             store.dispatch("setIconeNotificacao", novosAtendimentos[ramal].sigla)
             let icone = store.getters.getIconeNotificacao
-            emitirNotificacao(app, message.msg, icone, `${titulo} - ${novosAtendimentos[ramal].nome_usu}`, tempo)
+            emitirNotificacao(app, message.msg, icone, `${titulo} - ${novosAtendimentos[ramal].nome_usu}`, tempo, novosAtendimentos[ramal])
           }
 
           store.dispatch('setAtendimentos', novosAtendimentos)

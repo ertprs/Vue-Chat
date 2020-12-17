@@ -10,15 +10,15 @@
   transition: background 300ms;
   border: 2px solid #495057;
 
-  &.em-atendimento{ 
-    background: #248232
+  &.em-atendimento{
+    background: $status-gerenciador-em-atd
   }
   &.parado{
-    background: #bf211e;
-  } 
+    background: $status-gerenciador-parado;
+  }
   &.aguardando{
-    background: goldenrod!important;
-  } 
+    background: $status-gerenciador-aguardando!important;
+  }
 }
 
 .gerenciador-btn{

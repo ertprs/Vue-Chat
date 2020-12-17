@@ -70,7 +70,7 @@ export default {
         }
       })
     },
-    criarNotificacao(corpo, icone, titulo, tempo){
+    criarNotificacao(corpo, icone, titulo, tempo, atd){
       icone = `${this.dominio}/callcenter/imagens/ext_top_${icone}.png`
 
       const lengthLimite = 197
@@ -86,7 +86,18 @@ export default {
       })
 
       notification.onclick = (e) => {
-        console.log("e: ", e)
+        window.focus()
+        notification.close()
+
+        const todosAtds = Object.values(this.todosAtendimentos)
+        let index = ""
+        todosAtds.map((obj, indice) => {
+          if(obj.login_usu == atd.login_usu){
+            index = indice
+          }
+        })
+
+        this.$root.$emit("ativar-contato", atd, index)
       }
 
       if(document.visibilityState === "visible"){
@@ -106,7 +117,7 @@ export default {
     setDominio(){
       let baseUrl = ''
       if(window.location.hostname == 'localhost'){
-        baseUrl = 'http://linux03'
+        baseUrl = 'https://linux03'
         this.$store.dispatch("setReqTeste", "teste=rmix0101") // teste
       }else{
         baseUrl = 'https://'+window.location.hostname
@@ -126,8 +137,8 @@ export default {
       this.habilitarNotificacoes()
     })
 
-    this.$root.$on("criar-notificacao", (corpo, icone, titulo, tempo) => {
-      this.criarNotificacao(corpo, icone, titulo, tempo)
+    this.$root.$on("criar-notificacao", (corpo, icone, titulo, tempo, atd) => {
+      this.criarNotificacao(corpo, icone, titulo, tempo, atd)
     })
   },
   watch: {
@@ -143,7 +154,8 @@ export default {
       fechado: "getAbaContatos",
       corDestaque: "getCorDestaque",
       forcarNotificacoes: "getForcarNotificacoes",
-      dominio: "getDominio"
+      dominio: "getDominio",
+      todosAtendimentos: "getTodosAtendimentos"
     })
   }
 }

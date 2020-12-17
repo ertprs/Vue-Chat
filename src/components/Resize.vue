@@ -94,7 +94,7 @@ export default {
 
       if(this.origem === "chat"){
         min = maxDocumentWidth * .3
-        max = maxDocumentWidth * .48
+        max = maxDocumentWidth * .45
 
         this.sizes.min = min
         this.sizes.max = max
