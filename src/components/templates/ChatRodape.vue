@@ -296,7 +296,7 @@ export default {
         this.$store.dispatch('setBlocker', false)
       }
 
-      this.mensagem = this.mensagem.replace(/\n$/, "", this.mensagem);
+      this.mensagem = this.mensagem.replace(/\n$/, "", this.mensagem)
       if(!this.mensagem && !previa){
         return
       }

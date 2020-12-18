@@ -42,40 +42,48 @@ export default {
   },
   data(){
     return{
-      chatTitulo: 'Chat'
+      chatTitulo: 'Chat',
+      cor: ""
     }
   },
   methods: {
     fecharCliHist(){
       this.$store.dispatch("setAbrirPreviaCliente", false)
       this.$store.dispatch("setObjPreviaCli", {})
+
+      const arrAtendimentos = Object.values(this.todosAtendimentos)
+      if(arrAtendimentos.length){
+        this.$root.$emit("ativar-contato", arrAtendimentos[0], [0])
+      }
     },
     acionaFormataSigla(letra, acao){
       return formataSigla(letra, acao)
     },
     chamarIframe(){
-      this.$root.$emit("abrir-iframe", this.atendimentoAtivo.hist)
+      this.$root.$emit("abrir-iframe", this.dados.hist)
       this.$store.dispatch("setBlocker", true)
       this.$store.dispatch("setOrigemBlocker", "visualizar-iframe")
-    }
-  },
-  watch: {
-    semIframe(){
-      const chatContainer = document.querySelector("#chat").parentElement
-      if(chatContainer){
-        if(this.semIframe){
-          chatContainer.style.width = "100%"
-        }else{
-          chatContainer.style.width = "30%"
-        }
+    },
+    aplicarCor(){
+      if(!this.dados.siglas) { return }
+      if(!this.regrasDoClienteAtivo.regras){ return }
+
+      this.cor = this.regrasDoClienteAtivo.regras.primary_color
+      const titInformacoes = document.querySelector("#titulo-informacoes")
+      if(titInformacoes){
+        titInformacoes.style.borderBottom = `3px solid ${this.cor}`
       }
     }
   },
+  updated(){
+    this.aplicarCor()
+  },
   computed: {
     ...mapGetters({
-      atendimentoAtivo: 'getAtendimentoAtivo',
+      regrasDoClienteAtivo: "getRegrasDoClienteAtivo",
       semIframe: 'getSemIframe',
-      dominio: 'getDominio'
+      dominio: 'getDominio',
+      todosAtendimentos: "getTodosAtendimentos"
     })
   }
 }

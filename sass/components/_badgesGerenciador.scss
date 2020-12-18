@@ -74,10 +74,15 @@
       @include efeito-hover-padrao;
       background-color: $corListaClientes;
       border: 1px solid #000;
+      border-top: unset;
       border-left: unset;
       display: flex;
       flex-direction: column;
       $marginHorizontal: 5px;
+      &:focus{
+        outline: 2px solid black;
+        border: 2px solid red;
+      }
       .sem-cliente-lista{
         background-color: lighten(#e5383b, 5);
         width: 100%;
@@ -89,15 +94,27 @@
       .cliente-lista-nome{
         margin: $marginHorizontal 0 0 $marginHorizontal;
         @include d-flex-center("vertical");
+        position: relative;
+        .cliente-nome-login{
+          display: flex;
+          flex-direction: column;
+          p{
+            &:nth-child(2){
+              font-size: .7rem;
+            }
+          }
+        }
         svg {
           margin-right: 3px;
           font-size: 1.4rem;
         }
         .container-cliente-siglas{
           display: flex;
+          position: absolute;
+          right: 5px;
           margin-left: $marginHorizontal;
           .cliente-siglas {
-            margin-left: -7px;
+            margin-left: 2.5px;
             &:first-child {
               margin-left: 0;
             }
@@ -114,13 +131,6 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
-      }
-      &:first-child{
-        border-top: unset;
-      }
-      &:nth-child(even){
-        border-top: unset;
-        border-bottom: unset;
       }
       .cliente-lista-info-cli{
         align-self: flex-end;

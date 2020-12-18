@@ -84,7 +84,9 @@ export default {
         return
       }
 
+      this.mensagem = this.mensagem.replace(/<\/?[\d\w\s=\-:\.\/\'\";]+>/gi, ' ')
       this.mensagem = this.mensagem.trim()
+      this.mensagem = this.mensagem.replace(/\n$/, "", this.mensagem)
 
       if(!this.mensagem){
         this.$toasted.global.emConstrucao({msg: "Digite uma mensagem"})

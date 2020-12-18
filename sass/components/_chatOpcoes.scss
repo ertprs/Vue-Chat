@@ -95,6 +95,13 @@
       }
       .chat-opcoes-informacoes{
         @include d-flex-center;
+        img{
+          margin-right: 3px;
+          cursor: default;
+          &:last-child {
+            margin-right: 0;
+          }
+        }
         .fechar-historico{
           margin-left: 5px;
           @include efeito-hover-padrao;

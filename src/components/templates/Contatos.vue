@@ -15,7 +15,7 @@
     </div>
     <template v-if="objAtendimentos">
       <!-- Busca Cliente -->
-      <busca-cliente :estado="fechado" />
+      <busca-cliente v-if="caso != 400" :estado="fechado" />
       <!-- Caso Aguardando Cliente ou esperando a primeira requisicao ao buscaAtendimentos -->
       <div class="lista-contatos-container-vazio" :class="{'existe-agenda' : minhaAgenda.length || aguardando.length || caso !== 400}" v-if="caso == 206 || caso == 'aguardando'">
         <div class="load">

@@ -1,16 +1,19 @@
 <template>
   <div class="container-ativar-contato" v-if="ativo && !estado">
-    <input type="text" :placeholder="dicionario.placeholder_busca_cliente" @input="pesquisando" v-model="textoPesquisa" @focus="abrirLista = true" @blur="fecharLista">
+    <input type="text" :placeholder="dicionario.placeholder_busca_cliente" @keydown.down="focarLista" @input="pesquisando" v-model="textoPesquisa" @focus="abrirLista = true" @blur="fecharLista">
     <div class="gerenciador-btn" :title="dicionario.title_btn_adicionar_cliente" @click="abrirAtivarCtt()">
       <font-awesome-icon :icon="['fas', 'user-plus']" />
     </div>
     <div v-if="abrirLista">
       <div class="container-lista-clientes">
         <div v-if="(listaClientes && (listaClientes.length)) && textoPesquisa">
-          <div v-for="(cli, index) in listaClientes" :key="index" class="cliente-lista" @click="abrirAtivacao(cli)">
+          <div v-for="(cli, index) in listaClientes" :key="index" class="cliente-lista" @click="abrirAtivacao(cli)" :ref="`hist-cli-${index}`" :tabindex="index">
             <div class="cliente-lista-nome" v-if="!cli.msg_ret">
               <font-awesome-icon :icon="['fas', 'user-circle']" />
-              <p v-text="cli.nome_usu"></p>
+              <div class="cliente-nome-login">
+                <p v-text="cli.nome_usu"></p>
+                <p v-text="cli.login_usu"></p>
+              </div>
               <div v-if="cli.siglas" class="container-cliente-siglas">
                 <div class="cliente-siglas" v-for="(sigla, index) in cli.siglas" :key="index">
                   <img :src="`${dominio}/callcenter/imagens/ext_top_${sigla.toLowerCase()}.png`" :alt="sigla">
@@ -30,7 +33,7 @@
             </template>
           </div>
         </div>
-        <div v-else-if="textoPesquisa">
+        <div v-else-if="textoPesquisa.length >= 3">
           <div class="spinner">
             <div class="bounce1"></div>
             <div class="bounce2"></div>
@@ -54,7 +57,8 @@ export default {
       listaClientes: [],
       textoPesquisa: "",
       abrirLista: false,
-      interval: ""
+      interval: "",
+      indice: 0
     }
   },
   computed: {
@@ -66,6 +70,20 @@ export default {
     })
   },
   methods: {
+    focarLista(){
+      return
+
+      if(!this.listaClientes){ return }
+
+      const listaElem = this.$refs[`hist-cli-${this.indice}`]
+      if(listaElem.length){
+        const elem = listaElem[0]
+        if(elem){
+          console.log(elem)
+
+        }
+      }
+    },
     fecharLista(){
       setTimeout(() => {
         this.abrirLista = false
