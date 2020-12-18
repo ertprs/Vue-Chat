@@ -54,6 +54,10 @@ export default {
   },
   methods: {
     mostraIframe(idCliente, urlFrame) {
+      if(idCliente.match(this.regexIframe)){
+        idCliente = idCliente.replace(this.regexIframe, '')
+      }
+
       if(urlFrame != '') {
         let objIframe = {id: idCliente, url: urlFrame}
         if(this.iframesDisponiveis.length > 0) {
