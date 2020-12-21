@@ -465,6 +465,11 @@ export default {
         return
       }
 
+      // verificar se a mensagem a ser inserida ja existe
+      let seqAux = objMsgExterno ? objMsgExterno.seq : this.seqNovo
+      let mensagemJaExiste = this.verificarMensagemIgual(arrMsg, seqAux)
+      if(mensagemJaExiste){ return }
+
       // Msg sendo disparada pelo textarea
       if (!objMsgExterno) {
         for (let j = 0; j < this.todosEmojis.length; j++) {
@@ -713,13 +718,21 @@ export default {
         video: video
       };
 
-      // console.log("PUSH no array de msg (chat-rodape)")
       arrMsg.push(objMensagem)
 
       if(this.statusEnvio !== "E" && !objMsgExterno){
         this.resetar()
       }
 
+    },
+    verificarMensagemIgual(arrMsg, seq){
+      let bool = false
+      arrMsg.map(objMsg => {
+        if(objMsg.seq == seq){
+          bool = true
+        }
+      })
+      return bool
     },
     acionaFormataHoraMensagem() {
       return formataHoraMensagem()

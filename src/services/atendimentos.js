@@ -291,7 +291,7 @@ async function atualizarAtendimentos(app) {
       }
 
       const duracao = Date.now() - antes
-      // // Significa que o get-atendimentos esta demorando mais de 2 segundos para finalizar a requisicao
+      // Significa que o get-atendimentos esta demorando mais de 2 segundos para finalizar a requisicao
       if(duracao > 2000){
         console.log("Requisicao lenta: ", (duracao / 1000).toFixed(2) + "s")
         // if(!document.querySelector(".toasted.toasted-primary.error")){
@@ -302,7 +302,6 @@ async function atualizarAtendimentos(app) {
       if(contadorRequisicoesLentas >= 3){
         console.log("Multiplas requisicoes lentas, total: ", contadorRequisicoesLentas)
       }
-      // console.log(`Duracao da req de atualizacao: ${duracao}s`)
 
       liberaRequest()
     })
@@ -383,14 +382,14 @@ function atualizarClientes(mainData, app) {
           let tempo = store.getters.getTimeCli
           store.dispatch("setIconeNotificacao", novosAtendimentos[ramal_server].sigla)
           let icone = store.getters.getIconeNotificacao
-          emitirNotificacao(app, novosAtendimentos[ramal_server].nome_usu, icone, tituloCli, tempo, novosAtendimentos[ramal_server]) // app, corpo, icone, titulo, tempo, atd
+          emitirNotificacao(app, novosAtendimentos[ramal_server].nome_usu, icone, tituloCli, tempo, novosAtendimentos[ramal_server])
         }
 
         adicionarIframeNovoUsu(novosAtendimentos[ramal_server].login_usu, novosAtendimentos[ramal_server].url)
 
         setouAtendimentos = true
         app.$set(atendimentosLocal, ramal_server, novosAtendimentos[ramal_server])
-        // store.dispatch('setAtendimentos', novosAtendimentos)
+
         temClienteNovo = false
       } else {
         atualizarMensagens(atendimentosServer[ramal_server], ramal_server, novosAtendimentos, app)
@@ -502,6 +501,7 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos, app) {
       continue
     }
 
+
     if (!novosAtendimentos[ramal].arrMsg[chave].msg) { continue }
 
     const seqs = novosAtendimentos[ramal].arrMsg[chave].msg.map(({ seq }) => (seq))
@@ -527,12 +527,10 @@ function atualizarMensagens(cliente, ramal, novosAtendimentos, app) {
             }
             // Removendo a ultima msg do array para nao ter duas mensagens iguais no array do atendimento ativo
             novosAtendimentos[ramal].arrMsg[chave].msg.pop()
-            // console.log("Atualizar mensagens CLI")
             app.$root.$emit('atualizar-mensagem', message)
 
           } else if (message.resp_msg == "OPE") {
             if (!store.getters.getMensagemViaTextarea) {
-              // console.log("Atualizar mensagens OPE (mas que nao foi enviada pelo textarea)")
               app.$root.$emit('atualizar-mensagem', message)
             }
           }
