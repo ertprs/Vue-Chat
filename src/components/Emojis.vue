@@ -12,6 +12,7 @@
       :showPreview="false"
       :skin="1"
       :native="true"
+      :enableFrequentEmojiSort="true"
       :style="{ position: 'absolute', top: '-330px', left: '0', height: '325px', zIndex: '90' }"
       :i18n="textosEmojis"
       :include="['recent', 'people', 'nature', 'foods', 'activity', 'places', 'objects']"

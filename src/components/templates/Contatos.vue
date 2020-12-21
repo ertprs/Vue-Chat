@@ -15,7 +15,7 @@
     </div>
     <template v-if="objAtendimentos">
       <!-- Busca Cliente -->
-      <busca-cliente v-if="caso != 400" :estado="fechado" />
+      <!-- <busca-cliente v-if="caso != 400" :estado="fechado" /> -->
       <!-- Caso Aguardando Cliente ou esperando a primeira requisicao ao buscaAtendimentos -->
       <div class="lista-contatos-container-vazio" :class="{'existe-agenda' : minhaAgenda.length || aguardando.length || caso !== 400}" v-if="caso == 206 || caso == 'aguardando'">
         <div class="load">
@@ -160,7 +160,9 @@ export default {
         this.contarMsgClientes()
 
         if(this.objAtendimentos.length && this.idAtendimentoAtivo == ''){
-          this.ativarConversa(this.objAtendimentos[0], 0)
+          if(!this.$store.getters.getAbrirPreviaCliente){
+            this.ativarConversa(this.objAtendimentos[0], 0)
+          }
         }else if(this.objAtendimentos.length && this.idAtendimentoAtivo){
           let qtdNegativo = 0
           for(let atd in this.objAtendimentos){

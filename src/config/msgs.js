@@ -45,3 +45,25 @@ Vue.toasted.register(
   payload => (!payload.msg ? dicionario.msg_em_construcao : payload.msg),
   { type: "info", icon: "info" }
 );
+
+Vue.toasted.register(
+  "lagRequisicao",
+  payload => (!payload.msg ? dicionario.msg_req_lenta : payload.msg),
+  {
+    type: "error",
+    icon: "wifi",
+    fullWidth: true,
+    fitToScreen: true
+  }
+);
+
+Vue.toasted.register(
+  "novoCli",
+  payload => (!payload.msg ? dicionario.msg_novo_cli : payload.msg),
+  {
+    icon: "plus-square",
+    fullWidth: true,
+    fitToScreen: true,
+    className: 'yellow-card'
+  }
+);

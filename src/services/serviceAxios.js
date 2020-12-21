@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 
 let baseUrl = ''
 if(window.location.hostname == 'localhost'){
@@ -13,5 +13,5 @@ const axios_api = axios.create({
 
 export default axios_api;
 export function axiosTokenJWT(token) {
-    axios_api.defaults.headers.common['Authorization'] = token
+  axios_api.defaults.headers.common['Authorization'] = token
 }

@@ -219,9 +219,6 @@ export default {
     "emojis" : Emojis,
     "vue-select" : vSelect
   },
-  destroyed(){
-    this.$root.$off("toggle-msg-formatada")
-  },
   mounted() {
     this.todosEmojis = getCodigoEmojis()
 
@@ -234,7 +231,9 @@ export default {
     })
 
     this.$root.$on("atualizar-mensagem", (objMsgExterno) => {
-      this.criaObjMensagem(objMsgExterno)
+      if(objMsgExterno){
+        this.criaObjMensagem(objMsgExterno)
+      }
     })
 
     window.addEventListener("message", this.listenerPostMessage, false);
@@ -265,12 +264,12 @@ export default {
     executaTeste(event, previa, cont) {
       setTimeout( () => {
           cont = cont + 1
-          if(cont < 300) {
+          if(cont < 50) {
             this.mensagem = 'MSG ' + String(cont)
             this.enviarMensagem(event, previa)
             this.executaTeste(event, previa, cont)
           }
-        }, 700);
+        }, 2000);
     },
     async enviarMensagem(event, previa) {
 
@@ -302,7 +301,9 @@ export default {
       }
 
       if(this.mensagem === 'executaTeste') {
-        this.executaTeste(event, previa, 0)
+        if(window.location.hostname == "localhost"){
+          this.executaTeste(event, previa, 0)
+        }
       }
 
       const msgCasoErro = this.mensagem
@@ -712,6 +713,7 @@ export default {
         video: video
       };
 
+      // console.log("PUSH no array de msg (chat-rodape)")
       arrMsg.push(objMensagem)
 
       if(this.statusEnvio !== "E" && !objMsgExterno){
@@ -1160,8 +1162,6 @@ export default {
   },
   destroyed(){
     window.removeEventListener("resize", this.resizeEvent)
-
-    this.$root.$off("atualizar-mensagem")
   }
 };
 </script>
